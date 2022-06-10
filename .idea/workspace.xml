@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="1">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Literature.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Magazine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Shelf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tz_info/tz_info.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tz_info/tz_modified.txt" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="first">
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Literature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Literature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf_objects/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Shelf.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +28,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -50,15 +52,30 @@
     "OverrideImplement.generate.javadoc": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false"
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "File.Encoding"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\3PI_Smaliukh_Vlad\Labs\Bookshelf_project\tz_info" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
+      <recent name="org.ShmaliukhVlad" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.ShelfTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
@@ -72,9 +89,75 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="BookTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.Bookshelf_objects.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.Bookshelf_objects" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Bookshelf_objects.BookTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShelfTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.Bookshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShelfTest.addBookAndMagazineToShelf_2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.Bookshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="METHOD_NAME" value="addBookAndMagazineToShelf_2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShelfTest.generateShelf" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.Bookshelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="METHOD_NAME" value="generateShelf" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ShelfTest" />
+        <item itemvalue="JUnit.ShelfTest.generateShelf" />
+        <item itemvalue="JUnit.BookTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ShelfTest.addBookAndMagazineToShelf_2" />
       </list>
     </recent_temporary>
   </component>
@@ -87,7 +170,16 @@
       <option name="presentableId" value="Default" />
       <updated>1654796926354</updated>
       <workItem from="1654796928138" duration="6438000" />
+      <workItem from="1654860397830" duration="14554000" />
     </task>
+    <task id="LOCAL-00001" summary="first">
+      <created>1654860488518</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1654860488518</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,6 +198,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1" />
+    <MESSAGE value="first" />
+    <option name="LAST_COMMIT_MESSAGE" value="first" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java</url>
+          <line>101</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

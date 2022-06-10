@@ -1,8 +1,9 @@
-package org.ShmaliukhVlad.Bookshelf_objects;
+package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
 import java.util.Date;
 
 public class Book extends Literature{
+
     private String author;
     private Date issuanceDate;
 
@@ -14,13 +15,15 @@ public class Book extends Literature{
 
     @Override
     public String toString() {
-        return "Book{" +
-                "author='" + author + '\'' +
-                ", issuanceDate=" + issuanceDate +
-                ", name='" + name + '\'' +
-                ", pagesNumber=" + pagesNumber +
-                ", isBorrowed=" + isBorrowed +
-                "}\n";
+        String tab2 = "\n\t\t";
+        String tab3 = "\n\t\t\t";
+        return tab2 + "Book{" +
+               tab3 + "author='" + author + '\'' +
+               tab3 + "issuanceDate=" + issuanceDate +
+               tab3 + "name='" + name + '\'' +
+               tab3 + "pagesNumber=" + pagesNumber +
+               tab3 + "isBorrowed=" + isBorrowed +
+               tab2 + "}";
     }
 
     public String getAuthor() {

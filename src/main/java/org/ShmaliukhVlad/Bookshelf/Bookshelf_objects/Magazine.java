@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.Bookshelf_objects;
+package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
 import java.util.Comparator;
 
@@ -12,11 +12,13 @@ public class Magazine
 
     @Override
     public String toString() {
-        return "Magazine{" +
-                "name='" + name + '\'' +
-                ", pagesNumber=" + pagesNumber +
-                ", isBorrowed=" + isBorrowed +
-                '}';
+        String tab2 = "\n\t\t";
+        String tab3 = "\n\t\t\t";
+        return  tab2 + "Magazine{" +
+                tab3 + "name='" + name + '\'' +
+                tab3 + "pagesNumber=" + pagesNumber +
+                tab3 + "isBorrowed=" + isBorrowed +
+                tab2 + '}';
     }
 
     /**

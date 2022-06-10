@@ -1,11 +1,18 @@
-package org.ShmaliukhVlad.Bookshelf_objects;
+package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
-import java.util.Comparator;
+import java.io.Serializable;
 
-public abstract class Literature implements Comparable<Literature> {
+public abstract class Literature implements Comparable<Literature>, Serializable {
+
     protected String name;
     protected int pagesNumber;
     protected boolean isBorrowed;
+
+    public Literature(String name, int pagesNumber, boolean isBorrowed) {
+        this.name = name;
+        this.pagesNumber = pagesNumber;
+        this.isBorrowed = isBorrowed;
+    }
 
     public String getName() {
         return name;
@@ -20,6 +27,9 @@ public abstract class Literature implements Comparable<Literature> {
     }
 
     public void setPagesNumber(int pagesNumber) {
+        if(pagesNumber < 0){
+            pagesNumber = 0;
+        }
         this.pagesNumber = pagesNumber;
     }
 
@@ -31,9 +41,8 @@ public abstract class Literature implements Comparable<Literature> {
         isBorrowed = borrowed;
     }
 
-    public Literature(String name, int pagesNumber, boolean isBorrowed) {
-        this.name = name;
-        this.pagesNumber = pagesNumber;
-        this.isBorrowed = isBorrowed;
-    }
+
+
+
+
 }
