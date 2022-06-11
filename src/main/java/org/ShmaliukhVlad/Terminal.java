@@ -1,12 +1,12 @@
 package org.ShmaliukhVlad;
 
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
+import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 
-import java.util.Date;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Terminal {
     private Scanner scanner;
@@ -28,10 +28,42 @@ public class Terminal {
         while (play){
             printMainMenu();
             userChoice = getUserChoice();
+
             if (userChoice == 9){
                 System.out.println(shelf);
             }
-            if (userChoice == 2){
+            else if (userChoice == 6){
+                printMenuForMagazinesSorting();
+
+                userChoice =getUserChoice();
+                if(userChoice == 1){
+                    System.out.println("Sort by name");
+                    List<Literature> result =
+                            shelf.getLiteratureInShelf().stream()
+                                    .filter(literature -> literature instanceof Magazine)
+
+                                    .collect(Collectors.toList());
+                    //result.stream()
+                    //        .sorted(Comparator.comparing(literature -> literature.)
+                    //        .thenComparingInt(Magazine::getPagesNumber))
+
+                    System.out.println(result);
+                }
+                if(userChoice == 2){
+                    System.out.println("Sort by pages");
+                    List<Literature> result =
+                            shelf.getLiteratureInShelf().stream()
+                                    .filter(literature -> literature instanceof Magazine)
+                                    //.sorted(Comparator.<Magazine>comparingInt(obj -> obj.getPagesNumber()))
+                                    .collect(Collectors.toList());
+                    Collections.sort(result,Comparator.comparing((Literature o) -> o.getPagesNumber()));
+
+
+                    System.out.println(result);
+                }
+
+            }
+            else if (userChoice == 2){
                 System.out.println("Enter index of Literature object to delete one:");
                 int index = getUserChoice();
                 if(index >= 0 && index < shelf.getLiteratureInShelf().size()){

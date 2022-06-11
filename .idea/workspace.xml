@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.1.2 &#10;deprecate some methods">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.1.3&#10;add method 'remove by index' for Terminal&#10;add realization for getting current state of Shelf(in main menu)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
     </list>
@@ -162,7 +162,7 @@
       <workItem from="1654860397830" duration="14902000" />
       <workItem from="1654934408261" duration="3206000" />
       <workItem from="1654938146306" duration="844000" />
-      <workItem from="1654947189801" duration="4838000" />
+      <workItem from="1654947189801" duration="8240000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -192,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654951601068</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="v 0.1.3&#10;add method 'remove by index' for Terminal&#10;add realization for getting current state of Shelf(in main menu)">
+      <created>1654952586541</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1654952586541</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +222,8 @@
     <MESSAGE value="v 0.1.0" />
     <MESSAGE value="v 0.1.1 &#10;Terminal mod + ability to add new book or magazine ( + random add)" />
     <MESSAGE value="v 0.1.2 &#10;deprecate some methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 0.1.2 &#10;deprecate some methods" />
+    <MESSAGE value="v 0.1.3&#10;add method 'remove by index' for Terminal&#10;add realization for getting current state of Shelf(in main menu)" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 0.1.3&#10;add method 'remove by index' for Terminal&#10;add realization for getting current state of Shelf(in main menu)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
