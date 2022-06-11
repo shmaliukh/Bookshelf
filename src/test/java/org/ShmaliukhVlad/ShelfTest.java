@@ -203,8 +203,223 @@ class ShelfTest {
     }
 
     @Test
+    @DisplayName("Get sorted only Magazine objects by author")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Magazines which are sorted by Author")
+    void sortedMagazinesByName() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Magazine("LAST",55,false));
+        shelf.addLiteratureObject(new Magazine("last",100,false));
+        shelf.addLiteratureObject(new Magazine("last",55,false));
+        shelf.addLiteratureObject(new Magazine("las",55,false));
+        shelf.addLiteratureObject(new Magazine("la",55,false));
+        shelf.addLiteratureObject(new Magazine("55",55,false));
+        shelf.addLiteratureObject(new Magazine("b",6,false));
+        shelf.addLiteratureObject(new Magazine("a",5,false));
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Magazine)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getName())
+                                .thenComparing(
+                                        (Literature o) -> o.getPagesNumber()))
+                        .collect(Collectors.toList());
+
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Get sorted only Magazine objects by pages")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Magazines which are sorted by Pages")
+    void sortedMagazinesByPages() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Magazine("LAST",55,false));
+        shelf.addLiteratureObject(new Magazine("last",100,false));
+        shelf.addLiteratureObject(new Magazine("last",55,false));
+        shelf.addLiteratureObject(new Magazine("las",55,false));
+        shelf.addLiteratureObject(new Magazine("la",55,false));
+        shelf.addLiteratureObject(new Magazine("55",55,false));
+        shelf.addLiteratureObject(new Magazine("b",6,false));
+        shelf.addLiteratureObject(new Magazine("a",5,false));
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Magazine)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getPagesNumber())
+                                .thenComparing(
+                                        (Literature o) -> o.getName()))
+                        .collect(Collectors.toList());
+
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Get sorted only Book objects by name")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Books which are sorted by Name")
+    void sortedBooksByName() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",100,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("las",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("la",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("55",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("b",6,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("a",5,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("7",7,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("6",6,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getName())
+                                .thenComparing(
+                                        (Literature o) -> o.getPagesNumber()))
+                        .collect(Collectors.toList());
+
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Get sorted only Book objects by pages")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Books which are sorted by Pages")
+    void sortedBooksByPages() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",100,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("las",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("la",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("55",55,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("b",6,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("a",5,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("7",7,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("6",6,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getPagesNumber())
+                                .thenComparing(
+                                        (Literature o) -> o.getName()))
+                        .collect(Collectors.toList());
+
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Get sorted only Book objects by author")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Books which are sorted by Author")
+    void sortedBooksByAuthor() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",100,false,"last",new Date(2)));
+        shelf.addLiteratureObject(new Book("last",55,false,"last",new Date(2)));
+        shelf.addLiteratureObject(new Book("las",55,false,"las",new Date(2)));
+        shelf.addLiteratureObject(new Book("la",55,false,"la",new Date(2)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(2)));
+        shelf.addLiteratureObject(new Book("b",6,false,"b",new Date(2)));
+        shelf.addLiteratureObject(new Book("a",5,false,"a",new Date(2)));
+        shelf.addLiteratureObject(new Book("7",7,false,"7",new Date(2)));
+        shelf.addLiteratureObject(new Book("6",6,false,"6",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getAuthor();
+                            }
+                            return "";
+                        }).thenComparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @Deprecated
     @DisplayName("Sort Shelf Book objects by author")
-    @Description("")
+    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
+            "firstly Magazines not in order\n" +
+            "than Books which are sorted by Author")
     void sortBooksByAuthor() {
         String expectedLastAuthor = "last";
         int expectedLastPagesNumber = 100;
@@ -234,23 +449,26 @@ class ShelfTest {
                                 return ((Book) o).getAuthor();
                             }
                             return "";
-                        }).thenComparing((Literature o) -> {
+                        }).thenComparingInt((Literature o) -> {
                             if(o instanceof Book){
-                                return ((Book) o).getPagesNumber();
+                                return o.getPagesNumber();
                             }
                             return 0;
                         }))
                         .collect(Collectors.toList());
         shelf.setLiteratureInShelf(sortedShelf);
-        System.out.println(shelf);
+        System.out.println(sortedShelf);
 
         assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
         assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
     }
 
     @Test
+    @Deprecated
     @DisplayName("Sort Shelf Book objects by name")
-    @Description("")
+    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
+            "firstly Magazines not in order\n" +
+            "than Books which are sorted by Name")
     void sortBooksByName() {
         String expectedLastName = "last";
         int expectedLastPagesNumber = 100;
@@ -295,8 +513,12 @@ class ShelfTest {
     }
 
     @Test
+    @Deprecated
     @DisplayName("Sort Shelf Book objects by pages")
-    @Description("")
+    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
+            "firstly Magazines not in order\n" +
+            "than Books which are sorted by Pages"
+    )
     void sortBooksByPages() {
         int expectedLastLiteraturePages = 55;
 
@@ -330,8 +552,12 @@ class ShelfTest {
     }
 
     @Test
+    @Deprecated
     @DisplayName("Sort Shelf Magazine objects by pages")
-    @Description("")
+    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
+            "firstly Books not in order\n" +
+            "than Magazines which are sorted by Pages"
+    )
     void sortMagazineByPages() {
         int expectedLastLiteraturePages = 7;
 
@@ -361,8 +587,12 @@ class ShelfTest {
     }
 
     @Test
+    @Deprecated
     @DisplayName("Sort Shelf Magazine objects by name")
-    @Description("")
+    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
+            "firstly Books not in order\n" +
+            "than Magazines which are sorted by Name"
+    )
     void sortMagazineByName() {
         int expectedLastLiteraturePages = 13;
 

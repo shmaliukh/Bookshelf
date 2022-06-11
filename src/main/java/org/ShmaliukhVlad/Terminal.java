@@ -6,7 +6,6 @@ import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Terminal {
     private Scanner scanner;
@@ -25,6 +24,7 @@ public class Terminal {
         boolean play = true;
         int userChoice;
         ArrayList<Literature> sortedShelf;
+
         while (play){
             printMainMenu();
             userChoice = getUserChoice();
@@ -37,19 +37,19 @@ public class Terminal {
                 userChoice =getUserChoice();
 
                 if(userChoice == 1){
-                    System.out.println("Sort by name");
-                    shelf.sortShelfBooksByName();
+                    System.out.println("Sorted by name");
+
                 }
                 else if(userChoice == 2){
-                    System.out.println("Sort by author");
-                    shelf.sortShelfBooksByAuthor();
+                    System.out.println("Sorted by author");
+                    //shelf.sortShelfBooksByAuthor();
                 }
                 else if(userChoice == 3){
-                    System.out.println("Sort by pages");
-                    shelf.sortShelfBooksByPages();
+                    System.out.println("Sorted by pages");
+                    //shelf.sortShelfBooksByPages();
                 }
                 else if(userChoice == 4){
-                    System.out.println("Sort by date of issue");
+                    System.out.println("Sorted by date of issue");
                     shelf.sortShelfBooksByDate();
                 }
 
@@ -59,24 +59,19 @@ public class Terminal {
                 userChoice =getUserChoice();
 
                 if(userChoice == 1){
-                    System.out.println("Sort by name");
-                    shelf.sortShelfMagazinesByName();
+                    System.out.println("Sorted by name");
+                    shelf.printSortedMagazinesByName();
                 }
                 if(userChoice == 2){
-                    System.out.println("Sort by pages");
-                    shelf.sortShelfMagazinesByPages();
+                    System.out.println("Sorted by pages");
+                    shelf.printSortedMagazinesByPages();
                 }
 
             }
             else if (userChoice == 2){
                 System.out.println("Enter index of Literature object to delete one:");
                 int index = getUserChoice();
-                if(index >= 0 && index < shelf.getLiteratureInShelf().size()){
-                    shelf.getLiteratureInShelf().remove(index);
-                }
-                else {
-                    System.out.println("Wrong index");
-                }
+                shelf.deleteLiteratureObjectByIndex(index);
             }
             else if (userChoice == 1){
                 System.out.println("Choose type of literature you want to add:");
@@ -127,7 +122,7 @@ public class Terminal {
                         isBorrowed = true;
                     }
                     System.out.println("Enter author:");
-                    author = scanner.nextLine();
+                    author = scanner.next();
                     //Todo
                     System.out.println("Enter date of issue:");
                     dateOfIssue = new Date(scanner.nextInt());
@@ -176,7 +171,7 @@ public class Terminal {
         }
     }
     public String getRandomString(int length) {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_";
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {
@@ -194,30 +189,29 @@ public class Terminal {
 
     private void printMainMenu(){
         System.out.println(
-                "Введіть цифру пункту меню для виконання дії на полиці:" +
-                "1 - Додавання\n" +
-                "2 - Видалення\n" +
-                "3 - Запозичення з полиці\n" +
-                "4 - Повернення на полицю\n" +
-                "5 - Виведення списку наявних книг з можливістю сортування за вказаним параметром\n" +
-                "6 - Виведення списку наявних журналів з можливістю сортування за вказаним параметром\n" +
+                "Enter number of  command you wand to execute:\n" +
+                "1 - Add new Literature object to Shelf\n" +
+                "2 - Delete  Literature object by index from Shelf\n" +
+                "3 - Borrow  Literature object by index from Shelf\n" +
+                "4 - Arrive  Literature object by index back to Shelf\n" +
+                "5 - Print list of available Books sorted by parameter...\n" +
+                "6 - Print list of available Magazines sorted by parameter...\n" +
                 "7 - Save file\n" +
                 "9 - Print current state of Shelf\n" +
                 "0 - Вихід");
     }
     private void printMenuForBooksSorting(){
         System.out.println(
-                "1 - Сортування по автору\n" +
-                "2 - Сортування по автору\n" +
-                "3 - Сортування по назві\n" +
-                "4 - Сортування по даті видання\n" +
-                "5 - Сортування по кількості сторінок\n" +
-                "0 - Повернутися до попередніх пунктів");
+                "1 - Sort by 'name' value\n" +
+                "2 - Sort by 'author' value\n" +
+                "3 - Sort by 'page number' value\n" +
+                "4 - Sort by 'date' value\n" +
+                "0 - Back");
     }
     private void printMenuForMagazinesSorting(){
         System.out.println(
-                "1 - Сортування по назві\n" +
-                "2 - Сортування по кількості сторінок\n" +
-                "0 - Повернутися до попередніх пунктів");
+                "1 - Sort by 'name' value\n" +
+                "2 - Sort by 'page' value\n" +
+                "0 - Back");
     }
 }

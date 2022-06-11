@@ -58,20 +58,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
 
 
 
-    public void removeLiteratureFromShelf(Literature literature){
-        if(literature != null){
-            if(literature.isBorrowed() == true){
-                getLiteratureOutShelf().add(literature);
-            }
-            else{
-                getLiteratureInShelf().add(literature);
-            }
-        }
-        else {
-            System.out.println("The literature object (book or magazine) is empty");
-            System.err.println("The literature object (book or magazine) is NULL");
-        }
-    }
+
 
     /**
      * @param literature
@@ -93,33 +80,117 @@ public class Shelf implements ActionsWithShelf, Serializable {
     }
 
     /**
-     * @param literature
+     * @param index
      */
     @Override
-    public void removeLiteratureObject(Literature literature) {
-
+    public void deleteLiteratureObjectByIndex(int index) {
+        if(!this.getLiteratureInShelf().isEmpty()){
+            if(index >= 0 && index < this.getLiteratureInShelf().size()-1){
+                this.getLiteratureInShelf().remove(index);
+            }
+            else {
+                System.out.println("Wrong index");
+            }
+        }
     }
 
-    /**
-     * @param literature
-     */
-    @Override
-    public void borrowLiteratureObject(Literature literature) {
-
-    }
-
-    /**
-     * @param literature
-     */
-    @Override
-    public void arriveLiteratureObject(Literature literature) {
-
-    }
     /**
      *
      */
+    @Override
+    public void printSortedMagazinesByName() {
+        System.out.println(
+                this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Magazine)
+                        .sorted(Comparator.comparing(
+                                (Literature o) -> o.getName())
+                        .thenComparing(
+                                (Literature o) -> o.getPagesNumber()))
+                        .collect(Collectors.toList()).toString()
+        );
+    }
 
-    public void sortShelfBooksByName() {
+    /**
+     *
+     */
+    @Override
+    public void printSortedMagazinesByPages() {
+        System.out.println(
+                this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Magazine)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getPagesNumber())
+                                .thenComparing(
+                                        (Literature o) -> o.getName()))
+                        .collect(Collectors.toList()).toString()
+        );
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void printSortedBooksByName() {
+        System.out.println(
+                (ArrayList <Literature>) this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getName())
+                                .thenComparing(
+                                        (Literature o) -> o.getPagesNumber()))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void printSortedBooksByPages() {
+        System.out.println(
+                (ArrayList <Literature>) this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing(
+                                        (Literature o) -> o.getPagesNumber())
+                                .thenComparing(
+                                        (Literature o) -> o.getName()))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void printSortedBooksByAuthor() {
+        System.out.println(
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getAuthor();
+                            }
+                            return "";
+                        }).thenComparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void printSortedBooksByDate() {
+        ActionsWithShelf.super.printSortedBooksByDate();
+    }
+
+    @Deprecated
+    public void sortOnlyBooksByNameInShelf() {
         this.setLiteratureInShelf(
                 (ArrayList<Literature>) this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparing((Literature o) -> {
@@ -136,7 +207,8 @@ public class Shelf implements ActionsWithShelf, Serializable {
                         .collect(Collectors.toList()));
     }
 
-    public void sortShelfBooksByAuthor() {
+    @Deprecated
+    public void sortOnlyBooksByAuthorInShelf() {
         this.setLiteratureInShelf(
                 (ArrayList<Literature>) this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparing((Literature o) -> {
@@ -153,7 +225,8 @@ public class Shelf implements ActionsWithShelf, Serializable {
                         .collect(Collectors.toList()));
     }
 
-    public void sortShelfBooksByPages() {
+    @Deprecated
+    public void sortShelfBooksByPagesInShelf() {
         this.setLiteratureInShelf(
                 (ArrayList<Literature>) this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparingInt((Literature o) -> {
@@ -165,7 +238,8 @@ public class Shelf implements ActionsWithShelf, Serializable {
                         .collect(Collectors.toList()));
     }
 
-    public void sortShelfMagazinesByName() {
+    @Deprecated
+    public void sortShelfMagazinesByNameInShelf() {
         this.setLiteratureInShelf((
                 (ArrayList<Literature>) this.getLiteratureInShelf().stream()
                 .sorted(Comparator.comparing((Literature o) -> {
@@ -182,7 +256,8 @@ public class Shelf implements ActionsWithShelf, Serializable {
                 .collect(Collectors.toList())));
     }
 
-    public void sortShelfMagazinesByPages() {
+    @Deprecated
+    public void sortShelfMagazinesByPagesInShelf() {
         this.setLiteratureInShelf(
                 (ArrayList<Literature>) this.getLiteratureInShelf().stream()
                 .sorted(Comparator.comparingInt((Literature o) -> {
