@@ -4,14 +4,9 @@ import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 
-import java.awt.desktop.AboutEvent;
 import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
-
-enum MenuLevel{
-
-}
 
 public class Terminal {
     private Scanner scanner;
@@ -33,7 +28,20 @@ public class Terminal {
         while (play){
             printMainMenu();
             userChoice = getUserChoice();
-            if (userChoice == 1){
+            if (userChoice == 9){
+                System.out.println(shelf);
+            }
+            if (userChoice == 2){
+                System.out.println("Enter index of Literature object to delete one:");
+                int index = getUserChoice();
+                if(index >= 0 && index < shelf.getLiteratureInShelf().size()){
+                    shelf.getLiteratureInShelf().remove(index);
+                }
+                else {
+                    System.out.println("Wrong index");
+                }
+            }
+            else if (userChoice == 1){
                 System.out.println("Choose type of literature you want to add:");
                 System.out.println("1 - Magazine");
                 System.out.println("2 - Book");
@@ -111,8 +119,8 @@ public class Terminal {
                             new Date(randomNumber.nextInt(10000))));
                     System.out.println("New random Book has added to shelf");
                 }
-                else if(getUserChoice() == 0){
-                    play = false;
+                else if(userChoice == 0){
+                    //play = false;
                 }
                 System.out.println("Shelf state:");
                 System.out.println(shelf);
@@ -121,7 +129,7 @@ public class Terminal {
                 shelf.saveShelfToFile();
                 System.out.println("Shelf state:");
             }
-            else if(getUserChoice() == 0){
+            else if(userChoice == 0){
                 play = false;
             }
 
@@ -157,6 +165,7 @@ public class Terminal {
                 "5 - Виведення списку наявних книг з можливістю сортування за вказаним параметром\n" +
                 "6 - Виведення списку наявних журналів з можливістю сортування за вказаним параметром\n" +
                 "7 - Save file\n" +
+                "9 - Print current state of Shelf\n" +
                 "0 - Вихід");
     }
     private void printMenuForBooksSorting(){

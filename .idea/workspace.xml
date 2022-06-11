@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.1.1 &#10;Terminal mod + ability to add new book or magazine ( + random add)">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.1.2 &#10;deprecate some methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tz_info/tz_modified.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tz_info/tz_modified.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +64,7 @@
       <recent name="org.ShmaliukhVlad" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ShelfTest.whenSerializingAndDeserializing_ThenObjectIsTheSame">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
@@ -146,8 +142,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ShelfTest.whenSerializingAndDeserializing_ThenObjectIsTheSame" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ShelfTest.whenSerializingAndDeserializing_ThenObjectIsTheSame" />
         <item itemvalue="JUnit.ShelfTest" />
         <item itemvalue="JUnit.ShelfTest.generateShelf" />
         <item itemvalue="JUnit.BookTest" />
@@ -166,7 +162,7 @@
       <workItem from="1654860397830" duration="14902000" />
       <workItem from="1654934408261" duration="3206000" />
       <workItem from="1654938146306" duration="844000" />
-      <workItem from="1654947189801" duration="3969000" />
+      <workItem from="1654947189801" duration="4838000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -189,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654937634058</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="v 0.1.2 &#10;deprecate some methods">
+      <created>1654951601068</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1654951601068</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +214,8 @@
     <MESSAGE value="first" />
     <MESSAGE value="v 0.1.0" />
     <MESSAGE value="v 0.1.1 &#10;Terminal mod + ability to add new book or magazine ( + random add)" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 0.1.1 &#10;Terminal mod + ability to add new book or magazine ( + random add)" />
+    <MESSAGE value="v 0.1.2 &#10;deprecate some methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 0.1.2 &#10;deprecate some methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
