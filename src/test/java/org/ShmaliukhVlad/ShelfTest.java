@@ -210,9 +210,9 @@ class ShelfTest {
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",100,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",100,false,"last",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",55,false,"last",new Date(55)));
         shelf.addLiteratureObject(new Book("las",55,false,"55",new Date(55)));
         shelf.addLiteratureObject(new Book("la",55,false,"55",new Date(55)));
         shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
@@ -234,9 +234,9 @@ class ShelfTest {
                                 return ((Book) o).getAuthor();
                             }
                             return "";
-                        }).thenComparingInt((Literature o) -> {
+                        }).thenComparing((Literature o) -> {
                             if(o instanceof Book){
-                                return o.getPagesNumber();
+                                return ((Book) o).getPagesNumber();
                             }
                             return 0;
                         }))

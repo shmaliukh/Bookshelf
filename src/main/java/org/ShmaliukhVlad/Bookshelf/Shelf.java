@@ -1,7 +1,9 @@
 package org.ShmaliukhVlad.Bookshelf;
 
 import jdk.jfr.Description;
+import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
+import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,7 +12,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ShmaliukhVlad
@@ -115,6 +119,85 @@ public class Shelf implements ActionsWithShelf, Serializable {
      *
      */
 
+    public void sortShelfBooksByName() {
+        this.setLiteratureInShelf(
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getName();
+                            }
+                            return "";
+                        }).thenComparing((Literature o) -> {
+                            if (o instanceof Book) {
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList()));
+    }
+
+    public void sortShelfBooksByAuthor() {
+        this.setLiteratureInShelf(
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getAuthor();
+                            }
+                            return "";
+                        }).thenComparing((Literature o) -> {
+                            if (o instanceof Book) {
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList()));
+    }
+
+    public void sortShelfBooksByPages() {
+        this.setLiteratureInShelf(
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList()));
+    }
+
+    public void sortShelfMagazinesByName() {
+        this.setLiteratureInShelf((
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                .sorted(Comparator.comparing((Literature o) -> {
+                    if(o instanceof Magazine){
+                        return o.getName();
+                    }
+                    return "";
+                }).thenComparing((Literature o) -> {
+                    if (o instanceof Magazine) {
+                        return o.getPagesNumber();
+                    }
+                    return 0;
+                }))
+                .collect(Collectors.toList())));
+    }
+
+    public void sortShelfMagazinesByPages() {
+        this.setLiteratureInShelf(
+                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                .sorted(Comparator.comparingInt((Literature o) -> {
+                    if(o instanceof Magazine){
+                        return o.getPagesNumber();
+                    }
+                    return 0;
+                }))
+                .collect(Collectors.toList()));
+    }
+
+    public void sortShelfBooksByDate() {
+        //Todo
+    }
+
 
 
     @Override
@@ -139,23 +222,9 @@ public class Shelf implements ActionsWithShelf, Serializable {
             System.err.println(e.getMessage());
             System.out.println("Serialization Error");
         }
-
-
-        //// Востановление из файла с помощью класса ObjectInputStream
-        //ObjectInputStream objectInputStream = new ObjectInputStream(
-        //        new FileInputStream("person.out"));
-        //Person igorRestored = (Person) objectInputStream.readObject();
-        //Person renatRestored = (Person) objectInputStream.readObject();
-        //objectInputStream.close();
     }
 
-    /**
-     *
-     */
-    @Override
-    public void getListOfBooks() {
 
-    }
 
     @Override
     public String toString() {

@@ -24,7 +24,7 @@ public class Terminal {
     public void startWork(){
         boolean play = true;
         int userChoice;
-
+        ArrayList<Literature> sortedShelf;
         while (play){
             printMainMenu();
             userChoice = getUserChoice();
@@ -34,106 +34,37 @@ public class Terminal {
             }
             else if (userChoice == 5){
                 printMenuForBooksSorting();
-
                 userChoice =getUserChoice();
+
                 if(userChoice == 1){
                     System.out.println("Sort by name");
-                    ArrayList<Literature> sortedShelf =
-                            (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
-                                    .sorted(Comparator.comparing((Literature o) -> {
-                                        if(o instanceof Book){
-                                            return o.getName();
-                                        }
-                                        return "";
-                                    }).thenComparing((Literature o) -> {
-                                        if (o instanceof Book) {
-                                            return o.getPagesNumber();
-                                        }
-                                        return 0;
-                                    }))
-                                    .collect(Collectors.toList());
-                    shelf.setLiteratureInShelf(sortedShelf);
+                    shelf.sortShelfBooksByName();
                 }
                 else if(userChoice == 2){
                     System.out.println("Sort by author");
-                    ArrayList<Literature> sortedShelf =
-                            (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
-                                    .sorted(Comparator.comparing((Literature o) -> {
-                                        if(o instanceof Book){
-                                            return o.getName();
-                                        }
-                                        return "";
-                                    }).thenComparing((Literature o) -> {
-                                        if (o instanceof Book) {
-                                            return o.getPagesNumber();
-                                        }
-                                        return 0;
-                                    }))
-                                    .collect(Collectors.toList());
-                    shelf.setLiteratureInShelf(sortedShelf);
-
+                    shelf.sortShelfBooksByAuthor();
                 }
                 else if(userChoice == 3){
                     System.out.println("Sort by pages");
-                    ArrayList<Literature> sortedShelf =
-                            (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
-                                    .sorted(Comparator.comparingInt((Literature o) -> {
-                                        if(o instanceof Book){
-                                            return o.getPagesNumber();
-                                        }
-                                        return 0;
-                                    }))
-                                    .collect(Collectors.toList());
-                    shelf.setLiteratureInShelf(sortedShelf);
-                    System.out.println(shelf);
+                    shelf.sortShelfBooksByPages();
                 }
                 else if(userChoice == 4){
                     System.out.println("Sort by date of issue");
-                    //List<Literature> result =
-                    //        shelf.getLiteratureInShelf().stream()
-                    //                .filter(literature -> literature instanceof Book)
-                    //                .sorted(Comparator.comparing((Literature o) -> o.getPagesNumber()))
-                    //                .collect(Collectors.toList());
-                    //Todo
-                    //System.out.println(result);
+                    shelf.sortShelfBooksByDate();
                 }
 
             }
             else if (userChoice == 6){
                 printMenuForMagazinesSorting();
-
                 userChoice =getUserChoice();
+
                 if(userChoice == 1){
                     System.out.println("Sort by name");
-                    ArrayList<Literature> result =
-                            (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
-                                    .sorted(Comparator.comparing((Literature o) -> {
-                                        if(o instanceof Magazine){
-                                            return o.getName();
-                                        }
-                                        return "";
-                                    }).thenComparing((Literature o) -> {
-                                        if (o instanceof Magazine) {
-                                            return o.getPagesNumber();
-                                        }
-                                        return 0;
-                                    }))
-                                    .collect(Collectors.toList());
-                    shelf.setLiteratureInShelf(result);
+                    shelf.sortShelfMagazinesByName();
                 }
                 if(userChoice == 2){
                     System.out.println("Sort by pages");
-                    ArrayList<Literature> sortedShelf =
-                            (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
-                                    .sorted(Comparator.comparingInt((Literature o) -> {
-                                        if(o instanceof Magazine){
-                                            return o.getPagesNumber();
-                                        }
-                                        return 0;
-                                    }))
-                                    .collect(Collectors.toList());
-                    shelf.setLiteratureInShelf(sortedShelf);
-                    System.out.println(shelf);
+                    shelf.sortShelfMagazinesByPages();
                 }
 
             }

@@ -3,8 +3,7 @@ package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 import java.util.Comparator;
 
 public class Magazine
-        extends Literature
-        implements Comparator<Magazine> {
+        extends Literature {
 
     public Magazine(String name, int pagesNumber, boolean isBorrowed) {
         super(name, pagesNumber, isBorrowed);
@@ -21,15 +20,6 @@ public class Magazine
                 tab2 + '}';
     }
 
-    /**
-     * @param o1 the first object to be compared.
-     * @param o2 the second object to be compared.
-     * @return
-     */
-    @Override
-    public int compare(Magazine o1, Magazine o2) {
-        return 0;
-    }
 
 
 }
