@@ -38,19 +38,19 @@ public class Terminal {
 
                 if(userChoice == 1){
                     System.out.println("Sorted by name");
-
+                    shelf.printSortedBooksByName();
                 }
                 else if(userChoice == 2){
                     System.out.println("Sorted by author");
-                    //shelf.sortShelfBooksByAuthor();
+                    shelf.printSortedBooksByAuthor();
                 }
                 else if(userChoice == 3){
                     System.out.println("Sorted by pages");
-                    //shelf.sortShelfBooksByPages();
+                    shelf.printSortedBooksByPages();
                 }
                 else if(userChoice == 4){
                     System.out.println("Sorted by date of issue");
-                    shelf.sortShelfBooksByDate();
+                    shelf.printSortedBooksByDate();
                 }
 
             }
