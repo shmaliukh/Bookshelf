@@ -1,6 +1,7 @@
 package org.ShmaliukhVlad;
 
 import jdk.jfr.Description;
+import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
@@ -9,7 +10,11 @@ import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -196,6 +201,208 @@ class ShelfTest {
         shelf.saveShelfToFile();
         //assertTrue("The files differ!", FileUtils.contentEquals(file1, file2));
     }
+
+    @Test
+    @DisplayName("Sort Shelf Book objects by author")
+    @Description("")
+    void sortBooksByAuthor() {
+        String expectedLastAuthor = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",100,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("las",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("la",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("b",6,false,"6",new Date(6)));
+        shelf.addLiteratureObject(new Book("a",5,false,"4",new Date(5)));
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getAuthor();
+                            }
+                            return "";
+                        }).thenComparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(shelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastAuthor);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Sort Shelf Book objects by name")
+    @Description("")
+    void sortBooksByName() {
+        String expectedLastName = "last";
+        int expectedLastPagesNumber = 100;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",100,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("last",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("las",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("la",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("b",6,false,"6",new Date(6)));
+        shelf.addLiteratureObject(new Book("a",5,false,"4",new Date(5)));
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getName();
+                            }
+                            return "";
+                        }).thenComparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(shelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getName(), expectedLastName);
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastPagesNumber);
+    }
+
+    @Test
+    @DisplayName("Sort Shelf Book objects by pages")
+    @Description("")
+    void sortBooksByPages() {
+        int expectedLastLiteraturePages = 55;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
+        shelf.addLiteratureObject(new Book("6",6,false,"6",new Date(6)));
+        shelf.addLiteratureObject(new Book("5",5,false,"4",new Date(5)));
+
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(shelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastLiteraturePages);
+    }
+
+    @Test
+    @DisplayName("Sort Shelf Magazine objects by pages")
+    @Description("")
+    void sortMagazineByPages() {
+        int expectedLastLiteraturePages = 7;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Magazine("7",7,false));
+        shelf.addLiteratureObject(new Magazine("6",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+
+        ArrayList<Literature> result =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparingInt((Literature o) -> {
+                            if(o instanceof Magazine){
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(result);
+        System.out.println(shelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastLiteraturePages);
+    }
+
+    @Test
+    @DisplayName("Sort Shelf Magazine objects by name")
+    @Description("")
+    void sortMagazineByName() {
+        int expectedLastLiteraturePages = 13;
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Magazine("ca",13,false));
+        shelf.addLiteratureObject(new Magazine("ca",12,false));
+        shelf.addLiteratureObject(new Magazine("ca",11,false));
+        shelf.addLiteratureObject(new Magazine("C",10,false));
+        shelf.addLiteratureObject(new Magazine("c",9,false));
+        shelf.addLiteratureObject(new Magazine("b",8,false));
+        shelf.addLiteratureObject(new Magazine("a",7,false));
+        shelf.addLiteratureObject(new Magazine("612121212",6,false));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+
+
+        ArrayList<Literature> result =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .sorted(Comparator.comparing((Literature o) -> {
+                            if(o instanceof Magazine){
+                                return o.getName();
+                            }
+                            return "";
+                        }).thenComparing((Literature o) -> {
+                            if (o instanceof Magazine) {
+                                return o.getPagesNumber();
+                            }
+                            return 0;
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(result);
+        System.out.println(shelf);
+
+        assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastLiteraturePages);
+    }
+
+
 
     @AfterClass
     public static void tearDown() {

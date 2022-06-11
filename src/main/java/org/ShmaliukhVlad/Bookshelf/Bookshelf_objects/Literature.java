@@ -2,7 +2,7 @@ package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
 import java.io.Serializable;
 
-public abstract class Literature implements Comparable<Literature>, Serializable {
+public abstract class Literature implements Serializable {
 
     protected String name;
     protected int pagesNumber;

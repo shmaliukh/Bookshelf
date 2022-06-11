@@ -31,12 +31,5 @@ public class Magazine
         return 0;
     }
 
-    /**
-     * @param o the object to be compared.
-     * @return
-     */
-    @Override
-    public int compareTo(Literature o) {
-        return 0;
-    }
+
 }
