@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
+import java.io.*;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -127,6 +128,45 @@ class ShelfTest {
         shelfExpect.addLiteratureObject(magazine1);
 
         assertEquals(shelfTest.getLiteratureInShelf().size(),shelfExpect.getLiteratureInShelf().size());
+    }
+
+    @Test
+    public void whenSerializingAndDeserializing_ThenObjectIsTheSame()
+            throws IOException, ClassNotFoundException {
+
+        Shelf shelf1 = new Shelf();
+        Magazine magazine1 = new Magazine("1",1,false);
+        shelf1.addLiteratureObject(magazine1);
+
+        final String fileName = "shelf.out";
+        ObjectOutputStream objectOutputStream =
+                new ObjectOutputStream(new FileOutputStream(fileName));
+
+        //objectOutputStream.writeObject(shelf1);
+        objectOutputStream.writeObject(shelf1);
+        //ObjectOutputStream finalObjectOutputStream = objectOutputStream;
+//
+        //shelf1.getLiteratureInShelf().stream().forEach(literature -> {
+        //    try {
+        //        finalObjectOutputStream.writeObject(literature);
+        //    } catch (IOException ex) {
+        //        throw new RuntimeException(ex);
+        //    }
+        //});
+        objectOutputStream.close();
+        System.out.println("File '" + fileName + "' has been written");
+
+        FileInputStream fileInputStream
+                = new FileInputStream(fileName);
+        ObjectInputStream objectInputStream
+                = new ObjectInputStream(fileInputStream);
+
+        Shelf shelf2 = new Shelf();
+        objectInputStream.close();
+
+        assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
+        assertEquals(shelf1.getLiteratureInShelf().get(0).getPagesNumber(), shelf2.getLiteratureInShelf().get(0).getPagesNumber());
+        assertEquals(shelf1.getLiteratureInShelf().get(0).isBorrowed(), shelf2.getLiteratureInShelf().get(0).isBorrowed());
     }
 
 //ToDo

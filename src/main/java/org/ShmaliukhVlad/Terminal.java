@@ -30,7 +30,7 @@ public class Terminal {
         boolean play = true;
         int userChoice;
 
-        while (true){
+        while (play){
             printMainMenu();
             userChoice = getUserChoice();
             if (userChoice == 1){
@@ -112,12 +112,18 @@ public class Terminal {
                     System.out.println("New random Book has added to shelf");
                 }
                 else if(getUserChoice() == 0){
-
+                    play = false;
                 }
                 System.out.println("Shelf state:");
                 System.out.println(shelf);
             }
-
+            else if (userChoice == 7){
+                shelf.saveShelfToFile();
+                System.out.println("Shelf state:");
+            }
+            else if(getUserChoice() == 0){
+                play = false;
+            }
 
 
 
@@ -150,7 +156,8 @@ public class Terminal {
                 "4 - Повернення на полицю\n" +
                 "5 - Виведення списку наявних книг з можливістю сортування за вказаним параметром\n" +
                 "6 - Виведення списку наявних журналів з можливістю сортування за вказаним параметром\n" +
-                "7 - Вихід");
+                "7 - Save file\n" +
+                "0 - Вихід");
     }
     private void printMenuForBooksSorting(){
         System.out.println(
