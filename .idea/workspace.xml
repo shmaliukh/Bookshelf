@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.1&#10;fixed menu items">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +71,7 @@
       <recent name="org.ShmaliukhVlad" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ShelfTest.sortedBooksByAuthor">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
@@ -148,11 +151,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ShelfTest.sortedBooksByAuthor" />
         <item itemvalue="JUnit.ShelfTest.sortedBooksByPages" />
         <item itemvalue="JUnit.ShelfTest.sortedBookssByName" />
         <item itemvalue="JUnit.ShelfTest.sortedMagazinesByPages" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +171,7 @@
       <workItem from="1654860397830" duration="14902000" />
       <workItem from="1654934408261" duration="3206000" />
       <workItem from="1654938146306" duration="844000" />
-      <workItem from="1654947189801" duration="22064000" />
+      <workItem from="1654947189801" duration="23270000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -233,7 +236,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654978042569</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="v 0.2.1&#10;fixed menu items">
+      <created>1654978287072</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1654978287072</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +272,8 @@
     <MESSAGE value="v 0.1.5&#10;add realizations for sorting Shelf Literature objects &#10;add tests for sorting realization&#10;// TODO (sort by Date for Books not works)" />
     <MESSAGE value="v 0.1.6&#10;refactored sorting methods" />
     <MESSAGE value="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one" />
+    <MESSAGE value="v 0.2.1&#10;fixed menu items" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.1&#10;fixed menu items" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

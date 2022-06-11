@@ -68,6 +68,17 @@ public class Terminal {
                 }
 
             }
+            else if (userChoice == 4){
+                System.out.println("Enter index of Literature object to arrive one:");
+                System.out.println(shelf.getLiteratureOutShelf());
+                int index = getUserChoice();
+                shelf.arriveLiteratureObjectFromShelfByIndex(index);
+            }
+            else if (userChoice == 3){
+                System.out.println("Enter index of Literature object to borrow one:");
+                int index = getUserChoice();
+                shelf.borrowLiteratureObjectFromShelfByIndex(index);
+            }
             else if (userChoice == 2){
                 System.out.println("Enter index of Literature object to delete one:");
                 int index = getUserChoice();
@@ -198,7 +209,7 @@ public class Terminal {
                 "6 - Print list of available Magazines sorted by parameter...\n" +
                 "7 - Save file\n" +
                 "9 - Print current state of Shelf\n" +
-                "0 - Вихід");
+                "0 - Exit");
     }
     private void printMenuForBooksSorting(){
         System.out.println(

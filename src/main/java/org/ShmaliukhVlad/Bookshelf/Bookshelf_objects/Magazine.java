@@ -1,7 +1,5 @@
 package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
-import java.util.Comparator;
-
 public class Magazine
         extends Literature {
 

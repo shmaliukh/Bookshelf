@@ -7,7 +7,9 @@ public interface ActionsWithShelf {
     }
     default void deleteLiteratureObjectByIndex(int index){
     }
-    default void saveShelfToFile() {
+    default void borrowLiteratureObjectFromShelfByIndex(int index) {
+    }
+    default void arriveLiteratureObjectFromShelfByIndex(int index) {
     }
     default void printSortedMagazinesByName(){
     }
@@ -21,7 +23,8 @@ public interface ActionsWithShelf {
     }
     default void printSortedBooksByDate(){
     }
-
+    default void saveShelfToFile() {
+    }
 
 
 

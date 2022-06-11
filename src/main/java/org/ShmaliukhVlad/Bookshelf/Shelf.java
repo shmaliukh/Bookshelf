@@ -85,13 +85,52 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
         if(!this.getLiteratureInShelf().isEmpty()){
-            if(index >= 0 && index < this.getLiteratureInShelf().size()-1){
+            if(index >= 0 && index < this.getLiteratureInShelf().size()){
                 this.getLiteratureInShelf().remove(index);
             }
             else {
                 System.out.println("Wrong index");
             }
         }
+        else System.out.println("Empty");
+    }
+
+    /**
+     * @param index
+     */
+    @Override
+    public void borrowLiteratureObjectFromShelfByIndex(int index) {
+        Literature buffer;
+        if(!this.getLiteratureInShelf().isEmpty()){
+            if(index >= 0 && index < this.getLiteratureInShelf().size()){
+                buffer = this.getLiteratureInShelf().remove(index);
+                buffer.setBorrowed(true);
+                this.getLiteratureOutShelf().add(buffer);
+            }
+            else {
+                System.out.println("Wrong index");
+            }
+        }
+        else System.out.println("Empty");
+    }
+
+    /**
+     *@param index
+     */
+    @Override
+    public void arriveLiteratureObjectFromShelfByIndex(int index) {
+        Literature buffer;
+        if(!this.getLiteratureOutShelf().isEmpty()){
+            if(index >= 0 && index < this.getLiteratureOutShelf().size()){
+                buffer = this.getLiteratureOutShelf().remove(index);
+                buffer.setBorrowed(false);
+                this.getLiteratureInShelf().add(buffer);
+            }
+            else {
+                System.out.println("Wrong index");
+            }
+        }
+        else System.out.println("Empty");
     }
 
     /**
@@ -268,12 +307,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
                 }))
                 .collect(Collectors.toList()));
     }
-
-    public void sortShelfBooksByDate() {
-        //Todo
-    }
-
-
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
