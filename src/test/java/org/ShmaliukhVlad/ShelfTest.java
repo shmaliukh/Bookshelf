@@ -10,10 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +34,7 @@ class ShelfTest {
     @Description("Simple add one Book which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookToShelf_0() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
         shelf1.addLiteratureObject(book1);
 
         assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Book
@@ -47,7 +46,7 @@ class ShelfTest {
     @Description("Simple add one Book which is borrowed (isBorrowed = true) to empty Shelf")
     void addBookToShelf_1() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,true,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,true,"NoAuthor1",LocalDate.now());
         shelf1.addLiteratureObject(book1);
 
         assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Book
@@ -83,7 +82,7 @@ class ShelfTest {
     @Description("Simple add one Book and one Magazine which are borrowed (isBorrowed = true) to empty Shelf")
     void addBookAndMagazineToShelf_0() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,true,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,true,"NoAuthor1",LocalDate.now());
         Magazine magazine1 = new Magazine("4",4,true);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
@@ -97,7 +96,7 @@ class ShelfTest {
     @Description("Simple add one Book and one Magazine which are NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_1() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
         Magazine magazine1 = new Magazine("4",4,false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
@@ -112,7 +111,7 @@ class ShelfTest {
             "and one Magazine which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_2() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,true,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,true,"NoAuthor1",LocalDate.now());
         Magazine magazine1 = new Magazine("4",4,false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
@@ -127,7 +126,7 @@ class ShelfTest {
     void generateShelf() {
         Shelf shelfTest = new Shelf();
         Shelf shelfExpect = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",new Date(1));
+        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
         Magazine magazine1 = new Magazine("4",4,false);
         shelfTest.addLiteratureObject(book1);
         shelfExpect.addLiteratureObject(magazine1);
@@ -137,7 +136,7 @@ class ShelfTest {
 
     @Test
     public void whenSerializingAndDeserializing_ThenObjectIsTheSame()
-            throws IOException, ClassNotFoundException {
+            throws IOException{
 
         Shelf shelf1 = new Shelf();
         Magazine magazine1 = new Magazine("1",1,false);
@@ -180,9 +179,9 @@ class ShelfTest {
     @Description("Generate Shelf, add 6 objects of Literature (3 - Book and 3 - Magazine) with different parameters. " +
             "Than try to save info into .txt file")
     void saveShelfFile() {
-        Book book1 = new Book("1",1,false,"NoAutho1",new Date(1));
-        Book book2 = new Book("2",2,false,"NoAuthor2",new Date(2));
-        Book book3 = new Book("3",3,true,"NoAuthor3",new Date(3));
+        Book book1 = new Book("1",1,false,"NoAutho1",LocalDate.now());
+        Book book2 = new Book("2",2,false,"NoAuthor2",LocalDate.now());
+        Book book3 = new Book("3",3,true,"NoAuthor3",LocalDate.now());
 
         Magazine magazine1 = new Magazine("4",4,false);
         Magazine magazine2 = new Magazine("5",5,false);
@@ -221,11 +220,11 @@ class ShelfTest {
         shelf.addLiteratureObject(new Magazine("a",5,false));
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
@@ -262,11 +261,11 @@ class ShelfTest {
         shelf.addLiteratureObject(new Magazine("a",5,false));
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
@@ -293,21 +292,21 @@ class ShelfTest {
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",100,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("las",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("la",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("55",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("b",6,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("a",5,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("7",7,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("6",6,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",100,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("las",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("la",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("55",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("b",6,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("a",5,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("7",7,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("6",6,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
@@ -334,21 +333,21 @@ class ShelfTest {
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",100,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("las",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("la",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("55",55,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("b",6,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("a",5,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("7",7,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("6",6,false,"2",new Date(2)));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",100,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("las",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("la",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("55",55,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("b",6,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("a",5,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("7",7,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("6",6,false,"2",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
@@ -375,21 +374,21 @@ class ShelfTest {
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",100,false,"last",new Date(2)));
-        shelf.addLiteratureObject(new Book("last",55,false,"last",new Date(2)));
-        shelf.addLiteratureObject(new Book("las",55,false,"las",new Date(2)));
-        shelf.addLiteratureObject(new Book("la",55,false,"la",new Date(2)));
-        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(2)));
-        shelf.addLiteratureObject(new Book("b",6,false,"b",new Date(2)));
-        shelf.addLiteratureObject(new Book("a",5,false,"a",new Date(2)));
-        shelf.addLiteratureObject(new Book("7",7,false,"7",new Date(2)));
-        shelf.addLiteratureObject(new Book("6",6,false,"6",new Date(2)));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",100,false,"last",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",55,false,"last",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("las",55,false,"las",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("la",55,false,"la",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("b",6,false,"b",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("a",5,false,"a",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("7",7,false,"7",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("6",6,false,"6",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
@@ -415,31 +414,84 @@ class ShelfTest {
     }
 
     @Test
+    @DisplayName("Get sorted only Book objects by Date Of Issue")
+    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
+            "Books which are sorted by DateOfIssue")
+    void sortedBooksByDateOfIssue() {
+        LocalDate expectedDate = LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth());
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",LocalDate.of(2020,12,1)));
+        shelf.addLiteratureObject(new Book("last",100,false,"last",LocalDate.of(1965,12,1)));
+        shelf.addLiteratureObject(new Book("last",55,false,"last",LocalDate.of(2020,12,1)));
+        shelf.addLiteratureObject(new Book("las",55,false,"las",LocalDate.of(2020,12,1)));
+        shelf.addLiteratureObject(new Book("la",55,false,"la",LocalDate.of(1968,12,1)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.of(1965,12,1)));
+        shelf.addLiteratureObject(new Book("b",6,false,"b",LocalDate.of(1967,12,1)));
+        shelf.addLiteratureObject(new Book("a",5,false,"a",LocalDate.of(1995,12,1)));
+        shelf.addLiteratureObject(new Book("7",7,false,"7",LocalDate.of(2020,12,1)));
+        shelf.addLiteratureObject(new Book("6",6,false,"6",LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth())));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.of(1985,12,1)));
+        shelf.addLiteratureObject(new Magazine("5",5,false));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.of(1975,12,1)));
+        shelf.addLiteratureObject(new Magazine("3",3,false));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.of(1965,12,1)));
+
+        ArrayList<Literature> sortedShelf =
+                (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getIssuanceDate().getYear();
+                            }
+                            return LocalDate.now().getYear();
+                        }).thenComparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getIssuanceDate().getMonthValue();
+                            }
+                            return LocalDate.now().getMonthValue();
+                        }).thenComparing((Literature o) -> {
+                            if (o instanceof Book) {
+                                return ((Book) o).getIssuanceDate().getDayOfMonth();
+                            }
+                            return LocalDate.now().getDayOfMonth();
+                        }))
+                        .collect(Collectors.toList());
+        shelf.setLiteratureInShelf(sortedShelf);
+        System.out.println(sortedShelf);
+
+        Book lastBook = (Book) shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1);
+
+        assertEquals(lastBook.getIssuanceDate(), expectedDate);
+    }
+
+    @Test
     @Deprecated
     @DisplayName("Sort Shelf Book objects by author")
-    @Description("Test Method which swap Literature object inside Shelf by next rule:\n" +
-            "firstly Magazines not in order\n" +
-            "than Books which are sorted by Author")
+    @Description("""
+            Test Method which swap Literature object inside Shelf by next rule:
+            firstly Magazines not in order
+            than Books which are sorted by Author""")
     void sortBooksByAuthor() {
         String expectedLastAuthor = "last";
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",100,false,"last",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",55,false,"last",new Date(55)));
-        shelf.addLiteratureObject(new Book("las",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("la",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("b",6,false,"6",new Date(6)));
-        shelf.addLiteratureObject(new Book("a",5,false,"4",new Date(5)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"LAST", LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",100,false,"last",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",55,false,"last",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("las",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("la",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("b",6,false,"6",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("a",5,false,"4",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
         ArrayList<Literature> sortedShelf =
@@ -474,21 +526,21 @@ class ShelfTest {
         int expectedLastPagesNumber = 100;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("LAST",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",100,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("last",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("las",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("la",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("b",6,false,"6",new Date(6)));
-        shelf.addLiteratureObject(new Book("a",5,false,"4",new Date(5)));
+        shelf.addLiteratureObject(new Book("LAST",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",100,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("last",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("las",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("la",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("b",6,false,"6",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("a",5,false,"4",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
         ArrayList<Literature> sortedShelf =
@@ -523,17 +575,17 @@ class ShelfTest {
         int expectedLastLiteraturePages = 55;
 
         Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("55",55,false,"55",new Date(55)));
-        shelf.addLiteratureObject(new Book("6",6,false,"6",new Date(6)));
-        shelf.addLiteratureObject(new Book("5",5,false,"4",new Date(5)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("6",6,false,"6",LocalDate.now()));
+        shelf.addLiteratureObject(new Book("5",5,false,"4",LocalDate.now()));
 
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
         ArrayList<Literature> sortedShelf =
@@ -564,11 +616,11 @@ class ShelfTest {
         Shelf shelf = new Shelf();
         shelf.addLiteratureObject(new Magazine("7",7,false));
         shelf.addLiteratureObject(new Magazine("6",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
         ArrayList<Literature> result =
@@ -605,11 +657,11 @@ class ShelfTest {
         shelf.addLiteratureObject(new Magazine("b",8,false));
         shelf.addLiteratureObject(new Magazine("a",7,false));
         shelf.addLiteratureObject(new Magazine("612121212",6,false));
-        shelf.addLiteratureObject(new Book("2",2,false,"2",new Date(2)));
+        shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",new Date(1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.now()));
         shelf.addLiteratureObject(new Magazine("3",3,false));
-        shelf.addLiteratureObject(new Book("4",4,false,"4",new Date(4)));
+        shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
         ArrayList<Literature> result =

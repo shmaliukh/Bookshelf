@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.1&#10;fixed menu items">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.2&#10;add ability to borrow and arrive Shelf items">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Book.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tz_info/tz_result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tz_info/tz_result.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +58,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "File.Encoding"
   }
 }]]></component>
@@ -85,6 +91,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ShelfTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShelfTest.sortBooksByAuthor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="METHOD_NAME" value="sortBooksByAuthor" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ShelfTest.sortedBooksByAuthor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
@@ -101,7 +138,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ShelfTest.sortedBooksByPages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShelfTest.sortedBooksByDateOfIssue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -111,39 +148,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
-      <option name="METHOD_NAME" value="sortedBooksByPages" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ShelfTest.sortedBookssByName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Bookshelf_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
-      <option name="METHOD_NAME" value="sortedBookssByName" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ShelfTest.sortedMagazinesByPages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Bookshelf_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
-      <option name="METHOD_NAME" value="sortedMagazinesByPages" />
+      <option name="METHOD_NAME" value="sortedBooksByDateOfIssue" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -152,10 +157,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.ShelfTest.sortedBooksByDateOfIssue" />
+        <item itemvalue="JUnit.ShelfTest.sortBooksByAuthor" />
+        <item itemvalue="JUnit.ShelfTest" />
         <item itemvalue="JUnit.ShelfTest.sortedBooksByAuthor" />
-        <item itemvalue="JUnit.ShelfTest.sortedBooksByPages" />
-        <item itemvalue="JUnit.ShelfTest.sortedBookssByName" />
-        <item itemvalue="JUnit.ShelfTest.sortedMagazinesByPages" />
       </list>
     </recent_temporary>
   </component>
@@ -171,7 +176,8 @@
       <workItem from="1654860397830" duration="14902000" />
       <workItem from="1654934408261" duration="3206000" />
       <workItem from="1654938146306" duration="844000" />
-      <workItem from="1654947189801" duration="23270000" />
+      <workItem from="1654947189801" duration="23669000" />
+      <workItem from="1655023376640" duration="3580000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -243,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654978287072</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="v 0.2.2&#10;add ability to borrow and arrive Shelf items">
+      <created>1654979474468</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654979474468</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,14 +286,15 @@
     <MESSAGE value="v 0.1.6&#10;refactored sorting methods" />
     <MESSAGE value="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one" />
     <MESSAGE value="v 0.2.1&#10;fixed menu items" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.1&#10;fixed menu items" />
+    <MESSAGE value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java</url>
-          <line>101</line>
+          <line>102</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

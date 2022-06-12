@@ -17,7 +17,4 @@ public class Magazine
                 tab3 + "isBorrowed=" + isBorrowed +
                 tab2 + '}';
     }
-
-
-
 }

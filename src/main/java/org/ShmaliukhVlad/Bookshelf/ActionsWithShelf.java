@@ -25,8 +25,4 @@ public interface ActionsWithShelf {
     }
     default void saveShelfToFile() {
     }
-
-
-
-
 }

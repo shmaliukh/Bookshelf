@@ -1,14 +1,13 @@
 package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
-import java.util.Comparator;
-import java.util.Date;
+import java.time.LocalDate;
 
-public class Book extends Literature implements Comparator {
+public class Book extends Literature{
 
     private String author;
-    private Date issuanceDate;
+    private LocalDate issuanceDate;
 
-    public Book(String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
+    public Book(String name, int pagesNumber, boolean isBorrowed, String author, LocalDate issuanceDate) {
         super(name, pagesNumber, isBorrowed);
         this.author = author;
         this.issuanceDate = issuanceDate;
@@ -35,21 +34,11 @@ public class Book extends Literature implements Comparator {
         this.author = author;
     }
 
-    public Date getIssuanceDate() {
+    public LocalDate getIssuanceDate() {
         return issuanceDate;
     }
 
-    public void setIssuanceDate(Date issuanceDate) {
+    public void setIssuanceDate(LocalDate issuanceDate) {
         this.issuanceDate = issuanceDate;
-    }
-
-    /**
-     * @param o1 the first object to be compared.
-     * @param o2 the second object to be compared.
-     * @return
-     */
-    @Override
-    public int compare(Object o1, Object o2) {
-        return 0;
     }
 }

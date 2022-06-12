@@ -1,16 +1,16 @@
 package org.ShmaliukhVlad;
 
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 public class Terminal {
-    private Scanner scanner;
-    private int userChoice;
-    private Shelf shelf;
+    private final Scanner scanner;
+    private final Shelf shelf;
 
     {
         scanner = new Scanner(System.in);
@@ -23,7 +23,7 @@ public class Terminal {
     public void startWork(){
         boolean play = true;
         int userChoice;
-        ArrayList<Literature> sortedShelf;
+        System.out.println("Program START");
 
         while (play){
             printMainMenu();
@@ -52,7 +52,6 @@ public class Terminal {
                     System.out.println("Sorted by date of issue");
                     shelf.printSortedBooksByDate();
                 }
-
             }
             else if (userChoice == 6){
                 printMenuForMagazinesSorting();
@@ -121,7 +120,7 @@ public class Terminal {
                     int pages = 0;
                     boolean isBorrowed = false;
                     String author = "";
-                    Date dateOfIssue = new Date(0);
+                    LocalDate dateOfIssue;
 
                     System.out.println("Enter name:");
                     name = scanner.next();
@@ -134,9 +133,12 @@ public class Terminal {
                     }
                     System.out.println("Enter author:");
                     author = scanner.next();
-                    //Todo
-                    System.out.println("Enter date of issue:");
-                    dateOfIssue = new Date(scanner.nextInt());
+
+                    System.out.println("Enter date of issue (format \"dd-MMM-yyyy\"):");
+                    int day = scanner.nextInt();
+                    int year = scanner.nextInt();
+                    int month = scanner.nextInt();
+                    dateOfIssue = LocalDate.of(year, month, day);
 
                     userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
                     shelf.addLiteratureObject(userBookToAdd);
@@ -159,32 +161,23 @@ public class Terminal {
                             randomNumber.nextInt(1000),
                             false,
                             getRandomString(randomNumber.nextInt(10)),
-                            new Date(randomNumber.nextInt(10000))));
+                            LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70))))));
                     System.out.println("New random Book has added to shelf");
                 }
-                else if(userChoice == 0){
-                    //play = false;
-                }
-                System.out.println("Shelf state:");
-                System.out.println(shelf);
             }
             else if (userChoice == 7){
                 shelf.saveShelfToFile();
-                System.out.println("Shelf state:");
             }
             else if(userChoice == 0){
+                System.out.println("Program END");
                 play = false;
             }
-
-
-
-
         }
     }
     public String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(62);
             sb.append(str.charAt(number));
@@ -192,37 +185,38 @@ public class Terminal {
         return sb.toString();
     }
 
-
-
     private int getUserChoice(){
         return scanner.nextInt();
     }
 
     private void printMainMenu(){
         System.out.println(
-                "Enter number of  command you wand to execute:\n" +
-                "1 - Add new Literature object to Shelf\n" +
-                "2 - Delete  Literature object by index from Shelf\n" +
-                "3 - Borrow  Literature object by index from Shelf\n" +
-                "4 - Arrive  Literature object by index back to Shelf\n" +
-                "5 - Print list of available Books sorted by parameter...\n" +
-                "6 - Print list of available Magazines sorted by parameter...\n" +
-                "7 - Save file\n" +
-                "9 - Print current state of Shelf\n" +
-                "0 - Exit");
+                """
+                        Enter number of  command you wand to execute:
+                        1 - Add new Literature object to Shelf
+                        2 - Delete  Literature object by index from Shelf
+                        3 - Borrow  Literature object by index from Shelf
+                        4 - Arrive  Literature object by index back to Shelf
+                        5 - Print list of available Books sorted by parameter...
+                        6 - Print list of available Magazines sorted by parameter...
+                        7 - Save file
+                        9 - Print current state of Shelf
+                        0 - Exit""");
     }
     private void printMenuForBooksSorting(){
         System.out.println(
-                "1 - Sort by 'name' value\n" +
-                "2 - Sort by 'author' value\n" +
-                "3 - Sort by 'page number' value\n" +
-                "4 - Sort by 'date' value\n" +
-                "0 - Back");
+                """
+                        1 - Sort by 'name' value
+                        2 - Sort by 'author' value
+                        3 - Sort by 'page number' value
+                        4 - Sort by 'date' value
+                        Press another key to return\s""");
     }
     private void printMenuForMagazinesSorting(){
         System.out.println(
-                "1 - Sort by 'name' value\n" +
-                "2 - Sort by 'page' value\n" +
-                "0 - Back");
+                """
+                        1 - Sort by 'name' value
+                        2 - Sort by 'page' value
+                        Press another key to return\s""");
     }
 }

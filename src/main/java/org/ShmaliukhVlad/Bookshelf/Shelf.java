@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,15 +26,11 @@ import java.util.stream.Collectors;
 public class Shelf implements ActionsWithShelf, Serializable {
 
     private List<Literature> literatureInShelf;
-    private List<Literature> literatureOutShelf;
+    private final List<Literature> literatureOutShelf;
 
     {
         literatureInShelf = new ArrayList<>();
         literatureOutShelf= new ArrayList<>();
-    }
-
-    public void addSomeLite(){
-
     }
 
     public List<Literature> getLiteratureInShelf() {
@@ -48,17 +45,9 @@ public class Shelf implements ActionsWithShelf, Serializable {
         return literatureOutShelf;
     }
 
-    public void setLiteratureOutShelf(List<Literature> literatureOutShelf) {
-        this.literatureOutShelf = literatureOutShelf;
-    }
-
     public Shelf(){
 
     }
-
-
-
-
 
     /**
      * @param literature
@@ -66,7 +55,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     public void addLiteratureObject(Literature literature) {
         if(literature != null){
-            if(literature.isBorrowed() == true){
+            if(literature.isBorrowed()){
                 getLiteratureOutShelf().add(literature);
             }
             else{
@@ -140,12 +129,11 @@ public class Shelf implements ActionsWithShelf, Serializable {
     public void printSortedMagazinesByName() {
         System.out.println(
                 this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Magazine)
+                        .filter((Literature o) -> o instanceof Magazine)
                         .sorted(Comparator.comparing(
-                                (Literature o) -> o.getName())
-                        .thenComparing(
-                                (Literature o) -> o.getPagesNumber()))
-                        .collect(Collectors.toList()).toString()
+                                        (Literature o) -> o.getName())
+                                .thenComparing(
+                                        (Literature o) -> o.getPagesNumber())).toList()
         );
     }
 
@@ -161,7 +149,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
                                         (Literature o) -> o.getPagesNumber())
                                 .thenComparing(
                                         (Literature o) -> o.getName()))
-                        .collect(Collectors.toList()).toString()
+                        .collect(Collectors.toList())
         );
     }
 
@@ -171,7 +159,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     public void printSortedBooksByName() {
         System.out.println(
-                (ArrayList <Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Book)
                         .sorted(Comparator.comparing(
                                         (Literature o) -> o.getName())
@@ -187,7 +175,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     public void printSortedBooksByPages() {
         System.out.println(
-                (ArrayList <Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Book)
                         .sorted(Comparator.comparing(
                                         (Literature o) -> o.getPagesNumber())
@@ -203,7 +191,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     public void printSortedBooksByAuthor() {
         System.out.println(
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Book)
                         .sorted(Comparator.comparing((Literature o) -> {
                             if(o instanceof Book){
@@ -225,13 +213,33 @@ public class Shelf implements ActionsWithShelf, Serializable {
      */
     @Override
     public void printSortedBooksByDate() {
-        ActionsWithShelf.super.printSortedBooksByDate();
+        System.out.println(
+                this.getLiteratureInShelf().stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .sorted(Comparator.comparingInt((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getIssuanceDate().getYear();
+                            }
+                            return LocalDate.now().getYear();
+                        }).thenComparing((Literature o) -> {
+                            if(o instanceof Book){
+                                return ((Book) o).getIssuanceDate().getMonthValue();
+                            }
+                            return LocalDate.now().getMonthValue();
+                        }).thenComparing((Literature o) -> {
+                            if (o instanceof Book) {
+                                return ((Book) o).getIssuanceDate().getDayOfMonth();
+                            }
+                            return LocalDate.now().getDayOfMonth();
+                        }))
+                        .collect(Collectors.toList())
+        );
     }
 
     @Deprecated
     public void sortOnlyBooksByNameInShelf() {
         this.setLiteratureInShelf(
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparing((Literature o) -> {
                             if(o instanceof Book){
                                 return o.getName();
@@ -249,7 +257,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Deprecated
     public void sortOnlyBooksByAuthorInShelf() {
         this.setLiteratureInShelf(
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparing((Literature o) -> {
                             if(o instanceof Book){
                                 return ((Book) o).getAuthor();
@@ -267,7 +275,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Deprecated
     public void sortShelfBooksByPagesInShelf() {
         this.setLiteratureInShelf(
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                         .sorted(Comparator.comparingInt((Literature o) -> {
                             if(o instanceof Book){
                                 return o.getPagesNumber();
@@ -279,26 +287,25 @@ public class Shelf implements ActionsWithShelf, Serializable {
 
     @Deprecated
     public void sortShelfMagazinesByNameInShelf() {
-        this.setLiteratureInShelf((
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
-                .sorted(Comparator.comparing((Literature o) -> {
-                    if(o instanceof Magazine){
-                        return o.getName();
-                    }
-                    return "";
-                }).thenComparing((Literature o) -> {
-                    if (o instanceof Magazine) {
-                        return o.getPagesNumber();
-                    }
-                    return 0;
-                }))
-                .collect(Collectors.toList())));
+        this.setLiteratureInShelf(this.getLiteratureInShelf().stream()
+        .sorted(Comparator.comparing((Literature o) -> {
+            if(o instanceof Magazine){
+                return o.getName();
+            }
+            return "";
+        }).thenComparing((Literature o) -> {
+            if (o instanceof Magazine) {
+                return o.getPagesNumber();
+            }
+            return 0;
+        }))
+        .collect(Collectors.toList()));
     }
 
     @Deprecated
     public void sortShelfMagazinesByPagesInShelf() {
         this.setLiteratureInShelf(
-                (ArrayList<Literature>) this.getLiteratureInShelf().stream()
+                this.getLiteratureInShelf().stream()
                 .sorted(Comparator.comparingInt((Literature o) -> {
                     if(o instanceof Magazine){
                         return o.getPagesNumber();
@@ -311,13 +318,12 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Override
     @Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToFile(){
-        ObjectOutputStream objectOutputStream = null;
+        ObjectOutputStream objectOutputStream;
         final String fileName = "shelf.out";
         try {
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
             ObjectOutputStream finalObjectOutputStream = objectOutputStream;
             this.literatureInShelf.stream().forEach(literature -> {
-                assert finalObjectOutputStream != null;
                 try {
                     finalObjectOutputStream.writeObject(literature);
                 } catch (IOException e) {
