@@ -317,11 +317,15 @@ public class Shelf implements ActionsWithShelf, Serializable {
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile(){
-        ObjectOutputStream objectOutputStream;
+    public void saveShelfToFile() throws IOException {
         final String fileName = "shelf.out";
+        FileOutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
         try {
+            outputStream = new FileOutputStream(fileName);
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+
             ObjectOutputStream finalObjectOutputStream = objectOutputStream;
             this.literatureInShelf.stream().forEach(literature -> {
                 try {
@@ -329,15 +333,41 @@ public class Shelf implements ActionsWithShelf, Serializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+
             });
-            objectOutputStream.close();
             System.out.println("File '" + fileName + "' has been written");
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-            System.out.println("Serialization Error");
+        }finally {
+            if (objectOutputStream != null) {
+                objectOutputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
     }
 
+
+    @Description("Deserialization Shelf and it's Literature objects")
+    public void deserialize() throws IOException, ClassNotFoundException {
+        final String fileName = "shelf.out";
+        FileOutputStream outputStream = null;
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            outputStream = new FileOutputStream(fileName);
+            objectOutputStream = new ObjectOutputStream(outputStream);
+
+            // Todo
+            System.out.println("Deserialization Shelf and it's Literature objects done");
+        }finally {
+            if (objectOutputStream != null) {
+                objectOutputStream.close();
+            }
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        }
+    }
 
 
     @Override

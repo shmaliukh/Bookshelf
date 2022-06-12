@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.2&#10;add ability to borrow and arrive Shelf items">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/DatabaseTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Bookshelf_objects/Magazine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/Shelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/Bookshelf_objects/BookTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tz_info/tz_result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tz_info/tz_result.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,9 +18,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -177,7 +171,7 @@
       <workItem from="1654934408261" duration="3206000" />
       <workItem from="1654938146306" duration="844000" />
       <workItem from="1654947189801" duration="23669000" />
-      <workItem from="1655023376640" duration="3580000" />
+      <workItem from="1655023376640" duration="5753000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -256,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654979474468</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code">
+      <created>1655027171819</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1655027171819</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +288,8 @@
     <MESSAGE value="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one" />
     <MESSAGE value="v 0.2.1&#10;fixed menu items" />
     <MESSAGE value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
+    <MESSAGE value="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

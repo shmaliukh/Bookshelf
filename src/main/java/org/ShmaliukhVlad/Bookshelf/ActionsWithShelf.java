@@ -2,6 +2,8 @@ package org.ShmaliukhVlad.Bookshelf;
 
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
 
+import java.io.IOException;
+
 public interface ActionsWithShelf {
     default void addLiteratureObject(Literature literature){
     }
@@ -23,6 +25,6 @@ public interface ActionsWithShelf {
     }
     default void printSortedBooksByDate(){
     }
-    default void saveShelfToFile() {
+    default void saveShelfToFile() throws IOException {
     }
 }
