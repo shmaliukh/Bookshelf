@@ -5,10 +5,7 @@ import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -319,29 +316,34 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToFile() throws IOException {
         final String fileName = "shelf.out";
-        FileOutputStream outputStream = null;
+        FileOutputStream   fileOutputStream   = null;
         ObjectOutputStream objectOutputStream = null;
-
         try {
-            outputStream = new FileOutputStream(fileName);
+            fileOutputStream = new FileOutputStream(fileName);
             objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
 
             ObjectOutputStream finalObjectOutputStream = objectOutputStream;
-            this.literatureInShelf.stream().forEach(literature -> {
+            this.getLiteratureInShelf().stream().forEach(literature -> {
                 try {
                     finalObjectOutputStream.writeObject(literature);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-
+            });
+            this.getLiteratureOutShelf().stream().forEach(literature -> {
+                try {
+                    finalObjectOutputStream.writeObject(literature);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
             System.out.println("File '" + fileName + "' has been written");
         }finally {
             if (objectOutputStream != null) {
                 objectOutputStream.close();
             }
-            if (outputStream != null) {
-                outputStream.close();
+            if (fileOutputStream != null) {
+                fileOutputStream.close();
             }
         }
     }
@@ -350,21 +352,31 @@ public class Shelf implements ActionsWithShelf, Serializable {
     @Description("Deserialization Shelf and it's Literature objects")
     public void deserialize() throws IOException, ClassNotFoundException {
         final String fileName = "shelf.out";
-        FileOutputStream outputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
         try {
-            outputStream = new FileOutputStream(fileName);
-            objectOutputStream = new ObjectOutputStream(outputStream);
-
-            // Todo
-            System.out.println("Deserialization Shelf and it's Literature objects done");
-        }finally {
-            if (objectOutputStream != null) {
-                objectOutputStream.close();
+            fileInputStream = new FileInputStream(fileName);
+            objectInputStream = new ObjectInputStream(fileInputStream);
+            try
+            {
+                while(true){
+                    Literature literatureBuff = (Literature) objectInputStream.readObject();
+                    this.addLiteratureObject(literatureBuff);
+                }
             }
-            if (outputStream != null) {
-                outputStream.close();
+            catch(EOFException e) {
+                //eof - no error in this case
+            }
+            catch(IOException e) {
+                e.printStackTrace();
+            }
+        } finally {
+            System.out.println(this);
+            if (fileInputStream != null) {
+                fileInputStream.close();
+            }
+            if (objectInputStream != null) {
+                objectInputStream.close();
             }
         }
     }

@@ -4,6 +4,7 @@ import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
 import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
 import org.ShmaliukhVlad.Bookshelf.Shelf;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -23,7 +24,7 @@ public class Terminal {
     public void startWork(){
         boolean play = true;
         int userChoice;
-        System.out.println("Program START");
+        System.out.println("Terminal START");
 
         while (play){
             printMainMenu();
@@ -166,10 +167,29 @@ public class Terminal {
                 }
             }
             else if (userChoice == 7){
-                shelf.saveShelfToFile();
+                try {
+                    shelf.saveShelfToFile();
+                    System.out.println("Serialized");
+                } catch (IOException e) {
+                    //System.out.println("Serialization error");
+                    System.err.println("Serialization error");
+                    throw new RuntimeException(e);
+                }
+            }
+            else if (userChoice == 8){
+                try {
+                    shelf.deserialize();
+                    System.out.println("Deserialized");
+                } catch (IOException e) {
+                    //System.out.println("Serialization error");
+                    System.err.println("Deserialization error");
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
             }
             else if(userChoice == 0){
-                System.out.println("Program END");
+                System.out.println("Terminal END");
                 play = false;
             }
         }
@@ -199,7 +219,8 @@ public class Terminal {
                         4 - Arrive  Literature object by index back to Shelf
                         5 - Print list of available Books sorted by parameter...
                         6 - Print list of available Magazines sorted by parameter...
-                        7 - Save file
+                        7 - Save in file
+                        8 - Deserialize
                         9 - Print current state of Shelf
                         0 - Exit""");
     }
