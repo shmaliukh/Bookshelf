@@ -5,12 +5,12 @@ SHELFBOOK PROJECT
 ## Task
 > "Program: bookshelf"
 
-The bookshelf can contain books or magazines, the user can perform the following actions with them:
-* Addition
+The bookshelf can contain books and magazines, the user can perform the following actions with them:
+* Add
 * Delete
-* Borrowing from the shelf
+* Borrow from the shelf
 * Return to the shelf
-* Display a list of available books with the ability to sort by author, or by title, or by date of publication, or by number of pages
+* Display a list of available books with the ability to sort by author, or by name, or by date of publication, or by number of pages
 * Display a list of available journals with the ability to sort by title or number of pages
 
 ***Book*** properties:
