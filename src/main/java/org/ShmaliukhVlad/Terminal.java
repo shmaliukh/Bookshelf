@@ -9,9 +9,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+
+/**
+ * Class which gives user interactive interface
+ */
 public class Terminal {
-    private final Scanner scanner;
     private final Shelf shelf;
+    private final Scanner scanner;
 
     {
         scanner = new Scanner(System.in);
@@ -21,6 +25,11 @@ public class Terminal {
     public Terminal(){
     }
 
+    /**
+     * Method which gives opportunity to choose command by entering number of item to execute
+     * Continually print menu items and wait for user choice
+     * Works till user enter '0'
+     */
     public void startWork(){
         boolean play = true;
         int userChoice;
@@ -194,6 +203,12 @@ public class Terminal {
             }
         }
     }
+
+    /**
+     * Method which gives opportunity to get string with random characters ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ")
+     * @param length is value of expected string size
+     * @return string with random symbols
+     */
     public String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
         Random random = new Random();
@@ -205,10 +220,17 @@ public class Terminal {
         return sb.toString();
     }
 
+    /**
+     * Method which gives opportunity to get user choice by entered integer value in console
+     * @return entered integer value in console
+     */
     private int getUserChoice(){
         return scanner.nextInt();
     }
 
+    /**
+     * Method which simply print main menu
+     */
     private void printMainMenu(){
         System.out.println(
                 """
@@ -224,6 +246,10 @@ public class Terminal {
                         9 - Print current state of Shelf
                         0 - Exit""");
     }
+
+    /**
+     * Method which simply print menu items for sorting books
+     */
     private void printMenuForBooksSorting(){
         System.out.println(
                 """
@@ -233,6 +259,10 @@ public class Terminal {
                         4 - Sort by 'date' value
                         Press another key to return\s""");
     }
+
+    /**
+     * Method which simply print menu items for sorting magazines
+     */
     private void printMenuForMagazinesSorting(){
         System.out.println(
                 """

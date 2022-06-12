@@ -2,17 +2,29 @@ package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
 
 import java.time.LocalDate;
 
+/**
+ * @author ShmaliukhVlad
+ * @version 1.0.0
+ * This is Book class which gives ability to create objects
+ */
 public class Book extends Literature{
 
     private String author;
     private LocalDate issuanceDate;
 
+    /**
+     * Constructor for creating Book object
+     */
     public Book(String name, int pagesNumber, boolean isBorrowed, String author, LocalDate issuanceDate) {
         super(name, pagesNumber, isBorrowed);
         this.author = author;
         this.issuanceDate = issuanceDate;
     }
 
+    /**
+     * Simple forming String about Book object
+     * @return String about Magazine object
+     */
     @Override
     public String toString() {
         String tab2 = "\n\t\t";
@@ -26,6 +38,7 @@ public class Book extends Literature{
                tab2 + "}";
     }
 
+    //getters and setters
     public String getAuthor() {
         return author;
     }

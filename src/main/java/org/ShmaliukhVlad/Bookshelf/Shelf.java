@@ -16,10 +16,9 @@ import java.util.stream.Collectors;
 
 /**
  * @author ShmaliukhVlad
- *
- *
+ * @version 1.0.0
+ * This is Shelf class which simulates real shelf with books and magazines
  */
-
 public class Shelf implements ActionsWithShelf, Serializable {
 
     private List<Literature> literatureInShelf;
@@ -30,25 +29,9 @@ public class Shelf implements ActionsWithShelf, Serializable {
         literatureOutShelf= new ArrayList<>();
     }
 
-    public List<Literature> getLiteratureInShelf() {
-        return literatureInShelf;
-    }
-
-    public void setLiteratureInShelf(List<Literature> literatureInShelf) {
-        this.literatureInShelf = literatureInShelf;
-    }
-
-    public List<Literature> getLiteratureOutShelf() {
-        return literatureOutShelf;
-    }
-
     public Shelf(){
-
     }
 
-    /**
-     * @param literature
-     */
     @Override
     public void addLiteratureObject(Literature literature) {
         if(literature != null){
@@ -65,9 +48,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         }
     }
 
-    /**
-     * @param index
-     */
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
         if(!this.getLiteratureInShelf().isEmpty()){
@@ -81,9 +61,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         else System.out.println("Empty");
     }
 
-    /**
-     * @param index
-     */
     @Override
     public void borrowLiteratureObjectFromShelfByIndex(int index) {
         Literature buffer;
@@ -100,9 +77,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         else System.out.println("Empty");
     }
 
-    /**
-     *@param index
-     */
     @Override
     public void arriveLiteratureObjectFromShelfByIndex(int index) {
         Literature buffer;
@@ -119,9 +93,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         else System.out.println("Empty");
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedMagazinesByName() {
         System.out.println(
@@ -134,9 +105,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         );
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedMagazinesByPages() {
         System.out.println(
@@ -150,9 +118,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         );
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedBooksByName() {
         System.out.println(
@@ -166,9 +131,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         );
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedBooksByPages() {
         System.out.println(
@@ -182,9 +144,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         );
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedBooksByAuthor() {
         System.out.println(
@@ -205,9 +164,6 @@ public class Shelf implements ActionsWithShelf, Serializable {
         );
     }
 
-    /**
-     *
-     */
     @Override
     public void printSortedBooksByDate() {
         System.out.println(
@@ -348,8 +304,9 @@ public class Shelf implements ActionsWithShelf, Serializable {
         }
     }
 
-
-    @Description("Deserialization Shelf and it's Literature objects")
+    /**
+     * Deserialization Shelf and it's Literature objects
+     */
     public void deserialize() throws IOException, ClassNotFoundException {
         final String fileName = "shelf.out";
         FileInputStream fileInputStream = null;
@@ -381,7 +338,10 @@ public class Shelf implements ActionsWithShelf, Serializable {
         }
     }
 
-
+    /**
+     * Simple forming String about Book object
+     * @return String about Shelf object
+     */
     @Override
     public String toString() {
         String tab1 = "\n";
@@ -404,5 +364,18 @@ public class Shelf implements ActionsWithShelf, Serializable {
             System.err.println(ex.getMessage());
             System.out.println("Save file Error");
         }
+    }
+
+    //getters and setters
+    public List<Literature> getLiteratureInShelf() {
+        return literatureInShelf;
+    }
+
+    public void setLiteratureInShelf(List<Literature> literatureInShelf) {
+        this.literatureInShelf = literatureInShelf;
+    }
+
+    public List<Literature> getLiteratureOutShelf() {
+        return literatureOutShelf;
     }
 }
