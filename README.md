@@ -5,7 +5,7 @@ SHELFBOOK PROJECT
 ## Task
 > "Program: bookshelf"
 
-The bookshelf can contain books or magazines, the user can perform the following actions with them:
+The bookshelf can contain books and magazines, the user can perform the following actions with them:
 * Addition
 * Delete
 * Borrowing from the shelf
