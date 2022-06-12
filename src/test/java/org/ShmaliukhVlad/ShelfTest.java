@@ -130,51 +130,11 @@ class ShelfTest {
     }
 
     @Test
-    public void whenSerializingAndDeserializing_ThenObjectIsTheSame()
-            throws IOException{
-
-        Shelf shelf1 = new Shelf();
-        Magazine magazine1 = new Magazine("1",1,false);
-        shelf1.addLiteratureObject(magazine1);
-
-        final String fileName = "shelf.out";
-        ObjectOutputStream objectOutputStream =
-                new ObjectOutputStream(new FileOutputStream(fileName));
-
-        //objectOutputStream.writeObject(shelf1);
-        objectOutputStream.writeObject(shelf1);
-        //ObjectOutputStream finalObjectOutputStream = objectOutputStream;
-//
-        //shelf1.getLiteratureInShelf().stream().forEach(literature -> {
-        //    try {
-        //        finalObjectOutputStream.writeObject(literature);
-        //    } catch (IOException ex) {
-        //        throw new RuntimeException(ex);
-        //    }
-        //});
-        objectOutputStream.close();
-        System.out.println("File '" + fileName + "' has been written");
-
-        FileInputStream fileInputStream
-                = new FileInputStream(fileName);
-        ObjectInputStream objectInputStream
-                = new ObjectInputStream(fileInputStream);
-
-        Shelf shelf2 = new Shelf();
-        objectInputStream.close();
-
-        assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
-        assertEquals(shelf1.getLiteratureInShelf().get(0).getPagesNumber(), shelf2.getLiteratureInShelf().get(0).getPagesNumber());
-        assertEquals(shelf1.getLiteratureInShelf().get(0).isBorrowed(), shelf2.getLiteratureInShelf().get(0).isBorrowed());
-    }
-
-
-    @Test
     @DisplayName("Serialization / deserialization test")
     @Description("Generate Shelf, add 6 objects of Literature (3 - Book and 3 - Magazine) with different parameters. " +
             "Than try to Serialize"+
             "Than try to Deserialize")
-    void saveShelfFile() throws IOException, ClassNotFoundException, EOFException {
+    public void saveShelfFile() throws IOException, ClassNotFoundException, EOFException {
         Book book1 = new Book("1",1,false,"NoAutho1",LocalDate.now());
         Book book2 = new Book("2",2,true,"NoAuthor2",LocalDate.now());
         Book book3 = new Book("3",3,true,"NoAuthor3",LocalDate.now());
