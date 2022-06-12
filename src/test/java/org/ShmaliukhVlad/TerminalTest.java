@@ -5,14 +5,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TerminalTest {
 
+    InputStream sysInBackup = System.in; // backup System.in to restore it later
+    ByteArrayInputStream in = new ByteArrayInputStream("My string".getBytes());
+
     @Test
+    @DisplayName("test which simulates user via terminal")
     void startWork() {
+        Terminal terminal = new Terminal();
+        terminal.startWork();
+        //TODO
     }
 
     @Test

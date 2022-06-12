@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.0.1&#10;tests refactor">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.0.2&#10;tests refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Bookshelf/ActionsWithShelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +72,7 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TerminalTest.getRandomString">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
@@ -151,8 +152,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TerminalTest.getRandomString" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TerminalTest.getRandomString" />
         <item itemvalue="JUnit.ShelfTest.saveShelfFile" />
         <item itemvalue="JUnit.ShelfTest.sortedBooksByDateOfIssue" />
         <item itemvalue="JUnit.ShelfTest.sortBooksByAuthor" />
@@ -173,7 +174,7 @@
       <workItem from="1654938146306" duration="844000" />
       <workItem from="1654947189801" duration="23669000" />
       <workItem from="1655023376640" duration="16916000" />
-      <workItem from="1655051038363" duration="837000" />
+      <workItem from="1655051038363" duration="2490000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -287,7 +288,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655051377587</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="v 1.0.2&#10;tests refactor">
+      <created>1655051909301</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1655051909301</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -323,7 +331,8 @@
     <MESSAGE value="v 0.3.0&#10;all functions are ready&#10;main functions are covered with tests" />
     <MESSAGE value="v 1.0.0&#10;first release" />
     <MESSAGE value="v 1.0.1&#10;tests refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.0.1&#10;tests refactor" />
+    <MESSAGE value="v 1.0.2&#10;tests refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.0.2&#10;tests refactor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

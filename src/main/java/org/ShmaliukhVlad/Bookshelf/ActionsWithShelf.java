@@ -78,6 +78,7 @@ public interface ActionsWithShelf {
 
     /**
      * This method serialize all magazines and books in file
+     * @throws IOException {@link IOException}
      */
     default void saveShelfToFile() throws IOException {
     }

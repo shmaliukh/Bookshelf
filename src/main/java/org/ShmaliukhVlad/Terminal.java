@@ -94,13 +94,7 @@ public class Terminal {
                 shelf.deleteLiteratureObjectByIndex(index);
             }
             else if (userChoice == 1){
-                System.out.println("Choose type of literature you want to add:");
-                System.out.println("1 - Magazine");
-                System.out.println("2 - Book");
-                System.out.println("3 - Random Magazine");
-                System.out.println("4 - Random Book");
-                System.out.println("0 - Back");
-
+                printMenuForAddingLiteratureObject();
                 userChoice = getUserChoice();
 
                 if(userChoice == 1){
@@ -113,10 +107,10 @@ public class Terminal {
                     name = scanner.next();
                     System.out.println("Enter number of pages:");
                     pages = scanner.nextInt();
-                    System.out.println("Enter 1 if Magazine is borrowed:");
-                    System.out.println("Enter 2 if Magazine is NOT borrowed:");
+                    System.out.println("Enter 1 if Magazine is NOT borrowed");
+                    System.out.println("Press another key to continue");
                     if(getUserChoice() == 1){
-                        isBorrowed = true;
+                        isBorrowed = false;
                     }
 
                     userMagazineToAdd = new Magazine(name, pages, isBorrowed);
@@ -136,10 +130,10 @@ public class Terminal {
                     name = scanner.next();
                     System.out.println("Enter number of pages:");
                     pages = scanner.nextInt();
-                    System.out.println("Enter 1 if Book is borrowed:");
-                    System.out.println("Enter 2 if Book is NOT borrowed:");
+                    System.out.println("Enter 1 if Book is NOT borrowed");
+                    System.out.println("Press another key to continue");
                     if(getUserChoice() == 1){
-                        isBorrowed = true;
+                        isBorrowed = false;
                     }
                     System.out.println("Enter author:");
                     author = scanner.next();
@@ -269,5 +263,19 @@ public class Terminal {
                         1 - Sort by 'name' value
                         2 - Sort by 'page' value
                         Press another key to return\s""");
+    }
+
+    /**
+     * Method which simply print menu items for adding literature obj
+     */
+    private void printMenuForAddingLiteratureObject(){
+        System.out.println(
+                """
+                Choose type of literature you want to add:");
+                "1 - Magazine");
+                "2 - Book");
+                "3 - Random Magazine");
+                "4 - Random Book");
+                "Press another key to return\s""");
     }
 }
