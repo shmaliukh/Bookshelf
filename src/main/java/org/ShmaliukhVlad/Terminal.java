@@ -14,190 +14,308 @@ import java.util.*;
  * Class which gives user interactive interface
  */
 public class Terminal {
+    private boolean play;
+
     private Shelf shelf;
     private Scanner scanner;
 
     public Terminal(){
         scanner = new Scanner(System.in);
         shelf = new Shelf();
+        play = true;
     }
 
-    private static final int booksSorting = 5;
+    private static final int addNewLiterature = 1;
+    private static final int deleteLiterature = 2;
+    private static final int borrowLiterature = 3;
+    private static final int arriveLiterature = 4;
+    private static final int printSortedBooks = 5;
+    private static final int printSortedMagazines = 6;
+    private static final int saveShelfInFile = 7;
+    private static final int deserialize = 8;
+    private static final int printShelf = 9;
+    private static final int exit = 0;
 
+    private static final int addCustomMagazine = 1;
+    private static final int addCustomBook = 2;
+    private static final int addRandomMagazine = 3;
+    private static final int addRandomBook = 4;
 
+    private static final int sortBooksByName = 1;
+    private static final int sortBooksByPagesNumber = 2;
+    private static final int sortBooksByAuthor = 3;
+    private static final int sortBooksByDateOfIssue = 4;
+
+    private static final int sortMagazinesByName = 1;
+    private static final int sortMagazinesByPagesNumber = 2;
+
+    /**
+     * Method simulates Terminal work like a real one
+     */
+    public void startWork(){
+        System.out.println("Terminal START");
+
+        while (isPlay()){
+            generateUserInterface();
+        }
+
+        System.out.println("Terminal STOP");
+    }
 
     /**
      * Method which gives opportunity to choose command by entering number of item to execute
      * Continually print menu items and wait for user choice
-     * Works till user enter '0'
+     * Works till user enter '0' (Exit)
      */
-    public void startWork(){
-        boolean play = true;
-        int userChoice;
-        System.out.println("Terminal START");
+    private void generateUserInterface() {
+        printMainMenu();
 
-        while (play){
-            printMainMenu();
-            userChoice = getUserChoice();
-
-            if (userChoice == 9){
+        switch (getUserChoice()){
+            case addNewLiterature:
+                printMenuForAddingLiterature();//ToDo
+                chooseTypeAndAddIt();
+                break;
+            case deleteLiterature:
+                printMenuForDeletingLiterature();
+                shelf.deleteLiteratureObjectByIndex(getUserChoice());//ToDo
+                break;
+            case borrowLiterature:
+                printMenuForBorrowingLiterature();
+                shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
+                break;
+            case arriveLiterature:
+                printMenuForArrivingLiterature();
+                shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
+                break;
+            case printSortedBooks:
+                clarificationForSortingBooks();
+                break;
+            case printSortedMagazines:
+                clarificationForSortingMagazines();
+                break;
+            case saveShelfInFile:
+                saveShelf();
+                break;
+            case deserialize:
+                deserializeShelf();
+                break;
+            case printShelf:
                 System.out.println(shelf);
-            }
-            else if (userChoice == 5){
-                printMenuForBooksSorting();
-                userChoice =getUserChoice();
-
-                if(userChoice == 1){
-                    System.out.println("Sorted by name");
-                    shelf.printSortedBooksByName();
-                }
-                else if(userChoice == 2){
-                    //printSortedObj(sortedArr)
-                    System.out.println("Sorted by author");
-                    shelf.printSortedBooksByAuthor();
-                }
-                else if(userChoice == 3){
-                    System.out.println("Sorted by pages");
-                    shelf.printSortedBooksByPages();
-                }
-                else if(userChoice == 4){
-                    System.out.println("Sorted by date of issue");
-                    shelf.printSortedBooksByDate();
-                }
-            }
-            else if (userChoice == 6){
-                printMenuForMagazinesSorting();
-                userChoice =getUserChoice();
-
-                if(userChoice == 1){
-                    System.out.println("Sorted by name");
-                    shelf.printSortedMagazinesByName();
-                }
-                if(userChoice == 2){
-                    System.out.println("Sorted by pages");
-                    shelf.printSortedMagazinesByPages();
-                }
-
-            }
-            else if (userChoice == 4){
-                System.out.println("Enter index of Literature object to arrive one:");
-                System.out.println(shelf.getLiteratureOutShelf());
-                int index = getUserChoice();
-                shelf.arriveLiteratureObjectFromShelfByIndex(index);
-            }
-            else if (userChoice == 3){
-                System.out.println("Enter index of Literature object to borrow one:");
-                int index = getUserChoice();
-                shelf.borrowLiteratureObjectFromShelfByIndex(index);
-            }
-            else if (userChoice == 2){
-                System.out.println("Enter index of Literature object to delete one:");
-                int index = getUserChoice();
-                shelf.deleteLiteratureObjectByIndex(index);
-            }
-            else if (userChoice == 1){
-                printMenuForAddingLiteratureObject();
-                userChoice = getUserChoice();
-
-                if(userChoice == 1){
-                    Magazine userMagazineToAdd;
-                    String name = "";
-                    int pages = 0;
-                    boolean isBorrowed = false;
-
-                    System.out.println("Enter name:");
-                    name = scanner.next();
-                    System.out.println("Enter number of pages:");
-                    pages = scanner.nextInt();
-                    System.out.println("Enter 1 if Magazine is NOT borrowed");
-                    System.out.println("Press another key to continue");
-                    if(getUserChoice() == 1){
-                        isBorrowed = false;
-                    }
-
-                    userMagazineToAdd = new Magazine(name, pages, isBorrowed);
-                    shelf.addLiteratureObject(userMagazineToAdd);
-                    System.out.println("New user Magazine has added to shelf");
-
-                }
-                else if(userChoice == 2){
-                    Book userBookToAdd;
-                    String name = "";
-                    int pages = 0;
-                    boolean isBorrowed = false;
-                    String author = "";
-                    LocalDate dateOfIssue;
-
-                    System.out.println("Enter name:");
-                    name = scanner.next();
-                    System.out.println("Enter number of pages:");
-                    pages = scanner.nextInt();
-                    System.out.println("Enter 1 if Book is NOT borrowed");
-                    System.out.println("Press another key to continue");
-                    if(getUserChoice() == 1){
-                        isBorrowed = false;
-                    }
-                    System.out.println("Enter author:");
-                    author = scanner.next();
-
-                    System.out.println("Enter date of issue (format \"dd-MMM-yyyy\"):");
-                    int day = scanner.nextInt();
-                    int year = scanner.nextInt();
-                    int month = scanner.nextInt();
-                    dateOfIssue = LocalDate.of(year, month, day);
-
-                    userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
-                    shelf.addLiteratureObject(userBookToAdd);
-                    System.out.println("New user Book has added to shelf");
-                }
-                else if(userChoice == 3){
-                    Random randomNumber = new Random();
-
-                    shelf.addLiteratureObject(new Magazine(
-                            getRandomString(randomNumber.nextInt(10)),
-                            randomNumber.nextInt(1000),
-                            false));
-                    System.out.println("New random Magazine has added to shelf");
-                }
-                else if(userChoice == 4){
-                    Random randomNumber = new Random();
-
-                    shelf.addLiteratureObject(new Book(
-                            getRandomString(randomNumber.nextInt(10)),
-                            randomNumber.nextInt(1000),
-                            false,
-                            getRandomString(randomNumber.nextInt(10)),
-                            LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70))))));
-                    System.out.println("New random Book has added to shelf");
-                }
-            }
-            else if (userChoice == 7){
-                try {
-                    shelf.saveShelfToFile();
-                    System.out.println("Serialized");
-                } catch (IOException e) {
-                    //System.out.println("Serialization error");
-                    System.err.println("Serialization error");
-                    throw new RuntimeException(e);
-                }
-            }
-            else if (userChoice == 8){
-                try {
-                    shelf.deserialize();
-                    System.out.println("Deserialized");
-                } catch (IOException e) {
-                    //System.out.println("Serialization error");
-                    System.err.println("Deserialization error");
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            else if(userChoice == 0){
-                System.out.println("Terminal STOP");
-                play = false;
-            }
+                break;
+            case exit:
+                setPlay(false);
+                break;
+            default:
+                break;
         }
+    }
+
+    /**
+     * Method deserializes all Literature objects from .out file save in current Shelf.
+     */
+    private void deserializeShelf() {// ToDo
+        try {
+            shelf.deserialize();
+            System.out.println("Deserialized");
+        } catch (IOException e) {
+            //System.out.println("Serialization error");
+            System.err.println("Deserialization error");
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method serializes all Shelf's Literature objects in .out file.
+     */
+    private void saveShelf() {// ToDo
+        try {
+            shelf.saveShelfToFile();
+            System.out.println("Serialized");
+        } catch (IOException e) {
+            //System.out.println("Serialization error");
+            System.err.println("Serialization error");
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Method gives ability to choose method for sorting Magazines and print sorted list
+     */
+    private void clarificationForSortingMagazines() {
+        printMenuForMagazinesSorting();
+        switch (getUserChoice()){
+            case sortMagazinesByName:
+                System.out.println("Sorted by name");
+                shelf.printSortedMagazinesByName();
+                break;
+            case sortMagazinesByPagesNumber:
+                System.out.println("Sorted by pages");
+                shelf.printSortedMagazinesByPages();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Method gives ability to choose method for sorting Books and print sorted list
+     */
+    private void clarificationForSortingBooks() {
+        printMenuForBooksSorting();
+        switch (getUserChoice()){
+            case sortBooksByName:
+                System.out.println("Sorted by name");
+                shelf.printSortedBooksByName();
+                break;
+            case sortBooksByAuthor:
+                System.out.println("Sorted by author");
+                shelf.printSortedBooksByAuthor();
+                break;
+            case sortBooksByPagesNumber:
+                System.out.println("Sorted by pages");
+                shelf.printSortedBooksByPages();
+                break;
+            case sortBooksByDateOfIssue:
+                System.out.println("Sorted by date of issue");
+                shelf.printSortedBooksByDate();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
+     */
+    private void printMenuForArrivingLiterature() {
+        System.out.println("Enter index of Literature object to arrive one:");
+        System.out.println(shelf.getLiteratureOutShelf());
+    }
+
+    /**
+     * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
+     */
+    private void printMenuForBorrowingLiterature() {
+        System.out.println("Enter index of Literature object to borrow one:");
+        System.out.println(shelf.getLiteratureInShelf());
+    }
+
+    /**
+     * Method print menu with necessary information when user needs to delete some Literature object in Shelf
+     */
+    private void printMenuForDeletingLiterature() {
+        System.out.println("Enter INDEX of Literature object to delete one:");
+        //Todo
+        System.out.println(shelf);
+    }
+
+
+    /**
+     * Method give user ability to choose new Literature object type
+     * generate new Literature object (Magazine or Book) with user or random parameters (depends on user choice)
+     */
+    private void chooseTypeAndAddIt() {
+        switch (getUserChoice()){
+            
+            case addCustomMagazine:
+                Magazine userMagazineToAdd;
+                String name = "";
+                int pages = 0;
+                boolean isBorrowed = false;
+
+                System.out.println("Enter name:");
+                name = scanner.next();
+                System.out.println("Enter number of pages:");
+                pages = scanner.nextInt();
+                System.out.println("Enter 1 if Magazine is NOT borrowed");
+                System.out.println("Press another key to continue");
+                if(getUserChoice() == 1){
+                    isBorrowed = false;
+                }
+
+                userMagazineToAdd = new Magazine(name, pages, isBorrowed);
+                shelf.addLiteratureObject(userMagazineToAdd);
+                System.out.println("New user Magazine has added to shelf");
+                break;
+                
+            case addCustomBook:
+                Book userBookToAdd;
+                isBorrowed = false;
+                String author = "";
+                LocalDate dateOfIssue;
+
+                System.out.println("Enter name:");
+                name = scanner.next();
+                System.out.println("Enter number of pages:");
+                pages = scanner.nextInt();
+                System.out.println("Enter 1 if Book is NOT borrowed");
+                System.out.println("Press another key to continue");
+                if(getUserChoice() == 1){
+                    isBorrowed = false;
+                }
+                System.out.println("Enter author:");
+                author = scanner.next();
+
+                System.out.println("Enter date of issue (format \"dd-MMM-yyyy\"):");
+                int day = scanner.nextInt();
+                int year = scanner.nextInt();
+                int month = scanner.nextInt();
+                dateOfIssue = LocalDate.of(year, month, day);
+
+                userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
+                shelf.addLiteratureObject(userBookToAdd);
+                System.out.println("New user Book has added to shelf");
+                break;
+                
+            case addRandomMagazine:
+                Magazine randomMagazine = getRandomMagazine();
+                shelf.addLiteratureObject(randomMagazine);
+                System.out.println("New random Magazine has added to shelf");
+                break;
+                
+            case addRandomBook:
+                Book randomBook = getRandomBook();
+                shelf.addLiteratureObject(randomBook);
+                System.out.println("New random Book has added to shelf");
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Method forms new Magazine with random parameters (isBorrowed = false -> constant)
+     * @return Magazine with
+     * random name (max string length = 20),
+     * random number of pages (max = 1000)
+     */
+    public Magazine getRandomMagazine() {
+        Random randomNumber = new Random();
+        return new Magazine(
+                getRandomString(randomNumber.nextInt(20)),
+                randomNumber.nextInt(1000),
+                false);
+    }
+
+    /**
+     * Method forms new Book with random parameters (isBorrowed = false -> constant)
+     * @return Book with
+     * random name (max string length = 20),
+     * random number of pages (max = 1000),
+     * random author (max string length = 10),
+     * random date of issue (today minus random number of days (up to one year)),
+     */
+    public Book getRandomBook() {
+        Random randomNumber = new Random();
+        return new Book(
+                getRandomString(randomNumber.nextInt(20)),
+                randomNumber.nextInt(1000),
+                false,
+                getRandomString(randomNumber.nextInt(10)),
+                LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70)))));
     }
 
     /**
@@ -272,14 +390,22 @@ public class Terminal {
     /**
      * Method which simply print menu items for adding literature obj
      */
-    private void printMenuForAddingLiteratureObject(){
+    private void printMenuForAddingLiterature(){
         System.out.println(
                 """
-                Choose type of literature you want to add:");
-                "1 - Magazine");
-                "2 - Book");
-                "3 - Random Magazine");
-                "4 - Random Book");
-                "Press another key to return\s""");
+                         Choose type of literature you want to add:
+                         "1 - Magazine
+                         "2 - Book
+                         "3 - Random Magazine
+                         "4 - Random Book
+                         "Press another key to return\s""");
+    }
+
+    public boolean isPlay() {
+        return play;
+    }
+
+    public void setPlay(boolean play) {
+        this.play = play;
     }
 }
