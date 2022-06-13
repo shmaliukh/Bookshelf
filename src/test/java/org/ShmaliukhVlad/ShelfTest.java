@@ -5,8 +5,6 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -18,11 +16,11 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShelfTest {
-    @BeforeClass
-    public static void globalSetUp() {
-        System.out.println("Initial setup...");
-        System.out.println("Code executes only once");
-    }
+    //@BeforeClass
+    //public static void globalSetUp() {
+    //    System.out.println("Initial setup...");
+    //    System.out.println("Code executes only once");
+    //}
 
     @Test
     @DisplayName("Add one NOT borrowed Book to empty Shelf")
@@ -253,7 +251,7 @@ class ShelfTest {
         shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
 
-        shelf.sor
+
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Magazine)
@@ -452,39 +450,30 @@ class ShelfTest {
         shelf.addLiteratureObject(new Book("LAST",55,false,"LAST",LocalDate.of(2020,12,1)));
         shelf.addLiteratureObject(new Book("last",100,false,"last",LocalDate.of(1965,12,1)));
         shelf.addLiteratureObject(new Book("last",55,false,"last",LocalDate.of(2020,12,1)));
-        shelf.addLiteratureObject(new Book("las",55,false,"las",LocalDate.of(2020,12,1)));
-        shelf.addLiteratureObject(new Book("la",55,false,"la",LocalDate.of(1968,12,1)));
-        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.of(1965,12,1)));
-        shelf.addLiteratureObject(new Book("b",6,false,"b",LocalDate.of(1967,12,1)));
-        shelf.addLiteratureObject(new Book("a",5,false,"a",LocalDate.of(1995,12,1)));
-        shelf.addLiteratureObject(new Book("7",7,false,"7",LocalDate.of(2020,12,1)));
+        shelf.addLiteratureObject(new Book("las",55,false,"las",LocalDate.of(2020,12,15)));
+        shelf.addLiteratureObject(new Book("la",55,false,"la",LocalDate.of(1968,12,14)));
+        shelf.addLiteratureObject(new Book("55",55,false,"55",LocalDate.of(1965,12,13)));
+        shelf.addLiteratureObject(new Book("b",6,false,"b",LocalDate.of(1967,12,12)));
+        shelf.addLiteratureObject(new Book("a",5,false,"a",LocalDate.of(1995,12,11)));
+        shelf.addLiteratureObject(new Book("7",7,false,"7",LocalDate.of(2020,12,10)));
         shelf.addLiteratureObject(new Book("6",6,false,"6",LocalDate.of(LocalDate.now().getYear(),LocalDate.now().getMonthValue(),LocalDate.now().getDayOfMonth())));
         shelf.addLiteratureObject(new Book("2",2,false,"2",LocalDate.of(1985,12,1)));
         shelf.addLiteratureObject(new Magazine("5",5,false));
-        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.of(1975,12,1)));
+        shelf.addLiteratureObject(new Book("1",1,false,"1",LocalDate.of(1975,12,5)));
         shelf.addLiteratureObject(new Magazine("3",3,false));
         shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.of(1965,12,1)));
 
         ArrayList<Literature> sortedShelf =
                 (ArrayList<Literature>) shelf.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Book)
-                        .sorted(Comparator.comparingInt((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getIssuanceDate().getYear();
-                            }
-                            return LocalDate.now().getYear();
-                        }).thenComparing((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getIssuanceDate().getMonthValue();
-                            }
-                            return LocalDate.now().getMonthValue();
-                        }).thenComparing((Literature o) -> {
-                            if (o instanceof Book) {
-                                return ((Book) o).getIssuanceDate().getDayOfMonth();
-                            }
-                            return LocalDate.now().getDayOfMonth();
-                        }))
+                        .sorted(Comparator.comparingLong(
+                                        o ->  ((Book) o).getIssuanceDate().toEpochDay())
+                                .thenComparing(
+                                        o -> ((Book) o).getAuthor().toLowerCase())
+                                .thenComparing(
+                                        o -> ((Book) o).getName().toLowerCase()))
                         .collect(Collectors.toList());
+
         shelf.setLiteratureInShelf(sortedShelf);
         System.out.println(sortedShelf);
 
@@ -712,10 +701,4 @@ class ShelfTest {
         assertEquals(shelf.getLiteratureInShelf().get(shelf.getLiteratureInShelf().size()-1).getPagesNumber(), expectedLastLiteraturePages);
     }
 
-
-
-    @AfterClass
-    public static void tearDown() {
-        System.out.println("Tests finished");
-    }
 }

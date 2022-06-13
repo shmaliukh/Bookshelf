@@ -6,8 +6,6 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,12 +21,6 @@ public class Shelf implements ActionsWithShelf{
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
 
-    //{
-    //    literatureInShelf = new ArrayList<>();
-    //    literatureInShelf.add(new Magazine("1",1,false))
-    //    literatureOutShelf= new ArrayList<>();
-    //}
-
     public Shelf(){
         literatureInShelf = new ArrayList<>();
         literatureOutShelf= new ArrayList<>();
@@ -43,6 +35,7 @@ public class Shelf implements ActionsWithShelf{
             else{
                 getLiteratureInShelf().add(literature);
             }
+            informAboutAddedLiteratureObject(literature);
         }
         else {
             System.out.println("The literature object (book or magazine) is empty");
@@ -50,17 +43,35 @@ public class Shelf implements ActionsWithShelf{
         }
     }
 
+    /**
+     * Method simply inform user about added Literature object
+     */
+    private void informAboutAddedLiteratureObject(Literature literature) {
+        System.out.println("New literature object:");
+        System.out.println(literature);
+        System.out.println("has added to shelf");
+    }
+
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
         if(!this.getLiteratureInShelf().isEmpty()){
             if(index >= 0 && index < this.getLiteratureInShelf().size()){
-                this.getLiteratureInShelf().remove(index);
+                informAboutDeletedLiteratureObject(this.getLiteratureInShelf().remove(index));
             }
             else {
                 System.out.println("Wrong index");
             }
         }
-        else System.out.println("Empty");
+        else System.out.println("Empty shelf");
+    }
+
+    /**
+     * Method simply inform user about deleted Literature object
+     */
+    private void informAboutDeletedLiteratureObject(Literature literature) {
+        System.out.println("literature object:");
+        System.out.println(literature);
+        System.out.println("has deleted from shelf");
     }
 
     @Override
@@ -71,12 +82,22 @@ public class Shelf implements ActionsWithShelf{
                 buffer = this.getLiteratureInShelf().remove(index);
                 buffer.setBorrowed(true);
                 this.getLiteratureOutShelf().add(buffer);
+                informAboutBorrowedLiteratureObject(buffer);
             }
             else {
                 System.out.println("Wrong index");
             }
         }
-        else System.out.println("Empty");
+        else System.out.println("Empty shelf");
+    }
+
+    /**
+     * Method simply inform user about borrowed Literature object
+     */
+    private void informAboutBorrowedLiteratureObject(Literature literature) {
+        System.out.println("literature object:");
+        System.out.println(literature);
+        System.out.println("has borrowed from shelf");
     }
 
     @Override
@@ -87,175 +108,157 @@ public class Shelf implements ActionsWithShelf{
                 buffer = this.getLiteratureOutShelf().remove(index);
                 buffer.setBorrowed(false);
                 this.getLiteratureInShelf().add(buffer);
+                informAboutArrivedLiteratureObject(buffer);
             }
             else {
                 System.out.println("Wrong index");
             }
         }
-        else System.out.println("Empty");
+        else System.out.println("No borrowed literature object");
+    }
+
+    /**
+     * Method simply inform user about arrived Literature object
+     */
+    private void informAboutArrivedLiteratureObject(Literature literature) {
+        System.out.println("literature object:");
+        System.out.println(literature);
+        System.out.println("has arrived back to shelf");
     }
 
     @Override
     public void printSortedMagazinesByName() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o) -> o instanceof Magazine)
-                        .sorted(Comparator.comparing(
-                                        (Literature o) -> o.getName())
-                                .thenComparing(
-                                        (Literature o) -> o.getPagesNumber())).toList()
-        );
+        System.out.println(getSortedMagazinesByName());
     }
 
     @Override
     public void printSortedMagazinesByPages() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Magazine)
-                        .sorted(Comparator.comparing(
-                                        (Literature o) -> o.getPagesNumber())
-                                .thenComparing(
-                                        (Literature o) -> o.getName()))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(getSortedMagazinesByPages());
     }
 
     @Override
     public void printSortedBooksByName() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Book)
-                        .sorted(Comparator.comparing(
-                                        (Literature o) -> o.getName())
-                                .thenComparing(
-                                        (Literature o) -> o.getPagesNumber()))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(getSortedBooksByName());
     }
 
     @Override
     public void printSortedBooksByPages() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Book)
-                        .sorted(Comparator.comparing(
-                                        (Literature o) -> o.getPagesNumber())
-                                .thenComparing(
-                                        (Literature o) -> o.getName()))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(getSortedBooksByPages());
     }
 
     @Override
     public void printSortedBooksByAuthor() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Book)
-                        .sorted(Comparator.comparing((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getAuthor().toLowerCase();
-                            }
-                            return "";
-                        }).thenComparingInt((Literature o) -> {
-                            if(o instanceof Book){
-                                return o.getPagesNumber();
-                            }
-                            return 0;
-                        }))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(getSortedBooksByAuthor());
     }
 
     @Override
     public void printSortedBooksByDate() {
-        System.out.println(
-                this.getLiteratureInShelf().stream()
-                        .filter((Literature o)-> o instanceof Book)
-                        .map(o -> (Book) o)
-                        .sorted(Comparator.comparingLong((Book o) -> {
-                                return o.getIssuanceDate().getYear(); // Todo.getLong();
-                        }))
-                        .collect(Collectors.toList())
-        );
+        System.out.println(getSortedBooksByDate());
     }
 
-    @Deprecated
-    public void sortOnlyBooksByNameInShelf() {
-        this.setLiteratureInShelf(
-                this.getLiteratureInShelf().stream()
-                        .sorted(Comparator.comparing((Literature o) -> {
-                            if(o instanceof Book){
-                                return o.getName();
-                            }
-                            return "";
-                        }).thenComparing((Literature o) -> {
-                            if (o instanceof Book) {
-                                return o.getPagesNumber();
-                            }
-                            return 0;
-                        }))
-                        .collect(Collectors.toList()));
+    /**
+     * Method returns sorted ArrayList of Magazines by Name number from current Shelf
+     * @return ArrayList<Magazine>
+     *     firstly sorted by Name
+     *     than sorted by Pages number
+     */
+    public ArrayList<Magazine> getSortedMagazinesByName(){
+        return (ArrayList<Magazine>) this.getLiteratureInShelf().stream()
+                .filter((Literature o) -> o instanceof Magazine)
+                .map(o -> (Magazine) o)
+                .sorted(Comparator.comparing(
+                                o -> ((Magazine) o).getName())
+                        .thenComparing(
+                                o -> ((Magazine) o).getPagesNumber()))
+                .collect(Collectors.toList());
     }
 
-    @Deprecated
-    public void sortOnlyBooksByAuthorInShelf() {
-        this.setLiteratureInShelf(
-                this.getLiteratureInShelf().stream()
-                        .sorted(Comparator.comparing((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getAuthor();
-                            }
-                            return "";
-                        }).thenComparing((Literature o) -> {
-                            if (o instanceof Book) {
-                                return o.getPagesNumber();
-                            }
-                            return 0;
-                        }))
-                        .collect(Collectors.toList()));
+    /**
+     * Method returns sorted ArrayList of Magazines by Pages number from current Shelf
+     * @return ArrayList<Magazine>
+     *     firstly sorted by Pages number
+     *     than sorted by Name
+     */
+    public ArrayList<Magazine> getSortedMagazinesByPages(){
+        return (ArrayList<Magazine>) this.getLiteratureInShelf().stream()
+                .filter((Literature o)-> o instanceof Magazine)
+                .map(o -> (Magazine) o)
+                .sorted(Comparator.comparing(
+                                o -> ((Magazine) o).getPagesNumber())
+                        .thenComparing(
+                                o -> ((Magazine) o).getName()))
+                .collect(Collectors.toList());
     }
 
-    @Deprecated
-    public void sortShelfBooksByPagesInShelf() {
-        this.setLiteratureInShelf(
-                this.getLiteratureInShelf().stream()
-                        .sorted(Comparator.comparingInt((Literature o) -> {
-                            if(o instanceof Book){
-                                return o.getPagesNumber();
-                            }
-                            return 0;
-                        }))
-                        .collect(Collectors.toList()));
+    /**
+     * Method returns sorted ArrayList of Books by Name from current Shelf
+     * @return ArrayList<Book>
+     *     firstly sorted by Name
+     *     than sorted by Pages number
+     */
+    public ArrayList<Book> getSortedBooksByName(){
+        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
+                .filter((Literature o)-> o instanceof Book)
+                .map(o -> (Book) o)
+                .sorted(Comparator.comparing(
+                                o -> ((Book) o).getName())
+                        .thenComparing(
+                                o -> ((Book) o).getPagesNumber()))
+                .collect(Collectors.toList());
     }
 
-    @Deprecated
-    public void sortShelfMagazinesByNameInShelf() {
-        this.setLiteratureInShelf(this.getLiteratureInShelf().stream()
-        .sorted(Comparator.comparing((Literature o) -> {
-            if(o instanceof Magazine){
-                return o.getName();
-            }
-            return "";
-        }).thenComparing((Literature o) -> {
-            if (o instanceof Magazine) {
-                return o.getPagesNumber();
-            }
-            return 0;
-        }))
-        .collect(Collectors.toList()));
+    /**
+     * Method returns sorted ArrayList of Books by Pages number from current Shelf
+     * @return ArrayList<Book>
+     *     firstly sorted by Pages number
+     *     than sorted by Name
+     */
+    public ArrayList<Book> getSortedBooksByPages(){
+        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
+                .filter((Literature o)-> o instanceof Book)
+                .map(o -> (Book) o)
+                .sorted(Comparator.comparing(
+                                o -> ((Book) o).getPagesNumber())
+                        .thenComparing(
+                                o -> ((Book) o).getName()))
+                .collect(Collectors.toList());
     }
 
-    @Deprecated
-    public void sortShelfMagazinesByPagesInShelf() {
-        this.setLiteratureInShelf(
-                this.getLiteratureInShelf().stream()
-                .sorted(Comparator.comparingInt((Literature o) -> {
-                    if(o instanceof Magazine){
-                        return o.getPagesNumber();
-                    }
-                    return 0;
-                }))
-                .collect(Collectors.toList()));
+    /**
+     * Method returns sorted ArrayList of Books by Author from current Shelf
+     * @return ArrayList<Book>
+     *     firstly sorted by Author
+     *     than sorted by Pages
+     */
+    public ArrayList<Book> getSortedBooksByAuthor(){
+        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
+                .filter((Literature o)-> o instanceof Book)
+                .map(o -> (Book) o)
+                .sorted(Comparator.comparing(
+                            o -> ((Book) o).getAuthor().toLowerCase())
+                        .thenComparingInt(
+                            o -> ((Book) o).getPagesNumber()))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Method returns sorted ArrayList of Books by Date from current Shelf
+     * @return ArrayList<Book>
+     *     firstly sorted by Date
+     *     than sorted by Author
+     *     than sorted by Name
+     */
+    public ArrayList<Book> getSortedBooksByDate(){
+        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
+                .filter((Literature o)-> o instanceof Book)
+                .map(o -> (Book) o)
+                .sorted(Comparator.comparingLong(
+                                o ->  ((Book) o).getIssuanceDate().toEpochDay())
+                        .thenComparing(
+                                o -> ((Book) o).getAuthor().toLowerCase())
+                        .thenComparing(
+                                o -> ((Book) o).getName().toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -340,20 +343,6 @@ public class Shelf implements ActionsWithShelf{
                 tab2 + "\n\tliteratureInShelf=" + literatureInShelf +
                 tab2 + "\n\tliteratureOutShelf=" + literatureOutShelf +
                 tab1 + "}";
-    }
-
-    @Deprecated
-    @Description("Simple save all info about Shelf and it's objects in .txt file (with current date)")
-    public void saveShelfToTXTFile(){
-        String filename = "books_inside_shelf_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy")) +".txt";
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))){
-            oos.writeObject(this.toString());
-            System.out.println("File has been written");
-        }
-        catch(Exception ex){
-            System.err.println(ex.getMessage());
-            System.out.println("Save file Error");
-        }
     }
 
     //getters and setters
