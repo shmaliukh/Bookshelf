@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
+package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
 import java.time.LocalDate;
 
@@ -38,6 +38,17 @@ public class Book extends Literature{
                tab2 + "}";
     }
 
+    public String fegPrintableLineOfBook(){
+        String tab2 = "\n\t\t";
+        String tab3 = "\n\t\t\t";
+        return tab2 + "Book{" +
+                tab3 + "author='" + author + '\'' +
+                tab3 + "issuanceDate=" + issuanceDate +
+                tab3 + "name='" + name + '\'' +
+                tab3 + "pagesNumber=" + pagesNumber +
+                tab3 + "isBorrowed=" + isBorrowed +
+                tab2 + "}";
+    }
     //getters and setters
     public String getAuthor() {
         return author;

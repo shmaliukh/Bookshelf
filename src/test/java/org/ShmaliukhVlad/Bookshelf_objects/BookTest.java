@@ -1,6 +1,6 @@
 package org.ShmaliukhVlad.Bookshelf_objects;
 
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

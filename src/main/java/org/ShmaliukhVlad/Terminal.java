@@ -1,8 +1,8 @@
 package org.ShmaliukhVlad;
 
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
-import org.ShmaliukhVlad.Bookshelf.Shelf;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
+import org.ShmaliukhVlad.bookshelf.Shelf;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,16 +14,17 @@ import java.util.*;
  * Class which gives user interactive interface
  */
 public class Terminal {
-    private final Shelf shelf;
-    private final Scanner scanner;
+    private Shelf shelf;
+    private Scanner scanner;
 
-    {
+    public Terminal(){
         scanner = new Scanner(System.in);
         shelf = new Shelf();
     }
 
-    public Terminal(){
-    }
+    private static final int booksSorting = 5;
+
+
 
     /**
      * Method which gives opportunity to choose command by entering number of item to execute
@@ -51,6 +52,7 @@ public class Terminal {
                     shelf.printSortedBooksByName();
                 }
                 else if(userChoice == 2){
+                    //printSortedObj(sortedArr)
                     System.out.println("Sorted by author");
                     shelf.printSortedBooksByAuthor();
                 }
@@ -192,7 +194,7 @@ public class Terminal {
                 }
             }
             else if(userChoice == 0){
-                System.out.println("Terminal END");
+                System.out.println("Terminal STOP");
                 play = false;
             }
         }
@@ -221,6 +223,8 @@ public class Terminal {
     private int getUserChoice(){
         return scanner.nextInt();
     }
+
+
 
     /**
      * Method which simply print main menu

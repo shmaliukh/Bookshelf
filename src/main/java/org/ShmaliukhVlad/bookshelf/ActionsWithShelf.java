@@ -1,6 +1,6 @@
-package org.ShmaliukhVlad.Bookshelf;
+package org.ShmaliukhVlad.bookshelf;
 
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 
 import java.io.IOException;
 
@@ -16,70 +16,58 @@ public interface ActionsWithShelf {
      * add element to the end of shelf objects
      * @param literature Book or Magazine object
      */
-    default void addLiteratureObject(Literature literature){
-    }
+    void addLiteratureObject(Literature literature);
 
     /**
      * This method for deleting Literature object (Book or Magazine) from the shelf by index
      * @param index index of Literature object in shelf need to delete
      */
-    default void deleteLiteratureObjectByIndex(int index){
-    }
+    void deleteLiteratureObjectByIndex(int index);
 
     /**
      * This method for borrowing Literature object (Book or Magazine) from the shelf by index
      * @param index index of Literature object in shelf need to borrow
      */
-    default void borrowLiteratureObjectFromShelfByIndex(int index) {
-    }
+    void borrowLiteratureObjectFromShelfByIndex(int index);
 
     /**
      * This method for arriving borrowed Literature object (Book or Magazine) back to the shelf by index
      * @param index index of Literature object out shelf need to arrive
      */
-    default void arriveLiteratureObjectFromShelfByIndex(int index) {
-    }
+    void arriveLiteratureObjectFromShelfByIndex(int index);
 
     /**
      * This method print info about magazines in shelf sorted by name
      */
-    default void printSortedMagazinesByName(){
-    }
-
+    void printSortedMagazinesByName();
     /**
      * This method print info about magazines in shelf sorted by pages
      */
-    default void printSortedMagazinesByPages(){
-    }
+    void printSortedMagazinesByPages();
 
     /**
      * This method print info about books in shelf sorted by name
      */
-    default void printSortedBooksByName(){
-    }
+    void printSortedBooksByName();
 
     /**
      * This method print info about books in shelf sorted by pages
      */
-    default void printSortedBooksByPages(){
-    }
+    void printSortedBooksByPages();
 
     /**
      * This method print info about books in shelf sorted by author
      */
-    default void printSortedBooksByAuthor(){
-    }
+    void printSortedBooksByAuthor();
 
     /**
      * This method print info about books in shelf sorted by date
      */
-    default void printSortedBooksByDate(){
-    }
+    void printSortedBooksByDate();
 
     /**
      * This method serialize all magazines and books in file
      * @throws IOException {@link IOException}
      */
-    default void saveShelfToFile() throws IOException {
-    }
+    void saveShelfToFile() throws IOException;
 }

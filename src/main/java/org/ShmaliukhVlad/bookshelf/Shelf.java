@@ -1,12 +1,11 @@
-package org.ShmaliukhVlad.Bookshelf;
+package org.ShmaliukhVlad.bookshelf;
 
 import jdk.jfr.Description;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -19,17 +18,20 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * This is Shelf class which simulates real shelf with books and magazines
  */
-public class Shelf implements ActionsWithShelf, Serializable {
+public class Shelf implements ActionsWithShelf{
 
     private List<Literature> literatureInShelf;
-    private final List<Literature> literatureOutShelf;
+    private List<Literature> literatureOutShelf;
 
-    {
-        literatureInShelf = new ArrayList<>();
-        literatureOutShelf= new ArrayList<>();
-    }
+    //{
+    //    literatureInShelf = new ArrayList<>();
+    //    literatureInShelf.add(new Magazine("1",1,false))
+    //    literatureOutShelf= new ArrayList<>();
+    //}
 
     public Shelf(){
+        literatureInShelf = new ArrayList<>();
+        literatureOutShelf= new ArrayList<>();
     }
 
     @Override
@@ -151,7 +153,7 @@ public class Shelf implements ActionsWithShelf, Serializable {
                         .filter((Literature o)-> o instanceof Book)
                         .sorted(Comparator.comparing((Literature o) -> {
                             if(o instanceof Book){
-                                return ((Book) o).getAuthor();
+                                return ((Book) o).getAuthor().toLowerCase();
                             }
                             return "";
                         }).thenComparingInt((Literature o) -> {
@@ -169,21 +171,9 @@ public class Shelf implements ActionsWithShelf, Serializable {
         System.out.println(
                 this.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Book)
-                        .sorted(Comparator.comparingInt((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getIssuanceDate().getYear();
-                            }
-                            return LocalDate.now().getYear();
-                        }).thenComparing((Literature o) -> {
-                            if(o instanceof Book){
-                                return ((Book) o).getIssuanceDate().getMonthValue();
-                            }
-                            return LocalDate.now().getMonthValue();
-                        }).thenComparing((Literature o) -> {
-                            if (o instanceof Book) {
-                                return ((Book) o).getIssuanceDate().getDayOfMonth();
-                            }
-                            return LocalDate.now().getDayOfMonth();
+                        .map(o -> (Book) o)
+                        .sorted(Comparator.comparingLong((Book o) -> {
+                                return o.getIssuanceDate().getYear(); // Todo.getLong();
                         }))
                         .collect(Collectors.toList())
         );

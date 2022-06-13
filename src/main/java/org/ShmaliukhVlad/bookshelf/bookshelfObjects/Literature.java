@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
+package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
 import java.io.Serializable;
 
@@ -20,6 +20,17 @@ public abstract class Literature implements Serializable {
         this.name = name;
         this.pagesNumber = pagesNumber;
         this.isBorrowed = isBorrowed;
+    }
+
+    public String getPrintableLineOfLiterature(){
+        //Todo
+        String tab2 = "\n\t\t";
+        String tab3 = "\n\t\t\t";
+        return tab2 + "Book{" +
+                tab3 + "name='" + name + '\'' +
+                tab3 + "pagesNumber=" + pagesNumber +
+                tab3 + "isBorrowed=" + isBorrowed +
+                tab2 + "}";
     }
 
 

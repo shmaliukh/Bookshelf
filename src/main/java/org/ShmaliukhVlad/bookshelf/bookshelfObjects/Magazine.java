@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.Bookshelf.Bookshelf_objects;
+package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
 /**
  * @author ShmaliukhVlad

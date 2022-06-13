@@ -1,10 +1,10 @@
 package org.ShmaliukhVlad;
 
 import jdk.jfr.Description;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Literature;
-import org.ShmaliukhVlad.Bookshelf.Shelf;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Book;
-import org.ShmaliukhVlad.Bookshelf.Bookshelf_objects.Magazine;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
+import org.ShmaliukhVlad.bookshelf.Shelf;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
@@ -252,6 +252,8 @@ class ShelfTest {
         shelf.addLiteratureObject(new Magazine("3",3,false));
         shelf.addLiteratureObject(new Book("4",4,false,"4",LocalDate.now()));
 
+
+        shelf.sor
         ArrayList<Literature> sortedShelf =
                 (ArrayList <Literature>) shelf.getLiteratureInShelf().stream()
                         .filter((Literature o)-> o instanceof Magazine)
