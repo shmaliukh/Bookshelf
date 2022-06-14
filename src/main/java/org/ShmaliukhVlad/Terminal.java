@@ -9,8 +9,12 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
+import static org.ShmaliukhVlad.ConstantValues.*;
+
 
 /**
+ * @author ShmaliukhVlad
+ * @version 1.1.3
  * Class which gives user interactive interface
  */
 public class Terminal {
@@ -25,29 +29,6 @@ public class Terminal {
         play = true;
     }
 
-    private static final int addNewLiterature = 1;
-    private static final int deleteLiterature = 2;
-    private static final int borrowLiterature = 3;
-    private static final int arriveLiterature = 4;
-    private static final int printSortedBooks = 5;
-    private static final int printSortedMagazines = 6;
-    private static final int saveShelfInFile = 7;
-    private static final int deserialize = 8;
-    private static final int printShelf = 9;
-    private static final int exit = 0;
-
-    private static final int addCustomMagazine = 1;
-    private static final int addCustomBook = 2;
-    private static final int addRandomMagazine = 3;
-    private static final int addRandomBook = 4;
-
-    private static final int sortBooksByName = 1;
-    private static final int sortBooksByPagesNumber = 2;
-    private static final int sortBooksByAuthor = 3;
-    private static final int sortBooksByDateOfIssue = 4;
-
-    private static final int sortMagazinesByName = 1;
-    private static final int sortMagazinesByPagesNumber = 2;
 
     /**
      * Method simulates Terminal work like a real one
@@ -71,38 +52,38 @@ public class Terminal {
         printMainMenu();
 
         switch (getUserChoice()){
-            case addNewLiterature:
-                printMenuForAddingLiterature();//ToDo
-                chooseTypeAndAddIt();
+            case ADD_NEW_LITERATURE:
+                printMenuForAddingLiterature();
+                chooseTypeAndAddIt(); //ToDo ???
                 break;
-            case deleteLiterature:
+            case DELETE_LITERATURE:
                 printMenuForDeletingLiterature();
                 shelf.deleteLiteratureObjectByIndex(getUserChoice());//ToDo
                 break;
-            case borrowLiterature:
+            case BORROW_LITERATURE:
                 printMenuForBorrowingLiterature();
                 shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
                 break;
-            case arriveLiterature:
+            case ARRIVE_LITERATURE:
                 printMenuForArrivingLiterature();
                 shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
                 break;
-            case printSortedBooks:
+            case PRINT_SORTED_BOOKS:
                 clarificationForSortingBooks();
                 break;
-            case printSortedMagazines:
+            case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
                 break;
-            case saveShelfInFile:
+            case SAVE_SHELF_IN_FILE:
                 saveShelf();
                 break;
-            case deserialize:
+            case DESERIALIZE:
                 deserializeShelf();
                 break;
-            case printShelf:
+            case PRINT_SHELF:
                 System.out.println(shelf);
                 break;
-            case exit:
+            case EXIT:
                 setPlay(false);
                 break;
             default:
@@ -146,12 +127,12 @@ public class Terminal {
     private void clarificationForSortingMagazines() {
         printMenuForMagazinesSorting();
         switch (getUserChoice()){
-            case sortMagazinesByName:
-                System.out.println("Sorted by name");
+            case SORT_MAGAZINES_BY_NAME:
+                System.out.println("Available magazines sorted by name");
                 shelf.printSortedMagazinesByName();
                 break;
-            case sortMagazinesByPagesNumber:
-                System.out.println("Sorted by pages");
+            case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                System.out.println("Available magazines sorted by pages");
                 shelf.printSortedMagazinesByPages();
                 break;
             default:
@@ -165,20 +146,20 @@ public class Terminal {
     private void clarificationForSortingBooks() {
         printMenuForBooksSorting();
         switch (getUserChoice()){
-            case sortBooksByName:
-                System.out.println("Sorted by name");
+            case SORT_BOOKS_BY_NAME:
+                System.out.println("Available books sorted by name");
                 shelf.printSortedBooksByName();
                 break;
-            case sortBooksByAuthor:
-                System.out.println("Sorted by author");
+            case SORT_BOOKS_BY_AUTHOR:
+                System.out.println("Available books sorted by author");
                 shelf.printSortedBooksByAuthor();
                 break;
-            case sortBooksByPagesNumber:
-                System.out.println("Sorted by pages");
+            case SORT_BOOKS_BY_PAGES_NUMBER:
+                System.out.println("Available books sorted by pages");
                 shelf.printSortedBooksByPages();
                 break;
-            case sortBooksByDateOfIssue:
-                System.out.println("Sorted by date of issue");
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                System.out.println("Available books sorted by date of issue");
                 shelf.printSortedBooksByDate();
                 break;
             default:
@@ -190,16 +171,20 @@ public class Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void printMenuForArrivingLiterature() {
-        System.out.println("Enter index of Literature object to arrive one:");
-        System.out.println(shelf.getLiteratureOutShelf());
+        System.out.println("Enter INDEX of Literature object to arrive one:");
+        for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
+            System.out.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+        }
     }
 
     /**
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void printMenuForBorrowingLiterature() {
-        System.out.println("Enter index of Literature object to borrow one:");
-        System.out.println(shelf.getLiteratureInShelf());
+        System.out.println("Enter INDEX of Literature object to borrow one:");
+        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
+            System.out.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+        }
     }
 
     /**
@@ -207,8 +192,9 @@ public class Terminal {
      */
     private void printMenuForDeletingLiterature() {
         System.out.println("Enter INDEX of Literature object to delete one:");
-        //Todo
-        System.out.println(shelf);
+        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
+            System.out.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+        }
     }
 
 
@@ -219,7 +205,7 @@ public class Terminal {
     private void chooseTypeAndAddIt() {
         switch (getUserChoice()){
             
-            case addCustomMagazine:
+            case ADD_CUSTOM_MAGAZINE:
                 Magazine userMagazineToAdd;
                 String name = "";
                 int pages = 0;
@@ -237,10 +223,9 @@ public class Terminal {
 
                 userMagazineToAdd = new Magazine(name, pages, isBorrowed);
                 shelf.addLiteratureObject(userMagazineToAdd);
-                System.out.println("New user Magazine has added to shelf");
                 break;
                 
-            case addCustomBook:
+            case ADD_CUSTOM_BOOK:
                 Book userBookToAdd;
                 isBorrowed = false;
                 String author = "";
@@ -258,27 +243,26 @@ public class Terminal {
                 System.out.println("Enter author:");
                 author = scanner.next();
 
-                System.out.println("Enter date of issue (format \"dd-MMM-yyyy\"):");
-                int day = scanner.nextInt();
+                System.out.println("Enter the year of issue:");
                 int year = scanner.nextInt();
+                System.out.println("Enter the day number of month of issue:");
+                int day = scanner.nextInt();
+                System.out.println("Enter the month number of issue:");
                 int month = scanner.nextInt();
                 dateOfIssue = LocalDate.of(year, month, day);
 
                 userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
                 shelf.addLiteratureObject(userBookToAdd);
-                System.out.println("New user Book has added to shelf");
                 break;
                 
-            case addRandomMagazine:
+            case ADD_RANDOM_MAGAZINE:
                 Magazine randomMagazine = getRandomMagazine();
                 shelf.addLiteratureObject(randomMagazine);
-                System.out.println("New random Magazine has added to shelf");
                 break;
                 
-            case addRandomBook:
+            case ADD_RANDOM_BOOK:
                 Book randomBook = getRandomBook();
                 shelf.addLiteratureObject(randomBook);
-                System.out.println("New random Book has added to shelf");
                 break;
 
             default:
@@ -343,13 +327,13 @@ public class Terminal {
     }
 
 
-
     /**
      * Method which simply print main menu
      */
     private void printMainMenu(){
         System.out.println(
                 """
+                        
                         Enter number of  command you wand to execute:
                         1 - Add new Literature object to Shelf
                         2 - Delete  Literature object by index from Shelf
@@ -369,6 +353,7 @@ public class Terminal {
     private void printMenuForBooksSorting(){
         System.out.println(
                 """
+                        Choose type of sorting:
                         1 - Sort by 'name' value
                         2 - Sort by 'author' value
                         3 - Sort by 'page number' value
@@ -382,6 +367,7 @@ public class Terminal {
     private void printMenuForMagazinesSorting(){
         System.out.println(
                 """
+                        Choose type of sorting:
                         1 - Sort by 'name' value
                         2 - Sort by 'page' value
                         Press another key to return\s""");
@@ -394,11 +380,11 @@ public class Terminal {
         System.out.println(
                 """
                          Choose type of literature you want to add:
-                         "1 - Magazine
-                         "2 - Book
-                         "3 - Random Magazine
-                         "4 - Random Book
-                         "Press another key to return\s""");
+                         1 - Magazine
+                         2 - Book
+                         3 - Random Magazine
+                         4 - Random Book
+                         Press another key to return\s""");
     }
 
     public boolean isPlay() {

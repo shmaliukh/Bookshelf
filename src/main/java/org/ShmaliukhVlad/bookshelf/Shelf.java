@@ -11,6 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.ShmaliukhVlad.ConstantValues.*;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -47,16 +49,14 @@ public class Shelf implements ActionsWithShelf{
      * Method simply inform user about added Literature object
      */
     private void informAboutAddedLiteratureObject(Literature literature) {
-        System.out.println("New literature object:");
-        System.out.println(literature);
-        System.out.println("has added to shelf");
+        System.out.println(literature + " has added to shelf");
     }
 
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
         if(!this.getLiteratureInShelf().isEmpty()){
-            if(index >= 0 && index < this.getLiteratureInShelf().size()){
-                informAboutDeletedLiteratureObject(this.getLiteratureInShelf().remove(index));
+            if(index >0 && index <= this.getLiteratureInShelf().size()){
+                informAboutDeletedLiteratureObject(this.getLiteratureInShelf().remove(index-1));
             }
             else {
                 System.out.println("Wrong index");
@@ -69,17 +69,15 @@ public class Shelf implements ActionsWithShelf{
      * Method simply inform user about deleted Literature object
      */
     private void informAboutDeletedLiteratureObject(Literature literature) {
-        System.out.println("literature object:");
-        System.out.println(literature);
-        System.out.println("has deleted from shelf");
+        System.out.println(literature + " has deleted from shelf");
     }
 
     @Override
     public void borrowLiteratureObjectFromShelfByIndex(int index) {
         Literature buffer;
         if(!this.getLiteratureInShelf().isEmpty()){
-            if(index >= 0 && index < this.getLiteratureInShelf().size()){
-                buffer = this.getLiteratureInShelf().remove(index);
+            if(index > 0 && index <= this.getLiteratureInShelf().size()){
+                buffer = this.getLiteratureInShelf().remove(index-1);
                 buffer.setBorrowed(true);
                 this.getLiteratureOutShelf().add(buffer);
                 informAboutBorrowedLiteratureObject(buffer);
@@ -95,17 +93,15 @@ public class Shelf implements ActionsWithShelf{
      * Method simply inform user about borrowed Literature object
      */
     private void informAboutBorrowedLiteratureObject(Literature literature) {
-        System.out.println("literature object:");
-        System.out.println(literature);
-        System.out.println("has borrowed from shelf");
+        System.out.println(literature + " has borrowed from shelf");
     }
 
     @Override
     public void arriveLiteratureObjectFromShelfByIndex(int index) {
         Literature buffer;
         if(!this.getLiteratureOutShelf().isEmpty()){
-            if(index >= 0 && index < this.getLiteratureOutShelf().size()){
-                buffer = this.getLiteratureOutShelf().remove(index);
+            if(index > 0 && index <= this.getLiteratureOutShelf().size()){
+                buffer = this.getLiteratureOutShelf().remove(index-1);
                 buffer.setBorrowed(false);
                 this.getLiteratureInShelf().add(buffer);
                 informAboutArrivedLiteratureObject(buffer);
@@ -121,39 +117,49 @@ public class Shelf implements ActionsWithShelf{
      * Method simply inform user about arrived Literature object
      */
     private void informAboutArrivedLiteratureObject(Literature literature) {
-        System.out.println("literature object:");
-        System.out.println(literature);
-        System.out.println("has arrived back to shelf");
+        System.out.println(literature + " has arrived back to shelf");
     }
 
     @Override
     public void printSortedMagazinesByName() {
-        System.out.println(getSortedMagazinesByName());
+        for (Magazine magazine : getSortedMagazinesByName()) {
+            System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+        }
     }
 
     @Override
     public void printSortedMagazinesByPages() {
-        System.out.println(getSortedMagazinesByPages());
+        for (Magazine magazine : getSortedMagazinesByPages()) {
+            System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
+        }
     }
 
     @Override
     public void printSortedBooksByName() {
-        System.out.println(getSortedBooksByName());
+        for (Book book : getSortedBooksByName()) {
+            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
+        }
     }
 
     @Override
     public void printSortedBooksByPages() {
-        System.out.println(getSortedBooksByPages());
+        for (Book book : getSortedBooksByPages()) {
+            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
+        }
     }
 
     @Override
     public void printSortedBooksByAuthor() {
-        System.out.println(getSortedBooksByAuthor());
+        for (Book book : getSortedBooksByAuthor()) {
+            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
+        }
     }
 
     @Override
     public void printSortedBooksByDate() {
-        System.out.println(getSortedBooksByDate());
+        for (Book book : getSortedBooksByDate()) {
+            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
+        }
     }
 
     /**
@@ -167,7 +173,7 @@ public class Shelf implements ActionsWithShelf{
                 .filter((Literature o) -> o instanceof Magazine)
                 .map(o -> (Magazine) o)
                 .sorted(Comparator.comparing(
-                                o -> ((Magazine) o).getName())
+                                o -> ((Magazine) o).getName().toLowerCase())
                         .thenComparing(
                                 o -> ((Magazine) o).getPagesNumber()))
                 .collect(Collectors.toList());
@@ -186,7 +192,7 @@ public class Shelf implements ActionsWithShelf{
                 .sorted(Comparator.comparing(
                                 o -> ((Magazine) o).getPagesNumber())
                         .thenComparing(
-                                o -> ((Magazine) o).getName()))
+                                o -> ((Magazine) o).getName().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
@@ -201,7 +207,7 @@ public class Shelf implements ActionsWithShelf{
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparing(
-                                o -> ((Book) o).getName())
+                                o -> ((Book) o).getName().toLowerCase())
                         .thenComparing(
                                 o -> ((Book) o).getPagesNumber()))
                 .collect(Collectors.toList());
@@ -220,7 +226,7 @@ public class Shelf implements ActionsWithShelf{
                 .sorted(Comparator.comparing(
                                 o -> ((Book) o).getPagesNumber())
                         .thenComparing(
-                                o -> ((Book) o).getName()))
+                                o -> ((Book) o).getName().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
@@ -253,7 +259,7 @@ public class Shelf implements ActionsWithShelf{
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o ->  ((Book) o).getIssuanceDate().toEpochDay())
+                                o -> ((Book) o).getIssuanceDate().toEpochDay())
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -339,7 +345,7 @@ public class Shelf implements ActionsWithShelf{
     public String toString() {
         String tab1 = "\n";
         String tab2 = "\n\t";
-        return  tab1 + "Shelf{" +
+        return  tab1 + "Shelf {" +
                 tab2 + "\n\tliteratureInShelf=" + literatureInShelf +
                 tab2 + "\n\tliteratureOutShelf=" + literatureOutShelf +
                 tab1 + "}";

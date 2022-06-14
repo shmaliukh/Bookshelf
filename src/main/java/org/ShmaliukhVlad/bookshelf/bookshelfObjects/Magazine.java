@@ -1,5 +1,8 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
+import static org.ShmaliukhVlad.ConstantValues.SORT_MAGAZINES_BY_NAME;
+import static org.ShmaliukhVlad.ConstantValues.SORT_MAGAZINES_BY_PAGES_NUMBER;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -20,12 +23,36 @@ public class Magazine extends Literature {
      */
     @Override
     public String toString() {
-        String tab2 = "\n\t\t";
-        String tab3 = "\n\t\t\t";
-        return  tab2 + "Magazine{" +
-                tab3 + "name='" + name + '\'' +
-                tab3 + "pagesNumber=" + pagesNumber +
-                tab3 + "isBorrowed=" + isBorrowed +
-                tab2 + '}';
+        return  "Magazine {" +
+                " name='" + name + '\'' +
+                " pagesNumber=" + pagesNumber +
+                " isBorrowed=" + isBorrowed +
+                " }\n";
+    }
+
+    /**
+     * Simple forming String about Magazine object in one line with necessary configuration
+     * @param typeOfLineConfig integer value of configuration we need
+     * sortMagazinesByName -> first printed value of Literature object is 'Name'
+     * sortMagazinesByPagesNumber -> first printed value of Literature object is 'pagesNumber'
+     * default -> return toString() method
+     */
+    @Override
+    public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
+        return switch (typeOfLineConfig) {
+            case SORT_MAGAZINES_BY_NAME ->
+                    "Magazine {" +
+                    " name='" + name + '\'' +
+                    " pagesNumber=" + pagesNumber +
+                    " isBorrowed=" + isBorrowed +
+                    " }\n";
+            case SORT_MAGAZINES_BY_PAGES_NUMBER ->
+                    "Magazine {" +
+                    " pagesNumber=" + pagesNumber +
+                    " name='" + name + '\'' +
+                    " isBorrowed=" + isBorrowed +
+                    " }\n";
+            default -> toString();
+        };
     }
 }

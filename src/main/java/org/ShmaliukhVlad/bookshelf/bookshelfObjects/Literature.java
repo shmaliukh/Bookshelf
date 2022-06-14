@@ -22,15 +22,23 @@ public abstract class Literature implements Serializable {
         this.isBorrowed = isBorrowed;
     }
 
-    public String getPrintableLineOfLiterature(){
-        //Todo
-        String tab2 = "\n\t\t";
-        String tab3 = "\n\t\t\t";
-        return tab2 + "Book{" +
-                tab3 + "name='" + name + '\'' +
-                tab3 + "pagesNumber=" + pagesNumber +
-                tab3 + "isBorrowed=" + isBorrowed +
-                tab2 + "}";
+    /**
+     * Simple forming String about Literature object in one line
+     * @return String about Literature object in one line.
+     * default -> return toString() method
+     */
+    public String getPrintableLineOfLiteratureObject(){
+        return  toString();
+    }
+
+    /**
+     * Simple forming String about Literature object in one line with necessary configuration
+     * @param typeOfLineConfig integer value of configuration we need
+     * @return String about Literature object in one line.
+     * default -> return toString() method
+     */
+    public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
+        return  toString();
     }
 
 
