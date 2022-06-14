@@ -1,6 +1,7 @@
 package org.ShmaliukhVlad;
 
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 
@@ -54,7 +55,7 @@ public class Terminal {
         switch (getUserChoice()){
             case ADD_NEW_LITERATURE:
                 printMenuForAddingLiterature();
-                chooseTypeAndAddIt(); //ToDo ???
+                addNewLiteratureObject(); //ToDo ???
                 break;
             case DELETE_LITERATURE:
                 printMenuForDeletingLiterature();
@@ -199,75 +200,86 @@ public class Terminal {
 
 
     /**
-     * Method give user ability to choose new Literature object type
-     * generate new Literature object (Magazine or Book) with user or random parameters (depends on user choice)
+     * Method give user ability to add new Literature object to Shelf
      */
-    private void chooseTypeAndAddIt() {
+    private void addNewLiteratureObject() {
         switch (getUserChoice()){
-            
             case ADD_CUSTOM_MAGAZINE:
-                Magazine userMagazineToAdd;
-                String name = "";
-                int pages = 0;
-                boolean isBorrowed = false;
-
-                System.out.println("Enter name:");
-                name = scanner.next();
-                System.out.println("Enter number of pages:");
-                pages = scanner.nextInt();
-                System.out.println("Enter 1 if Magazine is NOT borrowed");
-                System.out.println("Press another key to continue");
-                if(getUserChoice() == 1){
-                    isBorrowed = false;
-                }
-
-                userMagazineToAdd = new Magazine(name, pages, isBorrowed);
-                shelf.addLiteratureObject(userMagazineToAdd);
+                shelf.addLiteratureObject(getUserMagazine());
                 break;
-                
             case ADD_CUSTOM_BOOK:
-                Book userBookToAdd;
-                isBorrowed = false;
-                String author = "";
-                LocalDate dateOfIssue;
-
-                System.out.println("Enter name:");
-                name = scanner.next();
-                System.out.println("Enter number of pages:");
-                pages = scanner.nextInt();
-                System.out.println("Enter 1 if Book is NOT borrowed");
-                System.out.println("Press another key to continue");
-                if(getUserChoice() == 1){
-                    isBorrowed = false;
-                }
-                System.out.println("Enter author:");
-                author = scanner.next();
-
-                System.out.println("Enter the year of issue:");
-                int year = scanner.nextInt();
-                System.out.println("Enter the day number of month of issue:");
-                int day = scanner.nextInt();
-                System.out.println("Enter the month number of issue:");
-                int month = scanner.nextInt();
-                dateOfIssue = LocalDate.of(year, month, day);
-
-                userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
-                shelf.addLiteratureObject(userBookToAdd);
+                shelf.addLiteratureObject(getUserBook());
                 break;
-                
             case ADD_RANDOM_MAGAZINE:
-                Magazine randomMagazine = getRandomMagazine();
-                shelf.addLiteratureObject(randomMagazine);
+                shelf.addLiteratureObject(getRandomMagazine());
                 break;
-                
             case ADD_RANDOM_BOOK:
-                Book randomBook = getRandomBook();
-                shelf.addLiteratureObject(randomBook);
+                shelf.addLiteratureObject(getRandomBook());
                 break;
-
             default:
                 break;
         }
+    }
+
+    /**
+     * Method give ability to create custom Magazine
+     * @return user created Magazine
+     */
+    private Magazine getUserMagazine() {
+        Magazine userMagazineToAdd;
+        String name = "";
+        int pages = 0;
+        boolean isBorrowed = false;
+
+        System.out.println("Enter name:");
+        name = scanner.next();
+        System.out.println("Enter number of pages:");
+        pages = scanner.nextInt();
+        System.out.println("Enter 1 if Magazine is NOT borrowed");
+        System.out.println("Press another key to continue");
+        if(getUserChoice() == 1){
+            isBorrowed = false;
+        }
+
+        userMagazineToAdd = new Magazine(name, pages, isBorrowed);
+        return userMagazineToAdd;
+    }
+
+    /**
+     * Method give ability to create custom Book
+     * @return user created Book
+     */
+    private Book getUserBook() {
+        int pages;
+        String name;
+        boolean isBorrowed;
+        Book userBookToAdd;
+        isBorrowed = false;
+        String author = "";
+        LocalDate dateOfIssue;
+
+        System.out.println("Enter name:");
+        name = scanner.next();
+        System.out.println("Enter number of pages:");
+        pages = scanner.nextInt();
+        System.out.println("Enter 1 if Book is NOT borrowed");
+        System.out.println("Press another key to continue");
+        if(getUserChoice() == 1){
+            isBorrowed = false;
+        }
+        System.out.println("Enter author:");
+        author = scanner.next();
+
+        System.out.println("Enter the year of issue:");
+        int year = scanner.nextInt();
+        System.out.println("Enter the day number of month of issue:");
+        int day = scanner.nextInt();
+        System.out.println("Enter the month number of issue:");
+        int month = scanner.nextInt();
+        dateOfIssue = LocalDate.of(year, month, day);
+
+        userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
+        return userBookToAdd;
     }
 
     /**
