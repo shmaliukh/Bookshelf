@@ -1,6 +1,9 @@
 package org.ShmaliukhVlad.bookshelf;
 
 import jdk.jfr.Description;
+import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
+import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
+import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -11,14 +14,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.ShmaliukhVlad.ConstantValues.*;
+import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
  * This is Shelf class which simulates real shelf with books and magazines
  */
-public class Shelf implements ActionsWithShelf{
+public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;

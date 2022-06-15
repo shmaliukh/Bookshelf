@@ -1,7 +1,7 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import static org.ShmaliukhVlad.ConstantValues.SORT_MAGAZINES_BY_NAME;
-import static org.ShmaliukhVlad.ConstantValues.SORT_MAGAZINES_BY_PAGES_NUMBER;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_PAGES_NUMBER;
 
 /**
  * @author ShmaliukhVlad

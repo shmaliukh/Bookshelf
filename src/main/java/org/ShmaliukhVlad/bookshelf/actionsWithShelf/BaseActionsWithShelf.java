@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.bookshelf;
+package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 
@@ -9,7 +9,7 @@ import java.io.IOException;
  * @version 1.0.0
  * This is interface which describes all methods Shelf have to do
  */
-public interface ActionsWithShelf {
+public interface BaseActionsWithShelf {
 
     /**
      * This method for adding Literature object (Book or Magazine) to the shelf
@@ -35,35 +35,6 @@ public interface ActionsWithShelf {
      * @param index index of Literature object out shelf need to arrive
      */
     void arriveLiteratureObjectFromShelfByIndex(int index);
-
-    /**
-     * This method print info about magazines in shelf sorted by name
-     */
-    void printSortedMagazinesByName();
-    /**
-     * This method print info about magazines in shelf sorted by pages
-     */
-    void printSortedMagazinesByPages();
-
-    /**
-     * This method print info about books in shelf sorted by name
-     */
-    void printSortedBooksByName();
-
-    /**
-     * This method print info about books in shelf sorted by pages
-     */
-    void printSortedBooksByPages();
-
-    /**
-     * This method print info about books in shelf sorted by author
-     */
-    void printSortedBooksByAuthor();
-
-    /**
-     * This method print info about books in shelf sorted by date
-     */
-    void printSortedBooksByDate();
 
     /**
      * This method serialize all magazines and books in file

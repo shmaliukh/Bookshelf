@@ -2,10 +2,10 @@ package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
 import java.time.LocalDate;
 
-import static org.ShmaliukhVlad.ConstantValues.SORT_BOOKS_BY_NAME;
-import static org.ShmaliukhVlad.ConstantValues.SORT_BOOKS_BY_AUTHOR;
-import static org.ShmaliukhVlad.ConstantValues.SORT_BOOKS_BY_PAGES_NUMBER;
-import static org.ShmaliukhVlad.ConstantValues.SORT_BOOKS_BY_DATE_OF_ISSUE;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_AUTHOR;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_PAGES_NUMBER;
+import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_ISSUE;
 
 
 /**

@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad;
+package org.ShmaliukhVlad.constants;
 
 /**
  * @author ShmaliukhVlad
