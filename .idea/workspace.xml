@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.1.3&#10;code refactor + menu fix">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.1.4&#10;refactored menu item for adding Literature object">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/ConstantValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/ConstantValues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Magazine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Magazine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +32,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2ALlorqZwGIOImd2CAbnoR6apUv" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -70,7 +78,7 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.org.ShmaliukhVlad.Main">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
@@ -150,7 +158,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.org.ShmaliukhVlad.Main" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ShelfTest.sortedBooksByDateOfIssue" />
         <item itemvalue="JUnit.TerminalTest.getRandomString" />
         <item itemvalue="JUnit.ShelfTest.saveShelfFile" />
@@ -175,7 +183,9 @@
       <workItem from="1655051038363" duration="2731000" />
       <workItem from="1655053807582" duration="654000" />
       <workItem from="1655115689456" duration="20018000" />
-      <workItem from="1655200115112" duration="9903000" />
+      <workItem from="1655200115112" duration="10858000" />
+      <workItem from="1655236068668" duration="2827000" />
+      <workItem from="1655287515300" duration="8375000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -338,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655210020634</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="v 1.1.4&#10;refactored menu item for adding Literature object">
+      <created>1655211226147</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1655211226147</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,7 +373,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1" />
     <MESSAGE value="first" />
     <MESSAGE value="v 0.1.0" />
     <MESSAGE value="v 0.1.1 &#10;Terminal mod + ability to add new book or magazine ( + random add)" />
@@ -381,7 +397,8 @@
     <MESSAGE value="v 1.1.1&#10;Class Terminal code refactored" />
     <MESSAGE value="v 1.1.2&#10;code refactor" />
     <MESSAGE value="v 1.1.3&#10;code refactor + menu fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.3&#10;code refactor + menu fix" />
+    <MESSAGE value="v 1.1.4&#10;refactored menu item for adding Literature object" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.4&#10;refactored menu item for adding Literature object" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

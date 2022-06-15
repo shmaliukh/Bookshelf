@@ -25,8 +25,8 @@ public class Magazine extends Literature {
     public String toString() {
         return  "Magazine {" +
                 " name='" + name + '\'' +
-                " pagesNumber=" + pagesNumber +
-                " isBorrowed=" + isBorrowed +
+                ", pagesNumber=" + pagesNumber +
+                ", isBorrowed=" + isBorrowed +
                 " }\n";
     }
 
@@ -43,14 +43,14 @@ public class Magazine extends Literature {
             case SORT_MAGAZINES_BY_NAME ->
                     "Magazine {" +
                     " name='" + name + '\'' +
-                    " pagesNumber=" + pagesNumber +
-                    " isBorrowed=" + isBorrowed +
+                    ",  pagesNumber=" + pagesNumber +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             case SORT_MAGAZINES_BY_PAGES_NUMBER ->
                     "Magazine {" +
                     " pagesNumber=" + pagesNumber +
-                    " name='" + name + '\'' +
-                    " isBorrowed=" + isBorrowed +
+                    ",  name='" + name + '\'' +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             default -> toString();
         };

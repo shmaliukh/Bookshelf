@@ -18,7 +18,7 @@ public abstract class Literature implements Serializable {
      */
     public Literature(String name, int pagesNumber, boolean isBorrowed) {
         this.name = name;
-        this.pagesNumber = pagesNumber;
+        setPagesNumber(pagesNumber);
         this.isBorrowed = isBorrowed;
     }
 

@@ -35,10 +35,10 @@ public class Book extends Literature{
     public String toString() {
         return "Book {" +
                " name='" + name + '\'' +
-               " pagesNumber=" + pagesNumber +
-               " author='" + author + '\'' +
-               " issuanceDate=" + issuanceDate +
-               " isBorrowed=" + isBorrowed +
+               ", pagesNumber=" + pagesNumber +
+               ", author='" + author + '\'' +
+               ", issuanceDate=" + issuanceDate +
+               ", isBorrowed=" + isBorrowed +
                " }\n";
     }
 
@@ -59,34 +59,34 @@ public class Book extends Literature{
             case SORT_BOOKS_BY_NAME ->
                     "Book {" +
                     " name='" + name + '\'' +
-                    " pagesNumber=" + pagesNumber +
-                    " author='" + author + '\'' +
-                    " issuanceDate=" + issuanceDate +
-                    " isBorrowed=" + isBorrowed +
+                    ",  pagesNumber=" + pagesNumber +
+                    ",  author='" + author + '\'' +
+                    ",  issuanceDate=" + issuanceDate +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             case SORT_BOOKS_BY_PAGES_NUMBER ->
                     "Book {" +
                     " pagesNumber=" + pagesNumber +
-                    " name='" + name + '\'' +
-                    " author='" + author + '\'' +
-                    " issuanceDate=" + issuanceDate +
-                    " isBorrowed=" + isBorrowed +
+                    ",  name='" + name + '\'' +
+                    ",  author='" + author + '\'' +
+                    ",  issuanceDate=" + issuanceDate +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             case SORT_BOOKS_BY_AUTHOR ->
                     "Book {" +
                     " author='" + author + '\'' +
-                    " name='" + name + '\'' +
-                    " pagesNumber=" + pagesNumber +
-                    " issuanceDate=" + issuanceDate +
-                    " isBorrowed=" + isBorrowed +
+                    ",  name='" + name + '\'' +
+                    ",  pagesNumber=" + pagesNumber +
+                    ",  issuanceDate=" + issuanceDate +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             case SORT_BOOKS_BY_DATE_OF_ISSUE ->
                     "Book {" +
                     " issuanceDate=" + issuanceDate +
-                    " name='" + name + '\'' +
-                    " author='" + author + '\'' +
-                    " pagesNumber=" + pagesNumber +
-                    " isBorrowed=" + isBorrowed +
+                    ",  name='" + name + '\'' +
+                    ",  author='" + author + '\'' +
+                    ",  pagesNumber=" + pagesNumber +
+                    ",  isBorrowed=" + isBorrowed +
                     " }\n";
             default -> toString();
         };

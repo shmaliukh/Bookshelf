@@ -3,7 +3,7 @@ package org.ShmaliukhVlad;
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
- * This is special abstract class which contains all constants value in project
+ * This is a special abstract class which contains all constants value in project
  */
 public final class ConstantValues {
 
@@ -30,4 +30,8 @@ public final class ConstantValues {
 
     public static final int SORT_MAGAZINES_BY_NAME = 1;
     public static final int SORT_MAGAZINES_BY_PAGES_NUMBER = 2;
+
+    public static final int SAVE_CURRENT_STATE_OF_SHELF = 1;
+
+    public static final int WRONG_INPUT = -1;
 }

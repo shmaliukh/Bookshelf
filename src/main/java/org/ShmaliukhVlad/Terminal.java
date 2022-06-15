@@ -1,7 +1,6 @@
 package org.ShmaliukhVlad;
 
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
-import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 
@@ -21,7 +20,7 @@ import static org.ShmaliukhVlad.ConstantValues.*;
 public class Terminal {
     private boolean play;
 
-    private Shelf shelf;
+    private final Shelf shelf;
     private Scanner scanner;
 
     public Terminal(){
@@ -29,7 +28,6 @@ public class Terminal {
         shelf = new Shelf();
         play = true;
     }
-
 
     /**
      * Method simulates Terminal work like a real one
@@ -40,8 +38,6 @@ public class Terminal {
         while (isPlay()){
             generateUserInterface();
         }
-
-        System.out.println("Terminal STOP");
     }
 
     /**
@@ -52,43 +48,69 @@ public class Terminal {
     private void generateUserInterface() {
         printMainMenu();
 
-        switch (getUserChoice()){
-            case ADD_NEW_LITERATURE:
+        switch (getUserChoice()) {
+            case ADD_NEW_LITERATURE -> {
                 printMenuForAddingLiterature();
                 addNewLiteratureObject(); //ToDo ???
-                break;
-            case DELETE_LITERATURE:
+            }
+            case DELETE_LITERATURE -> {
                 printMenuForDeletingLiterature();
                 shelf.deleteLiteratureObjectByIndex(getUserChoice());//ToDo
-                break;
-            case BORROW_LITERATURE:
+            }
+            case BORROW_LITERATURE -> {
                 printMenuForBorrowingLiterature();
                 shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
-                break;
-            case ARRIVE_LITERATURE:
+            }
+            case ARRIVE_LITERATURE -> {
                 printMenuForArrivingLiterature();
                 shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
-                break;
-            case PRINT_SORTED_BOOKS:
-                clarificationForSortingBooks();
-                break;
-            case PRINT_SORTED_MAGAZINES:
-                clarificationForSortingMagazines();
-                break;
-            case SAVE_SHELF_IN_FILE:
-                saveShelf();
-                break;
-            case DESERIALIZE:
-                deserializeShelf();
-                break;
-            case PRINT_SHELF:
-                System.out.println(shelf);
-                break;
-            case EXIT:
-                setPlay(false);
-                break;
-            default:
-                break;
+            }
+            case PRINT_SORTED_BOOKS -> clarificationForSortingBooks();
+            case PRINT_SORTED_MAGAZINES -> clarificationForSortingMagazines();
+            case SAVE_SHELF_IN_FILE -> saveShelf();
+            case DESERIALIZE -> deserializeShelf();
+            case PRINT_SHELF -> printCurrentStateOfShelf();
+            case EXIT -> closeTerminal();
+            case WRONG_INPUT -> System.out.println("Wrong input");
+            default -> {System.out.println("Wrong input");
+            }
+        }
+    }
+
+    /**
+     * Method print info Shelf and it's Literature objects
+     */
+    private void printCurrentStateOfShelf() {
+        String tab = "\t";
+        System.out.println("Current state of Shelf:");
+        System.out.println("literature IN {");
+        shelf.getLiteratureInShelf()
+                .forEach(o -> System.out.print(tab + o.getPrintableLineOfLiteratureObject()));
+        System.out.println("}");
+        System.out.println("literature OUT {");
+        shelf.getLiteratureOutShelf()
+                .forEach(o -> System.out.print(tab + o.getPrintableLineOfLiteratureObject()));
+        System.out.println("}");
+    }
+
+    /**
+     * Method close current terminal
+     */
+    private void closeTerminal() {
+        askUserIfNeedToSaveShelf();
+        setPlay(false);
+        System.out.println("Terminal STOP");
+    }
+
+    /**
+     * Method gives a choice to save the current state of the shelf
+     */
+    private void askUserIfNeedToSaveShelf() {
+        System.out.println("Do you want to record the current state of the shelf?");
+        System.out.println("Enter '1' if you want to save");
+        System.out.println("Press another key to exit without saving");
+        if(getUserChoice() == SAVE_CURRENT_STATE_OF_SHELF){
+            saveShelf();
         }
     }
 
@@ -127,17 +149,15 @@ public class Terminal {
      */
     private void clarificationForSortingMagazines() {
         printMenuForMagazinesSorting();
-        switch (getUserChoice()){
-            case SORT_MAGAZINES_BY_NAME:
-                System.out.println("Available magazines sorted by name");
+        switch (getUserChoice()) {
+            case SORT_MAGAZINES_BY_NAME -> {
                 shelf.printSortedMagazinesByName();
-                break;
-            case SORT_MAGAZINES_BY_PAGES_NUMBER:
-                System.out.println("Available magazines sorted by pages");
+            }
+            case SORT_MAGAZINES_BY_PAGES_NUMBER -> {
                 shelf.printSortedMagazinesByPages();
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 
@@ -146,25 +166,21 @@ public class Terminal {
      */
     private void clarificationForSortingBooks() {
         printMenuForBooksSorting();
-        switch (getUserChoice()){
-            case SORT_BOOKS_BY_NAME:
-                System.out.println("Available books sorted by name");
+        switch (getUserChoice()) {
+            case SORT_BOOKS_BY_NAME -> {
                 shelf.printSortedBooksByName();
-                break;
-            case SORT_BOOKS_BY_AUTHOR:
-                System.out.println("Available books sorted by author");
+            }
+            case SORT_BOOKS_BY_AUTHOR -> {
                 shelf.printSortedBooksByAuthor();
-                break;
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                System.out.println("Available books sorted by pages");
+            }
+            case SORT_BOOKS_BY_PAGES_NUMBER -> {
                 shelf.printSortedBooksByPages();
-                break;
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                System.out.println("Available books sorted by date of issue");
+            }
+            case SORT_BOOKS_BY_DATE_OF_ISSUE -> {
                 shelf.printSortedBooksByDate();
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
     }
 
@@ -203,21 +219,13 @@ public class Terminal {
      * Method give user ability to add new Literature object to Shelf
      */
     private void addNewLiteratureObject() {
-        switch (getUserChoice()){
-            case ADD_CUSTOM_MAGAZINE:
-                shelf.addLiteratureObject(getUserMagazine());
-                break;
-            case ADD_CUSTOM_BOOK:
-                shelf.addLiteratureObject(getUserBook());
-                break;
-            case ADD_RANDOM_MAGAZINE:
-                shelf.addLiteratureObject(getRandomMagazine());
-                break;
-            case ADD_RANDOM_BOOK:
-                shelf.addLiteratureObject(getRandomBook());
-                break;
-            default:
-                break;
+        switch (getUserChoice()) {
+            case ADD_CUSTOM_MAGAZINE -> shelf.addLiteratureObject(getUserMagazine());
+            case ADD_CUSTOM_BOOK -> shelf.addLiteratureObject(getUserBook());
+            case ADD_RANDOM_MAGAZINE -> shelf.addLiteratureObject(getRandomMagazine());
+            case ADD_RANDOM_BOOK -> shelf.addLiteratureObject(getRandomBook());
+            default -> {
+            }
         }
     }
 
@@ -227,14 +235,14 @@ public class Terminal {
      */
     private Magazine getUserMagazine() {
         Magazine userMagazineToAdd;
-        String name = "";
-        int pages = 0;
-        boolean isBorrowed = false;
+        String name;
+        int pages;
+        boolean isBorrowed = true;
 
         System.out.println("Enter name:");
-        name = scanner.next();
+        name = getUserString();
         System.out.println("Enter number of pages:");
-        pages = scanner.nextInt();
+        pages = getUserInteger();
         System.out.println("Enter 1 if Magazine is NOT borrowed");
         System.out.println("Press another key to continue");
         if(getUserChoice() == 1){
@@ -254,32 +262,83 @@ public class Terminal {
         String name;
         boolean isBorrowed;
         Book userBookToAdd;
-        isBorrowed = false;
-        String author = "";
+        isBorrowed = true;
+        String author;
         LocalDate dateOfIssue;
 
         System.out.println("Enter name:");
-        name = scanner.next();
+        name = getUserString();
         System.out.println("Enter number of pages:");
-        pages = scanner.nextInt();
+        pages = getUserInteger();
         System.out.println("Enter 1 if Book is NOT borrowed");
         System.out.println("Press another key to continue");
         if(getUserChoice() == 1){
             isBorrowed = false;
         }
         System.out.println("Enter author:");
-        author = scanner.next();
+        author = getUserString();
 
-        System.out.println("Enter the year of issue:");
-        int year = scanner.nextInt();
-        System.out.println("Enter the day number of month of issue:");
-        int day = scanner.nextInt();
-        System.out.println("Enter the month number of issue:");
-        int month = scanner.nextInt();
-        dateOfIssue = LocalDate.of(year, month, day);
+        dateOfIssue = getUserDateOfIssue();
 
         userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
         return userBookToAdd;
+    }
+
+    /**
+     * Method ask user to enter year, month and day of Literature issue
+     * @return LocalDate of Literature object issue
+     */
+    private LocalDate getUserDateOfIssue() {
+        int year = getYear();
+        int month = getMonth();
+        int day = getDay();
+        return LocalDate.of(year,month,day);
+    }
+
+    /**
+     * Method ask user to enter month of Literature issue
+     * @return Int month of issue
+     * between 1 and 12 (included)
+     */
+    private int getMonth() {
+        System.out.println("Enter the month number of issue:");
+        int input = getUserInteger();
+        if(input >= 1 && input <= 12){
+            return input;
+        }
+        System.out.println("Wrong input month (from 1 to 12) try again");
+        return getMonth();
+    }
+
+    /**
+     * Method ask user to enter day of Literature issue
+     * @return Int day of issue
+     * between 1 and 31 (included)
+     */
+    //ToDo date
+    private int getDay() {
+        System.out.println("Enter the number of month of issue:");
+        int input = getUserInteger();
+        if(input >= 1 && input <= 31){
+            return input;
+        }
+        System.out.println("Wrong input number of day (from 1 to 12) try again");
+        return getDay();
+    }
+
+    /**
+     * Method ask user to enter year of Literature issue
+     * @return Int year of issue
+     * between 1 and Number of current year (included)
+     */
+    private int getYear() {
+        System.out.println("Enter the year of issue:");
+        int input = getUserInteger();
+        if(input >= 1 && input <= LocalDate.now().getYear()){
+            return input;
+        }
+        System.out.println("Wrong input year (from 1 to current year) try again");
+        return getYear();
     }
 
     /**
@@ -332,10 +391,28 @@ public class Terminal {
 
     /**
      * Method which gives opportunity to get user choice by entered integer value in console
-     * @return entered integer value in console
+     * @return entered integer value from console
      */
-    private int getUserChoice(){
-        return scanner.nextInt();
+    private int getUserChoice(){ // ToDo
+        scanner = new Scanner(System.in);
+        return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
+    }
+
+    /**
+     * Method which gives opportunity to get user String by entered symbols value in console
+     * @return entered String value from console
+     */
+    private String getUserString(){// ToDo
+        scanner = new Scanner(System.in);
+        return scanner.hasNextLine() ? scanner.nextLine() : "Default";
+    }
+    /**
+     * Method which gives opportunity to get user Integer by entered integer value in console
+     * @return entered Integer value from console
+     */
+    private int getUserInteger(){// ToDo
+        scanner = new Scanner(System.in);
+        return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
     }
 
 

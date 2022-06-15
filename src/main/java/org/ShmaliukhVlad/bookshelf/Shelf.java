@@ -122,43 +122,79 @@ public class Shelf implements ActionsWithShelf{
 
     @Override
     public void printSortedMagazinesByName() {
-        for (Magazine magazine : getSortedMagazinesByName()) {
-            System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+        if(getSortedMagazinesByName().isEmpty()){
+            System.out.println("No available magazines in Shelf");
+        }
+        else {
+            System.out.println("Available magazines sorted by name:");
+            for (Magazine magazine : getSortedMagazinesByName()) {
+                System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+            }
         }
     }
 
     @Override
     public void printSortedMagazinesByPages() {
-        for (Magazine magazine : getSortedMagazinesByPages()) {
-            System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
+        if(getSortedMagazinesByPages().isEmpty()){
+            System.out.println("No available magazines in Shelf");
+        }
+        else {
+            System.out.println("Available magazines sorted by pages:");
+            for (Magazine magazine : getSortedMagazinesByPages()) {
+                System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
+            }
         }
     }
 
     @Override
     public void printSortedBooksByName() {
-        for (Book book : getSortedBooksByName()) {
-            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
+        if(getSortedBooksByName().isEmpty()){
+            System.out.println("No available books in Shelf");
+        }
+        else {
+            System.out.println("Available books sorted by name:");
+            for (Book book : getSortedBooksByName()) {
+                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
+            }
         }
     }
 
     @Override
     public void printSortedBooksByPages() {
-        for (Book book : getSortedBooksByPages()) {
-            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
+        if(getSortedBooksByPages().isEmpty()){
+            System.out.println("No available books in Shelf");
+        }
+        else {
+            System.out.println("Available books sorted by pages:");
+            for (Book book : getSortedBooksByPages()) {
+                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
+            }
         }
     }
 
     @Override
     public void printSortedBooksByAuthor() {
-        for (Book book : getSortedBooksByAuthor()) {
-            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
+        if(getSortedBooksByAuthor().isEmpty()){
+            System.out.println("No available books in Shelf");
+        }
+        else {
+            System.out.println("Available books sorted by author:");
+            for (Book book : getSortedBooksByAuthor()) {
+                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
+            }
         }
     }
 
     @Override
     public void printSortedBooksByDate() {
-        for (Book book : getSortedBooksByDate()) {
-            System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
+        if(getSortedBooksByDate().isEmpty()){
+            System.out.println("No available books in Shelf");
+        }
+        else {
+            System.out.println("Available books sorted by date of issue:");
+            for (Book book : getSortedBooksByDate()) {
+                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
+            }
         }
     }
 
@@ -269,37 +305,26 @@ public class Shelf implements ActionsWithShelf{
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile() throws IOException {
+    public void saveShelfToFile() throws IOException { // Todo
         final String fileName = "shelf.out";
-        FileOutputStream   fileOutputStream   = null;
-        ObjectOutputStream objectOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(fileName);
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
-            ObjectOutputStream finalObjectOutputStream = objectOutputStream;
-            this.getLiteratureInShelf().stream().forEach(literature -> {
+            this.getLiteratureInShelf().forEach(literature -> {
                 try {
-                    finalObjectOutputStream.writeObject(literature);
+                    objectOutputStream.writeObject(literature);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
-            this.getLiteratureOutShelf().stream().forEach(literature -> {
+            this.getLiteratureOutShelf().forEach(literature -> {
                 try {
-                    finalObjectOutputStream.writeObject(literature);
+                    objectOutputStream.writeObject(literature);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
             System.out.println("File '" + fileName + "' has been written");
-        }finally {
-            if (objectOutputStream != null) {
-                objectOutputStream.close();
-            }
-            if (fileOutputStream != null) {
-                fileOutputStream.close();
-            }
         }
     }
 
@@ -308,32 +333,20 @@ public class Shelf implements ActionsWithShelf{
      */
     public void deserialize() throws IOException, ClassNotFoundException {
         final String fileName = "shelf.out";
-        FileInputStream fileInputStream = null;
-        ObjectInputStream objectInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(fileName);
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            try
-            {
-                while(true){
+        try (FileInputStream fileInputStream = new FileInputStream(fileName);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            try {
+                while (true) {
                     Literature literatureBuff = (Literature) objectInputStream.readObject();
                     this.addLiteratureObject(literatureBuff);
                 }
-            }
-            catch(EOFException e) {
+            } catch (EOFException e) {
                 //eof - no error in this case
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } finally {
             System.out.println(this);
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
-            if (objectInputStream != null) {
-                objectInputStream.close();
-            }
         }
     }
 
@@ -342,13 +355,11 @@ public class Shelf implements ActionsWithShelf{
      * @return String about Shelf object
      */
     @Override
-    public String toString() {
-        String tab1 = "\n";
-        String tab2 = "\n\t";
-        return  tab1 + "Shelf {" +
-                tab2 + "\n\tliteratureInShelf=" + literatureInShelf +
-                tab2 + "\n\tliteratureOutShelf=" + literatureOutShelf +
-                tab1 + "}";
+    public String toString() {// Todo
+        return  "Shelf {" +
+                "\n\tliteratureInShelf=" + literatureInShelf +
+                "\n\tliteratureOutShelf=" + literatureOutShelf +
+                "}";
     }
 
     //getters and setters
