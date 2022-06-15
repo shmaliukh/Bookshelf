@@ -16,11 +16,6 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShelfTest {
-    //@BeforeClass
-    //public static void globalSetUp() {
-    //    System.out.println("Initial setup...");
-    //    System.out.println("Code executes only once");
-    //}
 
     @Test
     @DisplayName("Add one NOT borrowed Book to empty Shelf")
