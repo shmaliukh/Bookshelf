@@ -27,8 +27,8 @@ class ActionsWithBooksTest {
 
     Shelf shelf1 = new Shelf();
 
-    /**
-     * Adding books in revers order
+    /*
+      Adding books in revers order
      */
     {
         shelf1.addLiteratureObject(book3);

@@ -24,7 +24,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
     private List<Literature> literatureInShelf;
-    private List<Literature> literatureOutShelf;
+    private final List<Literature> literatureOutShelf;
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();

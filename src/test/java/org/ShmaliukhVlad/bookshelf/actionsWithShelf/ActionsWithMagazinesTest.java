@@ -2,13 +2,10 @@ package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
 import jdk.jfr.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
-import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,8 +25,8 @@ class ActionsWithMagazinesTest {
 
     Shelf shelf1 = new Shelf();
 
-    /**
-     * Adding magazines in revers order
+    /*
+      Adding magazines in revers order
      */
     {
         shelf1.addLiteratureObject(magazine3);
