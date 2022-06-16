@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithMagazinesTest {
-    Magazine magazine1 = new Magazine("noNameBook1",1,false);
-    Magazine magazine2 = new Magazine("noNameBook2",2,false);
-    Magazine magazine3 = new Magazine("noNameBook3",3,true);
+    Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
+    Magazine magazine2 = new Magazine("noNameMagazine2",2,false);
+    Magazine magazine3 = new Magazine("noNameMagazine3",3,true);
 
-    Magazine expectedMagazine1 = new Magazine("noNameBook1",1,false);
-    Magazine expectedMagazine2 = new Magazine("noNameBook2",2,false);
+    Magazine expectedMagazine1 = new Magazine("noNameMagazine1",1,false);
+    Magazine expectedMagazine2 = new Magazine("noNameMagazine2",2,false);
 
     /**
      * The magazine3 is not expected to be included for sorting

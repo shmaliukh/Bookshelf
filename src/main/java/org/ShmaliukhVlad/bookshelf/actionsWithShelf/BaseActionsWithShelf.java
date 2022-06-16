@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
- * This is interface which describes all methods Shelf have to do
+ * This is interface which describes all base methods Shelf have to do
  */
 public interface BaseActionsWithShelf {
 

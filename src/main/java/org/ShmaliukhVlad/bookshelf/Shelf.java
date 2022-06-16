@@ -89,7 +89,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 System.out.println("Wrong index");
             }
         }
-        else System.out.println("Empty shelf");
+        else System.out.println("No available literature");
     }
 
     /**
@@ -113,7 +113,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 System.out.println("Wrong index");
             }
         }
-        else System.out.println("No borrowed literature object");
+        else System.out.println("Literature is not borrowed");
     }
 
     /**

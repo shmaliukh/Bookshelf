@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.1.7&#10;tests for literature objects methods">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.1.8&#10;tests for actions with books and magazines">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooks.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazines.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazines.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/MagazineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/MagazineTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,8 +84,8 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ActionsWithMagazinesTest">
-    <configuration name="ActionsWithBooksTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.BaseActionsWithShelfTest.saveShelfToFile">
+    <configuration name="BaseActionsWithShelfTest.arriveLiteratureObjectByIndex_book" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -94,29 +94,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooksTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ActionsWithBooksTest.printSortedBooksByDate" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Bookshelf_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooksTest" />
-      <option name="METHOD_NAME" value="printSortedBooksByDate" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelfTest" />
+      <option name="METHOD_NAME" value="arriveLiteratureObjectByIndex_book" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ActionsWithBooksTest.printSortedBooksByName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BaseActionsWithShelfTest.arriveLiteratureObjectByIndex_magazine" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -125,14 +110,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooksTest" />
-      <option name="METHOD_NAME" value="printSortedBooksByName" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelfTest" />
+      <option name="METHOD_NAME" value="arriveLiteratureObjectByIndex_magazine" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ActionsWithBooksTest.printSortedBooksByPages" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BaseActionsWithShelfTest.arriveLiteratureObjectFromShelfByIndex_noBorrowed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -141,14 +126,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooksTest" />
-      <option name="METHOD_NAME" value="printSortedBooksByPages" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelfTest" />
+      <option name="METHOD_NAME" value="arriveLiteratureObjectFromShelfByIndex_noBorrowed" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ActionsWithMagazinesTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BaseActionsWithShelfTest.arriveLiteratureObjectFromShelfByIndex_wrongIndex" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -157,19 +142,36 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazinesTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelfTest" />
+      <option name="METHOD_NAME" value="arriveLiteratureObjectFromShelfByIndex_wrongIndex" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BaseActionsWithShelfTest.saveShelfToFile" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelfTest" />
+      <option name="METHOD_NAME" value="saveShelfToFile" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ActionsWithMagazinesTest" />
-        <item itemvalue="JUnit.ActionsWithBooksTest.printSortedBooksByName" />
-        <item itemvalue="JUnit.ActionsWithBooksTest" />
-        <item itemvalue="JUnit.ActionsWithBooksTest.printSortedBooksByDate" />
-        <item itemvalue="JUnit.ActionsWithBooksTest.printSortedBooksByPages" />
+        <item itemvalue="JUnit.BaseActionsWithShelfTest.saveShelfToFile" />
+        <item itemvalue="JUnit.BaseActionsWithShelfTest.arriveLiteratureObjectByIndex_magazine" />
+        <item itemvalue="JUnit.BaseActionsWithShelfTest.arriveLiteratureObjectByIndex_book" />
+        <item itemvalue="JUnit.BaseActionsWithShelfTest.arriveLiteratureObjectFromShelfByIndex_noBorrowed" />
+        <item itemvalue="JUnit.BaseActionsWithShelfTest.arriveLiteratureObjectFromShelfByIndex_wrongIndex" />
       </list>
     </recent_temporary>
   </component>
@@ -193,7 +195,7 @@
       <workItem from="1655200115112" duration="10858000" />
       <workItem from="1655236068668" duration="2827000" />
       <workItem from="1655287515300" duration="16271000" />
-      <workItem from="1655364130842" duration="3543000" />
+      <workItem from="1655364130842" duration="11166000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -384,7 +386,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655308469686</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="v 1.1.8&#10;tests for actions with books and magazines">
+      <created>1655367741773</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1655367741773</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -402,7 +411,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 0.1.2 &#10;deprecate some methods" />
     <MESSAGE value="v 0.1.3&#10;add method 'remove by index' for Terminal&#10;add realization for getting current state of Shelf(in main menu)" />
     <MESSAGE value="v 0.1.4&#10;add (pre) realization for sorting Magazine objects in the Shelf BY PAGES (in main menu)" />
     <MESSAGE value="v 0.1.5&#10;add realizations for sorting Shelf Literature objects &#10;add tests for sorting realization&#10;(sort by Date for Books is not works)" />
@@ -427,7 +435,8 @@
     <MESSAGE value="v 1.1.5&#10;menu bugs fix" />
     <MESSAGE value="v 1.1.6&#10;structure of project refactoring" />
     <MESSAGE value="v 1.1.7&#10;tests for literature objects methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.7&#10;tests for literature objects methods" />
+    <MESSAGE value="v 1.1.8&#10;tests for actions with books and magazines" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.1.8&#10;tests for actions with books and magazines" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

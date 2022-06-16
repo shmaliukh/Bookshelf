@@ -1,5 +1,10 @@
 package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
+/**
+ * @author ShmaliukhVlad
+ * @version 1.0.0
+ * This is interface which describes all methods Shelf have to do with Magazines
+ */
 public interface ActionsWithMagazines {
     /**
      * This method print info about magazines in shelf sorted by name
