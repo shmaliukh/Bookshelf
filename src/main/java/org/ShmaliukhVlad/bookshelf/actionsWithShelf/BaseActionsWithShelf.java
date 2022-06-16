@@ -41,4 +41,5 @@ public interface BaseActionsWithShelf {
      * @throws IOException {@link IOException}
      */
     void saveShelfToFile() throws IOException;
+
 }

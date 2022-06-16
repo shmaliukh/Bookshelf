@@ -17,52 +17,65 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShelfTest {
 
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1",LocalDate.now());
+    Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now());
+    Book book3 = new Book("noNameBook3",3,true,"NoAuthor3",LocalDate.now());
+
+    Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
+    Magazine magazine2 = new Magazine("noNameMagazine2",2,false);
+    Magazine magazine3 = new Magazine("noNameMagazine3",3,true);
+
+
     @Test
     @DisplayName("Add one NOT borrowed Book to empty Shelf")
     @Description("Simple add one Book which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookToShelf_0() {
+        String expectedName = "noNameBook1";
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
         shelf1.addLiteratureObject(book1);
 
-        assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Book
-            && shelf1.getLiteratureOutShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureOutShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Book);
+        assertEquals(expectedName, shelf1.getLiteratureInShelf().get(0).getName());
     }
 
     @Test
     @DisplayName("Add one borrowed Book to empty  Shelf")
     @Description("Simple add one Book which is borrowed (isBorrowed = true) to empty Shelf")
     void addBookToShelf_1() {
+        String expectedName = "noNameBook3";
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,true,"NoAuthor1",LocalDate.now());
-        shelf1.addLiteratureObject(book1);
+        shelf1.addLiteratureObject(book3);
 
-        assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Book
-                && shelf1.getLiteratureInShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureInShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Book);
+        assertEquals(expectedName, shelf1.getLiteratureOutShelf().get(0).getName());
     }
 
     @Test
-    @DisplayName("Add one NOT borrowed Magazine to empty  Shelf")
+    @DisplayName("Add one NOT borrowed Magazine to empty Shelf")
     @Description("Simple add one Magazine which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addMagazineToShelf_0() {
+        String expectedName = "noNameMagazine1";
         Shelf shelf1 = new Shelf();
-        Magazine magazine1 = new Magazine("1",1,false);
         shelf1.addLiteratureObject(magazine1);
 
-        assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Magazine
-                && shelf1.getLiteratureOutShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureOutShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Magazine);
+        assertEquals(expectedName, shelf1.getLiteratureInShelf().get(0).getName());
     }
 
     @Test
     @DisplayName("Add one borrowed Magazine to empty Shelf")
     @Description("Simple add one Magazine which is borrowed (isBorrowed = true) to empty Shelf")
     void addMagazineToShelf_1() {
+        String expectedName = "noNameMagazine3";
         Shelf shelf1 = new Shelf();
-        Magazine magazine1 = new Magazine("1",1,true);
-        shelf1.addLiteratureObject(magazine1);
+        shelf1.addLiteratureObject(magazine3);
 
-        assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Magazine
-                && shelf1.getLiteratureInShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureInShelf().isEmpty());
+        assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Magazine);
+        assertEquals(expectedName, shelf1.getLiteratureOutShelf().get(0).getName());
     }
 
     @Test
@@ -84,7 +97,7 @@ class ShelfTest {
     @Description("Simple add one Book and one Magazine which are NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_1() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
+
         Magazine magazine1 = new Magazine("4",4,false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);

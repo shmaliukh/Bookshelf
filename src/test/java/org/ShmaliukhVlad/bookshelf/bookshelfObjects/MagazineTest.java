@@ -51,7 +51,6 @@ class MagazineTest {
         assertEquals(expectedStr, magazine1.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
     }
 
-
     @Test
     @DisplayName("test getName")
     void getName() {
@@ -76,7 +75,6 @@ class MagazineTest {
 
         assertEquals(expectedNumber, magazine1.getPagesNumber());
     }
-
 
     @Test
     @DisplayName("test setPagesNumber (set -1)")

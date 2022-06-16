@@ -10,5 +10,4 @@ public interface ActionsWithMagazines {
      */
     void printSortedMagazinesByPages();
 
-
 }
