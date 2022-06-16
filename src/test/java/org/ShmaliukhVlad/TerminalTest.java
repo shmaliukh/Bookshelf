@@ -17,7 +17,7 @@ class TerminalTest {
     ByteArrayInputStream in = new ByteArrayInputStream("My string".getBytes());
 
     @Test
-    @DisplayName("test which simulates user via terminal")
+    @DisplayName("test simulates user terminal")
     void startWork() {
         Terminal terminal = new Terminal();
         terminal.startWork();
