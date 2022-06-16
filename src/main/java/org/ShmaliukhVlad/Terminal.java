@@ -12,7 +12,6 @@ import java.util.*;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
-
 /**
  * @author ShmaliukhVlad
  * @version 1.1.3
@@ -416,7 +415,7 @@ public class Terminal {
      * Method which gives opportunity to get user choice by entered integer value in console
      * @return entered integer value from console
      */
-    private int getUserChoice(){ // ToDo
+    private int getUserChoice(){
         scanner = new Scanner(System.in);
         return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
     }
@@ -425,7 +424,7 @@ public class Terminal {
      * Method which gives opportunity to get user String by entered symbols value in console
      * @return entered String value from console
      */
-    private String getUserString(){// ToDo
+    private String getUserString(){
         scanner = new Scanner(System.in);
         return scanner.hasNextLine() ? scanner.nextLine() : "Default";
     }
@@ -433,7 +432,7 @@ public class Terminal {
      * Method which gives opportunity to get user Integer by entered integer value in console
      * @return entered Integer value from console
      */
-    private int getUserInteger(){// ToDo
+    private int getUserInteger(){
         scanner = new Scanner(System.in);
         return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
     }

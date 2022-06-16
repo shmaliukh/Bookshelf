@@ -358,7 +358,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      * @return String about Shelf object
      */
     @Override
-    public String toString() {// Todo
+    public String toString() {
         return  "Shelf {" +
                 "\n\tliteratureInShelf=" + literatureInShelf +
                 "\n\tliteratureOutShelf=" + literatureOutShelf +

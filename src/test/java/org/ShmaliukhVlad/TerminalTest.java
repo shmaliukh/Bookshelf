@@ -20,7 +20,7 @@ class TerminalTest {
     PrintStream old = System.out;
 
     @Test
-    @DisplayName("test state of terminal start") //TODO
+    @DisplayName("test state of terminal start")
     void startWork() {
         String expectedString = """
                         
