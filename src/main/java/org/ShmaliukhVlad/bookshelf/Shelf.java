@@ -24,7 +24,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
     private List<Literature> literatureInShelf;
-    private final List<Literature> literatureOutShelf;
+    private List<Literature> literatureOutShelf;
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();
@@ -309,7 +309,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     @Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToFile() throws IOException { // Todo
-        final String fileName = "shelf.out";
+        final String fileName = FILE_NAME;
         try (FileOutputStream fileOutputStream = new FileOutputStream(fileName);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
@@ -335,21 +335,21 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      * Deserialization Shelf and it's Literature objects
      */
     public void deserialize() throws IOException, ClassNotFoundException {
-        final String fileName = "shelf.out";
+        final String fileName = FILE_NAME;
         try (FileInputStream fileInputStream = new FileInputStream(fileName);
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-            try {
-                while (true) {
-                    Literature literatureBuff = (Literature) objectInputStream.readObject();
-                    this.addLiteratureObject(literatureBuff);
-                }
-            } catch (EOFException e) {
-                //eof - no error in this case
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } finally {
-            System.out.println(this);
+             this.setLiteratureInShelf(new ArrayList<>());
+             this.setLiteratureOutShelf(new ArrayList<>());
+             try {
+                 while (true) {
+                     Literature literatureBuff = (Literature) objectInputStream.readObject();
+                     this.addLiteratureObject(literatureBuff);
+                 }
+             } catch (EOFException e) {
+                 //eof - no error in this case
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
         }
     }
 
@@ -376,5 +376,9 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     public List<Literature> getLiteratureOutShelf() {
         return literatureOutShelf;
+    }
+
+    public void setLiteratureOutShelf(List<Literature> literatureOutShelf) {
+        this.literatureOutShelf = literatureOutShelf;
     }
 }

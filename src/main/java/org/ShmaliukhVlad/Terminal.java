@@ -4,6 +4,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -51,19 +52,19 @@ public class Terminal {
         switch (getUserChoice()) {
             case ADD_NEW_LITERATURE -> {
                 printMenuForAddingLiterature();
-                addNewLiteratureObject(); //ToDo ???
+                addNewLiteratureObject();
             }
             case DELETE_LITERATURE -> {
                 printMenuForDeletingLiterature();
-                shelf.deleteLiteratureObjectByIndex(getUserChoice());//ToDo
+                shelf.deleteLiteratureObjectByIndex(getUserChoice());
             }
             case BORROW_LITERATURE -> {
                 printMenuForBorrowingLiterature();
-                shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
+                shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
             }
             case ARRIVE_LITERATURE -> {
                 printMenuForArrivingLiterature();
-                shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());//ToDo
+                shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
             }
             case PRINT_SORTED_BOOKS -> clarificationForSortingBooks();
             case PRINT_SORTED_MAGAZINES -> clarificationForSortingMagazines();
@@ -72,8 +73,7 @@ public class Terminal {
             case PRINT_SHELF -> printCurrentStateOfShelf();
             case EXIT -> closeTerminal();
             case WRONG_INPUT -> System.out.println("Wrong input");
-            default -> {System.out.println("Wrong input");
-            }
+            default -> System.out.println("Wrong input");
         }
     }
 
@@ -117,30 +117,53 @@ public class Terminal {
     /**
      * Method deserializes all Literature objects from .out file save in current Shelf.
      */
-    private void deserializeShelf() {// ToDo
-        try {
-            shelf.deserialize();
-            System.out.println("Deserialized");
-        } catch (IOException e) {
-            //System.out.println("Serialization error");
-            System.err.println("Deserialization error");
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    private void deserializeShelf() {
+        System.out.println("If you need get saving from file '" + FILE_NAME + "'");
+        System.out.println("you LOOSE ALL INFO about current SHELF");
+        System.out.println("If you need to rewrite it enter '1'");
+        System.out.println("Press another key to return");
+        switch (getUserChoice()){
+            case READ_FILE ->{
+                try {
+                    shelf.deserialize();
+                    System.out.println("Deserialized");
+                } catch (IOException e) {
+                    //System.out.println("Serialization error");
+                    System.err.println("Deserialization error");
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            default ->{
+                System.out.println("Deserialization canceled");
+            }
         }
+        System.out.println();
+        printCurrentStateOfShelf();
     }
 
     /**
      * Method serializes all Shelf's Literature objects in .out file.
      */
-    private void saveShelf() {// ToDo
-        try {
-            shelf.saveShelfToFile();
-            System.out.println("Serialized");
-        } catch (IOException e) {
-            //System.out.println("Serialization error");
-            System.err.println("Serialization error");
-            throw new RuntimeException(e);
+    private void saveShelf() {
+        File file = new File(FILE_NAME);
+        int userChoice = REWRITE_FILE;
+        if(file.exists()){
+            System.out.println("File " + FILE_NAME + " contains info about previous saving");
+            System.out.println("If you need to rewrite it enter '1'");
+            System.out.println("Press another key to return");
+            userChoice =getUserChoice();
+        }
+        if(userChoice == REWRITE_FILE) {
+            System.out.println("Shelf will be save as '" + FILE_NAME + "'");
+            try {
+                shelf.saveShelfToFile();
+            } catch (IOException e) {
+                System.out.println("Saving error");
+                System.err.println("Serialization error");
+                throw new RuntimeException(e);
+            }
         }
     }
 
