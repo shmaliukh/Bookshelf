@@ -1,5 +1,6 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
+
 import java.time.LocalDate;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
@@ -101,8 +102,8 @@ public class Book extends Literature{
         this.author = author;
     }
 
-    public String getIssuanceDate() {
-        return issuanceDate.toString();
+    public LocalDate getIssuanceDate() {
+        return issuanceDate;
     }
 
     public void setIssuanceDate(LocalDate issuanceDate) {

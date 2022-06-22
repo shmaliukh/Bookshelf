@@ -1,11 +1,14 @@
 package org.ShmaliukhVlad;
 
+import com.google.gson.*;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -508,3 +511,4 @@ public class Terminal {
         this.play = play;
     }
 }
+

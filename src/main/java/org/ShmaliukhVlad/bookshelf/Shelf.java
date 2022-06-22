@@ -1,9 +1,8 @@
 package org.ShmaliukhVlad.bookshelf;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import jdk.jfr.Description;
-import org.ShmaliukhVlad.CustomConverter;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
@@ -12,8 +11,11 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -301,7 +303,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> Long.parseLong(((Book) o).getIssuanceDate().toLowerCase()))
+                                o -> Long.parseLong(String.valueOf(((Book) o).getIssuanceDate().toEpochDay())))
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -344,16 +346,21 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
              ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
              this.setLiteratureInShelf(new ArrayList<>());
              this.setLiteratureOutShelf(new ArrayList<>());
-             try {
-                 while (true) {
-                     Literature literatureBuff = (Literature) objectInputStream.readObject();
-                     this.addLiteratureObject(literatureBuff);
-                 }
-             } catch (EOFException e) {
-                 //eof - no error in this case
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
+
+             Gson gson = new Gson();
+             Magazine magazine = gson.fromJson(FILE_NAME, Magazine.class);
+             this.addLiteratureObject(magazine);
+
+             //try {
+             //    while (true) {
+             //        Literature literatureBuff = (Literature) objectInputStream.readObject();
+             //        this.addLiteratureObject(literatureBuff);
+             //    }
+             //} catch (EOFException e) {
+             //    //eof - no error in this case
+             //} catch (IOException e) {
+             //    e.printStackTrace();
+             //}
         }
     }
 
@@ -385,4 +392,48 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public void setLiteratureOutShelf(List<Literature> literatureOutShelf) {
         this.literatureOutShelf = literatureOutShelf;
     }
+}
+
+
+class CustomConverter implements JsonSerializer<Literature>, JsonDeserializer<Literature> {
+    @Override
+    public JsonElement serialize(Literature literature,
+                                 Type type,
+                                 JsonSerializationContext jsonSerializationContext) {
+
+        JsonObject object = new JsonObject();
+
+        object.addProperty("name", literature.getName());
+        object.addProperty("pagesNumber", literature.getPagesNumber());
+        object.addProperty("isBorrowed", literature.isBorrowed());
+
+        if(literature instanceof Book){
+            object.addProperty("author", ((Book) literature).getAuthor());
+            object.addProperty("year", ((Book) literature).getIssuanceDate().getYear());
+            object.addProperty("month", ((Book) literature).getIssuanceDate().getMonthValue());
+            object.addProperty("day", ((Book) literature).getIssuanceDate().getDayOfMonth());
+        }
+        return object;
+    }
+
+    @Override
+    public Literature deserialize(JsonElement jsonElement,
+                                  Type type,
+                                  JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        LocalDate localDate = LocalDate.of(
+                jsonObject.get("year").getAsInt(),
+                jsonObject.get("month").getAsInt(),
+                jsonObject.get("day").getAsInt()
+        );
+
+        return new Magazine(
+                jsonObject.get("name").getAsString(),
+                jsonObject.get("pagesNumber").getAsInt(),
+                jsonObject.get("isBorrowed").getAsBoolean());
+    }
+
+
 }
