@@ -13,11 +13,10 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
@@ -316,25 +315,49 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public void saveShelfToFile() throws IOException {
         final String fileName = FILE_NAME;
 
-        GsonBuilder builder = new GsonBuilder();
-        builder.registerTypeAdapter(Literature.class, new CustomConverter());
-        Gson gson = builder.setPrettyPrinting().create();
+        //GsonBuilder builder = new GsonBuilder();
+        //builder.registerTypeAdapter(Literature.class, new CustomConverter());
+        //Gson gson = builder.setPrettyPrinting().create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                //.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .create();
+        try {
+            Writer writer = new FileWriter(fileName);
 
-        try (FileOutputStream fos = new FileOutputStream(fileName);
-             OutputStreamWriter isr = new OutputStreamWriter(fos,
-                     StandardCharsets.UTF_8)) {
-
-            for (Literature literature : this.literatureInShelf) {
-                gson.toJson(literature, isr);
-            }
-            for (Literature literature : this.literatureOutShelf) {
-                gson.toJson(literature, isr);
-            }
-            //gson.toJson(this.getLiteratureInShelf(), isr);
-            //gson.toJson(this.getLiteratureOutShelf(), isr);
-
+            new Gson().toJson(this.literatureInShelf, writer);
+            writer.close();
             System.out.println("File '" + fileName + "' has been written");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        //try (FileOutputStream fos = new FileOutputStream(fileName);
+        //     OutputStreamWriter isr = new OutputStreamWriter(fos,
+        //             StandardCharsets.UTF_8)) {
+//
+        //    gson.toJson(newJsonArray(this.literatureInShelf), isr);
+        //    gson.toJson(newJsonArray(this.literatureOutShelf), isr);
+        //    //for (Literature literature : this.literatureInShelf) {
+        //    //    gson.toJson(literature, isr);
+        //    //}
+        //    //for (Literature literature : this.literatureOutShelf) {
+        //    //    gson.toJson(literature, isr);
+        //    //}
+        //    //gson.toJson(this.getLiteratureInShelf(), isr);
+        //    //gson.toJson(this.getLiteratureOutShelf(), isr);
+//
+        //
+        //}
+    }
+
+    public JsonArray newJsonArray(List<Literature> list) {
+        final JsonArray jsonArray = new JsonArray();
+        for(Literature element : list)
+        {
+            jsonArray.add(String.valueOf(element));
+        }
+        return jsonArray;
     }
 
     /**
@@ -342,26 +365,34 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      */
     public void deserialize() throws IOException, ClassNotFoundException {
         final String fileName = FILE_NAME;
-        try (FileInputStream fileInputStream = new FileInputStream(fileName);
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-             this.setLiteratureInShelf(new ArrayList<>());
-             this.setLiteratureOutShelf(new ArrayList<>());
 
-             Gson gson = new Gson();
-             Magazine magazine = gson.fromJson(FILE_NAME, Magazine.class);
-             this.addLiteratureObject(magazine);
+        Gson gson = new GsonBuilder().create();
+        Path path = new File(fileName).toPath();
 
-             //try {
-             //    while (true) {
-             //        Literature literatureBuff = (Literature) objectInputStream.readObject();
-             //        this.addLiteratureObject(literatureBuff);
-             //    }
-             //} catch (EOFException e) {
-             //    //eof - no error in this case
-             //} catch (IOException e) {
-             //    e.printStackTrace();
-             //}
+        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            this.literatureInShelf = new ArrayList<>();
+            //this.literatureInShelf = new ArrayList<>();
+
+            Magazine arr [] = gson.fromJson(reader, Magazine[].class);
+
+            Arrays.stream(arr).forEach(e -> {
+                this.addLiteratureObject(e);
+                System.out.println(e);
+            });
         }
+
+        //try {
+        //    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        //    Reader reader = Files.newBufferedReader(Path.of(fileName));
+//
+        //    Magazine magazine = gson.fromJson(reader, Magazine.class);
+        //    this.addLiteratureObject(magazine);
+//
+        //    reader.close();
+//
+        //} catch (Exception ex) {
+        //    ex.printStackTrace();
+        //}
     }
 
     /**
