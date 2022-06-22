@@ -35,7 +35,7 @@ public final class ConstantValues {
 
     public static final int WRONG_INPUT = -1;
 
-    public static final String FILE_NAME = "shelf.out";
+    public static final String FILE_NAME = "shelf.txt";
     public static final int REWRITE_FILE = 1;
     public static final int READ_FILE = 1;
 }

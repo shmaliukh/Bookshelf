@@ -146,6 +146,7 @@ public class Terminal {
      * Method serializes all Shelf's Literature objects in .out file.
      */
     private void saveShelf() {
+
         File file = new File(FILE_NAME);
         int userChoice = REWRITE_FILE;
         if(file.exists()){
@@ -469,7 +470,8 @@ public class Terminal {
                         2 - Sort by 'author' value
                         3 - Sort by 'page number' value
                         4 - Sort by 'date' value
-                        Press another key to return\s""");
+                        Press another key to return\s
+                          """);
     }
 
     /**

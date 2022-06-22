@@ -17,6 +17,7 @@ public class Book extends Literature{
     private String author;
     private LocalDate issuanceDate;
 
+
     /**
      * Constructor for creating Book object
      */
@@ -100,8 +101,8 @@ public class Book extends Literature{
         this.author = author;
     }
 
-    public LocalDate getIssuanceDate() {
-        return issuanceDate;
+    public String getIssuanceDate() {
+        return issuanceDate.toString();
     }
 
     public void setIssuanceDate(LocalDate issuanceDate) {

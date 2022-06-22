@@ -9,8 +9,8 @@ import java.io.Serializable;
  */
 public abstract class Literature implements Serializable {
 
-    protected String name;
-    protected int pagesNumber;
+    protected String  name;
+    protected int     pagesNumber;
     protected boolean isBorrowed;
 
     /**

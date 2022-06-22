@@ -1,6 +1,9 @@
 package org.ShmaliukhVlad.bookshelf;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jdk.jfr.Description;
+import org.ShmaliukhVlad.CustomConverter;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
@@ -9,6 +12,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -178,12 +182,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedBooksByAuthor() {
         if(getSortedBooksByAuthor().isEmpty()){
-            System.out.println("No available books in Shelf");
+                 System.out.println("No available books in Shelf");
         }
         else {
             System.out.println("Available books sorted by author:");
             for (Book book : getSortedBooksByAuthor()) {
-                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
+                        System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
             }
         }
     }
@@ -263,9 +267,8 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparing(
-                                o -> ((Book) o).getPagesNumber())
-                        .thenComparing(
-                                o -> ((Book) o).getName().toLowerCase()))
+                                Book::getPagesNumber)
+                        .thenComparing(Book::getName))
                 .collect(Collectors.toList());
     }
 
@@ -298,7 +301,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> ((Book) o).getIssuanceDate().toEpochDay())
+                                o -> Long.parseLong(((Book) o).getIssuanceDate().toLowerCase()))
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -308,25 +311,26 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile() throws IOException { // Todo
+    public void saveShelfToFile() throws IOException {
         final String fileName = FILE_NAME;
-        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
-            this.getLiteratureInShelf().forEach(literature -> {
-                try {
-                    objectOutputStream.writeObject(literature);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            this.getLiteratureOutShelf().forEach(literature -> {
-                try {
-                    objectOutputStream.writeObject(literature);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Literature.class, new CustomConverter());
+        Gson gson = builder.setPrettyPrinting().create();
+
+        try (FileOutputStream fos = new FileOutputStream(fileName);
+             OutputStreamWriter isr = new OutputStreamWriter(fos,
+                     StandardCharsets.UTF_8)) {
+
+            for (Literature literature : this.literatureInShelf) {
+                gson.toJson(literature, isr);
+            }
+            for (Literature literature : this.literatureOutShelf) {
+                gson.toJson(literature, isr);
+            }
+            //gson.toJson(this.getLiteratureInShelf(), isr);
+            //gson.toJson(this.getLiteratureOutShelf(), isr);
+
             System.out.println("File '" + fileName + "' has been written");
         }
     }
