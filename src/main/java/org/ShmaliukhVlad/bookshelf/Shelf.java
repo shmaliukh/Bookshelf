@@ -373,12 +373,19 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
             this.literatureInShelf = new ArrayList<>();
             //this.literatureInShelf = new ArrayList<>();
 
+
             Magazine arr [] = gson.fromJson(reader, Magazine[].class);
 
             Arrays.stream(arr).forEach(e -> {
                 this.addLiteratureObject(e);
-                System.out.println(e);
             });
+
+            //Type collectionType = new TypeToken<Collection<Magazine>>(){}.getType();
+            //Collection<Magazine> ints2 = gson.fromJson(reader, collectionType);
+            //ints2.forEach(e -> {
+            //    System.out.println(e);
+            //});
+
         }
 
         //try {
