@@ -1,7 +1,6 @@
 package org.ShmaliukhVlad.bookshelf;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import jdk.jfr.Description;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
@@ -16,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +30,8 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
+
+    Gson gson;
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();
@@ -302,7 +304,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> Long.parseLong(String.valueOf(((Book) o).getIssuanceDate().toEpochDay())))
+                                o -> Long.parseLong(((Book) o).getIssuanceDate()))
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -315,49 +317,52 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public void saveShelfToFile() throws IOException {
         final String fileName = FILE_NAME;
 
-        //GsonBuilder builder = new GsonBuilder();
-        //builder.registerTypeAdapter(Literature.class, new CustomConverter());
-        //Gson gson = builder.setPrettyPrinting().create();
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                //.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-                .create();
         try {
             Writer writer = new FileWriter(fileName);
 
-            new Gson().toJson(this.literatureInShelf, writer);
+            gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(Book.class, new BookSerializer())
+                    .registerTypeAdapter(DateSerializer.class, new DateSerializer())
+                    .create();
+            new Gson().toJson(getBooks(), writer);
+
+            gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
+            new Gson().toJson(getMagazines(), writer);
             writer.close();
             System.out.println("File '" + fileName + "' has been written");
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        //try (FileOutputStream fos = new FileOutputStream(fileName);
-        //     OutputStreamWriter isr = new OutputStreamWriter(fos,
-        //             StandardCharsets.UTF_8)) {
-//
-        //    gson.toJson(newJsonArray(this.literatureInShelf), isr);
-        //    gson.toJson(newJsonArray(this.literatureOutShelf), isr);
-        //    //for (Literature literature : this.literatureInShelf) {
-        //    //    gson.toJson(literature, isr);
-        //    //}
-        //    //for (Literature literature : this.literatureOutShelf) {
-        //    //    gson.toJson(literature, isr);
-        //    //}
-        //    //gson.toJson(this.getLiteratureInShelf(), isr);
-        //    //gson.toJson(this.getLiteratureOutShelf(), isr);
-//
-        //
-        //}
     }
 
-    public JsonArray newJsonArray(List<Literature> list) {
-        final JsonArray jsonArray = new JsonArray();
-        for(Literature element : list)
-        {
-            jsonArray.add(String.valueOf(element));
-        }
-        return jsonArray;
+    private List<Book> getBooks() {
+        List <Book> arrBooks = new ArrayList<>();
+        arrBooks.addAll(this.literatureInShelf.stream()
+                .filter((Literature o)-> o instanceof Book)
+                .map(o -> (Book) o)
+                .collect(Collectors.toList()));
+        arrBooks.addAll(this.literatureOutShelf.stream()
+                        .filter((Literature o)-> o instanceof Book)
+                        .map(o -> (Book) o)
+                        .collect(Collectors.toList()));
+        return arrBooks;
+    }
+
+    private List<Magazine> getMagazines() {
+        List <Magazine> arrMagazines = new ArrayList<>();
+        arrMagazines.addAll(this.literatureInShelf.stream()
+                .filter((Literature o)-> o instanceof Magazine)
+                .map(o -> (Magazine) o)
+                .collect(Collectors.toList()));
+        arrMagazines.addAll(this.literatureOutShelf.stream()
+                .filter((Literature o)-> o instanceof Magazine)
+                .map(o -> (Magazine) o)
+                .collect(Collectors.toList()));
+        return arrMagazines;
     }
 
     /**
@@ -371,35 +376,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             this.literatureInShelf = new ArrayList<>();
-            //this.literatureInShelf = new ArrayList<>();
+            this.literatureInShelf = new ArrayList<>();
 
+            Book arrBooks [] = gson.fromJson(reader, Book[].class);
+            Magazine arrMagazine [] = gson.fromJson(reader, Magazine[].class);
 
-            Magazine arr [] = gson.fromJson(reader, Magazine[].class);
-
-            Arrays.stream(arr).forEach(e -> {
+            Arrays.stream(arrBooks).forEach(e -> {
                 this.addLiteratureObject(e);
             });
-
-            //Type collectionType = new TypeToken<Collection<Magazine>>(){}.getType();
-            //Collection<Magazine> ints2 = gson.fromJson(reader, collectionType);
-            //ints2.forEach(e -> {
-            //    System.out.println(e);
-            //});
-
+            Arrays.stream(arrMagazine).forEach(e -> {
+                this.addLiteratureObject(e);
+            });
         }
-
-        //try {
-        //    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        //    Reader reader = Files.newBufferedReader(Path.of(fileName));
-//
-        //    Magazine magazine = gson.fromJson(reader, Magazine.class);
-        //    this.addLiteratureObject(magazine);
-//
-        //    reader.close();
-//
-        //} catch (Exception ex) {
-        //    ex.printStackTrace();
-        //}
     }
 
     /**
@@ -447,9 +435,9 @@ class CustomConverter implements JsonSerializer<Literature>, JsonDeserializer<Li
 
         if(literature instanceof Book){
             object.addProperty("author", ((Book) literature).getAuthor());
-            object.addProperty("year", ((Book) literature).getIssuanceDate().getYear());
-            object.addProperty("month", ((Book) literature).getIssuanceDate().getMonthValue());
-            object.addProperty("day", ((Book) literature).getIssuanceDate().getDayOfMonth());
+            object.addProperty("year", ((Book) literature).getYear());
+            object.addProperty("month", ((Book) literature).getMonth());
+            object.addProperty("day", ((Book) literature).getDay());
         }
         return object;
     }
@@ -472,6 +460,7 @@ class CustomConverter implements JsonSerializer<Literature>, JsonDeserializer<Li
                 jsonObject.get("pagesNumber").getAsInt(),
                 jsonObject.get("isBorrowed").getAsBoolean());
     }
-
-
 }
+
+
+

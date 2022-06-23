@@ -1,7 +1,10 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDate;
+import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_AUTHOR;
@@ -14,8 +17,9 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_I
  * This is Book class which gives ability to create objects
  */
 public class Book extends Literature{
-
+    @SerializedName("Author")
     private String author;
+    @SerializedName("Date")
     private LocalDate issuanceDate;
 
 
@@ -102,11 +106,28 @@ public class Book extends Literature{
         this.author = author;
     }
 
-    public LocalDate getIssuanceDate() {
-        return issuanceDate;
+    public String getIssuanceDate() {
+        int year = issuanceDate.getYear();
+        int month = issuanceDate.getMonthValue();
+        int day = issuanceDate.getDayOfMonth();
+        final LocalDate date = LocalDate.of(year, month, day);
+        return date.toString();
     }
 
     public void setIssuanceDate(LocalDate issuanceDate) {
         this.issuanceDate = issuanceDate;
     }
+
+    public int getYear() {
+        return issuanceDate.getYear();
+    }
+
+    public int getMonth() {
+
+        return issuanceDate.getMonthValue();
+    }
+    public int getDay() {
+        return issuanceDate.getDayOfMonth();
+    }
+
 }
