@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.2.0&#10;new version ready for user">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/BookSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/DateSerializer.java" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.2.2&#10;book serializer problem">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/DateGsonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/BookSerializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/BookGsonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/DateSerializer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +196,7 @@
       <workItem from="1655236068668" duration="2827000" />
       <workItem from="1655287515300" duration="16271000" />
       <workItem from="1655364130842" duration="18768000" />
-      <workItem from="1655967283871" duration="6466000" />
+      <workItem from="1655967283871" duration="8719000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -443,7 +443,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655909818201</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="v 1.2.2&#10;book serializer problem">
+      <created>1655974034182</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1655974034182</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -488,7 +495,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 0.2.0&#10;refactored some code&#10;deprecated sorting methods and created new one" />
     <MESSAGE value="v 0.2.1&#10;fixed menu items" />
     <MESSAGE value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
     <MESSAGE value="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code" />
@@ -513,7 +519,8 @@
     <MESSAGE value="v 1.1.11&#10;clean up code + start test for Terminal" />
     <MESSAGE value="v 1.2.1&#10;gson" />
     <MESSAGE value="v 1.2.0&#10;new version ready for user" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.2.0&#10;new version ready for user" />
+    <MESSAGE value="v 1.2.2&#10;book serializer problem" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.2.2&#10;book serializer problem" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

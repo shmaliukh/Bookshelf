@@ -4,7 +4,6 @@ package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_AUTHOR;
@@ -17,9 +16,8 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_I
  * This is Book class which gives ability to create objects
  */
 public class Book extends Literature{
-    @SerializedName("Author")
+
     private String author;
-    @SerializedName("Date")
     private LocalDate issuanceDate;
 
 

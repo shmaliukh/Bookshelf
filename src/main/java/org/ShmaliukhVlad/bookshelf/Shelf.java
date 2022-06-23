@@ -10,12 +10,10 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,7 +29,17 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
 
-    Gson gson;
+    Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create();
+
+    Gson gsonForBooks = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .registerTypeAdapter(Book.class, new BookGsonService())
+                    .registerTypeAdapter(LocalDate.class, new DateGsonService())
+                    .create();
+
+
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();
@@ -320,17 +328,9 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         try {
             Writer writer = new FileWriter(fileName);
 
-            gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(Book.class, new BookSerializer())
-                    .registerTypeAdapter(DateSerializer.class, new DateSerializer())
-                    .create();
-            new Gson().toJson(getBooks(), writer);
+            gsonForBooks.toJson(getBooks(), writer);
+            gson.toJson(getMagazines(), writer);
 
-            gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
-            new Gson().toJson(getMagazines(), writer);
             writer.close();
             System.out.println("File '" + fileName + "' has been written");
 
@@ -370,15 +370,13 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      */
     public void deserialize() throws IOException, ClassNotFoundException {
         final String fileName = FILE_NAME;
-
-        Gson gson = new GsonBuilder().create();
         Path path = new File(fileName).toPath();
 
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             this.literatureInShelf = new ArrayList<>();
             this.literatureInShelf = new ArrayList<>();
 
-            Book arrBooks [] = gson.fromJson(reader, Book[].class);
+            Book arrBooks [] = gsonForBooks.fromJson(reader, Book[].class);
             Magazine arrMagazine [] = gson.fromJson(reader, Magazine[].class);
 
             Arrays.stream(arrBooks).forEach(e -> {
@@ -419,48 +417,3 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         this.literatureOutShelf = literatureOutShelf;
     }
 }
-
-
-class CustomConverter implements JsonSerializer<Literature>, JsonDeserializer<Literature> {
-    @Override
-    public JsonElement serialize(Literature literature,
-                                 Type type,
-                                 JsonSerializationContext jsonSerializationContext) {
-
-        JsonObject object = new JsonObject();
-
-        object.addProperty("name", literature.getName());
-        object.addProperty("pagesNumber", literature.getPagesNumber());
-        object.addProperty("isBorrowed", literature.isBorrowed());
-
-        if(literature instanceof Book){
-            object.addProperty("author", ((Book) literature).getAuthor());
-            object.addProperty("year", ((Book) literature).getYear());
-            object.addProperty("month", ((Book) literature).getMonth());
-            object.addProperty("day", ((Book) literature).getDay());
-        }
-        return object;
-    }
-
-    @Override
-    public Literature deserialize(JsonElement jsonElement,
-                                  Type type,
-                                  JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-
-        LocalDate localDate = LocalDate.of(
-                jsonObject.get("year").getAsInt(),
-                jsonObject.get("month").getAsInt(),
-                jsonObject.get("day").getAsInt()
-        );
-
-        return new Magazine(
-                jsonObject.get("name").getAsString(),
-                jsonObject.get("pagesNumber").getAsInt(),
-                jsonObject.get("isBorrowed").getAsBoolean());
-    }
-}
-
-
-
