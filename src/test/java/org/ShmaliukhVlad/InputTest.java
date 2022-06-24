@@ -3,12 +3,16 @@ package org.ShmaliukhVlad;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
 
 public class InputTest {
 
     @Test
+    @ParameterizedTest
+    @ValueSource(ints = {1, 3, 5, -3, 15, Integer.MAX_VALUE})
     @DisplayName("test user input for integer")//Todo
     public void testDateUserInput() {
         String expectedAnswer = "Wrong input";

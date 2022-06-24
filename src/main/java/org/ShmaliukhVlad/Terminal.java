@@ -7,6 +7,8 @@ import org.ShmaliukhVlad.bookshelf.Shelf;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
@@ -261,18 +263,78 @@ public class Terminal {
         int pages;
         boolean isBorrowed = true;
 
-        printStream.println("Enter name:");
-        name = getUserString();
-        printStream.println("Enter number of pages:");
-        pages = getUserInteger();
-        printStream.println("Enter 1 if Magazine is NOT borrowed");
-        printStream.println("Press another key to continue");
-        if(getUserChoice() == 1){
-            isBorrowed = false;
-        }
+        name = getUserLiteratureName();
+        pages = getUserLiteraturePages();
+        isBorrowed = getUserLiteratureIsBorrowed();
 
         userMagazineToAdd = new Magazine(name, pages, isBorrowed);
         return userMagazineToAdd;
+    }
+
+    private boolean getUserLiteratureIsBorrowed() {
+        printStream.println("Enter 'Y' if Literature object is borrowed OR 'N' if no borrowed");
+        String answer = scanner.nextLine();
+        if(isValidLiteratureIsBorrowed(answer.trim())){
+            return true;
+        }
+        printStream.println("Wrong input. Try again");
+        return getUserLiteratureIsBorrowed();
+    }
+
+    private boolean isValidLiteratureIsBorrowed(String answer) {
+        String regex = "[yn]";
+        Pattern p = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
+        // If the name is empty
+        // return false
+        if (answer == null) {
+            return false;
+        }
+        Matcher m = p.matcher(answer);
+        return m.matches();
+    }
+
+    private int getUserLiteraturePages() {
+        printStream.println("Enter pages number: (number without spaces which bigger than 0)");
+        String pages = scanner.nextLine();
+        if(isValidLiteraturePages(pages.trim())){
+            return Integer.getInteger(pages);
+        }
+        printStream.println("Wrong input for literature pages. Try again");
+        return getUserLiteraturePages();
+    }
+
+    public boolean isValidLiteraturePages(String pages){
+        String regex = "/\\d+/g"; 
+        Pattern p = Pattern.compile(regex);
+        // If the name is empty
+        // return false
+        if (pages == null) {
+            return false;
+        }
+        Matcher m = p.matcher(pages);
+        return m.matches();
+    }
+
+    private String getUserLiteratureName() {
+        printStream.println("Enter name:");
+        String name = scanner.nextLine();
+        if(isValidLiteratureName(name)){
+            return name.trim();
+        }
+        printStream.println("Wrong input for literature name. Try again");
+        return getUserLiteratureName();
+    }
+
+    public boolean isValidLiteratureName(String name){
+        String regex = "^( .{1,100}$)";
+        Pattern p = Pattern.compile(regex);
+        // If the name is empty
+        // return false
+        if (name == null) {
+            return false;
+        }
+        Matcher m = p.matcher(name);
+        return m.matches();
     }
 
     /**
