@@ -7,13 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
-import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +48,6 @@ public class TestJsonWriteAndRead {
         }
         final Date d = new Date();
         System.out.println(d);
-
 
 
     }

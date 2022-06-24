@@ -6,19 +6,17 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithBooksTest {
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date());
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
     Book book3 = new Book("noNameBook3",3,true,"NoAuthor3",new Date());
 
-    Book expectedBook1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date());
+    Book expectedBook1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book expectedBook2 = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
 
     /**

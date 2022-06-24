@@ -8,8 +8,6 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -75,7 +73,7 @@ class ShelfTest {
             "Than try to Serialize" +
             "Than try to Deserialize")
     public void saveShelfFile() throws IOException, ClassNotFoundException, EOFException {
-        Book book1 = new Book("1", 1, false, "NoAutho1", new Date());
+        Book book1 = new Book("1", 1, false, "NoAutho1", new Date(System.currentTimeMillis() - 60*60*64*1000));
         Book book2 = new Book("2", 2, true, "NoAuthor2", new Date());
         Book book3 = new Book("3", 3, true, "NoAuthor3", new Date());
 

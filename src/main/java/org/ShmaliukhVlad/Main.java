@@ -1,5 +1,7 @@
 package org.ShmaliukhVlad;
 
+import java.util.Arrays;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -12,6 +14,7 @@ public class Main {
      * @param args command line values
      */
     public static void main(String[] args) {
+        System.out.println(Arrays.toString( args));
         Terminal terminal = new Terminal();
         terminal.startWork();
     }

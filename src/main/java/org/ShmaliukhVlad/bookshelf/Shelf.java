@@ -14,6 +14,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,17 +30,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
-
-    //Gson gson = new GsonBuilder()
-    //                //.setPrettyPrinting()
-    //                .create();
-//
-    //Gson gsonForBooks = new GsonBuilder()
-    //                //.setLenient()
-    //                //.setPrettyPrinting()
-    //                .registerTypeAdapter(Book.class, new BookGsonService())
-    //                .registerTypeAdapter(LocalDate.class, new DateGsonService())
-    //                .create();
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();
@@ -307,11 +298,13 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      *     than sorted by Name
      */
     public ArrayList<Book> getSortedBooksByDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         return (ArrayList<Book>) this.getLiteratureInShelf().stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> Long.parseLong(((Book) o).getIssuanceDate().toString()))
+                                o -> ((Book) o).getIssuanceDate().getDate())
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -321,16 +314,11 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile(Shelf shelf) throws IOException {
-
-        final String fileName = FILE_NAME;
-
+    public void saveShelfToFile(String fileName){
         try {
             Writer writer = new FileWriter(fileName);
-            //gsonForBooks
-            new Gson().toJson(new ShelfContainer(shelf), writer);
-            //writer.append('\n');
-            //gson.toJson(getMagazines(), writer);
+
+            new Gson().toJson(new ShelfContainer(this), writer);
 
             writer.close();
             System.out.println("File '" + fileName + "' has been written");

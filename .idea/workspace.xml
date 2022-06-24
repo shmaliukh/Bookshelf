@@ -4,22 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/sericesForGson/ShelfContainer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TestJsonWriteAndRead.java" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.2.4&#10;fix serialization and deserialization">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/BookGsonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/sericesForGson/BookGsonService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/DateGsonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/sericesForGson/DateGsonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TestJsonWriteAndRead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TestJsonWriteAndRead.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,12 +63,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.ShmaliukhVlad.bookshelf" />
@@ -96,10 +97,11 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestJsonWriteAndRead.test">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
+      <option name="PROGRAM_PARAMETERS" value="oicngf jkib" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="org.ShmaliukhVlad.*" />
@@ -110,7 +112,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TerminalTest.getRandomString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JsonWriteAndReadTest.testWriteLiterature_books" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -119,14 +121,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TerminalTest" />
-      <option name="METHOD_NAME" value="getRandomString" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.JsonWriteAndReadTest" />
+      <option name="METHOD_NAME" value="testWriteLiterature_books" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TerminalTest.startWork" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="JsonWriteAndReadTest.testWriteLiterature_magazines" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -135,14 +137,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TerminalTest" />
-      <option name="METHOD_NAME" value="startWork" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.JsonWriteAndReadTest" />
+      <option name="METHOD_NAME" value="testWriteLiterature_magazines" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestJsonWriteAndRead" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShelfTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -151,13 +153,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TestJsonWriteAndRead" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestJsonWriteAndRead.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ShelfTest.generateShelf" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -166,20 +168,27 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TestJsonWriteAndRead" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ShelfTest" />
+      <option name="METHOD_NAME" value="generateShelf" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.JsonWriteAndReadTest.testWriteLiterature_books" />
+      <item itemvalue="JUnit.JsonWriteAndReadTest.testWriteLiterature_magazines" />
+      <item itemvalue="JUnit.ShelfTest" />
+      <item itemvalue="JUnit.ShelfTest.generateShelf" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestJsonWriteAndRead.test" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.TestJsonWriteAndRead" />
-        <item itemvalue="JUnit.TerminalTest.startWork" />
-        <item itemvalue="JUnit.TerminalTest.getRandomString" />
+        <item itemvalue="JUnit.JsonWriteAndReadTest.testWriteLiterature_magazines" />
+        <item itemvalue="JUnit.JsonWriteAndReadTest.testWriteLiterature_books" />
+        <item itemvalue="JUnit.ShelfTest" />
+        <item itemvalue="JUnit.ShelfTest.generateShelf" />
       </list>
     </recent_temporary>
   </component>
@@ -206,6 +215,7 @@
       <workItem from="1655364130842" duration="18768000" />
       <workItem from="1655967283871" duration="10038000" />
       <workItem from="1655977532155" duration="15419000" />
+      <workItem from="1656059295012" duration="10243000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -466,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655976396107</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="v 1.2.4&#10;fix serialization and deserialization">
+      <created>1656059364444</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1656059364444</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -511,7 +528,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
     <MESSAGE value="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code" />
     <MESSAGE value="v 0.2.4&#10;preparation ащк Serialization and Deserialization" />
     <MESSAGE value="v 0.3.0&#10;all functions are ready&#10;main functions are covered with tests" />
@@ -536,7 +552,8 @@
     <MESSAGE value="v 1.2.0&#10;new version ready for user" />
     <MESSAGE value="v 1.2.2&#10;book serializer problem" />
     <MESSAGE value="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared" />
+    <MESSAGE value="v 1.2.4&#10;fix serialization and deserialization" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.2.4&#10;fix serialization and deserialization" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

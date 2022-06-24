@@ -41,6 +41,6 @@ public interface BaseActionsWithShelf {
      * This method serialize all magazines and books in file
      * @throws IOException {@link IOException}
      */
-    void saveShelfToFile(Shelf shelf) throws IOException;
+    void saveShelfToFile(String fileName) throws IOException;
 
 }
