@@ -4,8 +4,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -21,18 +20,25 @@ public class Terminal {
 
     private final Shelf shelf;
     private Scanner scanner;
+    private PrintStream printStream;
 
     public Terminal(){
-        scanner = new Scanner(System.in);
+        this(System.in, System.out);
+    }
+    public Terminal(InputStream inputStream, PrintStream printStream){
+        this.scanner = new Scanner(inputStream);
+        this.printStream = printStream;
         shelf = new Shelf();
         play = true;
     }
+
+
 
     /**
      * Method simulates Terminal work like a real one
      */
     public void startWork(){
-        System.out.println("Terminal START");
+        printStream.println("Terminal START");
 
         while (isPlay()){
             generateUserInterface();
@@ -70,8 +76,8 @@ public class Terminal {
             case DESERIALIZE -> deserializeShelf();
             case PRINT_SHELF -> printCurrentStateOfShelf();
             case EXIT -> closeTerminal();
-            case WRONG_INPUT -> System.out.println("Wrong input");
-            default -> System.out.println("Wrong input");
+            case WRONG_INPUT -> printStream.println("Wrong input");
+            default -> printStream.println("Wrong input");
         }
     }
 
@@ -80,15 +86,15 @@ public class Terminal {
      */
     private void printCurrentStateOfShelf() {
         String tab = "\t";
-        System.out.println("Current state of Shelf:");
-        System.out.println("literature IN {");
+        printStream.println("Current state of Shelf:");
+        printStream.println("literature IN {");
         shelf.getLiteratureInShelf()
-                .forEach(o -> System.out.print(tab + o.getPrintableLineOfLiteratureObject()));
-        System.out.println("}");
-        System.out.println("literature OUT {");
+                .forEach(o -> printStream.print(tab + o.getPrintableLineOfLiteratureObject()));
+        printStream.println("}");
+        printStream.println("literature OUT {");
         shelf.getLiteratureOutShelf()
-                .forEach(o -> System.out.print(tab + o.getPrintableLineOfLiteratureObject()));
-        System.out.println("}");
+                .forEach(o -> printStream.print(tab + o.getPrintableLineOfLiteratureObject()));
+        printStream.println("}");
     }
 
     /**
@@ -97,16 +103,16 @@ public class Terminal {
     private void closeTerminal() {
         askUserIfNeedToSaveShelf();
         setPlay(false);
-        System.out.println("Terminal STOP");
+        printStream.println("Terminal STOP");
     }
 
     /**
      * Method gives a choice to save the current state of the shelf
      */
     private void askUserIfNeedToSaveShelf() {
-        System.out.println("Do you want to record the current state of the shelf?");
-        System.out.println("Enter '1' if you want to save");
-        System.out.println("Press another key to exit without saving");
+        printStream.println("Do you want to record the current state of the shelf?");
+        printStream.println("Enter '1' if you want to save");
+        printStream.println("Press another key to exit without saving");
         if(getUserChoice() == SAVE_CURRENT_STATE_OF_SHELF){
             saveShelf();
         }
@@ -116,17 +122,17 @@ public class Terminal {
      * Method deserializes all Literature objects from .out file save in current Shelf.
      */
     private void deserializeShelf() {
-        System.out.println("If you need get saving from file '" + FILE_NAME + "'");
-        System.out.println("you LOOSE ALL INFO about current SHELF");
-        System.out.println("If you need to rewrite it enter '1'");
-        System.out.println("Press another key to return");
+        printStream.println("If you need get saving from file '" + FILE_NAME + "'");
+        printStream.println("you LOOSE ALL INFO about current SHELF");
+        printStream.println("If you need to rewrite it enter '1'");
+        printStream.println("Press another key to return");
         switch (getUserChoice()){
             case READ_FILE ->{
                 try {
                     shelf.deserialize();
-                    System.out.println("Deserialized");
+                    printStream.println("Deserialized");
                 } catch (IOException e) {
-                    //System.out.println("Serialization error");
+                    //printStream.println("Serialization error");
                     System.err.println("Deserialization error");
                     throw new RuntimeException(e);
                 } catch (ClassNotFoundException e) {
@@ -134,10 +140,10 @@ public class Terminal {
                 }
             }
             default ->{
-                System.out.println("Deserialization canceled");
+                printStream.println("Deserialization canceled");
             }
         }
-        System.out.println();
+        printStream.println();
         printCurrentStateOfShelf();
     }
 
@@ -149,13 +155,13 @@ public class Terminal {
         File file = new File(FILE_NAME);
         int userChoice = REWRITE_FILE;
         if(file.exists()){
-            System.out.println("File " + FILE_NAME + " contains info about previous saving");
-            System.out.println("If you need to rewrite it enter '1'");
-            System.out.println("Press another key to return");
+            printStream.println("File " + FILE_NAME + " contains info about previous saving");
+            printStream.println("If you need to rewrite it enter '1'");
+            printStream.println("Press another key to return");
             userChoice =getUserChoice();
         }
         if(userChoice == REWRITE_FILE) {
-            System.out.println("Shelf will be save as '" + FILE_NAME + "'");
+            printStream.println("Shelf will be save as '" + FILE_NAME + "'");
             shelf.saveShelfToFile(FILE_NAME);
         }
     }
@@ -204,9 +210,9 @@ public class Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void printMenuForArrivingLiterature() {
-        System.out.println("Enter INDEX of Literature object to arrive one:");
+        printStream.println("Enter INDEX of Literature object to arrive one:");
         for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-            System.out.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+            printStream.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
         }
     }
 
@@ -214,9 +220,9 @@ public class Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void printMenuForBorrowingLiterature() {
-        System.out.println("Enter INDEX of Literature object to borrow one:");
+        printStream.println("Enter INDEX of Literature object to borrow one:");
         for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            System.out.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+            printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
         }
     }
 
@@ -224,9 +230,9 @@ public class Terminal {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void printMenuForDeletingLiterature() {
-        System.out.println("Enter INDEX of Literature object to delete one:");
+        printStream.println("Enter INDEX of Literature object to delete one:");
         for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            System.out.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+            printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
         }
     }
 
@@ -249,18 +255,18 @@ public class Terminal {
      * Method give ability to create custom Magazine
      * @return user created Magazine
      */
-    private Magazine getUserMagazine() {
+    public Magazine getUserMagazine() {
         Magazine userMagazineToAdd;
         String name;
         int pages;
         boolean isBorrowed = true;
 
-        System.out.println("Enter name:");
+        printStream.println("Enter name:");
         name = getUserString();
-        System.out.println("Enter number of pages:");
+        printStream.println("Enter number of pages:");
         pages = getUserInteger();
-        System.out.println("Enter 1 if Magazine is NOT borrowed");
-        System.out.println("Press another key to continue");
+        printStream.println("Enter 1 if Magazine is NOT borrowed");
+        printStream.println("Press another key to continue");
         if(getUserChoice() == 1){
             isBorrowed = false;
         }
@@ -282,16 +288,16 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        System.out.println("Enter name:");
+        printStream.println("Enter name:");
         name = getUserString();
-        System.out.println("Enter number of pages:");
+        printStream.println("Enter number of pages:");
         pages = getUserInteger();
-        System.out.println("Enter 1 if Book is NOT borrowed");
-        System.out.println("Press another key to continue");
+        printStream.println("Enter 1 if Book is NOT borrowed");
+        printStream.println("Press another key to continue");
         if(getUserChoice() == 1){
             isBorrowed = false;
         }
-        System.out.println("Enter author:");
+        printStream.println("Enter author:");
         author = getUserString();
 
         dateOfIssue = getUserDateOfIssue();
@@ -317,12 +323,12 @@ public class Terminal {
      * between 1 and 12 (included)
      */
     private int getMonth() {
-        System.out.println("Enter the month number of issue:");
+        printStream.println("Enter the month number of issue:");
         int input = getUserInteger();
         if(input >= 1 && input <= 12){
             return input;
         }
-        System.out.println("Wrong input month (from 1 to 12) try again");
+        printStream.println("Wrong input month (from 1 to 12) try again");
         return getMonth();
     }
 
@@ -333,12 +339,12 @@ public class Terminal {
      */
     //ToDo date
     private int getDay() {
-        System.out.println("Enter the number of month of issue:");
+        printStream.println("Enter the number of month of issue:");
         int input = getUserInteger();
         if(input >= 1 && input <= 31){
             return input;
         }
-        System.out.println("Wrong input number of day (from 1 to 12) try again");
+        printStream.println("Wrong input number of day (from 1 to 12) try again");
         return getDay();
     }
 
@@ -348,12 +354,12 @@ public class Terminal {
      * between 1 and Number of current year (included)
      */
     private int getYear() {
-        System.out.println("Enter the year of issue:");
+        printStream.println("Enter the year of issue:");
         int input = getUserInteger();
         if(input >= 1 && input <= LocalDate.now().getYear()){
             return input;
         }
-        System.out.println("Wrong input year (from 1 to current year) try again");
+        printStream.println("Wrong input year (from 1 to current year) try again");
         return getYear();
     }
 
@@ -411,8 +417,7 @@ public class Terminal {
      * Method which gives opportunity to get user choice by entered integer value in console
      * @return entered integer value from console
      */
-    private int getUserChoice(){
-        scanner = new Scanner(System.in);
+    public int getUserChoice(){
         return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
     }
 
@@ -420,16 +425,14 @@ public class Terminal {
      * Method which gives opportunity to get user String by entered symbols value in console
      * @return entered String value from console
      */
-    private String getUserString(){
-        scanner = new Scanner(System.in);
+    public String getUserString(){
         return scanner.hasNextLine() ? scanner.nextLine() : "Default";
     }
     /**
      * Method which gives opportunity to get user Integer by entered integer value in console
      * @return entered Integer value from console
      */
-    private int getUserInteger(){
-        scanner = new Scanner(System.in);
+    public int getUserInteger(){
         return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
     }
 
@@ -438,7 +441,7 @@ public class Terminal {
      * Method which simply print main menu
      */
     private void printMainMenu(){
-        System.out.println(
+        printStream.println(
                 """
                         
                         Enter number of  command you wand to execute:
@@ -458,7 +461,7 @@ public class Terminal {
      * Method which simply print menu items for sorting books
      */
     private void printMenuForBooksSorting(){
-        System.out.println(
+        printStream.println(
                 """
                         Choose type of sorting:
                         1 - Sort by 'name' value
@@ -473,7 +476,7 @@ public class Terminal {
      * Method which simply print menu items for sorting magazines
      */
     private void printMenuForMagazinesSorting(){
-        System.out.println(
+        printStream.println(
                 """
                         Choose type of sorting:
                         1 - Sort by 'name' value
@@ -485,7 +488,7 @@ public class Terminal {
      * Method which simply print menu items for adding literature obj
      */
     private void printMenuForAddingLiterature(){
-        System.out.println(
+        printStream.println(
                 """
                          Choose type of literature you want to add:
                          1 - Magazine
@@ -495,6 +498,10 @@ public class Terminal {
                          Press another key to return\s""");
     }
 
+    public void stop(){
+        setPlay(false);
+    }
+
     public boolean isPlay() {
         return play;
     }
@@ -502,5 +509,6 @@ public class Terminal {
     public void setPlay(boolean play) {
         this.play = play;
     }
+
 }
 
