@@ -8,12 +8,12 @@ import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
+import org.ShmaliukhVlad.bookshelf.sericesForGson.ShelfContainer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,17 +29,16 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
 
-    Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
-
-    Gson gsonForBooks = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(Book.class, new BookGsonService())
-                    .registerTypeAdapter(LocalDate.class, new DateGsonService())
-                    .create();
-
-
+    //Gson gson = new GsonBuilder()
+    //                //.setPrettyPrinting()
+    //                .create();
+//
+    //Gson gsonForBooks = new GsonBuilder()
+    //                //.setLenient()
+    //                //.setPrettyPrinting()
+    //                .registerTypeAdapter(Book.class, new BookGsonService())
+    //                .registerTypeAdapter(LocalDate.class, new DateGsonService())
+    //                .create();
 
     public Shelf(){
         literatureInShelf = new ArrayList<>();
@@ -312,7 +311,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> Long.parseLong(((Book) o).getIssuanceDate()))
+                                o -> Long.parseLong(((Book) o).getIssuanceDate().toString()))
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(
@@ -322,14 +321,16 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     @Override
     @Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile() throws IOException {
+    public void saveShelfToFile(Shelf shelf) throws IOException {
+
         final String fileName = FILE_NAME;
 
         try {
             Writer writer = new FileWriter(fileName);
-
-            gsonForBooks.toJson(getBooks(), writer);
-            gson.toJson(getMagazines(), writer);
+            //gsonForBooks
+            new Gson().toJson(new ShelfContainer(shelf), writer);
+            //writer.append('\n');
+            //gson.toJson(getMagazines(), writer);
 
             writer.close();
             System.out.println("File '" + fileName + "' has been written");
@@ -339,7 +340,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         }
     }
 
-    private List<Book> getBooks() {
+    public List<Book> getBooks() {
         List <Book> arrBooks = new ArrayList<>();
         arrBooks.addAll(this.literatureInShelf.stream()
                 .filter((Literature o)-> o instanceof Book)
@@ -352,7 +353,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         return arrBooks;
     }
 
-    private List<Magazine> getMagazines() {
+    public List<Magazine> getMagazines() {
         List <Magazine> arrMagazines = new ArrayList<>();
         arrMagazines.addAll(this.literatureInShelf.stream()
                 .filter((Literature o)-> o instanceof Magazine)
@@ -372,19 +373,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         final String fileName = FILE_NAME;
         Path path = new File(fileName).toPath();
 
-        try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
-            this.literatureInShelf = new ArrayList<>();
-            this.literatureInShelf = new ArrayList<>();
+        this.literatureInShelf = new ArrayList<>();
+        this.literatureOutShelf = new ArrayList<>();
 
-            Book arrBooks [] = gsonForBooks.fromJson(reader, Book[].class);
-            Magazine arrMagazine [] = gson.fromJson(reader, Magazine[].class);
+        ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
 
-            Arrays.stream(arrBooks).forEach(e -> {
-                this.addLiteratureObject(e);
-            });
-            Arrays.stream(arrMagazine).forEach(e -> {
-                this.addLiteratureObject(e);
-            });
+        for (Book book:
+             shelfContainer.getBooks()) {
+            this.addLiteratureObject(book);
+        }
+        for (Magazine magazine:
+                shelfContainer.getMagazines()) {
+            this.addLiteratureObject(magazine);
         }
     }
 

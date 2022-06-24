@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,11 +18,11 @@ class BaseActionsWithShelfTest {
     /**
      * Literature objects for tests
      */
-    Book bookIsBorrowed = new Book("noNameBook1",1,true,"NoAuthor1", LocalDate.now());
-    Book bookNotBorrowed = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now().plus(Period.ofDays(1)));
+    Book bookIsBorrowed = new Book("noNameBook1",1,true,"NoAuthor1", new Date());
+    Book bookNotBorrowed = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
 
-    Book expectedBorrowedBook = new Book("noNameBook1",1,true,"NoAuthor1", LocalDate.now());
-    Book expectedNotBorrowedBook = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now().plus(Period.ofDays(1)));
+    Book expectedBorrowedBook = new Book("noNameBook1",1,true,"NoAuthor1", new Date());
+    Book expectedNotBorrowedBook = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
 
     Magazine magazineIsBorrowed = new Magazine("noNameMagazine1",1,true);
     Magazine magazineNotBorrowed = new Magazine("noNameMagazine2",2,false);

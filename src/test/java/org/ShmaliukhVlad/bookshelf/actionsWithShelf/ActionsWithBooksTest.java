@@ -9,16 +9,17 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithBooksTest {
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", LocalDate.now());
-    Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now().plus(Period.ofDays(1)));
-    Book book3 = new Book("noNameBook3",3,true,"NoAuthor3",LocalDate.now());
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date());
+    Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
+    Book book3 = new Book("noNameBook3",3,true,"NoAuthor3",new Date());
 
-    Book expectedBook1 = new Book("noNameBook1",1,false,"NoAuthor1", LocalDate.now());
-    Book expectedBook2 = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now().plus(Period.ofDays(1)));
+    Book expectedBook1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date());
+    Book expectedBook2 = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
 
     /**
      * The book3 is not expected to be included for sorting

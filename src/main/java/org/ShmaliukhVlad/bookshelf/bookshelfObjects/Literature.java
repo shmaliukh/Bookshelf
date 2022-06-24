@@ -10,6 +10,7 @@ import java.io.Serializable;
  * This is Literature class which is abstraction class for generating extended classes like Book and Magazine
  */
 public abstract class Literature implements Serializable {
+    protected String type;
     @SerializedName("Name")
     protected String  name;
     @SerializedName("Number of pages")

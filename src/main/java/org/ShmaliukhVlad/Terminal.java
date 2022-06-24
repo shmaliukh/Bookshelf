@@ -161,7 +161,7 @@ public class Terminal {
         if(userChoice == REWRITE_FILE) {
             System.out.println("Shelf will be save as '" + FILE_NAME + "'");
             try {
-                shelf.saveShelfToFile();
+                shelf.saveShelfToFile(shelf);
             } catch (IOException e) {
                 System.out.println("Saving error");
                 System.err.println("Serialization error");
@@ -290,7 +290,7 @@ public class Terminal {
         Book userBookToAdd;
         isBorrowed = true;
         String author;
-        LocalDate dateOfIssue;
+        Date dateOfIssue;
 
         System.out.println("Enter name:");
         name = getUserString();
@@ -314,11 +314,11 @@ public class Terminal {
      * Method ask user to enter year, month and day of Literature issue
      * @return LocalDate of Literature object issue
      */
-    private LocalDate getUserDateOfIssue() {
+    private Date getUserDateOfIssue() {
         int year = getYear();
         int month = getMonth();
         int day = getDay();
-        return LocalDate.of(year,month,day);
+        return new Date(year,month,day); // TODO
     }
 
     /**
@@ -396,7 +396,9 @@ public class Terminal {
                 randomNumber.nextInt(1000),
                 false,
                 getRandomString(randomNumber.nextInt(10)),
-                LocalDate.now().minus(Period.ofDays((new Random().nextInt(365 * 70)))));
+                new Date(System.currentTimeMillis()));
+                        //.before(Period.ofDays((new Random().nextInt(365 * 70))))); TODO
+
     }
 
     /**

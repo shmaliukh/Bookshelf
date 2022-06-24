@@ -1,9 +1,6 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-
-import com.google.gson.annotations.SerializedName;
-
-import java.time.LocalDate;
+import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_AUTHOR;
@@ -18,13 +15,13 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_I
 public class Book extends Literature{
 
     private String author;
-    private LocalDate issuanceDate;
+    private Date issuanceDate;
 
 
     /**
      * Constructor for creating Book object
      */
-    public Book(String name, int pagesNumber, boolean isBorrowed, String author, LocalDate issuanceDate) {
+    public Book(String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
         super(name, pagesNumber, isBorrowed);
         this.author = author;
         this.issuanceDate = issuanceDate;
@@ -104,28 +101,12 @@ public class Book extends Literature{
         this.author = author;
     }
 
-    public String getIssuanceDate() {
-        int year = issuanceDate.getYear();
-        int month = issuanceDate.getMonthValue();
-        int day = issuanceDate.getDayOfMonth();
-        final LocalDate date = LocalDate.of(year, month, day);
-        return date.toString();
+    public Date getIssuanceDate() {
+        return issuanceDate;
     }
 
-    public void setIssuanceDate(LocalDate issuanceDate) {
+    public void setIssuanceDate(Date issuanceDate) {
         this.issuanceDate = issuanceDate;
-    }
-
-    public int getYear() {
-        return issuanceDate.getYear();
-    }
-
-    public int getMonth() {
-
-        return issuanceDate.getMonthValue();
-    }
-    public int getDay() {
-        return issuanceDate.getDayOfMonth();
     }
 
 }

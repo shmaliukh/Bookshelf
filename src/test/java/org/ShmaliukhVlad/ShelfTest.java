@@ -11,18 +11,19 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShelfTest {
 
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1",LocalDate.now().minus(Period.ofDays(1)));
-    Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",LocalDate.now());
-    Book book3 = new Book("noNameBook3",3,true,"NoAuthor3",LocalDate.now());
+    Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 24 * 1000));
+    Book book2 = new Book("noNameBook2", 2, false, "NoAuthor2", new Date());
+    Book book3 = new Book("noNameBook3", 3, true, "NoAuthor3", new Date());
 
-    Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
-    Magazine magazine2 = new Magazine("noNameMagazine2",2,false);
-    Magazine magazine3 = new Magazine("noNameMagazine3",3,true);
+    Magazine magazine1 = new Magazine("noNameMagazine1", 1, false);
+    Magazine magazine2 = new Magazine("noNameMagazine2", 2, false);
+    Magazine magazine3 = new Magazine("noNameMagazine3", 3, true);
 
 
     @Test
@@ -31,7 +32,7 @@ class ShelfTest {
     void addBookAndMagazineToShelf_1() {
         Shelf shelf1 = new Shelf();
 
-        Magazine magazine1 = new Magazine("4",4,false);
+        Magazine magazine1 = new Magazine("4", 4, false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
 
@@ -45,8 +46,8 @@ class ShelfTest {
             "and one Magazine which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_2() {
         Shelf shelf1 = new Shelf();
-        Book book1 = new Book("1",1,true,"NoAuthor1",LocalDate.now());
-        Magazine magazine1 = new Magazine("4",4,false);
+        Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
+        Magazine magazine1 = new Magazine("4", 4, false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
 
@@ -60,27 +61,27 @@ class ShelfTest {
     void generateShelf() {
         Shelf shelfTest = new Shelf();
         Shelf shelfExpect = new Shelf();
-        Book book1 = new Book("1",1,false,"NoAuthor1",LocalDate.now());
-        Magazine magazine1 = new Magazine("4",4,false);
+        Book book1 = new Book("1", 1, false, "NoAuthor1", new Date());
+        Magazine magazine1 = new Magazine("4", 4, false);
         shelfTest.addLiteratureObject(book1);
         shelfExpect.addLiteratureObject(magazine1);
 
-        assertEquals(shelfTest.getLiteratureInShelf().size(),shelfExpect.getLiteratureInShelf().size());
+        assertEquals(shelfTest.getLiteratureInShelf().size(), shelfExpect.getLiteratureInShelf().size());
     }
 
     @Test
     @DisplayName("Serialization / deserialization test")
     @Description("Generate Shelf, add 6 objects of Literature (3 - Book and 3 - Magazine) with different parameters. " +
-            "Than try to Serialize"+
+            "Than try to Serialize" +
             "Than try to Deserialize")
     public void saveShelfFile() throws IOException, ClassNotFoundException, EOFException {
-        Book book1 = new Book("1",1,false,"NoAutho1",LocalDate.now());
-        Book book2 = new Book("2",2,true,"NoAuthor2",LocalDate.now());
-        Book book3 = new Book("3",3,true,"NoAuthor3",LocalDate.now());
+        Book book1 = new Book("1", 1, false, "NoAutho1", new Date());
+        Book book2 = new Book("2", 2, true, "NoAuthor2", new Date());
+        Book book3 = new Book("3", 3, true, "NoAuthor3", new Date());
 
-        Magazine magazine1 = new Magazine("4",4,false);
-        Magazine magazine2 = new Magazine("5",5,false);
-        Magazine magazine3 = new Magazine("6",6,true);
+        Magazine magazine1 = new Magazine("4", 4, false);
+        Magazine magazine2 = new Magazine("5", 5, false);
+        Magazine magazine3 = new Magazine("6", 6, true);
 
         Shelf shelf = new Shelf();
 
@@ -93,7 +94,7 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine3);
 
         final String fileName = "shelf.out";
-        FileOutputStream   fileOutputStream   = null;
+        FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
 
         try {
@@ -116,7 +117,7 @@ class ShelfTest {
                 }
             });
             System.out.println("File '" + fileName + "' has been written");
-        }finally {
+        } finally {
             if (objectOutputStream != null) {
                 objectOutputStream.close();
             }
@@ -131,17 +132,14 @@ class ShelfTest {
         try {
             fileInputStream = new FileInputStream(fileName);
             objectInputStream = new ObjectInputStream(fileInputStream);
-            try
-            {
-                while(true){
+            try {
+                while (true) {
                     Literature literatureBuff = (Literature) objectInputStream.readObject();
                     shelf2.addLiteratureObject(literatureBuff);
                 }
-            }
-            catch(EOFException e) {
+            } catch (EOFException e) {
                 //eof - no error in this case
-            }
-            catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } finally {
