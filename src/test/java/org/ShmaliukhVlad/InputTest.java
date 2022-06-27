@@ -4,6 +4,7 @@ import org.ShmaliukhVlad.serices.UserInput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.*;
@@ -13,6 +14,48 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InputTest {
     PrintStream printStream = new PrintStream(new ByteArrayOutputStream());
+
+    @DisplayName("validate data from user input (year) of Literature object")
+    @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
+    # INPUT | BOOLEAN
+        0   |  true
+        1   |  true
+       -1   |  true
+     2022   |  true
+    -1000   |  true
+     2100   |  false 
+    """)
+    public void testYearValidation(int input, boolean expectedBoolean){
+        assertEquals(expectedBoolean, UserInput.isValidLiteratureYear(input));
+    }
+
+    @DisplayName("validate data from user input (month) of Literature object")
+    @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
+    # INPUT | BOOLEAN
+        1   |  true
+       12   |  true
+        0   |  false
+       -1   |  false
+    """)
+    public void testMonthValidation(int input, boolean expectedBoolean){
+        assertEquals(expectedBoolean, UserInput.isValidLiteratureDay(input));
+    }
+
+    @DisplayName("validate data from user input (day) of Literature object")
+    @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
+    # INPUT | BOOLEAN
+        1   |  true
+       31   |  true
+        0   |  false
+       -1   |  false
+       32   |  false
+    """)
+    public void testDayValidation(int input, boolean expectedBoolean){
+        assertEquals(expectedBoolean, UserInput.isValidLiteratureDay(input));
+    }
 
     @DisplayName("test user input for name of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
@@ -79,7 +122,7 @@ public class InputTest {
 
     @DisplayName("validate data from user input (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
-    @CsvFileSource(resources = "/inputAuthorsForValidation.cvs", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/inputAuthorsForValidation.cvs", numLinesToSkip = 1)//TODO new test items
     public void testAuthorValidation_true(String input){
         assertTrue(UserInput.isValidLiteratureAuthor(input));
     }

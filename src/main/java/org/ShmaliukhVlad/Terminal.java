@@ -273,87 +273,21 @@ public class Terminal {
      * @return user created Book
      */
     private Book getUserBook() {
+        Book userBookToAdd;
         int pages;
         String name;
         boolean isBorrowed;
-        Book userBookToAdd;
-        isBorrowed = true;
         String author;
         Date dateOfIssue;
 
-        printStream.println("Enter name:");
-        name = getUserString();
-        printStream.println("Enter number of pages:");
-        pages = getUserInteger();
-        printStream.println("Enter 1 if Book is NOT borrowed");
-        printStream.println("Press another key to continue");
-        if(getUserChoice() == 1){
-            isBorrowed = false;
-        }
-        printStream.println("Enter author:");
-        author = getUserString();
-
-        dateOfIssue = getUserDateOfIssue();
+        name = UserInput.getUserLiteratureName(scanner, printStream);
+        pages = UserInput.getUserLiteraturePages(scanner, printStream);
+        isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
+        author = UserInput.getUserLiteratureAuthor(scanner, printStream);
+        dateOfIssue = UserInput.getUserDateOfIssue(scanner, printStream);
 
         userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
         return userBookToAdd;
-    }
-
-    /**
-     * Method ask user to enter year, month and day of Literature issue
-     * @return LocalDate of Literature object issue
-     */
-    private Date getUserDateOfIssue() {
-        int year = getYear();
-        int month = getMonth();
-        int day = getDay();
-        return new Date(year,month,day); // TODO
-    }
-
-    /**
-     * Method ask user to enter month of Literature issue
-     * @return Int month of issue
-     * between 1 and 12 (included)
-     */
-    private int getMonth() {
-        printStream.println("Enter the month number of issue:");
-        int input = getUserInteger();
-        if(input >= 1 && input <= 12){
-            return input;
-        }
-        printStream.println("Wrong input month (from 1 to 12) try again");
-        return getMonth();
-    }
-
-    /**
-     * Method ask user to enter day of Literature issue
-     * @return Int day of issue
-     * between 1 and 31 (included)
-     */
-    //ToDo date
-    private int getDay() {
-        printStream.println("Enter the number of month of issue:");
-        int input = getUserInteger();
-        if(input >= 1 && input <= 31){
-            return input;
-        }
-        printStream.println("Wrong input number of day (from 1 to 12) try again");
-        return getDay();
-    }
-
-    /**
-     * Method ask user to enter year of Literature issue
-     * @return Int year of issue
-     * between 1 and Number of current year (included)
-     */
-    private int getYear() {
-        printStream.println("Enter the year of issue:");
-        int input = getUserInteger();
-        if(input >= 1 && input <= LocalDate.now().getYear()){
-            return input;
-        }
-        printStream.println("Wrong input year (from 1 to current year) try again");
-        return getYear();
     }
 
     /**
