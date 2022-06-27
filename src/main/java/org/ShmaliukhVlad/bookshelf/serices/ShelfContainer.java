@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.bookshelf.sericesForGson;
+package org.ShmaliukhVlad.bookshelf.serices;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
