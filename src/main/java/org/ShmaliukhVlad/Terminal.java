@@ -3,13 +3,12 @@ package org.ShmaliukhVlad;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
-import org.ShmaliukhVlad.bookshelf.serices.UserInput;
+import org.ShmaliukhVlad.serices.UserInput;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.ShmaliukhVlad.bookshelf.serices.UserInput.getUserLiteratureName;
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 /**

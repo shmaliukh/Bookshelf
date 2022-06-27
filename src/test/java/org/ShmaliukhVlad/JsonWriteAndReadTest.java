@@ -5,7 +5,7 @@ import jdk.jfr.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
-import org.ShmaliukhVlad.bookshelf.serices.ShelfContainer;
+import org.ShmaliukhVlad.serices.ShelfContainer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

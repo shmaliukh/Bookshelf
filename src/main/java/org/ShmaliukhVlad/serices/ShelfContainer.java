@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.bookshelf.serices;
+package org.ShmaliukhVlad.serices;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
