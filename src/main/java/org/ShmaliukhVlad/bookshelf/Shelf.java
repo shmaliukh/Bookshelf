@@ -1,7 +1,7 @@
 package org.ShmaliukhVlad.bookshelf;
 
 import com.google.gson.*;
-import jdk.jfr.Description;
+
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
@@ -311,7 +311,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     @Override
-    @Description("Serialization Shelf and it's Literature objects")
+    //@Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToFile(String fileName){
         try {
             Writer writer = new FileWriter(fileName);

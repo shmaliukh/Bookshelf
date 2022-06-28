@@ -1,6 +1,6 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import jdk.jfr.Description;
+import com.sun.org.glassfish.gmbal.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

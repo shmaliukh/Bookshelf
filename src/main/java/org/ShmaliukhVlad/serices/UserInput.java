@@ -15,10 +15,10 @@ public class UserInput {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
 
-    private static final Pattern patternForIsBorrowed = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
+    private static final Pattern  patternForIsBorrowed = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
     private static final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
     private static final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
-    private static final Pattern patternForAuthor = Pattern.compile("/^[a-z][a-z '-.,]{0,31}$|^$/i");
+    private static final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
 
     private UserInput() {
     }

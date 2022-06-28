@@ -39,20 +39,21 @@ public class Magazine extends Literature {
      */
     @Override
     public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
-        return switch (typeOfLineConfig) {
-            case SORT_MAGAZINES_BY_NAME ->
-                    "Magazine {" +
-                    " name='" + name + '\'' +
-                    ",  pagesNumber=" + pagesNumber +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            case SORT_MAGAZINES_BY_PAGES_NUMBER ->
-                    "Magazine {" +
-                    " pagesNumber=" + pagesNumber +
-                    ",  name='" + name + '\'' +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            default -> toString();
-        };
+        switch (typeOfLineConfig) {
+            case SORT_MAGAZINES_BY_NAME:
+                return "Magazine {" +
+                        " name='" + name + '\'' +
+                        ",  pagesNumber=" + pagesNumber +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                return "Magazine {" +
+                        " pagesNumber=" + pagesNumber +
+                        ",  name='" + name + '\'' +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            default:
+                return toString();
+        }
     }
 }

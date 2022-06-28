@@ -55,41 +55,42 @@ public class Book extends Literature{
      */
     @Override
     public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
-        return switch (typeOfLineConfig) {
-            case SORT_BOOKS_BY_NAME ->
-                    "Book {" +
-                    " name='" + name + '\'' +
-                    ",  pagesNumber=" + pagesNumber +
-                    ",  author='" + author + '\'' +
-                    ",  issuanceDate=" + issuanceDate +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            case SORT_BOOKS_BY_PAGES_NUMBER ->
-                    "Book {" +
-                    " pagesNumber=" + pagesNumber +
-                    ",  name='" + name + '\'' +
-                    ",  author='" + author + '\'' +
-                    ",  issuanceDate=" + issuanceDate +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            case SORT_BOOKS_BY_AUTHOR ->
-                    "Book {" +
-                    " author='" + author + '\'' +
-                    ",  name='" + name + '\'' +
-                    ",  pagesNumber=" + pagesNumber +
-                    ",  issuanceDate=" + issuanceDate +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            case SORT_BOOKS_BY_DATE_OF_ISSUE ->
-                    "Book {" +
-                    " issuanceDate=" + issuanceDate +
-                    ",  name='" + name + '\'' +
-                    ",  author='" + author + '\'' +
-                    ",  pagesNumber=" + pagesNumber +
-                    ",  isBorrowed=" + isBorrowed +
-                    " }\n";
-            default -> toString();
-        };
+        switch (typeOfLineConfig) {
+            case SORT_BOOKS_BY_NAME:
+                return "Book {" +
+                        " name='" + name + '\'' +
+                        ",  pagesNumber=" + pagesNumber +
+                        ",  author='" + author + '\'' +
+                        ",  issuanceDate=" + issuanceDate +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            case SORT_BOOKS_BY_PAGES_NUMBER:
+                return "Book {" +
+                        " pagesNumber=" + pagesNumber +
+                        ",  name='" + name + '\'' +
+                        ",  author='" + author + '\'' +
+                        ",  issuanceDate=" + issuanceDate +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            case SORT_BOOKS_BY_AUTHOR:
+                return "Book {" +
+                        " author='" + author + '\'' +
+                        ",  name='" + name + '\'' +
+                        ",  pagesNumber=" + pagesNumber +
+                        ",  issuanceDate=" + issuanceDate +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                return "Book {" +
+                        " issuanceDate=" + issuanceDate +
+                        ",  name='" + name + '\'' +
+                        ",  author='" + author + '\'' +
+                        ",  pagesNumber=" + pagesNumber +
+                        ",  isBorrowed=" + isBorrowed +
+                        " }\n";
+            default:
+                return toString();
+        }
     }
 
     //getters and setters

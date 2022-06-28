@@ -1,6 +1,6 @@
 package org.ShmaliukhVlad;
 
-import jdk.jfr.Description;
+import com.sun.org.glassfish.gmbal.Description;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;

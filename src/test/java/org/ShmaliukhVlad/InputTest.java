@@ -17,42 +17,40 @@ public class InputTest {
 
     @DisplayName("validate data from user input (year) of Literature object")
     @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
-    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
-    # INPUT | BOOLEAN
-        0   |  true
-        1   |  true
-       -1   |  true
-     2022   |  true
-    -1000   |  true
-     2100   |  false 
-    """)
-    public void testYearValidation(int input, boolean expectedBoolean){
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock =
+            //"# INPUT | BOOLEAN" + "\n" +
+            "        0   |  true" + "\n" +
+            "        1   |  true" + "\n" +
+            "       -1   |  true" + "\n" +
+            "     2022   |  true" + "\n" +
+            "    -1000   |  true" + "\n" +
+            "     2100   |  false ")
+    public void testYearValidation(int input, boolean expectedBoolean) {
         assertEquals(expectedBoolean, UserInput.isValidLiteratureYear(input));
     }
 
     @DisplayName("validate data from user input (month) of Literature object")
     @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
-    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
-    # INPUT | BOOLEAN
-        1   |  true
-       12   |  true
-        0   |  false
-       -1   |  false
-    """)
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = "" +
+            //"  # INPUT | BOOLEAN" +
+            "        1   |  true"   +
+            "       12   |  true"   +
+            "        0   |  false"  +
+            "       -1   |  false")
+
     public void testMonthValidation(int input, boolean expectedBoolean){
         assertEquals(expectedBoolean, UserInput.isValidLiteratureDay(input));
     }
 
     @DisplayName("validate data from user input (day) of Literature object")
     @ParameterizedTest(name = "{index} ==> input integer ''{0}''")
-    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = """
-    # INPUT | BOOLEAN
-        1   |  true
-       31   |  true
-        0   |  false
-       -1   |  false
-       32   |  false
-    """)
+    @CsvSource(delimiter = '|', quoteCharacter = '"', textBlock = "    " +
+            //"  # INPUT | BOOLEAN" + "\n" +
+            "        1   |  true"   + "\n" +
+            "       31   |  true"   + "\n" +
+            "        0   |  false"  + "\n" +
+            "       -1   |  false"  + "\n" +
+            "       32   |  false")
     public void testDayValidation(int input, boolean expectedBoolean){
         assertEquals(expectedBoolean, UserInput.isValidLiteratureDay(input));
     }

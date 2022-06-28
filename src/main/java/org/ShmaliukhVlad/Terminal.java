@@ -54,30 +54,46 @@ public class Terminal {
         printMainMenu();
 
         switch (getUserChoice()) {
-            case ADD_NEW_LITERATURE -> {
+            case ADD_NEW_LITERATURE:
                 printMenuForAddingLiterature();
                 addNewLiteratureObject();
-            }
-            case DELETE_LITERATURE -> {
+                break;
+            case DELETE_LITERATURE:
                 printMenuForDeletingLiterature();
                 shelf.deleteLiteratureObjectByIndex(getUserChoice());
-            }
-            case BORROW_LITERATURE -> {
+                break;
+            case BORROW_LITERATURE:
                 printMenuForBorrowingLiterature();
                 shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
-            }
-            case ARRIVE_LITERATURE -> {
+                break;
+            case ARRIVE_LITERATURE:
                 printMenuForArrivingLiterature();
                 shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
-            }
-            case PRINT_SORTED_BOOKS -> clarificationForSortingBooks();
-            case PRINT_SORTED_MAGAZINES -> clarificationForSortingMagazines();
-            case SAVE_SHELF_IN_FILE -> saveShelf();
-            case DESERIALIZE -> deserializeShelf();
-            case PRINT_SHELF -> printCurrentStateOfShelf();
-            case EXIT -> closeTerminal();
-            case WRONG_INPUT -> printStream.println("Wrong input");
-            default -> printStream.println("Wrong input");
+                break;
+            case PRINT_SORTED_BOOKS:
+                clarificationForSortingBooks();
+                break;
+            case PRINT_SORTED_MAGAZINES:
+                clarificationForSortingMagazines();
+                break;
+            case SAVE_SHELF_IN_FILE:
+                saveShelf();
+                break;
+            case DESERIALIZE:
+                deserializeShelf();
+                break;
+            case PRINT_SHELF:
+                printCurrentStateOfShelf();
+                break;
+            case EXIT:
+                closeTerminal();
+                break;
+            case WRONG_INPUT:
+                printStream.println("Wrong input");
+                break;
+            default:
+                printStream.println("Wrong input");
+                break;
         }
     }
 
@@ -126,8 +142,8 @@ public class Terminal {
         printStream.println("you LOOSE ALL INFO about current SHELF");
         printStream.println("If you need to rewrite it enter '1'");
         printStream.println("Press another key to return");
-        switch (getUserChoice()){
-            case READ_FILE ->{
+        switch (getUserChoice()) {
+            case READ_FILE:
                 try {
                     shelf.deserialize();
                     printStream.println("Deserialized");
@@ -138,10 +154,10 @@ public class Terminal {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-            }
-            default ->{
+                break;
+            default:
                 printStream.println("Deserialization canceled");
-            }
+                break;
         }
         printStream.println();
         printCurrentStateOfShelf();
@@ -172,14 +188,14 @@ public class Terminal {
     private void clarificationForSortingMagazines() {
         printMenuForMagazinesSorting();
         switch (getUserChoice()) {
-            case SORT_MAGAZINES_BY_NAME -> {
+            case SORT_MAGAZINES_BY_NAME:
                 shelf.printSortedMagazinesByName();
-            }
-            case SORT_MAGAZINES_BY_PAGES_NUMBER -> {
+                break;
+            case SORT_MAGAZINES_BY_PAGES_NUMBER:
                 shelf.printSortedMagazinesByPages();
-            }
-            default -> {
-            }
+                break;
+            default:
+                break;
         }
     }
 
@@ -189,20 +205,20 @@ public class Terminal {
     private void clarificationForSortingBooks() {
         printMenuForBooksSorting();
         switch (getUserChoice()) {
-            case SORT_BOOKS_BY_NAME -> {
+            case SORT_BOOKS_BY_NAME:
                 shelf.printSortedBooksByName();
-            }
-            case SORT_BOOKS_BY_AUTHOR -> {
+                break;
+            case SORT_BOOKS_BY_AUTHOR:
                 shelf.printSortedBooksByAuthor();
-            }
-            case SORT_BOOKS_BY_PAGES_NUMBER -> {
+                break;
+            case SORT_BOOKS_BY_PAGES_NUMBER:
                 shelf.printSortedBooksByPages();
-            }
-            case SORT_BOOKS_BY_DATE_OF_ISSUE -> {
+                break;
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
                 shelf.printSortedBooksByDate();
-            }
-            default -> {
-            }
+                break;
+            default:
+                break;
         }
     }
 
@@ -241,12 +257,20 @@ public class Terminal {
      */
     private void addNewLiteratureObject() {
         switch (getUserChoice()) {
-            case ADD_CUSTOM_MAGAZINE -> shelf.addLiteratureObject(getUserMagazine());
-            case ADD_CUSTOM_BOOK -> shelf.addLiteratureObject(getUserBook());
-            case ADD_RANDOM_MAGAZINE -> shelf.addLiteratureObject(getRandomMagazine());
-            case ADD_RANDOM_BOOK -> shelf.addLiteratureObject(getRandomBook());
-            default -> {
-            }
+            case ADD_CUSTOM_MAGAZINE:
+                shelf.addLiteratureObject(getUserMagazine());
+                break;
+            case ADD_CUSTOM_BOOK:
+                shelf.addLiteratureObject(getUserBook());
+                break;
+            case ADD_RANDOM_MAGAZINE:
+                shelf.addLiteratureObject(getRandomMagazine());
+                break;
+            case ADD_RANDOM_BOOK:
+                shelf.addLiteratureObject(getRandomBook());
+                break;
+            default:
+                break;
         }
     }
 
@@ -369,19 +393,18 @@ public class Terminal {
      */
     private void printMainMenu(){
         printStream.println(
-                """
-                        
-                        Enter number of  command you wand to execute:
-                        1 - Add new Literature object to Shelf
-                        2 - Delete  Literature object by index from Shelf
-                        3 - Borrow  Literature object by index from Shelf
-                        4 - Arrive  Literature object by index back to Shelf
-                        5 - Print list of available Books sorted by parameter...
-                        6 - Print list of available Magazines sorted by parameter...
-                        7 - Save in file
-                        8 - Deserialize
-                        9 - Print current state of Shelf
-                        0 - Exit""");
+                        "\n" +
+                        "Enter number of  command you wand to execute:" +"\n" +
+                        "1 - Add new Literature object to Shelf" +"\n" +
+                        "2 - Delete  Literature object by index from Shelf" +"\n" +
+                        "3 - Borrow  Literature object by index from Shelf" +"\n" +
+                        "4 - Arrive  Literature object by index back to Shelf" +"\n" +
+                        "5 - Print list of available Books sorted by parameter..." +"\n" +
+                        "6 - Print list of available Magazines sorted by parameter..." +"\n" +
+                        "7 - Save in file" +"\n" +
+                        "8 - Deserialize" +"\n" +
+                        "9 - Print current state of Shelf" +"\n" +
+                        "0 - Exit");
     }
 
     /**
@@ -389,14 +412,12 @@ public class Terminal {
      */
     private void printMenuForBooksSorting(){
         printStream.println(
-                """
-                        Choose type of sorting:
-                        1 - Sort by 'name' value
-                        2 - Sort by 'author' value
-                        3 - Sort by 'page number' value
-                        4 - Sort by 'date' value
-                        Press another key to return\s
-                          """);
+                        "Choose type of sorting:" +"\n" +
+                        "1 - Sort by 'name' value" +"\n" +
+                        "2 - Sort by 'author' value" +"\n" +
+                        "3 - Sort by 'page number' value" +"\n" +
+                        "4 - Sort by 'date' value" +"\n" +
+                        "Press another key to return");
     }
 
     /**
@@ -404,11 +425,10 @@ public class Terminal {
      */
     private void printMenuForMagazinesSorting(){
         printStream.println(
-                """
-                        Choose type of sorting:
-                        1 - Sort by 'name' value
-                        2 - Sort by 'page' value
-                        Press another key to return\s""");
+                        "Choose type of sorting:" +"\n" +
+                        "1 - Sort by 'name' value" +"\n" +
+                        "2 - Sort by 'page' value" +"\n" +
+                        "Press another key to return");
     }
 
     /**
@@ -416,13 +436,12 @@ public class Terminal {
      */
     private void printMenuForAddingLiterature(){
         printStream.println(
-                """
-                         Choose type of literature you want to add:
-                         1 - Magazine
-                         2 - Book
-                         3 - Random Magazine
-                         4 - Random Book
-                         Press another key to return\s""");
+                         "Choose type of literature you want to add:" + "\n" +
+                         "1 - Magazine" + "\n" +
+                         "2 - Book" + "\n" +
+                         "3 - Random Magazine" + "\n" +
+                         "4 - Random Book" + "\n" +
+                         "Press another key to return");
     }
 
     public void stop(){
