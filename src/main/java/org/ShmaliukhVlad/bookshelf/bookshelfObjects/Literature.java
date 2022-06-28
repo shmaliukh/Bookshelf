@@ -46,7 +46,6 @@ public abstract class Literature implements Serializable {
         return  toString();
     }
 
-
     //getters and setters
     public String getName() {
         return name;

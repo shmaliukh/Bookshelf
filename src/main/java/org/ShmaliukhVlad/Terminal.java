@@ -145,7 +145,7 @@ public class Terminal {
         switch (getUserChoice()) {
             case READ_FILE:
                 try {
-                    shelf.deserialize();
+                    shelf.deserialize(FILE_NAME);
                     printStream.println("Deserialized");
                 } catch (IOException e) {
                     //printStream.println("Serialization error");
@@ -279,7 +279,6 @@ public class Terminal {
      * @return user created Magazine
      */
     public Magazine getUserMagazine() {
-        Magazine userMagazineToAdd;
         String name;
         int pages;
         boolean isBorrowed = true;
@@ -288,8 +287,7 @@ public class Terminal {
         pages = UserInput.getUserLiteraturePages(scanner, printStream);
         isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
 
-        userMagazineToAdd = new Magazine(name, pages, isBorrowed);
-        return userMagazineToAdd;
+        return new Magazine(name, pages, isBorrowed);
     }
 
     /**
@@ -297,7 +295,6 @@ public class Terminal {
      * @return user created Book
      */
     private Book getUserBook() {
-        Book userBookToAdd;
         int pages;
         String name;
         boolean isBorrowed;
@@ -310,8 +307,8 @@ public class Terminal {
         author = UserInput.getUserLiteratureAuthor(scanner, printStream);
         dateOfIssue = UserInput.getUserDateOfIssue(scanner, printStream);
 
-        userBookToAdd = new Book(name, pages, isBorrowed, author, dateOfIssue);
-        return userBookToAdd;
+
+        return new Book(name, pages, isBorrowed, author, dateOfIssue);
     }
 
     /**

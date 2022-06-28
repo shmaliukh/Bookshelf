@@ -355,8 +355,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     /**
      * Deserialization Shelf and it's Literature objects
      */
-    public void deserialize() throws IOException, ClassNotFoundException {
-        final String fileName = FILE_NAME;
+    public void deserialize(String fileName) throws IOException, ClassNotFoundException {
         Path path = new File(fileName).toPath();
 
         this.literatureInShelf = new ArrayList<>();

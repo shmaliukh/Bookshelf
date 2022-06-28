@@ -1,5 +1,8 @@
 package org.ShmaliukhVlad.constants;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -38,4 +41,6 @@ public final class ConstantValues {
     public static final String FILE_NAME = "shelf.json";
     public static final int REWRITE_FILE = 1;
     public static final int READ_FILE = 1;
+
+    //public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 }

@@ -20,20 +20,21 @@ public class UserInput {
     private static final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
     private static final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
     private static final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
-    private static final Pattern patternForDate = Pattern.compile("(^([0][1-9]|[12][0-9]|[3][0-1])-(0[1-9]|1[0-2])-(\\d)$)");
-    static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    //private static final Pattern patternForDate = Pattern.compile("(^([0][1-9]|[12][0-9]|[3][0-1])-(0[1-9]|1[0-2])-{4}$)");
+    private static final Pattern patternForDate = Pattern.compile("(^(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-(\\d{4})$)");
+    //private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private UserInput() {
     }
 
     public static boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter 'Y' if Literature object is borrowed OR 'N' if no borrowed");
-        if(scanner.hasNextLine()){
+        printStream.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
+        //if(scanner.hasNextLine()){
             String answer = scanner.nextLine().trim();
             if (isValidLiteratureIsBorrowed(answer)) {
                 return true;
             }
-        }
+        //}
         printStream.println("Wrong input. Try again");
         return getUserLiteratureIsBorrowed(scanner, printStream);
     }
@@ -48,10 +49,10 @@ public class UserInput {
 
     public static int getUserLiteraturePages(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter pages number: (number without spaces which bigger than 0)");
-        if(scanner.hasNextLine()){
-            String pages = scanner.nextLine().trim();
-            if (isValidLiteraturePages(pages)) {
-                return Integer.getInteger(pages);
+        if(scanner.hasNextInt()){
+            int pages = scanner.nextInt();
+            if (isValidLiteraturePages(String.valueOf(pages))) {
+                return pages;
             }
         }
         printStream.println("Wrong input for literature pages. Try again");
@@ -62,13 +63,13 @@ public class UserInput {
         if (pages == null) {
             return false;
         }
-        Matcher m = patternForPages.matcher(pages.trim());
+        Matcher m = patternForPages.matcher(pages);
         return m.matches();
     }
 
     public static String getUserLiteratureName(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter name:");
-        if(scanner.hasNextLine()){
+        //if(scanner.hasNextLine()){
             String name = scanner.nextLine().trim();
             LOGGER.debug("name = " + name); //TODO loggers
             boolean validationResult = isValidLiteratureName(name);
@@ -76,7 +77,7 @@ public class UserInput {
             if (validationResult) {
                 return name;
             }
-        }
+        //}
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
     }
@@ -85,13 +86,13 @@ public class UserInput {
         if (name == null) {
             return false;
         }
-        Matcher m = patternForName.matcher(name.trim());
+        Matcher m = patternForName.matcher(name);
         return m.matches();
     }
 
     public static String getUserLiteratureAuthor(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter author: (Names must start with a capital letter)");
-        if(scanner.hasNextLine()){
+        printStream.println("Enter author:");
+        //if(scanner.hasNextLine()){
             String author = scanner.nextLine().trim();
             LOGGER.debug("author = " + author);
             boolean validationResult = isValidLiteratureName(author);
@@ -99,7 +100,7 @@ public class UserInput {
             if (validationResult) {
                 return author;
             }
-        }
+        //}
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
     }
@@ -108,7 +109,7 @@ public class UserInput {
         if (name == null) {
             return false;
         }
-        Matcher m = patternForAuthor.matcher(name.trim());
+        Matcher m = patternForAuthor.matcher(name);
         return m.matches();
     }
 
@@ -116,12 +117,12 @@ public class UserInput {
         printStream.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
         "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");// TODO write instruction for user date input
         String dateStr;
-        if(scanner.hasNextLine()){
+        //if(scanner.hasNextLine()){
             dateStr = scanner.nextLine().trim();
             if(isValidLiteratureDate(dateStr)){
                 return new Date(dateStr);
             }
-        }
+        //}
         printStream.println("Wrong input. Try again.");
         return getUserDateOfIssue(scanner, printStream);
     }
@@ -130,14 +131,16 @@ public class UserInput {
         if(input == null){
             return false;
         }
-        try {
-            dateFormat.parse(input);
-            LOGGER.debug("input date string {}, parsed date {}", input, dateFormat.parse(input));
-        } catch (ParseException e) {
-            //throw new RuntimeException(e);
-            return false;
-        }
-        return true;
+        Matcher m = patternForDate.matcher(input);
+//        try {
+//            //Date.parse(input);
+//            Date date = dateFormat.parse(input);
+//            LOGGER.debug("input date string {}, parsed date {}", input, dateFormat.parse(input));
+//        } catch (ParseException e) {
+//            //throw new RuntimeException(e);
+//            return false;
+//        }
+        return m.matches();
 
     }
 }

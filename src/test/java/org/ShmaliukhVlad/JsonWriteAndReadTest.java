@@ -19,6 +19,7 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonWriteAndReadTest {
+    String testFileName = "testShelf.json";
 
     Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book book2 = new Book("noNameBook2",2,true,"NoAuthor2",new Date());
@@ -33,10 +34,30 @@ public class JsonWriteAndReadTest {
     Magazine expectedMagazine2 = new Magazine("noNameMagazine2",2,true);
 
     @Test
+    @DisplayName("test read json file")
+    void testReadLiteratureFromJson() throws IOException, ClassNotFoundException {
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(book1);
+        shelf.addLiteratureObject(book2);
+        shelf.addLiteratureObject(magazine1);
+        shelf.addLiteratureObject(magazine2);
+
+        shelf.saveShelfToFile(testFileName);
+
+        Shelf shelf2 = new Shelf();
+        shelf2.deserialize(testFileName);
+
+        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine1.getPrintableLineOfLiteratureObject(), shelf2.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine2.getPrintableLineOfLiteratureObject(), shelf2.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+
+    }
+
+    @Test
     @DisplayName("test to write Shelf with books in file")
     @Description("Test to write info about Shelf only with books objects")
     void testWriteLiterature_books() throws IOException {
-        String testFileName = "testShelf.json";
         Shelf shelf1 = new Shelf();
         Shelf shelf2 = new Shelf();
 

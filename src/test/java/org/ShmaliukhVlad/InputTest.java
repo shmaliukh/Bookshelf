@@ -3,12 +3,11 @@ package org.ShmaliukhVlad;
 import org.ShmaliukhVlad.serices.UserInput;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,9 +27,9 @@ public class InputTest {
             "  29-02-2024   |  true"  + "\n" +
             "  29-02-2022   |  true"  + "\n" +
             "  30-02-2024   |  true"  + "\n" +
-            "  00-00-0000   |  true"  + "\n" +
-            "  01-13-2022   |  true"  + "\n" +
-            "  01-00-2022   |  true"  + "\n" +
+            "  00-00-0000   |  false" + "\n" +
+            "  01-13-2022   |  false" + "\n" +
+            "  01-00-2022   |  false" + "\n" +
             "  01 01 2022   |  false" + "\n" +
             "  01/01/2022   |  false" + "\n" +
             "  01_01_2022   |  false" )
@@ -45,11 +44,18 @@ public class InputTest {
         assertEquals(expected, UserInput.getUserLiteratureName(new Scanner(input), printStream));
     }
 
-    @DisplayName("test user input for choosing state (is borrowed) of Literature object")
-    @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
-    @CsvFileSource(resources = "/inputName.cvs", numLinesToSkip = 1)
-    public void testNameInput_false(String input, String expected){
-        assertEquals(expected, UserInput.getUserLiteratureName(new Scanner(input), printStream));
+    @DisplayName("test for user input for date of issue")
+    @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected result ''{1}''")
+    @MethodSource("providedStringForDateInput")
+    public void testDateInput(String input){
+        //TODO
+        //assertEquals(expected);
+    }
+
+    private static Stream<Arguments> providedStringForDateInput(){
+        return Stream.of(
+                Arguments.of("01-01-0001","")//TODO
+        );
     }
 
     @DisplayName("test user input for choosing state (author) of Literature object")
