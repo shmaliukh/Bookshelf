@@ -4,7 +4,6 @@ import com.sun.org.glassfish.gmbal.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
@@ -15,6 +14,7 @@ class BookTest {
      * Simple Book object for test
      */
     Book book1 = new Book("someName", 1, false, "someAuthor", new Date());
+    Book book2 = new Book("someName2", 2, true, "someAuthor2", new Date());
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_PAGES_NUMBER")
@@ -25,7 +25,7 @@ class BookTest {
                         " pagesNumber=" + 1 +
                         ",  name='" + "someName" + '\'' +
                         ",  author='" + "someAuthor" + '\'' +
-                        ",  issuanceDate=" + LocalDate.now() +
+                        ",  issuanceDate=" + new Date() +
                         ",  isBorrowed=" + false +
                         " }\n";
 
@@ -41,7 +41,7 @@ class BookTest {
                         " name='" + "someName" + '\'' +
                         ",  pagesNumber=" + 1 +
                         ",  author='" + "someAuthor" + '\'' +
-                        ",  issuanceDate=" + LocalDate.now() +
+                        ",  issuanceDate=" + new Date() +
                         ",  isBorrowed=" + false +
                         " }\n";
 
@@ -57,7 +57,7 @@ class BookTest {
                         " author='" + "someAuthor" + '\'' +
                         ",  name='" + "someName" + '\'' +
                         ",  pagesNumber=" + 1 +
-                        ",  issuanceDate=" + LocalDate.now() +
+                        ",  issuanceDate=" + new Date() +
                         ",  isBorrowed=" + false +
                         " }\n";
 
@@ -70,7 +70,7 @@ class BookTest {
     void testGetPrintableLineOfLiteratureObject_whenSortByDateOfIssue() {
         String expectedStr =
                 "Book {" +
-                        " issuanceDate=" + LocalDate.now() +
+                        " issuanceDate=" + new Date() +
                         ",  name='" + "someName" + '\'' +
                         ",  author='" + "someAuthor" + '\'' +
                         ",  pagesNumber=" + 1 +
@@ -172,19 +172,16 @@ class BookTest {
     @Test
     @DisplayName("test getIssuanceDate")
     void getIssuanceDate() {
-        LocalDate expectedDate = LocalDate.now();
-
+        Date expectedDate = new Date();
         assertEquals(expectedDate, book1.getIssuanceDate());
     }
 
     @Test
     @DisplayName("test setIssuanceDate")
     void setIssuanceDate() {
-        LocalDate expectedDate = LocalDate.now();
-        Book book1 = new Book("1", 1, false, "NoAuthor1", new Date());
-        book1.setIssuanceDate(new Date());
-
-        assertEquals(expectedDate, book1.getIssuanceDate());
+        Date expectedDate = new Date(123456);
+        book2.setIssuanceDate(new Date(123456));
+        assertEquals(expectedDate, book2.getIssuanceDate());
 
     }
 }

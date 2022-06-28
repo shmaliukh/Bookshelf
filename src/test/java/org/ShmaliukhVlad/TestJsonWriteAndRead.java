@@ -40,12 +40,12 @@ public class TestJsonWriteAndRead {
 //        Container x = gson.fromJson(new FileReader("test.json"), Container.class);
         JsonElement x = gson.fromJson(new FileReader("test.json"), JsonElement.class);
         System.out.println(x);
-        for (JsonElement jsonElement : x.getAsJsonArray()) {
-            JsonElement type = jsonElement.getAsJsonObject().get("type");
-            if(type.equals("book")){
-                gson.fromJson(jsonElement, Book.class);
-            }
-        }
+       //for (JsonElement jsonElement : x.getAsJsonArray()) {
+       //    JsonElement type = jsonElement.getAsJsonObject().get("type");
+       //    if(type.equals("book")){
+       //        gson.fromJson(jsonElement, Book.class);
+       //    }
+       //}
         final Date d = new Date();
         System.out.println(d);
 

@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TerminalTest {
 
-    /**
-     * Special capture variables for the capture console output
-     */
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    PrintStream ps = new PrintStream(baos);
-    PrintStream old = System.out;
-
+    ///**
+    // * Special capture variables for the capture console output
+    // */
+    //ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    //PrintStream ps = new PrintStream(baos);
+    //PrintStream old = System.out;
+//
     //@Test
     //@DisplayName("test state of terminal start")
     //void startWork() {
@@ -61,7 +61,7 @@ class TerminalTest {
     //        int number = random.nextInt(62);
     //        sb.append(str.charAt(number));
     //    }
-//
+////
     //    assertEquals(sb.toString().length(), expectedLength);
     //}
 }

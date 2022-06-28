@@ -4,8 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintStream;
-import java.time.LocalDate;
-import java.time.Year;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -19,15 +20,19 @@ public class UserInput {
     private static final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
     private static final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
     private static final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
+    private static final Pattern patternForDate = Pattern.compile("(^([0][1-9]|[12][0-9]|[3][0-1])-(0[1-9]|1[0-2])-(\\d)$)");
+    static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private UserInput() {
     }
 
     public static boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter 'Y' if Literature object is borrowed OR 'N' if no borrowed");
-        String answer = scanner.nextLine();
-        if (isValidLiteratureIsBorrowed(answer)) {
-            return true;
+        if(scanner.hasNextLine()){
+            String answer = scanner.nextLine().trim();
+            if (isValidLiteratureIsBorrowed(answer)) {
+                return true;
+            }
         }
         printStream.println("Wrong input. Try again");
         return getUserLiteratureIsBorrowed(scanner, printStream);
@@ -43,9 +48,11 @@ public class UserInput {
 
     public static int getUserLiteraturePages(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter pages number: (number without spaces which bigger than 0)");
-        String pages = scanner.nextLine();
-        if (isValidLiteraturePages(pages.trim())) {
-            return Integer.getInteger(pages);
+        if(scanner.hasNextLine()){
+            String pages = scanner.nextLine().trim();
+            if (isValidLiteraturePages(pages)) {
+                return Integer.getInteger(pages);
+            }
         }
         printStream.println("Wrong input for literature pages. Try again");
         return getUserLiteraturePages(scanner, printStream);
@@ -61,12 +68,14 @@ public class UserInput {
 
     public static String getUserLiteratureName(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter name:");
-        String name = scanner.nextLine();
-        LOGGER.debug("name = " + name);
-        boolean validationResult = isValidLiteratureName(name);
-        LOGGER.debug("validationResult: " + validationResult);
-        if (validationResult) {
-            return name.trim();
+        if(scanner.hasNextLine()){
+            String name = scanner.nextLine().trim();
+            LOGGER.debug("name = " + name); //TODO loggers
+            boolean validationResult = isValidLiteratureName(name);
+            LOGGER.debug("validationResult: " + validationResult);
+            if (validationResult) {
+                return name;
+            }
         }
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
@@ -82,12 +91,14 @@ public class UserInput {
 
     public static String getUserLiteratureAuthor(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter author: (Names must start with a capital letter)");
-        String author = scanner.nextLine();
-        LOGGER.debug("author = " + author);
-        boolean validationResult = isValidLiteratureName(author);
-        LOGGER.debug("validationResult: " + validationResult);
-        if (validationResult) {
-            return author.trim();
+        if(scanner.hasNextLine()){
+            String author = scanner.nextLine().trim();
+            LOGGER.debug("author = " + author);
+            boolean validationResult = isValidLiteratureName(author);
+            LOGGER.debug("validationResult: " + validationResult);
+            if (validationResult) {
+                return author;
+            }
         }
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
@@ -102,58 +113,31 @@ public class UserInput {
     }
 
     public static Date getUserDateOfIssue(Scanner scanner, PrintStream printStream) {
-        int year = getUserYear(scanner, printStream);
-        int month = getUserMonth(scanner, printStream);
-        int day = getUserDay(scanner, printStream);
-        return new Date(year,month,day); // TODO
-    }
-
-    public static int getUserMonth(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter the month number of issue:");
-        if(scanner.hasNextInt()) {
-            int input = scanner.nextInt();
-            if (input >= 1 && input <= 12) {
-                return input;
+        printStream.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
+        "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");// TODO write instruction for user date input
+        String dateStr;
+        if(scanner.hasNextLine()){
+            dateStr = scanner.nextLine().trim();
+            if(isValidLiteratureDate(dateStr)){
+                return new Date(dateStr);
             }
         }
-        printStream.println("Wrong input month (from 1 to 12) try again");
-        return getUserMonth(scanner, printStream);
+        printStream.println("Wrong input. Try again.");
+        return getUserDateOfIssue(scanner, printStream);
     }
 
-    //TODO test
-    public static int getUserDay(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter the number of month of issue:");
-        if(scanner.hasNextInt()){
-            int input = scanner.nextInt();
-            if(isValidLiteratureDay(input)){
-                return input;
-            }
+    public static boolean isValidLiteratureDate(String input) {
+        if(input == null){
+            return false;
         }
-        printStream.println("Wrong input number of day (from 1 to 31) try again");
-        return getUserDay(scanner, printStream);
-    }
-
-    public static boolean isValidLiteratureYear(int input) {
-        return input >= Year.MIN_VALUE && input <= Year.now().getValue();
-    }
-
-    public static boolean isValidLiteratureMonth(int input) {
-        return input >= 1 && input <= 12;
-    }
-
-    public static boolean isValidLiteratureDay(int input) {
-        return input >= 1 && input <= 31; // TODO validation for day input
-    }
-
-    public static int getUserYear(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter the year of issue:");
-        if(scanner.hasNextInt()){
-            int input = scanner.nextInt();
-            if(input >= 1 && input <= LocalDate.now().getYear()){
-                return input;
-            }
+        try {
+            dateFormat.parse(input);
+            LOGGER.debug("input date string {}, parsed date {}", input, dateFormat.parse(input));
+        } catch (ParseException e) {
+            //throw new RuntimeException(e);
+            return false;
         }
-        printStream.println("Wrong input year (from 1 to current year) try again");
-        return getUserYear(scanner, printStream);
+        return true;
+
     }
 }

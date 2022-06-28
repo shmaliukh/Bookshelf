@@ -1,13 +1,11 @@
 package org.ShmaliukhVlad;
 
 import com.sun.org.glassfish.gmbal.Description;
-import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -65,101 +63,6 @@ class ShelfTest {
         shelfExpect.addLiteratureObject(magazine1);
 
         assertEquals(shelfTest.getLiteratureInShelf().size(), shelfExpect.getLiteratureInShelf().size());
-    }
-
-    @Test
-    @DisplayName("Serialization / deserialization test")
-    @Description("Generate Shelf, add 6 objects of Literature (3 - Book and 3 - Magazine) with different parameters. " +
-            "Than try to Serialize" +
-            "Than try to Deserialize")
-    public void saveShelfFile() throws IOException, ClassNotFoundException, EOFException {
-        Book book1 = new Book("1", 1, false, "NoAutho1", new Date(System.currentTimeMillis() - 60*60*64*1000));
-        Book book2 = new Book("2", 2, true, "NoAuthor2", new Date());
-        Book book3 = new Book("3", 3, true, "NoAuthor3", new Date());
-
-        Magazine magazine1 = new Magazine("4", 4, false);
-        Magazine magazine2 = new Magazine("5", 5, false);
-        Magazine magazine3 = new Magazine("6", 6, true);
-
-        Shelf shelf = new Shelf();
-
-        shelf.addLiteratureObject(book1);
-        shelf.addLiteratureObject(book2);
-        shelf.addLiteratureObject(book3);
-
-        shelf.addLiteratureObject(magazine1);
-        shelf.addLiteratureObject(magazine2);
-        shelf.addLiteratureObject(magazine3);
-
-        final String fileName = "shelf.out";
-        FileOutputStream fileOutputStream = null;
-        ObjectOutputStream objectOutputStream = null;
-
-        try {
-            fileOutputStream = new FileOutputStream(fileName);
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
-
-            ObjectOutputStream finalObjectOutputStream = objectOutputStream;
-            shelf.getLiteratureInShelf().stream().forEach(literature -> {
-                try {
-                    finalObjectOutputStream.writeObject(literature);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            shelf.getLiteratureOutShelf().stream().forEach(literature -> {
-                try {
-                    finalObjectOutputStream.writeObject(literature);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            System.out.println("File '" + fileName + "' has been written");
-        } finally {
-            if (objectOutputStream != null) {
-                objectOutputStream.close();
-            }
-            if (fileOutputStream != null) {
-                fileOutputStream.close();
-            }
-        }
-
-        Shelf shelf2 = new Shelf();
-        FileInputStream fileInputStream = null;
-        ObjectInputStream objectInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(fileName);
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            try {
-                while (true) {
-                    Literature literatureBuff = (Literature) objectInputStream.readObject();
-                    shelf2.addLiteratureObject(literatureBuff);
-                }
-            } catch (EOFException e) {
-                //eof - no error in this case
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } finally {
-            System.out.println(shelf2);
-            if (fileInputStream != null) {
-                fileInputStream.close();
-            }
-            if (objectInputStream != null) {
-                objectInputStream.close();
-            }
-        }
-
-        assertEquals(shelf.getLiteratureInShelf().get(0).getPagesNumber(), shelf2.getLiteratureInShelf().get(0).getPagesNumber());
-        assertEquals(shelf.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
-        assertEquals(shelf.getLiteratureOutShelf().get(2).getPagesNumber(), shelf2.getLiteratureOutShelf().get(2).getPagesNumber());
-        assertEquals(shelf.getLiteratureOutShelf().get(2).getName(), shelf2.getLiteratureOutShelf().get(2).getName());
-
-        assertEquals(shelf.getLiteratureOutShelf().get(0).getPagesNumber(), shelf2.getLiteratureOutShelf().get(0).getPagesNumber());
-        assertEquals(shelf.getLiteratureOutShelf().get(0).getName(), shelf2.getLiteratureOutShelf().get(0).getName());
-        assertEquals(shelf.getLiteratureOutShelf().get(2).getPagesNumber(), shelf2.getLiteratureOutShelf().get(2).getPagesNumber());
-        assertEquals(shelf.getLiteratureOutShelf().get(2).getName(), shelf2.getLiteratureOutShelf().get(2).getName());
-
     }
 
     @Test
