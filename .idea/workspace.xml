@@ -4,17 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.1&#10;prefixed tests + new Date input">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Literature.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/InputTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/InputTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,9 +98,8 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.JsonWriteAndReadTest.testReadLiteratureFromJson">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
+  <component name="RunManager" selected="JUnit.org.ShmaliukhVlad in Bookshelf_project">
+    <configuration name="InputTest.testDateInput (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -112,6 +107,26 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
+      <option name="METHOD_NAME" value="testDateInput(java.util.Date,java.lang.String)" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InputTest.testDateInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
+      <option name="METHOD_NAME" value="testDateInput(java.lang.String,java.lang.String)" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -127,22 +142,6 @@
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
       <option name="METHOD_NAME" value="testDateValidation(java.lang.String,boolean)" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="InputTest.testNameInput_false" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Bookshelf_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
-      <option name="METHOD_NAME" value="testNameInput_false(java.lang.String,java.lang.String)" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -179,19 +178,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.InputTest.testDateInput" />
+      <item itemvalue="JUnit.InputTest.testDateInput (1)" />
       <item itemvalue="JUnit.InputTest.testDateValidation" />
-      <item itemvalue="JUnit.InputTest.testNameInput_false" />
       <item itemvalue="JUnit.JsonWriteAndReadTest.testReadLiteratureFromJson" />
       <item itemvalue="JUnit.org.ShmaliukhVlad in Bookshelf_project" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.JsonWriteAndReadTest.testReadLiteratureFromJson" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.InputTest.testDateValidation" />
-        <item itemvalue="JUnit.InputTest.testNameInput_false" />
         <item itemvalue="JUnit.org.ShmaliukhVlad in Bookshelf_project" />
+        <item itemvalue="JUnit.InputTest.testDateInput" />
+        <item itemvalue="JUnit.InputTest.testDateValidation" />
+        <item itemvalue="JUnit.InputTest.testDateInput (1)" />
+        <item itemvalue="JUnit.JsonWriteAndReadTest.testReadLiteratureFromJson" />
       </list>
     </recent_temporary>
   </component>
@@ -221,7 +220,7 @@
       <workItem from="1656059295012" duration="23910000" />
       <workItem from="1656312843563" duration="5882000" />
       <workItem from="1656318804273" duration="18715000" />
-      <workItem from="1656399111417" duration="15326000" />
+      <workItem from="1656399111417" duration="20380000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -552,7 +551,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656410171135</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods">
+      <created>1656416467755</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1656416467755</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 1.1.1&#10;Class Terminal code refactored" />
     <MESSAGE value="v 1.1.2&#10;code refactor" />
     <MESSAGE value="v 1.1.3&#10;code refactor + menu fix" />
     <MESSAGE value="v 1.1.4&#10;refactored menu item for adding Literature object" />
@@ -622,7 +627,8 @@
     <MESSAGE value="v 1.2.10&#10;tests for user input (no for data)" />
     <MESSAGE value="v 1.3.0&#10;set up JDK 8" />
     <MESSAGE value="v 1.3.1&#10;prefixed tests + new Date input" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.1&#10;prefixed tests + new Date input" />
+    <MESSAGE value="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -640,6 +646,9 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Practice_1_PragmatTech_$org_ShmaliukhVlad_in_Bookshelf_project.ic" NAME="org.ShmaliukhVlad in Bookshelf_project Coverage Results" MODIFIED="1656411115313" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>org.ShmaliukhVlad.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Practice_1_PragmatTech_$InputTest_testDateInput.ic" NAME="InputTest.testDateInput Coverage Results" MODIFIED="1656423423404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>org.ShmaliukhVlad.*</FILTER>
     </SUITE>
   </component>

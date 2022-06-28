@@ -12,6 +12,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.ShmaliukhVlad.constants.ConstantValues.DATE_FORMAT;
+
 public class UserInput {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
@@ -22,7 +24,7 @@ public class UserInput {
     private static final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
     //private static final Pattern patternForDate = Pattern.compile("(^([0][1-9]|[12][0-9]|[3][0-1])-(0[1-9]|1[0-2])-{4}$)");
     private static final Pattern patternForDate = Pattern.compile("(^(0?[1-9]|[12][0-9]|3[01])-(0?[1-9]|1[012])-(\\d{4})$)");
-    //private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+    private static DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     private UserInput() {
     }
@@ -69,7 +71,7 @@ public class UserInput {
 
     public static String getUserLiteratureName(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter name:");
-        //if(scanner.hasNextLine()){
+        if(scanner.hasNextLine()){
             String name = scanner.nextLine().trim();
             LOGGER.debug("name = " + name); //TODO loggers
             boolean validationResult = isValidLiteratureName(name);
@@ -77,7 +79,7 @@ public class UserInput {
             if (validationResult) {
                 return name;
             }
-        //}
+        }
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
     }
@@ -92,7 +94,7 @@ public class UserInput {
 
     public static String getUserLiteratureAuthor(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter author:");
-        //if(scanner.hasNextLine()){
+        if(scanner.hasNextLine()){
             String author = scanner.nextLine().trim();
             LOGGER.debug("author = " + author);
             boolean validationResult = isValidLiteratureName(author);
@@ -100,7 +102,7 @@ public class UserInput {
             if (validationResult) {
                 return author;
             }
-        //}
+        }
         printStream.println("Wrong input for literature name. Try again");
         return getUserLiteratureName(scanner, printStream);
     }
@@ -113,16 +115,18 @@ public class UserInput {
         return m.matches();
     }
 
-    public static Date getUserDateOfIssue(Scanner scanner, PrintStream printStream) {
+    public static Date getUserDateOfIssue(Scanner scanner, PrintStream printStream) throws ParseException {
         printStream.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
         "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");// TODO write instruction for user date input
         String dateStr;
-        //if(scanner.hasNextLine()){
+        DATE_FORMAT.setLenient(false);
+        if(scanner.hasNextLine()){
             dateStr = scanner.nextLine().trim();
+            LOGGER.debug("input date str = {}",dateStr);
             if(isValidLiteratureDate(dateStr)){
-                return new Date(dateStr);
+                return DATE_FORMAT.parse(dateStr);
             }
-        //}
+        }
         printStream.println("Wrong input. Try again.");
         return getUserDateOfIssue(scanner, printStream);
     }
@@ -131,7 +135,16 @@ public class UserInput {
         if(input == null){
             return false;
         }
-        Matcher m = patternForDate.matcher(input);
+        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        sdf.setLenient(false);
+        try {
+            //LOGGER.debug("str = {}",str);
+            sdf.parse(input);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+        //Matcher m = patternForDate.matcher(input);
 //        try {
 //            //Date.parse(input);
 //            Date date = dateFormat.parse(input);
@@ -140,7 +153,7 @@ public class UserInput {
 //            //throw new RuntimeException(e);
 //            return false;
 //        }
-        return m.matches();
+        //return m.matches();
 
     }
 }

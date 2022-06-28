@@ -6,6 +6,7 @@ import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.serices.UserInput;
 
 import java.io.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -37,7 +38,7 @@ public class Terminal {
     /**
      * Method simulates Terminal work like a real one
      */
-    public void startWork(){
+    public void startWork() throws ParseException {
         printStream.println("Terminal START");
 
         while (isPlay()){
@@ -50,7 +51,7 @@ public class Terminal {
      * Continually print menu items and wait for user choice
      * Works till user enter '0' (Exit)
      */
-    private void generateUserInterface() {
+    private void generateUserInterface() throws ParseException {
         printMainMenu();
 
         switch (getUserChoice()) {
@@ -255,7 +256,7 @@ public class Terminal {
     /**
      * Method give user ability to add new Literature object to Shelf
      */
-    private void addNewLiteratureObject() {
+    private void addNewLiteratureObject() throws ParseException {
         switch (getUserChoice()) {
             case ADD_CUSTOM_MAGAZINE:
                 shelf.addLiteratureObject(getUserMagazine());
@@ -294,7 +295,7 @@ public class Terminal {
      * Method give ability to create custom Book
      * @return user created Book
      */
-    private Book getUserBook() {
+    private Book getUserBook() throws ParseException {
         int pages;
         String name;
         boolean isBorrowed;

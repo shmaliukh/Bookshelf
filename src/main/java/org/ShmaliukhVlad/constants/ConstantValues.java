@@ -42,5 +42,5 @@ public final class ConstantValues {
     public static final int REWRITE_FILE = 1;
     public static final int READ_FILE = 1;
 
-    //public static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 }
