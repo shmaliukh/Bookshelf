@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.constants;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**

@@ -296,13 +296,11 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      *     than sorted by Name
      */
     public ArrayList<Book> getSortedBooksByDate(){
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //TODO
-
         return (ArrayList<Book>) this.getLiteratureInShelf().stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> ((Book) o).getIssuanceDate().getDate())
+                                o -> ((Book) o).getIssuanceDate().getTime())
                         .thenComparing(
                                 o -> ((Book) o).getAuthor().toLowerCase())
                         .thenComparing(

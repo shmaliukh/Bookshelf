@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.3&#10;tests fo date">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/NewContainerForShelf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/inputAuthorsForValidation.cvs" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/inputAuthorsForValidation.cvs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,14 +62,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Админ/IdeaProjects/Practice_1_PragmatTech_/src/test/resources",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.15",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "preferences.editor"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -69,15 +75,10 @@
       <recent name="org.ShmaliukhVlad.bookshelf" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\test\resources" />
       <recent name="D:\3PI_Smaliukh_Vlad\Labs\Bookshelf_project\tz_info" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\test\resources" />
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\test" />
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\main" />
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\test\java\resources" />
-      <recent name="C:\Users\Админ\IdeaProjects\Practice_1_PragmatTech_\src\test\java\org\ShmaliukhVlad" />
+      <recent name="D:\3PI_Smaliukh_Vlad\Labs\Bookshelf_project\tz_info" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -93,8 +94,10 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TerminalTest.test">
+    <configuration name="org.ShmaliukhVlad.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.Main" />
       <module name="Bookshelf_project" />
       <extension name="coverage">
@@ -107,7 +110,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InputTest.testDateInput (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TerminalTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -116,14 +119,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
-      <option name="METHOD_NAME" value="testDateInput(java.util.Date,java.lang.String)" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TerminalTest" />
+      <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InputTest.testDateInput" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestJsonWriteAndRead" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -132,14 +135,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
-      <option name="METHOD_NAME" value="testDateInput(java.lang.String,java.lang.String)" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TestJsonWriteAndRead" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InputTest.testDateValidation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestJsonWriteAndRead.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -148,8 +150,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
-      <option name="METHOD_NAME" value="testDateValidation(java.lang.String,boolean)" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TestJsonWriteAndRead" />
+      <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -170,19 +172,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.InputTest.testDateInput" />
-      <item itemvalue="JUnit.InputTest.testDateInput (1)" />
-      <item itemvalue="JUnit.InputTest.testDateValidation" />
+      <item itemvalue="Application.org.ShmaliukhVlad.Main" />
+      <item itemvalue="JUnit.TerminalTest.test" />
       <item itemvalue="JUnit.org.ShmaliukhVlad in Bookshelf_project" />
+      <item itemvalue="JUnit.TestJsonWriteAndRead" />
+      <item itemvalue="JUnit.TestJsonWriteAndRead.test" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TerminalTest.test" />
+        <item itemvalue="Application.org.ShmaliukhVlad.Main" />
         <item itemvalue="JUnit.org.ShmaliukhVlad in Bookshelf_project" />
-        <item itemvalue="JUnit.InputTest.testDateInput" />
-        <item itemvalue="JUnit.InputTest.testDateValidation" />
-        <item itemvalue="JUnit.InputTest.testDateInput (1)" />
+        <item itemvalue="JUnit.TestJsonWriteAndRead.test" />
+        <item itemvalue="JUnit.TestJsonWriteAndRead" />
       </list>
     </recent_temporary>
   </component>
@@ -209,10 +211,7 @@
       <workItem from="1655364130842" duration="18768000" />
       <workItem from="1655967283871" duration="10038000" />
       <workItem from="1655977532155" duration="15419000" />
-      <workItem from="1656059295012" duration="23910000" />
-      <workItem from="1656312843563" duration="5882000" />
-      <workItem from="1656318804273" duration="18715000" />
-      <workItem from="1656399111417" duration="21657000" />
+      <workItem from="1656426121567" duration="5270000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -473,91 +472,7 @@
       <option name="project" value="LOCAL" />
       <updated>1655976396107</updated>
     </task>
-    <task id="LOCAL-00038" summary="v 1.2.4&#10;fix serialization and deserialization">
-      <created>1656059364444</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1656059364444</updated>
-    </task>
-    <task id="LOCAL-00039" summary="v 1.2.5">
-      <created>1656071077771</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1656071077771</updated>
-    </task>
-    <task id="LOCAL-00040" summary="v 1.2.6">
-      <created>1656081692748</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1656081692748</updated>
-    </task>
-    <task id="LOCAL-00041" summary="v 1.2.7">
-      <created>1656085601067</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1656085601067</updated>
-    </task>
-    <task id="LOCAL-00042" summary="v 1.2.8&#10;UserInput class added">
-      <created>1656313597008</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1656313597008</updated>
-    </task>
-    <task id="LOCAL-00043" summary="v 1.2.8.1&#10;UserInput class added">
-      <created>1656313905851</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1656313905851</updated>
-    </task>
-    <task id="LOCAL-00044" summary="v 1.2.9&#10;tests for user input (no for data)">
-      <created>1656333903234</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1656333903234</updated>
-    </task>
-    <task id="LOCAL-00045" summary="v 1.2.10&#10;tests for user input (no for data)">
-      <created>1656344752776</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1656344752776</updated>
-    </task>
-    <task id="LOCAL-00046" summary="v 1.3.0&#10;set up JDK 8">
-      <created>1656404796804</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1656404796804</updated>
-    </task>
-    <task id="LOCAL-00047" summary="v 1.3.1&#10;prefixed tests + new Date input">
-      <created>1656410171135</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1656410171135</updated>
-    </task>
-    <task id="LOCAL-00048" summary="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods">
-      <created>1656416467755</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1656416467755</updated>
-    </task>
-    <task id="LOCAL-00049" summary="v 1.3.3&#10;tests fo date">
-      <created>1656424617577</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1656424617577</updated>
-    </task>
-    <option name="localTasksCounter" value="50" />
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -602,6 +517,18 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="v 0.2.2&#10;add ability to borrow and arrive Shelf items" />
+    <MESSAGE value="v 0.2.3&#10;add ability for printing Books sorted by Date of issue&#10;refactor and clean up code" />
+    <MESSAGE value="v 0.2.4&#10;preparation ащк Serialization and Deserialization" />
+    <MESSAGE value="v 0.3.0&#10;all functions are ready&#10;main functions are covered with tests" />
+    <MESSAGE value="v 1.0.0&#10;first release" />
+    <MESSAGE value="v 1.0.1&#10;tests refactor" />
+    <MESSAGE value="v 1.0.2&#10;tests refactor" />
+    <MESSAGE value="v 1.0.3&#10;fix fome problems" />
+    <MESSAGE value="v 1.0.3&#10;fix some problems" />
+    <MESSAGE value="v 1.1.0&#10;preparation for code refactoring" />
+    <MESSAGE value="v 1.1.1&#10;Class Terminal code refactored" />
+    <MESSAGE value="v 1.1.2&#10;code refactor" />
     <MESSAGE value="v 1.1.3&#10;code refactor + menu fix" />
     <MESSAGE value="v 1.1.4&#10;refactored menu item for adding Literature object" />
     <MESSAGE value="v 1.1.5&#10;menu bugs fix" />
@@ -615,19 +542,7 @@
     <MESSAGE value="v 1.2.0&#10;new version ready for user" />
     <MESSAGE value="v 1.2.2&#10;book serializer problem" />
     <MESSAGE value="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared" />
-    <MESSAGE value="v 1.2.4&#10;fix serialization and deserialization" />
-    <MESSAGE value="v 1.2.5" />
-    <MESSAGE value="v 1.2.6" />
-    <MESSAGE value="v 1.2.7" />
-    <MESSAGE value="v 1.2.8&#10;UserInput class added" />
-    <MESSAGE value="v 1.2.8.1&#10;UserInput class added" />
-    <MESSAGE value="v 1.2.9&#10;tests for user input (no for data)" />
-    <MESSAGE value="v 1.2.10&#10;tests for user input (no for data)" />
-    <MESSAGE value="v 1.3.0&#10;set up JDK 8" />
-    <MESSAGE value="v 1.3.1&#10;prefixed tests + new Date input" />
-    <MESSAGE value="v 1.3.2&#10;new date input regex +  + micro fixes + refactored methods" />
-    <MESSAGE value="v 1.3.3&#10;tests fo date" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.3&#10;tests fo date" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.2.3&#10;fix serialization&#10;but book deserialization problem appeared" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -636,6 +551,11 @@
           <properties class="java.io.EOFException" package="java.io" />
           <option name="timeStamp" value="5" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TerminalTest.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -644,13 +564,10 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Practice_1_PragmatTech_$org_ShmaliukhVlad_in_Bookshelf_project.ic" NAME="org.ShmaliukhVlad in Bookshelf_project Coverage Results" MODIFIED="1656424592867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Practice_1$Main.ic" NAME="Main Coverage Results" MODIFIED="1656426552487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>org.ShmaliukhVlad.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Practice_1_PragmatTech_$InputTest_testDateInput.ic" NAME="InputTest.testDateInput Coverage Results" MODIFIED="1656423423404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>org.ShmaliukhVlad.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Practice_1_PragmatTech_$Main.ic" NAME="Main Coverage Results" MODIFIED="1656425662337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Practice_1$org_ShmaliukhVlad_in_Bookshelf_project.ic" NAME="org.ShmaliukhVlad in Bookshelf_project Coverage Results" MODIFIED="1656427105447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>org.ShmaliukhVlad.*</FILTER>
     </SUITE>
   </component>

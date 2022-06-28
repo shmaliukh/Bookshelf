@@ -142,7 +142,7 @@ public class Terminal {
         printStream.println("If you need get saving from file '" + FILE_NAME + "'");
         printStream.println("you LOOSE ALL INFO about current SHELF");
         printStream.println("If you need to rewrite it enter '1'");
-        printStream.println("Press another key to return");
+        printStream.println("Enter another key to back");
         switch (getUserChoice()) {
             case READ_FILE:
                 try {

@@ -173,7 +173,7 @@ class BookTest {
     @DisplayName("test getIssuanceDate")
     void getIssuanceDate() {
         Date expectedDate = new Date();
-        assertEquals(expectedDate, book1.getIssuanceDate());
+        assertEquals(expectedDate.getTime(), book1.getIssuanceDate().getTime());
     }
 
     @Test

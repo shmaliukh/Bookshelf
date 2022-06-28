@@ -15,7 +15,7 @@ public class Main {
      * @param args command line values
      */
     public static void main(String[] args) throws ParseException {
-        System.out.println(Arrays.toString( args));
+        //System.out.println(Arrays.toString( args));
         Terminal terminal = new Terminal();
         terminal.startWork();
     }
