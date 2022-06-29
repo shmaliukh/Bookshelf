@@ -40,10 +40,14 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         literatureOutShelf= new ArrayList<>();
     }
 
-    public Shelf(List<List<Literature>> allLiteratureInShelf){
-        if(allLiteratureInShelf.size() > 1){
-            literatureInShelf = allLiteratureInShelf.get(0);
-            literatureOutShelf= allLiteratureInShelf.get(1);
+    public Shelf(List<List<Object>> allLiteratureInShelf){
+        //this.allLiterature = allLiteratureInShelf;
+        literatureInShelf = new ArrayList<>();
+        literatureOutShelf = new ArrayList<>();
+
+        if( allLiteratureInShelf.size() > 1){
+            literatureInShelf = Collections.singletonList((Literature) allLiteratureInShelf.get(0));
+            literatureOutShelf= Collections.singletonList((Literature)allLiteratureInShelf.get(1));
         }
     }
 
