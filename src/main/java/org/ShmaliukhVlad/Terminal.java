@@ -38,12 +38,16 @@ public class Terminal {
     /**
      * Method simulates Terminal work like a real one
      */
-    public void startWork() throws ParseException {
+    public void startWork() throws ParseException, IOException, ClassNotFoundException {
         printStream.println("Terminal START");
+
+        shelf.deserialize(FILE_NAME);
 
         while (isPlay()){
             generateUserInterface();
+            shelf.saveShelfToFile(FILE_NAME);
         }
+        shelf.saveShelfToFile(FILE_NAME);
     }
 
     /**
