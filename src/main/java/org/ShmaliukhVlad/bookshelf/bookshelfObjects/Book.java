@@ -1,7 +1,9 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_NAME;
@@ -14,6 +16,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_I
  * @version 1.0.0
  * This is Book class which gives ability to create objects
  */
+@Data
 public class Book extends Literature{
 
     private String author;
@@ -93,22 +96,4 @@ public class Book extends Literature{
                 return toString();
         }
     }
-
-    //getters and setters
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Date getIssuanceDate() {
-        return issuanceDate;
-    }
-
-    public void setIssuanceDate(Date issuanceDate) {
-        this.issuanceDate = issuanceDate;
-    }
-
 }

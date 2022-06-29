@@ -2,6 +2,8 @@ package org.ShmaliukhVlad.bookshelf;
 
 import com.google.gson.*;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithMagazines;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
@@ -24,15 +26,33 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
  * @version 1.0.0
  * This is Shelf class which simulates real shelf with books and magazines
  */
+@Data
+@AllArgsConstructor
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
 
+    public List<List<Object>> allLiterature = new ArrayList<>();
+
     public Shelf(){
         literatureInShelf = new ArrayList<>();
         literatureOutShelf= new ArrayList<>();
     }
+
+    public Shelf(List<List<Literature>> allLiteratureInShelf){
+        if(allLiteratureInShelf.size() > 1){
+            literatureInShelf = allLiteratureInShelf.get(0);
+            literatureOutShelf= allLiteratureInShelf.get(1);
+        }
+    }
+
+    public List<List<Object>> getAllLiterature(){
+        allLiterature.add(Collections.singletonList(literatureInShelf));// TODO ???
+        allLiterature.add(Collections.singletonList(literatureOutShelf));
+        return allLiterature;
+    }
+
 
     @Override
     public void addLiteratureObject(Literature literature) {

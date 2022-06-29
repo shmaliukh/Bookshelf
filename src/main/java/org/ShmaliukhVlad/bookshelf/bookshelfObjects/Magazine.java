@@ -1,5 +1,8 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_PAGES_NUMBER;
 
@@ -8,6 +11,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_PAGES
  * @version 1.0.0
  * This is Magazine class which gives ability to create objects
  */
+@Data
 public class Magazine extends Literature {
 
     /**
