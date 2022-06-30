@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import com.sun.org.glassfish.gmbal.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,6 @@ class BookTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_PAGES_NUMBER")
-    @Description("Should return special printable line when sorting by pages")
     void testGetPrintableLineOfLiteratureObject_whenSortByPages() {
         String expectedStr =
                 "Book {" +
@@ -34,7 +32,6 @@ class BookTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_NAME")
-    @Description("Should return special printable line when sorting by name")
     void testGetPrintableLineOfLiteratureObject_whenSortByName() {
         String expectedStr =
                 "Book {" +
@@ -50,7 +47,6 @@ class BookTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_AUTHOR")
-    @Description("Should return special printable line when sorting by author")
     void testGetPrintableLineOfLiteratureObject_whenSortByAuthor() {
         String expectedStr =
                 "Book {" +
@@ -66,7 +62,6 @@ class BookTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_DATE_OF_ISSUE")
-    @Description("Should return special printable line when sorting by date of issue")
     void testGetPrintableLineOfLiteratureObject_whenSortByDateOfIssue() {
         String expectedStr =
                 "Book {" +
@@ -82,7 +77,6 @@ class BookTest {
 
 
     @Test
-    @DisplayName("test getName")
     void getName() {
         String expectedName = "someName";
 
@@ -90,7 +84,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setName")
     void setName() {
         String expectedStr = "someName";
         book1.setName("someName");
@@ -99,7 +92,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test getPagesNumber")
     void getPagesNumber() {
         int expectedNumber = 1;
 
@@ -107,8 +99,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setPagesNumber (0)")
-    @Description("Pages number can be 0")
     void setPagesNumber_0() {
         int expectedNumber = 0;
         book1.setPagesNumber(0);
@@ -117,8 +107,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setPagesNumber (-1)")
-    @Description("Pages number can not be lower than 0")
     void setPagesNumber_1() {
         int expectedNumber = 1;
         book1.setPagesNumber(-1);
@@ -127,7 +115,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setPagesNumber (1)")
     void setPagesNumber_2() {
         int expectedNumber = 1;
         book1.setPagesNumber(1);
@@ -136,7 +123,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test isBorrowed")
     void isBorrowed() {
         boolean expectedBoolean = false;
 
@@ -144,7 +130,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setBorrowed")
     void setBorrowed() {
         boolean expectedBoolean = true;
         book1.setBorrowed(true);
@@ -153,7 +138,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test getAuthor")
     void getAuthor() {
         String expectedAuthor = "someAuthor";
 
@@ -161,7 +145,6 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test setAuthor")
     void setAuthor() {
         String expectedAuthor = "someAuthor1";
         book1.setAuthor("someAuthor1");
@@ -170,14 +153,12 @@ class BookTest {
     }
 
     @Test
-    @DisplayName("test getIssuanceDate")
     void getIssuanceDate() {
         Date expectedDate = new Date();
         assertEquals(expectedDate.getTime(), book1.getIssuanceDate().getTime());
     }
 
     @Test
-    @DisplayName("test setIssuanceDate")
     void setIssuanceDate() {
         Date expectedDate = new Date(123456);
         book2.setIssuanceDate(new Date(123456));

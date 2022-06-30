@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
-import com.sun.org.glassfish.gmbal.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.DisplayName;
@@ -36,8 +35,6 @@ class ActionsWithMagazinesTest {
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Name")
-    @Description("Simple test for getting info about sorted available magazines in shelf by name (magazines added in revers order)." +
-            "Operate with getPrintableLineOfLiteratureObject() method")
     void printSortedMagazinesByName() {
         ArrayList<Magazine> sortedMagazinesByName = shelf1.getSortedMagazinesByName();
 
@@ -48,8 +45,6 @@ class ActionsWithMagazinesTest {
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Pages")
-    @Description("Simple test for getting info about sorted available magazines in shelf by pages (magazines added in revers order)." +
-            "Operate with getPrintableLineOfLiteratureObject() method")
     void printSortedMagazinesByPages() {
         ArrayList<Magazine> sortedMagazinesByPages = shelf1.getSortedMagazinesByPages();
 

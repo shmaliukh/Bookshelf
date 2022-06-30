@@ -1,7 +1,6 @@
 package org.ShmaliukhVlad;
 
 import com.google.gson.Gson;
-import com.sun.org.glassfish.gmbal.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -56,7 +55,6 @@ public class JsonWriteAndReadTest {
 
     @Test
     @DisplayName("test to write Shelf with books in file")
-    @Description("Test to write info about Shelf only with books objects")
     void testWriteLiterature_books() throws IOException {
         Shelf shelf1 = new Shelf();
         Shelf shelf2 = new Shelf();
@@ -81,7 +79,6 @@ public class JsonWriteAndReadTest {
 
     @Test
     @DisplayName("test to write Shelf with magazines in file")
-    @Description("Test to write info about Shelf only with magazines objects")
     void testWriteLiterature_magazines() throws IOException {
         String testFileName = "testShelf.json";
         Shelf shelf1 = new Shelf();

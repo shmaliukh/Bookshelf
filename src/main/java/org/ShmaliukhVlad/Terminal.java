@@ -41,13 +41,14 @@ public class Terminal {
     public void startWork() throws ParseException, IOException, ClassNotFoundException {
         printStream.println("Terminal START");
 
-        shelf = Shelf.readShelfFromGsonFile(FILE_NAME);
-
+        if(new File(FILE_NAME).exists()){ // TODO validation
+            shelf = Shelf.readShelfFromGsonFile(FILE_NAME);
+        }
         while (isPlay()){
             generateUserInterface();
             shelf.saveShelfToGsonFile(FILE_NAME);
         }
-        shelf.saveShelfToGsonFile(FILE_NAME);
+        //shelf.saveShelfToGsonFile(FILE_NAME);
     }
 
     /**
@@ -402,7 +403,13 @@ public class Terminal {
      * @return entered integer value from console
      */
     public int getUserChoice(){
-        return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
+        if (scanner.hasNextLine()){
+            String str = scanner.nextLine().replaceAll("[\\D]", "").trim();
+            if (!str.equals("")) {
+                return Integer.parseInt(str);
+            }
+        }
+        return WRONG_INPUT;
     }
 
     /**

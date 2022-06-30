@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
-import com.sun.org.glassfish.gmbal.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -35,11 +34,8 @@ class BaseActionsWithShelfTest {
     PrintStream ps = new PrintStream(baos);
     PrintStream old = System.out;
 
-
-
     @Test
     @DisplayName("test to add one not borrowed magazine to the shelf")
-    @Description("Simple test to add one magazine to shelf which is NOT borrowed")
     void addLiteratureObject_magazineNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
@@ -54,7 +50,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to add one borrowed magazine to the shelf")
-    @Description("Simple test to add one magazine to shelf which is borrowed")
     void addLiteratureObject_magazineIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
@@ -69,7 +64,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to add one not borrowed book to the shelf")
-    @Description("Simple test to add one book to shelf which is NOT borrowed")
     void addLiteratureObject_bookNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
@@ -84,7 +78,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to add one borrowed book to the shelf")
-    @Description("Simple test to add one book to shelf which is borrowed")
     void addLiteratureObject_bookIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
@@ -99,7 +92,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to delete book from the shelf")
-    @Description("Simple test to delete one book from shelf")
     void deleteLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
         Shelf shelf = new Shelf();
@@ -112,7 +104,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to delete magazine from the shelf)")
-    @Description("Simple test to delete one magazine from shelf")
     void deleteLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
         Shelf shelf = new Shelf();
@@ -125,7 +116,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to delete literature object from the shelf when empty")
-    @Description("Check the console's response when trying to remove from an empty shelf")
     void deleteLiteratureObjectByIndex_emptyShelf() {
         String expectedString = "Empty shelf";
 
@@ -142,7 +132,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to delete literature object by wrong index from the shelf")
-    @Description("Verify that the console responds to an attempt to remove an incorrect index from the shelf")
     void deleteLiteratureObjectByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         Shelf shelf = new Shelf();
@@ -161,7 +150,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to borrow magazine from the shelf")
-    @Description("Simple test to borrow one magazine from shelf")
     void borrowLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
@@ -176,7 +164,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to borrow book from the shelf")
-    @Description("Simple test to borrow one book from shelf")
     void borrowLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
@@ -191,7 +178,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to borrow no available literature object from the shelf")
-    @Description("Verify that the console responds to an attempt to borrow literature from the shelf when no available literature object")
     void borrowLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "No available literature";
         Shelf shelf = new Shelf();
@@ -209,7 +195,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to borrow literature object by wrong index from the shelf")
-    @Description("Verify that the console responds to an attempt to borrow an incorrect index from the shelf")
     void borrowLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         Shelf shelf = new Shelf();
@@ -228,7 +213,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to arrive book back to the shelf")
-    @Description("Simple test to arrive one book back to the shelf")
     void arriveLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
@@ -243,7 +227,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to arrive magazine back to the shelf")
-    @Description("Simple test to arrive one magazine back to the shelf")
     void arriveLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
@@ -258,7 +241,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to arrive literature object by wrong index back to the shelf")
-    @Description("Verify that the console responds to an attempt to arrive an incorrect index back to the shelf")
     void arriveLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         Shelf shelf = new Shelf();
@@ -277,7 +259,6 @@ class BaseActionsWithShelfTest {
 
     @Test
     @DisplayName("test to arrive literature object back to the shelf when literature is not borrowed")
-    @Description("Verify that the console responds to an attempt to arrive back to the shelf when literature is not borrowed")
     void arriveLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "Literature is not borrowed";
         Shelf shelf = new Shelf();

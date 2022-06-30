@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad;
 
-import com.sun.org.glassfish.gmbal.Description;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -24,7 +23,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Add one Book and one Magazine (are not borrowed) to empty Shelf")
-    @Description("Simple add one Book and one Magazine which are NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_1() {
         Shelf shelf1 = new Shelf();
 
@@ -38,8 +36,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Add one Book (borrowed) and one Magazine (not borrowed) to empty Shelf")
-    @Description("Add one Book which is borrowed (isBorrowed = true) " +
-            "and one Magazine which is NOT borrowed (isBorrowed = false) to empty Shelf")
     void addBookAndMagazineToShelf_2() {
         Shelf shelf1 = new Shelf();
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
@@ -53,7 +49,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Generating Shelf with one Book and one Magazine")
-    @Description("Try to generate Shelf and add one Book and one Magazine which are NOT borrowed (isBorrowed = false) ")
     void generateShelf() {
         Shelf shelfTest = new Shelf();
         Shelf shelfExpect = new Shelf();
@@ -67,8 +62,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Get sorted only Magazine objects by name")
-    @Description("Test method which gives user list of Magazines inside Shelf by next rule:\n" +
-            "Magazines which are sorted by Name")
     void sortedMagazinesByName() {
         String expectedLastName = "noNameMagazine2";
         int expectedLastPagesNumber = 2;
@@ -89,8 +82,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Get sorted only Magazine objects by pages")
-    @Description("Test method which gives user list of Magazines inside Shelf by next rule:\n" +
-            "Magazines which are sorted by Pages")
     void sortedMagazinesByPages() {
         String expectedLastName = "noNameMagazine2";
         int expectedLastPagesNumber = 2;
@@ -110,8 +101,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Get sorted only Book objects by name")
-    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
-            "Books which are sorted by Name")
     void sortedBooksByName() {
         String expectedLastName = "noNameBook2";
         int expectedLastPagesNumber = 2;
@@ -131,8 +120,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Get sorted only Book objects by pages")
-    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
-            "Books which are sorted by Pages")
     void sortedBooksByPages() {
         String expectedLastName = "noNameBook2";
         int expectedLastPagesNumber = 2;
@@ -152,8 +139,6 @@ class ShelfTest {
 
     @Test
     @DisplayName("Get sorted only Book objects by author")
-    @Description("Test method which gives user list of Books inside Shelf by next rule:\n" +
-            "Books which are sorted by Author")
     void sortedBooksByAuthor() {
         String expectedLastName = "noNameBook2";
         String expectedLastAuthor = "NoAuthor2";

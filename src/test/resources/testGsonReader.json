@@ -1,0 +1,1 @@
+[{"ClassType":"class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book","Literature":{"author":"sfs[\u0027ldf sdf\u0027[l","issuanceDate":"Dec 12, 1212 12:00:00 AM","Name":"book name","Number of pages":6446,"Borrowed":false}},{"ClassType":"class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine","Literature":{"Name":"magazine name","Number of pages":12,"Borrowed":true}}]

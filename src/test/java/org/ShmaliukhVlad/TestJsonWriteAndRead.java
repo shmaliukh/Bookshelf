@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;

@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import com.sun.org.glassfish.gmbal.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,6 @@ class MagazineTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject without parameters")
-    @Description("Should return 'toString()' value if method 'getPrintableLineOfLiteratureObject()' has no parameter")
     void testGetPrintableLineOfLiteratureObject_noParameter() {
         String expectedStr= magazine1.toString();
 
@@ -25,7 +23,6 @@ class MagazineTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_MAGAZINES_BY_NAME")
-    @Description("Should return special printable line when sorting by name")
     void testGetPrintableLineOfLiteratureObject_whenSortByName() {
         String expectedStr =
                 "Magazine {" +
@@ -39,7 +36,6 @@ class MagazineTest {
 
     @Test
     @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_MAGAZINES_PAGES_NUMBER")
-    @Description("Should return special printable line when sorting by pages")
     void testGetPrintableLineOfLiteratureObject_whenSortByPages() {
         String expectedStr =
                 "Magazine {" +
@@ -52,7 +48,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test getName")
     void getName() {
         String expectedName = "someValue";
 
@@ -60,7 +55,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test setName")
     void setName() {
         String expectedName = "someName1";
         magazine1.setName("someName1");
@@ -69,7 +63,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test getPagesNumber")
     void getPagesNumber_0() {
         int expectedNumber = 0;
 
@@ -77,7 +70,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test setPagesNumber (set -1)")
     void setPagesNumber_0() {
         int expectedNumber = 1;
         magazine1.setPagesNumber(-1);
@@ -86,7 +78,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test setPagesNumber (set 1)")
     void setPagesNumber_1() {
         int expectedNumber = 1;
         magazine1.setPagesNumber(1);
@@ -95,7 +86,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test isBorrowed")
     void isBorrowed() {
         boolean expectedBoolean = true;
 
@@ -103,7 +93,6 @@ class MagazineTest {
     }
 
     @Test
-    @DisplayName("test setBorrowed")
     void setBorrowed() {
         boolean expectedBoolean = false;
         magazine1.setBorrowed(false);

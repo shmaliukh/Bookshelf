@@ -50,7 +50,7 @@ public class UserInput {
         printStream.println("Enter pages number: (program ignores all not number symbols)");
         if(scanner.hasNext()){
             String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();// get only string with numbers
-            if (inputStr.length() > 1){
+            if (inputStr.length() > 0){
                 if (isValidLiteraturePages(inputStr)) {
                     return Integer.parseInt(inputStr);
                 }
@@ -95,9 +95,9 @@ public class UserInput {
         printStream.println("Enter author:");
         if(scanner.hasNextLine()){
             String author = scanner.nextLine().trim();
-            LOGGER.debug("author = " + author);
+            //LOGGER.debug("author = " + author);
             boolean validationResult = isValidLiteratureName(author);
-            LOGGER.debug("validationResult: " + validationResult);
+            //LOGGER.debug("validationResult: " + validationResult);
             if (validationResult) {
                 return author;
             }
@@ -143,16 +143,5 @@ public class UserInput {
             return false;
         }
         return true;
-        //Matcher m = patternForDate.matcher(input);
-//        try {
-//            //Date.parse(input);
-//            Date date = dateFormat.parse(input);
-//            LOGGER.debug("input date string {}, parsed date {}", input, dateFormat.parse(input));
-//        } catch (ParseException e) {
-//            //throw new RuntimeException(e);
-//            return false;
-//        }
-        //return m.matches();
-
     }
 }

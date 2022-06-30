@@ -2,11 +2,8 @@ package org.ShmaliukhVlad;
 
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 
@@ -17,11 +14,32 @@ import org.junit.jupiter.api.Test;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.*;
 
+import static org.ShmaliukhVlad.bookshelf.Shelf.readShelfFromGsonFile;
 
 class ContainerNewTest {
+    @Test
+    void readFileTest() throws IOException, ClassNotFoundException {
+        FileReader fr = new FileReader("src/test/resources/testGsonReader.json");
+        String strGsonFile = fr.toString();
+
+        String fineName = "readFileTest.json";
+        FileWriter fw = new FileWriter(fineName);
+
+        fw.write(strGsonFile);
+        fw.flush();
+        fw.close();
+
+        Shelf shelf = new Shelf();
+        shelf.addLiteratureObject(new Book("book name", 123,true, "author" ,new Date()));
+        shelf.addLiteratureObject(new Magazine("magazine name", 123,false));
+
+        shelf = readShelfFromGsonFile(fineName);
+
+
+    }
+
     @Test
     void test() throws IOException {
         FileWriter fw =new FileWriter("newGsonContainer.json");
@@ -95,6 +113,5 @@ class Container{
         this.classOfLiterature = literature.getClass().toString();
         this.literature = literature;
     }
-
 }
 

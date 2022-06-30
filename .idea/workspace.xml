@@ -4,12 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.8&#10;new serialization/deserialization prototype method created in tests file">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/ContainerForLiteratureObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/resources/testGsonReader.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/constants/ConstantValues.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TestJsonWriteAndRead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TestJsonWriteAndRead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/MagazineTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/MagazineTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +32,8 @@
       <list>
         <option value="Interface" />
         <option value="JUnit5 Test Class" />
-        <option value="Class" />
         <option value="Kotlin Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -43,6 +54,18 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Book.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/Magazine.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/InputTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ShelfTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithBooksTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/ActionsWithMagazinesTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelfTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/BookTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/bookshelf/bookshelfObjects/MagazineTest.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -57,21 +80,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Vlad_projects/Practice_1/src/test/resources",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.editor"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.ShmaliukhVlad.bookshelf" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Vlad_projects\Practice_1\src\test\resources" />
       <recent name="D:\3PI_Smaliukh_Vlad\Labs\Bookshelf_project\tz_info" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -91,7 +116,7 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ContainerNewTest.test (1)">
+  <component name="RunManager" selected="Application.org.ShmaliukhVlad.Main">
     <configuration name="TryUseBigDecimal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TryUseBigDecimal" />
       <module name="Bookshelf_project" />
@@ -120,6 +145,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ContainerNewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Bookshelf_project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
+      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ContainerNewTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ContainerNewTest.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
@@ -136,23 +176,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="InputTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Bookshelf_project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.ShmaliukhVlad.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.ShmaliukhVlad" />
-      <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.InputTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea -Dtmp.dir=c:\tmp" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TryKotlinKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="TryKotlinKt" />
       <module name="Bookshelf_project" />
@@ -163,17 +186,17 @@
     <list>
       <item itemvalue="Application.TryUseBigDecimal" />
       <item itemvalue="Application.org.ShmaliukhVlad.Main" />
+      <item itemvalue="JUnit.ContainerNewTest" />
       <item itemvalue="JUnit.ContainerNewTest.test (1)" />
-      <item itemvalue="JUnit.InputTest" />
       <item itemvalue="Kotlin.TryKotlinKt" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ContainerNewTest.test (1)" />
         <item itemvalue="Application.org.ShmaliukhVlad.Main" />
+        <item itemvalue="JUnit.ContainerNewTest" />
+        <item itemvalue="JUnit.ContainerNewTest.test (1)" />
         <item itemvalue="Kotlin.TryKotlinKt" />
         <item itemvalue="Application.TryUseBigDecimal" />
-        <item itemvalue="JUnit.InputTest" />
       </list>
     </recent_temporary>
   </component>
@@ -202,7 +225,8 @@
       <workItem from="1655977532155" duration="15419000" />
       <workItem from="1656426121567" duration="6091000" />
       <workItem from="1656489239692" duration="22502000" />
-      <workItem from="1656571713524" duration="10075000" />
+      <workItem from="1656571713524" duration="14457000" />
+      <workItem from="1656593770694" duration="5118000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -498,7 +522,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656575611491</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="v 1.3.8&#10;new serialization/deserialization prototype method created in tests file">
+      <created>1656582538762</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1656582538762</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -543,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 1.0.1&#10;tests refactor" />
     <MESSAGE value="v 1.0.2&#10;tests refactor" />
     <MESSAGE value="v 1.0.3&#10;fix fome problems" />
     <MESSAGE value="v 1.0.3&#10;fix some problems" />
@@ -568,7 +598,8 @@
     <MESSAGE value="v 1.3.5" />
     <MESSAGE value="v 1.3.6&#10;Kotlin code example" />
     <MESSAGE value="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort" />
+    <MESSAGE value="v 1.3.8&#10;new serialization/deserialization prototype method created in tests file" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.8&#10;new serialization/deserialization prototype method created in tests file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -578,14 +609,14 @@
           <option name="timeStamp" value="5" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java</url>
-          <line>71</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java</url>
-          <line>54</line>
-          <option name="timeStamp" value="7" />
+          <url>file://$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

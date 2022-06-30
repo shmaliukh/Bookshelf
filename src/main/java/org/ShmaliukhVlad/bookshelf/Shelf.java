@@ -10,6 +10,7 @@ import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
+import org.ShmaliukhVlad.serices.ContainerForLiteratureObject;
 import org.ShmaliukhVlad.serices.ShelfContainer;
 
 import java.io.*;
@@ -361,15 +362,27 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     //@Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToGsonFile(String fileName){
         try {
-            Writer writer = new FileWriter(fileName);
-            new Gson().toJson(new ShelfContainer(this), writer);
-            writer.flush();
-            writer.close();
+            Writer fw = new FileWriter(fileName);
+            new Gson().toJson(getContainerForLiteratureObjects(), fw);
+            fw.flush();
+            fw.close();
             //System.out.println("File '" + fileName + "' has been written");
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    //TODO description
+    private List<ContainerForLiteratureObject> getContainerForLiteratureObjects() {
+        List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
+        for (Book book : this.getBooks()) {
+            containerArrayList.add(new ContainerForLiteratureObject(book));
+        }
+        for (Magazine magazine : this.getMagazines()) {
+            containerArrayList.add(new ContainerForLiteratureObject(magazine));
+        }
+        return containerArrayList;
     }
 
     public List<Book> getBooks() {
@@ -402,9 +415,32 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      * Deserialization Shelf and it's Literature objects
      */
     public static Shelf readShelfFromGsonFile(String fileName) throws IOException, ClassNotFoundException {
-        Path path = new File(fileName).toPath();
-        ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
-        return new Shelf(shelfContainer.getBooks(), shelfContainer.getMagazines());
+        FileReader fr = new FileReader(fileName);
+        Gson gson = new Gson();
+
+        List<Literature> literatureList = new ArrayList();
+        JsonArray jsonArray = gson.fromJson(fr, JsonArray.class);
+        for (JsonElement element : jsonArray) {
+            //System.out.println("element: " + element);
+            JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
+            String typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+            //System.out.println("    classType: " + typeOfClass);
+            //System.out.println("    itemObject: " + itemObject);
+            List<Book> books = new ArrayList<>();
+            List<Magazine> magazines = new ArrayList<>();
+
+            if (typeOfClass.equals(Book.class.toString())) {
+                books.add(gson.fromJson(itemObject, Book.class));
+                //System.out.println("        book: " + gson.fromJson(itemObject, Book.class));
+            }
+            else if (typeOfClass.equals(Magazine.class.toString())) {
+                magazines.add(gson.fromJson(itemObject, Magazine.class));
+                //System.out.println("        magazine: " + gson.fromJson(itemObject, Magazine.class));
+            }
+            literatureList.addAll(books);
+            literatureList.addAll(magazines);
+        }
+        return new Shelf(literatureList);
     }
 
     /**
