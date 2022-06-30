@@ -1,13 +1,13 @@
 package org.ShmaliukhVlad;
 
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
+import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.serices.UserInput;
 
 import java.io.*;
 import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
@@ -20,7 +20,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 public class Terminal {
     private boolean play;
 
-    private final Shelf shelf;
+    private Shelf shelf;
     private Scanner scanner;
     private PrintStream printStream;
 
@@ -41,13 +41,13 @@ public class Terminal {
     public void startWork() throws ParseException, IOException, ClassNotFoundException {
         printStream.println("Terminal START");
 
-        shelf.deserialize(FILE_NAME);
+        shelf = Shelf.readShelfFromGsonFile(FILE_NAME);
 
         while (isPlay()){
             generateUserInterface();
-            shelf.saveShelfToFile(FILE_NAME);
+            shelf.saveShelfToGsonFile(FILE_NAME);
         }
-        shelf.saveShelfToFile(FILE_NAME);
+        shelf.saveShelfToGsonFile(FILE_NAME);
     }
 
     /**
@@ -81,12 +81,12 @@ public class Terminal {
             case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
                 break;
-            case SAVE_SHELF_IN_FILE:
-                saveShelf();
-                break;
-            case DESERIALIZE:
-                deserializeShelf();
-                break;
+            //case SAVE_SHELF_IN_FILE:
+            //    saveShelf();
+            //    break;
+            //case DESERIALIZE:
+            //    deserializeShelf();
+            //    break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
                 break;
@@ -94,7 +94,7 @@ public class Terminal {
                 closeTerminal();
                 break;
             case WRONG_INPUT:
-                printStream.println("Wrong input");
+                printStream.println("Wrong input"); // TODO delete???
                 break;
             default:
                 printStream.println("Wrong input");
@@ -122,18 +122,20 @@ public class Terminal {
      * Method close current terminal
      */
     private void closeTerminal() {
-        askUserIfNeedToSaveShelf();
-        setPlay(false);
+        //askUserIfNeedToSaveShelf();
+        //askUserIfNeedToSaveShelf();
+        this.stop();
         printStream.println("Terminal STOP");
     }
 
     /**
      * Method gives a choice to save the current state of the shelf
      */
+    @Deprecated
     private void askUserIfNeedToSaveShelf() {
         printStream.println("Do you want to record the current state of the shelf?");
         printStream.println("Enter '1' if you want to save");
-        printStream.println("Press another key to exit without saving");
+        printStream.println("Enter another value to exit without saving");
         if(getUserChoice() == SAVE_CURRENT_STATE_OF_SHELF){
             saveShelf();
         }
@@ -142,15 +144,16 @@ public class Terminal {
     /**
      * Method deserializes all Literature objects from .out file save in current Shelf.
      */
+    @Deprecated
     private void deserializeShelf() {
         printStream.println("If you need get saving from file '" + FILE_NAME + "'");
         printStream.println("you LOOSE ALL INFO about current SHELF");
         printStream.println("If you need to rewrite it enter '1'");
-        printStream.println("Enter another key to back");
+        printStream.println("Enter another value to back");
         switch (getUserChoice()) {
             case READ_FILE:
                 try {
-                    shelf.deserialize(FILE_NAME);
+                    shelf.readShelfFromGsonFile(FILE_NAME);
                     printStream.println("Deserialized");
                 } catch (IOException e) {
                     //printStream.println("Serialization error");
@@ -171,6 +174,7 @@ public class Terminal {
     /**
      * Method serializes all Shelf's Literature objects in .out file.
      */
+    @Deprecated
     private void saveShelf() {
 
         File file = new File(FILE_NAME);
@@ -178,12 +182,12 @@ public class Terminal {
         if(file.exists()){
             printStream.println("File " + FILE_NAME + " contains info about previous saving");
             printStream.println("If you need to rewrite it enter '1'");
-            printStream.println("Press another key to return");
+            printStream.println("Enter another value to return");
             userChoice =getUserChoice();
         }
         if(userChoice == REWRITE_FILE) {
             printStream.println("Shelf will be save as '" + FILE_NAME + "'");
-            shelf.saveShelfToFile(FILE_NAME);
+            shelf.saveShelfToGsonFile(FILE_NAME);
         }
     }
 
@@ -191,16 +195,21 @@ public class Terminal {
      * Method gives ability to choose method for sorting Magazines and print sorted list
      */
     private void clarificationForSortingMagazines() {
-        printMenuForMagazinesSorting();
-        switch (getUserChoice()) {
-            case SORT_MAGAZINES_BY_NAME:
-                shelf.printSortedMagazinesByName();
-                break;
-            case SORT_MAGAZINES_BY_PAGES_NUMBER:
-                shelf.printSortedMagazinesByPages();
-                break;
-            default:
-                break;
+        if(shelf.getAvailableMagazines().isEmpty()){
+            System.out.println("No available magazines IN shelf");
+        }
+        else {
+            printMenuForMagazinesSorting();
+            switch (getUserChoice()) {
+                case SORT_MAGAZINES_BY_NAME:
+                    shelf.printSortedMagazinesByName();
+                    break;
+                case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                    shelf.printSortedMagazinesByPages();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -208,22 +217,27 @@ public class Terminal {
      * Method gives ability to choose method for sorting Books and print sorted list
      */
     private void clarificationForSortingBooks() {
-        printMenuForBooksSorting();
-        switch (getUserChoice()) {
-            case SORT_BOOKS_BY_NAME:
-                shelf.printSortedBooksByName();
-                break;
-            case SORT_BOOKS_BY_AUTHOR:
-                shelf.printSortedBooksByAuthor();
-                break;
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                shelf.printSortedBooksByPages();
-                break;
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                shelf.printSortedBooksByDate();
-                break;
-            default:
-                break;
+        if(shelf.getAvailableBooks().isEmpty()){
+            System.out.println("No available books IN shelf");
+        }
+        else {
+            printMenuForBooksSorting();
+            switch (getUserChoice()) {
+                case SORT_BOOKS_BY_NAME:
+                    shelf.printSortedBooksByName();
+                    break;
+                case SORT_BOOKS_BY_AUTHOR:
+                    shelf.printSortedBooksByAuthor();
+                    break;
+                case SORT_BOOKS_BY_PAGES_NUMBER:
+                    shelf.printSortedBooksByPages();
+                    break;
+                case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                    shelf.printSortedBooksByDate();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -280,19 +294,29 @@ public class Terminal {
     }
 
     /**
+     * Method simply inform user about added Literature object
+     */
+    private void informAboutAddedLiteratureObject(Literature literature) {
+        System.out.println(literature + " has added to shelf");
+    }
+
+    /**
      * Method give ability to create custom Magazine
      * @return user created Magazine
      */
     public Magazine getUserMagazine() {
+        Magazine userMagazine;
         String name;
         int pages;
-        boolean isBorrowed = true;
+        boolean isBorrowed;
 
         name = UserInput.getUserLiteratureName(scanner, printStream);
         pages = UserInput.getUserLiteraturePages(scanner, printStream);
         isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
 
-        return new Magazine(name, pages, isBorrowed);
+        userMagazine = new Magazine(name, pages, isBorrowed);
+        informAboutAddedLiteratureObject(userMagazine);
+        return userMagazine;
     }
 
     /**
@@ -300,6 +324,7 @@ public class Terminal {
      * @return user created Book
      */
     private Book getUserBook() throws ParseException {
+        Book userBook;
         int pages;
         String name;
         boolean isBorrowed;
@@ -312,8 +337,9 @@ public class Terminal {
         author = UserInput.getUserLiteratureAuthor(scanner, printStream);
         dateOfIssue = UserInput.getUserDateOfIssue(scanner, printStream);
 
-
-        return new Book(name, pages, isBorrowed, author, dateOfIssue);
+        userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
+        informAboutAddedLiteratureObject(userBook);
+        return userBook;
     }
 
     /**
@@ -324,10 +350,14 @@ public class Terminal {
      */
     public Magazine getRandomMagazine() {
         Random randomNumber = new Random();
-        return new Magazine(
+        Magazine randomMagazine = new Magazine(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
                 false);
+
+        informAboutAddedLiteratureObject(randomMagazine);
+        return randomMagazine;
+
     }
 
     /**
@@ -336,18 +366,19 @@ public class Terminal {
      * random name (max string length = 20),
      * random number of pages (max = 1000),
      * random author (max string length = 10),
-     * random date of issue (today minus random number of days (up to one year)),
+     * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
      */
     public Book getRandomBook() {
         Random randomNumber = new Random();
-        return new Book(
+        Book randomBook = new Book(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
                 false,
                 getRandomString(randomNumber.nextInt(10)),
-                new Date(System.currentTimeMillis()));
-                        //.before(Period.ofDays((new Random().nextInt(365 * 70))))); TODO
+                new Date(randomNumber.nextInt(1000000)));  //TODO
 
+        informAboutAddedLiteratureObject(randomBook);
+        return randomBook;
     }
 
     /**
@@ -375,22 +406,6 @@ public class Terminal {
     }
 
     /**
-     * Method which gives opportunity to get user String by entered symbols value in console
-     * @return entered String value from console
-     */
-    public String getUserString(){
-        return scanner.hasNextLine() ? scanner.nextLine() : "Default";
-    }
-    /**
-     * Method which gives opportunity to get user Integer by entered integer value in console
-     * @return entered Integer value from console
-     */
-    public int getUserInteger(){
-        return scanner.hasNextInt() ? scanner.nextInt() : WRONG_INPUT;
-    }
-
-
-    /**
      * Method which simply print main menu
      */
     private void printMainMenu(){
@@ -403,8 +418,8 @@ public class Terminal {
                         "4 - Arrive  Literature object by index back to Shelf" +"\n" +
                         "5 - Print list of available Books sorted by parameter..." +"\n" +
                         "6 - Print list of available Magazines sorted by parameter..." +"\n" +
-                        "7 - Save in file" +"\n" +
-                        "8 - Deserialize" +"\n" +
+                        //"7 - Save in file" +"\n" +
+                        //"8 - Deserialize" +"\n" +
                         "9 - Print current state of Shelf" +"\n" +
                         "0 - Exit");
     }
@@ -419,7 +434,7 @@ public class Terminal {
                         "2 - Sort by 'author' value" +"\n" +
                         "3 - Sort by 'page number' value" +"\n" +
                         "4 - Sort by 'date' value" +"\n" +
-                        "Press another key to return");
+                        "Enter another value to return");
     }
 
     /**
@@ -430,7 +445,7 @@ public class Terminal {
                         "Choose type of sorting:" +"\n" +
                         "1 - Sort by 'name' value" +"\n" +
                         "2 - Sort by 'page' value" +"\n" +
-                        "Press another key to return");
+                        "Enter another value to return");
     }
 
     /**
@@ -443,7 +458,7 @@ public class Terminal {
                          "2 - Book" + "\n" +
                          "3 - Random Magazine" + "\n" +
                          "4 - Random Book" + "\n" +
-                         "Press another key to return");
+                         "Enter another value to return");
     }
 
     public void stop(){

@@ -4,13 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.5">
-      <change afterPath="$PROJECT_DIR$/src/test/java/TryKotlin.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TryUseBigDecimal.java" afterDir="false" />
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.6&#10;Kotlin code example">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/NewContainerForShelf.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TryKotlin.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TryUseBigDecimal.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +96,7 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.TryKotlinKt">
+  <component name="RunManager" selected="Application.org.ShmaliukhVlad.Main">
     <configuration name="TryUseBigDecimal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TryUseBigDecimal" />
       <module name="Bookshelf_project" />
@@ -171,9 +175,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.org.ShmaliukhVlad.Main" />
         <item itemvalue="Kotlin.TryKotlinKt" />
         <item itemvalue="Application.TryUseBigDecimal" />
-        <item itemvalue="Application.org.ShmaliukhVlad.Main" />
         <item itemvalue="JUnit.InputTest" />
         <item itemvalue="JUnit.ContainerNewTest.test" />
       </list>
@@ -203,7 +207,8 @@
       <workItem from="1655967283871" duration="10038000" />
       <workItem from="1655977532155" duration="15419000" />
       <workItem from="1656426121567" duration="6091000" />
-      <workItem from="1656489239692" duration="22466000" />
+      <workItem from="1656489239692" duration="22502000" />
+      <workItem from="1656571713524" duration="3440000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -485,7 +490,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656508842095</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="v 1.3.6&#10;Kotlin code example">
+      <created>1656518546722</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1656518546722</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,7 +542,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 0.3.0&#10;all functions are ready&#10;main functions are covered with tests" />
     <MESSAGE value="v 1.0.0&#10;first release" />
     <MESSAGE value="v 1.0.1&#10;tests refactor" />
     <MESSAGE value="v 1.0.2&#10;tests refactor" />
@@ -555,7 +566,8 @@
     <MESSAGE value="v 1.3.3.1" />
     <MESSAGE value="v 1.3.4&#10;try to make new gson reader with one container" />
     <MESSAGE value="v 1.3.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.5" />
+    <MESSAGE value="v 1.3.6&#10;Kotlin code example" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.6&#10;Kotlin code example" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

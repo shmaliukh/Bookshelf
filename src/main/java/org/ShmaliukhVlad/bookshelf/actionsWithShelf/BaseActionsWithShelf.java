@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
-import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 
 import java.io.IOException;
@@ -41,6 +40,6 @@ public interface BaseActionsWithShelf {
      * This method serialize all magazines and books in file
      * @throws IOException {@link IOException}
      */
-    void saveShelfToFile(String fileName) throws IOException;
+    void saveShelfToGsonFile(String fileName) throws IOException;
 
 }

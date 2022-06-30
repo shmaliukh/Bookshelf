@@ -30,25 +30,44 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 @AllArgsConstructor
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
-    private List<Literature> literatureInShelf;
-    private List<Literature> literatureOutShelf;
+    private List<Literature> literatureInShelf  = new ArrayList<>();
+    private List<Literature> literatureOutShelf = new ArrayList<>();
 
     public List<List<Object>> allLiterature = new ArrayList<>();
 
     public Shelf(){
-        literatureInShelf = new ArrayList<>();
-        literatureOutShelf= new ArrayList<>();
     }
 
     public Shelf(List<List<Object>> allLiteratureInShelf){
-        //this.allLiterature = allLiteratureInShelf;
-        literatureInShelf = new ArrayList<>();
-        literatureOutShelf = new ArrayList<>();
-
         if( allLiteratureInShelf.size() > 1){
             literatureInShelf = Collections.singletonList((Literature) allLiteratureInShelf.get(0));
             literatureOutShelf= Collections.singletonList((Literature)allLiteratureInShelf.get(1));
         }
+    }
+
+    public Shelf(List<Book> books, List<Magazine> magazines) {
+        if(!books.isEmpty()){
+            for (Book book : books) {
+                this.addLiteratureObject(book);
+            }
+        }
+        if(!magazines.isEmpty()){
+            for (Magazine magazine : magazines) {
+                this.addLiteratureObject(magazine);
+            }
+        }
+    }
+
+    public List<Book> getAvailableBooks(){
+        return this.getBooks().stream()
+                .filter(o -> o.isBorrowed() == false)
+                .collect(Collectors.toList());
+    }
+
+    public List<Magazine> getAvailableMagazines(){
+        return this.getMagazines().stream()
+                .filter(o -> o.isBorrowed() == false)
+                .collect(Collectors.toList());
     }
 
     public List<List<Object>> getAllLiterature(){
@@ -56,7 +75,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         allLiterature.add(Collections.singletonList(literatureOutShelf));
         return allLiterature;
     }
-
 
     @Override
     public void addLiteratureObject(Literature literature) {
@@ -67,19 +85,11 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
             else{
                 getLiteratureInShelf().add(literature);
             }
-            informAboutAddedLiteratureObject(literature);
         }
         else {
             System.out.println("The literature object (book or magazine) is empty");
             System.err.println("The literature object (book or magazine) is NULL");
         }
-    }
-
-    /**
-     * Method simply inform user about added Literature object
-     */
-    private void informAboutAddedLiteratureObject(Literature literature) {
-        System.out.println(literature + " has added to shelf");
     }
 
     @Override
@@ -334,16 +344,15 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     @Override
     //@Description("Serialization Shelf and it's Literature objects")
-    public void saveShelfToFile(String fileName){
+    public void saveShelfToGsonFile(String fileName){
         try {
             Writer writer = new FileWriter(fileName);
-
             new Gson().toJson(new ShelfContainer(this), writer);
-
+            writer.flush();
             writer.close();
-            System.out.println("File '" + fileName + "' has been written");
-
-        } catch (Exception ex) {
+            //System.out.println("File '" + fileName + "' has been written");
+        }
+        catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -377,22 +386,10 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     /**
      * Deserialization Shelf and it's Literature objects
      */
-    public void deserialize(String fileName) throws IOException, ClassNotFoundException {
+    public static Shelf readShelfFromGsonFile(String fileName) throws IOException, ClassNotFoundException {
         Path path = new File(fileName).toPath();
-
-        this.literatureInShelf = new ArrayList<>();
-        this.literatureOutShelf = new ArrayList<>();
-
         ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
-
-        for (Book book:
-             shelfContainer.getBooks()) {
-            this.addLiteratureObject(book);
-        }
-        for (Magazine magazine:
-                shelfContainer.getMagazines()) {
-            this.addLiteratureObject(magazine);
-        }
+        return new Shelf(shelfContainer.getBooks(), shelfContainer.getMagazines());
     }
 
     /**
@@ -405,22 +402,5 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 "\n\tliteratureInShelf=" + literatureInShelf +
                 "\n\tliteratureOutShelf=" + literatureOutShelf +
                 "}";
-    }
-
-    //getters and setters
-    public List<Literature> getLiteratureInShelf() {
-        return literatureInShelf;
-    }
-
-    public void setLiteratureInShelf(List<Literature> literatureInShelf) {
-        this.literatureInShelf = literatureInShelf;
-    }
-
-    public List<Literature> getLiteratureOutShelf() {
-        return literatureOutShelf;
-    }
-
-    public void setLiteratureOutShelf(List<Literature> literatureOutShelf) {
-        this.literatureOutShelf = literatureOutShelf;
     }
 }

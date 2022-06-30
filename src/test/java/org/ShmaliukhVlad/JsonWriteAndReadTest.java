@@ -42,10 +42,10 @@ public class JsonWriteAndReadTest {
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
 
-        shelf.saveShelfToFile(testFileName);
+        shelf.saveShelfToGsonFile(testFileName);
 
         Shelf shelf2 = new Shelf();
-        shelf2.deserialize(testFileName);
+        shelf2.readShelfFromGsonFile(testFileName);
 
         assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(1).getPrintableLineOfLiteratureObject());
@@ -64,7 +64,7 @@ public class JsonWriteAndReadTest {
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(book2);
 
-        shelf1.saveShelfToFile(testFileName);
+        shelf1.saveShelfToGsonFile(testFileName);
 
         Path path = new File(testFileName).toPath();
         ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
@@ -90,7 +90,7 @@ public class JsonWriteAndReadTest {
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
 
-        shelf1.saveShelfToFile(testFileName);
+        shelf1.saveShelfToGsonFile(testFileName);
 
         Path path = new File(testFileName).toPath();
         ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
