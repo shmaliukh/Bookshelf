@@ -38,10 +38,16 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public Shelf(){
     }
 
-    public Shelf(List<List<Object>> allLiteratureInShelf){
-        if( allLiteratureInShelf.size() > 1){
-            literatureInShelf = Collections.singletonList((Literature) allLiteratureInShelf.get(0));
-            literatureOutShelf= Collections.singletonList((Literature)allLiteratureInShelf.get(1));
+    //public Shelf(List<List<Object>> allLiteratureInShelf){
+    //    if( allLiteratureInShelf.size() > 1){
+    //        literatureInShelf = Collections.singletonList((Literature) allLiteratureInShelf.get(0));
+    //        literatureOutShelf= Collections.singletonList((Literature)allLiteratureInShelf.get(1));
+    //    }
+    //}
+
+    public Shelf(List<Literature> literatureList){
+        for (Literature literature : literatureList) {
+            this.addLiteratureObject(literature);
         }
     }
 
@@ -58,18 +64,27 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         }
     }
 
+    /**
+     * Method returns all available books which are inside (not borrowed) Shelf
+     * @return list of Book objects inside Shelf
+     */
     public List<Book> getAvailableBooks(){
         return this.getBooks().stream()
                 .filter(o -> o.isBorrowed() == false)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method returns all available magazines which are inside (not borrowed) Shelf
+     * @return list of Magazine objects inside Shelf
+     */
     public List<Magazine> getAvailableMagazines(){
         return this.getMagazines().stream()
                 .filter(o -> o.isBorrowed() == false)
                 .collect(Collectors.toList());
     }
 
+    @Deprecated
     public List<List<Object>> getAllLiterature(){
         allLiterature.add(Collections.singletonList(literatureInShelf));// TODO ???
         allLiterature.add(Collections.singletonList(literatureOutShelf));

@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.6&#10;Kotlin code example">
+    <list default="true" id="c496e7aa-e9e0-4366-b8e2-c34905b7f0b8" name="Changes" comment="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/Terminal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/Shelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/bookshelf/actionsWithShelf/BaseActionsWithShelf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/NewContainerForShelf.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TryKotlin.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/JsonWriteAndReadTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/TryUseBigDecimal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +91,7 @@
       <recent name="org.ShmaliukhVlad.Bookshelf_objects" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.org.ShmaliukhVlad.Main">
+  <component name="RunManager" selected="JUnit.ContainerNewTest.test (1)">
     <configuration name="TryUseBigDecimal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.TryUseBigDecimal" />
       <module name="Bookshelf_project" />
@@ -125,7 +120,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ContainerNewTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ContainerNewTest.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Bookshelf_project" />
       <extension name="coverage">
         <pattern>
@@ -137,7 +132,6 @@
       <option name="MAIN_CLASS_NAME" value="org.ShmaliukhVlad.ContainerNewTest" />
       <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea -Dtmp.dir=c:\tmp" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -169,17 +163,17 @@
     <list>
       <item itemvalue="Application.TryUseBigDecimal" />
       <item itemvalue="Application.org.ShmaliukhVlad.Main" />
+      <item itemvalue="JUnit.ContainerNewTest.test (1)" />
       <item itemvalue="JUnit.InputTest" />
-      <item itemvalue="JUnit.ContainerNewTest.test" />
       <item itemvalue="Kotlin.TryKotlinKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ContainerNewTest.test (1)" />
         <item itemvalue="Application.org.ShmaliukhVlad.Main" />
         <item itemvalue="Kotlin.TryKotlinKt" />
         <item itemvalue="Application.TryUseBigDecimal" />
         <item itemvalue="JUnit.InputTest" />
-        <item itemvalue="JUnit.ContainerNewTest.test" />
       </list>
     </recent_temporary>
   </component>
@@ -208,7 +202,7 @@
       <workItem from="1655977532155" duration="15419000" />
       <workItem from="1656426121567" duration="6091000" />
       <workItem from="1656489239692" duration="22502000" />
-      <workItem from="1656571713524" duration="3440000" />
+      <workItem from="1656571713524" duration="10075000" />
     </task>
     <task id="LOCAL-00001" summary="first">
       <created>1654860488518</created>
@@ -497,7 +491,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656518546722</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort">
+      <created>1656575611491</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1656575611491</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +543,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="v 1.0.0&#10;first release" />
     <MESSAGE value="v 1.0.1&#10;tests refactor" />
     <MESSAGE value="v 1.0.2&#10;tests refactor" />
     <MESSAGE value="v 1.0.3&#10;fix fome problems" />
@@ -567,7 +567,8 @@
     <MESSAGE value="v 1.3.4&#10;try to make new gson reader with one container" />
     <MESSAGE value="v 1.3.5" />
     <MESSAGE value="v 1.3.6&#10;Kotlin code example" />
-    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.6&#10;Kotlin code example" />
+    <MESSAGE value="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort" />
+    <option name="LAST_COMMIT_MESSAGE" value="v 1.3.7&#10;fix all time saving to file and update it when terminal start work&#10;add fix when no available literature try to sort" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -576,8 +577,23 @@
           <properties class="java.io.EOFException" package="java.io" />
           <option name="timeStamp" value="5" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/ShmaliukhVlad/serices/UserInput.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/ShmaliukhVlad/ContainerNewTest.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.google.gson.JsonArray" memberName="elements" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -418,8 +418,6 @@ public class Terminal {
                         "4 - Arrive  Literature object by index back to Shelf" +"\n" +
                         "5 - Print list of available Books sorted by parameter..." +"\n" +
                         "6 - Print list of available Magazines sorted by parameter..." +"\n" +
-                        //"7 - Save in file" +"\n" +
-                        //"8 - Deserialize" +"\n" +
                         "9 - Print current state of Shelf" +"\n" +
                         "0 - Exit");
     }
