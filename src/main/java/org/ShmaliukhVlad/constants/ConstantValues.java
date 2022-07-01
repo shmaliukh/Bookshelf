@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
  */
 public final class ConstantValues {
 
+    private ConstantValues(){}
+
     public static final int ADD_NEW_LITERATURE = 1;
     public static final int DELETE_LITERATURE = 2;
     public static final int BORROW_LITERATURE = 3;
@@ -34,8 +36,6 @@ public final class ConstantValues {
     public static final int WRONG_INPUT = -1;
 
     public static final String FILE_NAME = "shelfGson.json";
-
-    public static final String TEMP_PATH = "my_temp/";
 
     public static final int SAVE_READ_ONE_FILE = 1;
     public static final int SAVE_READ_TWO_FILES = 2;

@@ -102,9 +102,6 @@ public class Terminal {
             case EXIT:
                 closeTerminal();
                 break;
-            case WRONG_INPUT:
-                printStream.println("Wrong input"); // TODO delete???
-                break;
             default:
                 printStream.println("Wrong input");
                 break;

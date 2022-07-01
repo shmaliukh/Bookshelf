@@ -76,13 +76,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .collect(Collectors.toList());
     }
 
-    //TODO is necessary?
-    public List<List<Object>> getAllLiterature(){
-        allLiterature.add(Collections.singletonList(literatureInShelf));// TODO ???
-        allLiterature.add(Collections.singletonList(literatureOutShelf));
-        return allLiterature;
-    }
-
     @Override
     public void addLiteratureObject(Literature literature) {
         if(literature != null){
@@ -443,7 +436,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         }
 
         for (JsonElement element : jsonArray) {
-            //System.out.println("element: " + element);
             JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
             String typeOfClass;
             try {
@@ -453,18 +445,14 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 informAboutGsonReadErr();
                 return new Shelf();
             }
-            //System.out.println("    classType: " + typeOfClass);
-            //System.out.println("    itemObject: " + itemObject);
             List<Book> books = new ArrayList<>();
             List<Magazine> magazines = new ArrayList<>();
 
             if (typeOfClass.equals(Book.class.toString())) {
                 books.add(gson.fromJson(itemObject, Book.class));
-                //System.out.println("        book: " + gson.fromJson(itemObject, Book.class));
             }
             else if (typeOfClass.equals(Magazine.class.toString())) {
                 magazines.add(gson.fromJson(itemObject, Magazine.class));
-                //System.out.println("        magazine: " + gson.fromJson(itemObject, Magazine.class));
             }
             literatureList.addAll(books);
             literatureList.addAll(magazines);
@@ -592,7 +580,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
             return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
-        }// TODO add inform method
+        }
         informAboutReadFilesErr();
         return new Shelf();
     }
@@ -600,11 +588,11 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
             return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
-        }// TODO add inform method
+        }
         informAboutReadFilesErr();
         return new Shelf();
     }
     private static void informAboutReadFilesErr() {
-        System.err.println("Problem to read files");
+        System.err.println("Problem to read files");// TODO refactor
     }
 }
