@@ -15,8 +15,6 @@ public final class ConstantValues {
     public static final int ARRIVE_LITERATURE = 4;
     public static final int PRINT_SORTED_BOOKS = 5;
     public static final int PRINT_SORTED_MAGAZINES = 6;
-    //public static final int SAVE_SHELF_IN_FILE = 7;
-    //public static final int DESERIALIZE = 8;
     public static final int PRINT_SHELF = 9;
     public static final int EXIT = 0;
 
@@ -33,13 +31,11 @@ public final class ConstantValues {
     public static final int SORT_MAGAZINES_BY_NAME = 1;
     public static final int SORT_MAGAZINES_BY_PAGES_NUMBER = 2;
 
-    public static final int SAVE_CURRENT_STATE_OF_SHELF = 1;
-
     public static final int WRONG_INPUT = -1;
 
     public static final String FILE_NAME = "shelfGson.json";
-    public static final int REWRITE_FILE = 1;
-    public static final int READ_FILE = 1;
+
+    public static final String TEMP_PATH = "my_temp/";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 }

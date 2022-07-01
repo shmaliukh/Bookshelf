@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad;
 
-import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -50,7 +49,6 @@ public class Terminal {
             generateUserInterface();
             shelf.saveShelfToGsonFile(FILE_NAME);
         }
-        //shelf.saveShelfToGsonFile(FILE_NAME);
     }
 
     /**
@@ -84,12 +82,6 @@ public class Terminal {
             case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
                 break;
-            //case SAVE_SHELF_IN_FILE:
-            //    saveShelf();
-            //    break;
-            //case DESERIALIZE:
-            //    deserializeShelf();
-            //    break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
                 break;
@@ -125,73 +117,8 @@ public class Terminal {
      * Method close current terminal
      */
     private void closeTerminal() {
-        //askUserIfNeedToSaveShelf();
-        //askUserIfNeedToSaveShelf();
         this.stop();
         printStream.println("Terminal STOP");
-    }
-
-    /**
-     * Method gives a choice to save the current state of the shelf
-     */
-    @Deprecated
-    private void askUserIfNeedToSaveShelf() {
-        printStream.println("Do you want to record the current state of the shelf?");
-        printStream.println("Enter '1' if you want to save");
-        printStream.println("Enter another value to exit without saving");
-        if(getUserChoice() == SAVE_CURRENT_STATE_OF_SHELF){
-            saveShelf();
-        }
-    }
-
-    /**
-     * Method deserializes all Literature objects from .out file save in current Shelf.
-     */
-    @Deprecated
-    private void deserializeShelf() {
-        printStream.println("If you need get saving from file '" + FILE_NAME + "'");
-        printStream.println("you LOOSE ALL INFO about current SHELF");
-        printStream.println("If you need to rewrite it enter '1'");
-        printStream.println("Enter another value to back");
-        switch (getUserChoice()) {
-            case READ_FILE:
-                try {
-                    shelf.readShelfFromGsonFile(FILE_NAME);
-                    printStream.println("Deserialized");
-                } catch (IOException e) {
-                    //printStream.println("Serialization error");
-                    System.err.println("Deserialization error");
-                    throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                break;
-            default:
-                printStream.println("Deserialization canceled");
-                break;
-        }
-        printStream.println();
-        printCurrentStateOfShelf();
-    }
-
-    /**
-     * Method serializes all Shelf's Literature objects in .out file.
-     */
-    @Deprecated
-    private void saveShelf() {
-
-        File file = new File(FILE_NAME);
-        int userChoice = REWRITE_FILE;
-        if(file.exists()){
-            printStream.println("File " + FILE_NAME + " contains info about previous saving");
-            printStream.println("If you need to rewrite it enter '1'");
-            printStream.println("Enter another value to return");
-            userChoice =getUserChoice();
-        }
-        if(userChoice == REWRITE_FILE) {
-            printStream.println("Shelf will be save as '" + FILE_NAME + "'");
-            shelf.saveShelfToGsonFile(FILE_NAME);
-        }
     }
 
     /**
@@ -481,4 +408,5 @@ public class Terminal {
     }
 
 }
+
 

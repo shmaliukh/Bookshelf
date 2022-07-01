@@ -74,7 +74,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .collect(Collectors.toList());
     }
 
-    @Deprecated
+    //TODO is necessary?
     public List<List<Object>> getAllLiterature(){
         allLiterature.add(Collections.singletonList(literatureInShelf));// TODO ???
         allLiterature.add(Collections.singletonList(literatureOutShelf));
