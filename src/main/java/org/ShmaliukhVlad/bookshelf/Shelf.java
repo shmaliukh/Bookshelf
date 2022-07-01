@@ -471,4 +471,91 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 "\n\tliteratureOutShelf=" + literatureOutShelf +
                 "}";
     }
+
+    //TODO delete method???
+    void saveLiteratureToGsonFile(Shelf shelf, String fileName) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+        new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(shelf.getAllLiterature(), fw);
+        fw.flush();
+        fw.close();
+    }
+
+    void saveBooksToGsonFile(String fileName) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+        new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(this.getBooks(), fw);
+        fw.flush();
+        fw.close();
+    }
+
+    void saveMagazinesToGsonFile(String fileName) throws IOException {
+        FileWriter fw = new FileWriter(fileName);
+        new GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+                .toJson(this.getMagazines(), fw);
+        fw.flush();
+        fw.close();
+    }
+
+
+    List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
+        FileReader fr = new FileReader(fileName);
+        List<Magazine> magazineList = new ArrayList<>();
+
+        String name;
+        Integer pages;
+        Boolean isBorrowed;
+
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(fr, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray) {// TODO cover with try-catch
+            name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
+            pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Pages number").getAsInt();
+            isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
+
+            magazineList.add(new Magazine(name, pages, isBorrowed));
+        }
+        return magazineList;
+    }
+
+    List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
+        FileReader fr = new FileReader(fileName);
+        List<Book> bookList = new ArrayList<>();
+
+        String name;
+        Integer pages;
+        Boolean isBorrowed;
+        String author;
+        Date dateOfIssue;
+
+        Gson gson = new Gson();
+        JsonArray jsonArray = gson.fromJson(fr, JsonArray.class);
+        for (JsonElement jsonElement : jsonArray) { // TODO cover with try-catch
+            //System.out.println("Book");
+            name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
+            //System.out.println("    name = " + name);
+            pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
+            //System.out.println("    pages = " + pages);
+            isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
+            //System.out.println("    borrowed = " + isBorrowed);
+            author = jsonElement.getAsJsonObject().getAsJsonPrimitive("Author").getAsString();
+            //System.out.println("    author = " + author);
+            dateOfIssue = new Date(jsonElement.getAsJsonObject().getAsJsonPrimitive("Date of issue").getAsString()); // TODO date adapter
+            //System.out.println("    date = " + dateOfIssue);
+
+            bookList.add(new Book(name,pages,isBorrowed,author,dateOfIssue));
+        }
+        return bookList;
+    }
+
+    public void saveShelfToDifferentFiles(String fileName) throws IOException {
+        this.saveBooksToGsonFile(fileName+"Books");
+        this.saveMagazinesToGsonFile(fileName+"Magazines");
+    }
 }

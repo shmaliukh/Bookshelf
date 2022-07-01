@@ -1,5 +1,6 @@
 package org.ShmaliukhVlad;
 
+import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -478,5 +479,10 @@ public class Terminal {
         this.play = play;
     }
 
+}
+
+@Data
+class User{
+    Integer id;
 }
 
