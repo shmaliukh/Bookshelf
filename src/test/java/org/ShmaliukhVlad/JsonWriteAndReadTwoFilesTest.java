@@ -47,8 +47,17 @@ public class JsonWriteAndReadTwoFilesTest {
     }
 
     @Test
-    void readFromFiles() throws FileNotFoundException {
+    void readFromFiles_twoArg() throws FileNotFoundException {
         Shelf shelf = Shelf.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
+
+        assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+    }
+    @Test
+    void readFromFiles_oneArg() throws FileNotFoundException {
+        Shelf shelf = Shelf.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
 
         assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());

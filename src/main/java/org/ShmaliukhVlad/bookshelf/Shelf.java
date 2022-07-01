@@ -593,12 +593,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
             return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
         }// TODO add inform method
+        informAboutReadFilesErr();
         return new Shelf();
     }
+
     public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
             return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
         }// TODO add inform method
+        informAboutReadFilesErr();
         return new Shelf();
+    }
+    private static void informAboutReadFilesErr() {
+        System.err.println("Problem to read files");
     }
 }

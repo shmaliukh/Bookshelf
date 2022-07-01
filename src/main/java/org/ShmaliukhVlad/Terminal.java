@@ -22,8 +22,8 @@ public class Terminal {
 
     private Shelf shelf;
 
-    private Scanner scanner;
-    private PrintStream printStream;
+    private final Scanner scanner;
+    private final PrintStream printStream;
 
     public Terminal(){
         this(System.in, System.out);
@@ -39,15 +39,29 @@ public class Terminal {
     /**
      * Method simulates Terminal work like a real one
      */
-    public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException, ClassNotFoundException {
+    public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
         printStream.println("Terminal START");
-
+        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
 
         shelf = Shelf.readShelfFromGsonFile(FILE_NAME, typeOfWorkWithFiles);
-
         while (isPlay()){
             generateUserInterface();
             shelf.saveShelfToGsonFile(FILE_NAME, typeOfWorkWithFiles);
+        }
+    }
+
+    private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
+        printStream.print("Type of work with save/read shelf in files: ");
+        switch (typeOfWorkWithFiles){
+            case SAVE_READ_ONE_FILE:
+                printStream.println("SAVE_READ_ONE_FILE");
+                break;
+            case SAVE_READ_TWO_FILES:
+                printStream.println("SAVE_READ_TWO_FILES");
+                break;
+            default:
+                printStream.println("DEFAULT (no work with files)");
+                break;
         }
     }
 
@@ -126,7 +140,7 @@ public class Terminal {
      */
     private void clarificationForSortingMagazines() {
         if(shelf.getAvailableMagazines().isEmpty()){
-            System.out.println("No available magazines IN shelf");
+            printStream.println("No available magazines IN shelf");
         }
         else {
             printMenuForMagazinesSorting();
@@ -148,7 +162,7 @@ public class Terminal {
      */
     private void clarificationForSortingBooks() {
         if(shelf.getAvailableBooks().isEmpty()){
-            System.out.println("No available books IN shelf");
+            printStream.println("No available books IN shelf");
         }
         else {
             printMenuForBooksSorting();
@@ -227,7 +241,7 @@ public class Terminal {
      * Method simply inform user about added Literature object
      */
     private void informAboutAddedLiteratureObject(Literature literature) {
-        System.out.println(literature + " has added to shelf");
+        printStream.println(literature + " has added to shelf");
     }
 
     /**
