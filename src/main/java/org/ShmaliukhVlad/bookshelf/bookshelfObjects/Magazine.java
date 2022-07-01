@@ -1,6 +1,5 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;

@@ -11,12 +11,8 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.serices.ContainerForLiteratureObject;
-import org.ShmaliukhVlad.serices.ShelfContainer;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -359,11 +355,13 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     @Override
-    //@Description("Serialization Shelf and it's Literature objects")
     public void saveShelfToGsonFile(String fileName){
         try {
             Writer fw = new FileWriter(fileName);
-            new Gson().toJson(getContainerForLiteratureObjects(), fw);
+            new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create()
+                    .toJson(getContainerForLiteratureObjects(), fw);
             fw.flush();
             fw.close();
             //System.out.println("File '" + fileName + "' has been written");
@@ -419,11 +417,26 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         Gson gson = new Gson();
 
         List<Literature> literatureList = new ArrayList();
-        JsonArray jsonArray = gson.fromJson(fr, JsonArray.class);
+        JsonArray jsonArray;
+        try{
+            jsonArray = gson.fromJson(fr, JsonArray.class);
+        }
+        catch (JsonSyntaxException e){
+            informAboutGsonReadErr();
+            return new Shelf();
+        }
+
         for (JsonElement element : jsonArray) {
             //System.out.println("element: " + element);
             JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
-            String typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+            String typeOfClass;
+            try {
+                typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+            }
+            catch (NullPointerException e){
+                informAboutGsonReadErr();
+                return new Shelf();
+            }
             //System.out.println("    classType: " + typeOfClass);
             //System.out.println("    itemObject: " + itemObject);
             List<Book> books = new ArrayList<>();
@@ -441,6 +454,10 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
             literatureList.addAll(magazines);
         }
         return new Shelf(literatureList);
+    }
+
+    private static void informAboutGsonReadErr() {
+        System.err.println("Problem to read shelf from file");
     }
 
     /**

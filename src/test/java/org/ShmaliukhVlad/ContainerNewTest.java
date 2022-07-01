@@ -17,27 +17,17 @@ import java.io.IOException;
 import java.util.*;
 
 import static org.ShmaliukhVlad.bookshelf.Shelf.readShelfFromGsonFile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ContainerNewTest {
     @Test
     void readFileTest() throws IOException, ClassNotFoundException {
-        FileReader fr = new FileReader("src/test/resources/testGsonReader.json");
-        String strGsonFile = fr.toString();
+        Book expectedBook = new Book("book name", 111, false, "book author", new Date(1000000));
+        Magazine expectedMagazine = new Magazine("book name", 222, true);
 
-        String fineName = "readFileTest.json";
-        FileWriter fw = new FileWriter(fineName);
-
-        fw.write(strGsonFile);
-        fw.flush();
-        fw.close();
-
-        Shelf shelf = new Shelf();
-        shelf.addLiteratureObject(new Book("book name", 123,true, "author" ,new Date()));
-        shelf.addLiteratureObject(new Magazine("magazine name", 123,false));
-
-        shelf = readShelfFromGsonFile(fineName);
-
-
+        Shelf shelf = readShelfFromGsonFile("src/test/resources/testGsonReader.json");
+        assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
     }
 
     @Test

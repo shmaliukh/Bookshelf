@@ -41,7 +41,7 @@ public class Terminal {
     public void startWork() throws ParseException, IOException, ClassNotFoundException {
         printStream.println("Terminal START");
 
-        if(new File(FILE_NAME).exists()){ // TODO validation
+        if(new File(FILE_NAME).exists()){
             shelf = Shelf.readShelfFromGsonFile(FILE_NAME);
         }
         while (isPlay()){

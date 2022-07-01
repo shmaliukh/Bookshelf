@@ -14,11 +14,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShelfContainer {
+public class OldShelfContainer {
     private List<MyBook> bookList = new ArrayList<>();
     private List<MyMagazine> magazineList = new ArrayList<>();
 
-    public ShelfContainer(Shelf shelf){
+    public OldShelfContainer(Shelf shelf){
         for (Magazine magazine : shelf.getMagazines()) {
             magazineList.add(new MyMagazine(magazine.getName(), magazine.getPagesNumber(), magazine.isBorrowed()));
         }

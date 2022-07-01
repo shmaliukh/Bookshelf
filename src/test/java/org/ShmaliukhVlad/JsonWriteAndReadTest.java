@@ -1,20 +1,15 @@
 package org.ShmaliukhVlad;
 
-import com.google.gson.Gson;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
-import org.ShmaliukhVlad.serices.ShelfContainer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Date;
 
+import static org.ShmaliukhVlad.bookshelf.Shelf.readShelfFromGsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonWriteAndReadTest {
@@ -33,8 +28,19 @@ public class JsonWriteAndReadTest {
     Magazine expectedMagazine2 = new Magazine("noNameMagazine2",2,true);
 
     @Test
-    @DisplayName("test read json file")
-    void testReadLiteratureFromJson() throws IOException, ClassNotFoundException {
+    @DisplayName("test to read shelf from file")
+    void readFileTest() throws IOException, ClassNotFoundException {
+        Book expectedBook = new Book("book name", 111, false, "book author", new Date(1000000));
+        Magazine expectedMagazine = new Magazine("book name", 222, true);
+
+        Shelf shelf = readShelfFromGsonFile("src/test/resources/testGsonReader.json");
+        assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+    }
+
+    @Test
+    @DisplayName("test to read created json shelf file by program")
+    void testReadCreatedGsonFile() throws IOException, ClassNotFoundException {
         Shelf shelf = new Shelf();
         shelf.addLiteratureObject(book1);
         shelf.addLiteratureObject(book2);
@@ -43,8 +49,7 @@ public class JsonWriteAndReadTest {
 
         shelf.saveShelfToGsonFile(testFileName);
 
-        Shelf shelf2 = new Shelf();
-        shelf2.readShelfFromGsonFile(testFileName);
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
 
         assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(1).getPrintableLineOfLiteratureObject());
@@ -55,21 +60,14 @@ public class JsonWriteAndReadTest {
 
     @Test
     @DisplayName("test to write Shelf with books in file")
-    void testWriteLiterature_books() throws IOException {
+    void testWriteLiterature_books() throws IOException, ClassNotFoundException {
         Shelf shelf1 = new Shelf();
-        Shelf shelf2 = new Shelf();
-
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(book2);
 
         shelf1.saveShelfToGsonFile(testFileName);
 
-        Path path = new File(testFileName).toPath();
-        ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
-
-        for (Book book : shelfContainer.getBooks()) {
-            shelf2.addLiteratureObject(book);
-        }
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
 
         assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
         assertEquals(shelf1.getLiteratureOutShelf().get(0).getName(), shelf2.getLiteratureOutShelf().get(0).getName());
@@ -79,22 +77,15 @@ public class JsonWriteAndReadTest {
 
     @Test
     @DisplayName("test to write Shelf with magazines in file")
-    void testWriteLiterature_magazines() throws IOException {
-        String testFileName = "testShelf.json";
+    void testWriteLiterature_magazines() throws IOException, ClassNotFoundException {
         Shelf shelf1 = new Shelf();
-        Shelf shelf2 = new Shelf();
 
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
 
         shelf1.saveShelfToGsonFile(testFileName);
 
-        Path path = new File(testFileName).toPath();
-        ShelfContainer shelfContainer = new Gson().fromJson(Files.newBufferedReader(path, StandardCharsets.UTF_8), ShelfContainer.class);
-
-        for (Magazine magazine : shelfContainer.getMagazines()) {
-            shelf2.addLiteratureObject(magazine);
-        }
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
 
         assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
         assertEquals(shelf1.getLiteratureOutShelf().get(0).getName(), shelf2.getLiteratureOutShelf().get(0).getName());

@@ -1,8 +1,7 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
-import lombok.AllArgsConstructor;
+import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -19,7 +18,9 @@ import static org.ShmaliukhVlad.constants.ConstantValues.SORT_BOOKS_BY_DATE_OF_I
 @Data
 public class Book extends Literature{
 
+    @SerializedName("Author")
     private String author;
+    @SerializedName("Date of issue")
     private Date issuanceDate;
 
     /**

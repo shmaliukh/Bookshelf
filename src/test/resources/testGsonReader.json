@@ -1,1 +1,20 @@
-[{"ClassType":"class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book","Literature":{"author":"sfs[\u0027ldf sdf\u0027[l","issuanceDate":"Dec 12, 1212 12:00:00 AM","Name":"book name","Number of pages":6446,"Borrowed":false}},{"ClassType":"class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine","Literature":{"Name":"magazine name","Number of pages":12,"Borrowed":true}}]
+[
+  {
+    "ClassType": "class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book",
+    "Literature": {
+      "Author": "book author",
+      "Date of issue": "Jan 1, 1970 2:16:40 AM",
+      "Name": "book name",
+      "Number of pages": 111,
+      "Borrowed": false
+    }
+  },
+  {
+    "ClassType": "class org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine",
+    "Literature": {
+      "Name": "book name",
+      "Number of pages": 222,
+      "Borrowed": true
+    }
+  }
+]
