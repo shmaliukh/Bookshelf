@@ -40,6 +40,6 @@ public interface BaseActionsWithShelf {
      * This method serialize all magazines and books in file
      * @throws IOException {@link IOException}
      */
-    void saveShelfToGsonFile(String fileName) throws IOException;
+    void saveShelfToGsonFile(String fileName, int type) throws IOException;
 
 }

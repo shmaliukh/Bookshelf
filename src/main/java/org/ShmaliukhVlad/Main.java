@@ -3,6 +3,9 @@ package org.ShmaliukhVlad;
 import java.io.IOException;
 import java.text.ParseException;
 
+import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
+import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_TWO_FILES;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.3.0
@@ -16,6 +19,6 @@ public class Main {
      */
     public static void main(String[] args) throws ParseException, IOException, ClassNotFoundException {
         Terminal terminal = new Terminal();
-        terminal.startWork();
+        terminal.startWork(SAVE_READ_TWO_FILES);
     }
 }

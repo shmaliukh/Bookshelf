@@ -13,7 +13,8 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.serices.ContainerForLiteratureObject;
 
 import java.io.*;
-import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      */
     public List<Book> getAvailableBooks(){
         return this.getBooks().stream()
-                .filter(o -> o.isBorrowed() == false)
+                .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +72,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
      */
     public List<Magazine> getAvailableMagazines(){
         return this.getMagazines().stream()
-                .filter(o -> o.isBorrowed() == false)
+                .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
@@ -349,7 +350,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     @Override
-    public void saveShelfToGsonFile(String fileName){
+    public void saveShelfToGsonFile(String fileName, int typeOfWorkWithFiles) throws IOException {
+        switch (typeOfWorkWithFiles){
+            case SAVE_READ_ONE_FILE:
+                saveShelfInOneFile(fileName);
+                break;
+            case SAVE_READ_TWO_FILES:
+                saveShelfInTwoFiles(fileName);
+                break;
+        }
+    }
+
+    private void saveShelfInOneFile(String fileName) {
         try {
             Writer fw = new FileWriter(fileName);
             new GsonBuilder()
@@ -358,7 +370,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                     .toJson(getContainerForLiteratureObjects(), fw);
             fw.flush();
             fw.close();
-            //System.out.println("File '" + fileName + "' has been written");
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -406,7 +417,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     /**
      * Deserialization Shelf and it's Literature objects
      */
-    public static Shelf readShelfFromGsonFile(String fileName) throws IOException{
+    public static Shelf readShelfFromGsonFile(String fileName, int typeOfWorkWithFiles) throws IOException{
+        switch (typeOfWorkWithFiles){
+            case SAVE_READ_ONE_FILE:
+                return readShelfFromOneFile(fileName);
+            case SAVE_READ_TWO_FILES:
+                return readShelfFromTwoFiles(fileName);
+            default:
+                return new Shelf();
+        }
+    }
+
+    private static Shelf readShelfFromOneFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(fileName);
         Gson gson = new Gson();
 
@@ -464,17 +486,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 "\n\tliteratureInShelf=" + literatureInShelf +
                 "\n\tliteratureOutShelf=" + literatureOutShelf +
                 "}";
-    }
-
-    //TODO delete method???
-    public void saveLiteratureToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
-        new GsonBuilder()
-                .setPrettyPrinting()
-                .create()
-                .toJson(shelf.getAllLiterature(), fw);
-        fw.flush();
-        fw.close();
     }
 
     public void saveBooksToGsonFile(String fileName) throws IOException {
@@ -573,13 +584,21 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         return bookList;
     }
 
-    public void saveShelfToDifferentFiles(String fileName) throws IOException {
+    public void saveShelfInTwoFiles(String fileName) throws IOException {
         this.saveBooksToGsonFile(fileName+"Books"+".json");
         this.saveMagazinesToGsonFile(fileName+"Magazines"+".json");
     }
 
+    public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
+        if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
+            return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
+        }// TODO add inform method
+        return new Shelf();
+    }
     public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
-        Shelf shelf = new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
-        return shelf;
+        if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
+            return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
+        }// TODO add inform method
+        return new Shelf();
     }
 }

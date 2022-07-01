@@ -35,7 +35,7 @@ public class JsonWriteAndReadTwoFilesTest {
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
 
-        shelf.saveShelfToDifferentFiles("testInDiffFile");
+        shelf.saveShelfInTwoFiles("testInDiffFile");
         Path path1 = Paths.get(expectedBooksFileName);
         Path path2 = Paths.get(expectedMagazinesFileName);
 

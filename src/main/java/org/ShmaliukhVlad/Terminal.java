@@ -39,15 +39,15 @@ public class Terminal {
     /**
      * Method simulates Terminal work like a real one
      */
-    public void startWork() throws ParseException, IOException, ClassNotFoundException {
+    public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException, ClassNotFoundException {
         printStream.println("Terminal START");
 
-        if(new File(FILE_NAME).exists()){
-            shelf = Shelf.readShelfFromGsonFile(FILE_NAME);
-        }
+
+        shelf = Shelf.readShelfFromGsonFile(FILE_NAME, typeOfWorkWithFiles);
+
         while (isPlay()){
             generateUserInterface();
-            shelf.saveShelfToGsonFile(FILE_NAME);
+            shelf.saveShelfToGsonFile(FILE_NAME, typeOfWorkWithFiles);
         }
     }
 

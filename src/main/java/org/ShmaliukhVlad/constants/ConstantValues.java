@@ -37,5 +37,8 @@ public final class ConstantValues {
 
     public static final String TEMP_PATH = "my_temp/";
 
+    public static final int SAVE_READ_ONE_FILE = 1;
+    public static final int SAVE_READ_TWO_FILES = 2;
+
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Date;
 
 import static org.ShmaliukhVlad.bookshelf.Shelf.readShelfFromGsonFile;
+import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonWriteAndReadOneFileTest {
@@ -33,7 +34,7 @@ public class JsonWriteAndReadOneFileTest {
         Book expectedBook = new Book("book name", 111, false, "book author", new Date(1000000));
         Magazine expectedMagazine = new Magazine("book name", 222, true);
 
-        Shelf shelf = readShelfFromGsonFile("src/test/resources/testGsonReader.json");
+        Shelf shelf = readShelfFromGsonFile("src/test/resources/testGson",2);
         assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
     }
@@ -47,9 +48,9 @@ public class JsonWriteAndReadOneFileTest {
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
 
-        shelf.saveShelfToGsonFile(testFileName);
+        shelf.saveShelfToGsonFile(testFileName,SAVE_READ_ONE_FILE);
 
-        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName,SAVE_READ_ONE_FILE);
 
         assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(1).getPrintableLineOfLiteratureObject());
@@ -65,9 +66,9 @@ public class JsonWriteAndReadOneFileTest {
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(book2);
 
-        shelf1.saveShelfToGsonFile(testFileName);
+        shelf1.saveShelfToGsonFile(testFileName, SAVE_READ_ONE_FILE);
 
-        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName, SAVE_READ_ONE_FILE);
 
         assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
         assertEquals(shelf1.getLiteratureOutShelf().get(0).getName(), shelf2.getLiteratureOutShelf().get(0).getName());
@@ -77,15 +78,15 @@ public class JsonWriteAndReadOneFileTest {
 
     @Test
     @DisplayName("test to write Shelf with magazines in file")
-    void testWriteLiterature_magazines() throws IOException, ClassNotFoundException {
+    void testWriteLiterature_magazines() throws IOException {
         Shelf shelf1 = new Shelf();
 
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
 
-        shelf1.saveShelfToGsonFile(testFileName);
+        shelf1.saveShelfToGsonFile(testFileName, SAVE_READ_ONE_FILE);
 
-        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName);
+        Shelf shelf2 = Shelf.readShelfFromGsonFile(testFileName, SAVE_READ_ONE_FILE);
 
         assertEquals(shelf1.getLiteratureInShelf().get(0).getName(), shelf2.getLiteratureInShelf().get(0).getName());
         assertEquals(shelf1.getLiteratureOutShelf().get(0).getName(), shelf2.getLiteratureOutShelf().get(0).getName());
