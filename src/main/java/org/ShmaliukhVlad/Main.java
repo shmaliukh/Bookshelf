@@ -15,7 +15,6 @@ public class Main {
      * @param args command line values
      */
     public static void main(String[] args) throws ParseException, IOException, ClassNotFoundException {
-        //System.out.println(Arrays.toString( args));
         Terminal terminal = new Terminal();
         terminal.startWork();
     }

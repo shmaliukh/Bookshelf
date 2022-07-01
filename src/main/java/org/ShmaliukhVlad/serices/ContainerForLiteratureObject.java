@@ -8,11 +8,6 @@ public class ContainerForLiteratureObject {
     @SerializedName("Literature")
     Object literature;
 
-    public ContainerForLiteratureObject(String classOfLiterature, Object literature){
-        this.classOfLiterature = classOfLiterature;
-        this.literature = literature;
-    }
-
     public ContainerForLiteratureObject(Object literature){
         this.classOfLiterature = literature.getClass().toString();
         this.literature = literature;

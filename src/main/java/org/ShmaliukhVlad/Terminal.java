@@ -22,6 +22,7 @@ public class Terminal {
     private boolean play;
 
     private Shelf shelf;
+
     private Scanner scanner;
     private PrintStream printStream;
 
@@ -479,10 +480,5 @@ public class Terminal {
         this.play = play;
     }
 
-}
-
-@Data
-class User{
-    Integer id;
 }
 

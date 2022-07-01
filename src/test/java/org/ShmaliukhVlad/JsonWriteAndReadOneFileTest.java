@@ -12,7 +12,7 @@ import java.util.Date;
 import static org.ShmaliukhVlad.bookshelf.Shelf.readShelfFromGsonFile;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class JsonWriteAndReadTest {
+public class JsonWriteAndReadOneFileTest {
     String testFileName = "testShelf.json";
 
     Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));

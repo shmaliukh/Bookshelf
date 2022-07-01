@@ -35,13 +35,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public Shelf(){
     }
 
-    //public Shelf(List<List<Object>> allLiteratureInShelf){
-    //    if( allLiteratureInShelf.size() > 1){
-    //        literatureInShelf = Collections.singletonList((Literature) allLiteratureInShelf.get(0));
-    //        literatureOutShelf= Collections.singletonList((Literature)allLiteratureInShelf.get(1));
-    //    }
-    //}
-
     public Shelf(List<Literature> literatureList){
         for (Literature literature : literatureList) {
             this.addLiteratureObject(literature);

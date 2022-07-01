@@ -15,8 +15,8 @@ public final class ConstantValues {
     public static final int ARRIVE_LITERATURE = 4;
     public static final int PRINT_SORTED_BOOKS = 5;
     public static final int PRINT_SORTED_MAGAZINES = 6;
-    public static final int SAVE_SHELF_IN_FILE = 7;
-    public static final int DESERIALIZE = 8;
+    //public static final int SAVE_SHELF_IN_FILE = 7;
+    //public static final int DESERIALIZE = 8;
     public static final int PRINT_SHELF = 9;
     public static final int EXIT = 0;
 
