@@ -5,6 +5,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,11 +13,12 @@ import java.nio.file.Paths;
 import java.util.Date;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonWriteAndReadTwoFilesTest {
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
-    Book book2 = new Book("noNameBook2",2,true,"NoAuthor2",new Date());
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date("Jun 28, 2022 10:47:50 PM"));
+    Book book2 = new Book("noNameBook2",2,true,"NoAuthor2",new Date("Jul 1, 2022 2:47:50 PM"));
 
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2",2,true);
@@ -24,7 +26,6 @@ public class JsonWriteAndReadTwoFilesTest {
 
     @Test
     void saveBooksToFile() throws IOException {
-        Path path = Paths.get("my_temp/");
         String expectedBooksFileName = "testInDiffFileBooks.json";
         String expectedMagazinesFileName = "testInDiffFileMagazines.json";
 
@@ -43,6 +44,16 @@ public class JsonWriteAndReadTwoFilesTest {
         //TODO test files inside
         //assertTrue(Arrays.equals(, Files.readAllBytes(Paths.get("src/test/resources/shelfInDiffFileBooks.json"))));
 
+    }
+
+    @Test
+    void readFromFiles() throws FileNotFoundException {
+        Shelf shelf = Shelf.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
+
+        assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+        assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
     }
 
 
