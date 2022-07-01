@@ -466,7 +466,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     //TODO delete method???
-    void saveLiteratureToGsonFile(Shelf shelf, String fileName) throws IOException {
+    public void saveLiteratureToGsonFile(Shelf shelf, String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
@@ -476,7 +476,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         fw.close();
     }
 
-    void saveBooksToGsonFile(String fileName) throws IOException {
+    public void saveBooksToGsonFile(String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
@@ -486,7 +486,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         fw.close();
     }
 
-    void saveMagazinesToGsonFile(String fileName) throws IOException {
+    public void saveMagazinesToGsonFile(String fileName) throws IOException {
         FileWriter fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
@@ -497,7 +497,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
 
-    List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
+    public List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(fileName);
         List<Magazine> magazineList = new ArrayList<>();
 
@@ -517,7 +517,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         return magazineList;
     }
 
-    List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
+    public List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(fileName);
         List<Book> bookList = new ArrayList<>();
 
@@ -548,7 +548,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     public void saveShelfToDifferentFiles(String fileName) throws IOException {
-        this.saveBooksToGsonFile(fileName+"Books");
-        this.saveMagazinesToGsonFile(fileName+"Magazines");
+        this.saveBooksToGsonFile(fileName+"Books"+".json");
+        this.saveMagazinesToGsonFile(fileName+"Magazines"+".json");
     }
 }

@@ -4,10 +4,6 @@ target/
 !**/src/test/**/target/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
 .idea
 *.iws
 *.iml
@@ -41,3 +37,4 @@ build/
 /*.json
 logs
 HOME_LOG_IS_UNDEFINED
+my_temp
