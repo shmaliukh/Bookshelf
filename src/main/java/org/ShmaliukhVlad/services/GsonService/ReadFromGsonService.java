@@ -45,7 +45,7 @@ public abstract class ReadFromGsonService {
                 jsonArray = gson.fromJson(fr, JsonArray.class);
             }
             catch (JsonSyntaxException e){
-                informAboutGsonReadErr();
+                informAboutErr(System.err, "Problem to read shelf from file");
                 return new Shelf();
             }
 
@@ -56,7 +56,7 @@ public abstract class ReadFromGsonService {
                     typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
                 }
                 catch (NullPointerException e){
-                    informAboutGsonReadErr();
+                    informAboutErr(System.err, "Problem to read shelf from file");
                     return new Shelf();
                 }
                 List<Book> books = new ArrayList<>();
@@ -74,7 +74,7 @@ public abstract class ReadFromGsonService {
             return new Shelf(literatureList);
         }
         else{
-            informAboutSingleFileReadErr(System.err, "File not found"); // TODO refactor all info methods
+            informAboutErr(System.err, "File not found");
             return new Shelf();
         }
     }
@@ -83,7 +83,7 @@ public abstract class ReadFromGsonService {
         if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
             return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
         }
-        informAboutReadFilesErr();
+        informAboutErr(System.err, "Problem to read shelf from file");
         return new Shelf();
     }
 
@@ -91,7 +91,7 @@ public abstract class ReadFromGsonService {
         if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
             return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
         }
-        informAboutReadFilesErr();
+        informAboutErr(System.err, "Problem to read shelf from file");
         return new Shelf();
     }
 
@@ -109,7 +109,7 @@ public abstract class ReadFromGsonService {
             jsonArray = gson.fromJson(fr, JsonArray.class);
         }
         catch (JsonSyntaxException e){
-            informAboutGsonReadErr();
+            informAboutErr(System.err, "Problem to read shelf from file");
             return magazineList;
         }
         for (JsonElement jsonElement : jsonArray) {// TODO cover with try-catch
@@ -121,10 +121,10 @@ public abstract class ReadFromGsonService {
                 magazineList.add(new Magazine(name, pages, isBorrowed));
             }
             catch (JsonParseException e){
-                informAboutGsonReadErr();
+                informAboutErr(System.err, "Problem to read shelf from file");
             }
             catch (NullPointerException nullPointerException){
-                informAboutGsonReadErr();
+                informAboutErr(System.err, "Problem to read shelf from file");
             }
         }
         return magazineList;
@@ -147,7 +147,7 @@ public abstract class ReadFromGsonService {
             jsonArray = gson.fromJson(fr, JsonArray.class);
         }
         catch (JsonSyntaxException e){
-            informAboutGsonReadErr();
+            informAboutErr(System.err, "Problem to read shelf from file");
             return bookList;
         }
         for (JsonElement jsonElement : jsonArray) {
@@ -161,24 +161,16 @@ public abstract class ReadFromGsonService {
                 bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
             }
             catch (JsonParseException e){
-                informAboutGsonReadErr();
+                informAboutErr(System.err, "Problem to read shelf from file");
             }
             catch (NullPointerException nullPointerException){
-                informAboutGsonReadErr();
+                informAboutErr(System.err, "Problem to read shelf from file");
             }
         }
         return bookList;
     }
 
-    private static void informAboutSingleFileReadErr(PrintStream err, String File_not_found) {
-        err.println(File_not_found);
-    }
-
-    private static void informAboutReadFilesErr() {
-        System.err.println("Problem to read files");// TODO refactor
-    }
-
-    private static void informAboutGsonReadErr() {
-        System.err.println("Problem to read shelf from file");
+    private static void informAboutErr(PrintStream err, String problem) {
+        err.println(problem);
     }
 }
