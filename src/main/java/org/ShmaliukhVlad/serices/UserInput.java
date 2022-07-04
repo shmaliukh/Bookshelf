@@ -49,7 +49,7 @@ public class UserInput {
     public static int getUserLiteraturePages(Scanner scanner, PrintStream printStream) {
         printStream.println("Enter pages number: (program ignores all not number symbols)");
         if(scanner.hasNext()){
-            String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();// get only string with numbers
+            String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if (inputStr.length() > 0){
                 if (isValidLiteraturePages(inputStr)) {
                     return Integer.parseInt(inputStr);
@@ -116,7 +116,7 @@ public class UserInput {
 
     public static Date getUserDateOfIssue(Scanner scanner, PrintStream printStream) throws ParseException {
         printStream.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
-        "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");// TODO write instruction for user date input
+        "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");
         String dateStr;
         DATE_FORMAT.setLenient(false);
         if(scanner.hasNextLine()){

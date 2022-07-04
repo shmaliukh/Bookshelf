@@ -137,7 +137,7 @@ public class Terminal {
      */
     private void clarificationForSortingMagazines() {
         if(shelf.getAvailableMagazines().isEmpty()){
-            printStream.println("No available magazines IN shelf");
+            printStream.println("No available magazines IN shelf for sorting");
         }
         else {
             printMenuForMagazinesSorting();
@@ -159,7 +159,7 @@ public class Terminal {
      */
     private void clarificationForSortingBooks() {
         if(shelf.getAvailableBooks().isEmpty()){
-            printStream.println("No available books IN shelf");
+            printStream.println("No available books IN shelf for sorting");
         }
         else {
             printMenuForBooksSorting();
@@ -186,9 +186,14 @@ public class Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void printMenuForArrivingLiterature() {
-        printStream.println("Enter INDEX of Literature object to arrive one:");
-        for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-            printStream.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+        if(shelf.getLiteratureOutShelf().isEmpty()){
+            printStream.println("No literature OUT shelf to arrive");
+        }
+        else {
+            printStream.println("Enter INDEX of Literature object to arrive one:");
+            for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
+                printStream.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+            }
         }
     }
 
@@ -196,9 +201,14 @@ public class Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void printMenuForBorrowingLiterature() {
-        printStream.println("Enter INDEX of Literature object to borrow one:");
-        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+        if(shelf.getLiteratureInShelf().isEmpty()){
+            printStream.println("No available literature IN shelf to borrow");
+        }
+        else {
+            printStream.println("Enter INDEX of Literature object to borrow one:");
+            for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
+                printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+            }
         }
     }
 
@@ -206,6 +216,9 @@ public class Terminal {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void printMenuForDeletingLiterature() {
+        if(shelf.getLiteratureInShelf().isEmpty()){
+            printStream.println("No available literature IN shelf to delete");
+        }
         printStream.println("Enter INDEX of Literature object to delete one:");
         for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
             printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
