@@ -5,6 +5,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.services.GsonService.ReadFromGsonService;
+import org.ShmaliukhVlad.services.GsonService.SaveToGsonService;
 import org.ShmaliukhVlad.services.UserInput;
 
 import java.io.*;
@@ -47,7 +48,7 @@ public class Terminal {
         shelf = ReadFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
-            shelf.saveShelfToGsonFile(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+            SaveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 
@@ -219,11 +220,13 @@ public class Terminal {
         if(shelf.getLiteratureInShelf().isEmpty()){
             printStream.println("No available literature IN shelf to delete");
         }
-        printStream.println("Enter INDEX of Literature object to delete one:");
-        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+        else {
+            printStream.println("Enter INDEX of Literature object to delete one:");
+            for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
+                printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+            }
+            shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
-        shelf.deleteLiteratureObjectByIndex(getUserChoice());
     }
 
     /**
@@ -361,7 +364,7 @@ public class Terminal {
             String str = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if(str.length() > 8){
                 str = str.substring(0,8);
-            } // TODO do some capture
+            }
             if (!str.equals("")) {
                 return Integer.parseInt(str);
             }
@@ -375,7 +378,7 @@ public class Terminal {
     private void printMainMenu(){
         printStream.println(
                         "\n" +
-                        "Enter number of  command you wand to execute:" +"\n" +
+                        "Enter number of  command you wand to execute: (program ignores all not number symbols)" +"\n" +
                         "1 - Add new Literature object to Shelf" +"\n" +
                         "2 - Delete  Literature object by index from Shelf" +"\n" +
                         "3 - Borrow  Literature object by index from Shelf" +"\n" +

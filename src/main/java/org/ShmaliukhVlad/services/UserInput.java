@@ -47,7 +47,7 @@ public class UserInput {
     }
 
     public static int getUserLiteraturePages(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter pages number: (program ignores all not number symbols)");
+        printStream.println("Enter pages number: (program ignores all not number symbols, max 8 symbols)");
         if(scanner.hasNext()){
             String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if (inputStr.length() > 0){
@@ -72,7 +72,7 @@ public class UserInput {
     }
 
     public static String getUserLiteratureName(Scanner scanner, PrintStream printStream) {
-        printStream.println("Enter literature object's name (one line text):");
+        printStream.println("Enter literature object's name (not empty one line text):");
         if(scanner.hasNextLine()){
             String name = scanner.nextLine();
             //LOGGER.debug("name = " + name); //TODO loggers

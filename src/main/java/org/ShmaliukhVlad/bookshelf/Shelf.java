@@ -338,17 +338,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 .collect(Collectors.toList());
     }
 
-    public void saveShelfToGsonFile(String fileName, int typeOfWorkWithFiles) throws IOException {
-        switch (typeOfWorkWithFiles){
-            case SAVE_READ_ONE_FILE:
-                SaveToGsonService.saveShelfInOneFile(this ,fileName);
-                break;
-            case SAVE_READ_TWO_FILES:
-                SaveToGsonService.saveShelfInTwoFiles(this ,fileName);
-                break;
-        }
-    }
-
     public List<Book> getBooks() {
         List <Book> arrBooks = new ArrayList<>();
         arrBooks.addAll(this.literatureInShelf.stream()

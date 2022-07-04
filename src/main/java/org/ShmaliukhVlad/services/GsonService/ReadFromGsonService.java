@@ -48,35 +48,37 @@ public abstract class ReadFromGsonService {
                 informAboutErr(System.err, "Problem to read shelf from file");
                 return new Shelf();
             }
+            if(jsonArray != null){
+                for (JsonElement element : jsonArray) {
+                    JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
+                    String typeOfClass;
+                    try {
+                        typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+                    }
+                    catch (NullPointerException e){
+                        informAboutErr(System.err, "Problem to read shelf from file");
+                        return new Shelf();
+                    }
+                    List<Book> books = new ArrayList<>();
+                    List<Magazine> magazines = new ArrayList<>();
 
-            for (JsonElement element : jsonArray) {
-                JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
-                String typeOfClass;
-                try {
-                    typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+                    if (typeOfClass.equals(Book.class.toString())) {
+                        books.add(gson.fromJson(itemObject, Book.class));
+                    }
+                    else if (typeOfClass.equals(Magazine.class.toString())) {
+                        magazines.add(gson.fromJson(itemObject, Magazine.class));
+                    }
+                    literatureList.addAll(books);
+                    literatureList.addAll(magazines);
                 }
-                catch (NullPointerException e){
-                    informAboutErr(System.err, "Problem to read shelf from file");
-                    return new Shelf();
-                }
-                List<Book> books = new ArrayList<>();
-                List<Magazine> magazines = new ArrayList<>();
-
-                if (typeOfClass.equals(Book.class.toString())) {
-                    books.add(gson.fromJson(itemObject, Book.class));
-                }
-                else if (typeOfClass.equals(Magazine.class.toString())) {
-                    magazines.add(gson.fromJson(itemObject, Magazine.class));
-                }
-                literatureList.addAll(books);
-                literatureList.addAll(magazines);
+                return new Shelf(literatureList);
             }
-            return new Shelf(literatureList);
         }
         else{
             informAboutErr(System.err, "File not found");
             return new Shelf();
         }
+        return new Shelf();
     }
 
     public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
