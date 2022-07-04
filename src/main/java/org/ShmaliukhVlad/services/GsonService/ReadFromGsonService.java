@@ -114,19 +114,21 @@ public abstract class ReadFromGsonService {
             informAboutErr(System.err, "Problem to read shelf from file");
             return magazineList;
         }
-        for (JsonElement jsonElement : jsonArray) {
-            try {
-                name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
-                pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
-                isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
+        if(jsonArray != null){
+            for (JsonElement jsonElement : jsonArray) {
+                try {
+                    name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
+                    pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
+                    isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
 
-                magazineList.add(new Magazine(name, pages, isBorrowed));
-            }
-            catch (JsonParseException e){
-                informAboutErr(System.err, "Problem to read shelf from file");
-            }
-            catch (NullPointerException nullPointerException){
-                informAboutErr(System.err, "Problem to read shelf from file");
+                    magazineList.add(new Magazine(name, pages, isBorrowed));
+                }
+                catch (JsonParseException e){
+                    informAboutErr(System.err, "Problem to read shelf from file");
+                }
+                catch (NullPointerException nullPointerException){
+                    informAboutErr(System.err, "Problem to read shelf from file");
+                }
             }
         }
         return magazineList;
@@ -152,21 +154,23 @@ public abstract class ReadFromGsonService {
             informAboutErr(System.err, "Problem to read shelf from file");
             return bookList;
         }
-        for (JsonElement jsonElement : jsonArray) {
-            try {
-                name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
-                pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
-                isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
-                author = jsonElement.getAsJsonObject().getAsJsonPrimitive("Author").getAsString();
-                dateOfIssue = new Date(jsonElement.getAsJsonObject().getAsJsonPrimitive("Date of issue").getAsString()); // TODO date adapter
+        if(jsonArray != null){
+            for (JsonElement jsonElement : jsonArray) {
+                try {
+                    name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
+                    pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
+                    isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
+                    author = jsonElement.getAsJsonObject().getAsJsonPrimitive("Author").getAsString();
+                    dateOfIssue = new Date(jsonElement.getAsJsonObject().getAsJsonPrimitive("Date of issue").getAsString()); // TODO date adapter
 
-                bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
-            }
-            catch (JsonParseException e){
-                informAboutErr(System.err, "Problem to read shelf from file");
-            }
-            catch (NullPointerException nullPointerException){
-                informAboutErr(System.err, "Problem to read shelf from file");
+                    bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
+                }
+                catch (JsonParseException e){
+                    informAboutErr(System.err, "Problem to read shelf from file");
+                }
+                catch (NullPointerException nullPointerException){
+                    informAboutErr(System.err, "Problem to read shelf from file");
+                }
             }
         }
         return bookList;
