@@ -112,7 +112,7 @@ public abstract class ReadFromGsonService {
             informAboutErr(System.err, "Problem to read shelf from file");
             return magazineList;
         }
-        for (JsonElement jsonElement : jsonArray) {// TODO cover with try-catch
+        for (JsonElement jsonElement : jsonArray) {
             try {
                 name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
                 pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();

@@ -3,6 +3,8 @@ package org.ShmaliukhVlad;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
+import org.ShmaliukhVlad.services.GsonService.ReadFromGsonService;
+import org.ShmaliukhVlad.services.GsonService.SaveToGsonService;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -35,7 +37,7 @@ public class JsonWriteAndReadTwoFilesTest {
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
 
-        shelf.saveShelfInTwoFiles("testInDiffFile");
+        SaveToGsonService.saveShelfInTwoFiles(shelf,"testInDiffFile");
         Path path1 = Paths.get(expectedBooksFileName);
         Path path2 = Paths.get(expectedMagazinesFileName);
 
@@ -48,7 +50,7 @@ public class JsonWriteAndReadTwoFilesTest {
 
     @Test
     void readFromFiles_twoArg() throws FileNotFoundException {
-        Shelf shelf = Shelf.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
+        Shelf shelf = ReadFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
 
         assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
@@ -57,7 +59,7 @@ public class JsonWriteAndReadTwoFilesTest {
     }
     @Test
     void readFromFiles_oneArg() throws FileNotFoundException {
-        Shelf shelf = Shelf.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
+        Shelf shelf = ReadFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
 
         assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
