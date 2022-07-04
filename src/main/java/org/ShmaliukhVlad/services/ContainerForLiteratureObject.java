@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.serices;
+package org.ShmaliukhVlad.services;
 
 import com.google.gson.annotations.SerializedName;
 

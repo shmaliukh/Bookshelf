@@ -36,10 +36,10 @@ public interface BaseActionsWithShelf {
      */
     void arriveLiteratureObjectFromShelfByIndex(int index);
 
-    /**
-     * This method serialize all magazines and books in file
-     * @throws IOException {@link IOException}
-     */
-    void saveShelfToGsonFile(String fileName, int type) throws IOException;
+    ///** //TODO refactoring code structure
+    // * This method serialize all magazines and books in file
+    // * @throws IOException {@link IOException}
+    // */
+    //void saveShelfToGsonFile(String fileName, int type) throws IOException;
 
 }
