@@ -79,13 +79,13 @@ public class Terminal {
                 addNewLiteratureObject();
                 break;
             case DELETE_LITERATURE:
-                printMenuForDeletingLiterature();
+                menuForDeletingLiterature();
                 break;
             case BORROW_LITERATURE:
-                printMenuForBorrowingLiterature();
+                menuForBorrowingLiterature();
                 break;
             case ARRIVE_LITERATURE:
-                printMenuForArrivingLiterature();
+                menuForArrivingLiterature();
                 break;
             case PRINT_SORTED_BOOKS:
                 clarificationForSortingBooks();
@@ -182,7 +182,7 @@ public class Terminal {
     /**
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
-    private void printMenuForArrivingLiterature() {
+    private void menuForArrivingLiterature() {
         if(shelf.getLiteratureOutShelf().isEmpty()){
             printStream.println("No literature OUT shelf to arrive");
         }
@@ -198,7 +198,7 @@ public class Terminal {
     /**
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
-    private void printMenuForBorrowingLiterature() {
+    private void menuForBorrowingLiterature() {
         if(shelf.getLiteratureInShelf().isEmpty()){
             printStream.println("No available literature IN shelf to borrow");
         }
@@ -214,7 +214,7 @@ public class Terminal {
     /**
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
-    private void printMenuForDeletingLiterature() {
+    private void menuForDeletingLiterature() {
         if(shelf.getLiteratureInShelf().isEmpty()){
             printStream.println("No available literature IN shelf to delete");
         }
