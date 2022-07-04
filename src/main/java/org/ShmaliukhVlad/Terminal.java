@@ -4,7 +4,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
-import org.ShmaliukhVlad.services.SaveReadService;
+import org.ShmaliukhVlad.services.GsonService.ReadFromGsonService;
 import org.ShmaliukhVlad.services.UserInput;
 
 import java.io.*;
@@ -44,7 +44,7 @@ public class Terminal {
         printStream.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
 
-        shelf = SaveReadService.readShelfFromGsonFile(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+        shelf = ReadFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
             shelf.saveShelfToGsonFile(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);

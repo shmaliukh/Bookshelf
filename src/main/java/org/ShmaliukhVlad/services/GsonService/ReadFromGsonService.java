@@ -1,4 +1,4 @@
-package org.ShmaliukhVlad.services;
+package org.ShmaliukhVlad.services.GsonService;
 
 import com.google.gson.*;
 import org.ShmaliukhVlad.bookshelf.Shelf;
@@ -6,7 +6,10 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,12 +19,11 @@ import java.util.List;
 import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
 import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_TWO_FILES;
 
-public class SaveReadService {
+public abstract class ReadFromGsonService {
 
-    /**
-     * Deserialization Shelf and it's Literature objects
-     */
-    public static Shelf readShelfFromGsonFile(String fileName, int typeOfWorkWithFiles) throws IOException {
+    private ReadFromGsonService(){}
+
+    public static Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
                 return readShelfFromOneFile(fileName);
@@ -77,34 +79,21 @@ public class SaveReadService {
         }
     }
 
-    private static void informAboutSingleFileReadErr(PrintStream err, String File_not_found) {
-        err.println(File_not_found);
+    public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
+        if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
+            return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
+        }
+        informAboutReadFilesErr();
+        return new Shelf();
     }
 
-    private static void informAboutGsonReadErr() {
-        System.err.println("Problem to read shelf from file");
+    public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
+        if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
+            return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
+        }
+        informAboutReadFilesErr();
+        return new Shelf();
     }
-
-    public static void saveBooksToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
-        new GsonBuilder()
-                .setPrettyPrinting()
-                .create()
-                .toJson(shelf.getBooks(), fw);
-        fw.flush();
-        fw.close();
-    }
-
-    public static void saveMagazinesToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
-        new GsonBuilder()
-                .setPrettyPrinting()
-                .create()
-                .toJson(shelf.getMagazines(), fw);
-        fw.flush();
-        fw.close();
-    }
-
 
     public static List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(String.valueOf(fileName));
@@ -161,7 +150,7 @@ public class SaveReadService {
             informAboutGsonReadErr();
             return bookList;
         }
-        for (JsonElement jsonElement : jsonArray) { // TODO cover with try-catch
+        for (JsonElement jsonElement : jsonArray) {
             try {
                 name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
                 pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
@@ -181,54 +170,15 @@ public class SaveReadService {
         return bookList;
     }
 
-    public static void saveShelfInTwoFiles(Shelf shelf, String fileName) throws IOException {
-        saveBooksToGsonFile(shelf, fileName+"Books"+".json");
-        saveMagazinesToGsonFile(shelf, fileName+"Magazines"+".json");
+    private static void informAboutSingleFileReadErr(PrintStream err, String File_not_found) {
+        err.println(File_not_found);
     }
 
-    public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
-        if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
-            return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
-        }
-        informAboutReadFilesErr();
-        return new Shelf();
-    }
-
-    public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
-        if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
-            return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
-        }
-        informAboutReadFilesErr();
-        return new Shelf();
-    }
     private static void informAboutReadFilesErr() {
         System.err.println("Problem to read files");// TODO refactor
     }
 
-    public static void saveShelfInOneFile(Shelf shelf, String fileName) {
-        try {
-            Writer fw = new FileWriter(fileName);
-            new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create()
-                    .toJson(getContainerForLiteratureObjects(shelf), fw);
-            fw.flush();
-            fw.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    //TODO description
-    private static List<ContainerForLiteratureObject> getContainerForLiteratureObjects(Shelf shelf) {
-        List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
-        for (Book book : shelf.getBooks()) {
-            containerArrayList.add(new ContainerForLiteratureObject(book));
-        }
-        for (Magazine magazine : shelf.getMagazines()) {
-            containerArrayList.add(new ContainerForLiteratureObject(magazine));
-        }
-        return containerArrayList;
+    private static void informAboutGsonReadErr() {
+        System.err.println("Problem to read shelf from file");
     }
 }

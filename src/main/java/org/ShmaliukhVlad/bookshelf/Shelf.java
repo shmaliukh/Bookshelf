@@ -1,7 +1,5 @@
 package org.ShmaliukhVlad.bookshelf;
 
-import com.google.gson.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.actionsWithShelf.ActionsWithBooks;
@@ -10,8 +8,7 @@ import org.ShmaliukhVlad.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
-import org.ShmaliukhVlad.services.ContainerForLiteratureObject;
-import org.ShmaliukhVlad.services.SaveReadService;
+import org.ShmaliukhVlad.services.GsonService.SaveToGsonService;
 
 import java.io.*;
 import java.util.*;
@@ -344,10 +341,10 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public void saveShelfToGsonFile(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
-                SaveReadService.saveShelfInOneFile(this ,fileName);
+                SaveToGsonService.saveShelfInOneFile(this ,fileName);
                 break;
             case SAVE_READ_TWO_FILES:
-                SaveReadService.saveShelfInTwoFiles(this ,fileName);
+                SaveToGsonService.saveShelfInTwoFiles(this ,fileName);
                 break;
         }
     }

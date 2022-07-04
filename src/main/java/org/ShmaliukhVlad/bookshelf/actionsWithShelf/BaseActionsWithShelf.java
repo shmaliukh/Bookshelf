@@ -2,8 +2,6 @@ package org.ShmaliukhVlad.bookshelf.actionsWithShelf;
 
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 
-import java.io.IOException;
-
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -35,11 +33,4 @@ public interface BaseActionsWithShelf {
      * @param index index of Literature object out shelf need to arrive
      */
     void arriveLiteratureObjectFromShelfByIndex(int index);
-
-    ///** //TODO refactoring code structure
-    // * This method serialize all magazines and books in file
-    // * @throws IOException {@link IOException}
-    // */
-    //void saveShelfToGsonFile(String fileName, int type) throws IOException;
-
 }
