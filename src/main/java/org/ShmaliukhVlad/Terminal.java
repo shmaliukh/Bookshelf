@@ -80,15 +80,12 @@ public class Terminal {
                 break;
             case DELETE_LITERATURE:
                 printMenuForDeletingLiterature();
-                shelf.deleteLiteratureObjectByIndex(getUserChoice());
                 break;
             case BORROW_LITERATURE:
                 printMenuForBorrowingLiterature();
-                shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
                 break;
             case ARRIVE_LITERATURE:
                 printMenuForArrivingLiterature();
-                shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
                 break;
             case PRINT_SORTED_BOOKS:
                 clarificationForSortingBooks();
@@ -194,6 +191,7 @@ public class Terminal {
             for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
                 printStream.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
             }
+            shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
 
@@ -209,6 +207,7 @@ public class Terminal {
             for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
                 printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
             }
+            shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
 
@@ -223,6 +222,7 @@ public class Terminal {
         for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
             printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
         }
+        shelf.deleteLiteratureObjectByIndex(getUserChoice());
     }
 
     /**
