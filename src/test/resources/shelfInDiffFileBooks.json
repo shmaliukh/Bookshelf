@@ -1,0 +1,16 @@
+[
+  {
+    "Author": "NoAuthor1",
+    "Date of issue": "Jun 28, 2022 10:47:50 PM",
+    "Name": "noNameBook1",
+    "Number of pages": 1,
+    "Borrowed": false
+  },
+  {
+    "Author": "NoAuthor2",
+    "Date of issue": "Jul 1, 2022 2:47:50 PM",
+    "Name": "noNameBook2",
+    "Number of pages": 2,
+    "Borrowed": true
+  }
+]
