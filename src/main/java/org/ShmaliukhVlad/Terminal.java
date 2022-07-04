@@ -43,10 +43,10 @@ public class Terminal {
         printStream.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
 
-        shelf = Shelf.readShelfFromGsonFile(FILE_NAME, typeOfWorkWithFiles);
+        shelf = Shelf.readShelfFromGsonFile(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
-            shelf.saveShelfToGsonFile(FILE_NAME, typeOfWorkWithFiles);
+            shelf.saveShelfToGsonFile(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 

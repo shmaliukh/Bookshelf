@@ -422,42 +422,52 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     }
 
     private static Shelf readShelfFromOneFile(String fileName) throws FileNotFoundException {
-        FileReader fr = new FileReader(fileName);
-        Gson gson = new Gson();
+        if(Files.exists(Paths.get(fileName))){
+            FileReader fr = new FileReader(fileName);
+            Gson gson = new Gson();
 
-        List<Literature> literatureList = new ArrayList();
-        JsonArray jsonArray;
-        try{
-            jsonArray = gson.fromJson(fr, JsonArray.class);
-        }
-        catch (JsonSyntaxException e){
-            informAboutGsonReadErr();
-            return new Shelf();
-        }
-
-        for (JsonElement element : jsonArray) {
-            JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
-            String typeOfClass;
-            try {
-                typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+            List<Literature> literatureList = new ArrayList();
+            JsonArray jsonArray;
+            try{
+                jsonArray = gson.fromJson(fr, JsonArray.class);
             }
-            catch (NullPointerException e){
+            catch (JsonSyntaxException e){
                 informAboutGsonReadErr();
                 return new Shelf();
             }
-            List<Book> books = new ArrayList<>();
-            List<Magazine> magazines = new ArrayList<>();
 
-            if (typeOfClass.equals(Book.class.toString())) {
-                books.add(gson.fromJson(itemObject, Book.class));
+            for (JsonElement element : jsonArray) {
+                JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("Literature");
+                String typeOfClass;
+                try {
+                    typeOfClass = element.getAsJsonObject().get("ClassType").getAsString();
+                }
+                catch (NullPointerException e){
+                    informAboutGsonReadErr();
+                    return new Shelf();
+                }
+                List<Book> books = new ArrayList<>();
+                List<Magazine> magazines = new ArrayList<>();
+
+                if (typeOfClass.equals(Book.class.toString())) {
+                    books.add(gson.fromJson(itemObject, Book.class));
+                }
+                else if (typeOfClass.equals(Magazine.class.toString())) {
+                    magazines.add(gson.fromJson(itemObject, Magazine.class));
+                }
+                literatureList.addAll(books);
+                literatureList.addAll(magazines);
             }
-            else if (typeOfClass.equals(Magazine.class.toString())) {
-                magazines.add(gson.fromJson(itemObject, Magazine.class));
-            }
-            literatureList.addAll(books);
-            literatureList.addAll(magazines);
+            return new Shelf(literatureList);
         }
-        return new Shelf(literatureList);
+        else{
+            informAboutSingleFileReadErr(System.err, "File not found"); // TODO refactor all info methods
+            return new Shelf();
+        }
+    }
+
+    private static void informAboutSingleFileReadErr(PrintStream err, String File_not_found) {
+        err.println(File_not_found);
     }
 
     private static void informAboutGsonReadErr() {
