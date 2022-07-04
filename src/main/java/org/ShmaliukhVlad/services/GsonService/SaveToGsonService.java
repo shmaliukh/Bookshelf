@@ -9,8 +9,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_TWO_FILES;
+import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 public abstract class SaveToGsonService {
 
@@ -28,7 +27,7 @@ public abstract class SaveToGsonService {
     }
 
     public static void saveShelfInOneFile(Shelf shelf, String fileName) throws IOException {
-        Writer fw = new FileWriter(fileName);
+        Writer fw = new FileWriter(fileName+FILE_TYPE);
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -38,8 +37,10 @@ public abstract class SaveToGsonService {
     }
 
     public static void saveShelfInTwoFiles(Shelf shelf, String fileName) throws IOException {
-        saveBooksToGsonFile(shelf, fileName+"Books"+".json");
-        saveMagazinesToGsonFile(shelf, fileName+"Magazines"+".json");
+        String fileNameForBooks = fileName+"Books"+FILE_TYPE;
+        String fileNameForMagazines = fileName+"Magazines"+FILE_TYPE;
+        saveBooksToGsonFile(shelf, fileNameForBooks);
+        saveMagazinesToGsonFile(shelf, fileNameForMagazines);
     }
 
 

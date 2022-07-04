@@ -35,7 +35,8 @@ public final class ConstantValues {
 
     public static final int WRONG_INPUT = -1;
 
-    public static final String FILE_NAME = "\\shelfGson.json";
+    public static final String FILE_TYPE = "\\.json";
+    public static final String FILE_NAME = "\\shelfGson";
     public static final String SYSTEM_FILE_PATH = System.getProperty("user.home");
 
     public static final int SAVE_READ_ONE_FILE = 1;

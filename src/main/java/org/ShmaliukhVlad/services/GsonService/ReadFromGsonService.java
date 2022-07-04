@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_TWO_FILES;
+import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 public abstract class ReadFromGsonService {
 
@@ -26,7 +25,7 @@ public abstract class ReadFromGsonService {
     public static Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
-                return readShelfFromOneFile(fileName);
+                return readShelfFromOneFile(fileName+FILE_TYPE);
             case SAVE_READ_TWO_FILES:
                 return readShelfFromTwoFiles(fileName);
             default:
@@ -98,7 +97,7 @@ public abstract class ReadFromGsonService {
     }
 
     public static List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
-        FileReader fr = new FileReader(String.valueOf(fileName));
+        FileReader fr = new FileReader(String.valueOf(fileName+FILE_TYPE));
         List<Magazine> magazineList = new ArrayList<>();
 
         String name;
@@ -135,7 +134,7 @@ public abstract class ReadFromGsonService {
     }
 
     public static List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
-        FileReader fr = new FileReader(fileName);
+        FileReader fr = new FileReader(fileName+FILE_TYPE);
         List<Book> bookList = new ArrayList<>();
 
         String name;
