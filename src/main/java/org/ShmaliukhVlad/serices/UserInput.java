@@ -51,6 +51,9 @@ public class UserInput {
         if(scanner.hasNext()){
             String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if (inputStr.length() > 0){
+                if(inputStr.length() > 8){
+                    inputStr = inputStr.substring(0,8);
+                } // TODO do some capture
                 if (isValidLiteraturePages(inputStr)) {
                     return Integer.parseInt(inputStr);
                 }

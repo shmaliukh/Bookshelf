@@ -51,7 +51,7 @@ public class Terminal {
     }
 
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
-        printStream.print("Type of work with save/read shelf in files: ");
+        printStream.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
                 printStream.println("SAVE_READ_ONE_FILE");
@@ -358,6 +358,9 @@ public class Terminal {
     public int getUserChoice(){
         if (scanner.hasNextLine()){
             String str = scanner.nextLine().replaceAll("[\\D]", "").trim();
+            if(str.length() > 8){
+                str = str.substring(0,8);
+            } // TODO do some capture
             if (!str.equals("")) {
                 return Integer.parseInt(str);
             }
