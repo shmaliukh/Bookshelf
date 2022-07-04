@@ -43,7 +43,7 @@ public class InputTest {
 
     @DisplayName("test user input for name of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
-    @CsvFileSource(resources = "/inputName.cvs", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     public void testNameInput(String input, String expected){
         assertEquals(expected, UserInput.getUserLiteratureName(new Scanner(input), printStream));
     }
@@ -72,21 +72,21 @@ public class InputTest {
 
     @DisplayName("test user input for choosing state (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{0}''")
-    @CsvFileSource(resources = "/inputAuthorsForValidation.cvs", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     public void testAuthorInput(String input){
         assertEquals(input, UserInput.getUserLiteratureName(new Scanner(input), printStream));
     }
 
     @DisplayName("validate data from user input (name) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
-    @CsvFileSource(resources = "/inputNameForValidation.cvs", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/inputNameForValidation.csv", numLinesToSkip = 1)
     public void testIsNameValidate_true(String input){
         assertTrue(UserInput.isValidLiteratureName(input));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
-    @CsvFileSource(resources = "/inputIsBorrowedValid.cvs", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/inputIsBorrowedValid.csv", numLinesToSkip = 1)
     public void testIsBorrowedValidation_true(String input){
         assertTrue(UserInput.isValidLiteratureIsBorrowed(input));
     }
@@ -121,7 +121,7 @@ public class InputTest {
 
     @DisplayName("validate data from user input (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
-    @CsvFileSource(resources = "/inputAuthorsForValidation.cvs", numLinesToSkip = 1)//TODO new test items
+    @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)//TODO new test items
     public void testAuthorValidation_true(String input){
         assertTrue(UserInput.isValidLiteratureAuthor(input));
     }

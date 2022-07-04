@@ -4,6 +4,7 @@ import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.services.GsonService.ReadFromGsonService;
+import org.ShmaliukhVlad.services.GsonService.SaveToGsonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,21 +35,21 @@ public class JsonWriteAndReadOneFileTest {
         Book expectedBook = new Book("book name", 111, false, "book author", new Date(1000000));
         Magazine expectedMagazine = new Magazine("book name", 222, true);
 
-        Shelf shelf = ReadFromGsonService.readShelfFromGson("src/test/resources/testGson",2);
+        Shelf shelf = ReadFromGsonService.readShelfFromGson("src/test/resources/testGsonReader.json",1);
         assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
     }
 
     @Test
     @DisplayName("test to read created json shelf file by program")
-    void testReadCreatedGsonFile() throws IOException, ClassNotFoundException {
+    void testReadCreatedGsonFile() throws IOException{
         Shelf shelf = new Shelf();
         shelf.addLiteratureObject(book1);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
 
-        shelf.saveShelfToGsonFile(testFileName,SAVE_READ_ONE_FILE);
+        SaveToGsonService.saveShelfToGsonFile(shelf, testFileName, SAVE_READ_ONE_FILE);
 
         Shelf shelf2 = ReadFromGsonService.readShelfFromGson(testFileName,SAVE_READ_ONE_FILE);
 
@@ -61,12 +62,12 @@ public class JsonWriteAndReadOneFileTest {
 
     @Test
     @DisplayName("test to write Shelf with books in file")
-    void testWriteLiterature_books() throws IOException, ClassNotFoundException {
+    void testWriteLiterature_books() throws IOException{
         Shelf shelf1 = new Shelf();
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(book2);
 
-        shelf1.saveShelfToGsonFile(testFileName, SAVE_READ_ONE_FILE);
+        SaveToGsonService.saveShelfToGsonFile(shelf1, testFileName, SAVE_READ_ONE_FILE);
 
         Shelf shelf2 = ReadFromGsonService.readShelfFromGson(testFileName, SAVE_READ_ONE_FILE);
 
@@ -84,7 +85,7 @@ public class JsonWriteAndReadOneFileTest {
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
 
-        shelf1.saveShelfToGsonFile(testFileName, SAVE_READ_ONE_FILE);
+        SaveToGsonService.saveShelfToGsonFile(shelf1, testFileName, SAVE_READ_ONE_FILE);
 
         Shelf shelf2 = ReadFromGsonService.readShelfFromGson(testFileName, SAVE_READ_ONE_FILE);
 
