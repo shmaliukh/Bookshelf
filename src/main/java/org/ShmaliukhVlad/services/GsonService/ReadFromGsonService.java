@@ -156,11 +156,12 @@ public abstract class ReadFromGsonService {
         if(jsonArray != null){
             for (JsonElement jsonElement : jsonArray) {
                 try {
-                    name = jsonElement.getAsJsonObject().getAsJsonPrimitive("Name").getAsString();
-                    pages = jsonElement.getAsJsonObject().getAsJsonPrimitive("Number of pages").getAsInt();
-                    isBorrowed = jsonElement.getAsJsonObject().getAsJsonPrimitive("Borrowed").getAsBoolean();
-                    author = jsonElement.getAsJsonObject().getAsJsonPrimitive("Author").getAsString();
-                    dateOfIssue = new Date(jsonElement.getAsJsonObject().getAsJsonPrimitive("Date of issue").getAsString());
+                    JsonObject asJsonObject = jsonElement.getAsJsonObject();
+                    name = asJsonObject.getAsJsonPrimitive("Name").getAsString();
+                    pages = asJsonObject.getAsJsonPrimitive("Number of pages").getAsInt();
+                    isBorrowed = asJsonObject.getAsJsonPrimitive("Borrowed").getAsBoolean();
+                    author = asJsonObject.getAsJsonPrimitive("Author").getAsString();
+                    dateOfIssue = new Date(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
 
                     bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
                 }
