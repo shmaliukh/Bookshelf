@@ -97,7 +97,7 @@ public abstract class ReadFromGsonService {
     }
 
     public static List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
-        FileReader fr = new FileReader(String.valueOf(fileName+FILE_TYPE));
+        FileReader fr = new FileReader(fileName);
         List<Magazine> magazineList = new ArrayList<>();
 
         String name;
@@ -134,7 +134,7 @@ public abstract class ReadFromGsonService {
     }
 
     public static List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
-        FileReader fr = new FileReader(fileName+FILE_TYPE);
+        FileReader fr = new FileReader(fileName);
         List<Book> bookList = new ArrayList<>();
 
         String name;

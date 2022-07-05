@@ -27,7 +27,7 @@ public abstract class SaveToGsonService {
     }
 
     public static void saveShelfInOneFile(Shelf shelf, String fileName) throws IOException {
-        Writer fw = new FileWriter(fileName+FILE_TYPE);
+        Writer fw = new FileWriter((fileName+FILE_TYPE));
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()

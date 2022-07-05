@@ -35,7 +35,8 @@ public class JsonWriteAndReadOneFileTest {
         Book expectedBook = new Book("book name", 111, false, "book author", new Date(1000000));
         Magazine expectedMagazine = new Magazine("book name", 222, true);
 
-        Shelf shelf = ReadFromGsonService.readShelfFromGson("src/test/resources/testGsonReader.json",1);
+        Shelf shelf = ReadFromGsonService.readShelfFromGson("src/test/resources/testGsonReader",1);
+
         assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
         assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
     }
