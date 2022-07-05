@@ -333,7 +333,7 @@ public class Terminal {
                 randomNumber.nextInt(1000),
                 false,
                 getRandomString(randomNumber.nextInt(10)),
-                new Date(randomNumber.nextInt(1000000)));  //TODO
+                new Date(randomNumber.nextInt(1000000)));
 
         informAboutAddedLiteratureObject(randomBook);
         return randomBook;

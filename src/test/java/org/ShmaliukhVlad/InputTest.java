@@ -121,7 +121,7 @@ public class InputTest {
 
     @DisplayName("validate data from user input (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
-    @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)//TODO new test items
+    @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     public void testAuthorValidation_true(String input){
         assertTrue(UserInput.isValidLiteratureAuthor(input));
     }
