@@ -5,10 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MultithreadedSocketServer {
-    static final ServerSocket SERVER_SOCKET;
-    static final int MAX_CONNECTION = 10;
-    static final int SERVER_PORT = 8888;
-    static int userCounter = 0;
+    private static final ServerSocket SERVER_SOCKET;
+    private static final int MAX_CONNECTION = 10;
+    private static final int SERVER_PORT = 8888;
+    private static int userCounter = 0;
 
     static {
         try {
@@ -17,17 +17,29 @@ public class MultithreadedSocketServer {
             System.err.println("Problem to set up server socket");
             throw new RuntimeException(e);
         }
-
     }
+
+    private static int terminalConfig = 0;
+
     public static void main(String[] args) throws IOException {
         System.out.println("Server start");
+
+        terminalConfig = getTerminalConfig(args);
 
         while (true){
             userCounter++;
             Socket serverClient = SERVER_SOCKET.accept();
             System.out.println("client №" + userCounter + " connected");
-            ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter);
+
+            ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter, terminalConfig);
             serverClientThread.start();
         }
+    }
+
+    private static int getTerminalConfig(String[] args) {
+        if(args.length > 0 && args[0]!=null){
+            return Integer.parseInt(args[0]) - 3;
+        }
+        return 0;
     }
 }

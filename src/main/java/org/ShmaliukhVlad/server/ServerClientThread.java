@@ -9,8 +9,10 @@ import java.util.Scanner;
 public class ServerClientThread extends Thread{
     Socket serverClient;
     int userId;
+    int terminalConfig;
 
-    public ServerClientThread(Socket socket, int userCounter) {
+    public ServerClientThread(Socket socket, int userCounter, int terminalConfig) {
+        this.terminalConfig = terminalConfig;
         serverClient = socket;
         userId = userCounter;
     }
@@ -21,7 +23,7 @@ public class ServerClientThread extends Thread{
             PrintWriter printWriter = new PrintWriter(serverClient.getOutputStream(),true);
 
             Terminal terminal = new Terminal(scanner, printWriter);
-            terminal.startWork(0);
+            terminal.startWork(terminalConfig);
 
             scanner.close();
             printWriter.close();

@@ -27,6 +27,8 @@ public class Terminal {
     private final Scanner scanner;
     private final PrintWriter printStream;
 
+    ReadFromGsonService readFromGsonService = new ReadFromGsonService();
+
     //public Terminal(){
         //this(System.in, System.out);
     //}
@@ -52,7 +54,7 @@ public class Terminal {
         printStream.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
 
-        shelf = ReadFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
             SaveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
