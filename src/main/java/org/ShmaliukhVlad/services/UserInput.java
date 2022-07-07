@@ -1,7 +1,6 @@
 package org.ShmaliukhVlad.services;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.NoArgsConstructor;
 
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -14,7 +13,7 @@ import java.util.regex.Pattern;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.DATE_FORMAT;
 
-
+@NoArgsConstructor
 public class UserInput {
 
     //private final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
@@ -23,9 +22,6 @@ public class UserInput {
     private final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
     private final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
     private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
-
-    public UserInput() {
-    }
 
     public boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintWriter printWriter) {
         printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
@@ -76,9 +72,7 @@ public class UserInput {
         printWriter.println("Enter literature object's name (not empty one line text):");
         if(scanner.hasNextLine()){
             String name = scanner.nextLine();
-            //LOGGER.debug("name = " + name); //TODO loggers
             boolean validationResult = isValidLiteratureName(name);
-            //LOGGER.debug("validationResult: " + validationResult);
             if (validationResult) {
                 return name;
             }
@@ -99,9 +93,7 @@ public class UserInput {
         printWriter.println("Enter author:");
         if(scanner.hasNextLine()){
             String author = scanner.nextLine().trim();
-            //LOGGER.debug("author = " + author);
             boolean validationResult = isValidLiteratureName(author);
-            //LOGGER.debug("validationResult: " + validationResult);
             if (validationResult) {
                 return author;
             }
@@ -125,7 +117,6 @@ public class UserInput {
         DATE_FORMAT.setLenient(false);
         if(scanner.hasNextLine()){
             dateStr = scanner.nextLine().trim();
-            //LOGGER.debug("input date str = {}",dateStr);
             if(isValidLiteratureDate(dateStr)){
                 return DATE_FORMAT.parse(dateStr);
             }
@@ -141,7 +132,6 @@ public class UserInput {
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         sdf.setLenient(false);
         try {
-            //LOGGER.debug("str = {}",str);
             sdf.parse(input);
         } catch (ParseException e) {
             return false;

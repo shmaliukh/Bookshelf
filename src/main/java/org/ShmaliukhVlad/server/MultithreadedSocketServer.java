@@ -19,12 +19,10 @@ public class MultithreadedSocketServer {
         }
     }
 
-    private static int terminalConfig = 0;
-
     public static void main(String[] args) throws IOException {
         System.out.println("Server start");
 
-        terminalConfig = getTerminalConfig(args);
+        int terminalConfig = getTerminalConfig(args);
 
         while (true){
             userCounter++;

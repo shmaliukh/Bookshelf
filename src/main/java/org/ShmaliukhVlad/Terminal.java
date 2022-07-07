@@ -32,9 +32,7 @@ public class Terminal {
     
     UserInput userInput = new UserInput();
 
-    //public Terminal(){
-        //this(System.in, System.out);
-    //}
+    Random randomNumber;
 
     public Terminal(InputStream inputStream, PrintWriter printStream){
         this.scanner = new Scanner(inputStream);
@@ -319,7 +317,6 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
-        Random randomNumber = new Random();
         Magazine randomMagazine = new Magazine(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
@@ -339,7 +336,8 @@ public class Terminal {
      * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
      */
     public Book getRandomBook() {
-        Random randomNumber = new Random();
+
+        randomNumber = new Random();
         Book randomBook = new Book(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
@@ -358,10 +356,9 @@ public class Terminal {
      */
     public String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
-        Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            int number = random.nextInt(62);
+            int number = randomNumber.nextInt(62);
             sb.append(str.charAt(number));
         }
         return sb.toString();

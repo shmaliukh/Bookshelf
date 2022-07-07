@@ -1,6 +1,7 @@
 package org.ShmaliukhVlad.services.GsonService;
 
 import com.google.gson.*;
+import lombok.NoArgsConstructor;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -11,9 +12,8 @@ import java.util.List;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
+@NoArgsConstructor
 public class SaveToGsonService {
-
-    public SaveToGsonService(){}
 
     public void saveShelfToGsonFile(Shelf shelf, String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
