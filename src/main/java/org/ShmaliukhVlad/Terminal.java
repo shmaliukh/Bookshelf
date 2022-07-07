@@ -25,15 +25,22 @@ public class Terminal {
     private Shelf shelf;
 
     private final Scanner scanner;
-    private final PrintStream printStream;
+    private final PrintWriter printStream;
 
-    public Terminal(){
-        this(System.in, System.out);
-    }
+    //public Terminal(){
+        //this(System.in, System.out);
+    //}
 
-    public Terminal(InputStream inputStream, PrintStream printStream){
+    public Terminal(InputStream inputStream, PrintWriter printStream){
         this.scanner = new Scanner(inputStream);
         this.printStream = printStream;
+        shelf = new Shelf();
+        play = true;
+    }
+
+    public Terminal(Scanner scanner, PrintWriter printWriter){
+        this.scanner = scanner;
+        this.printStream = printWriter;
         shelf = new Shelf();
         play = true;
     }

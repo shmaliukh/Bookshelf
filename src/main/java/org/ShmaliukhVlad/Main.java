@@ -1,7 +1,10 @@
 package org.ShmaliukhVlad;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Scanner;
 
 /**
  * @author ShmaliukhVlad
@@ -14,7 +17,7 @@ public class Main {
      * @param args command line values
      */
     public static void main(String[] args) throws ParseException, IOException{
-        Terminal terminal = new Terminal();
+        Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out)));
         int typeOfConfig;
 
         if(args.length>0){
