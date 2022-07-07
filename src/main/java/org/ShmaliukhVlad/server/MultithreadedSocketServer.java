@@ -8,6 +8,7 @@ public class MultithreadedSocketServer {
     static final ServerSocket SERVER_SOCKET;
     static final int MAX_CONNECTION = 10;
     static final int SERVER_PORT = 8888;
+    static int userCounter = 0;
 
     static {
         try {
@@ -19,7 +20,6 @@ public class MultithreadedSocketServer {
 
     }
     public static void main(String[] args) throws IOException {
-        int userCounter = 0;
         System.out.println("Server start");
 
         while (true){
@@ -29,7 +29,5 @@ public class MultithreadedSocketServer {
             ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter);
             serverClientThread.start();
         }
-
-
     }
 }
