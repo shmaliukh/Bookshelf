@@ -28,6 +28,9 @@ public class Terminal {
     private final PrintWriter printStream;
 
     ReadFromGsonService readFromGsonService = new ReadFromGsonService();
+    SaveToGsonService saveToGsonService = new SaveToGsonService();
+    
+    UserInput userInput = new UserInput();
 
     //public Terminal(){
         //this(System.in, System.out);
@@ -57,7 +60,7 @@ public class Terminal {
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
-            SaveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+             saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 
@@ -277,9 +280,9 @@ public class Terminal {
         int pages;
         boolean isBorrowed;
 
-        name = UserInput.getUserLiteratureName(scanner, printStream);
-        pages = UserInput.getUserLiteraturePages(scanner, printStream);
-        isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
+        name = userInput.getUserLiteratureName(scanner, printStream);
+        pages = userInput.getUserLiteraturePages(scanner, printStream);
+        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printStream);
 
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
@@ -298,11 +301,11 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        name = UserInput.getUserLiteratureName(scanner, printStream);
-        pages = UserInput.getUserLiteraturePages(scanner, printStream);
-        isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
-        author = UserInput.getUserLiteratureAuthor(scanner, printStream);
-        dateOfIssue = UserInput.getUserDateOfIssue(scanner, printStream);
+        name = userInput.getUserLiteratureName(scanner, printStream);
+        pages = userInput.getUserLiteraturePages(scanner, printStream);
+        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printStream);
+        author = userInput.getUserLiteratureAuthor(scanner, printStream);
+        dateOfIssue = userInput.getUserDateOfIssue(scanner, printStream);
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
         informAboutAddedLiteratureObject(userBook);
