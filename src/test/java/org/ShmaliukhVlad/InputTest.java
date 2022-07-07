@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InputTest {
 
-    PrintStream printStream = new PrintStream(new ByteArrayOutputStream());
+    PrintWriter printStream = new PrintWriter(new OutputStreamWriter(System.out));
 
     @DisplayName("validate data from user input (date) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected state ''{1}''")
