@@ -14,27 +14,12 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
-import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_TWO_FILES;
-
 
 public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
-
     private FileReader fr;
     private Gson gson = new Gson();
     private List<Literature> literatureList;
     private JsonArray jsonArray;
-
-    public GsonHandler(int typeOfWorkWithFiles){
-        switch (typeOfWorkWithFiles){
-            case SAVE_READ_ONE_FILE:
-                ;
-                break;
-            case SAVE_READ_TWO_FILES:
-                //this.saveShelfInTwoFiles(shelf ,fileName);
-                break;
-        }
-    }
 
     public boolean isFileExists(File gsonFile){
         return Files.exists(gsonFile.toPath());
@@ -52,8 +37,7 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
         return literatureList;
     }
 
-    private void informAboutErr(String problem) {
-        System.err.println(problem);
+    private void informAboutErr(String file_not_exists) {
     }
 
     public JsonArray getJsonArr(File file){
