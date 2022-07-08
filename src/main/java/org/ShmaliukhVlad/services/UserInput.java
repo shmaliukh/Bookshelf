@@ -23,6 +23,16 @@ public class UserInput {
     private final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
     private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
 
+    public String getUserName(Scanner scanner, PrintWriter printWriter){
+        String userName = "default";
+        printWriter.println("Enter user name:");
+        if(scanner.hasNextLine()){
+            userName = scanner.nextLine().trim().replaceAll(" ","");
+            // TODO validation
+        }
+        return userName;
+    }
+
     public boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintWriter printWriter) {
         printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
         if(scanner.hasNextLine()){

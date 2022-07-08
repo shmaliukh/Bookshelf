@@ -159,7 +159,7 @@ public class ReadFromGsonService {
                     pages = asJsonObject.getAsJsonPrimitive("Number of pages").getAsInt();
                     isBorrowed = asJsonObject.getAsJsonPrimitive("Borrowed").getAsBoolean();
                     author = asJsonObject.getAsJsonPrimitive("Author").getAsString();
-                    dateOfIssue = DATE_FORMAT.parse(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
+                    dateOfIssue = new Date(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
                     bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
                 }
                 catch (Exception e){

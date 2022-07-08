@@ -15,6 +15,8 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 @NoArgsConstructor
 public class SaveToGsonService {
 
+    public FileWriter fw;
+
     public void saveShelfToGsonFile(Shelf shelf, String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
@@ -27,7 +29,7 @@ public class SaveToGsonService {
     }
 
     public void saveShelfInOneFile(Shelf shelf, String fileName) throws IOException {
-        Writer fw = new FileWriter((fileName+FILE_TYPE));
+        fw = new FileWriter((fileName+FILE_TYPE));
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -45,7 +47,7 @@ public class SaveToGsonService {
 
 
     public void saveBooksToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+        fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -55,7 +57,7 @@ public class SaveToGsonService {
     }
 
     public void saveMagazinesToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+        fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
