@@ -1,6 +1,7 @@
 package org.ShmaliukhVlad.services.GsonService;
 
 import com.google.gson.*;
+import lombok.NoArgsConstructor;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -11,23 +12,24 @@ import java.util.List;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
-public abstract class SaveToGsonService {
+@NoArgsConstructor
+public class SaveToGsonService {
 
-    private SaveToGsonService(){}
+    public FileWriter fw;
 
-    public static void saveShelfToGsonFile(Shelf shelf, String fileName, int typeOfWorkWithFiles) throws IOException {
+    public void saveShelfToGsonFile(Shelf shelf, String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
-                SaveToGsonService.saveShelfInOneFile(shelf ,fileName);
+                this.saveShelfInOneFile(shelf ,fileName);
                 break;
             case SAVE_READ_TWO_FILES:
-                SaveToGsonService.saveShelfInTwoFiles(shelf ,fileName);
+                this.saveShelfInTwoFiles(shelf ,fileName);
                 break;
         }
     }
 
-    public static void saveShelfInOneFile(Shelf shelf, String fileName) throws IOException {
-        Writer fw = new FileWriter((fileName+FILE_TYPE));
+    public void saveShelfInOneFile(Shelf shelf, String fileName) throws IOException {
+        fw = new FileWriter((fileName+FILE_TYPE));
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -36,7 +38,7 @@ public abstract class SaveToGsonService {
         fw.close();
     }
 
-    public static void saveShelfInTwoFiles(Shelf shelf, String fileName) throws IOException {
+    public void saveShelfInTwoFiles(Shelf shelf, String fileName) throws IOException {
         String fileNameForBooks = fileName+"Books"+FILE_TYPE;
         String fileNameForMagazines = fileName+"Magazines"+FILE_TYPE;
         saveBooksToGsonFile(shelf, fileNameForBooks);
@@ -44,8 +46,8 @@ public abstract class SaveToGsonService {
     }
 
 
-    public static void saveBooksToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+    public void saveBooksToGsonFile(Shelf shelf, String fileName) throws IOException {
+        fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -54,8 +56,8 @@ public abstract class SaveToGsonService {
         fw.close();
     }
 
-    public static void saveMagazinesToGsonFile(Shelf shelf, String fileName) throws IOException {
-        FileWriter fw = new FileWriter(fileName);
+    public void saveMagazinesToGsonFile(Shelf shelf, String fileName) throws IOException {
+        fw = new FileWriter(fileName);
         new GsonBuilder()
                 .setPrettyPrinting()
                 .create()
@@ -64,7 +66,7 @@ public abstract class SaveToGsonService {
         fw.close();
     }
 
-    private static List<ContainerForLiteratureObject> getContainerForLiteratureObjects(Shelf shelf) {
+    private List<ContainerForLiteratureObject> getContainerForLiteratureObjects(Shelf shelf) {
         List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
         for (Book book : shelf.getBooks()) {
             containerArrayList.add(new ContainerForLiteratureObject(book));

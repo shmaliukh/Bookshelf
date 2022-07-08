@@ -22,27 +22,21 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 public class Terminal {
     private boolean play;
 
+    private User user;
+
     private Shelf shelf;
 
     private final Scanner scanner;
-    private final PrintWriter printStream;
+    private final PrintWriter printWriter;
 
+    Random randomNumber = new Random();
     ReadFromGsonService readFromGsonService = new ReadFromGsonService();
-
-    //public Terminal(){
-        //this(System.in, System.out);
-    //}
-
-    public Terminal(InputStream inputStream, PrintWriter printStream){
-        this.scanner = new Scanner(inputStream);
-        this.printStream = printStream;
-        shelf = new Shelf();
-        play = true;
-    }
+    SaveToGsonService saveToGsonService = new SaveToGsonService();
+    UserInput userInput = new UserInput();
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
         this.scanner = scanner;
-        this.printStream = printWriter;
+        this.printWriter = printWriter;
         shelf = new Shelf();
         play = true;
     }
@@ -51,27 +45,46 @@ public class Terminal {
      * Method simulates Terminal work like a real one
      */
     public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
-        printStream.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
+        printWriter.println("Terminal START");
+        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
             generateUserInterface();
-            SaveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+             saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 
+    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
+        printWriter.println("Terminal START");
+        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
+
+        if(userMode){
+            userLogin();
+        }
+
+        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
+        while (isPlay()){
+            generateUserInterface();
+            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
+        }
+    }
+
+    private void userLogin() {
+        user = new User(userInput.getUserName(scanner,printWriter));
+    }
+
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
-        printStream.print("Type of work with save/read shelf with files: ");
+        printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
-                printStream.println("SAVE_READ_ONE_FILE");
+                printWriter.println("SAVE_READ_ONE_FILE");
                 break;
             case SAVE_READ_TWO_FILES:
-                printStream.println("SAVE_READ_TWO_FILES");
+                printWriter.println("SAVE_READ_TWO_FILES");
                 break;
             default:
-                printStream.println("DEFAULT (no work with files)");
+                printWriter.println("DEFAULT (no work with files)");
                 break;
         }
     }
@@ -111,7 +124,7 @@ public class Terminal {
                 closeTerminal();
                 break;
             default:
-                printStream.println("Wrong input");
+                printWriter.println("Wrong input");
                 break;
         }
     }
@@ -121,15 +134,15 @@ public class Terminal {
      */
     private void printCurrentStateOfShelf() {
         String tab = "\t";
-        printStream.println("Current state of Shelf:");
-        printStream.println("literature IN {");
+        printWriter.println("Current state of Shelf:");
+        printWriter.println("literature IN {");
         shelf.getLiteratureInShelf()
-                .forEach(o -> printStream.print(tab + o.getPrintableLineOfLiteratureObject()));
-        printStream.println("}");
-        printStream.println("literature OUT {");
+                .forEach(o -> printWriter.print(tab + o.getPrintableLineOfLiteratureObject()));
+        printWriter.println("}");
+        printWriter.println("literature OUT {");
         shelf.getLiteratureOutShelf()
-                .forEach(o -> printStream.print(tab + o.getPrintableLineOfLiteratureObject()));
-        printStream.println("}");
+                .forEach(o -> printWriter.print(tab + o.getPrintableLineOfLiteratureObject()));
+        printWriter.println("}");
     }
 
     /**
@@ -137,7 +150,7 @@ public class Terminal {
      */
     private void closeTerminal() {
         this.stop();
-        printStream.println("Terminal STOP");
+        printWriter.println("Terminal STOP");
     }
 
     /**
@@ -145,7 +158,7 @@ public class Terminal {
      */
     private void clarificationForSortingMagazines() {
         if(shelf.getAvailableMagazines().isEmpty()){
-            printStream.println("No available magazines IN shelf for sorting");
+            printWriter.println("No available magazines IN shelf for sorting");
         }
         else {
             printMenuForMagazinesSorting();
@@ -167,7 +180,7 @@ public class Terminal {
      */
     private void clarificationForSortingBooks() {
         if(shelf.getAvailableBooks().isEmpty()){
-            printStream.println("No available books IN shelf for sorting");
+            printWriter.println("No available books IN shelf for sorting");
         }
         else {
             printMenuForBooksSorting();
@@ -195,12 +208,12 @@ public class Terminal {
      */
     private void menuForArrivingLiterature() {
         if(shelf.getLiteratureOutShelf().isEmpty()){
-            printStream.println("No literature OUT shelf to arrive");
+            printWriter.println("No literature OUT shelf to arrive");
         }
         else {
-            printStream.println("Enter INDEX of Literature object to arrive one:");
+            printWriter.println("Enter INDEX of Literature object to arrive one:");
             for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-                printStream.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+                printWriter.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
             }
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -211,12 +224,12 @@ public class Terminal {
      */
     private void menuForBorrowingLiterature() {
         if(shelf.getLiteratureInShelf().isEmpty()){
-            printStream.println("No available literature IN shelf to borrow");
+            printWriter.println("No available literature IN shelf to borrow");
         }
         else {
-            printStream.println("Enter INDEX of Literature object to borrow one:");
+            printWriter.println("Enter INDEX of Literature object to borrow one:");
             for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-                printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+                printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
             }
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -227,12 +240,12 @@ public class Terminal {
      */
     private void menuForDeletingLiterature() {
         if(shelf.getLiteratureInShelf().isEmpty()){
-            printStream.println("No available literature IN shelf to delete");
+            printWriter.println("No available literature IN shelf to delete");
         }
         else {
-            printStream.println("Enter INDEX of Literature object to delete one:");
+            printWriter.println("Enter INDEX of Literature object to delete one:");
             for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-                printStream.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
+                printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
             }
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
@@ -264,7 +277,7 @@ public class Terminal {
      * Method simply inform user about added Literature object
      */
     private void informAboutAddedLiteratureObject(Literature literature) {
-        printStream.println(literature + " has added to shelf");
+        printWriter.println(literature + " has added to shelf");
     }
 
     /**
@@ -277,9 +290,9 @@ public class Terminal {
         int pages;
         boolean isBorrowed;
 
-        name = UserInput.getUserLiteratureName(scanner, printStream);
-        pages = UserInput.getUserLiteraturePages(scanner, printStream);
-        isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
+        name = userInput.getUserLiteratureName(scanner, printWriter);
+        pages = userInput.getUserLiteraturePages(scanner, printWriter);
+        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printWriter);
 
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
@@ -298,11 +311,11 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        name = UserInput.getUserLiteratureName(scanner, printStream);
-        pages = UserInput.getUserLiteraturePages(scanner, printStream);
-        isBorrowed = UserInput.getUserLiteratureIsBorrowed(scanner, printStream);
-        author = UserInput.getUserLiteratureAuthor(scanner, printStream);
-        dateOfIssue = UserInput.getUserDateOfIssue(scanner, printStream);
+        name = userInput.getUserLiteratureName(scanner, printWriter);
+        pages = userInput.getUserLiteraturePages(scanner, printWriter);
+        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printWriter);
+        author = userInput.getUserLiteratureAuthor(scanner, printWriter);
+        dateOfIssue = userInput.getUserDateOfIssue(scanner, printWriter);
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
         informAboutAddedLiteratureObject(userBook);
@@ -316,7 +329,6 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
-        Random randomNumber = new Random();
         Magazine randomMagazine = new Magazine(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
@@ -336,7 +348,8 @@ public class Terminal {
      * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
      */
     public Book getRandomBook() {
-        Random randomNumber = new Random();
+
+        randomNumber = new Random();
         Book randomBook = new Book(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
@@ -355,10 +368,9 @@ public class Terminal {
      */
     public String getRandomString(int length) {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
-        Random random = new Random();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            int number = random.nextInt(62);
+            int number = randomNumber.nextInt(62);
             sb.append(str.charAt(number));
         }
         return sb.toString();
@@ -385,7 +397,7 @@ public class Terminal {
      * Method which simply print main menu
      */
     private void printMainMenu(){
-        printStream.println(
+        printWriter.println(
                         "\n" +
                         "Enter number of  command you wand to execute: (program ignores all not number symbols)" +"\n" +
                         "1 - Add new Literature object to Shelf" +"\n" +
@@ -402,7 +414,7 @@ public class Terminal {
      * Method which simply print menu items for sorting books
      */
     private void printMenuForBooksSorting(){
-        printStream.println(
+        printWriter.println(
                         "Choose type of sorting:" +"\n" +
                         "1 - Sort by 'name' value" +"\n" +
                         "2 - Sort by 'author' value" +"\n" +
@@ -415,7 +427,7 @@ public class Terminal {
      * Method which simply print menu items for sorting magazines
      */
     private void printMenuForMagazinesSorting(){
-        printStream.println(
+        printWriter.println(
                         "Choose type of sorting:" +"\n" +
                         "1 - Sort by 'name' value" +"\n" +
                         "2 - Sort by 'page' value" +"\n" +
@@ -426,7 +438,7 @@ public class Terminal {
      * Method which simply print menu items for adding literature obj
      */
     private void printMenuForAddingLiterature(){
-        printStream.println(
+        printWriter.println(
                          "Choose type of literature you want to add:" + "\n" +
                          "1 - Magazine" + "\n" +
                          "2 - Book" + "\n" +
@@ -446,6 +458,9 @@ public class Terminal {
     public void setPlay(boolean play) {
         this.play = play;
     }
+
+
+
 
 }
 

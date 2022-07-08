@@ -17,24 +17,21 @@ public class ServerClientThread extends Thread{
         userId = userCounter;
     }
 
+    @Override
     public void run(){
-        try{
-            Scanner scanner = new Scanner(serverClient.getInputStream());
-            PrintWriter printWriter = new PrintWriter(serverClient.getOutputStream(),true);
+        try(Scanner scanner = new Scanner(serverClient.getInputStream());
+            PrintWriter printWriter = new PrintWriter(serverClient.getOutputStream(),true)){
 
             Terminal terminal = new Terminal(scanner, printWriter);
-            terminal.startWork(terminalConfig);
+            terminal.startWork(terminalConfig, true);
 
-            scanner.close();
-            printWriter.close();
             serverClient.close();
         } catch (Exception e) {
             System.err.println("Some err");// TODO
             throw new RuntimeException(e);
         }
         finally {
-            System.out.println("Client № " + userId + "exit");
+            System.out.println("Client №" + userId + " exit");
         }
-
     }
 }

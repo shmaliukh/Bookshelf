@@ -20,8 +20,6 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 public class ReadFromGsonService {
 
-    public ReadFromGsonService(){}
-
     public Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
@@ -162,13 +160,9 @@ public class ReadFromGsonService {
                     isBorrowed = asJsonObject.getAsJsonPrimitive("Borrowed").getAsBoolean();
                     author = asJsonObject.getAsJsonPrimitive("Author").getAsString();
                     dateOfIssue = new Date(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
-
                     bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
                 }
-                catch (JsonParseException e){
-                    informAboutErr(System.err, "Problem to read shelf from file");
-                }
-                catch (NullPointerException nullPointerException){
+                catch (Exception e){
                     informAboutErr(System.err, "Problem to read shelf from file");
                 }
             }
