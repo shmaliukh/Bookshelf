@@ -16,14 +16,11 @@ import java.util.List;
 
 
 public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
+
     private FileReader fr;
     private Gson gson = new Gson();
     private List<Literature> literatureList;
     private JsonArray jsonArray;
-
-    public boolean isFileExists(File gsonFile){
-        return Files.exists(gsonFile.toPath());
-    }
 
     public List<Literature> readLiteratureTypeFromGson(Class type, File gsonFile){
         literatureList = new ArrayList<>();
@@ -60,6 +57,11 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
         }
         return jsonArray;
     }
+
+    public boolean isFileExists(File gsonFile){
+        return Files.exists(gsonFile.toPath());
+    }
+
     @Override
     public Shelf readShelfFromGsonFile() {
        return new Shelf();

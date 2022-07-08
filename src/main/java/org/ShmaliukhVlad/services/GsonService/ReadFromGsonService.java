@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,8 +19,6 @@ import java.util.List;
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 public class ReadFromGsonService {
-
-    public ReadFromGsonService(){}
 
     public Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
@@ -162,15 +159,10 @@ public class ReadFromGsonService {
                     pages = asJsonObject.getAsJsonPrimitive("Number of pages").getAsInt();
                     isBorrowed = asJsonObject.getAsJsonPrimitive("Borrowed").getAsBoolean();
                     author = asJsonObject.getAsJsonPrimitive("Author").getAsString();
-                    //DateFormat.parse(String.valueOf(asJsonObject.getAsJsonPrimitive("Date of issue")));
-                    dateOfIssue = new Date(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
-
+                    dateOfIssue = DATE_FORMAT.parse(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
                     bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
                 }
-                catch (JsonParseException e){
-                    informAboutErr(System.err, "Problem to read shelf from file");
-                }
-                catch (NullPointerException nullPointerException){
+                catch (Exception e){
                     informAboutErr(System.err, "Problem to read shelf from file");
                 }
             }
