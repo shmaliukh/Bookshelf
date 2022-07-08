@@ -1,5 +1,7 @@
 package org.ShmaliukhVlad;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -57,7 +59,7 @@ public class Terminal {
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
-        printWriter.println("Terminal START");
+        //printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         if(userMode){
@@ -458,10 +460,11 @@ public class Terminal {
     public void setPlay(boolean play) {
         this.play = play;
     }
-
-
-
-
 }
 
+@Data
+@AllArgsConstructor
+class User {
+    private String name;
+}
 

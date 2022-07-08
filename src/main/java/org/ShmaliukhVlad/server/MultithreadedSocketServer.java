@@ -20,14 +20,14 @@ public class MultithreadedSocketServer {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Server start");
+        System.out.println("[Server] start");
 
         int terminalConfig = getTerminalConfig(args);
 
         while (true){
             userCounter++;
             Socket serverClient = SERVER_SOCKET.accept();
-            System.out.println("client №" + userCounter + " connected");
+            System.out.println("    [org.ShmaliukhVlad.server.Client] " + userCounter + " - connected");
 
             ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter, terminalConfig);
             serverClientThread.start();
