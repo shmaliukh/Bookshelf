@@ -7,9 +7,12 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class ServerClientThread extends Thread{
-    Socket serverClient;
-    int userId;
-    int terminalConfig;
+    private Socket serverClient;
+    private int userId;
+    private int terminalConfig;
+
+    Scanner scanner;
+    PrintWriter printWriter;
 
     public ServerClientThread(Socket socket, int userCounter, int terminalConfig) {
         this.terminalConfig = terminalConfig;
@@ -19,8 +22,11 @@ public class ServerClientThread extends Thread{
 
     @Override
     public void run(){
+
         try(Scanner scanner = new Scanner(serverClient.getInputStream());
             PrintWriter printWriter = new PrintWriter(serverClient.getOutputStream(),true)){
+
+
 
             Terminal terminal = new Terminal(scanner, printWriter);
             terminal.startWork(terminalConfig, true);

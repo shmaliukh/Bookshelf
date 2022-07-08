@@ -17,15 +17,18 @@ import static org.ShmaliukhVlad.constants.ConstantValues.DATE_FORMAT;
 public class UserInput {
 
     //private final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
+    //TODO cover code with LOGGER ???
 
     private final Pattern  patternForIsBorrowed = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
     private final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
     private final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
-    private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)"); //TODO some regular expression
+    private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)");
+    //TODO create another regular expression for 'author' input
 
     public String getUserName(Scanner scanner, PrintWriter printWriter){
         String userName = "default";
         printWriter.println("Enter user name:");
+
         if(scanner.hasNextLine()){
             userName = scanner.nextLine().trim().replaceAll(" ","");
             // TODO validation

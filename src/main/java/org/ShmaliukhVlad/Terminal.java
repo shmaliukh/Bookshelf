@@ -26,8 +26,8 @@ public class Terminal {
 
     private Shelf shelf;
 
-    private final Scanner scanner;
-    private final PrintWriter printWriter;
+    private Scanner scanner;
+    private PrintWriter printWriter;
 
     Random randomNumber = new Random();
     ReadFromGsonService readFromGsonService = new ReadFromGsonService();
@@ -45,6 +45,7 @@ public class Terminal {
      * Method simulates Terminal work like a real one
      */
     public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
+        // TODO delete this method if new version with user mode ready
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
@@ -96,7 +97,6 @@ public class Terminal {
      */
     private void generateUserInterface() throws ParseException {
         printMainMenu();
-
         switch (getUserChoice()) {
             case ADD_NEW_LITERATURE:
                 printMenuForAddingLiterature();

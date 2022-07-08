@@ -34,6 +34,8 @@ public class MultithreadedSocketServer {
         }
     }
 
+
+
     private static int getTerminalConfig(String[] args) {
         // TODO create better validation
         int config = 0;
