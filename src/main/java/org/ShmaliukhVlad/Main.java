@@ -1,20 +1,17 @@
 package org.ShmaliukhVlad;
 
-import java.io.IOException;
-import java.text.ParseException;
+import org.ShmaliukhVlad.server.MultithreadedSocketServer;
 
-/**
- * @author ShmaliukhVlad
- * @version 1.3.0
- * This is Main class for starting project
- */
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.util.Scanner;
+
 public class Main {
-    /**
-     * Here is start point of a program
-     * @param args command line values
-     */
+
     public static void main(String[] args) throws ParseException, IOException{
-        Terminal terminal = new Terminal();
+        Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out)));
         int typeOfConfig;
 
         if(args.length>0){
@@ -23,7 +20,13 @@ public class Main {
         else{
             typeOfConfig = 0;
         }
+        if(typeOfConfig > 2 && typeOfConfig <6){
+            MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
+        }
+        else {
+            terminal.startWork(typeOfConfig);
+        }
 
-        terminal.startWork(typeOfConfig);
+
     }
 }

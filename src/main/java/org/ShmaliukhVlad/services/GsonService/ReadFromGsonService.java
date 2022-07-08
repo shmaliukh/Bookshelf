@@ -18,11 +18,9 @@ import java.util.List;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
-public abstract class ReadFromGsonService {
+public class ReadFromGsonService {
 
-    private ReadFromGsonService(){}
-
-    public static Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
+    public Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
                 return readShelfFromOneFile(fileName+FILE_TYPE);
@@ -33,7 +31,7 @@ public abstract class ReadFromGsonService {
         }
     }
 
-    public static Shelf readShelfFromOneFile(String fileName) throws FileNotFoundException {
+    public Shelf readShelfFromOneFile(String fileName) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileName))){
             FileReader fr = new FileReader(fileName);
             Gson gson = new Gson();
@@ -80,7 +78,7 @@ public abstract class ReadFromGsonService {
         return new Shelf();
     }
 
-    public static Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
+    public Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
             return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
         }
@@ -88,7 +86,7 @@ public abstract class ReadFromGsonService {
         return new Shelf();
     }
 
-    public static Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
+    public Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
             return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
         }
@@ -96,7 +94,7 @@ public abstract class ReadFromGsonService {
         return new Shelf();
     }
 
-    public static List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
+    public List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(fileName);
         List<Magazine> magazineList = new ArrayList<>();
 
@@ -133,7 +131,7 @@ public abstract class ReadFromGsonService {
         return magazineList;
     }
 
-    public static List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
+    public List<Book> getBooksFromGsonFile(String fileName) throws FileNotFoundException {
         FileReader fr = new FileReader(fileName);
         List<Book> bookList = new ArrayList<>();
 
@@ -162,13 +160,9 @@ public abstract class ReadFromGsonService {
                     isBorrowed = asJsonObject.getAsJsonPrimitive("Borrowed").getAsBoolean();
                     author = asJsonObject.getAsJsonPrimitive("Author").getAsString();
                     dateOfIssue = new Date(asJsonObject.getAsJsonPrimitive("Date of issue").getAsString());
-
                     bookList.add(new Book(name, pages, isBorrowed, author, dateOfIssue));
                 }
-                catch (JsonParseException e){
-                    informAboutErr(System.err, "Problem to read shelf from file");
-                }
-                catch (NullPointerException nullPointerException){
+                catch (Exception e){
                     informAboutErr(System.err, "Problem to read shelf from file");
                 }
             }
@@ -176,7 +170,7 @@ public abstract class ReadFromGsonService {
         return bookList;
     }
 
-    private static void informAboutErr(PrintStream err, String problem) {
+    private void informAboutErr(PrintStream err, String problem) {
         err.println(problem);
     }
 }
