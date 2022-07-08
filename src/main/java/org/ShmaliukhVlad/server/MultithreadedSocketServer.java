@@ -35,9 +35,14 @@ public class MultithreadedSocketServer {
     }
 
     private static int getTerminalConfig(String[] args) {
+        // TODO create better validation
+        int config = 0;
         if(args.length > 0 && args[0]!=null){
-            return Integer.parseInt(args[0]) - 3;
+            config = Integer.parseInt(args[0]);
+            if(config > 2){
+                config -= 3;
+            }
         }
-        return 0;
+        return config;
     }
 }

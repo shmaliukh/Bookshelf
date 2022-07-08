@@ -46,7 +46,7 @@ public class Terminal {
      */
     public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
         printWriter.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
+        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         while (isPlay()){
@@ -57,7 +57,7 @@ public class Terminal {
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
         printWriter.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename
+        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         if(userMode){
             userLogin();
