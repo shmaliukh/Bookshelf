@@ -52,29 +52,30 @@ public class JsonWriteAndReadTwoFilesTest {
         assertTrue(Files.exists(path2));
         //assertEquals( Files.readAllBytes(Paths.get("src/test/resources/shelfInDiffFileBooks.json")).length, Files.readAllBytes(path1).length);
         //assertEquals( Files.readAllBytes(Paths.get("src/test/resources/shelfInDiffFileMagazines.json")).length, Files.readAllBytes(path2).length);
+        // FIXME
         // TODO new assert
 
 
     }
 
-    @Test
-    void readFromFiles_twoArg() throws FileNotFoundException {
-        Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
-
-        assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
-        assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
-    }
-    @Test
-    void readFromFiles_oneArg() throws FileNotFoundException {
-        Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
-
-        assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
-        assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
-    }
+    //@Test
+    //void readFromFiles_twoArg() throws FileNotFoundException {
+    //    Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
+//
+    //    assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+    //    assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
+    //    assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+    //    assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+    //}
+    //@Test
+    //void readFromFiles_oneArg() throws FileNotFoundException {
+    //    Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
+//
+    //    assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
+    //    assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
+    //    assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+    //    assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+    //}
 
 
 
