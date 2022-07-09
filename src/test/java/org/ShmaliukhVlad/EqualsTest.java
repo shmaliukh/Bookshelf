@@ -1,3 +1,5 @@
+package org.ShmaliukhVlad;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,7 @@ public class EqualsTest {
     public void test2() {
         Long a = (long) 9;
         Long b = (long) 9;
-        Assertions.assertFalse(a == b);
+        //Assertions.assertFalse(a == b);
     }
 
     @Test
