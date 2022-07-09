@@ -9,13 +9,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import static org.ShmaliukhVlad.constants.ConstantValues.SAVE_READ_ONE_FILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonWriteAndReadOneFileTest {
-    ReadFromGsonService readFromGsonService = new ReadFromGsonService();
+    PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out));
+
+    ReadFromGsonService readFromGsonService = new ReadFromGsonService(printWriter);
     SaveToGsonService saveToGsonService = new SaveToGsonService();
     
     String testFileName = "testShelf.json";
@@ -47,7 +51,7 @@ public class JsonWriteAndReadOneFileTest {
     @Test
     @DisplayName("test to read created json shelf file by program")
     void testReadCreatedGsonFile() throws IOException{
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book1);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(magazine1);
@@ -67,7 +71,7 @@ public class JsonWriteAndReadOneFileTest {
     @Test
     @DisplayName("test to write Shelf with books in file")
     void testWriteLiterature_books() throws IOException{
-        Shelf shelf1 = new Shelf();
+        Shelf shelf1 = new Shelf(printWriter);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(book2);
 
@@ -84,7 +88,7 @@ public class JsonWriteAndReadOneFileTest {
     @Test
     @DisplayName("test to write Shelf with magazines in file")
     void testWriteLiterature_magazines() throws IOException {
-        Shelf shelf1 = new Shelf();
+        Shelf shelf1 = new Shelf(printWriter);
 
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);

@@ -25,7 +25,6 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 @AllArgsConstructor
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
-    // FIXME remake all sout -> printWriter from Terminal
     private PrintWriter printWriter;
 
     private List<Literature> literatureInShelf  = new ArrayList<>();
@@ -33,16 +32,18 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     public List<List<Object>> allLiterature = new ArrayList<>();
 
-    public Shelf(){
+    public Shelf(PrintWriter printWriter){
     }
 
-    public Shelf(List<Literature> literatureList){
+    public Shelf(List<Literature> literatureList, PrintWriter printWriter){
+        this(printWriter);
         for (Literature literature : literatureList) {
             this.addLiteratureObject(literature);
         }
     }
 
-    public Shelf(List<Book> books, List<Magazine> magazines) {
+    public Shelf(List<Book> books, List<Magazine> magazines, PrintWriter printWriter) {
+        this(printWriter);
         if(!books.isEmpty()){
             for (Book book : books) {
                 this.addLiteratureObject(book);
@@ -87,7 +88,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         }
         else {
 
-            System.out.println("The literature object (book or magazine) is empty");
+            printWriter.println("The literature object (book or magazine) is empty");
             System.err.println("The literature object (book or magazine) is NULL");
         }
     }
@@ -99,17 +100,17 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 informAboutDeletedLiteratureObject(this.getLiteratureInShelf().remove(index-1));
             }
             else {
-                System.out.println("Wrong index");
+                printWriter.println("Wrong index");
             }
         }
-        else System.out.println("Empty shelf");
+        else printWriter.println("Empty shelf");
     }
 
     /**
      * Method simply inform user about deleted Literature object
      */
     private void informAboutDeletedLiteratureObject(Literature literature) {
-        System.out.println(literature + " has deleted from shelf");
+        printWriter.println(literature + " has deleted from shelf");
     }
 
     @Override
@@ -123,17 +124,17 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 informAboutBorrowedLiteratureObject(buffer);
             }
             else {
-                System.out.println("Wrong index");
+                printWriter.println("Wrong index");
             }
         }
-        else System.out.println("No available literature");
+        else printWriter.println("No available literature");
     }
 
     /**
      * Method simply inform user about borrowed Literature object
      */
     private void informAboutBorrowedLiteratureObject(Literature literature) {
-        System.out.println(literature + " has borrowed from shelf");
+        printWriter.println(literature + " has borrowed from shelf");
     }
 
     @Override
@@ -147,28 +148,28 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 informAboutArrivedLiteratureObject(buffer);
             }
             else {
-                System.out.println("Wrong index");
+                printWriter.println("Wrong index");
             }
         }
-        else System.out.println("Literature is not borrowed");
+        else printWriter.println("Literature is not borrowed");
     }
 
     /**
      * Method simply inform user about arrived Literature object
      */
     private void informAboutArrivedLiteratureObject(Literature literature) {
-        System.out.println(literature + " has arrived back to shelf");
+        printWriter.println(literature + " has arrived back to shelf");
     }
 
     @Override
     public void printSortedMagazinesByName() {
         if(getSortedMagazinesByName().isEmpty()){
-            System.out.println("No available magazines in Shelf");
+            printWriter.println("No available magazines in Shelf");
         }
         else {
-            System.out.println("Available magazines sorted by name:");
+            printWriter.println("Available magazines sorted by name:");
             for (Magazine magazine : getSortedMagazinesByName()) {
-                System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+                printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
             }
         }
     }
@@ -176,12 +177,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedMagazinesByPages() {
         if(getSortedMagazinesByPages().isEmpty()){
-            System.out.println("No available magazines in Shelf");
+            printWriter.println("No available magazines in Shelf");
         }
         else {
-            System.out.println("Available magazines sorted by pages:");
+            printWriter.println("Available magazines sorted by pages:");
             for (Magazine magazine : getSortedMagazinesByPages()) {
-                System.out.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
+                printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
             }
         }
     }
@@ -189,12 +190,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedBooksByName() {
         if(getSortedBooksByName().isEmpty()){
-            System.out.println("No available books in Shelf");
+            printWriter.println("No available books in Shelf");
         }
         else {
-            System.out.println("Available books sorted by name:");
+            printWriter.println("Available books sorted by name:");
             for (Book book : getSortedBooksByName()) {
-                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
+                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
             }
         }
     }
@@ -202,12 +203,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedBooksByPages() {
         if(getSortedBooksByPages().isEmpty()){
-            System.out.println("No available books in Shelf");
+            printWriter.println("No available books in Shelf");
         }
         else {
-            System.out.println("Available books sorted by pages:");
+            printWriter.println("Available books sorted by pages:");
             for (Book book : getSortedBooksByPages()) {
-                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
+                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
             }
         }
     }
@@ -215,12 +216,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedBooksByAuthor() {
         if(getSortedBooksByAuthor().isEmpty()){
-                 System.out.println("No available books in Shelf");
+                 printWriter.println("No available books in Shelf");
         }
         else {
-            System.out.println("Available books sorted by author:");
+            printWriter.println("Available books sorted by author:");
             for (Book book : getSortedBooksByAuthor()) {
-                        System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
+                        printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
             }
         }
     }
@@ -228,12 +229,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     @Override
     public void printSortedBooksByDate() {
         if(getSortedBooksByDate().isEmpty()){
-            System.out.println("No available books in Shelf");
+            printWriter.println("No available books in Shelf");
         }
         else {
-            System.out.println("Available books sorted by date of issue:");
+            printWriter.println("Available books sorted by date of issue:");
             for (Book book : getSortedBooksByDate()) {
-                System.out.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
+                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
             }
         }
     }

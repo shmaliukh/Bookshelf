@@ -1,6 +1,6 @@
 package org.ShmaliukhVlad;
 
-import org.ShmaliukhVlad.services.UserInput;
+import org.ShmaliukhVlad.services.UserInputHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
@@ -15,7 +15,7 @@ import static org.ShmaliukhVlad.constants.ConstantValues.DATE_FORMAT;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InputTest {
-    UserInput userInput = new UserInput();
+    UserInputHandler userInputHandler = new UserInputHandler();
 
     PrintWriter printStream = new PrintWriter(new OutputStreamWriter(System.out));
 
@@ -39,14 +39,14 @@ public class InputTest {
             "  01/01/2022   |  false" + "\n" +
             "  01_01_2022   |  false" )
     public void testDateValidation(String input, boolean expectedBoolean) {
-        assertEquals(expectedBoolean, userInput.isValidLiteratureDate(input));
+        assertEquals(expectedBoolean, userInputHandler.isValidLiteratureDate(input));
     }
 
     @DisplayName("test user input for name of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
     @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     public void testNameInput(String input, String expected){
-        assertEquals(expected, userInput.getUserLiteratureName(new Scanner(input), printStream));
+        assertEquals(expected, userInputHandler.getUserLiteratureName(new Scanner(input), printStream));
     }
 
     @DisplayName("test for user input for date of issue")
@@ -54,7 +54,7 @@ public class InputTest {
     @MethodSource("providedStringForDateInput")
     public void testDateInput(String  expectedOut, String input) throws ParseException {
         DATE_FORMAT.setLenient(false);
-        Date currentDate = userInput.getUserDateOfIssue(new Scanner(input),printStream);
+        Date currentDate = userInputHandler.getUserDateOfIssue(new Scanner(input),printStream);
         Date expectedDate = DATE_FORMAT.parse(expectedOut);
         assertEquals(expectedDate.getTime(),  currentDate.getTime());
     }
@@ -75,55 +75,55 @@ public class InputTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{0}''")
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     public void testAuthorInput(String input){
-        assertEquals(input, userInput.getUserLiteratureName(new Scanner(input), printStream));
+        assertEquals(input, userInputHandler.getUserLiteratureName(new Scanner(input), printStream));
     }
 
     @DisplayName("validate data from user input (name) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputNameForValidation.csv", numLinesToSkip = 1)
     public void testIsNameValidate_true(String input){
-        assertTrue(userInput.isValidLiteratureName(input));
+        assertTrue(userInputHandler.isValidLiteratureName(input));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputIsBorrowedValid.csv", numLinesToSkip = 1)
     public void testIsBorrowedValidation_true(String input){
-        assertTrue(userInput.isValidLiteratureIsBorrowed(input));
+        assertTrue(userInputHandler.isValidLiteratureIsBorrowed(input));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object after user Enter")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"\nn", "\nN", "\nY", "\ny", "\n n", "\n\tn", "\n\nn",})
     public void testIsBorrowedValidation_trueAfterSomeEnter(String input){
-        assertTrue(userInput.isValidLiteratureIsBorrowed(input.trim()));
+        assertTrue(userInputHandler.isValidLiteratureIsBorrowed(input.trim()));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"", "  ", "c", "1", "0", "\n", "nn", "NN", "n n", "_n", "Nn"})
     public void testIsBorrowedValidation_false(String input){
-        assertFalse(userInput.isValidLiteratureIsBorrowed(input));
+        assertFalse(userInputHandler.isValidLiteratureIsBorrowed(input));
     }
 
     @DisplayName("validate data from user input (pages number) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"1", " 1", "1 ", " 1 ", "\n1", "2147483647", "1000"})
     public void testPagesValidation_true(String input){
-        assertTrue(userInput.isValidLiteraturePages(input.trim()));
+        assertTrue(userInputHandler.isValidLiteraturePages(input.trim()));
     }
 
     @DisplayName("validate data from user input (pages number) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"", "  ", "0", "c", "_1", "o", "\n", "*1", "+1", "-1", "1 000", "0", "1.2", "six", "13/1", "2,147,483,647", "-1321"})
     public void testPagesValidation_false(String input){
-        assertFalse(userInput.isValidLiteraturePages(input));
+        assertFalse(userInputHandler.isValidLiteraturePages(input));
     }
 
     @DisplayName("validate data from user input (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     public void testAuthorValidation_true(String input){
-        assertTrue(userInput.isValidLiteratureAuthor(input));
+        assertTrue(userInputHandler.isValidLiteratureAuthor(input));
     }
 }

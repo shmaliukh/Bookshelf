@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws ParseException, IOException{
-        Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out)));
+
         int typeOfConfig;
 
         if(args.length>0){
@@ -20,13 +20,12 @@ public class Main {
         else{
             typeOfConfig = 0;
         }
-        if(typeOfConfig > 2 && typeOfConfig <6){
+        if(typeOfConfig > 2 && typeOfConfig <6){ // TODO user must choose save/read type
             MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
         }
         else {
+            Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out)));
             terminal.startWork(typeOfConfig);
         }
-
-
     }
 }

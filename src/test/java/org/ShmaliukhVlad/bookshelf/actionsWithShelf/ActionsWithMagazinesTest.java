@@ -5,11 +5,15 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithMagazinesTest {
+    PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out));
+
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2",2,false);
     Magazine magazine3 = new Magazine("noNameMagazine3",3,true);
@@ -22,7 +26,7 @@ class ActionsWithMagazinesTest {
      */
     int expectedArraySize = 2;
 
-    Shelf shelf1 = new Shelf();
+    Shelf shelf1 = new Shelf(printWriter);
 
     /*
       Adding magazines in revers order

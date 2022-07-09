@@ -8,7 +8,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.ShmaliukhVlad.bookshelf.Shelf;
 import org.ShmaliukhVlad.services.GsonService.ReadFromGsonService;
 import org.ShmaliukhVlad.services.GsonService.SaveToGsonService;
-import org.ShmaliukhVlad.services.UserInput;
+import org.ShmaliukhVlad.services.UserInputHandler;
 
 import java.io.*;
 import java.text.ParseException;
@@ -22,39 +22,44 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
  * Class which gives user interactive interface
  */
 public class Terminal {
-    private boolean play;
 
-    private User user;
+    private boolean isActiveTerminal;
 
     private Shelf shelf;
+    private User user;
 
     private Scanner scanner;
     private PrintWriter printWriter;
 
-    Random randomNumber = new Random();
-    ReadFromGsonService readFromGsonService = new ReadFromGsonService();
-    SaveToGsonService saveToGsonService = new SaveToGsonService();
-    UserInput userInput = new UserInput();
+    private UserInputHandler userInputHandler;
+    private ReadFromGsonService readFromGsonService;
+    private SaveToGsonService saveToGsonService;
+    private Random randomNumber;
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
         this.scanner = scanner;
         this.printWriter = printWriter;
-        shelf = new Shelf();
-        play = true;
+        isActiveTerminal = true;
+        shelf = new Shelf(printWriter);
+
+        randomNumber = new Random();
+        readFromGsonService = new ReadFromGsonService(printWriter);
+        saveToGsonService = new SaveToGsonService();
+        userInputHandler = new UserInputHandler();
     }
 
     /**
      * Method simulates Terminal work like a real one
      */
     public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
-        // TODO delete this method if new version with user mode ready
+        // TODO delete this method if new version with user mode is ready
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
-        while (isPlay()){
+        while (isActiveTerminal()){
             generateUserInterface();
-             saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 
@@ -67,14 +72,14 @@ public class Terminal {
         }
 
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
-        while (isPlay()){
+        while (isActiveTerminal()){
             generateUserInterface();
             saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
         }
     }
 
     private void userLogin() {
-        user = new User(userInput.getUserName(scanner,printWriter));
+        user = new User(userInputHandler.getUserName(scanner,printWriter));
     }
 
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
@@ -292,9 +297,9 @@ public class Terminal {
         int pages;
         boolean isBorrowed;
 
-        name = userInput.getUserLiteratureName(scanner, printWriter);
-        pages = userInput.getUserLiteraturePages(scanner, printWriter);
-        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printWriter);
+        name = userInputHandler.getUserLiteratureName(scanner, printWriter);
+        pages = userInputHandler.getUserLiteraturePages(scanner, printWriter);
+        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed(scanner, printWriter);
 
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
@@ -313,11 +318,11 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        name = userInput.getUserLiteratureName(scanner, printWriter);
-        pages = userInput.getUserLiteraturePages(scanner, printWriter);
-        isBorrowed = userInput.getUserLiteratureIsBorrowed(scanner, printWriter);
-        author = userInput.getUserLiteratureAuthor(scanner, printWriter);
-        dateOfIssue = userInput.getUserDateOfIssue(scanner, printWriter);
+        name = userInputHandler.getUserLiteratureName(scanner, printWriter);
+        pages = userInputHandler.getUserLiteraturePages(scanner, printWriter);
+        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed(scanner, printWriter);
+        author = userInputHandler.getUserLiteratureAuthor(scanner, printWriter);
+        dateOfIssue = userInputHandler.getUserDateOfIssue(scanner, printWriter);
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
         informAboutAddedLiteratureObject(userBook);
@@ -350,7 +355,7 @@ public class Terminal {
      * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
      */
     public Book getRandomBook() {
-
+        //his method is only for developer
         randomNumber = new Random();
         Book randomBook = new Book(
                 getRandomString(randomNumber.nextInt(20)),
@@ -450,15 +455,15 @@ public class Terminal {
     }
 
     public void stop(){
-        setPlay(false);
+        setActiveTerminal(false);
     }
 
-    public boolean isPlay() {
-        return play;
+    public boolean isActiveTerminal() {
+        return isActiveTerminal;
     }
 
-    public void setPlay(boolean play) {
-        this.play = play;
+    public void setActiveTerminal(boolean activeTerminal) {
+        this.isActiveTerminal = activeTerminal;
     }
 }
 

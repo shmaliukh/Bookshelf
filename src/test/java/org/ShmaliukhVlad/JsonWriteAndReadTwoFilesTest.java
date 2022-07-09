@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,8 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonWriteAndReadTwoFilesTest {
-
-    ReadFromGsonService readFromGsonService = new ReadFromGsonService();
+    PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out));
+    
+    ReadFromGsonService readFromGsonService = new ReadFromGsonService(printWriter);
     SaveToGsonService saveToGsonService = new SaveToGsonService();
 
     Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date("Jun 28, 2022 10:47:50 PM"));
@@ -38,7 +41,7 @@ public class JsonWriteAndReadTwoFilesTest {
         String expectedBooksFileName = "testInDiffFileBooks.json";
         String expectedMagazinesFileName = "testInDiffFileMagazines.json";
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book1);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(magazine1);

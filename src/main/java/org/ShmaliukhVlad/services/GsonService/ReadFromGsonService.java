@@ -6,10 +6,7 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,6 +17,12 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 
 public class ReadFromGsonService {
 
+    PrintWriter printWriter;
+
+    public ReadFromGsonService(PrintWriter printWriter){
+        this.printWriter = printWriter;
+    }
+    
     public Shelf readShelfFromGson(String fileName, int typeOfWorkWithFiles) throws IOException {
         switch (typeOfWorkWithFiles){
             case SAVE_READ_ONE_FILE:
@@ -27,7 +30,7 @@ public class ReadFromGsonService {
             case SAVE_READ_TWO_FILES:
                 return readShelfFromTwoFiles(fileName);
             default:
-                return new Shelf();
+                return new Shelf(printWriter);
         }
     }
 
@@ -43,7 +46,7 @@ public class ReadFromGsonService {
             }
             catch (JsonSyntaxException e){
                 informAboutErr(System.err, "Problem to read shelf from file");
-                return new Shelf();
+                return new Shelf(printWriter);
             }
             if(jsonArray != null){
                 for (JsonElement element : jsonArray) {
@@ -54,7 +57,7 @@ public class ReadFromGsonService {
                     }
                     catch (NullPointerException e){
                         informAboutErr(System.err, "Problem to read shelf from file");
-                        return new Shelf();
+                        return new Shelf(printWriter);
                     }
                     List<Book> books = new ArrayList<>();
                     List<Magazine> magazines = new ArrayList<>();
@@ -68,30 +71,30 @@ public class ReadFromGsonService {
                     literatureList.addAll(books);
                     literatureList.addAll(magazines);
                 }
-                return new Shelf(literatureList);
+                return new Shelf(literatureList, printWriter);
             }
         }
         else{
             informAboutErr(System.err, "File not found");
-            return new Shelf();
+            return new Shelf(printWriter);
         }
-        return new Shelf();
+        return new Shelf(printWriter);
     }
 
     public Shelf readShelfFromTwoFiles(String fileName) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileName + "Books.json")) && Files.exists(Paths.get(fileName + "Magazines.json"))){
-            return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"));
+            return new Shelf(getBooksFromGsonFile(fileName+"Books.json"),getMagazinesFromGsonFile(fileName+"Magazines.json"), printWriter);
         }
         informAboutErr(System.err, "Problem to read shelf from file");
-        return new Shelf();
+        return new Shelf(printWriter);
     }
 
     public Shelf readShelfFromTwoFiles(String fileNameBooks, String fileNamesMagazines) throws FileNotFoundException {
         if(Files.exists(Paths.get(fileNameBooks)) && Files.exists(Paths.get(fileNamesMagazines))){
-            return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines));
+            return new Shelf(getBooksFromGsonFile(fileNameBooks),getMagazinesFromGsonFile(fileNamesMagazines), printWriter);
         }
         informAboutErr(System.err, "Problem to read shelf from file");
-        return new Shelf();
+        return new Shelf(printWriter);
     }
 
     public List<Magazine> getMagazinesFromGsonFile(String fileName) throws FileNotFoundException {

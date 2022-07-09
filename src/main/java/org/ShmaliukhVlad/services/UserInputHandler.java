@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 import static org.ShmaliukhVlad.constants.ConstantValues.DATE_FORMAT;
 
 @NoArgsConstructor
-public class UserInput {
+public class UserInputHandler {
 
     //private final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
     //TODO cover code with LOGGER ???

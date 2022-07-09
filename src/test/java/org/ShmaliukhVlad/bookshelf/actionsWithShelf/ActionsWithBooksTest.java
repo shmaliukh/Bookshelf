@@ -5,12 +5,14 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithBooksTest {
+    PrintWriter printWriter = new PrintWriter(System.out);
     
     Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book book2 = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
@@ -24,7 +26,7 @@ class ActionsWithBooksTest {
      */
     int expectedArraySize = 2;
 
-    Shelf shelf1 = new Shelf();
+    Shelf shelf1 = new Shelf(printWriter);
 
     /*
       Adding books in revers order

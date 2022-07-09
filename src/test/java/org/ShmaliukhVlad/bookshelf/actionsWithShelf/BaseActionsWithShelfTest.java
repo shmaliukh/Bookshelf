@@ -15,6 +15,8 @@ class BaseActionsWithShelfTest {
     /**
      * Literature objects for tests
      */
+    PrintWriter printWriter = new PrintWriter(System.out);
+    
     Book bookIsBorrowed = new Book("noNameBook1",1,true,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book bookNotBorrowed = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
 
@@ -39,7 +41,7 @@ class BaseActionsWithShelfTest {
     void addLiteratureObject_magazineNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineNotBorrowed);
 
         assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
@@ -53,7 +55,7 @@ class BaseActionsWithShelfTest {
     void addLiteratureObject_magazineIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineIsBorrowed);
 
         assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
@@ -67,7 +69,7 @@ class BaseActionsWithShelfTest {
     void addLiteratureObject_bookNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookNotBorrowed);
 
         assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
@@ -81,7 +83,7 @@ class BaseActionsWithShelfTest {
     void addLiteratureObject_bookIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookIsBorrowed);
 
         assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
@@ -94,7 +96,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to delete book from the shelf")
     void deleteLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookNotBorrowed);
 
         shelf.deleteLiteratureObjectByIndex(1);
@@ -106,7 +108,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to delete magazine from the shelf)")
     void deleteLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineNotBorrowed);
 
         shelf.deleteLiteratureObjectByIndex(1);
@@ -121,7 +123,7 @@ class BaseActionsWithShelfTest {
 
         System.setOut(ps);
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.deleteLiteratureObjectByIndex(1);
 
         System.out.flush();
@@ -134,7 +136,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to delete literature object by wrong index from the shelf")
     void deleteLiteratureObjectByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookNotBorrowed);
 
         System.setOut(ps);
@@ -153,7 +155,7 @@ class BaseActionsWithShelfTest {
     void borrowLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineNotBorrowed);
 
         shelf.borrowLiteratureObjectFromShelfByIndex(1);
@@ -167,7 +169,7 @@ class BaseActionsWithShelfTest {
     void borrowLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookNotBorrowed);
 
         shelf.borrowLiteratureObjectFromShelfByIndex(1);
@@ -180,7 +182,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to borrow no available literature object from the shelf")
     void borrowLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "No available literature";
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
 
         System.setOut(ps);
 
@@ -197,7 +199,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to borrow literature object by wrong index from the shelf")
     void borrowLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookNotBorrowed);
 
         System.setOut(ps);
@@ -216,7 +218,7 @@ class BaseActionsWithShelfTest {
     void arriveLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookIsBorrowed);
 
         shelf.arriveLiteratureObjectFromShelfByIndex(1);
@@ -230,7 +232,7 @@ class BaseActionsWithShelfTest {
     void arriveLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineIsBorrowed);
 
         shelf.arriveLiteratureObjectFromShelfByIndex(1);
@@ -243,7 +245,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to arrive literature object by wrong index back to the shelf")
     void arriveLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookIsBorrowed);
 
         System.setOut(ps);
@@ -261,7 +263,7 @@ class BaseActionsWithShelfTest {
     @DisplayName("test to arrive literature object back to the shelf when literature is not borrowed")
     void arriveLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "Literature is not borrowed";
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
 
         System.setOut(ps);
 
@@ -276,7 +278,7 @@ class BaseActionsWithShelfTest {
 
     @Test
     void saveShelfToFile(){
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
 
         shelf.addLiteratureObject(bookNotBorrowed);
         shelf.addLiteratureObject(bookIsBorrowed);

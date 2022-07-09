@@ -42,6 +42,7 @@ public class Magazine extends Literature {
      */
     @Override
     public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
+        // FIXME simplify method
         switch (typeOfLineConfig) {
             case SORT_MAGAZINES_BY_NAME:
                 return "Magazine {" +

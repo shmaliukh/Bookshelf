@@ -7,47 +7,60 @@ import java.util.Scanner;
 
 public class Client {
 
-    public static void main(String[] args) throws IOException {
-        Client client = new Client();
-    }
+    private Socket socket;
 
+    private Scanner socketScanner;
+    private Scanner localScanner;
+    private PrintWriter socketPrintWriter;
+    private PrintWriter localPrintWriter;
 
-    Socket socket = new Socket("localhost", MultithreadedSocketServer.SERVER_PORT);
+    private Thread inThread;
+    private Thread outThread;
 
-    Scanner socketScanner = new Scanner(socket.getInputStream());
-    Scanner localScanner = new Scanner(System.in);
-    PrintWriter socketPrintWriter = new PrintWriter(socket.getOutputStream());
-    PrintWriter localPrintWriter = new PrintWriter(System.out);
+    public Client() throws IOException {
 
-    Client() throws IOException {
         System.out.println("Client start");
+
+        socket = new Socket("localhost", 8888);
+
+        socketScanner = new Scanner(socket.getInputStream());
+        localScanner = new Scanner(System.in);
+        socketPrintWriter = new PrintWriter(socket.getOutputStream());
+        localPrintWriter = new PrintWriter(System.out);
+
+        inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
+        outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
+
         inThread.start();
         outThread.start();
     }
 
-    Thread inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
-    Thread outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
+    public static void main(String[] args) throws IOException {
+        Client client = new Client();
+    }
+}
 
-    public static class ScannerToWriterRedirector extends Thread {
-        private Scanner scanner;
-        private PrintWriter printWriter;
+class ScannerToWriterRedirector extends Thread {
 
-        public ScannerToWriterRedirector(Scanner scanner, PrintWriter printWriter) {
-            this.scanner = scanner;
-            this.printWriter = printWriter;
-        }
+    private Scanner scanner;
+    private PrintWriter printWriter;
 
-        @Override
-        public void run() {
-            String userInput = "";
-            while (scanner.hasNextLine()) {
-                userInput = scanner.nextLine();
-                if (userInput.equals("0")) {
-                    break;
-                }
-                printWriter.println(userInput);
-                printWriter.flush();
+    public ScannerToWriterRedirector(Scanner scanner, PrintWriter printWriter) {
+        this.scanner = scanner;
+        this.printWriter = printWriter;
+    }
+
+    @Override
+    public void run() {
+        String userInput = "";
+        while (scanner.hasNextLine()) {
+            userInput = scanner.nextLine();
+            if (userInput.equals("0")) {
+                break;
+                // TODO create another exit value
             }
+            printWriter.println(userInput);
+            printWriter.flush();
         }
     }
 }

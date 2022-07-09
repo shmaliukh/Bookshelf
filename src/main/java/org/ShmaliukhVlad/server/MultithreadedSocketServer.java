@@ -5,37 +5,40 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MultithreadedSocketServer {
-    private static final ServerSocket SERVER_SOCKET;
-    private static final int MAX_CONNECTION = 10;
-    public static final int SERVER_PORT = 8888;
-    private static int userCounter = 0;
 
-    static {
-        System.out.println("Create ServerSocket");
+    private ServerSocket serverSocket;
+
+    private int maxConnection;
+    private int serverPort;
+    private int userCounter;
+    private boolean isServerActive;
+
+    public MultithreadedSocketServer(){
+        serverPort = 8888;
+        maxConnection = 10;
+        userCounter = 0;
+        isServerActive = true;
         try {
-            SERVER_SOCKET = new ServerSocket(SERVER_PORT, MAX_CONNECTION);
+            serverSocket = new ServerSocket(serverPort, maxConnection);
         } catch (IOException e) {
             System.err.println("Problem to set up server socket");
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) throws IOException {
-        System.out.println("[Server] start");
-
+    private void start(String[] args) throws IOException {
+        System.out.println("Server start");
         int terminalConfig = getTerminalConfig(args);
 
-        while (true){
+        while (isServerActive){
             userCounter++;
-            Socket serverClient = SERVER_SOCKET.accept();
-            System.out.println("    [org.ShmaliukhVlad.server.Client] " + userCounter + " - connected");
+            Socket serverClient = serverSocket.accept();
+            System.out.println("    [Client] " + userCounter + " - connected");
 
             ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter, terminalConfig);
             serverClientThread.start();
         }
     }
-
-
 
     private static int getTerminalConfig(String[] args) {
         // TODO create better validation
@@ -47,5 +50,10 @@ public class MultithreadedSocketServer {
             }
         }
         return config;
+    }
+
+    public static void main(String[] args) throws IOException {
+        MultithreadedSocketServer server = new MultithreadedSocketServer();
+        server.start(args);
     }
 }

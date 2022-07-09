@@ -5,12 +5,14 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShelfTest {
+    PrintWriter printWriter = new PrintWriter(System.out);
 
     Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 24 * 1000));
     Book book2 = new Book("noNameBook2", 2, false, "NoAuthor2", new Date());
@@ -24,7 +26,7 @@ class ShelfTest {
     @Test
     @DisplayName("Add one Book and one Magazine (are not borrowed) to empty Shelf")
     void addBookAndMagazineToShelf_1() {
-        Shelf shelf1 = new Shelf();
+        Shelf shelf1 = new Shelf(printWriter);
 
         Magazine magazine1 = new Magazine("4", 4, false);
         shelf1.addLiteratureObject(book1);
@@ -37,7 +39,7 @@ class ShelfTest {
     @Test
     @DisplayName("Add one Book (borrowed) and one Magazine (not borrowed) to empty Shelf")
     void addBookAndMagazineToShelf_2() {
-        Shelf shelf1 = new Shelf();
+        Shelf shelf1 = new Shelf(printWriter);
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
         shelf1.addLiteratureObject(book1);
@@ -50,8 +52,8 @@ class ShelfTest {
     @Test
     @DisplayName("Generating Shelf with one Book and one Magazine")
     void generateShelf() {
-        Shelf shelfTest = new Shelf();
-        Shelf shelfExpect = new Shelf();
+        Shelf shelfTest = new Shelf(printWriter);
+        Shelf shelfExpect = new Shelf(printWriter);
         Book book1 = new Book("1", 1, false, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
         shelfTest.addLiteratureObject(book1);
@@ -67,7 +69,7 @@ class ShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 2;
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazine3);
         shelf.addLiteratureObject(magazine2);
         shelf.addLiteratureObject(magazine1);
@@ -87,7 +89,7 @@ class ShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 2;
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazine3);
         shelf.addLiteratureObject(magazine2);
         shelf.addLiteratureObject(magazine1);
@@ -106,7 +108,7 @@ class ShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 2;
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);
@@ -125,7 +127,7 @@ class ShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 2;
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);
@@ -145,7 +147,7 @@ class ShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 2;
 
-        Shelf shelf = new Shelf();
+        Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);

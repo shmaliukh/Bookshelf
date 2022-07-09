@@ -10,10 +10,10 @@ import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
 
@@ -21,12 +21,18 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
     private Gson gson = new Gson();
     private List<Literature> literatureList;
     private JsonArray jsonArray;
+    private PrintWriter printWriter;
+
+    public GsonHandler(PrintWriter printWriter){
+        this.printWriter = printWriter;
+    }
 
     public List<Literature> readLiteratureTypeFromGson(Class type, File gsonFile){
         literatureList = new ArrayList<>();
         if(isFileExists(gsonFile)){
             for (JsonElement element : getJsonArr(gsonFile)) {
-                literatureList.add((Literature) gson.fromJson(element,type));}
+                literatureList.add((Literature) gson.fromJson(element,type));
+            }
         }
         else {
             informAboutErr("File not exists");
@@ -34,7 +40,8 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
         return literatureList;
     }
 
-    private void informAboutErr(String file_not_exists) {
+    private void informAboutErr(String problemMessage) {
+        printWriter.println("[GsonHandler] problem: " + problemMessage);
     }
 
     public JsonArray getJsonArr(File file){
@@ -64,7 +71,7 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
 
     @Override
     public Shelf readShelfFromGsonFile() {
-       return new Shelf();
+       return new Shelf(printWriter);
     }
 
 

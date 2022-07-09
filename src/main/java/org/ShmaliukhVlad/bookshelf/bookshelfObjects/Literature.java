@@ -1,5 +1,6 @@
 package org.ShmaliukhVlad.bookshelf.bookshelfObjects;
 
+
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
@@ -11,7 +12,6 @@ import java.io.Serializable;
  * This is Literature class which is abstraction class for generating extended classes like Book and Magazine
  */
 @Data
-
 public abstract class Literature implements Serializable {
 
     @SerializedName("Name")

@@ -57,6 +57,7 @@ public class Book extends Literature{
      */
     @Override
     public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
+        // FIXME simplify method
         switch (typeOfLineConfig) {
             case SORT_BOOKS_BY_NAME:
                 return "Book {" +
