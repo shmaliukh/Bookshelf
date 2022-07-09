@@ -25,6 +25,9 @@ import static org.ShmaliukhVlad.constants.ConstantValues.*;
 @AllArgsConstructor
 public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWithMagazines {
 
+    // FIXME remake all sout -> printWriter from Terminal
+    private PrintWriter printWriter;
+
     private List<Literature> literatureInShelf  = new ArrayList<>();
     private List<Literature> literatureOutShelf = new ArrayList<>();
 
@@ -83,6 +86,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
             }
         }
         else {
+
             System.out.println("The literature object (book or magazine) is empty");
             System.err.println("The literature object (book or magazine) is NULL");
         }

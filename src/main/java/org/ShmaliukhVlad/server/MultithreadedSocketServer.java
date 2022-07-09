@@ -7,10 +7,11 @@ import java.net.Socket;
 public class MultithreadedSocketServer {
     private static final ServerSocket SERVER_SOCKET;
     private static final int MAX_CONNECTION = 10;
-    private static final int SERVER_PORT = 8888;
+    public static final int SERVER_PORT = 8888;
     private static int userCounter = 0;
 
     static {
+        System.out.println("Create ServerSocket");
         try {
             SERVER_SOCKET = new ServerSocket(SERVER_PORT, MAX_CONNECTION);
         } catch (IOException e) {
@@ -20,19 +21,21 @@ public class MultithreadedSocketServer {
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Server start");
+        System.out.println("[Server] start");
 
         int terminalConfig = getTerminalConfig(args);
 
         while (true){
             userCounter++;
             Socket serverClient = SERVER_SOCKET.accept();
-            System.out.println("client №" + userCounter + " connected");
+            System.out.println("    [org.ShmaliukhVlad.server.Client] " + userCounter + " - connected");
 
             ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter, terminalConfig);
             serverClientThread.start();
         }
     }
+
+
 
     private static int getTerminalConfig(String[] args) {
         // TODO create better validation

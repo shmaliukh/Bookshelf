@@ -1,5 +1,7 @@
 package org.ShmaliukhVlad;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Book;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Literature;
 import org.ShmaliukhVlad.bookshelf.bookshelfObjects.Magazine;
@@ -26,8 +28,8 @@ public class Terminal {
 
     private Shelf shelf;
 
-    private final Scanner scanner;
-    private final PrintWriter printWriter;
+    private Scanner scanner;
+    private PrintWriter printWriter;
 
     Random randomNumber = new Random();
     ReadFromGsonService readFromGsonService = new ReadFromGsonService();
@@ -45,6 +47,7 @@ public class Terminal {
      * Method simulates Terminal work like a real one
      */
     public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
+        // TODO delete this method if new version with user mode ready
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
@@ -56,7 +59,7 @@ public class Terminal {
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
-        printWriter.println("Terminal START");
+        //printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         if(userMode){
@@ -96,7 +99,6 @@ public class Terminal {
      */
     private void generateUserInterface() throws ParseException {
         printMainMenu();
-
         switch (getUserChoice()) {
             case ADD_NEW_LITERATURE:
                 printMenuForAddingLiterature();
@@ -458,10 +460,11 @@ public class Terminal {
     public void setPlay(boolean play) {
         this.play = play;
     }
-
-
-
-
 }
 
+@Data
+@AllArgsConstructor
+class User {
+    private String name;
+}
 
