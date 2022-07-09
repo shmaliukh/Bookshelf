@@ -30,7 +30,7 @@ public class Magazine extends Literature {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", isBorrowed=" + isBorrowed +
-                " }\n";
+                " }";
     }
 
     /**

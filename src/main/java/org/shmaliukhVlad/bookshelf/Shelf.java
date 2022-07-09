@@ -97,7 +97,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     public void deleteLiteratureObjectByIndex(int index) {
         if(!this.getLiteratureInShelf().isEmpty()){
             if(index >0 && index <= this.getLiteratureInShelf().size()){
-                informAboutDeletedLiteratureObject(this.getLiteratureInShelf().remove(index-1));
+                informAboutActionWithLiterature(this.getLiteratureInShelf().remove(index-1), "has deleted from shelf");
             }
             else {
                 printWriter.println("Wrong index");
@@ -109,8 +109,8 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     /**
      * Method simply inform user about deleted Literature object
      */
-    private void informAboutDeletedLiteratureObject(Literature literature) {
-        printWriter.println(literature + " has deleted from shelf");
+    private void informAboutActionWithLiterature(Literature literature, String message) {
+        printWriter.println(literature + " " + message);
     }
 
     @Override
@@ -121,20 +121,13 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 buffer = this.getLiteratureInShelf().remove(index-1);
                 buffer.setBorrowed(true);
                 this.getLiteratureOutShelf().add(buffer);
-                informAboutBorrowedLiteratureObject(buffer);
+                informAboutActionWithLiterature(buffer, "has borrowed from shelf");
             }
             else {
                 printWriter.println("Wrong index");
             }
         }
         else printWriter.println("No available literature");
-    }
-
-    /**
-     * Method simply inform user about borrowed Literature object
-     */
-    private void informAboutBorrowedLiteratureObject(Literature literature) {
-        printWriter.println(literature + " has borrowed from shelf");
     }
 
     @Override
@@ -145,7 +138,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
                 buffer = this.getLiteratureOutShelf().remove(index-1);
                 buffer.setBorrowed(false);
                 this.getLiteratureInShelf().add(buffer);
-                informAboutArrivedLiteratureObject(buffer);
+                informAboutActionWithLiterature(buffer, "has arrived back to shelf");
             }
             else {
                 printWriter.println("Wrong index");
@@ -154,11 +147,41 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         else printWriter.println("Literature is not borrowed");
     }
 
-    /**
-     * Method simply inform user about arrived Literature object
-     */
-    private void informAboutArrivedLiteratureObject(Literature literature) {
-        printWriter.println(literature + " has arrived back to shelf");
+    public void printSortedMagazines(int typeOfSorting) { // TODO create new realization
+        List<Magazine> magazineList = getMagazines();
+        if(magazineList.isEmpty()){
+            printWriter.println("No available magazines in Shelf");
+        }
+        else {
+            switch (typeOfSorting){
+                case SORT_MAGAZINES_BY_NAME:
+                    magazineList.stream()
+                            .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
+                            .collect(Collectors.toList());
+                    break;
+                case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                    magazineList.stream()
+                            .sorted(Comparator.comparing(Magazine::getPagesNumber))
+                            .collect(Collectors.toList());
+                    break;
+                default:
+                    break;
+            }
+            magazineList.forEach(o -> printWriter.println(o));
+        }
+
+
+        //if(getSortedMagazinesByName().isEmpty()){
+        //    printWriter.println("No available magazines in Shelf");
+        //}
+        //else {
+        //    printWriter.println("Available magazines sorted by name:");
+        //    //printWriter.println(getAllLiterature());
+        //    for (Magazine magazine : getSortedMagazinesByName()) {
+        //        //printWriter.printf();
+        //        printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+        //    }
+        //}
     }
 
     @Override
@@ -168,11 +191,11 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
         }
         else {
             printWriter.println("Available magazines sorted by name:");
-            printWriter.println(getAllLiterature());
-            //for (Magazine magazine : getSortedMagazinesByName()) {
-            //    printWriter.printf();
-            //    printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
-            //}
+            //printWriter.println(getAllLiterature());
+            for (Magazine magazine : getSortedMagazinesByName()) {
+                //printWriter.printf();
+                printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
+            }
         }
     }
 
@@ -295,62 +318,52 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
     /**
      * Method returns sorted ArrayList of Books by Pages number from current Shelf
      * @return ArrayList<Book>
-     *     firstly sorted by Pages number
-     *     than sorted by Name
+     *     sorted by Pages number
      */
     public ArrayList<Book> getSortedBooksByPages(){
         return (ArrayList<Book>) this.getLiteratureInShelf().stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
-                .sorted(Comparator.comparing(
-                                Book::getPagesNumber)
-                        .thenComparing(Book::getName))
+                .sorted(Comparator.comparing(Book::getPagesNumber))
                 .collect(Collectors.toList());
     }
 
     /**
      * Method returns sorted ArrayList of Books by Author from current Shelf
      * @return ArrayList<Book>
-     *     firstly sorted by Author
-     *     than sorted by Pages
+     *     sorted by Author
      */
     public ArrayList<Book> getSortedBooksByAuthor(){
         return (ArrayList<Book>) this.getLiteratureInShelf().stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparing(
-                            o -> ((Book) o).getAuthor().toLowerCase())
-                        .thenComparingInt(
-                            o -> ((Book) o).getPagesNumber()))
+                            o -> o.getAuthor().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
     /**
      * Method returns sorted ArrayList of Books by Date from current Shelf
      * @return ArrayList<Book>
-     *     firstly sorted by Date
-     *     than sorted by Author
-     *     than sorted by Name
+     *     sorted by Date
      */
     public ArrayList<Book> getSortedBooksByDate(){
         return (ArrayList<Book>) this.getLiteratureInShelf().stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .sorted(Comparator.comparingLong(
-                                o -> ((Book) o).getIssuanceDate().getTime())
-                        .thenComparing(
-                                o -> ((Book) o).getAuthor().toLowerCase())
-                        .thenComparing(
-                                o -> ((Book) o).getName().toLowerCase()))
+                                o -> o.getIssuanceDate().getTime()))
                 .collect(Collectors.toList());
     }
 
     public List<Book> getBooks() {
         List <Book> arrBooks = new ArrayList<>();
+
         arrBooks.addAll(this.literatureInShelf.stream()
                 .filter((Literature o)-> o instanceof Book)
                 .map(o -> (Book) o)
                 .collect(Collectors.toList()));
+
         arrBooks.addAll(this.literatureOutShelf.stream()
                         .filter((Literature o)-> o instanceof Book)
                         .map(o -> (Book) o)
@@ -360,10 +373,12 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithBooks, ActionsWit
 
     public List<Magazine> getMagazines() {
         List <Magazine> arrMagazines = new ArrayList<>();
+
         arrMagazines.addAll(this.literatureInShelf.stream()
                 .filter((Literature o)-> o instanceof Magazine)
                 .map(o -> (Magazine) o)
                 .collect(Collectors.toList()));
+
         arrMagazines.addAll(this.literatureOutShelf.stream()
                 .filter((Literature o)-> o instanceof Magazine)
                 .map(o -> (Magazine) o)

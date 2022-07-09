@@ -169,9 +169,10 @@ public class Terminal {
         }
         else {
             printMenuForMagazinesSorting();
+
             switch (getUserChoice()) {
                 case SORT_MAGAZINES_BY_NAME:
-                    shelf.printSortedMagazinesByName();
+                    shelf.printSortedMagazines(SORT_MAGAZINES_BY_NAME);
                     break;
                 case SORT_MAGAZINES_BY_PAGES_NUMBER:
                     shelf.printSortedMagazinesByPages();
