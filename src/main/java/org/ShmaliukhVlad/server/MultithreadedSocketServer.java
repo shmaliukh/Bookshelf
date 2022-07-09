@@ -7,10 +7,11 @@ import java.net.Socket;
 public class MultithreadedSocketServer {
     private static final ServerSocket SERVER_SOCKET;
     private static final int MAX_CONNECTION = 10;
-    private static final int SERVER_PORT = 8888;
+    public static final int SERVER_PORT = 8888;
     private static int userCounter = 0;
 
     static {
+        System.out.println("Create ServerSocket");
         try {
             SERVER_SOCKET = new ServerSocket(SERVER_PORT, MAX_CONNECTION);
         } catch (IOException e) {

@@ -11,10 +11,13 @@ public class Client {
         Client client = new Client();
     }
 
-    Socket socket = new Socket("localhost", 8888);
 
-    Scanner scanner = new Scanner(socket.getInputStream());
-    PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+    Socket socket = new Socket("localhost", MultithreadedSocketServer.SERVER_PORT);
+
+    Scanner socketScanner = new Scanner(socket.getInputStream());
+    Scanner localScanner = new Scanner(System.in);
+    PrintWriter socketPrintWriter = new PrintWriter(socket.getOutputStream());
+    PrintWriter localPrintWriter = new PrintWriter(System.out);
 
     Client() throws IOException {
         System.out.println("Client start");
@@ -22,22 +25,29 @@ public class Client {
         outThread.start();
     }
 
-    Thread inThread = new Thread(() -> {
-        while (scanner.hasNextLine()){
-            System.out.println(scanner.nextLine());
+    Thread inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
+    Thread outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
+
+    public static class ScannerToWriterRedirector extends Thread {
+        private Scanner scanner;
+        private PrintWriter printWriter;
+
+        public ScannerToWriterRedirector(Scanner scanner, PrintWriter printWriter) {
+            this.scanner = scanner;
+            this.printWriter = printWriter;
         }
-    });
 
-    Thread outThread = new Thread(() -> {
-        Scanner scanner1 = new Scanner(System.in);
-
-        String userInput = "";
-        while (!userInput.equals("0")){
-            userInput = scanner1.nextLine();
-            printWriter.println(userInput);
-            printWriter.flush();
+        @Override
+        public void run() {
+            String userInput = "";
+            while (scanner.hasNextLine()) {
+                userInput = scanner.nextLine();
+                if (userInput.equals("0")) {
+                    break;
+                }
+                printWriter.println(userInput);
+                printWriter.flush();
+            }
         }
-    });
-
-
+    }
 }

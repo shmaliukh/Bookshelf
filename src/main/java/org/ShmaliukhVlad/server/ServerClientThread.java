@@ -2,6 +2,7 @@ package org.ShmaliukhVlad.server;
 
 import org.ShmaliukhVlad.Terminal;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
