@@ -28,7 +28,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.ShmaliukhVlad" level="debug" additivity="false">
+    <logger name="org.shmaliukhVlad" level="debug" additivity="false">
         <appender-ref ref="FILE-ROLLING"/>
     </logger>
 
