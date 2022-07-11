@@ -1,30 +1,79 @@
 package org.vshmaliukh.services.GsonService;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
+import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 
-    private FileReader fr;
+public class GsonHandler {
+
     private Gson gson = new Gson();
-    private List<Literature> literatureList;
+    private FileReader fr;
+    private FileWriter fw;
+
     private JsonArray jsonArray;
     private PrintWriter printWriter;
+    private List<Literature> literatureList;
 
-    public GsonHandler(PrintWriter printWriter){
+    private Path path;
+    private File file;
+    private String userName;
+
+    private String fileNameForAll;
+    private String fileNameForBooks;
+    private String fileNameForMagazines;
+
+    public GsonHandler(String userName, PrintWriter printWriter){
+        this.userName = userName;
         this.printWriter = printWriter;
+    }
+
+    public void saveInOneGsonFile(Shelf shelf) {
+        fileNameForAll = userName + "ShelfAll";
+
+        saveListToGsonFile(fileNameForAll, shelf.getAllLiteratureObjects());
+    }
+
+    public void saveInTwoGsonFiles(Shelf shelf) {
+        fileNameForBooks = userName + "ShelfBooks";
+        fileNameForMagazines = userName + "ShelfMagazines";
+
+        saveListToGsonFile(fileNameForBooks, shelf.getBooks());
+        saveListToGsonFile(fileNameForMagazines, shelf.getMagazines());
+    }
+
+    public <T> void saveListToGsonFile(String fileName, List<T> literatureList){
+        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE) );
+        file = new File(String.valueOf(path));
+        try {
+            fw = new FileWriter(file);
+            new GsonBuilder()
+                    .setPrettyPrinting()
+                    .create()
+                    .toJson(getContainerForLiteratureObjects((List<Literature>) literatureList), fw);// TODO set all literature
+            fw.flush();
+            fw.close();
+        }
+        catch (IOException e) {
+            informAboutErr(("Problem to write shelf to file"));
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    private List<ContainerForLiteratureObject> getContainerForLiteratureObjects(List<Literature> literatureList) {
+        List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
+        literatureList.forEach(o -> containerArrayList.add(new ContainerForLiteratureObject(o)));
+        return containerArrayList;
     }
 
     public List<Literature> readLiteratureTypeFromGson(Class type, File gsonFile){
@@ -69,25 +118,5 @@ public class GsonHandler implements SaveReadOneFile, SaveReadTwoFiles{
         return Files.exists(gsonFile.toPath());
     }
 
-    @Override
-    public Shelf readShelfFromGsonFile() {
-       return new Shelf(printWriter);
-    }
 
-
-
-    @Override
-    public void saveShelfInGsonFile() {
-
-    }
-
-    @Override
-    public Shelf readShelfFromTwoFiles() {
-        return null;
-    }
-
-    @Override
-    public void saveShelfInTwoFiles() {
-
-    }
 }

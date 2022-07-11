@@ -47,6 +47,8 @@ public class Terminal {
         readFromGsonService = new ReadFromGsonService(printWriter);
         saveToGsonService = new SaveToGsonService();
         userInputHandler = new UserInputHandler();
+
+
     }
 
     /**
