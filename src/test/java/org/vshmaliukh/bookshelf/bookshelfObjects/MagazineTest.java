@@ -18,33 +18,7 @@ class MagazineTest {
     void testGetPrintableLineOfLiteratureObject_noParameter() {
         String expectedStr= magazine1.toString();
 
-        assertEquals(expectedStr, magazine1.getPrintableLineOfLiteratureObject());
-    }
-
-    @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_MAGAZINES_BY_NAME")
-    void testGetPrintableLineOfLiteratureObject_whenSortByName() {
-        String expectedStr =
-                "Magazine {" +
-                " name='" + "someValue" + '\'' +
-                ",  pagesNumber=" + 0 +
-                ",  isBorrowed=" + true +
-                " }\n";
-
-        assertEquals(expectedStr, magazine1.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
-    }
-
-    @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_MAGAZINES_PAGES_NUMBER")
-    void testGetPrintableLineOfLiteratureObject_whenSortByPages() {
-        String expectedStr =
-                "Magazine {" +
-                        " pagesNumber=" + 0 +
-                        ",  name='" + "someValue" + '\'' +
-                        ",  isBorrowed=" + true +
-                        " }\n";
-
-        assertEquals(expectedStr, magazine1.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
+        assertEquals(expectedStr, magazine1.toString());
     }
 
     @Test

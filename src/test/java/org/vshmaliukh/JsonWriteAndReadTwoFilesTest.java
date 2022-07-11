@@ -64,19 +64,19 @@ public class JsonWriteAndReadTwoFilesTest {
     //void readFromFiles_twoArg() throws FileNotFoundException {
     //    Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFileBooks.json", "src/test/resources/shelfInDiffFileMagazines.json");
 //
-    //    assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
-    //    assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
-    //    assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
-    //    assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+    //    assertEquals(book1.toString(),shelf.getBooks().get(0).toString());
+    //    assertEquals(book2.toString(),shelf.getBooks().get(1).toString());
+    //    assertEquals(magazine1.toString(),shelf.getMagazines().get(0).toString());
+    //    assertEquals(magazine2.toString(),shelf.getMagazines().get(1).toString());
     //}
     //@Test
     //void readFromFiles_oneArg() throws FileNotFoundException {
     //    Shelf shelf = readFromGsonService.readShelfFromTwoFiles("src/test/resources/shelfInDiffFile");
 //
-    //    assertEquals(book1.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
-    //    assertEquals(book2.getPrintableLineOfLiteratureObject(),shelf.getBooks().get(1).getPrintableLineOfLiteratureObject());
-    //    assertEquals(magazine1.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
-    //    assertEquals(magazine2.getPrintableLineOfLiteratureObject(),shelf.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+    //    assertEquals(book1.toString(),shelf.getBooks().get(0).toString());
+    //    assertEquals(book2.toString(),shelf.getBooks().get(1).toString());
+    //    assertEquals(magazine1.toString(),shelf.getMagazines().get(0).toString());
+    //    assertEquals(magazine2.toString(),shelf.getMagazines().get(1).toString());
     //}
 
 

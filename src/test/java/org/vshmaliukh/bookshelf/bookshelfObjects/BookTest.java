@@ -16,67 +16,6 @@ class BookTest {
     Book book2 = new Book("someName2", 2, true, "someAuthor2", new Date());
 
     @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_PAGES_NUMBER")
-    void testGetPrintableLineOfLiteratureObject_whenSortByPages() {
-        String expectedStr =
-                "Book {" +
-                        " pagesNumber=" + 1 +
-                        ",  name='" + "someName" + '\'' +
-                        ",  author='" + "someAuthor" + '\'' +
-                        ",  issuanceDate=" + new Date() +
-                        ",  isBorrowed=" + false +
-                        " }\n";
-
-        assertEquals(expectedStr, book1.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
-    }
-
-    @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_NAME")
-    void testGetPrintableLineOfLiteratureObject_whenSortByName() {
-        String expectedStr =
-                "Book {" +
-                        " name='" + "someName" + '\'' +
-                        ",  pagesNumber=" + 1 +
-                        ",  author='" + "someAuthor" + '\'' +
-                        ",  issuanceDate=" + new Date() +
-                        ",  isBorrowed=" + false +
-                        " }\n";
-
-        assertEquals(expectedStr, book1.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
-    }
-
-    @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_AUTHOR")
-    void testGetPrintableLineOfLiteratureObject_whenSortByAuthor() {
-        String expectedStr =
-                "Book {" +
-                        " author='" + "someAuthor" + '\'' +
-                        ",  name='" + "someName" + '\'' +
-                        ",  pagesNumber=" + 1 +
-                        ",  issuanceDate=" + new Date() +
-                        ",  isBorrowed=" + false +
-                        " }\n";
-
-        assertEquals(expectedStr, book1.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
-    }
-
-    @Test
-    @DisplayName("test testGetPrintableLineOfLiteratureObject with parameter SORT_BOOKS_BY_DATE_OF_ISSUE")
-    void testGetPrintableLineOfLiteratureObject_whenSortByDateOfIssue() {
-        String expectedStr =
-                "Book {" +
-                        " issuanceDate=" + new Date() +
-                        ",  name='" + "someName" + '\'' +
-                        ",  author='" + "someAuthor" + '\'' +
-                        ",  pagesNumber=" + 1 +
-                        ",  isBorrowed=" + false +
-                        " }\n";
-
-        assertEquals(expectedStr, book1.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
-    }
-
-
-    @Test
     void getName() {
         String expectedName = "someName";
 
@@ -150,12 +89,6 @@ class BookTest {
         book1.setAuthor("someAuthor1");
 
         assertEquals(expectedAuthor, book1.getAuthor());
-    }
-
-    @Test
-    void getIssuanceDate() {
-        Date expectedDate = new Date();
-        assertEquals(expectedDate.getTime(), book1.getIssuanceDate().getTime());
     }
 
     @Test

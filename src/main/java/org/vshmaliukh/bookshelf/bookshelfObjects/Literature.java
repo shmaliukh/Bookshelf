@@ -1,6 +1,5 @@
 package org.vshmaliukh.bookshelf.bookshelfObjects;
 
-
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
@@ -30,25 +29,6 @@ public abstract class Literature implements Serializable {
         this.name = name;
         setPagesNumber(pagesNumber);
         this.isBorrowed = isBorrowed;
-    }
-
-    /**
-     * Simple forming String about Literature object in one line
-     * @return String about Literature object in one line.
-     * default -> return toString() method
-     */
-    public String getPrintableLineOfLiteratureObject(){
-        return  toString();
-    }
-
-    /**
-     * Simple forming String about Literature object in one line with necessary configuration
-     * @param typeOfLineConfig integer value of configuration we need
-     * @return String about Literature object in one line.
-     * default -> return toString() method
-     */
-    public String getPrintableLineOfLiteratureObject(int typeOfLineConfig){
-        return  toString();
     }
 
     /**

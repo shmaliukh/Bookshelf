@@ -20,16 +20,22 @@ import static org.vshmaliukh.constants.ConstantValues.*;
  */
 @Data
 @AllArgsConstructor
-public class Shelf implements BaseActionsWithShelf, ActionsWithMagazines {
+public class Shelf implements BaseActionsWithShelf{
 
     private PrintWriter printWriter;
 
-    private List<Literature> literatureInShelf  = new ArrayList<>();
-    private List<Literature> literatureOutShelf = new ArrayList<>();
+    private List<Literature> literatureInShelf;
+    private List<Literature> literatureOutShelf;
 
     private List<List<Object>> allLiterature = new ArrayList<>(); // TODO delete when new GsonHandler is ready
 
+    private Shelf(){
+        literatureInShelf  = new ArrayList<>();
+        literatureOutShelf = new ArrayList<>();
+    }
+
     public Shelf(PrintWriter printWriter){
+        this();
         this.printWriter = printWriter;
     }
 
@@ -54,26 +60,6 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithMagazines {
         }
     }
 
-    /**
-     * Method returns all available books which are inside (not borrowed) Shelf
-     * @return list of Book objects inside Shelf
-     */
-    public List<Book> getAvailableBooks(){
-        return this.getBooks().stream()
-                .filter(o -> !o.isBorrowed())
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Method returns all available magazines which are inside (not borrowed) Shelf
-     * @return list of Magazine objects inside Shelf
-     */
-    public List<Magazine> getAvailableMagazines(){
-        return this.getMagazines().stream()
-                .filter(o -> !o.isBorrowed())
-                .collect(Collectors.toList());
-    }
-
     @Override
     public void addLiteratureObject(Literature literature) {
         if(literature != null){
@@ -85,9 +71,7 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithMagazines {
             }
         }
         else {
-
             printWriter.println("The literature object (book or magazine) is empty");
-            System.err.println("The literature object (book or magazine) is NULL");
         }
     }
 
@@ -145,237 +129,79 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithMagazines {
         else printWriter.println("Literature is not borrowed");
     }
 
-    public void printSortedMagazines(int typeOfSorting) { // TODO create new realization for all printSorted by smth
-        List<Magazine> magazineList = getMagazines();
-        if(magazineList.isEmpty()){
-            printWriter.println("No available magazines in Shelf");
+    public void printSortedMagazines(int typeOfSorting) {
+        List<Magazine> magazineList = new ArrayList<>();
+        switch (typeOfSorting){
+            case SORT_MAGAZINES_BY_NAME:
+                magazineList = getSortedMagazinesByName();
+                break;
+            case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                magazineList = getSortedMagazinesByPages();
+                break;
+            default:
+                break;
         }
-        else {
-            switch (typeOfSorting){
-                case SORT_MAGAZINES_BY_NAME:
-                    magazineList.stream()
-                            .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
-                            .collect(Collectors.toList());
-                    break;
-                case SORT_MAGAZINES_BY_PAGES_NUMBER:
-                    magazineList.stream()
-                            .sorted(Comparator.comparing(Magazine::getPagesNumber))
-                            .collect(Collectors.toList());
-                    break;
-                default:
-                    break;
-            }
-            magazineList.forEach(o -> printWriter.println(o));
-        }
+        for (Magazine o : magazineList) {
+            printWriter.print(o);
+        }// TODO make new printing method
+    }
+
+    public List<Magazine> getSortedMagazinesByName() {
+        return getMagazines().stream()
+                .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Magazine> getSortedMagazinesByPages() {
+        return getMagazines().stream()
+                .sorted(Comparator.comparing(Magazine::getPagesNumber))
+                .collect(Collectors.toList());
     }
 
     public void printSortedBooks(int typeOfSorting){
         List<Book> bookList = new ArrayList<>();
-        if(bookList.isEmpty()){
-            printWriter.println("No available books in Shelf");
+        switch (typeOfSorting){
+            case SORT_BOOKS_BY_NAME:
+                bookList = getSortedBooksByName();
+                break;
+            case SORT_BOOKS_BY_PAGES_NUMBER:
+                bookList = getSortedBooksByPages();
+                break;
+            case SORT_BOOKS_BY_AUTHOR:
+                bookList = getSortedBooksByAuthor();
+                break;
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                bookList = getSortedBooksByDate();
+                break;
+            default:
+                break;
         }
-        else {
-            switch (typeOfSorting){
-                case SORT_BOOKS_BY_NAME:
-                    bookList = getBooks().stream()
-                            .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
-                            .collect(Collectors.toList());
-                    break;
-                case SORT_BOOKS_BY_PAGES_NUMBER:
-                    bookList = getBooks().stream()
-                            .sorted(Comparator.comparing(Book::getPagesNumber))
-                            .collect(Collectors.toList());
-                    break;
-                case SORT_BOOKS_BY_AUTHOR:
-                    bookList = getBooks().stream()
-                            .sorted(Comparator.comparing(o -> o.getAuthor().toLowerCase()))
-                            .collect(Collectors.toList());
-                    break;
-                case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                    bookList = getBooks().stream()
-                            .sorted(Comparator.comparing(o -> o.getIssuanceDate().getTime()))
-                            .collect(Collectors.toList());
-                    break;
-                default:
-                    break;
-            }
-            bookList.forEach(o -> printWriter.println(o));
-        }
+        for (Book o : bookList) {
+            printWriter.print(o);
+        } // TODO make new printing method
     }
 
-    public void printSortedLiterature(List<Literature> literatureList, int typeOfSorting){
-
-    }
-
-    @Override
-    public void printSortedMagazinesByName() {
-        if(getSortedMagazinesByName().isEmpty()){
-            printWriter.println("No available magazines in Shelf");
-        }
-        else {
-            printWriter.println("Available magazines sorted by name:");
-            //printWriter.println(getAllLiterature());
-            for (Magazine magazine : getSortedMagazinesByName()) {
-                //printWriter.printf();
-                printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_NAME));
-            }
-        }
-    }
-
-    @Override
-    public void printSortedMagazinesByPages() {
-        if(getSortedMagazinesByPages().isEmpty()){
-            printWriter.println("No available magazines in Shelf");
-        }
-        else {
-            printWriter.println("Available magazines sorted by pages:");
-            for (Magazine magazine : getSortedMagazinesByPages()) {
-                printWriter.print(magazine.getPrintableLineOfLiteratureObject(SORT_MAGAZINES_BY_PAGES_NUMBER));
-            }
-        }
-    }
-
-    @Override
-    public void printSortedBooksByName() {
-        if(getSortedBooksByName().isEmpty()){
-            printWriter.println("No available books in Shelf");
-        }
-        else {
-            printWriter.println("Available books sorted by name:");
-            for (Book book : getSortedBooksByName()) {
-                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_NAME));
-            }
-        }
-    }
-
-    @Override
-    public void printSortedBooksByPages() {
-        if(getSortedBooksByPages().isEmpty()){
-            printWriter.println("No available books in Shelf");
-        }
-        else {
-            printWriter.println("Available books sorted by pages:");
-            for (Book book : getSortedBooksByPages()) {
-                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_PAGES_NUMBER));
-            }
-        }
-    }
-
-    @Override
-    public void printSortedBooksByAuthor() {
-        if(getSortedBooksByAuthor().isEmpty()){
-                 printWriter.println("No available books in Shelf");
-        }
-        else {
-            printWriter.println("Available books sorted by author:");
-            for (Book book : getSortedBooksByAuthor()) {
-                        printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_AUTHOR));
-            }
-        }
-    }
-
-    @Override
-    public void printSortedBooksByDate() {
-        if(getSortedBooksByDate().isEmpty()){
-            printWriter.println("No available books in Shelf");
-        }
-        else {
-            printWriter.println("Available books sorted by date of issue:");
-            for (Book book : getSortedBooksByDate()) {
-                printWriter.print(book.getPrintableLineOfLiteratureObject(SORT_BOOKS_BY_DATE_OF_ISSUE));
-            }
-        }
-    }
-
-    /**
-     * Method returns sorted ArrayList of Magazines by Name number from current Shelf
-     * @return ArrayList<Magazine>
-     *     firstly sorted by Name
-     *     than sorted by Pages number
-     */
-    public ArrayList<Magazine> getSortedMagazinesByName(){
-        return (ArrayList<Magazine>) this.getLiteratureInShelf().stream()
-                .filter((Literature o) -> o instanceof Magazine)
-                .map(o -> (Magazine) o)
-                .sorted(Comparator.comparing(
-                                o -> ((Magazine) o).getName().toLowerCase())
-                        .thenComparing(
-                                o -> ((Magazine) o).getPagesNumber()))
+    public List<Book> getSortedBooksByName() {
+        return getBooks().stream()
+                .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Method returns sorted ArrayList of Magazines by Pages number from current Shelf
-     * @return ArrayList<Magazine>
-     *     firstly sorted by Pages number
-     *     than sorted by Name
-     */
-    public ArrayList<Magazine> getSortedMagazinesByPages(){
-        return (ArrayList<Magazine>) this.getLiteratureInShelf().stream()
-                .filter((Literature o)-> o instanceof Magazine)
-                .map(o -> (Magazine) o)
-                .sorted(Comparator.comparing(
-                                o -> ((Magazine) o).getPagesNumber())
-                        .thenComparing(
-                                o -> ((Magazine) o).getName().toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Method returns sorted ArrayList of Books by Name from current Shelf
-     * @return ArrayList<Book>
-     *     firstly sorted by Name
-     *     than sorted by Pages number
-     */
-    public ArrayList<Book> getSortedBooksByName(){
-        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
-                .filter((Literature o)-> o instanceof Book)
-                .map(o -> (Book) o)
-                .sorted(Comparator.comparing(
-                                o -> ((Book) o).getName().toLowerCase())
-                        .thenComparing(
-                                o -> ((Book) o).getPagesNumber()))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Method returns sorted ArrayList of Books by Pages number from current Shelf
-     * @return ArrayList<Book>
-     *     sorted by Pages number
-     */
-    public ArrayList<Book> getSortedBooksByPages(){
-        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
-                .filter((Literature o)-> o instanceof Book)
-                .map(o -> (Book) o)
+    public List<Book> getSortedBooksByPages() {
+        return getBooks().stream()
                 .sorted(Comparator.comparing(Book::getPagesNumber))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Method returns sorted ArrayList of Books by Author from current Shelf
-     * @return ArrayList<Book>
-     *     sorted by Author
-     */
-    public ArrayList<Book> getSortedBooksByAuthor(){
-        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
-                .filter((Literature o)-> o instanceof Book)
-                .map(o -> (Book) o)
-                .sorted(Comparator.comparing(
-                            o -> o.getAuthor().toLowerCase()))
+    public List<Book> getSortedBooksByAuthor() {
+        return getBooks().stream()
+                .sorted(Comparator.comparing(o -> o.getAuthor().toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Method returns sorted ArrayList of Books by Date from current Shelf
-     * @return ArrayList<Book>
-     *     sorted by Date
-     */
-    public ArrayList<Book> getSortedBooksByDate(){
-        return (ArrayList<Book>) this.getLiteratureInShelf().stream()
-                .filter((Literature o)-> o instanceof Book)
-                .map(o -> (Book) o)
-                .sorted(Comparator.comparingLong(
-                                o -> o.getIssuanceDate().getTime()))
+    public List<Book> getSortedBooksByDate() {
+        return getBooks().stream()
+                .sorted(Comparator.comparing(o -> o.getIssuanceDate().getTime()))
                 .collect(Collectors.toList());
     }
 
@@ -417,8 +243,8 @@ public class Shelf implements BaseActionsWithShelf, ActionsWithMagazines {
     @Override
     public String toString() {
         return  "Shelf {" +
-                "\n\tliteratureInShelf=" + literatureInShelf +
-                "\n\tliteratureOutShelf=" + literatureOutShelf +
+                "\n\tliteratureInShelf=" + literatureInShelf.toString() +
+                "\n\tliteratureOutShelf=" + literatureOutShelf.toString() +
                 "}";
     }
 }

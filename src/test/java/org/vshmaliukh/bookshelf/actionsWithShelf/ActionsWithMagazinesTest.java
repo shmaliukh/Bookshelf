@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +25,7 @@ class ActionsWithMagazinesTest {
     /**
      * The magazine3 is not expected to be included for sorting
      */
-    int expectedArraySize = 2;
+    int expectedArraySize = 3;
 
     Shelf shelf1 = new Shelf(printWriter);
 
@@ -40,20 +41,20 @@ class ActionsWithMagazinesTest {
     @Test
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
-        ArrayList<Magazine> sortedMagazinesByName = shelf1.getSortedMagazinesByName();
+        List<Magazine> sortedMagazinesByName = shelf1.getSortedMagazinesByName();
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
-        assertEquals(expectedMagazine1.getPrintableLineOfLiteratureObject(), sortedMagazinesByName.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedMagazine2.getPrintableLineOfLiteratureObject(), sortedMagazinesByName.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine1.toString(), sortedMagazinesByName.get(0).toString());
+        assertEquals(expectedMagazine2.toString(), sortedMagazinesByName.get(1).toString());
     }
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Pages")
     void printSortedMagazinesByPages() {
-        ArrayList<Magazine> sortedMagazinesByPages = shelf1.getSortedMagazinesByPages();
+        List<Magazine> sortedMagazinesByPages = shelf1.getSortedMagazinesByPages();
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
-        assertEquals(expectedMagazine1.getPrintableLineOfLiteratureObject(), sortedMagazinesByPages.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedMagazine2.getPrintableLineOfLiteratureObject(), sortedMagazinesByPages.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedMagazine1.toString(), sortedMagazinesByPages.get(0).toString());
+        assertEquals(expectedMagazine2.toString(), sortedMagazinesByPages.get(1).toString());
     }
 }

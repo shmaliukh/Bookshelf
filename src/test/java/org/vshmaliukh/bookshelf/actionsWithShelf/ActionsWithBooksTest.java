@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +25,7 @@ class ActionsWithBooksTest {
     /**
      * The book3 is not expected to be included for sorting
      */
-    int expectedArraySize = 2;
+    int expectedArraySize = 3;
 
     Shelf shelf1 = new Shelf(printWriter);
 
@@ -41,40 +42,40 @@ class ActionsWithBooksTest {
     @Test
     @DisplayName("test printable stings of sorted Books by Name")
     void printSortedBooksByName() {
-        ArrayList<Book> sortedBooksByName = shelf1.getSortedBooksByName();
+        List<Book> sortedBooksByName = shelf1.getSortedBooksByName();
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
-        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), sortedBooksByName.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), sortedBooksByName.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook1.toString(), sortedBooksByName.get(0).toString());
+        assertEquals(expectedBook2.toString(), sortedBooksByName.get(1).toString());
     }
 
     @Test
     @DisplayName("test printable stings of sorted Books by Pages")
     void printSortedBooksByPages() {
-        ArrayList<Book> sortedBooksByPages = shelf1.getSortedBooksByPages();
+        List<Book> sortedBooksByPages = shelf1.getSortedBooksByPages();
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
-        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), sortedBooksByPages.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), sortedBooksByPages.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook1.toString(), sortedBooksByPages.get(0).toString());
+        assertEquals(expectedBook2.toString(), sortedBooksByPages.get(1).toString());
     }
 
     @Test
     @DisplayName("test printable stings of sorted Books by Author")
     void printSortedBooksByAuthor() {
-        ArrayList<Book> sortedBooksByAuthor = shelf1.getSortedBooksByAuthor();
+        List<Book> sortedBooksByAuthor = shelf1.getSortedBooksByAuthor();
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());
-        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), sortedBooksByAuthor.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), sortedBooksByAuthor.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook1.toString(), sortedBooksByAuthor.get(0).toString());
+        assertEquals(expectedBook2.toString(), sortedBooksByAuthor.get(1).toString());
     }
 
     @Test
     @DisplayName("test printable stings of sorted Books by Date")
     void printSortedBooksByDate() {
-        ArrayList<Book> sortedBooksByDate = shelf1.getSortedBooksByDate();
+        List<Book> sortedBooksByDate = shelf1.getSortedBooksByDate();
 
         assertEquals(expectedArraySize, sortedBooksByDate.size());
-        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), sortedBooksByDate.get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), sortedBooksByDate.get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook1.toString(), sortedBooksByDate.get(0).toString());
+        assertEquals(expectedBook2.toString(), sortedBooksByDate.get(1).toString());
     }
 }

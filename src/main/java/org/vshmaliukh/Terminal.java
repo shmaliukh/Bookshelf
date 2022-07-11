@@ -144,11 +144,11 @@ public class Terminal {
         printWriter.println("Current state of Shelf:");
         printWriter.println("literature IN {");
         shelf.getLiteratureInShelf()
-                .forEach(o -> printWriter.print(tab + o.getPrintableLineOfLiteratureObject()));
+                .forEach(o -> printWriter.print(tab + o.toString()));
         printWriter.println("}");
         printWriter.println("literature OUT {");
         shelf.getLiteratureOutShelf()
-                .forEach(o -> printWriter.print(tab + o.getPrintableLineOfLiteratureObject()));
+                .forEach(o -> printWriter.print(tab + o.toString()));
         printWriter.println("}");
     }
 
@@ -164,50 +164,26 @@ public class Terminal {
      * Method gives ability to choose method for sorting Magazines and print sorted list
      */
     private void clarificationForSortingMagazines() {
-        if(shelf.getAvailableMagazines().isEmpty()){
+        if(shelf.getMagazines().isEmpty()){
             printWriter.println("No available magazines IN shelf for sorting");
         }
         else {
             printMenuForMagazinesSorting();
-
-            switch (getUserChoice()) {
-                case SORT_MAGAZINES_BY_NAME:
-                    shelf.printSortedMagazines(SORT_MAGAZINES_BY_NAME);
-                    break;
-                case SORT_MAGAZINES_BY_PAGES_NUMBER:
-                    shelf.printSortedMagazinesByPages();
-                    break;
-                default:
-                    break;
-            }
+            shelf.printSortedMagazines(getUserChoice());
         }
+
     }
 
     /**
      * Method gives ability to choose method for sorting Books and print sorted list
      */
     private void clarificationForSortingBooks() {
-        if(shelf.getAvailableBooks().isEmpty()){
+        if(shelf.getBooks().isEmpty()){
             printWriter.println("No available books IN shelf for sorting");
         }
         else {
             printMenuForBooksSorting();
-            switch (getUserChoice()) {
-                case SORT_BOOKS_BY_NAME:
-                    shelf.printSortedBooksByName();
-                    break;
-                case SORT_BOOKS_BY_AUTHOR:
-                    shelf.printSortedBooksByAuthor();
-                    break;
-                case SORT_BOOKS_BY_PAGES_NUMBER:
-                    shelf.printSortedBooksByPages();
-                    break;
-                case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                    shelf.printSortedBooksByDate();
-                    break;
-                default:
-                    break;
-            }
+            shelf.printSortedBooks(getUserChoice());
         }
     }
 
@@ -221,7 +197,7 @@ public class Terminal {
         else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
             for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-                printWriter.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).getPrintableLineOfLiteratureObject());
+                printWriter.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).toString());
             }
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -236,9 +212,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-                printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
-            }
+            printLiteratureListWithIndex();
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -252,10 +226,14 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-                printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).getPrintableLineOfLiteratureObject());
-            }
+            printLiteratureListWithIndex();
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
+        }
+    }
+
+    private void printLiteratureListWithIndex() {
+        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
+            printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).toString());
         }
     }
 

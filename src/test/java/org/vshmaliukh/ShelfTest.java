@@ -8,8 +8,10 @@ import org.junit.jupiter.api.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vshmaliukh.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;
 
 class ShelfTest {
     PrintWriter printWriter = new PrintWriter(System.out);
@@ -67,15 +69,15 @@ class ShelfTest {
     void sortedMagazinesByName() {
         String expectedLastName = "noNameMagazine2";
         int expectedLastPagesNumber = 2;
-        int expectedArraySize = 2;
+        int expectedArraySize = 3;
 
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazine3);
         shelf.addLiteratureObject(magazine2);
         shelf.addLiteratureObject(magazine1);
-        shelf.printSortedMagazinesByName();
+        shelf.printSortedMagazines(SORT_MAGAZINES_BY_NAME);
 
-        ArrayList<Magazine> sortedMagazinesByName = shelf.getSortedMagazinesByName();
+        List<Magazine> sortedMagazinesByName = shelf.getSortedMagazinesByName();
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
         assertEquals(expectedLastName, sortedMagazinesByName.get(1).getName());
@@ -87,14 +89,14 @@ class ShelfTest {
     void sortedMagazinesByPages() {
         String expectedLastName = "noNameMagazine2";
         int expectedLastPagesNumber = 2;
-        int expectedArraySize = 2;
+        int expectedArraySize = 3;
 
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazine3);
         shelf.addLiteratureObject(magazine2);
         shelf.addLiteratureObject(magazine1);
 
-        ArrayList<Magazine> sortedMagazinesByPages = shelf.getSortedMagazinesByPages();
+        List<Magazine> sortedMagazinesByPages = shelf.getSortedMagazinesByPages();
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
         assertEquals(expectedLastName, sortedMagazinesByPages.get(1).getName());
@@ -106,14 +108,14 @@ class ShelfTest {
     void sortedBooksByName() {
         String expectedLastName = "noNameBook2";
         int expectedLastPagesNumber = 2;
-        int expectedArraySize = 2;
+        int expectedArraySize = 3;
 
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);
 
-        ArrayList<Book> sortedBooksByName = shelf.getSortedBooksByName();
+        List<Book> sortedBooksByName = shelf.getSortedBooksByName();
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
         assertEquals(expectedLastName, sortedBooksByName.get(1).getName());
@@ -125,14 +127,14 @@ class ShelfTest {
     void sortedBooksByPages() {
         String expectedLastName = "noNameBook2";
         int expectedLastPagesNumber = 2;
-        int expectedArraySize = 2;
+        int expectedArraySize = 3;
 
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);
 
-        ArrayList<Book> sortedBooksByPages = shelf.getSortedBooksByPages();
+        List<Book> sortedBooksByPages = shelf.getSortedBooksByPages();
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
         assertEquals(expectedLastName, sortedBooksByPages.get(1).getName());
@@ -145,14 +147,14 @@ class ShelfTest {
         String expectedLastName = "noNameBook2";
         String expectedLastAuthor = "NoAuthor2";
         int expectedLastPagesNumber = 2;
-        int expectedArraySize = 2;
+        int expectedArraySize = 3;
 
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(book3);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(book1);
 
-        ArrayList<Book> sortedBooksByAuthor = shelf.getSortedBooksByAuthor();
+        List<Book> sortedBooksByAuthor = shelf.getSortedBooksByAuthor();
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());
         assertEquals(expectedLastName, sortedBooksByAuthor.get(1).getName());

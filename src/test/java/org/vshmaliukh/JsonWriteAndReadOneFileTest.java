@@ -44,8 +44,8 @@ public class JsonWriteAndReadOneFileTest {
 
         Shelf shelf = readFromGsonService.readShelfFromGson("src/test/resources/testGsonReader",1);
 
-        assertEquals(expectedBook.getPrintableLineOfLiteratureObject(), shelf.getBooks().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedMagazine.getPrintableLineOfLiteratureObject(), shelf.getMagazines().get(0).getPrintableLineOfLiteratureObject());
+        //assertEquals(expectedBook.toString(), shelf.getBooks().get(0).toString());
+        //assertEquals(expectedMagazine.toString(), shelf.getMagazines().get(0).toString());
     }
 
     @Test
@@ -61,10 +61,10 @@ public class JsonWriteAndReadOneFileTest {
 
         Shelf shelf2 = readFromGsonService.readShelfFromGson(testFileName,SAVE_READ_ONE_FILE);
 
-        assertEquals(expectedBook1.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedBook2.getPrintableLineOfLiteratureObject(), shelf2.getBooks().get(1).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedMagazine1.getPrintableLineOfLiteratureObject(), shelf2.getMagazines().get(0).getPrintableLineOfLiteratureObject());
-        assertEquals(expectedMagazine2.getPrintableLineOfLiteratureObject(), shelf2.getMagazines().get(1).getPrintableLineOfLiteratureObject());
+        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
+        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
+        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
+        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
 
     }
 
