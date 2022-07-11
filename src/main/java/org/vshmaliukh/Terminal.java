@@ -434,6 +434,8 @@ public class Terminal {
     }
 
     public void stop(){
+        scanner.close();
+        printWriter.close();
         setActiveTerminal(false);
     }
 

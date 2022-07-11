@@ -1,7 +1,5 @@
 package org.vshmaliukh.bookshelf;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
@@ -18,8 +16,6 @@ import static org.vshmaliukh.constants.ConstantValues.*;
  * @version 1.0.0
  * This is Shelf class which simulates real shelf with books and magazines
  */
-@Data
-@AllArgsConstructor
 public class Shelf implements BaseActionsWithShelf{
 
     private PrintWriter printWriter;
@@ -235,6 +231,13 @@ public class Shelf implements BaseActionsWithShelf{
         return arrMagazines;
     }
 
+    public List<Literature> getLiteratureInShelf() {
+        return literatureInShelf;
+    }
+
+    public List<Literature> getLiteratureOutShelf() {
+        return literatureOutShelf;
+    }
 
     /**
      * Simple forming String about Book object

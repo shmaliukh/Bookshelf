@@ -1,4 +1,6 @@
-package org.vshmaliukh.server;
+package org.vshmaliukh.client_server_model.client;
+
+import org.vshmaliukh.client_server_model.ConstantsForClientServerModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,7 +23,7 @@ public class Client {
 
         System.out.println("Client start");
 
-        socket = new Socket("localhost", 8888);
+        socket = new Socket(ConstantsForClientServerModel.HOST_NAME, ConstantsForClientServerModel.SOCKET_PORT_NUMBER);
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);
@@ -37,30 +39,5 @@ public class Client {
 
     public static void main(String[] args) throws IOException {
         Client client = new Client();
-    }
-}
-
-class ScannerToWriterRedirector extends Thread {
-
-    private Scanner scanner;
-    private PrintWriter printWriter;
-
-    public ScannerToWriterRedirector(Scanner scanner, PrintWriter printWriter) {
-        this.scanner = scanner;
-        this.printWriter = printWriter;
-    }
-
-    @Override
-    public void run() {
-        String userInput = "";
-        while (scanner.hasNextLine()) {
-            userInput = scanner.nextLine();
-            if (userInput.equals("0")) {
-                break;
-                // TODO create another exit value
-            }
-            printWriter.println(userInput);
-            printWriter.flush();
-        }
     }
 }

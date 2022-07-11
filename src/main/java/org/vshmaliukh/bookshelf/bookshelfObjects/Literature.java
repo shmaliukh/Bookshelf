@@ -13,11 +13,8 @@ import java.io.Serializable;
 @Data
 public abstract class Literature implements Serializable {
 
-    @SerializedName("Name")
     protected String name;
-    @SerializedName("Number of pages")
     protected int pagesNumber;
-    @SerializedName("Borrowed")
     protected boolean isBorrowed;
 
     private Literature(){}

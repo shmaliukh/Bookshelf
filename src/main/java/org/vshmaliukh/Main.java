@@ -1,6 +1,6 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.server.MultithreadedSocketServer;
+import org.vshmaliukh.client_server_model.server.MultithreadedSocketServer;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;

@@ -1,6 +1,5 @@
 package org.vshmaliukh.bookshelf.bookshelfObjects;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.util.Date;
@@ -13,9 +12,7 @@ import java.util.Date;
 @Data
 public class Book extends Literature{
 
-    @SerializedName("Author")
     private String author;
-    @SerializedName("Date of issue")
     private Date issuanceDate;
 
     /**

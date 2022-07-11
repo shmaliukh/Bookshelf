@@ -1,8 +1,13 @@
-package org.vshmaliukh.server;
+package org.vshmaliukh.client_server_model.server;
+
+import org.vshmaliukh.client_server_model.server.server_threads.WriterToClientThread;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import static org.vshmaliukh.client_server_model.ConstantsForClientServerModel.MAX_CONNECTION_NUMBER;
+import static org.vshmaliukh.client_server_model.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
 
 public class MultithreadedSocketServer {
 
@@ -13,9 +18,11 @@ public class MultithreadedSocketServer {
     private int userCounter;
     private boolean isServerActive;
 
+    private WriterToClientThread writerToClientThread;
+
     public MultithreadedSocketServer(){
-        serverPort = 8888;
-        maxConnection = 10;
+        serverPort = SOCKET_PORT_NUMBER;
+        maxConnection = MAX_CONNECTION_NUMBER;
         userCounter = 0;
         isServerActive = true;
         try {
@@ -35,8 +42,8 @@ public class MultithreadedSocketServer {
             Socket serverClient = serverSocket.accept();
             System.out.println("    [Client] " + userCounter + " - connected");
 
-            ServerClientThread serverClientThread = new ServerClientThread(serverClient, userCounter, terminalConfig);
-            serverClientThread.start();
+            ServerToClientHandler serverToClientHandler = new ServerToClientHandler(serverClient, userCounter, terminalConfig);
+            serverToClientHandler.startThreads(); // TODO
         }
     }
 
