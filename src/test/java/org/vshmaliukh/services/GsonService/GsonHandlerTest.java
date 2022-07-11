@@ -8,13 +8,9 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 
 class GsonHandlerTest {
     String userName = "test";
@@ -35,20 +31,6 @@ class GsonHandlerTest {
 
     Shelf shelf = new Shelf(printWriter);
 
-
-    @Test
-    void readLiteratureTypeFromGson() {
-
-    }
-
-    @Test
-    void getJsonArr() {
-    }
-
-    @Test
-    void isFileExists() {
-    }
-
     @Test
     void readShelfFromGsonFile() throws IOException {
         shelf.addLiteratureObject(book1);
@@ -57,13 +39,26 @@ class GsonHandlerTest {
         shelf.addLiteratureObject(magazine2);
 
         gsonHandler.saveInOneGsonFile(shelf);
-        Shelf shelf2 = gsonHandler.readShelfFromGsonFile();
+        Shelf shelf2 = gsonHandler.readShelfFromGson(1);
+        shelf2.getAllLiteratureObjects().forEach(printWriter::println);
 
         assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
         assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
         assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
         //assertTrue(Files.deleteIfExists(Paths.get(HOME_PROPERTY, (userName + SHELF_FILE_NAME_PREFIX + FILE_TYPE))));
+    }
+
+    @Test
+    void readShelfFromTwoGsonFilesTest() throws FileNotFoundException {
+        shelf.addLiteratureObject(book1);
+        shelf.addLiteratureObject(book2);
+        shelf.addLiteratureObject(magazine1);
+        shelf.addLiteratureObject(magazine2);
+
+        gsonHandler.saveInTwoGsonFiles(shelf);
+        Shelf shelf2 = gsonHandler.readShelfFromGson(2);
+        shelf2.getAllLiteratureObjects().forEach(printWriter::println);
     }
 
     @Test
@@ -90,17 +85,5 @@ class GsonHandlerTest {
         // TODO add test
         //assertTrue(Files.deleteIfExists(Paths.get(HOME_PROPERTY, (userName + BOOKS_FILE_NAME_PREFIX + FILE_TYPE))));
         //assertTrue(Files.deleteIfExists(Paths.get(HOME_PROPERTY, (userName + MAGAZINES_FILE_NAME_PREFIX+ FILE_TYPE))));
-    }
-
-    public void writeToGson(){
-
-    }
-
-    @Test
-    void readShelfFromTwoFiles() {
-    }
-
-    @Test
-    void saveShelfInTwoFiles() {
     }
 }

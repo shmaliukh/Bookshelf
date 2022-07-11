@@ -3,8 +3,6 @@ package org.vshmaliukh;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-import org.vshmaliukh.services.GsonService.ReadFromGsonService;
-import org.vshmaliukh.services.GsonService.SaveToGsonService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

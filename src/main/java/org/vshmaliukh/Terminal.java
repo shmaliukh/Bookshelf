@@ -6,8 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.services.GsonService.ReadFromGsonService;
-import org.vshmaliukh.services.GsonService.SaveToGsonService;
+import org.vshmaliukh.services.GsonService.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
 import java.io.*;
@@ -33,8 +32,7 @@ public class Terminal {
     private PrintWriter printWriter;
 
     private UserInputHandler userInputHandler;
-    private ReadFromGsonService readFromGsonService;
-    private SaveToGsonService saveToGsonService;
+    private GsonHandler gsonHandler;
     private Random randomNumber;
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
@@ -44,8 +42,8 @@ public class Terminal {
         shelf = new Shelf(printWriter);
 
         randomNumber = new Random();
-        readFromGsonService = new ReadFromGsonService(printWriter);
-        saveToGsonService = new SaveToGsonService();
+        gsonHandler = new GsonHandler(user.getName(), printWriter);
+
         userInputHandler = new UserInputHandler();
 
 
@@ -59,10 +57,10 @@ public class Terminal {
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
-        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+        shelf = gsonHandler.readShelfFromGson(typeOfWorkWithFiles);
         while (isActiveTerminal()){
             generateUserInterface();
-            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+            gsonHandler.saveInTwoGsonFiles(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
         }
     }
 
@@ -77,7 +75,7 @@ public class Terminal {
         shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
         while (isActiveTerminal()){
             generateUserInterface();
-            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
+            gsonHandler.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
         }
     }
 
