@@ -2,7 +2,9 @@ package org.vshmaliukh.services.GsonService;
 
 import com.google.gson.*;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -34,31 +36,30 @@ public class GsonHandler {
     public GsonHandler(String userName, PrintWriter printWriter){
         this.userName = userName;
         this.printWriter = printWriter;
+
+        fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
+        fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
+        fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
     }
 
     public void saveInOneGsonFile(Shelf shelf) {
-        fileNameForAll = userName + "ShelfAll";
-
         saveListToGsonFile(fileNameForAll, shelf.getAllLiteratureObjects());
     }
 
     public void saveInTwoGsonFiles(Shelf shelf) {
-        fileNameForBooks = userName + "ShelfBooks";
-        fileNameForMagazines = userName + "ShelfMagazines";
-
         saveListToGsonFile(fileNameForBooks, shelf.getBooks());
         saveListToGsonFile(fileNameForMagazines, shelf.getMagazines());
     }
 
     public <T> void saveListToGsonFile(String fileName, List<T> literatureList){
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE) );
+        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
         file = new File(String.valueOf(path));
         try {
             fw = new FileWriter(file);
             new GsonBuilder()
                     .setPrettyPrinting()
                     .create()
-                    .toJson(getContainerForLiteratureObjects((List<Literature>) literatureList), fw);// TODO set all literature
+                    .toJson(getContainerForLiteratureObjects((List<Literature>) literatureList), fw);
             fw.flush();
             fw.close();
         }
@@ -68,18 +69,74 @@ public class GsonHandler {
         }
     }
 
+    public Shelf readShelfFromGsonFile() throws FileNotFoundException {
+        path = Paths.get(HOME_PROPERTY, (fileNameForAll + FILE_TYPE));
+        if(Files.exists(path)){
+            fr = new FileReader(String.valueOf(path));
+            Gson gson = new Gson();
 
+            List<Literature> literatureList = new ArrayList();
+            JsonArray jsonArray;
+            try{
+                jsonArray = gson.fromJson(fr, JsonArray.class);
+            }
+            catch (JsonSyntaxException e){
+                informAboutErr("Problem to read shelf from file when read shelf from one file");
+                return new Shelf(printWriter);
+            }
+            if(jsonArray != null){
+                for (JsonElement element : jsonArray) {
+                    JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("literature");
+                    String typeOfClass;
+                    try {
+                        typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
+                    }
+                    catch (NullPointerException e){
+                        informAboutErr("Problem to read shelf from file when read shelf from one file");
+                        return new Shelf(printWriter);
+                    }
+                    List<Book> books = new ArrayList<>();
+                    List<Magazine> magazines = new ArrayList<>();
 
-    private List<ContainerForLiteratureObject> getContainerForLiteratureObjects(List<Literature> literatureList) {
-        List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
-        literatureList.forEach(o -> containerArrayList.add(new ContainerForLiteratureObject(o)));
-        return containerArrayList;
+                    if (typeOfClass.equals(Book.class.toString())) {
+                        books.add(gson.fromJson(itemObject, Book.class));
+                    }
+                    else if (typeOfClass.equals(Magazine.class.toString())) {
+                        magazines.add(gson.fromJson(itemObject, Magazine.class));
+                    }
+                    literatureList.addAll(books);
+                    literatureList.addAll(magazines);
+                }
+                return new Shelf(literatureList, printWriter);
+            }
+        }
+        else{
+            informAboutErr("File not found when read shelf from one file");
+            return new Shelf(printWriter);
+        }
+        try {
+            fr.close();
+        } catch (IOException e) {
+            informAboutErr("Problem to close file when read shelf from one file");
+            throw new RuntimeException(e);
+        }
+        return new Shelf(printWriter);
     }
 
-    public List<Literature> readLiteratureTypeFromGson(Class type, File gsonFile){
+//    public Shelf readShelfFromGsonFile(){
+//        Shelf shelf = new Shelf(printWriter);
+//        for (Literature magazine : readLiteratureTypeFromGson(Magazine.class, fileNameForAll)) {
+//            shelf.addLiteratureObject(magazine);
+//        }
+//        return shelf;
+//    }
+
+    public List<Literature> readLiteratureTypeFromGson(Class type, String fileName){
+        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
+        file = new File(String.valueOf(path));
         literatureList = new ArrayList<>();
-        if(isFileExists(gsonFile)){
-            for (JsonElement element : getJsonArr(gsonFile)) {
+        if(isFileExists(file)){
+            for (JsonElement element : getJsonArr(file)) {
                 literatureList.add((Literature) gson.fromJson(element,type));
             }
         }
@@ -87,10 +144,6 @@ public class GsonHandler {
             informAboutErr("File not exists");
         }
         return literatureList;
-    }
-
-    private void informAboutErr(String problemMessage) {
-        printWriter.println("[GsonHandler] problem: " + problemMessage);
     }
 
     public JsonArray getJsonArr(File file){
@@ -114,9 +167,17 @@ public class GsonHandler {
         return jsonArray;
     }
 
+    private List<Container> getContainerForLiteratureObjects(List<Literature> literatureList) {
+        List<Container> containerArrayList= new ArrayList<>();
+        literatureList.forEach(o -> containerArrayList.add(new Container(o)));
+        return containerArrayList;
+    }
+
     public boolean isFileExists(File gsonFile){
         return Files.exists(gsonFile.toPath());
     }
 
-
+    private void informAboutErr(String problemMessage) {
+        printWriter.println("[GsonHandler] problem: " + problemMessage);
+    }
 }

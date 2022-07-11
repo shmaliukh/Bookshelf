@@ -66,13 +66,13 @@ public class SaveToGsonService {
         fw.close();
     }
 
-    private List<ContainerForLiteratureObject> getContainerForLiteratureObjects(Shelf shelf) {
-        List<ContainerForLiteratureObject> containerArrayList= new ArrayList<>();
+    private List<Container> getContainerForLiteratureObjects(Shelf shelf) {
+        List<Container> containerArrayList= new ArrayList<>();
         for (Book book : shelf.getBooks()) {
-            containerArrayList.add(new ContainerForLiteratureObject(book));
+            containerArrayList.add(new Container(book));
         }
         for (Magazine magazine : shelf.getMagazines()) {
-            containerArrayList.add(new ContainerForLiteratureObject(magazine));
+            containerArrayList.add(new Container(magazine));
         }
         return containerArrayList;
     }
