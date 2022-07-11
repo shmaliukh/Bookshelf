@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.constants.ConstantValues.DATE_FORMAT;
+import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 
 @NoArgsConstructor
 public class UserInputHandler {

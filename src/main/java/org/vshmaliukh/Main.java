@@ -1,6 +1,6 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.client_server_model.server.MultithreadedSocketServer;
+import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -24,7 +24,7 @@ public class Main {
             MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
         }
         else {
-            Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out)));
+            Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out), true));
             terminal.startWork(typeOfConfig);
         }
     }

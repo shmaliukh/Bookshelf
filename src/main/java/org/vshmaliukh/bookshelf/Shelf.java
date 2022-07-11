@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.constants.ConstantValues.*;
+import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
  * @author ShmaliukhVlad

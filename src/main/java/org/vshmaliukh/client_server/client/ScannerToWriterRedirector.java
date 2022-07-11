@@ -1,4 +1,4 @@
-package org.vshmaliukh.client_server_model.client;
+package org.vshmaliukh.client_server.client;
 
 import java.io.PrintWriter;
 import java.util.Scanner;

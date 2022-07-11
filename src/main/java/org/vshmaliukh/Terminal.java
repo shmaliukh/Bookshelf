@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantValues.*;
+import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
  * @author ShmaliukhVlad

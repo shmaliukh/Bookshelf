@@ -1,4 +1,4 @@
-package org.vshmaliukh.client_server_model.server.server_threads;
+package org.vshmaliukh.client_server.server;
 
 import org.vshmaliukh.Terminal;
 
@@ -17,7 +17,7 @@ public class TerminalToClientThread extends Thread{
 
     @Override
     public void run(){
-        System.out.println("    [Client] " + this.userCounter +" - start");
+        System.out.println("        [Terminal] " + this.userCounter +" - start");
         try {
             terminal.startWork(terminalConfig, true);
         } catch (Exception e) {
@@ -25,7 +25,7 @@ public class TerminalToClientThread extends Thread{
             throw new RuntimeException(e);
         }
         finally {
-            System.out.println("    [Client] " + this.userCounter +" - stop");
+            System.out.println("        [Terminal] " + this.userCounter +" - stop");
         }
     }
 }

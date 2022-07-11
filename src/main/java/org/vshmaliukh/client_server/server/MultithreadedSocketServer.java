@@ -1,13 +1,11 @@
-package org.vshmaliukh.client_server_model.server;
-
-import org.vshmaliukh.client_server_model.server.server_threads.WriterToClientThread;
+package org.vshmaliukh.client_server.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static org.vshmaliukh.client_server_model.ConstantsForClientServerModel.MAX_CONNECTION_NUMBER;
-import static org.vshmaliukh.client_server_model.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
+import static org.vshmaliukh.constants.ConstantsForClientServerModel.MAX_CONNECTION_NUMBER;
+import static org.vshmaliukh.constants.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
 
 public class MultithreadedSocketServer {
 
@@ -17,8 +15,6 @@ public class MultithreadedSocketServer {
     private int serverPort;
     private int userCounter;
     private boolean isServerActive;
-
-    private WriterToClientThread writerToClientThread;
 
     public MultithreadedSocketServer(){
         serverPort = SOCKET_PORT_NUMBER;

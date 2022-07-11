@@ -3,8 +3,6 @@ package org.vshmaliukh.bookshelf.bookshelfObjects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.vshmaliukh.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;
-import static org.vshmaliukh.constants.ConstantValues.SORT_MAGAZINES_BY_PAGES_NUMBER;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MagazineTest {

@@ -1,8 +1,6 @@
-package org.vshmaliukh.client_server_model.server;
+package org.vshmaliukh.client_server.server;
 
 import org.vshmaliukh.Terminal;
-import org.vshmaliukh.client_server_model.server.server_threads.TerminalToClientThread;
-import org.vshmaliukh.client_server_model.server.server_threads.WriterToClientThread;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +17,6 @@ public class ServerToClientHandler { // TODO rename class
     private PrintWriter printWriter;
 
     private TerminalToClientThread terminalToClientThread;
-    private WriterToClientThread writerToClientThread;
 
     public ServerToClientHandler(Socket socket, int userCounter, int terminalConfig){
         socketForClient = socket;
@@ -28,7 +25,7 @@ public class ServerToClientHandler { // TODO rename class
 
         try {
             scanner = new Scanner(socketForClient.getInputStream());
-            printWriter = new PrintWriter(socketForClient.getOutputStream());
+            printWriter = new PrintWriter(socketForClient.getOutputStream(), true);
         } catch (IOException e) {
             System.err.println("Problem to start server for client");
             throw new RuntimeException(e);
@@ -37,9 +34,8 @@ public class ServerToClientHandler { // TODO rename class
 
     void startThreads(){
         terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner,printWriter), terminalConfig);
-        writerToClientThread = new WriterToClientThread(printWriter);
 
         terminalToClientThread.start();
-        writerToClientThread.start();
+        //writerToClientThread.start();
     }
 }

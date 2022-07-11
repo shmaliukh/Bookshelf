@@ -1,12 +1,12 @@
-package org.vshmaliukh.services.GsonService;
+package org.vshmaliukh.constants;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public final class ConstantsForGsonFiles {
+public final class ConstantsForGsonHandler {
 
-    private ConstantsForGsonFiles(){}
+    private ConstantsForGsonHandler(){}
 
     public static final String FILE_TYPE = ".json";
 

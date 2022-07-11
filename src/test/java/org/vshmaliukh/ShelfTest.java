@@ -6,12 +6,11 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantValues.SORT_MAGAZINES_BY_NAME;
+import static org.vshmaliukh.constants.ConstantsForTerminal.SORT_MAGAZINES_BY_NAME;
 
 class ShelfTest {
     PrintWriter printWriter = new PrintWriter(System.out);
