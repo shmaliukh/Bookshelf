@@ -160,4 +160,17 @@ class ShelfTest {
         assertEquals(expectedLastPagesNumber, sortedBooksByAuthor.get(1).getPagesNumber());
         assertEquals(expectedLastAuthor, sortedBooksByAuthor.get(1).getAuthor());
     }
+
+    @Test
+    void printTableTest(){
+        Shelf shelf = new Shelf(new PrintWriter(System.out, true));
+        shelf.addLiteratureObject(book3);
+        shelf.addLiteratureObject(book2);
+        shelf.addLiteratureObject(book1);
+        shelf.addLiteratureObject(magazine3);
+        shelf.addLiteratureObject(magazine2);
+        shelf.addLiteratureObject(magazine1);
+
+        shelf.printPrettyTable();
+    }
 }

@@ -259,4 +259,64 @@ public class Shelf implements BaseActionsWithShelf{
                 "\n\tliteratureOutShelf=" + literatureOutShelf.toString() +
                 "}";
     }
+
+    public void printPrettyTable(){
+        int spaceForName = 4;
+        int spaceForPages = 5;
+        int spaceForIsBorrowed = 5;
+        int spaceForAuthor = 6;
+        int spaceForDate = 4;
+        int gotNameLength = 0;
+        int gotPagesLength = 0;
+        int gotAuthorLength = 0;
+        int gotForDateLength = 0;
+
+        for (Literature literature : getAllLiteratureObjects()) {
+            gotNameLength = literature.getName().length();
+            gotPagesLength = String.valueOf(literature.getPagesNumber()).length();
+
+            if(gotNameLength > spaceForName){
+                spaceForName = gotNameLength;
+            }
+            if(gotPagesLength > spaceForPages){
+                spaceForPages = gotPagesLength;
+            }
+        }
+        for (Book book : getBooks()) {
+            gotAuthorLength = book.getAuthor().length();
+            gotForDateLength = book.getIssuanceDate().toString().length();
+
+            if(gotAuthorLength > spaceForAuthor){
+                spaceForAuthor = gotAuthorLength;
+            }
+            if(gotForDateLength > spaceForPages){
+                spaceForDate = gotForDateLength;
+            }
+        }
+
+        final String format = "| %-"
+                + spaceForName+"s | %-"
+                + spaceForPages +"s | %-"
+                + spaceForIsBorrowed+"s | %-"
+                + spaceForAuthor +"s | %-"
+                + spaceForDate +"s |\n\r";
+
+        printWriter.printf(format, "Name", "Pages", "State", "Author", "Date");
+        for (Book book : getBooks()) {
+            printWriter.printf(format,
+                    book.getName(),
+                    book.getPagesNumber(),
+                    book.isBorrowed(),
+                    book.getAuthor(),
+                    book.getIssuanceDate().toString());
+        }
+        for (Magazine magazine : getMagazines()) {
+            printWriter.printf(format,
+                    magazine.getName(),
+                    magazine.getPagesNumber(),
+                    magazine.isBorrowed(),
+                    "",
+                    "");
+        }
+    }
 }
