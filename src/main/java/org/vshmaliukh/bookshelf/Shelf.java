@@ -260,10 +260,10 @@ public class Shelf implements BaseActionsWithShelf{
                 "}";
     }
 
-    public void printPrettyTable(){
+    public void printPrettyTable(List<Literature> listToPrint){
         int spaceForName = 4;
         int spaceForPages = 5;
-        int spaceForIsBorrowed = 5;
+        int spaceForIsBorrowed = 8;
         int spaceForAuthor = 6;
         int spaceForDate = 4;
         int gotNameLength = 0;
@@ -271,10 +271,9 @@ public class Shelf implements BaseActionsWithShelf{
         int gotAuthorLength = 0;
         int gotForDateLength = 0;
 
-        for (Literature literature : getAllLiteratureObjects()) {
-            gotNameLength = literature.getName().length();
-            gotPagesLength = String.valueOf(literature.getPagesNumber()).length();
-
+        for (Magazine magazine : getMagazines()) {
+            gotNameLength = magazine.getName().length();
+            gotPagesLength = String.valueOf(magazine.getPagesNumber()).length();
             if(gotNameLength > spaceForName){
                 spaceForName = gotNameLength;
             }
@@ -285,7 +284,6 @@ public class Shelf implements BaseActionsWithShelf{
         for (Book book : getBooks()) {
             gotAuthorLength = book.getAuthor().length();
             gotForDateLength = book.getIssuanceDate().toString().length();
-
             if(gotAuthorLength > spaceForAuthor){
                 spaceForAuthor = gotAuthorLength;
             }
@@ -293,15 +291,14 @@ public class Shelf implements BaseActionsWithShelf{
                 spaceForDate = gotForDateLength;
             }
         }
-
         final String format = "| %-"
                 + spaceForName+"s | %-"
                 + spaceForPages +"s | %-"
                 + spaceForIsBorrowed+"s | %-"
                 + spaceForAuthor +"s | %-"
-                + spaceForDate +"s |\n\r";
+                + spaceForDate +"s |\n";
 
-        printWriter.printf(format, "Name", "Pages", "State", "Author", "Date");
+        printWriter.printf(format, "Name", "Pages", "Borrowed", "Author", "Date");
         for (Book book : getBooks()) {
             printWriter.printf(format,
                     book.getName(),

@@ -116,6 +116,9 @@ public class Terminal {
             case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
                 break;
+            case PRINT_PRETTY_SHELF:
+                shelf.printPrettyTable();
+                break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
                 break;
@@ -384,6 +387,7 @@ public class Terminal {
                         "4 - Arrive  Literature object by index back to Shelf" +"\n" +
                         "5 - Print list of available Books sorted by parameter..." +"\n" +
                         "6 - Print list of available Magazines sorted by parameter..." +"\n" +
+                        PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf" +"\n" +
                         "9 - Print current state of Shelf" +"\n" +
                         "0 - Exit");
     }
