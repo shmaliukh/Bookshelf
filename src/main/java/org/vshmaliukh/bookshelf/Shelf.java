@@ -1,5 +1,6 @@
 package org.vshmaliukh.bookshelf;
 
+import com.sun.org.apache.xpath.internal.operations.Lt;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
@@ -260,12 +261,8 @@ public class Shelf implements BaseActionsWithShelf{
                 "}";
     }
 
-    public void printPrettyTable(List<Literature> listToPrint){
-        int spaceForName = 4;
-        int spaceForPages = 5;
-        int spaceForIsBorrowed = 8;
-        int spaceForAuthor = 6;
-        int spaceForDate = 4;
+    public void printPrettyTable(){
+
         int gotNameLength = 0;
         int gotPagesLength = 0;
         int gotAuthorLength = 0;
