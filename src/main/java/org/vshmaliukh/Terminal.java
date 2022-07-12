@@ -13,7 +13,8 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantValues.*;
+import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_ONE_FILE;
+import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_TWO_FILES;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
@@ -76,10 +77,10 @@ public class Terminal {
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
         printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles){
-            case SAVE_READ_ONE_FILE:
+            case WORK_WITH_ONE_FILE:
                 printWriter.println("SAVE_READ_ONE_FILE");
                 break;
-            case SAVE_READ_TWO_FILES:
+            case WORK_WITH_TWO_FILES:
                 printWriter.println("SAVE_READ_TWO_FILES");
                 break;
             default:
