@@ -119,7 +119,6 @@ public class GsonHandler {
         List<Literature> literatureList = new ArrayList<>();
 
         if(Files.exists(path)){
-            fr = new FileReader(file);
             JsonObject itemObject;
             String typeOfClass;
             JsonArray jsonArray = getJsonArr();
@@ -136,17 +135,13 @@ public class GsonHandler {
                     }
                     literatureList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
                 }
+                closeFileReader();
                 return literatureList;
             }
         }
         else{
             informAboutErr( "'"+ fileName +"' file not found when read shelf from file (file not exists)");
             return literatureList;
-        }
-        try {
-            fr.close();
-        } catch (IOException e) {
-            informAboutErr("problem to close '"+ fileName +"' file when read shelf from file (IOException)");
         }
         return literatureList;
     }
@@ -166,9 +161,9 @@ public class GsonHandler {
         try {
             fr = new FileReader(file);
         } catch (FileNotFoundException e) {
+            closeFileReader();
             informAboutErr("problem to read shelf from file");
         }
-
         JsonArray jsonArray;
         try{
             jsonArray = gson.fromJson(fr, JsonArray.class);
@@ -181,7 +176,18 @@ public class GsonHandler {
             informAboutErr("problem to read shelf from file (JsonSyntaxException)");
             return null;
         }
+        finally {
+            closeFileReader();
+        }
         return jsonArray;
+    }
+
+    private void closeFileReader() {
+        try {
+            fr.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<Container> getContainerForLiteratureObjects(List<Literature> literatureList) {
