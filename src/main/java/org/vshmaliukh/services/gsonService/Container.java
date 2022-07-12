@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.GsonService;
+package org.vshmaliukh.services.gsonService;
 
 public class Container {
 

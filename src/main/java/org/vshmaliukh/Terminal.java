@@ -6,7 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.services.GsonService.GsonHandler;
+import org.vshmaliukh.services.gsonService.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
 import java.io.*;
@@ -42,40 +42,30 @@ public class Terminal {
         shelf = new Shelf(printWriter);
 
         randomNumber = new Random();
-        gsonHandler = new GsonHandler(user.getName(), printWriter);
-
         userInputHandler = new UserInputHandler();
-
-
-    }
-
-    /**
-     * Method simulates Terminal work like a real one
-     */
-    public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
-        // TODO delete this method if new version with user mode is ready
-        printWriter.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
-
-        shelf = gsonHandler.readShelfFromGson(typeOfWorkWithFiles);
-        while (isActiveTerminal()){
-            generateUserInterface();
-            gsonHandler.saveInTwoGsonFiles(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
-        }
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
-        //printWriter.println("Terminal START");
+        printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
+        setUpUserName(userMode);
+
+        gsonHandler = new GsonHandler(typeOfWorkWithFiles ,user.getName(), printWriter);
+
+        shelf = gsonHandler.readShelfFromGson();
+        while (isActiveTerminal()){
+            generateUserInterface();
+            gsonHandler.saveShelfInGson(shelf);
+        }
+    }
+
+    private void setUpUserName(boolean userMode) {
         if(userMode){
             userLogin();
         }
-
-        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
-        while (isActiveTerminal()){
-            generateUserInterface();
-            gsonHandler.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
+        else {
+            user = new User("no_user");
         }
     }
 

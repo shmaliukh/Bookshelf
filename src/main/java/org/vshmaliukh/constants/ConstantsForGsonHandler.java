@@ -1,9 +1,5 @@
 package org.vshmaliukh.constants;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public final class ConstantsForGsonHandler {
 
     private ConstantsForGsonHandler(){}
@@ -15,4 +11,7 @@ public final class ConstantsForGsonHandler {
     public static final String MAGAZINES_FILE_NAME_PREFIX = "ShelfMagazines";
 
     public static final String HOME_PROPERTY = System.getProperty("user.home");
+
+    public static final int WORK_WITH_ONE_FILE = 1;
+    public static final int WORK_WITH_TWO_FILES = 2;
 }

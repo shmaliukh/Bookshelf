@@ -25,7 +25,7 @@ public class Main {
         }
         else {
             Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out), true));
-            terminal.startWork(typeOfConfig);
+            terminal.startWork(typeOfConfig, false);
         }
     }
 }
