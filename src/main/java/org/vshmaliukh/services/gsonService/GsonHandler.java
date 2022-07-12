@@ -18,22 +18,17 @@ import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 public class GsonHandler {
 
     private final Gson gson = new Gson();
+    private final String userName;
+    private final PrintWriter printWriter;
+    private final int typeOfWorkWithFiles;
+
     private FileReader fr;
-    private FileWriter fw;
-
-    private JsonArray jsonArray;
-    private PrintWriter printWriter;
-    private List<Literature> literatureList;
-
     private Path path;
     private File file;
-    private String userName;
 
     private String fileNameForAll;
     private String fileNameForBooks;
     private String fileNameForMagazines;
-
-    private int typeOfWorkWithFiles;
 
     public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter){
         this.userName = userName;
@@ -47,18 +42,6 @@ public class GsonHandler {
         fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
-
-        //switch (typeOfWorkWithFiles){
-        //    case WORK_WITH_ONE_FILE:
-        //        fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
-        //        break;
-        //    case WORK_WITH_TWO_FILES:
-        //        fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
-        //        fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
-        //        break;
-        //    default:
-        //        break;
-        //}
     }
 
     public void saveShelfInGson(Shelf shelf){
@@ -84,11 +67,10 @@ public class GsonHandler {
     }
 
     private <T> void saveListToGsonFile(String fileName, List<T> literatureList){
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
-        file = new File(String.valueOf(path));
+        createFile(fileName);
         List<Container> containerList = getContainerForLiteratureObjects((List<Literature>) literatureList);
         try {
-            fw = new FileWriter(file);
+            FileWriter fw = new FileWriter(file);
             new GsonBuilder()
                     .setPrettyPrinting()
                     .create()
@@ -98,8 +80,12 @@ public class GsonHandler {
         }
         catch (IOException e) {
             informAboutErr("problem to write shelf to file");
-            throw new RuntimeException(e);
         }
+    }
+
+    private void createFile(String fileName) {
+        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
+        file = new File(String.valueOf(path));
     }
 
     public Shelf readShelfFromGson(){ // TODO make feature to try read from another typeOfWorkWithFiles when file not exists
@@ -111,7 +97,6 @@ public class GsonHandler {
                 }
                 catch (FileNotFoundException e) {
                     informAboutErr("(problem to read from one Json file (FileNotFoundException)");
-                    throw new RuntimeException(e);
                 }
                 break;
             case WORK_WITH_TWO_FILES:
@@ -121,7 +106,6 @@ public class GsonHandler {
                 }
                 catch (FileNotFoundException e) {
                     informAboutErr("(problem to read from two Json files (FileNotFoundException)");
-                    throw new RuntimeException(e);
                 }
                 break;
             default:
@@ -131,37 +115,26 @@ public class GsonHandler {
     }
 
     private List<Literature> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
-        file = new File(String.valueOf(path));
-        List<Literature> literatureList = new ArrayList();
+        createFile(fileName);
+        List<Literature> literatureList = new ArrayList<>();
 
         if(Files.exists(path)){
             fr = new FileReader(file);
-            Gson gson = new Gson();
+            JsonObject itemObject;
+            String typeOfClass;
             JsonArray jsonArray = getJsonArr();
-
-            List<Book> books = new ArrayList<>();
-            List<Magazine> magazines = new ArrayList<>();
 
             if(jsonArray != null){
                 for (JsonElement element : jsonArray) {
-                    JsonObject itemObject = element.getAsJsonObject().getAsJsonObject("literature");
-                    String typeOfClass;
                     try {
+                        itemObject = element.getAsJsonObject().getAsJsonObject("literature");
                         typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
                     }
                     catch (NullPointerException e){
                         informAboutErr("problem to read shelf from '"+ fileName +"' file when read shelf from file (NullPointerException)");
                         return literatureList;
                     }
-                    if (typeOfClass.equals(Book.class.toString())) {
-                        books.add(gson.fromJson(itemObject, Book.class));
-                    }
-                    else if (typeOfClass.equals(Magazine.class.toString())) {
-                        magazines.add(gson.fromJson(itemObject, Magazine.class));
-                    }
-                    literatureList.addAll(books);
-                    literatureList.addAll(magazines);
+                    literatureList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
                 }
                 return literatureList;
             }
@@ -174,44 +147,29 @@ public class GsonHandler {
             fr.close();
         } catch (IOException e) {
             informAboutErr("problem to close '"+ fileName +"' file when read shelf from file (IOException)");
-            throw new RuntimeException(e);
         }
         return literatureList;
     }
 
-    private Shelf readShelfFromTwoGsonFiles(){
-        Shelf shelf = new Shelf(printWriter);
-        for (Literature magazine : readLiteratureTypeFromGson(Magazine.class, fileNameForMagazines)) {
-            shelf.addLiteratureObject(magazine);
+    private Literature getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
+        Literature literature = null;
+        if (typeOfClass.equals(Book.class.toString())) {
+            literature = gson.fromJson(itemObject, Book.class);
         }
-        for (Literature book : readLiteratureTypeFromGson(Book.class, fileNameForBooks)) {
-            shelf.addLiteratureObject(book);
+        else if (typeOfClass.equals(Magazine.class.toString())) {
+            literature = gson.fromJson(itemObject, Magazine.class);
         }
-        return shelf;
-    }
-
-    private List<Literature> readLiteratureTypeFromGson(Class classType, String fileName){
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
-        file = new File(String.valueOf(path));
-        literatureList = new ArrayList<>();
-        if(isFileExists(file)){
-            for (JsonElement element : getJsonArr()) {
-                literatureList.add((Literature) gson.fromJson(element,classType));
-            }
-        }
-        else {
-            informAboutErr("file '"+ fileName +"' not found when read shelf from file (file not exists)");
-        }
-        return literatureList;
+        return literature;
     }
 
     private JsonArray getJsonArr(){
         try {
             fr = new FileReader(file);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            informAboutErr("problem to read shelf from file");
         }
 
+        JsonArray jsonArray;
         try{
             jsonArray = gson.fromJson(fr, JsonArray.class);
             if(jsonArray == null){
@@ -232,12 +190,8 @@ public class GsonHandler {
         return containerArrayList;
     }
 
-    private boolean isFileExists(File gsonFile){
-        return Files.exists(gsonFile.toPath());
-    }
-
     private void informAboutErr(String problemMessage) {
         System.err.println("        [User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
-        // TODO use LOGGER to inform about problem
+        // TODO use LOGGER to inform about problem (???)
     }
 }
