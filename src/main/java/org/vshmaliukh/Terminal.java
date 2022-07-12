@@ -6,15 +6,15 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.services.GsonService.ReadFromGsonService;
-import org.vshmaliukh.services.GsonService.SaveToGsonService;
+import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantValues.*;
+import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_ONE_FILE;
+import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_TWO_FILES;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
@@ -33,8 +33,7 @@ public class Terminal {
     private PrintWriter printWriter;
 
     private UserInputHandler userInputHandler;
-    private ReadFromGsonService readFromGsonService;
-    private SaveToGsonService saveToGsonService;
+    private GsonHandler gsonHandler;
     private Random randomNumber;
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
@@ -44,38 +43,30 @@ public class Terminal {
         shelf = new Shelf(printWriter);
 
         randomNumber = new Random();
-        readFromGsonService = new ReadFromGsonService(printWriter);
-        saveToGsonService = new SaveToGsonService();
         userInputHandler = new UserInputHandler();
     }
 
-    /**
-     * Method simulates Terminal work like a real one
-     */
-    public void startWork(int typeOfWorkWithFiles) throws ParseException, IOException{
-        // TODO delete this method if new version with user mode is ready
+    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
-        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+        setUpUserName(userMode);
+
+        gsonHandler = new GsonHandler(typeOfWorkWithFiles ,user.getName(), printWriter);
+
+        shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
             generateUserInterface();
-            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME, typeOfWorkWithFiles);
+            gsonHandler.saveShelfInGson(shelf);
         }
     }
 
-    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
-        //printWriter.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
-
+    private void setUpUserName(boolean userMode) {
         if(userMode){
             userLogin();
         }
-
-        shelf = readFromGsonService.readShelfFromGson(SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
-        while (isActiveTerminal()){
-            generateUserInterface();
-            saveToGsonService.saveShelfToGsonFile(shelf ,SYSTEM_FILE_PATH + FILE_NAME + user.getName(), typeOfWorkWithFiles);
+        else {
+            user = new User("no_user");
         }
     }
 
@@ -86,10 +77,10 @@ public class Terminal {
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
         printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles){
-            case SAVE_READ_ONE_FILE:
+            case WORK_WITH_ONE_FILE:
                 printWriter.println("SAVE_READ_ONE_FILE");
                 break;
-            case SAVE_READ_TWO_FILES:
+            case WORK_WITH_TWO_FILES:
                 printWriter.println("SAVE_READ_TWO_FILES");
                 break;
             default:

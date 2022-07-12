@@ -1,11 +1,8 @@
 package org.vshmaliukh.bookshelf.bookshelfObjects;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.Date;
 
-import static org.vshmaliukh.constants.ConstantValues.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookTest {

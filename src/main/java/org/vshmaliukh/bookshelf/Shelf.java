@@ -9,7 +9,6 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.vshmaliukh.constants.ConstantValues.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
@@ -232,12 +231,21 @@ public class Shelf implements BaseActionsWithShelf{
         return arrMagazines;
     }
 
+
+
     public List<Literature> getLiteratureInShelf() {
         return literatureInShelf;
     }
 
     public List<Literature> getLiteratureOutShelf() {
         return literatureOutShelf;
+    }
+
+    public List<Literature> getAllLiteratureObjects(){
+        ArrayList<Literature> literatureArrayList = new ArrayList<>();
+        literatureArrayList.addAll(getBooks());
+        literatureArrayList.addAll(getMagazines());
+        return literatureArrayList;
     }
 
     /**
