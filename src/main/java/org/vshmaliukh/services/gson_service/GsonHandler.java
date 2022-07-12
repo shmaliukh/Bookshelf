@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.gsonService;
+package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
 import org.vshmaliukh.bookshelf.Shelf;

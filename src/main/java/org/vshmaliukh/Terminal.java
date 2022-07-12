@@ -6,7 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.services.gsonService.GsonHandler;
+import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
 import java.io.*;

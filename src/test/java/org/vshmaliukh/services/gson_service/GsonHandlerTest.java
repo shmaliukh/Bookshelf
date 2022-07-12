@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.gsonService;
+package org.vshmaliukh.services.gson_service;
 
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.bookshelf.Shelf;
