@@ -19,7 +19,7 @@ public class UserInputHandler {
     private final PrintWriter printWriter;
 
     private boolean validationResult;
-    private String inputString;
+    private String inputString = "";
 
     public UserInputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -34,31 +34,52 @@ public class UserInputHandler {
         return m.matches();
     }
 
-    public String getUserName(){
-        String userName = "default";
-        printWriter.println("Enter user name:");
-
-        if(scanner.hasNextLine()){
-            userName = scanner.nextLine().trim().replace(" ","");
-            // TODO validation
+    private void readStringFromLine(){
+        if(scanner.hasNextLine()) {
+            if (scanner.hasNextLine()) {
+                inputString = scanner.nextLine().trim();
+            }
         }
-        return userName;
+    }
+
+    private String getUserString(String message, Pattern pattern, String wrongInputMessage){
+        printWriter.println(message);
+        readStringFromLine();
+        validationResult = isValidInputString(inputString, pattern);
+        if (validationResult) {
+            return inputString;
+        }
+        printWriter.println(wrongInputMessage);
+        return getUserString(message, pattern, wrongInputMessage);
+    }
+
+    public String getUserName(){
+        return getUserString(
+                "Enter user name:",
+                PATTERN_FOR_USER_NAME,
+                "Wrong input for name. Try again");
+    }
+
+    public String getUserLiteratureName() {
+        return getUserString(
+                "Enter literature object's name (not empty one line text):",
+                PATTERN_FOR_NAME,
+                "Wrong input for literature name. Try again");
+    }
+
+    public String getUserLiteratureAuthor() {
+        return getUserString(
+                "Enter author:",
+                PATTERN_FOR_AUTHOR,
+                "Wrong input for literature author. Try again");
     }
 
     public boolean getUserLiteratureIsBorrowed() {
-        printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
-        if(scanner.hasNextLine()){
-            inputString = scanner.nextLine().trim();
-            validationResult = isValidInputString(inputString, PATTERN_FOR_IS_BORROWED);
-            if (isValidInputString(inputString, PATTERN_FOR_IS_BORROWED)) {
-                return true;
-            }
-        }
-        printWriter.println("Wrong input. Try again");
-        return getUserLiteratureIsBorrowed();
+        return Boolean.getBoolean(getUserString(
+                "Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed",
+                PATTERN_FOR_IS_BORROWED,
+                "Wrong input. Try again"));
     }
-
-
 
     public int getUserLiteraturePages() {
         printWriter.println("Enter pages number: (program ignores all not number symbols, max 8 symbols)");
@@ -75,32 +96,6 @@ public class UserInputHandler {
         }
         printWriter.println("Wrong input for literature pages (must be bigger than '0' and not start with '0'). Try again");
         return getUserLiteraturePages();
-    }
-
-    public String getUserLiteratureName() {
-        printWriter.println("Enter literature object's name (not empty one line text):");
-        if(scanner.hasNextLine()){
-            inputString = scanner.nextLine();
-            validationResult = isValidInputString(inputString, PATTERN_FOR_NAME);
-            if (validationResult) {
-                return inputString;
-            }
-        }
-        printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName();
-    }
-
-    public String getUserLiteratureAuthor() {
-        printWriter.println("Enter author:");
-        if(scanner.hasNextLine()){
-            inputString = scanner.nextLine().trim();
-            validationResult = isValidInputString(inputString, PATTERN_FOR_AUTHOR);
-            if (validationResult) {
-                return inputString;
-            }
-        }
-        printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName();
     }
 
     public Date getUserDateOfIssue() throws ParseException {
