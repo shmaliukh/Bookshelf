@@ -9,32 +9,25 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.vshmaliukh.constants.ConstantsForPrettyPrinter.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 public class PrettyTablePrinter {
 
-    private PrintWriter printWriter;
+    private final PrintWriter printWriter;
 
-    String format;
+    private String format;
 
-    int spaceForIndex;
-    int spaceForType;
-    int spaceForName;
-    int spaceForPages;
-    int spaceForIsBorrowed;
-    int spaceForAuthor;
-    int spaceForDate;
+    private int spaceForIndex;
+    private int spaceForType;
+    private int spaceForName;
+    private int spaceForPages;
+    private int spaceForIsBorrowed;
+    private int spaceForAuthor;
+    private int spaceForDate;
 
-    String titleIndex = "#";
-    String titleType = "Type";
-    String titleName = "Name";
-    String titlePages = "Pages";
-    String titleBorrow = "Borrow";
-    String titleAuthor = "Author";
-    String titleDate = "Date";
-
-    String bookType = "Book";
-    String magazineType = "Magazine";
+    private int gotPagesLength;
+    private int gotNameLength;
 
     public PrettyTablePrinter(PrintWriter printWriter){
         this.printWriter = printWriter;
@@ -43,17 +36,20 @@ public class PrettyTablePrinter {
 
     public void printTable(List<Literature> literatureList){
         setFormat(literatureList);
-        if(!literatureList.isEmpty()){
-            printTitle();
-        }
+        printTitle(literatureList);
         for (int i = 1 ; literatureList.size() +1 > i; i++) {
             printLiteratureObject(i, literatureList.get(i-1));
         }
     }
 
-    private void printTitle() {
-        printWriter.println(String.format(format,
-                titleIndex, titleType, titleName, titlePages, titleBorrow, titleAuthor, titleDate));
+    private void printTitle(List<Literature> literatureList) {
+        if(literatureList.isEmpty()){
+            printWriter.println("No literature to print");
+        }
+        else {
+            printWriter.println(String.format(format,
+                    TITLE_INDEX, TITLE_TYPE, TITLE_NAME, TITLE_PAGES, TITLE_BORROW, TITLE_AUTHOR, TITLE_DATE));
+        }
     }
 
     public void printLiteratureObject(int i, Literature literature){
@@ -61,13 +57,13 @@ public class PrettyTablePrinter {
     }
 
     private void setDefaultSpaces() {
-        spaceForIndex = titleIndex.length();
-        spaceForType = titleType.length();
-        spaceForName = titleName.length();
-        spaceForPages = titlePages.length();
-        spaceForIsBorrowed = titleBorrow.length();
-        spaceForAuthor = titleAuthor.length();
-        spaceForDate = titleDate.length();
+        spaceForIndex = TITLE_INDEX.length();
+        spaceForType = TITLE_TYPE.length();
+        spaceForName = TITLE_NAME.length();
+        spaceForPages = TITLE_PAGES.length();
+        spaceForIsBorrowed = TITLE_BORROW.length();
+        spaceForAuthor = TITLE_AUTHOR.length();
+        spaceForDate = TITLE_DATE.length();
     }
 
     public String getPrettyStringOfLiterature (int i ,Literature literature){
@@ -81,11 +77,11 @@ public class PrettyTablePrinter {
     }
 
     public String getPrettyString(int i, Magazine magazine){
-        return String.format(format, i, magazineType, magazine.getName(), magazine.getPagesNumber(), magazine.isBorrowed(), "", "");
+        return String.format(format, i, MAGAZINE_TYPE, magazine.getName(), magazine.getPagesNumber(), magazine.isBorrowed(), "", "");
     }
 
     public String getPrettyString(int i, Book book){
-        return String.format(format, i, bookType, book.getName(), book.getPagesNumber(), book.isBorrowed(), book.getAuthor(), DATE_FORMAT.format(book.getIssuanceDate()));
+        return String.format(format, i, BOOK_TYPE, book.getName(), book.getPagesNumber(), book.isBorrowed(), book.getAuthor(), DATE_FORMAT.format(book.getIssuanceDate()));
     }
 
     private void setFormat(List<Literature> literatureList){
@@ -101,44 +97,48 @@ public class PrettyTablePrinter {
     }
 
     private void getSpacesValue(List<Literature> literatureList) {
-        int gotNameLength = spaceForName;
-        int gotPagesLength = spaceForPages;
-        int gotAuthorLength = spaceForAuthor;
-        int gotForDateLength = spaceForPages;
-
         spaceForIndex = String.valueOf(literatureList.size()).length();
 
         for (Literature literature : literatureList) {
-            if (literature instanceof Magazine) {
-                spaceForType = magazineType.length();
-                gotNameLength = literature.getName().length();
-                gotPagesLength = String.valueOf(literature.getPagesNumber()).length();
-                if (gotNameLength > spaceForName) {
-                    spaceForName = gotNameLength;
-                }
-                if (gotPagesLength > spaceForPages) {
-                    spaceForPages = gotPagesLength;
-                }
+            getSpacesForMagazines(literature);
+            getSpacesForBooks(literature);
+        }
+    }
+
+    private void getSpacesForBooks(Literature literature) {
+
+        if (literature instanceof Book) {
+            spaceForType = BOOK_TYPE.length();
+            Book book = (Book) literature;
+            gotNameLength = book.getName().length();
+            gotPagesLength = String.valueOf(book.getPagesNumber()).length();
+            int gotAuthorLength = book.getAuthor().length();
+            int gotForDateLength = DATE_FORMAT.format(book.getIssuanceDate()).length();
+            if (gotNameLength > spaceForName) {
+                spaceForName = gotNameLength;
             }
-            if (literature instanceof Book) {
-                spaceForType = bookType.length();
-                Book book = (Book) literature;
-                gotNameLength = book.getName().length();
-                gotPagesLength = String.valueOf(book.getPagesNumber()).length();
-                gotAuthorLength = book.getAuthor().length();
-                gotForDateLength = DATE_FORMAT.format(book.getIssuanceDate()).length();
-                if (gotNameLength > spaceForName) {
-                    spaceForName = gotNameLength;
-                }
-                if (gotPagesLength > spaceForPages) {
-                    spaceForPages = gotPagesLength;
-                }
-                if (gotAuthorLength > spaceForAuthor) {
-                    spaceForAuthor = gotAuthorLength;
-                }
-                if (gotForDateLength > spaceForPages) {
-                    spaceForDate = gotForDateLength;
-                }
+            if (gotPagesLength > spaceForPages) {
+                spaceForPages = gotPagesLength;
+            }
+            if (gotAuthorLength > spaceForAuthor) {
+                spaceForAuthor = gotAuthorLength;
+            }
+            if (gotForDateLength > spaceForPages) {
+                spaceForDate = gotForDateLength;
+            }
+        }
+    }
+
+    private void getSpacesForMagazines(Literature literature) {
+        if (literature instanceof Magazine) {
+            spaceForType = MAGAZINE_TYPE.length();
+            gotNameLength = literature.getName().length();
+            gotPagesLength = String.valueOf(literature.getPagesNumber()).length();
+            if (gotNameLength > spaceForName) {
+                spaceForName = gotNameLength;
+            }
+            if (gotPagesLength > spaceForPages) {
+                spaceForPages = gotPagesLength;
             }
         }
     }
@@ -164,7 +164,6 @@ public class PrettyTablePrinter {
         printTable(bookList);
     }
 
-
     public void printSortedMagazines(int typeOfSorting, Shelf shelf) {
         List<Literature> magazineList = new ArrayList<>();
         switch (typeOfSorting){
@@ -179,33 +178,4 @@ public class PrettyTablePrinter {
         }
         printTable(magazineList);
     }
-
-    //public void printPrettyTable(){
-////
-//
-    //    final String format = "| %-"
-    //            + spaceForName+"s | %-"
-    //            + spaceForPages +"s | %-"
-    //            + spaceForIsBorrowed+"s | %-"
-    //            + spaceForAuthor +"s | %-"
-    //            + spaceForDate +"s |\n";
-//
-    //    printWriter.printf(format, "Name", "Pages", "Borrowed", "Author", "Date");
-    //    for (Book book : shelf.getBooks()) {
-    //        printWriter.printf(format,
-    //                book.getName(),
-    //                book.getPagesNumber(),
-    //                book.isBorrowed(),
-    //                book.getAuthor(),
-    //                book.getIssuanceDate().toString());
-    //    }
-    //    for (Magazine magazine : shelf.getMagazines()) {
-    //        printWriter.printf(format,
-    //                magazine.getName(),
-    //                magazine.getPagesNumber(),
-    //                magazine.isBorrowed(),
-    //                "",
-    //                "");
-    //    }
-    //}
 }
