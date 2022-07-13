@@ -45,7 +45,7 @@ public class Terminal {
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
-        userInputHandler = new UserInputHandler();
+        userInputHandler = new UserInputHandler(scanner, printWriter);
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
