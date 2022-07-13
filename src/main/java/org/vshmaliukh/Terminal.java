@@ -6,6 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
@@ -29,30 +30,35 @@ public class Terminal {
     private Shelf shelf;
     private User user;
 
-    private Scanner scanner;
-    private PrintWriter printWriter;
+    private final Scanner scanner;
+    private final PrintWriter printWriter;
 
     private UserInputHandler userInputHandler;
+    private PrettyTablePrinter prettyTablePrinter;
     private GsonHandler gsonHandler;
     private Random randomNumber;
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
         this.scanner = scanner;
         this.printWriter = printWriter;
+
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
         randomNumber = new Random();
         userInputHandler = new UserInputHandler();
+
     }
 
-    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
+    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
+
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
         setUpUserName(userMode);
 
         gsonHandler = new GsonHandler(typeOfWorkWithFiles ,user.getName(), printWriter);
+        prettyTablePrinter = new PrettyTablePrinter(printWriter);
 
         shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
@@ -117,7 +123,7 @@ public class Terminal {
                 clarificationForSortingMagazines();
                 break;
             case PRINT_PRETTY_SHELF:
-                shelf.printPrettyTable();
+                prettyTablePrinter.printTable(shelf.getAllLiteratureObjects());
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -130,6 +136,10 @@ public class Terminal {
                 break;
         }
     }
+
+
+
+
 
     /**
      * Method print info Shelf and it's Literature objects
@@ -310,6 +320,7 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
+        //his method is only for developer
         Magazine randomMagazine = new Magazine(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
