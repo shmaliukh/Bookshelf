@@ -27,8 +27,8 @@ public class Client {
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);
-        socketPrintWriter = new PrintWriter(socket.getOutputStream());
-        localPrintWriter = new PrintWriter(System.out);
+        socketPrintWriter = new PrintWriter(socket.getOutputStream(), true);
+        localPrintWriter = new PrintWriter(System.out, true);
 
         inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
         outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);

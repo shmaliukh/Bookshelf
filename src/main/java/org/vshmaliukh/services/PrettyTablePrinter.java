@@ -44,7 +44,7 @@ public class PrettyTablePrinter {
     public void printTable(List<Literature> literatureList){
         setFormat(literatureList);
         printTitle();
-        for (int i = 1 ; literatureList.size() > i; i++) {
+        for (int i = 1 ; literatureList.size() +1 > i; i++) {
             printLiteratureObject(i, literatureList.get(i-1));
         }
     }

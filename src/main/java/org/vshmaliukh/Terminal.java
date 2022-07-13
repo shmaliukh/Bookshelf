@@ -205,9 +205,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-                printWriter.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).toString());
-            }
+            prettyTablePrinter.printTable(shelf.getLiteratureOutShelf());
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -221,7 +219,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            printLiteratureListWithIndex();
+            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -235,14 +233,8 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            printLiteratureListWithIndex();
+            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
-        }
-    }
-
-    private void printLiteratureListWithIndex() {
-        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).toString());
         }
     }
 

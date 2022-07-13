@@ -10,10 +10,9 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsForTerminal.SORT_MAGAZINES_BY_NAME;
 
 class ShelfTest {
-    PrintWriter printWriter = new PrintWriter(System.out);
+    PrintWriter printWriter = new PrintWriter(System.out, true);
 
     Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 24 * 1000));
     Book book2 = new Book("noNameBook2", 2, false, "NoAuthor2", new Date());

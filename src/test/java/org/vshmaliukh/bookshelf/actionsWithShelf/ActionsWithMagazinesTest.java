@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActionsWithMagazinesTest {
-    PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out));
+    PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);
 
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2",2,false);
