@@ -55,9 +55,6 @@ public class Terminal {
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
-
-
-
         shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
             generateUserInterface();
@@ -140,10 +137,6 @@ public class Terminal {
                 break;
         }
     }
-
-
-
-
 
     /**
      * Method print info Shelf and it's Literature objects
@@ -324,7 +317,6 @@ public class Terminal {
 
         informAboutAddedLiteratureObject(randomMagazine);
         return randomMagazine;
-
     }
 
     /**

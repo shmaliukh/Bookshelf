@@ -14,5 +14,4 @@ public final class ConstantsForPrettyPrinter {
 
     public static final String BOOK_TYPE = "Book";
     public static final String MAGAZINE_TYPE = "Magazine";
-
 }

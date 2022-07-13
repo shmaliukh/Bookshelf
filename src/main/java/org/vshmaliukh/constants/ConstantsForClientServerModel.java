@@ -8,5 +8,4 @@ public final class ConstantsForClientServerModel {
     public static final int MAX_CONNECTION_NUMBER = 10;
 
     public static final String HOST_NAME = "localhost";
-
 }

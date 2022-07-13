@@ -34,8 +34,6 @@ public class ServerToClientHandler { // TODO rename class
 
     void startThreads(){
         terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner,printWriter), terminalConfig);
-
         terminalToClientThread.start();
-        //writerToClientThread.start();
     }
 }

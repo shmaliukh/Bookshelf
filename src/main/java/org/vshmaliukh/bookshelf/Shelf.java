@@ -1,6 +1,5 @@
 package org.vshmaliukh.bookshelf;
 
-import com.sun.org.apache.xpath.internal.operations.Lt;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
@@ -9,8 +8,6 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
  * @author ShmaliukhVlad
@@ -23,8 +20,6 @@ public class Shelf implements BaseActionsWithShelf{
 
     private List<Literature> literatureInShelf;
     private List<Literature> literatureOutShelf;
-
-    private List<List<Object>> allLiterature = new ArrayList<>(); // TODO delete when new GsonHandler is ready
 
     private Shelf(){
         literatureInShelf  = new ArrayList<>();
@@ -191,8 +186,6 @@ public class Shelf implements BaseActionsWithShelf{
                 .collect(Collectors.toList()));
         return arrMagazines;
     }
-
-
 
     public List<Literature> getLiteratureInShelf() {
         return literatureInShelf;
