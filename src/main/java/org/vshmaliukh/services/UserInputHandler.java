@@ -42,47 +42,43 @@ public class UserInputHandler {
         }
     }
 
-    private String getUserString(String message, Pattern pattern, String wrongInputMessage){
+    private String getUserString(String message, Pattern pattern){
         printWriter.println(message);
         readStringFromLine();
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
             return inputString;
         }
-        printWriter.println(wrongInputMessage);
-        return getUserString(message, pattern, wrongInputMessage);
+        printWriter.println(MESSAGE_WRONG_INPUT_TRY_AGAIN);
+        return getUserString(message, pattern);
     }
 
     public String getUserName(){
         return getUserString(
-                "Enter user name:",
-                PATTERN_FOR_USER_NAME,
-                "Wrong input for name. Try again");
+                MESSAGE_ENTER_USER_NAME,
+                PATTERN_FOR_USER_NAME);
     }
 
     public String getUserLiteratureName() {
         return getUserString(
-                "Enter literature object's name (not empty one line text):",
-                PATTERN_FOR_NAME,
-                "Wrong input for literature name. Try again");
+                MESSAGE_ENTER_LITERATURE_NAME,
+                PATTERN_FOR_NAME);
     }
 
     public String getUserLiteratureAuthor() {
         return getUserString(
-                "Enter author:",
-                PATTERN_FOR_AUTHOR,
-                "Wrong input for literature author. Try again");
+                MESSAGE_ENTER_LITERATURE_AUTHOR,
+                PATTERN_FOR_AUTHOR);
     }
 
     public boolean getUserLiteratureIsBorrowed() {
         return Boolean.getBoolean(getUserString(
-                "Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed",
-                PATTERN_FOR_IS_BORROWED,
-                "Wrong input. Try again"));
+                MESSAGE_ENTER_LITERATURE_IS_BORROWED,
+                PATTERN_FOR_IS_BORROWED));
     }
 
     public int getUserLiteraturePages() {
-        printWriter.println("Enter pages number: (program ignores all not number symbols, max 8 symbols)");
+        printWriter.println(MESSAGE_ENTER_LITERATURE_PAGES_NUMBER);
         if(scanner.hasNext()){
             inputString = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if (inputString.length() > 0){
@@ -94,13 +90,12 @@ public class UserInputHandler {
                 }
             }
         }
-        printWriter.println("Wrong input for literature pages (must be bigger than '0' and not start with '0'). Try again");
+        printWriter.println(MESSAGE_WRONG_INPUT_FOR_LITERATURE_PAGES);
         return getUserLiteraturePages();
     }
 
     public Date getUserDateOfIssue() throws ParseException {
-        printWriter.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
-        "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");
+        printWriter.println(MESSAGE_ENTER_LITERATURE_DATE);
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
             validationResult = isValidLiteratureDate(inputString);
@@ -109,7 +104,7 @@ public class UserInputHandler {
                 return DATE_FORMAT.parse(inputString);
             }
         }
-        printWriter.println("Wrong input. Try again.");
+        printWriter.println(MESSAGE_WRONG_INPUT_TRY_AGAIN);
         return getUserDateOfIssue();
     }
 
