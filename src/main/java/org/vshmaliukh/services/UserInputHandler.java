@@ -1,15 +1,14 @@
 package org.vshmaliukh.services;
 
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
 public class UserInputHandler {
 
@@ -21,12 +20,6 @@ public class UserInputHandler {
 
     private boolean validationResult;
     private String inputString;
-
-    private final Pattern patternForIsBorrowed = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
-    private final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
-    private final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
-    private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)");
-    //TODO create another regular expression for 'author' input
 
     public UserInputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -56,8 +49,8 @@ public class UserInputHandler {
         printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
-            validationResult = isValidInputString(inputString, patternForIsBorrowed);
-            if (isValidInputString(inputString, patternForIsBorrowed)) {
+            validationResult = isValidInputString(inputString, PATTERN_FOR_IS_BORROWED);
+            if (isValidInputString(inputString, PATTERN_FOR_IS_BORROWED)) {
                 return true;
             }
         }
@@ -75,7 +68,7 @@ public class UserInputHandler {
                 if(inputString.length() > 8){
                     inputString = inputString.substring(0,8);
                 }
-                if (isValidInputString(inputString, patternForPages)) {
+                if (isValidInputString(inputString, PATTERN_FOR_PAGES)) {
                     return Integer.parseInt(inputString);
                 }
             }
@@ -88,7 +81,7 @@ public class UserInputHandler {
         printWriter.println("Enter literature object's name (not empty one line text):");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine();
-            validationResult = isValidInputString(inputString, patternForName);
+            validationResult = isValidInputString(inputString, PATTERN_FOR_NAME);
             if (validationResult) {
                 return inputString;
             }
@@ -101,7 +94,7 @@ public class UserInputHandler {
         printWriter.println("Enter author:");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
-            validationResult = isValidInputString(inputString, patternForAuthor);
+            validationResult = isValidInputString(inputString, PATTERN_FOR_AUTHOR);
             if (validationResult) {
                 return inputString;
             }
