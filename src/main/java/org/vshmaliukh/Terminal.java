@@ -44,15 +44,18 @@ public class Terminal {
 
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
+
+        userInputHandler = new UserInputHandler();
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
+        setUpUserName(userMode);
         initServicesForTerminal(typeOfWorkWithFiles);
 
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
-        setUpUserName(userMode);
+
 
 
         shelf = gsonHandler.readShelfFromGson();
@@ -64,7 +67,6 @@ public class Terminal {
 
     private void initServicesForTerminal(int typeOfWorkWithFiles) {
         randomNumber = new Random();
-        userInputHandler = new UserInputHandler();
         gsonHandler = new GsonHandler(typeOfWorkWithFiles,user.getName(), printWriter);
         prettyTablePrinter = new PrettyTablePrinter(printWriter);
     }
