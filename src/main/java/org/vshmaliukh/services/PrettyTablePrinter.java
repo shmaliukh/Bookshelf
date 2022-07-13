@@ -98,7 +98,6 @@ public class PrettyTablePrinter {
 
     private void getSpacesValue(List<Literature> literatureList) {
         spaceForIndex = String.valueOf(literatureList.size()).length();
-
         for (Literature literature : literatureList) {
             getSpacesForMagazines(literature);
             getSpacesForBooks(literature);
@@ -106,9 +105,10 @@ public class PrettyTablePrinter {
     }
 
     private void getSpacesForBooks(Literature literature) {
-
-        if (literature instanceof Book) {
+        if(spaceForType < BOOK_TYPE.length()){
             spaceForType = BOOK_TYPE.length();
+        }
+        if (literature instanceof Book) {
             Book book = (Book) literature;
             gotNameLength = book.getName().length();
             gotPagesLength = String.valueOf(book.getPagesNumber()).length();
@@ -130,8 +130,10 @@ public class PrettyTablePrinter {
     }
 
     private void getSpacesForMagazines(Literature literature) {
-        if (literature instanceof Magazine) {
+        if(spaceForType < MAGAZINE_TYPE.length()){
             spaceForType = MAGAZINE_TYPE.length();
+        }
+        if (literature instanceof Magazine) {
             gotNameLength = literature.getName().length();
             gotPagesLength = String.valueOf(literature.getPagesNumber()).length();
             if (gotNameLength > spaceForName) {
