@@ -387,15 +387,15 @@ public class Terminal {
     private void printMainMenu(){
         printWriter.println();
         printWriter.println("Enter number of  command you wand to execute: (program ignores all not number symbols)");
-        printWriter.println("1 - Add new Literature object to Shelf");
-        printWriter.println("2 - Delete  Literature object by index from Shelf");
-        printWriter.println("3 - Borrow  Literature object by index from Shelf");
-        printWriter.println("4 - Arrive  Literature object by index back to Shelf");
-        printWriter.println("5 - Print list of available Books sorted by parameter...");
-        printWriter.println("6 - Print list of available Magazines sorted by parameter...");
+        printWriter.println(ADD_NEW_LITERATURE + " - Add new Literature object to Shelf");
+        printWriter.println(DELETE_LITERATURE + " - Delete  Literature object by index from Shelf");
+        printWriter.println(BORROW_LITERATURE + " - Borrow  Literature object by index from Shelf");
+        printWriter.println(ARRIVE_LITERATURE + " - Arrive  Literature object by index back to Shelf");
+        printWriter.println(PRINT_SORTED_BOOKS + " - Print list of available Books sorted by parameter...");
+        printWriter.println(PRINT_SORTED_MAGAZINES + " - Print list of available Magazines sorted by parameter...");
         printWriter.println(PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf");
-        printWriter.println("9 - Print current state of Shelf");
-        printWriter.println("0 - Exit");
+        printWriter.println(PRINT_SHELF + " - Print current state of Shelf");
+        printWriter.println(EXIT + " - Exit");
     }
 
     /**
@@ -403,10 +403,10 @@ public class Terminal {
      */
     private void printMenuForBooksSorting(){
         printWriter.println("Choose type of sorting:");
-        printWriter.println("1 - Sort by 'name' value");
-        printWriter.println("2 - Sort by 'author' value");
-        printWriter.println("3 - Sort by 'page number' value");
-        printWriter.println("4 - Sort by 'date' value");
+        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
+        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'author' value");
+        printWriter.println(SORT_BOOKS_BY_PAGES_NUMBER + " - Sort by 'page number' value");
+        printWriter.println(SORT_BOOKS_BY_DATE_OF_ISSUE + " - Sort by 'date' value");
         printWriter.println("Enter another value to return");
     }
 
@@ -415,8 +415,8 @@ public class Terminal {
      */
     private void printMenuForMagazinesSorting(){
         printWriter.println("Choose type of sorting:");
-        printWriter.println("1 - Sort by 'name' value");
-        printWriter.println("2 - Sort by 'page' value");
+        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
+        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'page' value");
         printWriter.println("Enter another value to return");
     }
 
@@ -425,10 +425,10 @@ public class Terminal {
      */
     private void printMenuForAddingLiterature(){
         printWriter.println("Choose type of literature you want to add:");
-        printWriter.println("1 - Magazine");
-        printWriter.println("2 - Book");
-        printWriter.println("3 - Random Magazine");
-        printWriter.println("4 - Random Book");
+        printWriter.println(ADD_CUSTOM_MAGAZINE + " - Magazine");
+        printWriter.println(ADD_CUSTOM_BOOK + " - Book");
+        printWriter.println(ADD_RANDOM_MAGAZINE + " - Random Magazine");
+        printWriter.println(ADD_RANDOM_BOOK + " - Random Book");
         printWriter.println("Enter another value to return");
     }
 

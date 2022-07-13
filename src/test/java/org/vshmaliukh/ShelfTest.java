@@ -73,7 +73,6 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine3);
         shelf.addLiteratureObject(magazine2);
         shelf.addLiteratureObject(magazine1);
-        //shelf.printSortedMagazines(SORT_MAGAZINES_BY_NAME);
 
         List<Magazine> sortedMagazinesByName = shelf.getSortedMagazinesByName();
 
