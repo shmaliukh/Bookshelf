@@ -34,7 +34,7 @@ public class UserInputHandler {
         return m.matches();
     }
 
-    public String getUserName(Scanner scanner, PrintWriter printWriter){
+    public String getUserName(){
         String userName = "default";
         printWriter.println("Enter user name:");
 
@@ -45,7 +45,7 @@ public class UserInputHandler {
         return userName;
     }
 
-    public boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintWriter printWriter) {
+    public boolean getUserLiteratureIsBorrowed() {
         printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
@@ -55,12 +55,12 @@ public class UserInputHandler {
             }
         }
         printWriter.println("Wrong input. Try again");
-        return getUserLiteratureIsBorrowed(scanner, printWriter);
+        return getUserLiteratureIsBorrowed();
     }
 
 
 
-    public int getUserLiteraturePages(Scanner scanner, PrintWriter printWriter) {
+    public int getUserLiteraturePages() {
         printWriter.println("Enter pages number: (program ignores all not number symbols, max 8 symbols)");
         if(scanner.hasNext()){
             inputString = scanner.nextLine().replaceAll("[\\D]", "").trim();
@@ -74,10 +74,10 @@ public class UserInputHandler {
             }
         }
         printWriter.println("Wrong input for literature pages (must be bigger than '0' and not start with '0'). Try again");
-        return getUserLiteraturePages(scanner, printWriter);
+        return getUserLiteraturePages();
     }
 
-    public String getUserLiteratureName(Scanner scanner, PrintWriter printWriter) {
+    public String getUserLiteratureName() {
         printWriter.println("Enter literature object's name (not empty one line text):");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine();
@@ -87,10 +87,10 @@ public class UserInputHandler {
             }
         }
         printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName(scanner, printWriter);
+        return getUserLiteratureName();
     }
 
-    public String getUserLiteratureAuthor(Scanner scanner, PrintWriter printWriter) {
+    public String getUserLiteratureAuthor() {
         printWriter.println("Enter author:");
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
@@ -100,22 +100,22 @@ public class UserInputHandler {
             }
         }
         printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName(scanner, printWriter);
+        return getUserLiteratureName();
     }
 
-    public Date getUserDateOfIssue(Scanner scanner, PrintWriter printWriter) throws ParseException {
+    public Date getUserDateOfIssue() throws ParseException {
         printWriter.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
         "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");
-        DATE_FORMAT.setLenient(false); // is necessary???
         if(scanner.hasNextLine()){
             inputString = scanner.nextLine().trim();
             validationResult = isValidLiteratureDate(inputString);
             if(isValidLiteratureDate(inputString)){
+                DATE_FORMAT.setLenient(false);
                 return DATE_FORMAT.parse(inputString);
             }
         }
         printWriter.println("Wrong input. Try again.");
-        return getUserDateOfIssue(scanner, printWriter);
+        return getUserDateOfIssue();
     }
 
     public boolean isValidLiteratureDate(String input) {

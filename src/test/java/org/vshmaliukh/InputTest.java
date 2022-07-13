@@ -50,15 +50,17 @@ public class InputTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
     @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     public void testNameInput(String input, String expected){
-        assertEquals(expected, userInputHandler.getUserLiteratureName(new Scanner(input), printWriter));
+        userInputHandler = new UserInputHandler(new Scanner(input), printWriter);
+        assertEquals(expected, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("test for user input for date of issue")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected result ''{1}''")
     @MethodSource("providedStringForDateInput")
     public void testDateInput(String  expectedOut, String input) throws ParseException {
+        userInputHandler = new UserInputHandler(new Scanner(input), printWriter);
         DATE_FORMAT.setLenient(false);
-        Date currentDate = userInputHandler.getUserDateOfIssue(new Scanner(input), printWriter);
+        Date currentDate = userInputHandler.getUserDateOfIssue();
         Date expectedDate = DATE_FORMAT.parse(expectedOut);
         assertEquals(expectedDate.getTime(),  currentDate.getTime());
     }
@@ -79,7 +81,8 @@ public class InputTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{0}''")
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     public void testAuthorInput(String input){
-        assertEquals(input, userInputHandler.getUserLiteratureName(new Scanner(input), printWriter));
+        userInputHandler = new UserInputHandler(new Scanner(input), printWriter);
+        assertEquals(input, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("validate data from user input (name) of Literature object")
