@@ -122,6 +122,7 @@ public class UserInputHandler {
         if(input == null){
             return false;
         }
+        DATE_FORMAT.setLenient(false);
         try {
             DATE_FORMAT.parse(input);
         } catch (ParseException e) {
