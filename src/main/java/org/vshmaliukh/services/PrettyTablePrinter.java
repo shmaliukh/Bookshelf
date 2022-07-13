@@ -84,7 +84,7 @@ public class PrettyTablePrinter {
         return String.format(format, i, BOOK_TYPE, book.getName(), book.getPagesNumber(), book.isBorrowed(), book.getAuthor(), DATE_FORMAT.format(book.getIssuanceDate()));
     }
 
-    private void setFormat(List<Literature> literatureList){
+    public void setFormat(List<Literature> literatureList){
         getSpacesValue(literatureList);
         format = "| %-"
                 + spaceForIndex+"s | %-"
