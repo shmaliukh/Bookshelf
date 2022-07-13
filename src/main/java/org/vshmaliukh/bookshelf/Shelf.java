@@ -1,5 +1,6 @@
 package org.vshmaliukh.bookshelf;
 
+import com.sun.org.apache.xpath.internal.operations.Lt;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
@@ -125,23 +126,6 @@ public class Shelf implements BaseActionsWithShelf{
         else printWriter.println("Literature is not borrowed");
     }
 
-    public void printSortedMagazines(int typeOfSorting) {
-        List<Magazine> magazineList = new ArrayList<>();
-        switch (typeOfSorting){
-            case SORT_MAGAZINES_BY_NAME:
-                magazineList = getSortedMagazinesByName();
-                break;
-            case SORT_MAGAZINES_BY_PAGES_NUMBER:
-                magazineList = getSortedMagazinesByPages();
-                break;
-            default:
-                break;
-        }
-        for (Magazine o : magazineList) {
-            printWriter.print(o);
-        }// TODO make new printing method
-    }
-
     public List<Magazine> getSortedMagazinesByName() {
         return getMagazines().stream()
                 .sorted(Comparator.comparing(o -> o.getName().toLowerCase()))
@@ -152,29 +136,6 @@ public class Shelf implements BaseActionsWithShelf{
         return getMagazines().stream()
                 .sorted(Comparator.comparing(Magazine::getPagesNumber))
                 .collect(Collectors.toList());
-    }
-
-    public void printSortedBooks(int typeOfSorting){
-        List<Book> bookList = new ArrayList<>();
-        switch (typeOfSorting){
-            case SORT_BOOKS_BY_NAME:
-                bookList = getSortedBooksByName();
-                break;
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                bookList = getSortedBooksByPages();
-                break;
-            case SORT_BOOKS_BY_AUTHOR:
-                bookList = getSortedBooksByAuthor();
-                break;
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                bookList = getSortedBooksByDate();
-                break;
-            default:
-                break;
-        }
-        for (Book o : bookList) {
-            printWriter.print(o);
-        } // TODO make new printing method
     }
 
     public List<Book> getSortedBooksByName() {

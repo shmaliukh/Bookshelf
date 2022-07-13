@@ -15,7 +15,7 @@ class BaseActionsWithShelfTest {
     /**
      * Literature objects for tests
      */
-    PrintWriter printWriter = new PrintWriter(System.out);
+    PrintWriter printWriter = new PrintWriter(System.out, true);
     
     Book bookIsBorrowed = new Book("noNameBook1",1,true,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
     Book bookNotBorrowed = new Book("noNameBook2",2,false,"NoAuthor2",new Date());

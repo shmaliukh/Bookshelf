@@ -14,6 +14,7 @@ public final class ConstantsForTerminal {
     public static final int ARRIVE_LITERATURE = 4;
     public static final int PRINT_SORTED_BOOKS = 5;
     public static final int PRINT_SORTED_MAGAZINES = 6;
+    public static final int PRINT_PRETTY_SHELF = 8;
     public static final int PRINT_SHELF = 9;
     public static final int EXIT = 0;
 

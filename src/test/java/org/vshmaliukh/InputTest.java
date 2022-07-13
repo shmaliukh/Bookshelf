@@ -17,7 +17,7 @@ import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 public class InputTest {
     UserInputHandler userInputHandler = new UserInputHandler();
 
-    PrintWriter printStream = new PrintWriter(new OutputStreamWriter(System.out));
+    PrintWriter printStream = new PrintWriter(new OutputStreamWriter(System.out), true);
 
     @DisplayName("validate data from user input (date) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected state ''{1}''")

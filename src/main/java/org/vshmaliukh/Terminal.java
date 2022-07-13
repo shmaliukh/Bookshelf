@@ -6,6 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.UserInputHandler;
 
@@ -29,36 +30,45 @@ public class Terminal {
     private Shelf shelf;
     private User user;
 
-    private Scanner scanner;
-    private PrintWriter printWriter;
+    private final Scanner scanner;
+    private final PrintWriter printWriter;
 
     private UserInputHandler userInputHandler;
+    private PrettyTablePrinter prettyTablePrinter;
     private GsonHandler gsonHandler;
     private Random randomNumber;
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
         this.scanner = scanner;
         this.printWriter = printWriter;
+
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
-        randomNumber = new Random();
         userInputHandler = new UserInputHandler();
     }
 
-    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException, IOException{
+    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
+        setUpUserName(userMode);
+        initServicesForTerminal(typeOfWorkWithFiles);
+
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
 
-        setUpUserName(userMode);
 
-        gsonHandler = new GsonHandler(typeOfWorkWithFiles ,user.getName(), printWriter);
+
 
         shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
             generateUserInterface();
             gsonHandler.saveShelfInGson(shelf);
         }
+    }
+
+    private void initServicesForTerminal(int typeOfWorkWithFiles) {
+        randomNumber = new Random();
+        gsonHandler = new GsonHandler(typeOfWorkWithFiles,user.getName(), printWriter);
+        prettyTablePrinter = new PrettyTablePrinter(printWriter);
     }
 
     private void setUpUserName(boolean userMode) {
@@ -116,6 +126,9 @@ public class Terminal {
             case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
                 break;
+            case PRINT_PRETTY_SHELF:
+                prettyTablePrinter.printTable(shelf.getAllLiteratureObjects());
+                break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
                 break;
@@ -127,6 +140,10 @@ public class Terminal {
                 break;
         }
     }
+
+
+
+
 
     /**
      * Method print info Shelf and it's Literature objects
@@ -161,7 +178,7 @@ public class Terminal {
         }
         else {
             printMenuForMagazinesSorting();
-            shelf.printSortedMagazines(getUserChoice());
+            prettyTablePrinter.printSortedMagazines(getUserChoice(), shelf);
         }
 
     }
@@ -175,7 +192,7 @@ public class Terminal {
         }
         else {
             printMenuForBooksSorting();
-            shelf.printSortedBooks(getUserChoice());
+            prettyTablePrinter.printSortedBooks(getUserChoice(), shelf);
         }
     }
 
@@ -188,9 +205,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            for (int i = 0; i < shelf.getLiteratureOutShelf().size(); i++) {
-                printWriter.print( (i+1) + " " +  shelf.getLiteratureOutShelf().get(i).toString());
-            }
+            prettyTablePrinter.printTable(shelf.getLiteratureOutShelf());
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -204,7 +219,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            printLiteratureListWithIndex();
+            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -218,14 +233,8 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            printLiteratureListWithIndex();
+            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
-        }
-    }
-
-    private void printLiteratureListWithIndex() {
-        for (int i = 0; i < shelf.getLiteratureInShelf().size(); i++) {
-            printWriter.print( (i+1) + " " +  shelf.getLiteratureInShelf().get(i).toString());
         }
     }
 
@@ -307,6 +316,7 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
+        //his method is only for developer
         Magazine randomMagazine = new Magazine(
                 getRandomString(randomNumber.nextInt(20)),
                 randomNumber.nextInt(1000),
@@ -375,54 +385,51 @@ public class Terminal {
      * Method which simply print main menu
      */
     private void printMainMenu(){
-        printWriter.println(
-                        "\n" +
-                        "Enter number of  command you wand to execute: (program ignores all not number symbols)" +"\n" +
-                        "1 - Add new Literature object to Shelf" +"\n" +
-                        "2 - Delete  Literature object by index from Shelf" +"\n" +
-                        "3 - Borrow  Literature object by index from Shelf" +"\n" +
-                        "4 - Arrive  Literature object by index back to Shelf" +"\n" +
-                        "5 - Print list of available Books sorted by parameter..." +"\n" +
-                        "6 - Print list of available Magazines sorted by parameter..." +"\n" +
-                        "9 - Print current state of Shelf" +"\n" +
-                        "0 - Exit");
+        printWriter.println();
+        printWriter.println("Enter number of  command you wand to execute: (program ignores all not number symbols)");
+        printWriter.println(ADD_NEW_LITERATURE + " - Add new Literature object to Shelf");
+        printWriter.println(DELETE_LITERATURE + " - Delete  Literature object by index from Shelf");
+        printWriter.println(BORROW_LITERATURE + " - Borrow  Literature object by index from Shelf");
+        printWriter.println(ARRIVE_LITERATURE + " - Arrive  Literature object by index back to Shelf");
+        printWriter.println(PRINT_SORTED_BOOKS + " - Print list of available Books sorted by parameter...");
+        printWriter.println(PRINT_SORTED_MAGAZINES + " - Print list of available Magazines sorted by parameter...");
+        printWriter.println(PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf");
+        printWriter.println(PRINT_SHELF + " - Print current state of Shelf");
+        printWriter.println(EXIT + " - Exit");
     }
 
     /**
      * Method which simply print menu items for sorting books
      */
     private void printMenuForBooksSorting(){
-        printWriter.println(
-                        "Choose type of sorting:" +"\n" +
-                        "1 - Sort by 'name' value" +"\n" +
-                        "2 - Sort by 'author' value" +"\n" +
-                        "3 - Sort by 'page number' value" +"\n" +
-                        "4 - Sort by 'date' value" +"\n" +
-                        "Enter another value to return");
+        printWriter.println("Choose type of sorting:");
+        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
+        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'author' value");
+        printWriter.println(SORT_BOOKS_BY_PAGES_NUMBER + " - Sort by 'page number' value");
+        printWriter.println(SORT_BOOKS_BY_DATE_OF_ISSUE + " - Sort by 'date' value");
+        printWriter.println("Enter another value to return");
     }
 
     /**
      * Method which simply print menu items for sorting magazines
      */
     private void printMenuForMagazinesSorting(){
-        printWriter.println(
-                        "Choose type of sorting:" +"\n" +
-                        "1 - Sort by 'name' value" +"\n" +
-                        "2 - Sort by 'page' value" +"\n" +
-                        "Enter another value to return");
+        printWriter.println("Choose type of sorting:");
+        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
+        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'page' value");
+        printWriter.println("Enter another value to return");
     }
 
     /**
      * Method which simply print menu items for adding literature obj
      */
     private void printMenuForAddingLiterature(){
-        printWriter.println(
-                         "Choose type of literature you want to add:" + "\n" +
-                         "1 - Magazine" + "\n" +
-                         "2 - Book" + "\n" +
-                         "3 - Random Magazine" + "\n" +
-                         "4 - Random Book" + "\n" +
-                         "Enter another value to return");
+        printWriter.println("Choose type of literature you want to add:");
+        printWriter.println(ADD_CUSTOM_MAGAZINE + " - Magazine");
+        printWriter.println(ADD_CUSTOM_BOOK + " - Book");
+        printWriter.println(ADD_RANDOM_MAGAZINE + " - Random Magazine");
+        printWriter.println(ADD_RANDOM_BOOK + " - Random Book");
+        printWriter.println("Enter another value to return");
     }
 
     public void stop(){
