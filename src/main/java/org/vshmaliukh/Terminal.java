@@ -178,7 +178,7 @@ public class Terminal {
         }
         else {
             printMenuForMagazinesSorting();
-            shelf.printSortedMagazines(getUserChoice());
+            prettyTablePrinter.printSortedMagazines(getUserChoice(), shelf);
         }
 
     }
@@ -192,7 +192,7 @@ public class Terminal {
         }
         else {
             printMenuForBooksSorting();
-            shelf.printSortedBooks(getUserChoice());
+            prettyTablePrinter.printSortedBooks(getUserChoice(), shelf);
         }
     }
 

@@ -1,13 +1,15 @@
 package org.vshmaliukh.services;
 
+import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 public class PrettyTablePrinter {
 
@@ -137,6 +139,43 @@ public class PrettyTablePrinter {
                 }
             }
         }
+    }
+
+    public void printSortedBooks(int typeOfSorting, Shelf shelf){
+        List<Literature> bookList = new ArrayList<>();
+        switch (typeOfSorting){
+            case SORT_BOOKS_BY_NAME:
+                bookList.addAll(shelf.getSortedBooksByName());
+                break;
+            case SORT_BOOKS_BY_PAGES_NUMBER:
+                bookList.addAll(shelf.getSortedBooksByPages());
+                break;
+            case SORT_BOOKS_BY_AUTHOR:
+                bookList.addAll(shelf.getSortedBooksByAuthor());
+                break;
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                bookList.addAll(shelf.getSortedBooksByDate());
+                break;
+            default:
+                break;
+        }
+        printTable(bookList);
+    }
+
+
+    public void printSortedMagazines(int typeOfSorting, Shelf shelf) {
+        List<Literature> magazineList = new ArrayList<>();
+        switch (typeOfSorting){
+            case SORT_MAGAZINES_BY_NAME:
+                magazineList.addAll(shelf.getSortedMagazinesByName());
+                break;
+            case SORT_MAGAZINES_BY_PAGES_NUMBER:
+                magazineList.addAll(shelf.getSortedMagazinesByPages());
+                break;
+            default:
+                break;
+        }
+        printTable(magazineList);
     }
 
     //public void printPrettyTable(){
