@@ -385,55 +385,51 @@ public class Terminal {
      * Method which simply print main menu
      */
     private void printMainMenu(){
-        printWriter.println(
-                        "\n" +
-                        "Enter number of  command you wand to execute: (program ignores all not number symbols)" +"\n" +
-                        "1 - Add new Literature object to Shelf" +"\n" +
-                        "2 - Delete  Literature object by index from Shelf" +"\n" +
-                        "3 - Borrow  Literature object by index from Shelf" +"\n" +
-                        "4 - Arrive  Literature object by index back to Shelf" +"\n" +
-                        "5 - Print list of available Books sorted by parameter..." +"\n" +
-                        "6 - Print list of available Magazines sorted by parameter..." +"\n" +
-                        PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf" +"\n" +
-                        "9 - Print current state of Shelf" +"\n" +
-                        "0 - Exit");
+        printWriter.println();
+        printWriter.println("Enter number of  command you wand to execute: (program ignores all not number symbols)");
+        printWriter.println("1 - Add new Literature object to Shelf");
+        printWriter.println("2 - Delete  Literature object by index from Shelf");
+        printWriter.println("3 - Borrow  Literature object by index from Shelf");
+        printWriter.println("4 - Arrive  Literature object by index back to Shelf");
+        printWriter.println("5 - Print list of available Books sorted by parameter...");
+        printWriter.println("6 - Print list of available Magazines sorted by parameter...");
+        printWriter.println(PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf");
+        printWriter.println("9 - Print current state of Shelf");
+        printWriter.println("0 - Exit");
     }
 
     /**
      * Method which simply print menu items for sorting books
      */
     private void printMenuForBooksSorting(){
-        printWriter.println(
-                        "Choose type of sorting:" +"\n" +
-                        "1 - Sort by 'name' value" +"\n" +
-                        "2 - Sort by 'author' value" +"\n" +
-                        "3 - Sort by 'page number' value" +"\n" +
-                        "4 - Sort by 'date' value" +"\n" +
-                        "Enter another value to return");
+        printWriter.println("Choose type of sorting:");
+        printWriter.println("1 - Sort by 'name' value");
+        printWriter.println("2 - Sort by 'author' value");
+        printWriter.println("3 - Sort by 'page number' value");
+        printWriter.println("4 - Sort by 'date' value");
+        printWriter.println("Enter another value to return");
     }
 
     /**
      * Method which simply print menu items for sorting magazines
      */
     private void printMenuForMagazinesSorting(){
-        printWriter.println(
-                        "Choose type of sorting:" +"\n" +
-                        "1 - Sort by 'name' value" +"\n" +
-                        "2 - Sort by 'page' value" +"\n" +
-                        "Enter another value to return");
+        printWriter.println("Choose type of sorting:");
+        printWriter.println("1 - Sort by 'name' value");
+        printWriter.println("2 - Sort by 'page' value");
+        printWriter.println("Enter another value to return");
     }
 
     /**
      * Method which simply print menu items for adding literature obj
      */
     private void printMenuForAddingLiterature(){
-        printWriter.println(
-                         "Choose type of literature you want to add:" + "\n" +
-                         "1 - Magazine" + "\n" +
-                         "2 - Book" + "\n" +
-                         "3 - Random Magazine" + "\n" +
-                         "4 - Random Book" + "\n" +
-                         "Enter another value to return");
+        printWriter.println("Choose type of literature you want to add:");
+        printWriter.println("1 - Magazine");
+        printWriter.println("2 - Book");
+        printWriter.println("3 - Random Magazine");
+        printWriter.println("4 - Random Book");
+        printWriter.println("Enter another value to return");
     }
 
     public void stop(){

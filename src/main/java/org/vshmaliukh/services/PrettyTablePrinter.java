@@ -50,12 +50,12 @@ public class PrettyTablePrinter {
     }
 
     private void printTitle() {
-        printWriter.printf(format,
-                titleIndex, titleType, titleName, titlePages, titleBorrow, titleAuthor, titleDate);
+        printWriter.println(String.format(format,
+                titleIndex, titleType, titleName, titlePages, titleBorrow, titleAuthor, titleDate));
     }
 
     public void printLiteratureObject(int i, Literature literature){
-        printWriter.print(getPrettyStringOfLiterature(i, literature));
+        printWriter.println(getPrettyStringOfLiterature(i, literature));
     }
 
     private void setDefaultSpaces() {
@@ -95,7 +95,7 @@ public class PrettyTablePrinter {
                 + spaceForPages +"s | %-"
                 + spaceForIsBorrowed+"s | %-"
                 + spaceForAuthor +"s | %-"
-                + spaceForDate +"s |\n";
+                + spaceForDate +"s |";
     }
 
     private void getSpacesValue(List<Literature> literatureList) {

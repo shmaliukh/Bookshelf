@@ -36,6 +36,6 @@ public class Book extends Literature{
                ", author='" + author + '\'' +
                ", issuanceDate=" + issuanceDate +
                ", isBorrowed=" + isBorrowed +
-               " }\n";
+               " }";
     }
 }
