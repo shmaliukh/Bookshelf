@@ -25,7 +25,7 @@ public class PrettyTablePrinter {
     int spaceForAuthor;
     int spaceForDate;
 
-    String titleIndex = "№";
+    String titleIndex = "#";
     String titleType = "Type";
     String titleName = "Name";
     String titlePages = "Pages";
@@ -43,7 +43,9 @@ public class PrettyTablePrinter {
 
     public void printTable(List<Literature> literatureList){
         setFormat(literatureList);
-        printTitle();
+        if(!literatureList.isEmpty()){
+            printTitle();
+        }
         for (int i = 1 ; literatureList.size() +1 > i; i++) {
             printLiteratureObject(i, literatureList.get(i-1));
         }
