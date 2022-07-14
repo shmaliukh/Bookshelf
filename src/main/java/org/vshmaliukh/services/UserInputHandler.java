@@ -86,7 +86,7 @@ public class UserInputHandler {
         if(tryAgain(DEFAULT_STRING)){
             return getUserString(message, pattern);
         }
-        return "";
+        return DEFAULT_STRING;
     }
 
     private int getUserInteger(String message, Pattern pattern){

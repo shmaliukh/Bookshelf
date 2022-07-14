@@ -1,5 +1,6 @@
 package org.vshmaliukh;
 
+import org.junit.jupiter.api.Test;
 import org.vshmaliukh.services.UserInputHandler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,7 +10,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,8 +20,15 @@ public class InputTest {
     Scanner scanner = new Scanner(System.in);
     PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);
 
-
     UserInputHandler userInputHandler = new UserInputHandler(scanner, printWriter);
+
+    String entersForRecursion ="";
+    {
+        for (int i = 0; i < MAX_RECURSION_LEVEL; i++) {
+            entersForRecursion += "\n";
+        }
+    }
+
 
 
     @DisplayName("validate data from user input (date) of Literature object")
@@ -135,7 +142,58 @@ public class InputTest {
         assertTrue(userInputHandler.isValidInputString(input.trim(), PATTERN_FOR_AUTHOR));
     }
 
-    public void testRecursion(String input){
-        assertTrue(userInputHandler.isValidInputString(input.trim(), PATTERN_FOR_AUTHOR));
+    @Test
+    public void testRecursion_wrongInputMaxTimesForLiteraturePages(){
+        int currentInteger;
+        int expectedInteger = DEFAULT_INTEGER;
+        scanner = new Scanner(entersForRecursion);
+        userInputHandler = new UserInputHandler(scanner, printWriter);
+        currentInteger = userInputHandler.getUserLiteraturePages();
+
+        assertEquals(expectedInteger, currentInteger);
+    }
+
+    @Test
+    public void testRecursion_wrongInputMaxTimesForLiteratureBoolean(){
+        boolean currentBoolean;
+        boolean expectedBoolean = DEFAULT_BOOLEAN;
+        scanner = new Scanner(entersForRecursion);
+        userInputHandler = new UserInputHandler(scanner, printWriter);
+        currentBoolean = userInputHandler.getUserLiteratureIsBorrowed();
+
+        assertEquals(expectedBoolean, currentBoolean);
+    }
+
+    @Test
+    public void testRecursion_wrongInputMaxTimesForLiteratureDate() throws ParseException {
+        Date currentDate;
+        Date expectedDate = DEFAULT_DATE;
+        scanner = new Scanner(entersForRecursion);
+        userInputHandler = new UserInputHandler(scanner, printWriter);
+        currentDate = userInputHandler.getUserDateOfIssue();
+
+        assertEquals(expectedDate, currentDate);
+    }
+
+    @Test
+    public void testRecursion_wrongInputMaxTimesForLiteratureName(){
+        String currentString;
+        String expectedString = DEFAULT_STRING;
+        scanner = new Scanner(entersForRecursion);
+        userInputHandler = new UserInputHandler(scanner, printWriter);
+        currentString = userInputHandler.getUserLiteratureName();
+
+        assertEquals(expectedString, currentString);
+    }
+
+    @Test
+    public void testRecursion_wrongInputMaxTimesForUserName(){
+        String currentString;
+        String expectedString = DEFAULT_STRING;
+        scanner = new Scanner(entersForRecursion);
+        userInputHandler = new UserInputHandler(scanner, printWriter);
+        currentString = userInputHandler.getUserName();
+
+        assertEquals(expectedString, currentString);
     }
 }
