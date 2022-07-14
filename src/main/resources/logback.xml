@@ -1,14 +1,12 @@
 <configuration debug="false">
 
-    <!--
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n
-            </Pattern>
-        </layout>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
     </appender>
-    -->
+
 
     <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${HOME_LOG}</file>
@@ -29,10 +27,10 @@
     </appender>
 
     <logger name="org.vshmaliukh" level="debug" additivity="false">
-        <appender-ref ref="FILE-ROLLING"/>
+        <appender-ref ref="CONSOLE"/>
     </logger>
 
-    <root level="error">
+    <root level="info">
         <appender-ref ref="CONSOLE"/>
     </root>
 

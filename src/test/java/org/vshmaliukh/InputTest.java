@@ -9,6 +9,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,7 +44,7 @@ public class InputTest {
             "  01/01/2022   |  false" + "\n" +
             "  01_01_2022   |  false" )
     public void testDateValidation(String input, boolean expectedBoolean) {
-        assertEquals(expectedBoolean, userInputHandler.isValidLiteratureDate(input.trim()));
+        assertEquals(expectedBoolean, userInputHandler.isValidInputDate(input.trim(), DATE_FORMAT));
     }
 
     @DisplayName("test user input for name of Literature object")
@@ -124,7 +125,7 @@ public class InputTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"", "  ", "0", "c", "_1", "o", "\n", "*1", "+1", "-1", "1 000", "0", "1.2", "six", "13/1", "2,147,483,647", "-1321"})
     public void testPagesValidation_false(String input){
-        assertFalse(userInputHandler.isValidInputString(input.trim(), PATTERN_FOR_PAGES));
+        assertFalse(userInputHandler.isValidInputInteger(input.trim(), PATTERN_FOR_PAGES));
     }
 
     @DisplayName("validate data from user input (author) of Literature object")

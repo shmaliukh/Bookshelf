@@ -2,6 +2,7 @@ package org.vshmaliukh.services;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -11,9 +12,6 @@ import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
 public class UserInputHandler {
-
-    //private final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
-    //TODO cover code with LOGGER ???
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
@@ -30,27 +28,76 @@ public class UserInputHandler {
         if (inputStr == null) {
             return false;
         }
-        Matcher m = pattern.matcher(inputStr);
-        return m.matches();
+        return isMatcher(inputStr, pattern);
+    }
+
+    public boolean isValidInputInteger(String inputStr, Pattern pattern) {
+        if (inputStr == null || inputStr.length() > 8) {
+            return false;
+        }
+        return isMatcher(inputStr, pattern);
+    }
+
+    public boolean isValidInputDate(String inputStr, SimpleDateFormat dateFormat) {
+        if (inputStr == null) {
+            return false;
+        }
+        try{
+            dateFormat.setLenient(false);
+            dateFormat.parse(inputStr);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isMatcher(String inputStr, Pattern pattern) {
+        Matcher matcher = pattern.matcher(inputStr);
+        return matcher.matches();
     }
 
     private void readStringFromLine(){
         if(scanner.hasNextLine()) {
-            if (scanner.hasNextLine()) {
-                inputString = scanner.nextLine().trim();
-            }
+            inputString = scanner.nextLine().trim();
         }
     }
 
     private String getUserString(String message, Pattern pattern){
-        printWriter.println(message);
+        informMessageToUser(message);
         readStringFromLine();
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
             return inputString;
         }
-        printWriter.println(MESSAGE_WRONG_INPUT_TRY_AGAIN);
+        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
         return getUserString(message, pattern);
+    }
+
+    private int getUserInteger(String message, Pattern pattern){
+        informMessageToUser(message);
+        readStringFromLine();
+        inputString = inputString.replaceAll("[\\D]", "");
+        validationResult = isValidInputInteger(inputString, pattern);
+        if (validationResult) {
+            return Integer.parseInt(inputString);
+        }
+        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
+        return getUserInteger(message, pattern);
+    }
+
+    private Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
+        informMessageToUser(message);
+        readStringFromLine();
+        validationResult = isValidInputDate(inputString, dateFormat);
+        if (validationResult) {
+            return dateFormat.parse(inputString);
+        }
+        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
+        return getUserDate(message,  dateFormat);
+    }
+
+    private void informMessageToUser(String messageWrongInputTryAgain) {
+        printWriter.println(messageWrongInputTryAgain);
     }
 
     public String getUserName(){
@@ -78,46 +125,14 @@ public class UserInputHandler {
     }
 
     public int getUserLiteraturePages() {
-        printWriter.println(MESSAGE_ENTER_LITERATURE_PAGES_NUMBER);
-        if(scanner.hasNext()){
-            inputString = scanner.nextLine().replaceAll("[\\D]", "").trim();
-            if (inputString.length() > 0){
-                if(inputString.length() > 8){
-                    inputString = inputString.substring(0,8);
-                }
-                if (isValidInputString(inputString, PATTERN_FOR_PAGES)) {
-                    return Integer.parseInt(inputString);
-                }
-            }
-        }
-        printWriter.println(MESSAGE_WRONG_INPUT_FOR_LITERATURE_PAGES);
-        return getUserLiteraturePages();
+        return getUserInteger(
+                MESSAGE_ENTER_LITERATURE_PAGES_NUMBER,
+                PATTERN_FOR_PAGES);
     }
 
     public Date getUserDateOfIssue() throws ParseException {
-        printWriter.println(MESSAGE_ENTER_LITERATURE_DATE);
-        if(scanner.hasNextLine()){
-            inputString = scanner.nextLine().trim();
-            validationResult = isValidLiteratureDate(inputString);
-            if(isValidLiteratureDate(inputString)){
-                DATE_FORMAT.setLenient(false);
-                return DATE_FORMAT.parse(inputString);
-            }
-        }
-        printWriter.println(MESSAGE_WRONG_INPUT_TRY_AGAIN);
-        return getUserDateOfIssue();
-    }
-
-    public boolean isValidLiteratureDate(String input) {
-        if(input == null){
-            return false;
-        }
-        DATE_FORMAT.setLenient(false);
-        try {
-            DATE_FORMAT.parse(input);
-        } catch (ParseException e) {
-            return false;
-        }
-        return true;
+        return getUserDate(
+                MESSAGE_ENTER_LITERATURE_DATE,
+                DATE_FORMAT);
     }
 }
