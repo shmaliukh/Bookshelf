@@ -1,6 +1,8 @@
 package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
@@ -15,12 +17,15 @@ import java.util.List;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 
+@Slf4j
 public class GsonHandler {
 
-    private final Gson gson = new Gson();
     private final String userName;
     private final PrintWriter printWriter;
     private final int typeOfWorkWithFiles;
+    private final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
 
     private FileReader fr;
     private Path path;
@@ -71,10 +76,7 @@ public class GsonHandler {
         List<Container> containerList = getContainerForLiteratureObjects((List<Literature>) literatureList);
         try {
             FileWriter fw = new FileWriter(file);
-            new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create()
-                    .toJson(containerList, fw);
+            gson.toJson(containerList, fw);
             fw.flush();
             fw.close();
         }
@@ -115,6 +117,12 @@ public class GsonHandler {
     }
 
     private List<Literature> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
+
+        @Data
+        class GsonContainer{
+            private String classOfLiterature;
+            private Object literature;
+        }
         createFile(fileName);
         List<Literature> literatureList = new ArrayList<>();
 
@@ -126,10 +134,11 @@ public class GsonHandler {
             if(jsonArray != null){
                 for (JsonElement element : jsonArray) {
                     try {
+
                         itemObject = element.getAsJsonObject().getAsJsonObject("literature");
                         typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
                     }
-                    catch (NullPointerException e){
+                    catch (NullPointerException e){ //fixme
                         informAboutErr("problem to read shelf from '"+ fileName +"' file when read shelf from file (NullPointerException)");
                         return literatureList;
                     }
@@ -197,7 +206,6 @@ public class GsonHandler {
     }
 
     private void informAboutErr(String problemMessage) {
-        System.err.println("        [User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
-        // TODO use LOGGER to inform about problem (???)
+        log.info("  [User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
     }
 }

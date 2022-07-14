@@ -6,21 +6,25 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 
 class PrettyTablePrinterTest {
 
     PrettyTablePrinter prettyTablePrinter = new PrettyTablePrinter(new PrintWriter(System.out, true));
 
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new Date(System.currentTimeMillis() - 60*60*64*1000));
-    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___",new Date());
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", DATE_FORMAT.parse("10-07-2022"));
+    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___",DATE_FORMAT.parse("13-07-2022"));
 
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2___",222222222,true);
+
+    PrettyTablePrinterTest() throws ParseException {
+    }
 
 
     @Test

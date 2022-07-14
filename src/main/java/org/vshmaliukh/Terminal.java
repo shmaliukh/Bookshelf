@@ -32,8 +32,8 @@ public class Terminal {
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
+    private final UserInputHandler userInputHandler;
 
-    private UserInputHandler userInputHandler;
     private PrettyTablePrinter prettyTablePrinter;
     private GsonHandler gsonHandler;
     private Random randomNumber;
@@ -45,7 +45,7 @@ public class Terminal {
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
-        userInputHandler = new UserInputHandler();
+        userInputHandler = new UserInputHandler(scanner, printWriter);
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
@@ -54,9 +54,6 @@ public class Terminal {
 
         printWriter.println("Terminal START");
         informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
-
-
-
 
         shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
@@ -81,7 +78,7 @@ public class Terminal {
     }
 
     private void userLogin() {
-        user = new User(userInputHandler.getUserName(scanner,printWriter));
+        user = new User(userInputHandler.getUserName());
     }
 
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
@@ -140,10 +137,6 @@ public class Terminal {
                 break;
         }
     }
-
-
-
-
 
     /**
      * Method print info Shelf and it's Literature objects
@@ -277,9 +270,9 @@ public class Terminal {
         int pages;
         boolean isBorrowed;
 
-        name = userInputHandler.getUserLiteratureName(scanner, printWriter);
-        pages = userInputHandler.getUserLiteraturePages(scanner, printWriter);
-        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed(scanner, printWriter);
+        name = userInputHandler.getUserLiteratureName();
+        pages = userInputHandler.getUserLiteraturePages();
+        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed();
 
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
@@ -298,11 +291,11 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        name = userInputHandler.getUserLiteratureName(scanner, printWriter);
-        pages = userInputHandler.getUserLiteraturePages(scanner, printWriter);
-        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed(scanner, printWriter);
-        author = userInputHandler.getUserLiteratureAuthor(scanner, printWriter);
-        dateOfIssue = userInputHandler.getUserDateOfIssue(scanner, printWriter);
+        name = userInputHandler.getUserLiteratureName();
+        pages = userInputHandler.getUserLiteraturePages();
+        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed();
+        author = userInputHandler.getUserLiteratureAuthor();
+        dateOfIssue = userInputHandler.getUserDateOfIssue();
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
         informAboutAddedLiteratureObject(userBook);
@@ -324,7 +317,6 @@ public class Terminal {
 
         informAboutAddedLiteratureObject(randomMagazine);
         return randomMagazine;
-
     }
 
     /**

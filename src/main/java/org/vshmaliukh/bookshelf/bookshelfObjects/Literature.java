@@ -1,6 +1,5 @@
 package org.vshmaliukh.bookshelf.bookshelfObjects;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.io.Serializable;

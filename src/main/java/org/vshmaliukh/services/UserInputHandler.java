@@ -1,9 +1,6 @@
 package org.vshmaliukh.services;
 
-import lombok.NoArgsConstructor;
-
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,143 +9,168 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
-@NoArgsConstructor
 public class UserInputHandler {
 
-    //private final Logger LOGGER = LoggerFactory.getLogger(UserInput.class);
-    //TODO cover code with LOGGER ???
+    private final Scanner scanner;
+    private final PrintWriter printWriter;
 
-    private final Pattern  patternForIsBorrowed = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
-    private final Pattern patternForPages = Pattern.compile("^[1-9]+[0-9]*$");
-    private final Pattern patternForName = Pattern.compile("^(.{1,100}$)");
-    private final Pattern patternForAuthor = Pattern.compile("^(.{1,100}$)");
-    //TODO create another regular expression for 'author' input
+    private boolean validationResult;
+    private String inputString = "";
+    private int currentRecursionLevel;
 
-    public String getUserName(Scanner scanner, PrintWriter printWriter){
-        String userName = "default";
-        printWriter.println("Enter user name:");
-
-        if(scanner.hasNextLine()){
-            userName = scanner.nextLine().trim().replaceAll(" ","");
-            // TODO validation
-        }
-        return userName;
+    public UserInputHandler(Scanner scanner, PrintWriter printWriter) {
+        this.scanner = scanner;
+        this.printWriter = printWriter;
     }
 
-    public boolean getUserLiteratureIsBorrowed(Scanner scanner, PrintWriter printWriter) {
-        printWriter.println("Enter 'Y' if Literature object is borrowed OR 'N' if not borrowed");
-        if(scanner.hasNextLine()){
-            String answer = scanner.nextLine().trim();
-            if (isValidLiteratureIsBorrowed(answer)) {
-                return true;
-            }
+    public <T> boolean tryAgain(T defaultValue){
+        if(currentRecursionLevel < MAX_RECURSION_LEVEL){
+            informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN + " "
+                    + (MAX_RECURSION_LEVEL - currentRecursionLevel)
+                    + " more attempt(s) left");
+            currentRecursionLevel++;
+            return true;
         }
-        printWriter.println("Wrong input. Try again");
-        return getUserLiteratureIsBorrowed(scanner, printWriter);
+        currentRecursionLevel = 0;
+        informMessageToUser(MESSAGE_DEFAULT_VALUE_SET + "'" + defaultValue + "'");
+        return false;
     }
 
-    public boolean isValidLiteratureIsBorrowed(String answer) {
-        if (answer == null) {
+    public boolean isValidInputString(String inputStr, Pattern pattern) {
+        if (inputStr == null) {
             return false;
         }
-        Matcher m = patternForIsBorrowed.matcher(answer);
-        return m.matches();
+        return isMatcher(inputStr, pattern);
     }
 
-    public int getUserLiteraturePages(Scanner scanner, PrintWriter printWriter) {
-        printWriter.println("Enter pages number: (program ignores all not number symbols, max 8 symbols)");
-        if(scanner.hasNext()){
-            String inputStr = scanner.nextLine().replaceAll("[\\D]", "").trim();
-            if (inputStr.length() > 0){
-                if(inputStr.length() > 8){
-                    inputStr = inputStr.substring(0,8);
-                }
-                if (isValidLiteraturePages(inputStr)) {
-                    return Integer.parseInt(inputStr);
-                }
-            }
-        }
-        printWriter.println("Wrong input for literature pages (must be bigger than '0' and not start with '0'). Try again");
-        return getUserLiteraturePages(scanner, printWriter);
-    }
-
-    public boolean isValidLiteraturePages(String pages) {
-        if (pages == null) {
+    public boolean isValidInputInteger(String inputStr, Pattern pattern) {
+        if (inputStr == null || inputStr.length() > 8) {
             return false;
         }
-        Matcher m = patternForPages.matcher(pages);
-        return m.matches();
+        return isMatcher(inputStr, pattern);
     }
 
-    public String getUserLiteratureName(Scanner scanner, PrintWriter printWriter) {
-        printWriter.println("Enter literature object's name (not empty one line text):");
-        if(scanner.hasNextLine()){
-            String name = scanner.nextLine();
-            boolean validationResult = isValidLiteratureName(name);
-            if (validationResult) {
-                return name;
-            }
-        }
-        printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName(scanner, printWriter);
-    }
-
-    public boolean isValidLiteratureName(String name) {
-        if (name == null) {
+    public boolean isValidInputDate(String inputStr, SimpleDateFormat dateFormat) {
+        if (inputStr == null) {
             return false;
         }
-        Matcher m = patternForName.matcher(name);
-        return m.matches();
-    }
-
-    public String getUserLiteratureAuthor(Scanner scanner, PrintWriter printWriter) {
-        printWriter.println("Enter author:");
-        if(scanner.hasNextLine()){
-            String author = scanner.nextLine().trim();
-            boolean validationResult = isValidLiteratureName(author);
-            if (validationResult) {
-                return author;
-            }
-        }
-        printWriter.println("Wrong input for literature name. Try again");
-        return getUserLiteratureName(scanner, printWriter);
-    }
-
-    public boolean isValidLiteratureAuthor(String name) {
-        if (name == null) {
-            return false;
-        }
-        Matcher m = patternForAuthor.matcher(name);
-        return m.matches();
-    }
-
-    public Date getUserDateOfIssue(Scanner scanner, PrintWriter printWriter) throws ParseException {
-        printWriter.println("Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\n" +
-        "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers");
-        String dateStr;
-        DATE_FORMAT.setLenient(false);
-        if(scanner.hasNextLine()){
-            dateStr = scanner.nextLine().trim();
-            if(isValidLiteratureDate(dateStr)){
-                return DATE_FORMAT.parse(dateStr);
-            }
-        }
-        printWriter.println("Wrong input. Try again.");
-        return getUserDateOfIssue(scanner, printWriter);
-    }
-
-    public boolean isValidLiteratureDate(String input) {
-        if(input == null){
-            return false;
-        }
-        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        sdf.setLenient(false);
-        try {
-            sdf.parse(input);
+        try{
+            dateFormat.setLenient(false);
+            dateFormat.parse(inputStr);
+            return true;
         } catch (ParseException e) {
             return false;
         }
-        return true;
+    }
+
+    private boolean isMatcher(String inputStr, Pattern pattern) {
+        Matcher matcher = pattern.matcher(inputStr);
+        return matcher.matches();
+    }
+
+    private void readStringFromLine(){
+        if(scanner.hasNextLine()) {
+            inputString = scanner.nextLine().trim();
+        }
+    }
+
+    private String getUserString(String message, Pattern pattern){
+        getUserString(message);
+        validationResult = isValidInputString(inputString, pattern);
+        if (validationResult) {
+            currentRecursionLevel = 0;
+            return inputString;
+        }
+        if(tryAgain(DEFAULT_STRING)){
+            return getUserString(message, pattern);
+        }
+        return DEFAULT_STRING;
+    }
+
+    private int getUserInteger(String message, Pattern pattern){
+        getUserString(message);
+        inputString = inputString.replaceAll("[\\D]", "");
+        validationResult = isValidInputInteger(inputString, pattern);
+        if (validationResult) {
+            currentRecursionLevel = 0;
+            return Integer.parseInt(inputString);
+        }
+        if(tryAgain(DEFAULT_INTEGER)){
+            return getUserInteger(message, pattern);
+        }
+        return DEFAULT_INTEGER;
+    }
+
+    private Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
+        getUserString(message);
+        validationResult = isValidInputDate(inputString, dateFormat);
+        if (validationResult) {
+            currentRecursionLevel = 0;
+            return dateFormat.parse(inputString);
+        }
+        if(tryAgain(DATE_FORMAT_FOR_INPUT_HANDLER.format(DEFAULT_DATE))){
+            return getUserDate(message, dateFormat);
+        }
+        return DEFAULT_DATE;
+    }
+
+    private void getUserString(String message) {
+        informMessageToUser(message);
+        readStringFromLine();
+    }
+
+    private boolean getUserBoolean(String message, Pattern pattern) {
+        getUserString(message);
+        validationResult = isValidInputString(inputString, pattern);
+        if (validationResult) {
+            currentRecursionLevel = 0;
+            return Boolean.parseBoolean(inputString);
+        }
+        if(tryAgain(DEFAULT_BOOLEAN)){
+            return getUserBoolean(message, pattern);
+        }
+        return DEFAULT_BOOLEAN;
+    }
+
+    private void informMessageToUser(String message) {
+        printWriter.println(message);
+    }
+
+    public String getUserName(){
+        return getUserString(
+                MESSAGE_ENTER_USER_NAME,
+                PATTERN_FOR_USER_NAME);
+    }
+
+    public String getUserLiteratureName() {
+        return getUserString(
+                MESSAGE_ENTER_LITERATURE_NAME,
+                PATTERN_FOR_NAME);
+    }
+
+    public String getUserLiteratureAuthor() {
+        return getUserString(
+                MESSAGE_ENTER_LITERATURE_AUTHOR,
+                PATTERN_FOR_AUTHOR);
+    }
+
+    public boolean getUserLiteratureIsBorrowed() {
+        return getUserBoolean(
+                MESSAGE_ENTER_LITERATURE_IS_BORROWED,
+                PATTERN_FOR_IS_BORROWED);
+    }
+
+    public int getUserLiteraturePages() {
+        return getUserInteger(
+                MESSAGE_ENTER_LITERATURE_PAGES_NUMBER,
+                PATTERN_FOR_PAGES);
+    }
+
+    public Date getUserDateOfIssue() throws ParseException {
+        return getUserDate(
+                MESSAGE_ENTER_LITERATURE_DATE,
+                DATE_FORMAT);
     }
 }
