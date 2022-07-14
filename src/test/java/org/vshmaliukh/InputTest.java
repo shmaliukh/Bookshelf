@@ -134,4 +134,8 @@ public class InputTest {
     public void testAuthorValidation_true(String input){
         assertTrue(userInputHandler.isValidInputString(input.trim(), PATTERN_FOR_AUTHOR));
     }
+
+    public void testRecursion(String input){
+        assertTrue(userInputHandler.isValidInputString(input.trim(), PATTERN_FOR_AUTHOR));
+    }
 }
