@@ -1,10 +1,17 @@
 package org.vshmaliukh.constants;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Pattern;
+
+import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 
 public final class ConstantsForUserInputHandler {
 
     private ConstantsForUserInputHandler(){}
+
+    public static final int MAX_RECURSION_LEVEL = 3;
 
     public static final Pattern PATTERN_FOR_IS_BORROWED = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
     public static final Pattern PATTERN_FOR_PAGES = Pattern.compile("^[1-9]+[0-9]*$");
@@ -21,6 +28,13 @@ public final class ConstantsForUserInputHandler {
     public static final String MESSAGE_ENTER_LITERATURE_DATE = "Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\r\n" +
             "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers";
 
-    public static final String MESSAGE_WRONG_INPUT_FOR_LITERATURE_PAGES = "Wrong input for literature pages (must be bigger than '0' and not start with '0'). Try again";
-    public static final String MESSAGE_WRONG_INPUT_TRY_AGAIN = "Wrong input. Try again";
+    public static final String MESSAGE_WRONG_INPUT_TRY_AGAIN = "Wrong input. Try again.";
+    public static final String MESSAGE_DEFAULT_VALUE_SET = "Default set value: ";
+
+    public static final DateFormat DATE_FORMAT_FOR_INPUT_HANDLER = DATE_FORMAT;
+
+    public static final int DEFAULT_INTEGER = 1;
+    public static final Date DEFAULT_DATE = new Date();
+    public static final String DEFAULT_STRING = "-";
+    public static final boolean DEFAULT_BOOLEAN = false;
 }

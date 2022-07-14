@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.Date;
 
+import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+
 /**
  * @author ShmaliukhVlad
  * @version 1.0.0
@@ -34,7 +36,7 @@ public class Book extends Literature{
                " name='" + name + '\'' +
                ", pagesNumber=" + pagesNumber +
                ", author='" + author + '\'' +
-               ", issuanceDate=" + issuanceDate +
+               ", issuanceDate=" + DATE_FORMAT.format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
                ", isBorrowed=" + isBorrowed +
                " }";
     }

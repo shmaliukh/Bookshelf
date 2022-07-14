@@ -18,10 +18,24 @@ public class UserInputHandler {
 
     private boolean validationResult;
     private String inputString = "";
+    private int currentRecursionLevel;
 
     public UserInputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
+    }
+
+    public <T> boolean tryAgain(T defaultValue){
+        if(currentRecursionLevel < MAX_RECURSION_LEVEL){
+            informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN + " "
+                    + (MAX_RECURSION_LEVEL - currentRecursionLevel)
+                    + " more attempt(s) left");
+            currentRecursionLevel++;
+            return true;
+        }
+        currentRecursionLevel = 0;
+        informMessageToUser(MESSAGE_DEFAULT_VALUE_SET + "'" + defaultValue + "'");
+        return false;
     }
 
     public boolean isValidInputString(String inputStr, Pattern pattern) {
@@ -63,41 +77,65 @@ public class UserInputHandler {
     }
 
     private String getUserString(String message, Pattern pattern){
-        informMessageToUser(message);
-        readStringFromLine();
+        getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
+            currentRecursionLevel = 0;
             return inputString;
         }
-        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
-        return getUserString(message, pattern);
+        if(tryAgain(DEFAULT_STRING)){
+            return getUserString(message, pattern);
+        }
+        return "";
     }
 
     private int getUserInteger(String message, Pattern pattern){
-        informMessageToUser(message);
-        readStringFromLine();
+        getUserString(message);
         inputString = inputString.replaceAll("[\\D]", "");
         validationResult = isValidInputInteger(inputString, pattern);
         if (validationResult) {
+            currentRecursionLevel = 0;
             return Integer.parseInt(inputString);
         }
-        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
-        return getUserInteger(message, pattern);
+        if(tryAgain(DEFAULT_INTEGER)){
+            return getUserInteger(message, pattern);
+        }
+        return DEFAULT_INTEGER;
     }
 
     private Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
-        informMessageToUser(message);
-        readStringFromLine();
+        getUserString(message);
         validationResult = isValidInputDate(inputString, dateFormat);
         if (validationResult) {
+            currentRecursionLevel = 0;
             return dateFormat.parse(inputString);
         }
-        informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN);
-        return getUserDate(message,  dateFormat);
+        if(tryAgain(DATE_FORMAT_FOR_INPUT_HANDLER.format(DEFAULT_DATE))){
+            return getUserDate(message, dateFormat);
+        }
+        return DEFAULT_DATE;
     }
 
-    private void informMessageToUser(String messageWrongInputTryAgain) {
-        printWriter.println(messageWrongInputTryAgain);
+    private void getUserString(String message) {
+        informMessageToUser(message);
+        readStringFromLine();
+    }
+
+    private boolean getUserBoolean(String message, Pattern pattern) {
+        getUserString(message);
+        validationResult = isValidInputString(inputString, pattern);
+        if (validationResult) {
+            currentRecursionLevel = 0;
+            return Boolean.parseBoolean(inputString);
+        }
+        if(tryAgain(DEFAULT_BOOLEAN)){
+            return getUserBoolean(message, pattern);
+        }
+        return DEFAULT_BOOLEAN;
+    }
+
+    private void informMessageToUser(String message) {
+        printWriter.println(message);
     }
 
     public String getUserName(){
@@ -119,9 +157,9 @@ public class UserInputHandler {
     }
 
     public boolean getUserLiteratureIsBorrowed() {
-        return Boolean.getBoolean(getUserString(
+        return getUserBoolean(
                 MESSAGE_ENTER_LITERATURE_IS_BORROWED,
-                PATTERN_FOR_IS_BORROWED));
+                PATTERN_FOR_IS_BORROWED);
     }
 
     public int getUserLiteraturePages() {
