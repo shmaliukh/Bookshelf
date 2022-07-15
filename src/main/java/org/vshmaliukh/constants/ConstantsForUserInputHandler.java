@@ -1,11 +1,10 @@
 package org.vshmaliukh.constants;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 public final class ConstantsForUserInputHandler {
 
@@ -15,7 +14,7 @@ public final class ConstantsForUserInputHandler {
 
     public static final Pattern PATTERN_FOR_IS_BORROWED = Pattern.compile("[yn]", Pattern.CASE_INSENSITIVE);
     public static final Pattern PATTERN_FOR_PAGES = Pattern.compile("^[1-9]+[0-9]*$");
-    public static final Pattern PATTERN_FOR_TYPE_OF_WORK_WITH_FILES = Pattern.compile("^[0-2]*$");
+    public static final Pattern PATTERN_FOR_TYPE_OF_WORK_WITH_FILES = Pattern.compile("^[1-3]*$");
     public static final Pattern PATTERN_FOR_USER_NAME = Pattern.compile("^(.{1,100}$)");
     public static final Pattern PATTERN_FOR_NAME = Pattern.compile("^(.{1,100}$)");
     public static final Pattern PATTERN_FOR_AUTHOR = Pattern.compile("^(.{1,100}$)");
@@ -28,7 +27,11 @@ public final class ConstantsForUserInputHandler {
     public static final String MESSAGE_ENTER_LITERATURE_PAGES_NUMBER = "Enter number of pages more than '0': (program ignores all not number symbols, max 8 symbols)";
     public static final String MESSAGE_ENTER_LITERATURE_DATE = "Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\r\n" +
             "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers";
-    public static final String MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = "Enter number of pages more than '0': (program ignores all not number symbols, max 8 symbols):";
+    public static final String MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = "Enter type number of work with files: (program ignores all not number symbols\r\n" +
+            FILE_MODE_NO_WORK_WITH_FILES  + " - no work with files\r\n" +
+            FILE_MODE_WORK_WITH_ONE_FILE  + " - work with one file\r\n" +
+            FILE_MODE_WORK_WITH_TWO_FILES + " - work with two files";
+
 
     public static final String MESSAGE_WRONG_INPUT_TRY_AGAIN = "Wrong input. Try again.";
     public static final String MESSAGE_DEFAULT_VALUE_SET = "Default set value: ";
