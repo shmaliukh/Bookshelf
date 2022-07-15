@@ -69,7 +69,7 @@ class InputTest {
     void testDateInput(String  expectedOut, String input) throws ParseException {
         userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
         DATE_FORMAT.setLenient(false);
-        Date currentDate = userInputHandler.getUserDateOfIssue();
+        Date currentDate = userInputHandler.getUserLiteratureDateOfIssue();
         Date expectedDate = DATE_FORMAT.parse(expectedOut);
         assertEquals(expectedDate.getTime(),  currentDate.getTime());
     }
@@ -164,7 +164,7 @@ class InputTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_DATE, userInputHandler.getUserDateOfIssue());
+        assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
     }
 
     @Test

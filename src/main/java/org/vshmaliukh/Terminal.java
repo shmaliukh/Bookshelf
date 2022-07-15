@@ -1,7 +1,5 @@
 package org.vshmaliukh;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
@@ -9,6 +7,7 @@ import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
+import org.vshmaliukh.services.input_services.InputHandlerForUser;
 
 import java.io.*;
 import java.text.ParseException;
@@ -32,7 +31,8 @@ public class Terminal {
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
-    private final InputHandlerForLiterature userInputHandler;
+    private final InputHandlerForUser inputHandlerForUser;
+    private InputHandlerForLiterature inputHandlerForLiterature;
 
     private PrettyTablePrinter prettyTablePrinter;
     private GsonHandler gsonHandler;
@@ -45,7 +45,7 @@ public class Terminal {
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        inputHandlerForUser = new InputHandlerForUser(scanner, printWriter);
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
@@ -65,6 +65,7 @@ public class Terminal {
     private void initServicesForTerminal(int typeOfWorkWithFiles) {
         randomNumber = new Random();
         gsonHandler = new GsonHandler(typeOfWorkWithFiles,user.getName(), printWriter);
+        inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
         prettyTablePrinter = new PrettyTablePrinter(printWriter);
     }
 
@@ -78,7 +79,7 @@ public class Terminal {
     }
 
     private void userLogin() {
-        user = new User(userInputHandler.getUserName());
+        user = new User(inputHandlerForUser.getUserName());
     }
 
     private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
@@ -146,11 +147,11 @@ public class Terminal {
         printWriter.println("Current state of Shelf:");
         printWriter.println("literature IN {");
         shelf.getLiteratureInShelf()
-                .forEach(o -> printWriter.print(tab + o.toString()));
+                .forEach(o -> printWriter.println(tab + o.toString()));
         printWriter.println("}");
         printWriter.println("literature OUT {");
         shelf.getLiteratureOutShelf()
-                .forEach(o -> printWriter.print(tab + o.toString()));
+                .forEach(o -> printWriter.println(tab + o.toString()));
         printWriter.println("}");
     }
 
@@ -270,9 +271,9 @@ public class Terminal {
         int pages;
         boolean isBorrowed;
 
-        name = userInputHandler.getUserLiteratureName();
-        pages = userInputHandler.getUserLiteraturePages();
-        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed();
+        name = inputHandlerForLiterature.getUserLiteratureName();
+        pages = inputHandlerForLiterature.getUserLiteraturePages();
+        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
 
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
@@ -291,11 +292,11 @@ public class Terminal {
         String author;
         Date dateOfIssue;
 
-        name = userInputHandler.getUserLiteratureName();
-        pages = userInputHandler.getUserLiteraturePages();
-        isBorrowed = userInputHandler.getUserLiteratureIsBorrowed();
-        author = userInputHandler.getUserLiteratureAuthor();
-        dateOfIssue = userInputHandler.getUserDateOfIssue();
+        name = inputHandlerForLiterature.getUserLiteratureName();
+        pages = inputHandlerForLiterature.getUserLiteraturePages();
+        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        author = inputHandlerForLiterature.getUserLiteratureAuthor();
+        dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
         informAboutAddedLiteratureObject(userBook);

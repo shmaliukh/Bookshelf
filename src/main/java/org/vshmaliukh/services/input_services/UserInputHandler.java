@@ -19,7 +19,7 @@ public class UserInputHandler {
     private String inputString = "";
     private int currentRecursionLevel;
 
-    public UserInputHandler(Scanner scanner, PrintWriter printWriter) {
+    protected UserInputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
     }
