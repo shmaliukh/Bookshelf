@@ -45,7 +45,7 @@ public class UserInputHandler {
     }
 
     public boolean isValidInputInteger(String inputStr, Pattern pattern) {
-        if (inputStr == null || inputStr.length() > 8) {
+        if (inputStr == null || inputStr.length() > 8 || inputStr.length() == 0) {
             return false;
         }
         return isMatcher(inputStr, pattern);
