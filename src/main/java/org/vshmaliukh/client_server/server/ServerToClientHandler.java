@@ -7,21 +7,19 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ServerToClientHandler { // TODO rename class
+public class ServerToClientHandler {
 
     private Socket socketForClient;
     private int userCounter;
-    private int terminalConfig;
 
     private Scanner scanner;
     private PrintWriter printWriter;
 
     private TerminalToClientThread terminalToClientThread;
 
-    public ServerToClientHandler(Socket socket, int userCounter, int terminalConfig){
+    public ServerToClientHandler(Socket socket, int userCounter){
         socketForClient = socket;
         this.userCounter = userCounter;
-        this.terminalConfig = terminalConfig;
 
         try {
             scanner = new Scanner(socketForClient.getInputStream());
@@ -32,8 +30,8 @@ public class ServerToClientHandler { // TODO rename class
         }
     }
 
-    void startThreads(){
-        terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner,printWriter), terminalConfig);
+    void start(){
+        terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner,printWriter));
         terminalToClientThread.start();
     }
 }

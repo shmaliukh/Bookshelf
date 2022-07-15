@@ -29,34 +29,21 @@ public class MultithreadedSocketServer {
         }
     }
 
-    private void start(String[] args) throws IOException {
+    private void start() throws IOException {
         System.out.println("Server start");
-        int terminalConfig = getTerminalConfig(args);
 
         while (isServerActive){
             userCounter++;
             Socket serverClient = serverSocket.accept();
             System.out.println("    [Client] " + userCounter + " - connected");
 
-            ServerToClientHandler serverToClientHandler = new ServerToClientHandler(serverClient, userCounter, terminalConfig);
-            serverToClientHandler.startThreads(); // TODO
+            ServerToClientHandler serverToClientHandler = new ServerToClientHandler(serverClient, userCounter);
+            serverToClientHandler.start();
         }
-    }
-
-    private static int getTerminalConfig(String[] args) {
-        // TODO create better validation
-        int config = 0;
-        if(args.length > 0 && args[0]!=null){
-            config = Integer.parseInt(args[0]);
-            if(config > 2){
-                config -= 3;
-            }
-        }
-        return config;
     }
 
     public static void main(String[] args) throws IOException {
         MultithreadedSocketServer server = new MultithreadedSocketServer();
-        server.start(args);
+        server.start();
     }
 }

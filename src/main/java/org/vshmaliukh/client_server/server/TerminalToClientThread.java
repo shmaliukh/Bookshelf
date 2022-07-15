@@ -4,13 +4,12 @@ import org.vshmaliukh.Terminal;
 
 public class TerminalToClientThread extends Thread{
 
-    private int terminalConfig;
+
     private int userCounter;
 
     private Terminal terminal;
 
-    public TerminalToClientThread(int userCounter, Terminal terminal , int terminalConfig) {
-        this.terminalConfig = terminalConfig;
+    public TerminalToClientThread(int userCounter, Terminal terminal) {
         this.userCounter = userCounter;
         this.terminal = terminal;
     }
@@ -19,7 +18,7 @@ public class TerminalToClientThread extends Thread{
     public void run(){
         System.out.println("        [Terminal] " + this.userCounter +" - start");
         try {
-            terminal.startWork(terminalConfig, true);
+            terminal.startWork(true);
         } catch (Exception e) {
             System.err.println("Problem to start terminal");
             throw new RuntimeException(e);

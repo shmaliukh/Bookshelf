@@ -13,8 +13,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_ONE_FILE;
-import static org.vshmaliukh.constants.ConstantsForGsonHandler.WORK_WITH_TWO_FILES;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 /**
@@ -25,6 +23,7 @@ import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 public class Terminal {
 
     private boolean isActiveTerminal;
+    private int typeOfWorkWithFiles;
 
     private Shelf shelf;
     private User user;
@@ -48,12 +47,26 @@ public class Terminal {
         inputHandlerForUser = new InputHandlerForUser(scanner, printWriter);
     }
 
-    public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{
+    public void startWithUserLogin(boolean userMode){
         setUpUserName(userMode);
-        initServicesForTerminal(typeOfWorkWithFiles);
+        setUpTypeOfWorkWithFiles(userMode);
+    }
 
+    private void setUpTypeOfWorkWithFiles(boolean userMode) {
+        if(userMode){
+            typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
+        }
+        else {
+            typeOfWorkWithFiles = DEFAULT_MODE_WORK_WITH_FILES;
+        }
+    }
+
+    public void startWork(boolean userMode) throws ParseException{
         printWriter.println("Terminal START");
-        informAboutFileSaveReadType(typeOfWorkWithFiles); // TODO rename method
+
+        startWithUserLogin(userMode);
+        initServicesForTerminal(typeOfWorkWithFiles);
+        informAboutFileTypeWork(typeOfWorkWithFiles);
 
         shelf = gsonHandler.readShelfFromGson();
         while (isActiveTerminal()){
@@ -64,9 +77,9 @@ public class Terminal {
 
     private void initServicesForTerminal(int typeOfWorkWithFiles) {
         randomNumber = new Random();
-        gsonHandler = new GsonHandler(typeOfWorkWithFiles,user.getName(), printWriter);
-        inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
+        gsonHandler = new GsonHandler(typeOfWorkWithFiles, user.getName(), printWriter);
         prettyTablePrinter = new PrettyTablePrinter(printWriter);
+        inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
     }
 
     private void setUpUserName(boolean userMode) {
@@ -82,17 +95,17 @@ public class Terminal {
         user = new User(inputHandlerForUser.getUserName());
     }
 
-    private void informAboutFileSaveReadType(int typeOfWorkWithFiles) {
+    private void informAboutFileTypeWork(int typeOfWorkWithFiles) {
         printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles){
-            case WORK_WITH_ONE_FILE:
-                printWriter.println("SAVE_READ_ONE_FILE");
+            case FILE_MODE_NO_WORK_WITH_FILES:
+                printWriter.println("FILE_MODE_NO_WORK_WITH_FILES");
                 break;
-            case WORK_WITH_TWO_FILES:
-                printWriter.println("SAVE_READ_TWO_FILES");
+            case FILE_MODE_WORK_WITH_ONE_FILE:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
-            default:
-                printWriter.println("DEFAULT (no work with files)");
+            case FILE_MODE_WORK_WITH_TWO_FILES:
+                printWriter.println("FILE_MODE_WORK_WITH_TWO_FILES");
                 break;
         }
     }

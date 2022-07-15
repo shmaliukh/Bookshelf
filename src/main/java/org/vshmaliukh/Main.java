@@ -12,20 +12,20 @@ public class Main {
 
     public static void main(String[] args) throws ParseException, IOException{
 
-        int typeOfConfig;
-
-        if(args.length>0){
-            typeOfConfig = Integer.parseInt(args[0]);
-        }
-        else{
-            typeOfConfig = 0;
-        }
-        if(typeOfConfig > 2 && typeOfConfig <6){ // TODO user must choose save/read type
-            MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
-        }
-        else {
-            Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out), true));
-            terminal.startWork(typeOfConfig, false);
-        }
+        //int typeOfConfig;
+//
+        //if(args.length>0){
+        //    typeOfConfig = Integer.parseInt(args[0]);
+        //}
+        //else{
+        //    typeOfConfig = 0;
+        //}
+        //if(typeOfConfig > 2 && typeOfConfig <6){ // TODO user must choose save/read type
+        //    MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
+        //}
+        //else {
+        //    Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out), true));
+        //    terminal.startWork(typeOfConfig, false);
+        //}
     }
 }
