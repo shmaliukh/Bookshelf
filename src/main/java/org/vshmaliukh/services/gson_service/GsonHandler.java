@@ -117,12 +117,6 @@ public class GsonHandler {
     }
 
     private List<Literature> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
-
-        @Data
-        class GsonContainer{
-            private String classOfLiterature;
-            private Object literature;
-        }
         createFile(fileName);
         List<Literature> literatureList = new ArrayList<>();
 
@@ -133,13 +127,10 @@ public class GsonHandler {
 
             if(jsonArray != null){
                 for (JsonElement element : jsonArray) {
-                    try {
-
-                        itemObject = element.getAsJsonObject().getAsJsonObject("literature");
-                        typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
-                    }
-                    catch (NullPointerException e){ //fixme
-                        informAboutErr("problem to read shelf from '"+ fileName +"' file when read shelf from file (NullPointerException)");
+                    if(element.getAsJsonObject().getAsJsonObject("literature") == null
+                            || element.getAsJsonObject().get("classOfLiterature").getAsString() == null){
+                        informAboutErr("problem to read shelf from '" + fileName
+                                + "' file when read shelf from file (NullPointerException)");
                         return literatureList;
                     }
                     else {
