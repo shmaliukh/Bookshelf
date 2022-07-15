@@ -1,7 +1,9 @@
 package org.vshmaliukh.client_server.server;
 
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.Terminal;
 
+@Slf4j
 public class TerminalToClientThread extends Thread{
 
 
@@ -16,15 +18,15 @@ public class TerminalToClientThread extends Thread{
 
     @Override
     public void run(){
-        System.out.println("        [Terminal] " + this.userCounter +" - start");
+        log.info("        [Terminal] " + this.userCounter +" - start");
         try {
             terminal.startWork(true);
         } catch (Exception e) {
-            System.err.println("Problem to start terminal");
+            log.error("Problem to start terminal");
             throw new RuntimeException(e);
         }
         finally {
-            System.out.println("        [Terminal] " + this.userCounter +" - stop");
+            log.info("        [Terminal] " + this.userCounter +" - stop");
         }
     }
 }

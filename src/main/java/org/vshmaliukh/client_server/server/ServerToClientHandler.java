@@ -29,7 +29,7 @@ public class ServerToClientHandler {
             scanner = new Scanner(socketForClient.getInputStream());
             printWriter = new PrintWriter(socketForClient.getOutputStream(), true);
         } catch (IOException e) {
-            log.info("Problem to start server for client");// TODO create constant value
+            log.error("Problem to start server for client");// TODO create constant value
             throw new RuntimeException(e);
         }
     }
