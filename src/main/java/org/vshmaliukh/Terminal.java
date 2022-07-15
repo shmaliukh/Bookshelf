@@ -107,6 +107,8 @@ public class Terminal {
             case FILE_MODE_WORK_WITH_TWO_FILES:
                 printWriter.println("FILE_MODE_WORK_WITH_TWO_FILES");
                 break;
+            default:
+                break;
         }
     }
 
@@ -413,7 +415,7 @@ public class Terminal {
         printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'author' value");
         printWriter.println(SORT_BOOKS_BY_PAGES_NUMBER + " - Sort by 'page number' value");
         printWriter.println(SORT_BOOKS_BY_DATE_OF_ISSUE + " - Sort by 'date' value");
-        printWriter.println("Enter another value to return");
+        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
     }
 
     /**
@@ -423,7 +425,7 @@ public class Terminal {
         printWriter.println("Choose type of sorting:");
         printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
         printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'page' value");
-        printWriter.println("Enter another value to return");
+        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
     }
 
     /**
@@ -435,7 +437,7 @@ public class Terminal {
         printWriter.println(ADD_CUSTOM_BOOK + " - Book");
         printWriter.println(ADD_RANDOM_MAGAZINE + " - Random Magazine");
         printWriter.println(ADD_RANDOM_BOOK + " - Random Book");
-        printWriter.println("Enter another value to return");
+        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
     }
 
     public void stop(){

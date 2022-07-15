@@ -37,4 +37,6 @@ public final class ConstantsForTerminal {
     public static final int SORT_MAGAZINES_BY_PAGES_NUMBER = 2;
 
     public static final int WRONG_INPUT = -1;
+
+    public static final String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
 }
