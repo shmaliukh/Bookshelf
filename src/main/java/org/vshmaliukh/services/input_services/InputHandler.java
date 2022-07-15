@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
-public class UserInputHandler {
+public abstract class InputHandler {
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
@@ -19,7 +19,7 @@ public class UserInputHandler {
     private String inputString = "";
     private int currentRecursionLevel;
 
-    protected UserInputHandler(Scanner scanner, PrintWriter printWriter) {
+    protected InputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
     }
@@ -75,7 +75,7 @@ public class UserInputHandler {
         }
     }
 
-    String getUserString(String message, Pattern pattern){
+    protected  String getUserString(String message, Pattern pattern){
         getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
@@ -88,7 +88,7 @@ public class UserInputHandler {
         return DEFAULT_STRING;
     }
 
-    int getUserInteger(String message, Pattern pattern){
+    protected  int getUserInteger(String message, Pattern pattern){
         getUserString(message);
         inputString = inputString.replaceAll("[\\D]", "");
         validationResult = isValidInputInteger(inputString, pattern);
@@ -102,7 +102,7 @@ public class UserInputHandler {
         return DEFAULT_INTEGER;
     }
 
-    Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
+    protected Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
         getUserString(message);
         validationResult = isValidInputDate(inputString, dateFormat);
         if (validationResult) {
@@ -120,7 +120,7 @@ public class UserInputHandler {
         readStringFromLine();
     }
 
-    boolean getUserBoolean(String message, Pattern pattern) {
+    protected boolean getUserBoolean(String message, Pattern pattern) {
         getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
@@ -136,6 +136,4 @@ public class UserInputHandler {
     private void informMessageToUser(String message) {
         printWriter.println(message);
     }
-
-
 }

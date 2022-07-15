@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
-public class InputHandlerForLiterature extends UserInputHandler{
+public class InputHandlerForLiterature extends InputHandler {
 
     public InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);

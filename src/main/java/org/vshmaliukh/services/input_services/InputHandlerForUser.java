@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
-public class InputHandlerForUser extends UserInputHandler{
+public class InputHandlerForUser extends InputHandler {
 
     public InputHandlerForUser(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
