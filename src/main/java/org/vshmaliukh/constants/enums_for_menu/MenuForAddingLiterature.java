@@ -1,14 +1,17 @@
 package org.vshmaliukh.constants.enums_for_menu;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+
+import static org.vshmaliukh.constants.ConstantsForTerminal.WRONG_INPUT;
 
 public enum MenuForAddingLiterature {
 
     ADD_CUSTOM_MAGAZINE(1, "Magazine"),
     ADD_CUSTOM_BOOK(2, "Book"),
     ADD_RANDOM_MAGAZINE(3, "Random Magazine"),
-    ADD_RANDOM_BOOK(4, "Random Book");
-    //UNKNOWN(-1);
+    ADD_RANDOM_BOOK(4, "Random Book"),
+    UNKNOWN(WRONG_INPUT);
 
     public final int i;
     public final String str;
@@ -29,11 +32,12 @@ public enum MenuForAddingLiterature {
         }
         printWriter.println("Enter another value to return");
     }
-    //public static MenuForAddingLiterature getByIndex(int index){
-    //    return Arrays
-    //            .stream(values())
-    //            .filter(e -> e.i == index)
-    //            .findFirst()
-    //            .orElse(UNKNOWN);
-    //}
+
+    public static MenuForAddingLiterature getByIndex(int index){
+        return Arrays
+                .stream(values())
+                .filter(e -> e.i == index)
+                .findFirst()
+                .orElse(UNKNOWN);
+    }
 }

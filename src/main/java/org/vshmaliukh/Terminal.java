@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
+import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 
 /**
  * @author ShmaliukhVlad
@@ -51,7 +52,7 @@ public class Terminal {
         inputHandlerForUser = new InputHandlerForUser(scanner, printWriter);
     }
 
-    public void startWithUserLogin(boolean userMode){
+    public void startWithUserConfig(boolean userMode){
         setUpUserName(userMode);
         setUpTypeOfWorkWithFiles(userMode);
     }
@@ -68,7 +69,7 @@ public class Terminal {
     public void startWork(boolean userMode) throws ParseException{
         printWriter.println("Terminal START");
 
-        startWithUserLogin(userMode);
+        startWithUserConfig(userMode);
         initServicesForTerminal(typeOfWorkWithFiles);
         informAboutFileTypeWork(typeOfWorkWithFiles);
 
@@ -123,7 +124,8 @@ public class Terminal {
      */
     private void generateUserInterface() throws ParseException {
         printMainMenu();
-        switch (getUserChoice()) {
+        MainMenu byIndex = getByIndex(getUserChoice());
+        switch (byIndex) {
             case ADD_NEW_LITERATURE:
                 printMenuForAddingLiterature();
                 addNewLiteratureObject();
@@ -255,7 +257,8 @@ public class Terminal {
      * Method give user ability to add new Literature object to Shelf
      */
     private void addNewLiteratureObject() throws ParseException {
-        switch (getUserChoice()) {
+        MenuForAddingLiterature byIndex = MenuForAddingLiterature.getByIndex(getUserChoice());
+        switch (byIndex) {
             case ADD_CUSTOM_MAGAZINE:
                 shelf.addLiteratureObject(getUserMagazine());
                 break;

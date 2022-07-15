@@ -1,6 +1,9 @@
 package org.vshmaliukh.constants.enums_for_menu;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
+
+import static org.vshmaliukh.constants.ConstantsForTerminal.WRONG_INPUT;
 
 public enum MainMenu {
 
@@ -10,26 +13,36 @@ public enum MainMenu {
     ARRIVE_LITERATURE(4, "Arrive  Literature object by index back to Shelf"),
     PRINT_SORTED_BOOKS(5, "Print list of available Books sorted by parameter..."),
     PRINT_SORTED_MAGAZINES(6, "Print list of available Magazines sorted by parameter..."),
+    PRINT_PRETTY_SHELF(8, "Print pretty table of current Shelf"),
     PRINT_SHELF(9, "Print current state of Shelf"),
-    EXIT(0, "Exit");
+    EXIT(0, "Exit"),
+    UNKNOWN(WRONG_INPUT);
 
-    private final int number;
+    private final int i;
     private final String str;
 
-    MainMenu(int number, String str){
-        this.number = number;
+    MainMenu(int i, String str){
+        this.i = i;
         this.str = str;
     }
 
-    public int getNumber() {
-        return number;
+    MainMenu(int i){
+        this(i, "");
     }
 
     public static void printMainMenu(PrintWriter printWriter){
         printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
         for (MainMenu value : values()) {
-            printWriter.println(value.number + " - " + value.str);
+            printWriter.println(value.i + " - " + value.str);
         }
         printWriter.println("Enter another value to return");
+    }
+
+    public static MainMenu getByIndex(int index){
+        return Arrays
+                .stream(values())
+                .filter(e -> e.i == index)
+                .findFirst()
+                .orElse(UNKNOWN);
     }
 }
