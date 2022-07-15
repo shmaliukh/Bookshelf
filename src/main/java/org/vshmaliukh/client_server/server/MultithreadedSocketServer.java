@@ -12,7 +12,7 @@ import static org.vshmaliukh.constants.ConstantsForClientServerModel.SOCKET_PORT
 @Slf4j
 public class MultithreadedSocketServer {
 
-    private final ServerSocket serverSocket;
+    private ServerSocket serverSocket;
 
     private int userCounter;
     private boolean isServerActive;
@@ -20,6 +20,11 @@ public class MultithreadedSocketServer {
     public MultithreadedSocketServer(){
         userCounter = 0;
         isServerActive = true;
+
+        initServerSocket();
+    }
+
+    private void initServerSocket() {
         try {
             serverSocket = new ServerSocket(SOCKET_PORT_NUMBER, MAX_CONNECTION_NUMBER);
         } catch (IOException e) {
