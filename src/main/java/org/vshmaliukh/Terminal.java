@@ -4,6 +4,10 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.constants.enums_for_menu.MainMenu;
+import org.vshmaliukh.constants.enums_for_menu.MenuForAddingLiterature;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
@@ -389,55 +393,20 @@ public class Terminal {
         return WRONG_INPUT;
     }
 
-    /**
-     * Method which simply print main menu
-     */
     private void printMainMenu(){
-        printWriter.println();
-        printWriter.println("Enter number of  command you wand to execute: (program ignores all not number symbols)");
-        printWriter.println(ADD_NEW_LITERATURE + " - Add new Literature object to Shelf");
-        printWriter.println(DELETE_LITERATURE + " - Delete  Literature object by index from Shelf");
-        printWriter.println(BORROW_LITERATURE + " - Borrow  Literature object by index from Shelf");
-        printWriter.println(ARRIVE_LITERATURE + " - Arrive  Literature object by index back to Shelf");
-        printWriter.println(PRINT_SORTED_BOOKS + " - Print list of available Books sorted by parameter...");
-        printWriter.println(PRINT_SORTED_MAGAZINES + " - Print list of available Magazines sorted by parameter...");
-        printWriter.println(PRINT_PRETTY_SHELF + " - Print pretty table of current state of Shelf");
-        printWriter.println(PRINT_SHELF + " - Print current state of Shelf");
-        printWriter.println(EXIT + " - Exit");
+        MainMenu.printMainMenu(printWriter);
     }
 
-    /**
-     * Method which simply print menu items for sorting books
-     */
     private void printMenuForBooksSorting(){
-        printWriter.println("Choose type of sorting:");
-        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
-        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'author' value");
-        printWriter.println(SORT_BOOKS_BY_PAGES_NUMBER + " - Sort by 'page number' value");
-        printWriter.println(SORT_BOOKS_BY_DATE_OF_ISSUE + " - Sort by 'date' value");
-        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
+        MenuForSortingBooks.printMenu(printWriter);
     }
 
-    /**
-     * Method which simply print menu items for sorting magazines
-     */
     private void printMenuForMagazinesSorting(){
-        printWriter.println("Choose type of sorting:");
-        printWriter.println(SORT_BOOKS_BY_NAME + " - Sort by 'name' value");
-        printWriter.println(SORT_BOOKS_BY_AUTHOR + " - Sort by 'page' value");
-        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
+        MenuForSortingMagazines.printMenu(printWriter);
     }
 
-    /**
-     * Method which simply print menu items for adding literature obj
-     */
     private void printMenuForAddingLiterature(){
-        printWriter.println("Choose type of literature you want to add:");
-        printWriter.println(ADD_CUSTOM_MAGAZINE + " - Magazine");
-        printWriter.println(ADD_CUSTOM_BOOK + " - Book");
-        printWriter.println(ADD_RANDOM_MAGAZINE + " - Random Magazine");
-        printWriter.println(ADD_RANDOM_BOOK + " - Random Book");
-        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
+        MenuForAddingLiterature.printMenu(printWriter);
     }
 
     public void stop(){

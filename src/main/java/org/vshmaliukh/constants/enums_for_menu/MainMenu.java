@@ -1,0 +1,35 @@
+package org.vshmaliukh.constants.enums_for_menu;
+
+import java.io.PrintWriter;
+
+public enum MainMenu {
+
+    ADD_NEW_LITERATURE(1, "Add new Literature object to Shelf"),
+    DELETE_LITERATURE(2, "Delete  Literature object by index from Shelf"),
+    BORROW_LITERATURE(3, "Borrow  Literature object by index from Shelf"),
+    ARRIVE_LITERATURE(4, "Arrive  Literature object by index back to Shelf"),
+    PRINT_SORTED_BOOKS(5, "Print list of available Books sorted by parameter..."),
+    PRINT_SORTED_MAGAZINES(6, "Print list of available Magazines sorted by parameter..."),
+    PRINT_SHELF(9, "Print current state of Shelf"),
+    EXIT(0, "Exit");
+
+    private final int number;
+    private final String str;
+
+    MainMenu(int number, String str){
+        this.number = number;
+        this.str = str;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public static void printMainMenu(PrintWriter printWriter){
+        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
+        for (MainMenu value : values()) {
+            printWriter.println(value.number + " - " + value.str);
+        }
+        printWriter.println("Enter another value to return");
+    }
+}
