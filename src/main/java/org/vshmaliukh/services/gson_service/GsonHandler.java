@@ -218,6 +218,6 @@ public class GsonHandler {
     }
 
     private void informAboutErr(String problemMessage) {
-        log.info("  [User] name: '" + path + "' // [GsonHandler] problem: " + problemMessage);
+        log.info("[User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
     }
 }
