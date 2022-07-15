@@ -9,19 +9,17 @@ import java.util.Scanner;
 
 public class Client {
 
-    private Socket socket;
+    private final Socket socket;
 
-    private Scanner socketScanner;
-    private Scanner localScanner;
-    private PrintWriter socketPrintWriter;
-    private PrintWriter localPrintWriter;
+    private final Scanner socketScanner;
+    private final Scanner localScanner;
+    private final PrintWriter socketPrintWriter;
+    private final PrintWriter localPrintWriter;
 
-    private Thread inThread;
-    private Thread outThread;
+    private final Thread inThread;
+    private final Thread outThread;
 
     public Client() throws IOException {
-
-        System.out.println("Client start");
 
         socket = new Socket(ConstantsForClientServerModel.HOST_NAME, ConstantsForClientServerModel.SOCKET_PORT_NUMBER);
 
@@ -29,6 +27,8 @@ public class Client {
         localScanner = new Scanner(System.in);
         socketPrintWriter = new PrintWriter(socket.getOutputStream(), true);
         localPrintWriter = new PrintWriter(System.out, true);
+
+        localPrintWriter.println("Client start");
 
         inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
         outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
