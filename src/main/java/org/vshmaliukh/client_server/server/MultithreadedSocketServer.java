@@ -29,7 +29,7 @@ public class MultithreadedSocketServer {
         }
     }
 
-    private void start() throws IOException {
+    public void start() throws IOException {
         System.out.println("Server start");
 
         while (isServerActive){
