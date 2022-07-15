@@ -27,7 +27,9 @@ public enum MenuForAddingLiterature {
 
     public static void printMenu(PrintWriter printWriter) {
         printWriter.println("Choose type of literature you want to add:");
-        for (MenuForAddingLiterature value : values()) {
+        MenuForAddingLiterature[] values = values();
+        for (int j = 0, valuesLength = values.length - 1; j < valuesLength; j++) {
+            MenuForAddingLiterature value = values[j];
             printWriter.println(value.i + " - " + value.str);
         }
         printWriter.println("Enter another value to return");
