@@ -6,7 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.services.InputHandlerForLiterature;
+import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 

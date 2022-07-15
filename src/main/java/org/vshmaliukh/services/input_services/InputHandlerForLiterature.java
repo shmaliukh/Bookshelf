@@ -1,4 +1,4 @@
-package org.vshmaliukh.services;
+package org.vshmaliukh.services.input_services;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
