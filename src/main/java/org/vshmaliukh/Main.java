@@ -1,6 +1,5 @@
 package org.vshmaliukh;
 
-import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
 
 import java.io.IOException;

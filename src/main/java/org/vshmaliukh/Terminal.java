@@ -439,9 +439,3 @@ public class Terminal {
     }
 }
 
-@Data
-@AllArgsConstructor
-class User {
-    private String name;
-}
-
