@@ -6,9 +6,9 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
-import org.vshmaliukh.services.UserInputHandler;
 
 import java.io.*;
 import java.text.ParseException;
@@ -32,7 +32,7 @@ public class Terminal {
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
-    private final UserInputHandler userInputHandler;
+    private final InputHandlerForLiterature userInputHandler;
 
     private PrettyTablePrinter prettyTablePrinter;
     private GsonHandler gsonHandler;
@@ -45,7 +45,7 @@ public class Terminal {
         isActiveTerminal = true;
         shelf = new Shelf(printWriter);
 
-        userInputHandler = new UserInputHandler(scanner, printWriter);
+        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
     }
 
     public void startWork(int typeOfWorkWithFiles, boolean userMode) throws ParseException{

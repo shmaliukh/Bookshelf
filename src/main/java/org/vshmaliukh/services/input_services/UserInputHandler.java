@@ -1,4 +1,4 @@
-package org.vshmaliukh.services;
+package org.vshmaliukh.services.input_services;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -8,7 +8,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
 public class UserInputHandler {
@@ -76,7 +75,7 @@ public class UserInputHandler {
         }
     }
 
-    private String getUserString(String message, Pattern pattern){
+    String getUserString(String message, Pattern pattern){
         getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
@@ -89,7 +88,7 @@ public class UserInputHandler {
         return DEFAULT_STRING;
     }
 
-    private int getUserInteger(String message, Pattern pattern){
+    int getUserInteger(String message, Pattern pattern){
         getUserString(message);
         inputString = inputString.replaceAll("[\\D]", "");
         validationResult = isValidInputInteger(inputString, pattern);
@@ -103,7 +102,7 @@ public class UserInputHandler {
         return DEFAULT_INTEGER;
     }
 
-    private Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
+    Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
         getUserString(message);
         validationResult = isValidInputDate(inputString, dateFormat);
         if (validationResult) {
@@ -121,7 +120,7 @@ public class UserInputHandler {
         readStringFromLine();
     }
 
-    private boolean getUserBoolean(String message, Pattern pattern) {
+    boolean getUserBoolean(String message, Pattern pattern) {
         getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
@@ -138,39 +137,5 @@ public class UserInputHandler {
         printWriter.println(message);
     }
 
-    public String getUserName(){
-        return getUserString(
-                MESSAGE_ENTER_USER_NAME,
-                PATTERN_FOR_USER_NAME);
-    }
 
-    public String getUserLiteratureName() {
-        return getUserString(
-                MESSAGE_ENTER_LITERATURE_NAME,
-                PATTERN_FOR_NAME);
-    }
-
-    public String getUserLiteratureAuthor() {
-        return getUserString(
-                MESSAGE_ENTER_LITERATURE_AUTHOR,
-                PATTERN_FOR_AUTHOR);
-    }
-
-    public boolean getUserLiteratureIsBorrowed() {
-        return getUserBoolean(
-                MESSAGE_ENTER_LITERATURE_IS_BORROWED,
-                PATTERN_FOR_IS_BORROWED);
-    }
-
-    public int getUserLiteraturePages() {
-        return getUserInteger(
-                MESSAGE_ENTER_LITERATURE_PAGES_NUMBER,
-                PATTERN_FOR_PAGES);
-    }
-
-    public Date getUserDateOfIssue() throws ParseException {
-        return getUserDate(
-                MESSAGE_ENTER_LITERATURE_DATE,
-                DATE_FORMAT);
-    }
 }
