@@ -142,6 +142,10 @@ public class GsonHandler {
                         informAboutErr("problem to read shelf from '"+ fileName +"' file when read shelf from file (NullPointerException)");
                         return literatureList;
                     }
+                    else {
+                        itemObject = element.getAsJsonObject().getAsJsonObject("literature");
+                        typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
+                    }
                     literatureList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
                 }
                 closeFileReader();
