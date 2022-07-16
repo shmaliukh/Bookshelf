@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 public class TablePrinter {
 
-    private static final String ITEM_SEPARATOR = "|";
-    private static final String ITEM_SPACE = " ";
+    public static final String ITEM_SEPARATOR = "|";
+    public static final String ITEM_SPACE = " ";
 
 
     PrintWriter printWriter;
