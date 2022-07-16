@@ -46,6 +46,18 @@ class TablePrinterTest {
         assertEquals(expectedStr, tablePrinter.getLineString(stringList));
     }
 
+    @Test
+    void testGetThreeItemsLine_format(){//TODO rename test name
+        List<String> stringList = new ArrayList<>(Arrays.asList("0 item", "1 item", "2 item"));
+
+        String expectedStr = ITEM_SEPARATOR
+                + ITEM_SPACE + stringList.get(0) + ITEM_SPACE + ITEM_SEPARATOR
+                + ITEM_SPACE + stringList.get(1) + ITEM_SPACE + ITEM_SEPARATOR
+                + ITEM_SPACE + stringList.get(2) + ITEM_SPACE + ITEM_SEPARATOR;
+
+        assertEquals(expectedStr, tablePrinter.titleList.toString());
+    }
+
 
     @Test
     void test(){
@@ -60,9 +72,8 @@ class TablePrinterTest {
         tableList.add(stringList3);
 
 
-
-
         tablePrinter.printTable(tableList);
+
     }
 
 }

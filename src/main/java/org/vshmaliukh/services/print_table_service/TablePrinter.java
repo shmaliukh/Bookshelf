@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -13,6 +14,7 @@ public class TablePrinter {
     public static final String ITEM_SEPARATOR = "|";
     public static final String ITEM_SPACE = " ";
 
+    String format;
 
     PrintWriter printWriter;
 
@@ -37,19 +39,55 @@ public class TablePrinter {
         this.tableList = tableList;
     }
 
+    void initFormat() {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Integer> sizeList = new ArrayList<>();
+
+        //tableList.forEach();
+        // TODO
+
+        format = stringBuilder.toString();
+    }
+
+    void initFormat(List<List<String>> customTableList) {
+        List<Integer> sizeList = getMaxSpaceSizeListForItems(customTableList);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ITEM_SEPARATOR);
+        for (Integer spacesNumber : sizeList) {
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append("%");
+            stringBuilder.append(spacesNumber);
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(ITEM_SEPARATOR);
+        }
+        format = stringBuilder.toString();
+    }
+
+    private List<Integer> getMaxSpaceSizeListForItems(List<List<String>> customTableList) {
+        List<Integer> integerList = new ArrayList<>();
+        List<String> firstStrList = customTableList.get(0); // TODO create sorted method where first value (str.length) is the largest one
+        for (String s : firstStrList) {
+            integerList.add(s.length());
+        }
+        return integerList;
+    }
+
     void printTable() {
+        initFormat(tableList);
         tableList.forEach(this::printLine);
     }
 
     void printTable(List<List<String>> customTableList) {
+        initFormat(customTableList);
         customTableList.forEach(this::printLine);
     }
 
     void printLine(List<String> stringList) {
         printWriter.println(getLineString(stringList));
     }
-    
-    String getLineString (List<String> stringList){
+
+    String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(ITEM_SEPARATOR);
         for (String value : stringList) {
@@ -58,7 +96,23 @@ public class TablePrinter {
             stringBuilder.append(ITEM_SPACE);
             stringBuilder.append(ITEM_SEPARATOR);
         }
-        return stringBuilder.toString();
+
+        return String.format(format, stringBuilder);
+    }
+
+    String getLineString(List<String> stringList, String formatStr) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ITEM_SEPARATOR);
+        for (String value : stringList) {
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(value);
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(ITEM_SEPARATOR);
+        }
+
+        initFormat(Collections.singletonList(stringList));
+        formatStr = format; // TODO extract as separate
+        return String.format(formatStr, stringBuilder);
     }
 
 
