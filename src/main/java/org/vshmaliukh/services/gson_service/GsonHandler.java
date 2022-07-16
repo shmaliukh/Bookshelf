@@ -1,7 +1,6 @@
 package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
@@ -14,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 
@@ -98,7 +98,7 @@ public class GsonHandler {
                     readShelfFromGsonFile(fileNameForAll).forEach(shelf::addLiteratureObject);
                 }
                 catch (FileNotFoundException e) {
-                    informAboutErr("(problem to read from one Json file (FileNotFoundException)");
+                    informAboutErr("(problem to read '" + path + "'from one Json file (FileNotFoundException)");
                 }
                 break;
             case WORK_WITH_TWO_FILES:
@@ -107,7 +107,7 @@ public class GsonHandler {
                     readShelfFromGsonFile(fileNameForMagazines).forEach(shelf::addLiteratureObject);
                 }
                 catch (FileNotFoundException e) {
-                    informAboutErr("(problem to read from two Json files (FileNotFoundException)");
+                    informAboutErr("(problem to read '" + path + "' from two Json files (FileNotFoundException)");
                 }
                 break;
             default:
@@ -117,12 +117,6 @@ public class GsonHandler {
     }
 
     private List<Literature> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
-
-        @Data
-        class GsonContainer{
-            private String classOfLiterature;
-            private Object literature;
-        }
         createFile(fileName);
         List<Literature> literatureList = new ArrayList<>();
 
@@ -133,15 +127,14 @@ public class GsonHandler {
 
             if(jsonArray != null){
                 for (JsonElement element : jsonArray) {
-                    try {
-
-                        itemObject = element.getAsJsonObject().getAsJsonObject("literature");
-                        typeOfClass = element.getAsJsonObject().get("classOfLiterature").getAsString();
-                    }
-                    catch (NullPointerException e){ //fixme
-                        informAboutErr("problem to read shelf from '"+ fileName +"' file when read shelf from file (NullPointerException)");
+                    itemObject = getJsonObjectFromJsonElement(element);
+                    typeOfClass = getStringFromJsonElement(element);
+                    if(itemObject == null || typeOfClass == null){
+                        informAboutErr("problem to read shelf from '" + path
+                                + "' file when read shelf from file (NullPointerException)");
                         return literatureList;
                     }
+
                     literatureList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
                 }
                 closeFileReader();
@@ -149,10 +142,29 @@ public class GsonHandler {
             }
         }
         else{
-            informAboutErr( "'"+ fileName +"' file not found when read shelf from file (file not exists)");
+            informAboutErr( "'"+ path +"' file not found when read shelf from file (file not exists)");
             return literatureList;
         }
         return literatureList;
+    }
+
+    private JsonObject getJsonObjectFromJsonElement(JsonElement element) {
+        JsonObject itemObject;
+        itemObject = Optional.ofNullable(element)
+                        .map(JsonElement::getAsJsonObject)
+                        .map(o -> o.getAsJsonObject("literature"))
+                        .orElse(null);
+        return itemObject;
+    }
+
+    private String getStringFromJsonElement(JsonElement element) {
+        String typeOfClass;
+        typeOfClass = Optional.ofNullable(element)
+                .map(JsonElement::getAsJsonObject)
+                .map(o -> o.get("classOfLiterature"))
+                .map(JsonElement::getAsString)
+                .orElse (null);
+        return typeOfClass;
     }
 
     private Literature getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
@@ -171,18 +183,18 @@ public class GsonHandler {
             fr = new FileReader(file);
         } catch (FileNotFoundException e) {
             closeFileReader();
-            informAboutErr("problem to read shelf from file");
+            informAboutErr("problem to read shelf from file '" + path + "'");
         }
         JsonArray jsonArray;
         try{
             jsonArray = gson.fromJson(fr, JsonArray.class);
             if(jsonArray == null){
-                informAboutErr("problem to read shelf from file (jsonArray == null)");
+                informAboutErr("problem to read shelf from file '" + path + "' (jsonArray == null)");
                 return new JsonArray();
             }
         }
         catch (JsonSyntaxException e){
-            informAboutErr("problem to read shelf from file (JsonSyntaxException)");
+            informAboutErr("problem to read shelf from file '" + path + "'(JsonSyntaxException)");
             return null;
         }
         finally {
@@ -206,6 +218,6 @@ public class GsonHandler {
     }
 
     private void informAboutErr(String problemMessage) {
-        log.info("  [User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
+        log.error("[User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
     }
 }

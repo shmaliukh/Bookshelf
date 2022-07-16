@@ -1,5 +1,8 @@
 package org.vshmaliukh.constants;
 
+import static org.vshmaliukh.constants.ConstantsForTerminal.FILE_MODE_WORK_WITH_ONE_FILE;
+import static org.vshmaliukh.constants.ConstantsForTerminal.FILE_MODE_WORK_WITH_TWO_FILES;
+
 public final class ConstantsForGsonHandler {
 
     private ConstantsForGsonHandler(){}
@@ -12,6 +15,7 @@ public final class ConstantsForGsonHandler {
 
     public static final String HOME_PROPERTY = System.getProperty("user.home");
 
-    public static final int WORK_WITH_ONE_FILE = 1;
-    public static final int WORK_WITH_TWO_FILES = 2;
+    public static final int WORK_WITH_ONE_FILE = FILE_MODE_WORK_WITH_ONE_FILE;
+    public static final int WORK_WITH_TWO_FILES = FILE_MODE_WORK_WITH_TWO_FILES;
+
 }

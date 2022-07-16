@@ -1,5 +1,6 @@
 package org.vshmaliukh.client_server.server;
 
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.Terminal;
 
 import java.io.IOException;
@@ -7,33 +8,34 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ServerToClientHandler { // TODO rename class
+@Slf4j
+public class ServerToClientHandler {
 
-    private Socket socketForClient;
-    private int userCounter;
-    private int terminalConfig;
+    private final Socket socketForClient;
+    private final int userCounter;
 
     private Scanner scanner;
     private PrintWriter printWriter;
 
-    private TerminalToClientThread terminalToClientThread;
-
-    public ServerToClientHandler(Socket socket, int userCounter, int terminalConfig){
-        socketForClient = socket;
+    public ServerToClientHandler(Socket socket, int userCounter){
+        this.socketForClient = socket;
         this.userCounter = userCounter;
-        this.terminalConfig = terminalConfig;
 
+        initScannerAndPrinter();
+    }
+
+    private void initScannerAndPrinter() {
         try {
             scanner = new Scanner(socketForClient.getInputStream());
             printWriter = new PrintWriter(socketForClient.getOutputStream(), true);
         } catch (IOException e) {
-            System.err.println("Problem to start server for client");
+            log.error("Problem to start server for client");// TODO create constant value
             throw new RuntimeException(e);
         }
     }
 
-    void startThreads(){
-        terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner,printWriter), terminalConfig);
+    void start(){
+        TerminalToClientThread terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner, printWriter));
         terminalToClientThread.start();
     }
 }

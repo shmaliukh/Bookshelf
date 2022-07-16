@@ -8,16 +8,10 @@ import java.util.Scanner;
 import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
-public class InputHandlerForLiterature extends UserInputHandler{
+public class InputHandlerForLiterature extends InputHandler {
 
     public InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
-    }
-
-    public String getUserName(){
-        return getUserString(
-                MESSAGE_ENTER_USER_NAME,
-                PATTERN_FOR_USER_NAME);
     }
 
     public String getUserLiteratureName() {
@@ -44,7 +38,7 @@ public class InputHandlerForLiterature extends UserInputHandler{
                 PATTERN_FOR_PAGES);
     }
 
-    public Date getUserDateOfIssue() throws ParseException {
+    public Date getUserLiteratureDateOfIssue() throws ParseException {
         return getUserDate(
                 MESSAGE_ENTER_LITERATURE_DATE,
                 DATE_FORMAT);

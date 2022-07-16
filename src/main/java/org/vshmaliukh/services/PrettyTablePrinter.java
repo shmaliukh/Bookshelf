@@ -4,6 +4,9 @@ import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
+import org.vshmaliukh.constants.enums_for_menu.MenuForAddingLiterature;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -147,7 +150,8 @@ public class PrettyTablePrinter {
 
     public void printSortedBooks(int typeOfSorting, Shelf shelf){
         List<Literature> bookList = new ArrayList<>();
-        switch (typeOfSorting){
+        MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
+        switch (byIndex) {
             case SORT_BOOKS_BY_NAME:
                 bookList.addAll(shelf.getSortedBooksByName());
                 break;
@@ -168,11 +172,12 @@ public class PrettyTablePrinter {
 
     public void printSortedMagazines(int typeOfSorting, Shelf shelf) {
         List<Literature> magazineList = new ArrayList<>();
-        switch (typeOfSorting){
+        MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
+        switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:
                 magazineList.addAll(shelf.getSortedMagazinesByName());
                 break;
-            case SORT_MAGAZINES_BY_PAGES_NUMBER:
+            case SORT_MAGAZINES_BY_PAGES:
                 magazineList.addAll(shelf.getSortedMagazinesByPages());
                 break;
             default:

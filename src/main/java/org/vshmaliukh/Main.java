@@ -1,32 +1,47 @@
 package org.vshmaliukh;
 
-import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws ParseException, IOException{
+    public static void main(String[] args){
+        TerminalThread terminalThread = new TerminalThread();
+        terminalThread.start();
 
-        int typeOfConfig;
+        ServerThread serverThread = new ServerThread();
+        serverThread.start();
+    }
 
-        if(args.length>0){
-            typeOfConfig = Integer.parseInt(args[0]);
+    static class TerminalThread extends Thread{
+        private final Scanner scanner = new Scanner(System.in);
+        private final PrintWriter printWriter = new PrintWriter(System.out, true);
+        private final Terminal terminal = new Terminal(scanner, printWriter);
+
+        @Override
+        public synchronized void run() {
+            try {
+                terminal.startWork(false);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
         }
-        else{
-            typeOfConfig = 0;
-        }
-        if(typeOfConfig > 2 && typeOfConfig <6){ // TODO user must choose save/read type
-            MultithreadedSocketServer.main(new String[]{String.valueOf(typeOfConfig)});
-        }
-        else {
-            Terminal terminal = new Terminal(new Scanner(System.in), new PrintWriter(new OutputStreamWriter(System.out), true));
-            terminal.startWork(typeOfConfig, false);
+    }
+
+    static class ServerThread extends Thread{
+        MultithreadedSocketServer multithreadedSocketServer = new MultithreadedSocketServer();
+
+        @Override
+        public synchronized void run() {
+            try {
+                multithreadedSocketServer.start();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

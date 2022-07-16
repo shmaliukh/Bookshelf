@@ -5,6 +5,7 @@ import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
+import org.vshmaliukh.services.input_services.InputHandlerForUser;
 
 import java.io.*;
 import java.text.ParseException;
@@ -69,7 +70,7 @@ class InputTest {
     void testDateInput(String  expectedOut, String input) throws ParseException {
         userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
         DATE_FORMAT.setLenient(false);
-        Date currentDate = userInputHandler.getUserDateOfIssue();
+        Date currentDate = userInputHandler.getUserLiteratureDateOfIssue();
         Date expectedDate = DATE_FORMAT.parse(expectedOut);
         assertEquals(expectedDate.getTime(),  currentDate.getTime());
     }
@@ -164,7 +165,7 @@ class InputTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_DATE, userInputHandler.getUserDateOfIssue());
+        assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
     }
 
     @Test
@@ -178,8 +179,16 @@ class InputTest {
     @Test
     void testRecursion_wrongInputMaxTimesForUserName(){
         scanner = new Scanner(entersForRecursion);
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        InputHandlerForUser userInputHandler = new InputHandlerForUser(scanner, printWriter);
 
         assertEquals(DEFAULT_STRING, userInputHandler.getUserName());
+    }
+
+    @Test
+    void testRecursion_wrongInputMaxTimesForTypeOfWorkWithFiles(){
+        scanner = new Scanner(entersForRecursion);
+        InputHandlerForUser userInputHandler = new InputHandlerForUser(scanner, printWriter);
+
+        assertEquals(DEFAULT_INTEGER, userInputHandler.getTypeOfWorkWithFiles());
     }
 }
