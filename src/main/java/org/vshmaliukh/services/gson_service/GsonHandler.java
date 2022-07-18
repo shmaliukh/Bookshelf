@@ -44,6 +44,8 @@ public class GsonHandler {
     }
 
     private void generateFileNames() {
+
+
         fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;

@@ -38,8 +38,7 @@ public class Terminal {
     private final PrintWriter printWriter;
     private final InputHandlerForUser inputHandlerForUser;
     private InputHandlerForLiterature inputHandlerForLiterature;
-
-    private TablePrinter tablePrinter;
+    
     private ConvertorToStringForLiterature convertorToStringForLiterature;
 
     private GsonHandler gsonHandler;
@@ -86,9 +85,7 @@ public class Terminal {
         randomNumber = new Random();
         gsonHandler = new GsonHandler(typeOfWorkWithFiles, user.getName(), printWriter);
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
-
-        tablePrinter = new TablePrinter(printWriter);
-        tablePrinter.setNeedIndex(true);
+        
         convertorToStringForLiterature = new ConvertorToStringForLiterature();
     }
 
@@ -166,7 +163,7 @@ public class Terminal {
      */
     private void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        tablePrinter.printTable(titleListForBooks, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()));
+        TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()));
     }
 
     /**
@@ -210,7 +207,7 @@ public class Terminal {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()));
+            TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()));
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -223,7 +220,7 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
+            TablePrinter.printTable(printWriter, titleListForBooks ,convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -236,7 +233,7 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
+            TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -439,7 +436,7 @@ public class Terminal {
             default:
                 break;
         }
-        tablePrinter.printTable(titleListForBooks, convertorToStringForLiterature.getTable(bookList));
+        TablePrinter.printTable(printWriter,titleListForBooks, convertorToStringForLiterature.getTable(bookList));
     }
 
     public void printSortedMagazines(int typeOfSorting) {
@@ -455,7 +452,7 @@ public class Terminal {
             default:
                 break;
         }
-        tablePrinter.printTable(titleListForMagazine, convertorToStringForLiterature.getTable(magazineList));
+        TablePrinter.printTable(printWriter,titleListForMagazine, convertorToStringForLiterature.getTable(magazineList));
     }
 
 

@@ -4,13 +4,14 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConvertorToStringForLiterature {
 
-    ConvertorToStringForMagazine convertorToStringForMagazine = new ConvertorToStringForMagazine();
-    ConvertorToStringForBook convertorToStringForBook = new ConvertorToStringForBook();
+    private final ConvertorToStringForMagazine convertorToStringForMagazine = new ConvertorToStringForMagazine();
+    private final ConvertorToStringForBook convertorToStringForBook = new ConvertorToStringForBook();
 
     public static final String MAGAZINE_CLASS_NAME = Magazine.class.getCanonicalName();
     public static final String BOOK_CLASS_NAME = Book.class.getCanonicalName();
@@ -21,11 +22,11 @@ public class ConvertorToStringForLiterature {
         } else if (literature.getClass().getCanonicalName().equals(BOOK_CLASS_NAME)) {
             return convertorToStringForBook.convertObjectToListOfString((Book) literature);
         }
-        return null; //FIXME fix cast + catch NULL
+        return Collections.emptyList(); //FIXME fix cast
     }
 
-    public List<List<String>> getTable(List<? extends Literature> literature){
-        return literature.stream()
+    public List<List<String>> getTable(List<? extends Literature> literatures){
+        return literatures.stream()
                 .map(this::getConvertedLiterature)
                 .collect(Collectors.toList());
     }

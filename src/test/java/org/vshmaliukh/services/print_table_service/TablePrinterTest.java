@@ -1,141 +1,215 @@
 package org.vshmaliukh.services.print_table_service;
 
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
-import static org.vshmaliukh.services.print_table_service.TablePrinter.*;
 
 class TablePrinterTest {
 
-    PrintWriter printWriter = new PrintWriter(System.out, true);
-    TablePrinter tablePrinter = new TablePrinter(printWriter);
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    PrintStream printStream = new PrintStream(baos);
+
+    PrintWriter printWriter = new PrintWriter(printStream, true);
 
     @Test
-    void testGetOneItemLine() {//TODO rename test name
-        List<String> stringList = new ArrayList<>(Collections.singletonList("0 item"));
-
-        String expectedStr = ITEM_SEPARATOR + ITEM_SPACE + stringList.get(0) + ITEM_SPACE + ITEM_SEPARATOR;
-
-        assertEquals(expectedStr, tablePrinter.getLineString(stringList));
+    void testOneItemToPrint_onlyTitle(){
+        String expectedString =
+                "┌─────────┐" + System.lineSeparator() +
+                "│ 1 title │" + System.lineSeparator() +
+                "│─────────│" + System.lineSeparator() +
+                "└─────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title")),
+                new ArrayList<>());
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testGetTwoItemsLine() {//TODO rename test name
-        List<String> stringList = new ArrayList<>(Arrays.asList("0 item", "1 item"));
-
-        String expectedStr = ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(0) + ITEM_SPACE + ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(1) + ITEM_SPACE + ITEM_SEPARATOR;
-
-        assertEquals(expectedStr, tablePrinter.getLineString(stringList));
+    void testTwoItemsToPrint_onlyTitle(){
+        String expectedString =
+                "┌─────────┬─────────┐" + System.lineSeparator() +
+                "│ 1 title │ 2 title │" + System.lineSeparator() +
+                "│─────────┼─────────│" + System.lineSeparator() +
+                "└─────────┴─────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title", "2 title")),
+                new ArrayList<>());
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testGetThreeItemsLine() {//TODO rename test name
-        List<String> stringList = new ArrayList<>(Arrays.asList("0 item", "1 item", "2 item"));
-
-        String expectedStr = ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(0) + ITEM_SPACE + ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(1) + ITEM_SPACE + ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(2) + ITEM_SPACE + ITEM_SEPARATOR;
-
-        assertEquals(expectedStr, tablePrinter.getLineString(stringList));
+    void testThreeItemsToPrint_onlyTitle(){
+        String expectedString =
+                "┌─────────┬─────────┬─────────┐" + System.lineSeparator() +
+                "│ 1 title │ 2 title │ 3 title │" + System.lineSeparator() +
+                "│─────────┼─────────┼─────────│" + System.lineSeparator() +
+                "└─────────┴─────────┴─────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title", "2 title", "3 title")),
+                new ArrayList<>());
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testGetThreeItemsLine_format() {//TODO rename test name
-        List<String> stringList = new ArrayList<>(Arrays.asList("0 item", "1 item", "2 item"));
-
-        String expectedStr = ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(0) + ITEM_SPACE + ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(1) + ITEM_SPACE + ITEM_SEPARATOR
-                + ITEM_SPACE + stringList.get(2) + ITEM_SPACE + ITEM_SEPARATOR;
-
-        assertEquals(expectedStr, tablePrinter.getLineString(stringList));
+    void testOneItemToPrint_onlyTableItems(){
+        String expectedString =
+                "┌────────┐" + System.lineSeparator() +
+                "│ ~~     │" + System.lineSeparator() +
+                "│────────│" + System.lineSeparator() +
+                "│ 1 item │" + System.lineSeparator() +
+                "└────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item")))));
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testTableSort() {
-        String expectedStr = "[[0, 1, 2, 3], [0, 1, 2], [0, 1]]";
-        List<String> stringList1 = new ArrayList<>(Arrays.asList("0", "1"));
-        List<String> stringList2 = new ArrayList<>(Arrays.asList("0", "1", "2"));
-        List<String> stringList3 = new ArrayList<>(Arrays.asList("0", "1", "2", "3"));
-        List<List<String>> tableList = new ArrayList<>();
-        tableList.add(stringList1);
-        tableList.add(stringList2);
-        tableList.add(stringList3);
-        tablePrinter = new TablePrinter(printWriter, new ArrayList<>(), tableList);
-
-        tablePrinter.sortTable();
-        assertEquals(expectedStr, tablePrinter.getTableList().toString());
+    void testTwoItemsToPrint_oneLineTableItems(){
+        String expectedString =
+                "┌────────┬────────┐" + System.lineSeparator() +
+                "│ ~~     │ ~~     │" + System.lineSeparator() +
+                "│────────┼────────│" + System.lineSeparator() +
+                "│ 1 item │ 2 item │" + System.lineSeparator() +
+                "└────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item")))));
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testFillSortedTableWithEmptyValuesIfNecessary() {
-        String expectedStr = "[[0, 1], [0, " + EMPTY_VALUE + "]]";
-        List<String> stringList1 = new ArrayList<>(Collections.singletonList("0"));
-        List<String> stringList2 = new ArrayList<>(Arrays.asList("0", "1"));
-        List<List<String>> tableList = new ArrayList<>();
-        tableList.add(stringList1);
-        tableList.add(stringList2);
-        tablePrinter = new TablePrinter(printWriter, new ArrayList<>(), tableList);
-
-        tablePrinter.sortTable();
-        tablePrinter.fillAllWithDefaultValues();
-        assertEquals(expectedStr, tablePrinter.getTableList().toString());
+    void testThreeItemsToPrint_oneLineTableItems(){
+        String expectedString =
+                "┌────────┬────────┬────────┐" + System.lineSeparator() +
+                "│ ~~     │ ~~     │ ~~     │" + System.lineSeparator() +
+                "│────────┼────────┼────────│" + System.lineSeparator() +
+                "│ 1 item │ 2 item │ 3 item │" + System.lineSeparator() +
+                "└────────┴────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item", "3 item")))));
+        assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
-    void testCountTableMaxSpaceWidth() {
-        String expectedStr = "[[0, 1], [0, " + EMPTY_VALUE + "]]";
-        List<String> stringList1 = new ArrayList<>(Arrays.asList("0_", "1__"));
-        List<String> stringList2 = new ArrayList<>(Arrays.asList("0__", "1", "2"));
-        List<String> stringList3 = new ArrayList<>(Arrays.asList("0", "1", "2", "3"));
-        List<List<String>> tableList = new ArrayList<>();
-        tableList.add(stringList1);
-        tableList.add(stringList2);
-        tableList.add(stringList3);
-        tablePrinter = new TablePrinter(printWriter, new ArrayList<>(), tableList);
-
-        tablePrinter.printTable();
-        // TODO end the test
-        //assertEquals(expectedStr, tablePrinter.sizeList);
+    void testTwoLineItemsToPrint_oneItemForLine(){
+        String expectedString =
+                "┌────────┐" + System.lineSeparator() +
+                "│ ~~     │" + System.lineSeparator() +
+                "│────────│" + System.lineSeparator() +
+                "│ 1 item │" + System.lineSeparator() +
+                "│ 2 item │" + System.lineSeparator() +
+                "└────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item")),
+                new ArrayList<>(Arrays.asList("2 item")))));
+        assertEquals(expectedString, baos.toString().trim());
     }
 
+    @Test
+    void testThreeLineItemsToPrint_oneItemForLine(){
+        String expectedString =
+                "┌────────┐" + System.lineSeparator() +
+                "│ ~~     │" + System.lineSeparator() +
+                "│────────│" + System.lineSeparator() +
+                "│ 1 item │" + System.lineSeparator() +
+                "│ 2 item │" + System.lineSeparator() +
+                "│ 3 item │" + System.lineSeparator() +
+                "└────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item")),
+                new ArrayList<>(Arrays.asList("2 item")),
+                new ArrayList<>(Arrays.asList("3 item")))));
+        assertEquals(expectedString, baos.toString().trim());
+    }
 
     @Test
-    void test() throws ParseException {
-        ConvertorToStringForMagazine convertorMagazine = new ConvertorToStringForMagazine();
-        ConvertorToStringForBook convertorBook = new ConvertorToStringForBook();
+    void testThreeLineItemsToPrint_twoItemsForLine(){
+        String expectedString =
+                "┌────────┬────────┐" + System.lineSeparator() +
+                "│ ~~     │ ~~     │" + System.lineSeparator() +
+                "│────────┼────────│" + System.lineSeparator() +
+                "│ 1 item │ 2 item │" + System.lineSeparator() +
+                "│ 3 item │ ~~     │" + System.lineSeparator() +
+                "│ 4 item │ ~~     │" + System.lineSeparator() +
+                "└────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item")),
+                new ArrayList<>(Arrays.asList("3 item")),
+                new ArrayList<>(Arrays.asList("4 item")))));
+        assertEquals(expectedString, baos.toString().trim());
+    }
 
-        List<String> titleList = new ArrayList<>();
-        List<List<String>> tableList = new ArrayList<>();
+    @Test
+    void testThreeLineItemsToPrint_threeItemsForLine_diffLength(){
+        String expectedString =
+                "┌────────┬─────────────┬────────┐" + System.lineSeparator() +
+                "│ ~~     │ ~~          │ ~~     │" + System.lineSeparator() +
+                "│────────┼─────────────┼────────│" + System.lineSeparator() +
+                "│ 1 item │ 2 item_____ │ 3 item │" + System.lineSeparator() +
+                "│ 4 item │ 5 item      │ ~~     │" + System.lineSeparator() +
+                "│ 6 item │ ~~          │ ~~     │" + System.lineSeparator() +
+                "└────────┴─────────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item")),
+                new ArrayList<>(Arrays.asList("4 item", "5 item")),
+                new ArrayList<>(Arrays.asList("6 item")))));
+        assertEquals(expectedString, baos.toString().trim());
+    }
 
-        Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", DATE_FORMAT.parse("10-07-2022"));
-        Book book2 = new Book("noNameBook2___", 22, true, "NoAuthor2___", DATE_FORMAT.parse("13-07-2022"));
+    @Test
+    void testTableWithDiffParams(){
+        String expectedString =
+                "┌───────────┬─────────────┬─────────┬─────────┐" + System.lineSeparator() +
+                "│ 1 title   │ 2 title     │ 3 title │ 4 title │" + System.lineSeparator() +
+                "│───────────┼─────────────┼─────────┼─────────│" + System.lineSeparator() +
+                "│ 1 item    │ 2 item_____ │ 3 item  │ 4 item  │" + System.lineSeparator() +
+                "│ 4 item    │ 5 item      │ ~~      │ ~~      │" + System.lineSeparator() +
+                "│ 6 item___ │ ~~          │ ~~      │ ~~      │" + System.lineSeparator() +
+                "└───────────┴─────────────┴─────────┴─────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title", "2 title", "3 title", "4 title")),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item", "4 item")),
+                new ArrayList<>(Arrays.asList("4 item", "5 item")),
+                new ArrayList<>(Arrays.asList("6 item___")))));
+        assertEquals(expectedString, baos.toString().trim());
+    }
 
-        Magazine magazine1 = new Magazine("noNameMagazine1", 1, false);
-        Magazine magazine2 = new Magazine("noNameMagazine2___", 222222222, true);
-
-        tableList.add(convertorMagazine.convertObjectToListOfString(magazine1));
-        tableList.add(convertorMagazine.convertObjectToListOfString(magazine2));
-        tableList.add(convertorBook.convertObjectToListOfString(book1));
-        tableList.add(convertorBook.convertObjectToListOfString(book2));
-
-        //titleList.addAll(Arrays.asList("1", "2", "3", "4", "5", "6", "7"));
-
-        tablePrinter = new TablePrinter(printWriter, titleList, tableList);
-        tablePrinter.printTable();
-        // TODO end the test
+    @Test
+    void testTableWithDiffParams_2(){
+        String expectedString =
+                "┌─────────┬─────────────┬────────────┬─────────┬────────┐" + System.lineSeparator() +
+                "│ 1 title │ 2 title     │ 3 title___ │ 4 title │ ~~     │" + System.lineSeparator() +
+                "│─────────┼─────────────┼────────────┼─────────┼────────│" + System.lineSeparator() +
+                "│ 1 item  │ 2 item_____ │ 3 item     │ 4 item  │ 5 item │" + System.lineSeparator() +
+                "│ 4 item  │ 5 item      │ ~~         │ ~~      │ ~~     │" + System.lineSeparator() +
+                "│ 6 item  │ ~~          │ ~~         │ ~~      │ ~~     │" + System.lineSeparator() +
+                "└─────────┴─────────────┴────────────┴─────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title", "2 title", "3 title___", "4 title")),
+                new ArrayList<>(Arrays.asList(
+                new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item", "4 item", "5 item")),
+                new ArrayList<>(Arrays.asList("4 item", "5 item")),
+                new ArrayList<>(Arrays.asList("6 item")))));
+        assertEquals(expectedString, baos.toString().trim());
     }
 }

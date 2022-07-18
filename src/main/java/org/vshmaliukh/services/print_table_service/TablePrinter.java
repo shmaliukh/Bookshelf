@@ -4,52 +4,50 @@ import lombok.Data;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+
+import static org.vshmaliukh.constants.ConstantsForTablePrinter.*;
 
 @Data
 public class TablePrinter {
 
-    public static final String ITEM_SEPARATOR = "│";
-    public static final String ITEM_SPACE = " ";
-    public static final String EMPTY_VALUE = "~";
+    private final PrintWriter printWriter;
 
-    private PrintWriter printWriter;
-
-    private List<String> titleList;
-    private List<List<String>> tableList;
+    private final List<String> titleList;
+    private final List<List<String>> tableList;
 
     private List<Integer> sizeList = new ArrayList<>();
 
-    boolean isNeedIndex = false;
+    private boolean isNeedIndex = false;
 
-    public TablePrinter(PrintWriter printWriter) {
+    private TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList) {
         this.printWriter = printWriter;
-        this.titleList = new ArrayList<>();
+        this.titleList = new ArrayList<>(titleList);
         this.tableList = new ArrayList<>();
-    }
-
-    public TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList) {
-        this.printWriter = printWriter;
-        this.titleList = titleList;
-        this.tableList = tableList;
-    }
-
-    public void fillAllWithDefaultValues() { // TODO rename method
-        int max = 0;
-        max = Math.max(titleList.size(), max);
         for (List<String> stringList : tableList) {
-            max = Math.max(stringList.size(), max);
+            this.tableList.add(new ArrayList<>(stringList));
         }
-        appendWithDefaultValuesList(titleList, max);
+    }
+
+    public static void printTable(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList){
+        TablePrinter tablePrinter = new TablePrinter(printWriter, titleList, tableList);
+        tablePrinter.printFormattedTable();
+    }
+
+    public void appendTableWithDefaultValues() {
+        int maxSize = titleList.size();
         for (List<String> stringList : tableList) {
-            appendWithDefaultValuesList(stringList, max);
+            maxSize = Math.max(stringList.size(), maxSize);
+        }
+        appendWithDefaultValuesList(titleList, maxSize);
+        for (List<String> stringList : tableList) {
+            appendWithDefaultValuesList(stringList, maxSize);
         }
     }
 
     private void appendWithDefaultValuesList(List<String> stringList, int max) {
         while (stringList.size() < max) {
-            stringList.add(EMPTY_VALUE);
+            stringList.add(EMPTY_ITEM_VALUE);
         }
     }
 
@@ -69,68 +67,48 @@ public class TablePrinter {
         }
     }
 
-    public void printTable() {
-        printFormattedTable();
-    }
-
-    public void printTable(List<String> titleList, List<List<String>> tableList) {
-        this.titleList = titleList;
-        this.tableList = tableList;
-
-        printFormattedTable();
-    }
-
-    public void printTable(List<List<String>> tableList) {
-        this.titleList = new ArrayList<>();
-        this.tableList = tableList;
-
-        printFormattedTable();
-    }
-
-
     private void printFormattedTable() {
         setUpValuesSettings();
-        printCustomLine('┌', '┬', '┐', '─');
+
+        printLine('┌', '┬', '┐');
         printLine(titleList);
-        printCustomLine('│', '┼', '│', '─');
+        printLine('│', '┼', '│');
         tableList.forEach(this::printLine);
-        printCustomLine('└', '┴', '┘', '─');
+        printLine('└', '┴', '┘');
     }
 
     private void setUpValuesSettings() {
-        //sortTable(); // TODO is necessary method ???
         if (isNeedIndex) {
             addIndexBeforeLines();
         }
-        fillAllWithDefaultValues();
+        appendTableWithDefaultValues();
         countMaxSpaceWidth();
-        fillAllValuesWithSpaces();
+        appendEmptyItemsForTable();
     }
 
     private void addIndexBeforeLines() {
-        titleList.add(0, "#");
-        for (int i = 0; i < tableList.size(); i++) {
-            List<String> stringList = tableList.get(i);
-            stringList.add(0, String.valueOf(i + 1));
+        titleList.add(0, INDEX_VALUE);
+        for (int counter = 0; counter < tableList.size(); counter++) {
+            tableList.get(counter).add(0, String.valueOf(counter + 1));
         }
     }
 
-    private void printCustomLine(char first, char middle, char last, char space) {
+    private void printLine(char startSymbol, char crossedSymbol, char endSymbol) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(first);
+        stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append(space);
+                stringBuilder.append(LINE_VALUE);
             }
             if (i < sizeList.size() - 1) {
-                stringBuilder.append(middle);
+                stringBuilder.append(crossedSymbol);
             }
         }
-        stringBuilder.append(last);
+        stringBuilder.append(endSymbol);
         printWriter.println(stringBuilder);
     }
 
-    private void fillAllValuesWithSpaces() {
+    private void appendEmptyItemsForTable() {
         fillStringListWithSpaces(titleList);
         for (List<String> stringList : tableList) {
             fillStringListWithSpaces(stringList);
@@ -140,42 +118,25 @@ public class TablePrinter {
     private void fillStringListWithSpaces(List<String> stringList) {
         for (int i = 0; i < stringList.size(); i++) {
             while (stringList.get(i).length() < sizeList.get(i)) {
-                stringList.set(i, stringList.get(i) + ITEM_SPACE);
+                stringList.set(i, stringList.get(i) + SPACE_VALUE);
             }
         }
     }
 
-    void printLine(List<String> stringList) {
+    private void printLine(List<String> stringList) {
         printWriter.println(getLineString(stringList));
     }
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(ITEM_SEPARATOR);
+        stringBuilder.append(SEPARATOR_VALUE);
         for (String value : stringList) {
-            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(SPACE_VALUE);
             stringBuilder.append(value);
-            stringBuilder.append(ITEM_SPACE);
-            stringBuilder.append(ITEM_SEPARATOR);
+            stringBuilder.append(SPACE_VALUE);
+            stringBuilder.append(SEPARATOR_VALUE);
         }
         return stringBuilder.toString();
     }
-
-    public void sortTable() {
-        tableList.sort(new ListComparator<>());
-    }
 }
 
-class ListComparator<T extends Comparable<T>> implements Comparator<List<T>> {
-
-    @Override
-    public int compare(List<T> list1, List<T> list2) {
-        for (int i = 0; i < Math.min(list1.size(), list2.size()); i++) {
-            int c = list1.get(i).compareTo(list2.get(i));
-            if (c != 0) {
-                return c;
-            }
-        }
-        return -Integer.compare(list1.size(), list2.size());
-    }
-}

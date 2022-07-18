@@ -15,7 +15,7 @@ public class ConvertorToStringForBook implements ConvertorToString<Book> {
         list.add(book.getClass().getSimpleName());
         list.add(book.getName());
         list.add(strValueOf(book.getPagesNumber()));
-        list.add(String.valueOf(book.isBorrowed()));
+        list.add(strValueOf(book.isBorrowed()));
         list.add(book.getAuthor());
         list.add(DATE_FORMAT.format(book.getIssuanceDate()));
         return list;
