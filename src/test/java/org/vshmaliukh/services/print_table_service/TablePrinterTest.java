@@ -16,8 +16,8 @@ import static org.vshmaliukh.services.print_table_service.TablePrinter.*;
 
 class TablePrinterTest {
 
-    TablePrinter tablePrinter = new TablePrinter();
     PrintWriter printWriter = new PrintWriter(System.out, true);
+    TablePrinter tablePrinter = new TablePrinter(printWriter);
 
     @Test
     void testGetOneItemLine(){//TODO rename test name
@@ -90,7 +90,7 @@ class TablePrinterTest {
         tablePrinter = new TablePrinter(printWriter, new ArrayList<>(), tableList);
 
         tablePrinter.sortTable();
-        tablePrinter.fillSortedTableWithEmptyValuesIfNecessary();
+        tablePrinter.fillAllWithDefaultValues();
         assertEquals(expectedStr, tablePrinter.tableList.toString());
     }
 
@@ -131,9 +131,7 @@ class TablePrinterTest {
         tableList.add(convertorBook.convertObjectToListOfString(book1));
         tableList.add(convertorBook.convertObjectToListOfString(book2));
 
-        titleList.addAll(Arrays.asList("1", "2", "3", "4", "5", "6", "7"));
-
-
+        //titleList.addAll(Arrays.asList("1", "2", "3", "4", "5", "6", "7"));
 
         tablePrinter = new TablePrinter(printWriter, titleList, tableList);
         tablePrinter.printTable();

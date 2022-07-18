@@ -12,6 +12,8 @@ import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.PrettyTablePrinter;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
+import org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature;
+import org.vshmaliukh.services.print_table_service.TablePrinter;
 
 import java.io.*;
 import java.text.ParseException;
@@ -39,8 +41,15 @@ public class Terminal {
     private InputHandlerForLiterature inputHandlerForLiterature;
 
     private PrettyTablePrinter prettyTablePrinter;
+    private TablePrinter tablePrinter;
+    private ConvertorToStringForLiterature convertorToStringForLiterature;
+
     private GsonHandler gsonHandler;
     private Random randomNumber;
+
+    // TODO delete title list
+    List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
+    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
 
     public Terminal(Scanner scanner, PrintWriter printWriter){
         this.scanner = scanner;
@@ -84,6 +93,9 @@ public class Terminal {
         randomNumber = new Random();
         gsonHandler = new GsonHandler(typeOfWorkWithFiles, user.getName(), printWriter);
         prettyTablePrinter = new PrettyTablePrinter(printWriter);
+        tablePrinter = new TablePrinter(printWriter);
+        tablePrinter.setNeedIndex(true);
+        convertorToStringForLiterature = new ConvertorToStringForLiterature();
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
     }
 
@@ -146,7 +158,8 @@ public class Terminal {
                 clarificationForSortingMagazines();
                 break;
             case PRINT_PRETTY_SHELF:
-                prettyTablePrinter.printTable(shelf.getAllLiteratureObjects());
+                tablePrinter.printTable(titleListForBooks, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()));
+                //tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects());
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -193,7 +206,7 @@ public class Terminal {
         }
         else {
             printMenuForMagazinesSorting();
-            prettyTablePrinter.printSortedMagazines(getUserChoice(), shelf);
+            printSortedMagazines(getUserChoice());
         }
 
     }
@@ -207,7 +220,7 @@ public class Terminal {
         }
         else {
             printMenuForBooksSorting();
-            prettyTablePrinter.printSortedBooks(getUserChoice(), shelf);
+            printSortedBooks(getUserChoice());
         }
     }
 
@@ -220,7 +233,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            prettyTablePrinter.printTable(shelf.getLiteratureOutShelf());
+            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()));
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -234,7 +247,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
+            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -248,7 +261,7 @@ public class Terminal {
         }
         else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            prettyTablePrinter.printTable(shelf.getLiteratureInShelf());
+            tablePrinter.printTable(convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()));
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -425,5 +438,45 @@ public class Terminal {
     public void setActiveTerminal(boolean activeTerminal) {
         this.isActiveTerminal = activeTerminal;
     }
+
+    public void printSortedBooks(int typeOfSorting){
+        List<Literature> bookList = new ArrayList<>();
+        MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
+        switch (byIndex) {
+            case SORT_BOOKS_BY_NAME:
+                bookList.addAll(shelf.getSortedBooksByName());
+                break;
+            case SORT_BOOKS_BY_PAGES_NUMBER:
+                bookList.addAll(shelf.getSortedBooksByPages());
+                break;
+            case SORT_BOOKS_BY_AUTHOR:
+                bookList.addAll(shelf.getSortedBooksByAuthor());
+                break;
+            case SORT_BOOKS_BY_DATE_OF_ISSUE:
+                bookList.addAll(shelf.getSortedBooksByDate());
+                break;
+            default:
+                break;
+        }
+        tablePrinter.printTable(titleListForBooks, convertorToStringForLiterature.getTable(bookList));
+    }
+
+    public void printSortedMagazines(int typeOfSorting) {
+        List<Literature> magazineList = new ArrayList<>();
+        MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
+        switch (byIndex) {
+            case SORT_MAGAZINES_BY_NAME:
+                magazineList.addAll(shelf.getSortedMagazinesByName());
+                break;
+            case SORT_MAGAZINES_BY_PAGES:
+                magazineList.addAll(shelf.getSortedMagazinesByPages());
+                break;
+            default:
+                break;
+        }
+        tablePrinter.printTable(titleListForMagazine, convertorToStringForLiterature.getTable(magazineList));
+    }
+
+
 }
 

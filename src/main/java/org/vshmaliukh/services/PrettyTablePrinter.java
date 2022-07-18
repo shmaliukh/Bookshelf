@@ -148,41 +148,5 @@ public class PrettyTablePrinter {
         }
     }
 
-    public void printSortedBooks(int typeOfSorting, Shelf shelf){
-        List<Literature> bookList = new ArrayList<>();
-        MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_BOOKS_BY_NAME:
-                bookList.addAll(shelf.getSortedBooksByName());
-                break;
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                bookList.addAll(shelf.getSortedBooksByPages());
-                break;
-            case SORT_BOOKS_BY_AUTHOR:
-                bookList.addAll(shelf.getSortedBooksByAuthor());
-                break;
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                bookList.addAll(shelf.getSortedBooksByDate());
-                break;
-            default:
-                break;
-        }
-        printTable(bookList);
-    }
 
-    public void printSortedMagazines(int typeOfSorting, Shelf shelf) {
-        List<Literature> magazineList = new ArrayList<>();
-        MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_MAGAZINES_BY_NAME:
-                magazineList.addAll(shelf.getSortedMagazinesByName());
-                break;
-            case SORT_MAGAZINES_BY_PAGES:
-                magazineList.addAll(shelf.getSortedMagazinesByPages());
-                break;
-            default:
-                break;
-        }
-        printTable(magazineList);
-    }
 }

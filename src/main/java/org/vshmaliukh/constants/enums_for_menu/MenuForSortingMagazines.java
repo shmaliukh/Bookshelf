@@ -26,7 +26,7 @@ public enum MenuForSortingMagazines {
     public static void printMenu(PrintWriter printWriter){
         printWriter.println("Choose type of sorting:");
         MenuForSortingMagazines[] values = values();
-        for (int j = 0; j < values.length; j++) {
+        for (int j = 0; j < values.length - 1 ; j++) {
             MenuForSortingMagazines value = values[j];
             printWriter.println(value.i + " - " + value.str);
         }

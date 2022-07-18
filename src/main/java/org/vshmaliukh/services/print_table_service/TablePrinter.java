@@ -21,8 +21,10 @@ public class TablePrinter {
 
     List<Integer> sizeList = new ArrayList<>();
 
-    public TablePrinter() {
-        this.printWriter = new PrintWriter(System.out, true);
+    boolean isNeedIndex = false;
+
+    public TablePrinter(PrintWriter printWriter) {
+        this.printWriter = printWriter;
         this.titleList = new ArrayList<>();
         this.tableList = new ArrayList<>();
     }
@@ -37,16 +39,26 @@ public class TablePrinter {
         tableList.sort(new ListComparator<>());
     }
 
-    public void fillSortedTableWithEmptyValuesIfNecessary() { // TODO rename
-        int max = Math.max(titleList.size(), tableList.get(0).size());
+    public void fillAllWithDefaultValues() { // TODO rename method
+        int max = 0;
+        max = Math.max(titleList.size(), max);
         for (List<String> stringList : tableList) {
-            while (stringList.size() < max) {
-                stringList.add(EMPTY_VALUE);
-            }
+            max = Math.max(stringList.size(), max);
+        }
+        appendWithDefaultValuesList(titleList, max);
+        for (List<String> stringList : tableList) {
+            appendWithDefaultValuesList(stringList, max);
+        }
+    }
+
+    private void appendWithDefaultValuesList(List<String> stringList, int max) {
+        while (stringList.size() < max) {
+            stringList.add(EMPTY_VALUE);
         }
     }
 
     public void countMaxSpaceWidth() {
+        sizeList = new ArrayList<>();
         int strLength;
         titleList.forEach(s -> sizeList.add(s.length()));
         for (List<String> stringList : tableList) {
@@ -62,8 +74,26 @@ public class TablePrinter {
     }
 
     public void printTable() {
-        setUpValuesSettings();
+        printFormattedTable();
+    }
 
+    public void printTable(List<String> titleList, List<List<String>> tableList) {
+        this.titleList = titleList;
+        this.tableList = tableList;
+
+        printFormattedTable();
+    }
+
+    public void printTable(List<List<String>> tableList) {
+        this.titleList = new ArrayList<>();
+        this.tableList = tableList;
+
+        printFormattedTable();
+    }
+
+
+    private void printFormattedTable() {
+        setUpValuesSettings();
         printCustomLine('┌', '┬', '┐', '─');
         printLine(titleList);
         printCustomLine('│', '┼', '│', '─');
@@ -72,10 +102,21 @@ public class TablePrinter {
     }
 
     private void setUpValuesSettings() {
-        sortTable();
-        fillSortedTableWithEmptyValuesIfNecessary();
+        //sortTable(); // TODO is necessary method ???
+        if (isNeedIndex) {
+            addIndexBeforeLines();
+        }
+        fillAllWithDefaultValues();
         countMaxSpaceWidth();
         fillAllValuesWithSpaces();
+    }
+
+    private void addIndexBeforeLines() {
+        titleList.add(0, "#");
+        for (int i = 0; i < tableList.size(); i++) {
+            List<String> stringList = tableList.get(i);
+            stringList.add(0, String.valueOf(i + 1));
+        }
     }
 
     private void printCustomLine(char first, char middle, char last, char space) {
@@ -85,7 +126,7 @@ public class TablePrinter {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
                 stringBuilder.append(space);
             }
-            if(i < sizeList.size()-1){
+            if (i < sizeList.size() - 1) {
                 stringBuilder.append(middle);
             }
         }
@@ -121,7 +162,22 @@ public class TablePrinter {
             stringBuilder.append(ITEM_SPACE);
             stringBuilder.append(ITEM_SEPARATOR);
         }
+        return stringBuilder.toString();
+    }
 
+    public String getLineString(List<String> stringList, int index) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(ITEM_SEPARATOR);
+        stringBuilder.append(ITEM_SPACE);
+        stringBuilder.append(index);
+        stringBuilder.append(ITEM_SPACE);
+        stringBuilder.append(ITEM_SEPARATOR);
+        for (String value : stringList) {
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(value);
+            stringBuilder.append(ITEM_SPACE);
+            stringBuilder.append(ITEM_SEPARATOR);
+        }
         return stringBuilder.toString();
     }
 }

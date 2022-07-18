@@ -2,30 +2,31 @@ package org.vshmaliukh.services.print_table_service;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ConvertorToStringForLiterature implements ConvertorToString<Literature> {
-    @Override
-    public List<String> convertObjectToListOfString(Literature obj) {
+public class ConvertorToStringForLiterature {
+
+    ConvertorToStringForMagazine convertorToStringForMagazine = new ConvertorToStringForMagazine();
+    ConvertorToStringForBook convertorToStringForBook = new ConvertorToStringForBook();
+
+    public static final String MAGAZINE_CLASS_NAME = Magazine.class.getCanonicalName();
+    public static final String BOOK_CLASS_NAME = Book.class.getCanonicalName();
+
+    public List<String> getConvertedLiterature(Literature literature) {
+        if (literature.getClass().getCanonicalName().equals(MAGAZINE_CLASS_NAME)) {
+            return convertorToStringForMagazine.convertObjectToListOfString(Magazine.class.cast(literature));
+        } else if (literature.getClass().getCanonicalName().equals(BOOK_CLASS_NAME)) {
+            return convertorToStringForBook.convertObjectToListOfString(Book.class.cast(literature));
+        }
         return null;
     }
 
-
-    //public static Class initClazz(String simpleName) throws ClassNotFoundException{
-    //        return Class.forName(Literature.class.getPackage().getName() + "." + simpleName);
-    //}
-    //
-    //@Override
-    //public List<String> convertObjectToListOfString(Literature obj) {
-    //    return null;
-    //}
-    //
-    //public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-    //
-    //    Literature literature = new Book("asd", 12, true, "asdaddasd", new Date());
-    //    Literature literature1 = Class.forName(Book.class.getSimpleName()).newInstance();
-    //
-    //}
+    public List<List<String>> getTable(List<? extends Literature> literature){
+        return literature.stream()
+                .map(this::getConvertedLiterature)
+                .collect(Collectors.toList());
+    }
 }
