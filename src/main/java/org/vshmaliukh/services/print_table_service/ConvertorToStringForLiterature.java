@@ -17,11 +17,11 @@ public class ConvertorToStringForLiterature {
 
     public List<String> getConvertedLiterature(Literature literature) {
         if (literature.getClass().getCanonicalName().equals(MAGAZINE_CLASS_NAME)) {
-            return convertorToStringForMagazine.convertObjectToListOfString(Magazine.class.cast(literature));
+            return convertorToStringForMagazine.convertObjectToListOfString((Magazine) literature);
         } else if (literature.getClass().getCanonicalName().equals(BOOK_CLASS_NAME)) {
-            return convertorToStringForBook.convertObjectToListOfString(Book.class.cast(literature));
+            return convertorToStringForBook.convertObjectToListOfString((Book) literature);
         }
-        return null;
+        return null; //FIXME fix cast + catch NULL
     }
 
     public List<List<String>> getTable(List<? extends Literature> literature){

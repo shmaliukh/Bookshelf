@@ -14,12 +14,12 @@ public class TablePrinter {
     public static final String ITEM_SPACE = " ";
     public static final String EMPTY_VALUE = "~";
 
-    PrintWriter printWriter;
+    private PrintWriter printWriter;
 
-    List<String> titleList;
-    List<List<String>> tableList;
+    private List<String> titleList;
+    private List<List<String>> tableList;
 
-    List<Integer> sizeList = new ArrayList<>();
+    private List<Integer> sizeList = new ArrayList<>();
 
     boolean isNeedIndex = false;
 
@@ -33,10 +33,6 @@ public class TablePrinter {
         this.printWriter = printWriter;
         this.titleList = titleList;
         this.tableList = tableList;
-    }
-
-    public void sortTable() {
-        tableList.sort(new ListComparator<>());
     }
 
     public void fillAllWithDefaultValues() { // TODO rename method
@@ -165,20 +161,8 @@ public class TablePrinter {
         return stringBuilder.toString();
     }
 
-    public String getLineString(List<String> stringList, int index) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(ITEM_SEPARATOR);
-        stringBuilder.append(ITEM_SPACE);
-        stringBuilder.append(index);
-        stringBuilder.append(ITEM_SPACE);
-        stringBuilder.append(ITEM_SEPARATOR);
-        for (String value : stringList) {
-            stringBuilder.append(ITEM_SPACE);
-            stringBuilder.append(value);
-            stringBuilder.append(ITEM_SPACE);
-            stringBuilder.append(ITEM_SEPARATOR);
-        }
-        return stringBuilder.toString();
+    public void sortTable() {
+        tableList.sort(new ListComparator<>());
     }
 }
 
