@@ -2,6 +2,7 @@ package org.vshmaliukh.services.print_table_service;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,6 +14,7 @@ import static org.vshmaliukh.services.print_table_service.TablePrinter.ITEM_SPAC
 class TablePrinterTest {
 
     TablePrinter tablePrinter = new TablePrinter();
+    PrintWriter printWriter = new PrintWriter(System.out, true);
 
     @Test
     void testGetOneItemLine(){//TODO rename test name
@@ -58,21 +60,30 @@ class TablePrinterTest {
         assertEquals(expectedStr, tablePrinter.titleList.toString());
     }
 
-
     @Test
-    void test(){
-
-        List<String> stringList1 = new ArrayList<>(Arrays.asList("0   ","1","2","3"));
-        List<String> stringList2 = new ArrayList<>(Arrays.asList("0","1","2","3"));
+    void testTableSort(){
+        String expectedStr = "[[0, 1, 2, 3], [0, 1, 2], [0, 1]]";
+        List<String> stringList1 = new ArrayList<>(Arrays.asList("0","1"));
+        List<String> stringList2 = new ArrayList<>(Arrays.asList("0","1","2"));
         List<String> stringList3 = new ArrayList<>(Arrays.asList("0","1","2","3"));
-
         List<List<String>> tableList = new ArrayList<>();
         tableList.add(stringList1);
         tableList.add(stringList2);
         tableList.add(stringList3);
+        tablePrinter = new TablePrinter(printWriter, new ArrayList<>(), tableList);
+
+        tablePrinter.sortTable();
+        assertEquals(expectedStr, tablePrinter.tableList.toString());
+    }
 
 
-        tablePrinter.printTable(tableList);
+    @Test
+    void test(){
+
+
+
+
+        //tablePrinter.printTable(tableList);
 
     }
 

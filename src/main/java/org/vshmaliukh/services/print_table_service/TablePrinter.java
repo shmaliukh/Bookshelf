@@ -3,9 +3,9 @@ package org.vshmaliukh.services.print_table_service;
 import lombok.Data;
 
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Data
@@ -39,7 +39,11 @@ public class TablePrinter {
         this.tableList = tableList;
     }
 
-    void initFormat() {
+    public void sortTable(){
+          Collections.sort(tableList, new ListComparator<>());
+    }
+
+    public void initFormat() {
         StringBuilder stringBuilder = new StringBuilder();
         List<Integer> sizeList = new ArrayList<>();
 
@@ -114,6 +118,18 @@ public class TablePrinter {
         formatStr = format; // TODO extract as separate
         return String.format(formatStr, stringBuilder);
     }
+}
 
+class ListComparator<T extends Comparable<T>> implements Comparator<List<T>>{
 
+    @Override
+    public int compare(List<T> list1, List<T> list2) {
+        for (int i = 0; i < Math.min(list1.size(), list2.size()); i++) {
+            int c = list1.get(i).compareTo(list2.get(i));
+            if (c != 0) {
+                return c;
+            }
+        }
+        return -Integer.compare(list1.size(), list2.size());
+    }
 }
