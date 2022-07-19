@@ -25,8 +25,8 @@ public class ConvertorToStringForLiterature {
         return Collections.emptyList(); //FIXME fix cast
     }
 
-    public List<List<String>> getTable(List<? extends Item> literatures){
-        return literatures.stream()
+    public List<List<String>> getTable(List<? extends Item> literatureList){
+        return literatureList.stream()
                 .map(this::getConvertedLiterature)
                 .collect(Collectors.toList());
     }

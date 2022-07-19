@@ -12,10 +12,8 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Objects;
-import java.util.function.Predicate;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -51,7 +49,7 @@ class GsonHandlerTest {
         setTwoBooksAndTwoMagazinesToShelf(shelf);
 
         gsonHandlerOneFile.saveShelfInGson(shelf);
-        FileWriter fw = new FileWriter(String.valueOf(filePathAll),true);
+        FileWriter fw = new FileWriter(String.valueOf(filePathAll), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
@@ -74,11 +72,11 @@ class GsonHandlerTest {
         gsonHandlerTwoFiles.saveShelfInGson(shelf);
 
         FileWriter fw;
-        fw = new FileWriter(String.valueOf(filePathBooks),true);
+        fw = new FileWriter(String.valueOf(filePathBooks), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
-        fw = new FileWriter(String.valueOf(filePathMagazines),true);
+        fw = new FileWriter(String.valueOf(filePathMagazines), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
@@ -100,7 +98,7 @@ class GsonHandlerTest {
         setTwoBooksAndTwoMagazinesToShelf(shelf);
         gsonHandlerTwoFiles.saveShelfInGson(shelf);
 
-        FileWriter fw = new FileWriter(String.valueOf(filePathBooks),true);
+        FileWriter fw = new FileWriter(String.valueOf(filePathBooks), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
@@ -122,7 +120,7 @@ class GsonHandlerTest {
         setTwoBooksAndTwoMagazinesToShelf(shelf);
         gsonHandlerTwoFiles.saveShelfInGson(shelf);
 
-        FileWriter fw = new FileWriter(String.valueOf(filePathMagazines),true);
+        FileWriter fw = new FileWriter(String.valueOf(filePathMagazines), true);
         fw.append("someStr");
         fw.flush();
         fw.close();

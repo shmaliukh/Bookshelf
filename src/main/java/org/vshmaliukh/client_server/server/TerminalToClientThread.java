@@ -18,15 +18,14 @@ public class TerminalToClientThread extends Thread{
 
     @Override
     public void run(){
-        log.info("        [Terminal] " + this.userCounter +" - start");
+        log.info("[Terminal]: #" + this.userCounter +" - start");
         try {
             terminal.startWork(true);
         } catch (Exception e) {
-            log.error("Problem to start terminal");
-            throw new RuntimeException(e);
+            log.error("[TerminalToClientThread]: Problem to start terminal. Exception: " + e);
         }
         finally {
-            log.info("        [Terminal] " + this.userCounter +" - stop");
+            log.info("[Terminal]: #" + this.userCounter +" - stop");
         }
     }
 }

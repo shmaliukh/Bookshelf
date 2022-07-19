@@ -1,11 +1,13 @@
 package org.vshmaliukh;
 
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+@Slf4j
 public class Main {
 
     public static void main(String[] args){
@@ -26,7 +28,7 @@ public class Main {
             try {
                 terminal.startWork(false);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                log.error("[TerminalThread] problem to start thread. Exception: " + e);
             }
         }
     }
@@ -39,7 +41,7 @@ public class Main {
             try {
                 multithreadedSocketServer.start();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                log.error("[ServerThread] problem to start thread. Exception: " + e);
             }
         }
     }

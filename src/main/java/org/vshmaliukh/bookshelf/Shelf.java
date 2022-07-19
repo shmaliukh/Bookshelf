@@ -65,7 +65,7 @@ public class Shelf implements BaseActionsWithShelf{
             }
         }
         else {
-            log.info("The literature object (book or magazine) is empty");
+            log.error("The literature object is empty");
         }
     }
 

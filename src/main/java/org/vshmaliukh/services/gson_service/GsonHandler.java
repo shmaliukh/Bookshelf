@@ -77,13 +77,11 @@ public class GsonHandler {
     private <T extends Item> void saveListToGsonFile(String fileName, List<T> literatureList) {
         initFile(fileName);
         List<Container> containerList = getContainerForLiteratureObjects(literatureList);
-        try {
-            FileWriter fw = new FileWriter(gsonFile);
+        try (FileWriter fw = new FileWriter(gsonFile)) {
             gson.toJson(containerList, fw);
             fw.flush();
-            fw.close();
         } catch (IOException ioe) {
-            informAboutErr("problem to write shelf to file '" + gsonFile.getAbsolutePath() + "'");
+            informAboutErr("problem to write shelf to file '" + gsonFile.getAbsolutePath() + "'. Exception: " + ioe);
         }
     }
 
@@ -132,23 +130,22 @@ public class GsonHandler {
                 informAboutErr(problemMessage);
                 saveProblemFile(gsonFile, problemMessage);
                 return itemList;
-            }
-            else {
+            } else {
                 itemList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
             }
         }
         return itemList;
     }
 
-    private void saveProblemFile(File gsonFile , String message) {
+    private void saveProblemFile(File gsonFile, String message) {
+        boolean isSavedProblemFile = false;
+        File problemFile = null; // FIXME not use null
         try {
-            boolean isSavedProblemFile = false;
-
             File dirForProblemFiles = new File(String.valueOf(Paths.get(String.valueOf(userDirectory), "problemFiles")));
             createDirIfNotExists(dirForProblemFiles);
 
             for (int i = 0; !isSavedProblemFile; i++) {// TODO create new method for rewriting ready n-max-files
-                File problemFile = new File(String.valueOf(Paths.get(
+                problemFile = new File(String.valueOf(Paths.get(
                         String.valueOf(dirForProblemFiles),
                         ("problemFileToRead_" + i + "_" + gsonFile.getName()))));
                 if (!Files.exists(problemFile.toPath())) {
@@ -158,18 +155,16 @@ public class GsonHandler {
                 }
             }
         } catch (IOException ioe) {
-            throw new RuntimeException(ioe);
+            informAboutErr("problem to save copy of problem file'" + problemFile.getAbsolutePath() + "'. Exception: " + ioe);
         }
     }
 
     private void appendMessageToFile(String message, File problemFile) {
-        try {
-            FileWriter fileWriter = new FileWriter(problemFile, true);
+        try (FileWriter fileWriter = new FileWriter(problemFile, true)) {
             fileWriter.append(message);
             fileWriter.flush();
-            fileWriter.close();
-        } catch (IOException e) {
-            // TODO catch
+        } catch (IOException ioe) {
+            informAboutErr("problem to add message for problem file'" + problemFile.getAbsolutePath() + "'. Exception: " + ioe);
         }
     }
 
@@ -205,36 +200,31 @@ public class GsonHandler {
 
     private JsonArray getJsonArr() {
         JsonArray jsonArray = new JsonArray();
-        try {
-            FileReader fr = new FileReader(gsonFile);
-            try {
-                JsonArray fromJson = gson.fromJson(fr, JsonArray.class);
-                if (fromJson != null) {
-                    jsonArray = fromJson;
-                } else {
-
-                    String problemMessage = "problem to read shelf from file '" + gsonFile.getAbsolutePath() + "' (jsonArray == null)";
-                    informAboutErr(problemMessage);
-                    saveProblemFile(gsonFile, problemMessage);
-                }
-            } catch (JsonSyntaxException jse) {
-                String problemMessage = "problem to read shelf from file '" + gsonFile.getAbsolutePath() + "'(JsonSyntaxException)";
-                informAboutErr(problemMessage);
-                saveProblemFile(gsonFile, problemMessage);
-            }
-            closeFileReader(fr);
-        } catch (FileNotFoundException fnfe) {
-            //throw new RuntimeException(fnfe);
+        try (FileReader fr = new FileReader(gsonFile)) {
+            jsonArray = getJsonElementsFromArray(jsonArray, fr);
+        } catch (IOException fnfe) {
+            informAboutErr("problem to read for file'" + gsonFile.getAbsolutePath() + "'. Exception: " + fnfe);
         }
         return jsonArray;
     }
 
-    private void closeFileReader(FileReader fr) {
+    private JsonArray getJsonElementsFromArray(JsonArray jsonArray, FileReader fr) {
         try {
-            fr.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e); // TODO
+            JsonArray fromJson = gson.fromJson(fr, JsonArray.class);
+            if (fromJson != null) {
+                jsonArray = fromJson;
+            } else {
+
+                String problemMessage = "problem to read shelf from file '" + gsonFile.getAbsolutePath() + "'. Exception: jsonArray == null";
+                informAboutErr(problemMessage);
+                saveProblemFile(gsonFile, problemMessage);
+            }
+        } catch (JsonSyntaxException jse) {
+            String problemMessage = "problem to read shelf from file '" + gsonFile.getAbsolutePath() + "'(JsonSyntaxException). Exception: " + jse;
+            informAboutErr(problemMessage);
+            saveProblemFile(gsonFile, problemMessage);
         }
+        return jsonArray;
     }
 
     private <T extends Item> List<Container> getContainerForLiteratureObjects(List<T> itemList) {
@@ -244,6 +234,6 @@ public class GsonHandler {
     }
 
     private void informAboutErr(String problemMessage) {
-        log.error("[User] name: '" + userName + "' // [GsonHandler] problem: " + problemMessage);
+        log.error("[User]: name: '" + userName + "' // [GsonHandler]: problem: " + problemMessage);
     }
 }
