@@ -422,7 +422,7 @@ public class Terminal {
         MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_BOOKS_BY_NAME:
-                bookList.addAll(shelf.getSortedBooksByName());
+                bookList.addAll(shelf.getSortedLiterature(shelf.getBooks(), ));
                 break;
             case SORT_BOOKS_BY_PAGES_NUMBER:
                 bookList.addAll(shelf.getSortedBooksByPages());

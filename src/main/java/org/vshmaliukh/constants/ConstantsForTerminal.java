@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 
 public final class ConstantsForTerminal {
 
-    private ConstantsForTerminal(){}
+    private ConstantsForTerminal() {
+    }
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
