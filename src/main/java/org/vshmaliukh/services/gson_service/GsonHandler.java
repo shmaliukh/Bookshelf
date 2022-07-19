@@ -29,7 +29,6 @@ public class GsonHandler {
             .setPrettyPrinting()
             .create();
 
-    private FileReader fr;
     private Path userDirectory;
     private File gsonFile;
 
@@ -163,11 +162,15 @@ public class GsonHandler {
         }
     }
 
-    private void appendMessageToFile(String message, File problemFile) throws IOException {
-        FileWriter fileWriter = new FileWriter(problemFile, true);
-        fileWriter.append(message);
-        fileWriter.flush();
-        fileWriter.close();
+    private void appendMessageToFile(String message, File problemFile) {
+        try {
+            FileWriter fileWriter = new FileWriter(problemFile, true);
+            fileWriter.append(message);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            // TODO catch
+        }
     }
 
     private void createDirIfNotExists(File der) {
@@ -203,7 +206,7 @@ public class GsonHandler {
     private JsonArray getJsonArr() {
         JsonArray jsonArray = new JsonArray();
         try {
-            fr = new FileReader(gsonFile);
+            FileReader fr = new FileReader(gsonFile);
             try {
                 JsonArray fromJson = gson.fromJson(fr, JsonArray.class);
                 if (fromJson != null) {
