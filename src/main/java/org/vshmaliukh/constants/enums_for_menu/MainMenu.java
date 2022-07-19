@@ -13,7 +13,6 @@ public enum MainMenu {
     ARRIVE_LITERATURE(4, "Arrive  Literature object by index back to Shelf"),
     PRINT_SORTED_BOOKS(5, "Print list of available Books sorted by parameter..."),
     PRINT_SORTED_MAGAZINES(6, "Print list of available Magazines sorted by parameter..."),
-    PRINT_PRETTY_SHELF(8, "Print pretty table of current Shelf"),
     PRINT_SHELF(9, "Print current state of Shelf"),
     EXIT(0, "Exit"),
     UNKNOWN(WRONG_INPUT);

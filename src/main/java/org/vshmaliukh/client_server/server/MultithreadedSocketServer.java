@@ -27,9 +27,8 @@ public class MultithreadedSocketServer {
     private void initServerSocket() {
         try {
             serverSocket = new ServerSocket(SOCKET_PORT_NUMBER, MAX_CONNECTION_NUMBER);
-        } catch (IOException e) {
-            log.error("Problem to set up server socket");
-            throw new RuntimeException(e);
+        } catch (IOException ioe) {
+            log.error("[MultithreadedSocketServer]: Problem to set up server socket. Exception: " + ioe);
         }
     }
 

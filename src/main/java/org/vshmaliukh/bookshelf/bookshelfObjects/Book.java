@@ -12,7 +12,7 @@ import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
  * This is Book class which gives ability to create objects
  */
 @Data
-public class Book extends Literature{
+public class Book extends Item {
 
     private String author;
     private Date issuanceDate;

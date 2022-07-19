@@ -1,6 +1,6 @@
 package org.vshmaliukh.bookshelf.actionsWithShelf;
 
-import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 
 /**
  * @author ShmaliukhVlad
@@ -12,9 +12,9 @@ public interface BaseActionsWithShelf {
     /**
      * This method for adding Literature object (Book or Magazine) to the shelf
      * add element to the end of shelf objects
-     * @param literature Book or Magazine object
+     * @param item Book or Magazine object
      */
-    void addLiteratureObject(Literature literature);
+    void addLiteratureObject(Item item);
 
     /**
      * This method for deleting Literature object (Book or Magazine) from the shelf by index

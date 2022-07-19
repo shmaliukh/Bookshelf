@@ -10,18 +10,18 @@ import java.io.Serializable;
  * This is Literature class which is abstraction class for generating extended classes like Book and Magazine
  */
 @Data
-public abstract class Literature implements Serializable {
+public abstract class Item implements Serializable {
 
     protected String name;
     protected int pagesNumber;
     protected boolean isBorrowed;
 
-    private Literature(){}
+    private Item(){}
 
     /**
      * Base Constructor for creating Book and Magazine object
      */
-    protected Literature(String name, int pagesNumber, boolean isBorrowed) { // TODO is private wright?
+    protected Item(String name, int pagesNumber, boolean isBorrowed) { // TODO is private wright?
         this.name = name;
         setPagesNumber(pagesNumber);
         this.isBorrowed = isBorrowed;
