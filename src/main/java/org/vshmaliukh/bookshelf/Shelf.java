@@ -88,14 +88,6 @@ public class Shelf implements BaseActionsWithShelf {
         } else printWriter.println("No available literature");
     }
 
-
-
-    public <T extends Item> List<T> getSortedLiterature(List<T> literatureList, Comparator<T> bookComparator) { // TODO refactoring for comparator as parameter
-        return literatureList.stream()
-                .sorted(bookComparator)
-                .collect(Collectors.toList());
-    }
-
     public List<Book> getBooks() {
         return itemsOfShelf.stream()
                 .filter(Book.class::isInstance)
