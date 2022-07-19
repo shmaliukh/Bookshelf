@@ -8,7 +8,7 @@ import lombok.Data;
  * This is Magazine class which gives ability to create objects
  */
 @Data
-public class Magazine extends Literature {
+public class Magazine extends Item {
 
     /**
      * Constructor for creating Magazine object

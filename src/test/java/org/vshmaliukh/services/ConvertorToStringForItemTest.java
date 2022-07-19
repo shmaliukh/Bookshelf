@@ -2,7 +2,7 @@ package org.vshmaliukh.services;
 
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.services.print_table_service.ConvertorToStringForBook;
 import org.vshmaliukh.services.print_table_service.ConvertorToStringForMagazine;
@@ -12,7 +12,7 @@ import java.text.ParseException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
 
-class ConvertorToStringForLiteratureTest {
+class ConvertorToStringForItemTest {
 
     ConvertorToStringForMagazine convertorMagazine = new ConvertorToStringForMagazine();
     ConvertorToStringForBook convertorBook = new ConvertorToStringForBook();
@@ -23,7 +23,7 @@ class ConvertorToStringForLiteratureTest {
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2___",222222222,true);
 
-    ConvertorToStringForLiteratureTest() throws ParseException {
+    ConvertorToStringForItemTest() throws ParseException {
     }
 
     @Test
@@ -51,15 +51,15 @@ class ConvertorToStringForLiteratureTest {
 
     @Test
     void testForClass_methods(){
-        System.out.println("Literature.class.getClass() = " + Literature.class.getPackage().getName());
-        System.out.println("Literature.class.getClass() = " + Literature.class.getClass());
-        System.out.println("Literature.class.getName()  = " + Literature.class.getName());
-        System.out.println("Literature.class.getCanonicalName()  = " + Literature.class.getCanonicalName());
-        System.out.println("Literature.class.getSimpleName()  = " + Literature.class.getSimpleName());
-        System.out.println("Literature.class.getTypeName()  = " + Literature.class.getTypeName());
-        System.out.println("Literature.class.getName()  = " + Literature.class.getName());
-        System.out.println("Literature.class.getName()  = " + Literature.class.getName());
-        Literature.class.getClass();
+        System.out.println("Literature.class.getClass() = " + Item.class.getPackage().getName());
+        System.out.println("Literature.class.getClass() = " + Item.class.getClass());
+        System.out.println("Literature.class.getName()  = " + Item.class.getName());
+        System.out.println("Literature.class.getCanonicalName()  = " + Item.class.getCanonicalName());
+        System.out.println("Literature.class.getSimpleName()  = " + Item.class.getSimpleName());
+        System.out.println("Literature.class.getTypeName()  = " + Item.class.getTypeName());
+        System.out.println("Literature.class.getName()  = " + Item.class.getName());
+        System.out.println("Literature.class.getName()  = " + Item.class.getName());
+        Item.class.getClass();
     }
 
     //@Test

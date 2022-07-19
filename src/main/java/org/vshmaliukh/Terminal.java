@@ -1,7 +1,7 @@
 package org.vshmaliukh;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.constants.enums_for_menu.MainMenu;
@@ -264,8 +264,8 @@ public class Terminal {
     /**
      * Method simply inform user about added Literature object
      */
-    private void informAboutAddedLiteratureObject(Literature literature) {
-        printWriter.println(literature + " has added to shelf");
+    private void informAboutAddedLiteratureObject(Item item) {
+        printWriter.println(item + " has added to shelf");
     }
 
     /**
@@ -418,7 +418,7 @@ public class Terminal {
     }
 
     public void printSortedBooks(int typeOfSorting) {
-        List<Literature> bookList = new ArrayList<>();
+        List<Item> bookList = new ArrayList<>();
         MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_BOOKS_BY_NAME:
@@ -440,7 +440,7 @@ public class Terminal {
     }
 
     public void printSortedMagazines(int typeOfSorting) {
-        List<Literature> magazineList = new ArrayList<>();
+        List<Item> magazineList = new ArrayList<>();
         MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:

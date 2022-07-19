@@ -4,7 +4,7 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
@@ -44,8 +44,6 @@ public class GsonHandler {
     }
 
     private void generateFileNames() {
-
-
         fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
@@ -75,7 +73,7 @@ public class GsonHandler {
 
     private <T> void saveListToGsonFile(String fileName, List<T> literatureList){
         createFile(fileName);
-        List<Container> containerList = getContainerForLiteratureObjects((List<Literature>) literatureList);
+        List<Container> containerList = getContainerForLiteratureObjects((List<Item>) literatureList);
         try {
             FileWriter fw = new FileWriter(file);
             gson.toJson(containerList, fw);
@@ -90,6 +88,18 @@ public class GsonHandler {
     private void createFile(String fileName) {
         path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
         file = new File(String.valueOf(path));
+        if (!file.exists()){
+            file.mkdirs();
+        }
+    }
+
+    private File getGsonFile(String fileName) {
+        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
+        file = new File(String.valueOf(path));
+        if (!file.exists()){
+            file.mkdirs();
+        }
+        return file;
     }
 
     public Shelf readShelfFromGson(){ // TODO make feature to try read from another typeOfWorkWithFiles when file not exists
@@ -118,9 +128,9 @@ public class GsonHandler {
         return shelf;
     }
 
-    private List<Literature> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
+    private List<Item> readShelfFromGsonFile(String fileName) throws FileNotFoundException {
         createFile(fileName);
-        List<Literature> literatureList = new ArrayList<>();
+        List<Item> itemList = new ArrayList<>();
 
         if(Files.exists(path)){
             JsonObject itemObject;
@@ -134,20 +144,20 @@ public class GsonHandler {
                     if(itemObject == null || typeOfClass == null){
                         informAboutErr("problem to read shelf from '" + path
                                 + "' file when read shelf from file (NullPointerException)");
-                        return literatureList;
+                        return itemList;
                     }
 
-                    literatureList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
+                    itemList.add(getLiteratureObjectFromJson(typeOfClass, itemObject));
                 }
                 closeFileReader();
-                return literatureList;
+                return itemList;
             }
         }
         else{
             informAboutErr( "'"+ path +"' file not found when read shelf from file (file not exists)");
-            return literatureList;
+            return itemList;
         }
-        return literatureList;
+        return itemList;
     }
 
     private JsonObject getJsonObjectFromJsonElement(JsonElement element) {
@@ -169,15 +179,15 @@ public class GsonHandler {
         return typeOfClass;
     }
 
-    private Literature getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
-        Literature literature = null;
+    private Item getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
+        Item item = null;
         if (typeOfClass.equals(Book.class.toString())) {
-            literature = gson.fromJson(itemObject, Book.class);
+            item = gson.fromJson(itemObject, Book.class);
         }
         else if (typeOfClass.equals(Magazine.class.toString())) {
-            literature = gson.fromJson(itemObject, Magazine.class);
+            item = gson.fromJson(itemObject, Magazine.class);
         }
-        return literature;
+        return item;
     }
 
     private JsonArray getJsonArr(){
@@ -213,9 +223,9 @@ public class GsonHandler {
         }
     }
 
-    private List<Container> getContainerForLiteratureObjects(List<Literature> literatureList) {
+    private List<Container> getContainerForLiteratureObjects(List<Item> itemList) {
         List<Container> containerArrayList= new ArrayList<>();
-        literatureList.forEach(o -> containerArrayList.add(new Container(o)));
+        itemList.forEach(o -> containerArrayList.add(new Container(o)));
         return containerArrayList;
     }
 

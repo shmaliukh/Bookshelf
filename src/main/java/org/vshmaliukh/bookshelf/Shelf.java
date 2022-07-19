@@ -2,7 +2,7 @@ package org.vshmaliukh.bookshelf;
 
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Literature;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
@@ -18,12 +18,12 @@ public class Shelf implements BaseActionsWithShelf{
 
     private PrintWriter printWriter;
 
-    private List<Literature> literatureInShelf;
-    private List<Literature> literatureOutShelf;
+    private List<Item> itemInShelf;
+    private List<Item> itemOutShelf;
 
     private Shelf(){
-        literatureInShelf  = new ArrayList<>();
-        literatureOutShelf = new ArrayList<>();
+        itemInShelf = new ArrayList<>();
+        itemOutShelf = new ArrayList<>();
     }
 
     public Shelf(PrintWriter printWriter){
@@ -31,10 +31,10 @@ public class Shelf implements BaseActionsWithShelf{
         this.printWriter = printWriter;
     }
 
-    public Shelf(List<Literature> literatureList, PrintWriter printWriter){
+    public Shelf(List<Item> itemList, PrintWriter printWriter){
         this(printWriter);
-        for (Literature literature : literatureList) {
-            this.addLiteratureObject(literature);
+        for (Item item : itemList) {
+            this.addLiteratureObject(item);
         }
     }
 
@@ -53,13 +53,13 @@ public class Shelf implements BaseActionsWithShelf{
     }
 
     @Override
-    public void addLiteratureObject(Literature literature) {
-        if(literature != null){
-            if(literature.isBorrowed()){
-                getLiteratureOutShelf().add(literature);
+    public void addLiteratureObject(Item item) {
+        if(item != null){
+            if(item.isBorrowed()){
+                getLiteratureOutShelf().add(item);
             }
             else{
-                getLiteratureInShelf().add(literature);
+                getLiteratureInShelf().add(item);
             }
         }
         else {
@@ -83,13 +83,13 @@ public class Shelf implements BaseActionsWithShelf{
     /**
      * Method simply inform user about deleted Literature object
      */
-    private void informAboutActionWithLiterature(Literature literature, String message) {
-        printWriter.println(literature + " " + message);
+    private void informAboutActionWithLiterature(Item item, String message) {
+        printWriter.println(item + " " + message);
     }
 
     @Override
     public void borrowLiteratureObjectFromShelfByIndex(int index) {
-        Literature buffer;
+        Item buffer;
         if(!this.getLiteratureInShelf().isEmpty()){
             if(index > 0 && index <= this.getLiteratureInShelf().size()){
                 buffer = this.getLiteratureInShelf().remove(index-1);
@@ -106,7 +106,7 @@ public class Shelf implements BaseActionsWithShelf{
 
     @Override
     public void arriveLiteratureObjectFromShelfByIndex(int index) {
-        Literature buffer;
+        Item buffer;
         if(!this.getLiteratureOutShelf().isEmpty()){
             if(index > 0 && index <= this.getLiteratureOutShelf().size()){
                 buffer = this.getLiteratureOutShelf().remove(index-1);
@@ -160,12 +160,12 @@ public class Shelf implements BaseActionsWithShelf{
     public List<Book> getBooks() {
         List <Book> arrBooks = new ArrayList<>();
 
-        arrBooks.addAll(this.literatureInShelf.stream()
+        arrBooks.addAll(this.itemInShelf.stream()
                 .filter(Book.class::isInstance)
                 .map(Book.class::cast)
                 .collect(Collectors.toList()));
 
-        arrBooks.addAll(this.literatureOutShelf.stream()
+        arrBooks.addAll(this.itemOutShelf.stream()
                         .filter(Book.class::isInstance)
                         .map(Book.class::cast)
                         .collect(Collectors.toList()));
@@ -175,31 +175,31 @@ public class Shelf implements BaseActionsWithShelf{
     public List<Magazine> getMagazines() {
         List <Magazine> arrMagazines = new ArrayList<>();
 
-        arrMagazines.addAll(this.literatureInShelf.stream()
+        arrMagazines.addAll(this.itemInShelf.stream()
                 .filter(Magazine.class::isInstance)
                 .map(Magazine.class::cast)
                 .collect(Collectors.toList()));
 
-        arrMagazines.addAll(this.literatureOutShelf.stream()
+        arrMagazines.addAll(this.itemOutShelf.stream()
                 .filter(Magazine.class::isInstance)
                 .map(Magazine.class::cast)
                 .collect(Collectors.toList()));
         return arrMagazines;
     }
 
-    public List<Literature> getLiteratureInShelf() {
-        return literatureInShelf;
+    public List<Item> getLiteratureInShelf() {
+        return itemInShelf;
     }
 
-    public List<Literature> getLiteratureOutShelf() {
-        return literatureOutShelf;
+    public List<Item> getLiteratureOutShelf() {
+        return itemOutShelf;
     }
 
-    public List<Literature> getAllLiteratureObjects(){
-        ArrayList<Literature> literatureArrayList = new ArrayList<>();
-        literatureArrayList.addAll(getBooks());
-        literatureArrayList.addAll(getMagazines());
-        return literatureArrayList;
+    public List<Item> getAllLiteratureObjects(){
+        ArrayList<Item> itemArrayList = new ArrayList<>();
+        itemArrayList.addAll(getBooks());
+        itemArrayList.addAll(getMagazines());
+        return itemArrayList;
     }
 
     /**
@@ -209,8 +209,8 @@ public class Shelf implements BaseActionsWithShelf{
     @Override
     public String toString() {
         return  "Shelf {" +
-                "\n\tliteratureInShelf=" + literatureInShelf.toString() +
-                "\n\tliteratureOutShelf=" + literatureOutShelf.toString() +
+                "\n\tliteratureInShelf=" + itemInShelf.toString() +
+                "\n\tliteratureOutShelf=" + itemOutShelf.toString() +
                 "}";
     }
 }
