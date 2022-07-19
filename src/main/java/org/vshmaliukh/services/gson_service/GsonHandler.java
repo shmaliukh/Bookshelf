@@ -222,11 +222,19 @@ public class GsonHandler {
                 informAboutErr(problemMessage);
                 saveProblemFile(gsonFile, problemMessage);
             }
+            closeFileReader(fr);
         } catch (FileNotFoundException fnfe) {
-            //closeFileReader();
             //throw new RuntimeException(fnfe);
         }
         return jsonArray;
+    }
+
+    private void closeFileReader(FileReader fr) {
+        try {
+            fr.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e); // TODO
+        }
     }
 
     private <T extends Item> List<Container> getContainerForLiteratureObjects(List<T> itemList) {
