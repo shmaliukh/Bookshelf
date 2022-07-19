@@ -66,7 +66,7 @@ public class Terminal {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
     }
 
-    public void startWork(boolean userMode) throws ParseException {
+    public void startWork(boolean userMode) throws ParseException, FileNotFoundException {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);

@@ -13,8 +13,8 @@ public class ConvertorToStringForLiterature {
     private final ConvertorToStringForMagazine convertorToStringForMagazine = new ConvertorToStringForMagazine();
     private final ConvertorToStringForBook convertorToStringForBook = new ConvertorToStringForBook();
 
-    public static final String MAGAZINE_CLASS_NAME = Magazine.class.getCanonicalName();
-    public static final String BOOK_CLASS_NAME = Book.class.getCanonicalName();
+    public static final String MAGAZINE_CLASS_NAME = Magazine.class.getSimpleName();
+    public static final String BOOK_CLASS_NAME = Book.class.getSimpleName();
 
     public List<String> getConvertedLiterature(Item item) {
         if (item instanceof Magazine) {

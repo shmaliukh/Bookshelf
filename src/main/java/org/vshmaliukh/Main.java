@@ -4,7 +4,6 @@ import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +25,7 @@ public class Main {
         public synchronized void run() {
             try {
                 terminal.startWork(false);
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }

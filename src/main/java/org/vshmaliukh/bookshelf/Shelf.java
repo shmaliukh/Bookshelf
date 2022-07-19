@@ -1,5 +1,6 @@
 package org.vshmaliukh.bookshelf;
 
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * @version 1.0.0
  * This is Shelf class which simulates real shelf with books and magazines
  */
+@Slf4j
 public class Shelf implements BaseActionsWithShelf{
 
     private PrintWriter printWriter;
@@ -63,7 +65,7 @@ public class Shelf implements BaseActionsWithShelf{
             }
         }
         else {
-            printWriter.println("The literature object (book or magazine) is empty");
+            log.info("The literature object (book or magazine) is empty");
         }
     }
 

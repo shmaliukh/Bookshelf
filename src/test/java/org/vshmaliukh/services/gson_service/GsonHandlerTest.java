@@ -149,7 +149,9 @@ class GsonHandlerTest {
 
         assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        assertTrue(shelf2.getBooks().isEmpty());
+        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
+        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
+        //assertTrue(shelf2.getBooks().isEmpty());
 
         Files.deleteIfExists(filePathBooks);
         Files.deleteIfExists(filePathMagazines);

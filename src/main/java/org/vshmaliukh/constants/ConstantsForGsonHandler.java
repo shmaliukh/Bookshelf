@@ -10,6 +10,8 @@ public final class ConstantsForGsonHandler {
     private ConstantsForGsonHandler() {
     }
 
+    public static final int MAX_PROBLEM_FILES = 5;
+
     public static final String FILE_TYPE = ".json";
 
     public static final String SHELF_FILE_NAME_PREFIX = "ShelfAll";

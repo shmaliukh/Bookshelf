@@ -3,10 +3,10 @@ package org.vshmaliukh.services.gson_service;
 public class Container {
 
     String classOfLiterature;
-    Object literature;
+    Object item;
 
-    public Container(Object literature){
-        this.classOfLiterature = literature.getClass().toString();
-        this.literature = literature;
+    public Container(Object item){
+        this.classOfLiterature = item.getClass().getSimpleName();
+        this.item = item;
     }
 }
