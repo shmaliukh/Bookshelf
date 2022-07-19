@@ -1,6 +1,7 @@
 package org.vshmaliukh.services.print_table_service;
 
 import lombok.Data;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -20,8 +21,9 @@ public class TablePrinter {
 
     private boolean isNeedIndex = false;
 
-    private TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList) {
+    private TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, Boolean isNeedIndex) {
         this.printWriter = printWriter;
+        this.isNeedIndex = isNeedIndex;
         this.titleList = new ArrayList<>(titleList);
         this.tableList = new ArrayList<>();
         for (List<String> stringList : tableList) {
@@ -29,8 +31,8 @@ public class TablePrinter {
         }
     }
 
-    public static void printTable(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList){
-        TablePrinter tablePrinter = new TablePrinter(printWriter, titleList, tableList);
+    public static void printTable(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, boolean isNeedIndex) {
+        TablePrinter tablePrinter = new TablePrinter(printWriter, titleList, tableList, isNeedIndex);
         tablePrinter.printFormattedTable();
     }
 

@@ -26,7 +26,7 @@ class TablePrinterTest {
                 "└─────────┘";
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(Arrays.asList("1 title")),
-                new ArrayList<>());
+                new ArrayList<>(), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -39,7 +39,7 @@ class TablePrinterTest {
                 "└─────────┴─────────┘";
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(Arrays.asList("1 title", "2 title")),
-                new ArrayList<>());
+                new ArrayList<>(), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -52,7 +52,7 @@ class TablePrinterTest {
                 "└─────────┴─────────┴─────────┘";
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(Arrays.asList("1 title", "2 title", "3 title")),
-                new ArrayList<>());
+                new ArrayList<>(), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -67,7 +67,7 @@ class TablePrinterTest {
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList(
-                new ArrayList<>(Arrays.asList("1 item")))));
+                new ArrayList<>(Arrays.asList("1 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -82,7 +82,7 @@ class TablePrinterTest {
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList(
-                new ArrayList<>(Arrays.asList("1 item", "2 item")))));
+                new ArrayList<>(Arrays.asList("1 item", "2 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -97,7 +97,7 @@ class TablePrinterTest {
         TablePrinter.printTable(printWriter,
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList(
-                new ArrayList<>(Arrays.asList("1 item", "2 item", "3 item")))));
+                new ArrayList<>(Arrays.asList("1 item", "2 item", "3 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -114,7 +114,7 @@ class TablePrinterTest {
                 new ArrayList<>(),
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item")),
-                new ArrayList<>(Arrays.asList("2 item")))));
+                new ArrayList<>(Arrays.asList("2 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -133,7 +133,7 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item")),
                 new ArrayList<>(Arrays.asList("2 item")),
-                new ArrayList<>(Arrays.asList("3 item")))));
+                new ArrayList<>(Arrays.asList("3 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -152,7 +152,7 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item", "2 item")),
                 new ArrayList<>(Arrays.asList("3 item")),
-                new ArrayList<>(Arrays.asList("4 item")))));
+                new ArrayList<>(Arrays.asList("4 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -171,7 +171,7 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item")),
                 new ArrayList<>(Arrays.asList("4 item", "5 item")),
-                new ArrayList<>(Arrays.asList("6 item")))));
+                new ArrayList<>(Arrays.asList("6 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -190,7 +190,7 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item", "4 item")),
                 new ArrayList<>(Arrays.asList("4 item", "5 item")),
-                new ArrayList<>(Arrays.asList("6 item___")))));
+                new ArrayList<>(Arrays.asList("6 item___")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 
@@ -209,7 +209,7 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList(
                 new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item", "4 item", "5 item")),
                 new ArrayList<>(Arrays.asList("4 item", "5 item")),
-                new ArrayList<>(Arrays.asList("6 item")))));
+                new ArrayList<>(Arrays.asList("6 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
 }
