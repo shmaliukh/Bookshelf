@@ -22,6 +22,4 @@ public class InputHandlerForUser extends InputHandler {
                 MESSAGE_ENTER_USER_NAME,
                 PATTERN_FOR_USER_NAME);
     }
-
-
 }

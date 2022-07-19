@@ -216,9 +216,9 @@ class GsonHandlerTest {
     }
 
     void setPaths(String name){
-        filePath =          Paths.get(HOME_PROPERTY, (name + SHELF_FILE_NAME_PREFIX     + FILE_TYPE));
-        filePathBooks =     Paths.get(HOME_PROPERTY, (name + BOOKS_FILE_NAME_PREFIX     + FILE_TYPE));
-        filePathMagazines = Paths.get(HOME_PROPERTY, (name + MAGAZINES_FILE_NAME_PREFIX + FILE_TYPE));
+        filePath =          Paths.get(PROGRAM_HOME_PROPERTY, (name + SHELF_FILE_NAME_PREFIX     + FILE_TYPE));
+        filePathBooks =     Paths.get(PROGRAM_HOME_PROPERTY, (name + BOOKS_FILE_NAME_PREFIX     + FILE_TYPE));
+        filePathMagazines = Paths.get(PROGRAM_HOME_PROPERTY, (name + MAGAZINES_FILE_NAME_PREFIX + FILE_TYPE));
     }
 
     private void setTwoBooksAndTwoMagazinesToShelf(Shelf shelf) {

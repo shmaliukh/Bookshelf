@@ -29,6 +29,7 @@ public class GsonHandler {
 
     private FileReader fr;
     private Path path;
+    private Path userDirectory;
     private File file;
 
     private String fileNameForAll;
@@ -44,6 +45,8 @@ public class GsonHandler {
     }
 
     private void generateFileNames() {
+        userDirectory = Paths.get(PROGRAM_HOME_PROPERTY, userName);
+
         fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
@@ -71,9 +74,9 @@ public class GsonHandler {
         saveListToGsonFile(fileNameForMagazines, shelf.getMagazines());
     }
 
-    private <T> void saveListToGsonFile(String fileName, List<T> literatureList){
+    private <T extends Item> void saveListToGsonFile(String fileName, List<T> literatureList){
         createFile(fileName);
-        List<Container> containerList = getContainerForLiteratureObjects((List<Item>) literatureList);
+        List<Container> containerList = getContainerForLiteratureObjects(literatureList);
         try {
             FileWriter fw = new FileWriter(file);
             gson.toJson(containerList, fw);
@@ -86,15 +89,24 @@ public class GsonHandler {
     }
 
     private void createFile(String fileName) {
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
+        checkForDirectory();
+        path = Paths.get(String.valueOf(userDirectory), (fileName + FILE_TYPE));
         file = new File(String.valueOf(path));
-        if (!file.exists()){
-            file.mkdirs();
+    }
+
+    private void checkForDirectory() {
+        File dirForProgram = new File(PROGRAM_HOME_PROPERTY);
+        if (! dirForProgram.exists()){
+            dirForProgram.mkdir();
+        }
+        File dirForUser = new File(String.valueOf(userDirectory));
+        if (! dirForUser.exists()){
+            dirForUser.mkdir();
         }
     }
 
     private File getGsonFile(String fileName) {
-        path = Paths.get(HOME_PROPERTY, (fileName + FILE_TYPE));
+        path = Paths.get(PROGRAM_HOME_PROPERTY, (fileName + FILE_TYPE));
         file = new File(String.valueOf(path));
         if (!file.exists()){
             file.mkdirs();
@@ -223,7 +235,7 @@ public class GsonHandler {
         }
     }
 
-    private List<Container> getContainerForLiteratureObjects(List<Item> itemList) {
+    private <T extends Item> List<Container> getContainerForLiteratureObjects(List<T> itemList) {
         List<Container> containerArrayList= new ArrayList<>();
         itemList.forEach(o -> containerArrayList.add(new Container(o)));
         return containerArrayList;
