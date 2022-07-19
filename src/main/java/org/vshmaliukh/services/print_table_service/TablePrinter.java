@@ -1,7 +1,6 @@
 package org.vshmaliukh.services.print_table_service;
 
 import lombok.Data;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,13 +12,13 @@ import static org.vshmaliukh.constants.ConstantsForTablePrinter.*;
 public class TablePrinter {
 
     private final PrintWriter printWriter;
+    private final boolean isNeedIndex;
 
     private final List<String> titleList;
     private final List<List<String>> tableList;
 
     private List<Integer> sizeList = new ArrayList<>();
 
-    private boolean isNeedIndex = false;
 
     private TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, Boolean isNeedIndex) {
         this.printWriter = printWriter;

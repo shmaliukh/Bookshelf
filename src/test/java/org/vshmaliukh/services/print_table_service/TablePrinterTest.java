@@ -212,4 +212,56 @@ class TablePrinterTest {
                 new ArrayList<>(Arrays.asList("6 item")))), false);
         assertEquals(expectedString, baos.toString().trim());
     }
+
+    @Test
+    void testPrintTableWithIndex(){
+        String expectedString =
+                "┌───┬─────────┬─────────────┬────────────┬─────────┬────────┐" + System.lineSeparator() +
+                "│ # │ 1 title │ 2 title     │ 3 title___ │ 4 title │ ~~     │" + System.lineSeparator() +
+                "│───┼─────────┼─────────────┼────────────┼─────────┼────────│" + System.lineSeparator() +
+                "│ 1 │ 1 item  │ 2 item_____ │ 3 item     │ 4 item  │ 5 item │" + System.lineSeparator() +
+                "│ 2 │ 4 item  │ 5 item      │ ~~         │ ~~      │ ~~     │" + System.lineSeparator() +
+                "│ 3 │ 6 item  │ ~~          │ ~~         │ ~~      │ ~~     │" + System.lineSeparator() +
+                "└───┴─────────┴─────────────┴────────────┴─────────┴────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title", "2 title", "3 title___", "4 title")),
+                new ArrayList<>(Arrays.asList(
+                        new ArrayList<>(Arrays.asList("1 item", "2 item_____", "3 item", "4 item", "5 item")),
+                        new ArrayList<>(Arrays.asList("4 item", "5 item")),
+                        new ArrayList<>(Arrays.asList("6 item")))), true);
+        assertEquals(expectedString, baos.toString().trim());
+    }
+
+    @Test
+    void testPrintTableWithIndex_sizableWidthForIndexColumn(){
+        String expectedString =
+                "┌────┬─────────┐" + System.lineSeparator() +
+                "│ #  │ 1 title │" + System.lineSeparator() +
+                "│────┼─────────│" + System.lineSeparator() +
+                "│ 1  │ 1 item  │" + System.lineSeparator() +
+                "│ 2  │ 2 item  │" + System.lineSeparator() +
+                "│ 3  │ 3 item  │" + System.lineSeparator() +
+                "│ 4  │ 4 item  │" + System.lineSeparator() +
+                "│ 5  │ 5 item  │" + System.lineSeparator() +
+                "│ 6  │ 6 item  │" + System.lineSeparator() +
+                "│ 7  │ 7 item  │" + System.lineSeparator() +
+                "│ 8  │ 8 item  │" + System.lineSeparator() +
+                "│ 9  │ 9 item  │" + System.lineSeparator() +
+                "│ 10 │ 10 item │" + System.lineSeparator() +
+                "└────┴─────────┘";
+        TablePrinter.printTable(printWriter,
+                new ArrayList<>(Arrays.asList("1 title")),
+                new ArrayList<>(Arrays.asList(
+                        new ArrayList<>(Arrays.asList("1 item")),
+                        new ArrayList<>(Arrays.asList("2 item")),
+                        new ArrayList<>(Arrays.asList("3 item")),
+                        new ArrayList<>(Arrays.asList("4 item")),
+                        new ArrayList<>(Arrays.asList("5 item")),
+                        new ArrayList<>(Arrays.asList("6 item")),
+                        new ArrayList<>(Arrays.asList("7 item")),
+                        new ArrayList<>(Arrays.asList("8 item")),
+                        new ArrayList<>(Arrays.asList("9 item")),
+                        new ArrayList<>(Arrays.asList("10 item")))), true);
+        assertEquals(expectedString, baos.toString().trim());
+    }
 }
