@@ -19,7 +19,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantsForLiteratureComparator.*;
+import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 

@@ -5,9 +5,9 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.util.Comparator;
 
-public final class ConstantsForLiteratureComparator {
+public final class ConstantsLiteratureSorterHandler {
 
-    private ConstantsForLiteratureComparator(){}
+    private ConstantsLiteratureSorterHandler(){}
 
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());

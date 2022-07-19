@@ -214,7 +214,6 @@ public class GsonHandler {
             if (fromJson != null) {
                 jsonArray = fromJson;
             } else {
-
                 String problemMessage = "problem to read shelf from file '" + gsonFile.getAbsolutePath() + "'. Exception: jsonArray == null";
                 informAboutErr(problemMessage);
                 saveProblemFile(gsonFile, problemMessage);

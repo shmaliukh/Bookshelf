@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsForLiteratureComparator.*;
+import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 
 class ActionsWithBooksTest {
     PrintWriter printWriter = new PrintWriter(System.out, true);
