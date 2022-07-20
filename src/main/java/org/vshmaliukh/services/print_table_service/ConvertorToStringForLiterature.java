@@ -8,24 +8,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ConvertorToStringForLiterature {
-
-    private final ConvertorToStringForMagazine convertorToStringForMagazine = new ConvertorToStringForMagazine();
-    private final ConvertorToStringForBook convertorToStringForBook = new ConvertorToStringForBook();
+public class ConvertorToStringForLiterature <T extends Item> {
 
     public static final String MAGAZINE_CLASS_NAME = Magazine.class.getSimpleName();
     public static final String BOOK_CLASS_NAME = Book.class.getSimpleName();
 
-    public List<String> getConvertedLiterature(Item item) {
+    public List<String> getConvertedLiterature(T item) {
         if (item instanceof Magazine) {
-            return convertorToStringForMagazine.convertObjectToListOfString((Magazine) item);
+            return new ConvertorToStringForMagazine().convertObjectToListOfString((Magazine) item);
         } else if (item instanceof Book) {
-            return convertorToStringForBook.convertObjectToListOfString((Book) item);
+            return new ConvertorToStringForBook().convertObjectToListOfString((Book) item);
         }
         return Collections.emptyList(); //FIXME fix cast
     }
 
-    public List<List<String>> getTable(List<? extends Item> literatureList){
+    public List<List<String>> getTable(List<T> literatureList){
         return literatureList.stream()
                 .map(this::getConvertedLiterature)
                 .collect(Collectors.toList());

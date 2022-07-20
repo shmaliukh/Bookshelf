@@ -48,7 +48,7 @@ public class Terminal {
 
     // TODO delete title list if new version is ready
     List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
-    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
+    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -68,7 +68,7 @@ public class Terminal {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
     }
 
-    public void startWork(boolean userMode) throws ParseException, FileNotFoundException {
+    public void startWork(boolean userMode) throws ParseException {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
@@ -210,6 +210,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -223,6 +224,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -236,6 +238,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -425,22 +428,22 @@ public class Terminal {
         switch (byIndex) {
             case SORT_BOOKS_BY_NAME:
                 bookList.addAll(
-                        new LiteratureSorterHandler<Book>(shelf.getBooks())
+                        new LiteratureSorterHandler<>(shelf.getBooks())
                                 .getSortedLiterature(BOOK_COMPARATOR_BY_NAME));
                 break;
             case SORT_BOOKS_BY_PAGES_NUMBER:
                 bookList.addAll(
-                        new LiteratureSorterHandler<Book>(shelf.getBooks())
+                        new LiteratureSorterHandler<>(shelf.getBooks())
                                 .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES));
                 break;
             case SORT_BOOKS_BY_AUTHOR:
                 bookList.addAll(
-                        new LiteratureSorterHandler<Book>(shelf.getBooks())
+                        new LiteratureSorterHandler<>(shelf.getBooks())
                                 .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR));
                 break;
             case SORT_BOOKS_BY_DATE_OF_ISSUE:
                 bookList.addAll(
-                        new LiteratureSorterHandler<Book>(shelf.getBooks())
+                        new LiteratureSorterHandler<>(shelf.getBooks())
                                 .getSortedLiterature(BOOK_COMPARATOR_BY_DATE));
                 break;
             default:
@@ -454,11 +457,11 @@ public class Terminal {
         MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:
-                magazineList.addAll( new LiteratureSorterHandler<Magazine>(shelf.getMagazines())
+                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
                 break;
             case SORT_MAGAZINES_BY_PAGES:
-                magazineList.addAll( new LiteratureSorterHandler<Magazine>(shelf.getMagazines())
+                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
                 break;
             default:

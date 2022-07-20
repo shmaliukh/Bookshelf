@@ -6,7 +6,6 @@ import org.vshmaliukh.Terminal;
 @Slf4j
 public class TerminalToClientThread extends Thread{
 
-
     private int userCounter;
 
     private Terminal terminal;

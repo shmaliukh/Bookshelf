@@ -11,9 +11,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 import static org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature.BOOK_CLASS_NAME;
@@ -47,9 +47,9 @@ public class GsonHandler {
     private void generateFileNames() {
         userDirectory = Paths.get(PROGRAM_HOME_PROPERTY, userName);
 
-        fileNameForAll = userName + SHELF_FILE_NAME_PREFIX;
-        fileNameForBooks = userName + BOOKS_FILE_NAME_PREFIX;
-        fileNameForMagazines = userName + MAGAZINES_FILE_NAME_PREFIX;
+        fileNameForAll = userName + "_" + SHELF_FILE_NAME_PREFIX;
+        fileNameForBooks = userName + "_" + BOOKS_FILE_NAME_PREFIX;
+        fileNameForMagazines = userName + "_" + MAGAZINES_FILE_NAME_PREFIX;
     }
 
     public void saveShelfInGson(Shelf shelf) {
@@ -86,12 +86,12 @@ public class GsonHandler {
     }
 
     private void initFile(String fileName) {
-        checkForDirectory(); // TODO rename method
+        createUserDirectoryIfNoExist();
         Path gsonFilePath = Paths.get(String.valueOf(userDirectory), (fileName + FILE_TYPE));
         gsonFile = new File(String.valueOf(gsonFilePath));
     }
 
-    private void checkForDirectory() {
+    private void createUserDirectoryIfNoExist() {
         File dirForProgram = new File(PROGRAM_HOME_PROPERTY);
         createDirIfNotExists(dirForProgram);
         File dirForUser = new File(String.valueOf(userDirectory));
@@ -137,34 +137,62 @@ public class GsonHandler {
         return itemList;
     }
 
-    private void saveProblemFile(File gsonFile, String message) {
-        boolean isSavedProblemFile = false;
-        File problemFile = null; // FIXME not use null
-        try {
-            File dirForProblemFiles = new File(String.valueOf(Paths.get(String.valueOf(userDirectory), "problemFiles")));
-            createDirIfNotExists(dirForProblemFiles);
+    private void saveProblemFile(File gsonFile, String problemMessage) {
+        File dirForProblemFiles = new File(String.valueOf(Paths.get(String.valueOf(userDirectory), "problemFiles")));
+        createDirIfNotExists(dirForProblemFiles);
 
-            for (int i = 0; !isSavedProblemFile; i++) {// TODO create new method for rewriting ready n-max-files
-                problemFile = new File(String.valueOf(Paths.get(
-                        String.valueOf(dirForProblemFiles),
-                        ("problemFileToRead_" + i + "_" + gsonFile.getName()))));
-                if (!Files.exists(problemFile.toPath())) {
-                    Files.copy(gsonFile.toPath(), problemFile.toPath());
-                    appendMessageToFile(message, problemFile);
-                    isSavedProblemFile = true;
-                }
-            }
+        File problemFile = getOldestProblemFile(gsonFile, dirForProblemFiles);
+        try {
+            Files.copy(gsonFile.toPath(), problemFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            problemFile.setLastModified(new Date().getTime());
+            saveErrorToLogFile(problemMessage, dirForProblemFiles);
+
+            log.info("[GsonHandler] save problem file as '" + problemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(problemFile.lastModified()));
         } catch (IOException ioe) {
             informAboutErr("problem to save copy of problem file'" + problemFile.getAbsolutePath() + "'. Exception: " + ioe);
         }
     }
 
-    private void appendMessageToFile(String message, File problemFile) {
-        try (FileWriter fileWriter = new FileWriter(problemFile, true)) {
-            fileWriter.append(message);
+    private File getOldestProblemFile(File gsonFile, File dirForProblemFiles) {
+        List<File> filesList = new ArrayList<>();
+        for (int i = 0; i < MAX_PROBLEM_FILES; i++) {
+            File problemFile = new File(String.valueOf(Paths.get(
+                    String.valueOf(dirForProblemFiles),
+                    ("problemFileToRead_" + i + "_" + gsonFile.getName()))));
+            if (!problemFile.exists()) {
+                return problemFile;
+            }
+            filesList.add(problemFile);
+        }
+        return getTheOldestFile(filesList);
+    }
+
+    private File getTheOldestFile(List<File> filesList) {
+        long oldest = new Date().getTime();
+        File oldestFile = null;
+        for (File file : filesList) {
+            if (file.lastModified() < oldest) {
+                oldest = file.lastModified();
+                oldestFile = file;
+            }
+        }
+        if (oldestFile != null) {
+            return oldestFile;
+        }
+        return filesList.get(0);
+    }
+
+    private void saveErrorToLogFile(String message, File dirForProblemFiles) {
+        File logFile = new File(String.valueOf(Paths.get(
+                String.valueOf(dirForProblemFiles),
+                ("log.txt"))));
+        try (FileWriter fileWriter = new FileWriter(logFile, true)) {
+            fileWriter.append(new Date() + System.lineSeparator()
+                    + "\t" + message + System.lineSeparator() + System.lineSeparator());
             fileWriter.flush();
         } catch (IOException ioe) {
-            informAboutErr("problem to add message for problem file'" + problemFile.getAbsolutePath() + "'. Exception: " + ioe);
+            informAboutErr("problem to add message to log file'" + logFile.getAbsolutePath() + "'. "
+                    + "Exception: " + ioe);
         }
     }
 
