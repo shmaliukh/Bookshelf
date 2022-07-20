@@ -3,6 +3,7 @@ package org.vshmaliukh.services.gson_service;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.File;
@@ -26,6 +27,7 @@ class GsonHandlerTest {
     Path filePathAll;
     Path filePathBooks;
     Path filePathMagazines;
+    Path filePathGazettes;
 
     Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000));
     Book book2 = new Book("noNameBook2", 2, true, "NoAuthor2", new Date());
@@ -39,6 +41,12 @@ class GsonHandlerTest {
     Magazine expectedMagazine1 = new Magazine("noNameMagazine1", 1, false);
     Magazine expectedMagazine2 = new Magazine("noNameMagazine2", 2, true);
 
+    Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
+    Gazette gazette2 = new Gazette("noNameGazette2", 2, true);
+
+    Gazette expectedGazette1 = new Gazette("noNameGazette1", 1, false);
+    Gazette expectedGazette2 = new Gazette("noNameGazette2", 2, true);
+
     @Test
     void readWriteOneFileTest_brokenFile() throws IOException {
         String userName = "testProblemToReadBrokenShelfFile";
@@ -46,7 +54,7 @@ class GsonHandlerTest {
         GsonHandler gsonHandlerOneFile = new GsonHandler(WORK_WITH_ONE_FILE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
+        initShelfWithItems(shelf);
 
         gsonHandlerOneFile.saveShelfInGson(shelf);
         FileWriter fw = new FileWriter(String.valueOf(filePathAll), true);
@@ -57,19 +65,20 @@ class GsonHandlerTest {
 
         assertTrue(shelf2.getMagazines().isEmpty());
         assertTrue(shelf2.getBooks().isEmpty());
+        assertTrue(shelf2.getGazettes().isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
     }
 
     @Test
-    void workWithTwoFilesTest_brokenTwoFile() throws IOException {
-        String userName = "testProblemToReadBrokenBooksFile";
+    void workWithFilesPerTypeTest_brokenFilePerType() throws IOException {
+        String userName = "testProblemToReadBrokenFilePerType";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilePerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
+        initShelfWithItems(shelf);
+        gsonHandlerFilePerType.saveShelfInGson(shelf);
 
         FileWriter fw;
         fw = new FileWriter(String.valueOf(filePathBooks), true);
@@ -80,29 +89,34 @@ class GsonHandlerTest {
         fw.append("someStr");
         fw.flush();
         fw.close();
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        fw = new FileWriter(String.valueOf(filePathGazettes), true);
+        fw.append("someStr");
+        fw.flush();
+        fw.close();
+        Shelf shelf2 = gsonHandlerFilePerType.readShelfFromGson();
 
         assertTrue(shelf2.getMagazines().isEmpty());
         assertTrue(shelf2.getBooks().isEmpty());
+        assertTrue(shelf2.getGazettes().isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
     }
 
     @Test
-    void workWithTwoFilesTest_brokenBooksFile() throws IOException {
+    void workWithFilesPerTypeTest_brokenBooksFile() throws IOException {
         String userName = "testProblemToReadBrokenBooksFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
 
         FileWriter fw = new FileWriter(String.valueOf(filePathBooks), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
         assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
@@ -112,19 +126,19 @@ class GsonHandlerTest {
     }
 
     @Test
-    void workWithTwoFilesTest_brokenMagazinesFile() throws IOException {
+    void workWithFilesPerTypeTest_brokenMagazinesFile() throws IOException {
         String userName = "testProblemToReadBrokenMagazinesFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
 
         FileWriter fw = new FileWriter(String.valueOf(filePathMagazines), true);
         fw.append("someStr");
         fw.flush();
         fw.close();
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
         assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
         assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
@@ -134,17 +148,39 @@ class GsonHandlerTest {
     }
 
     @Test
-    void workWithTwoFilesTest_booksFileNotExists() throws IOException {
+    void workWithFilesPerTypeTest_brokenGazettesFile() throws IOException {
+        String userName = "testProblemToReadBrokenGazettesFile";
+        setPaths(userName);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
+        Shelf shelf = new Shelf(printWriter);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
+
+        FileWriter fw = new FileWriter(String.valueOf(filePathGazettes), true);
+        fw.append("someStr");
+        fw.flush();
+        fw.close();
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
+
+        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
+        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
+        assertTrue(shelf2.getGazettes().isEmpty());
+
+        assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
+    }
+
+    @Test
+    void workWithFilesPerTypeTest_booksFileNotExists() throws IOException {
         String userName = "testProblemToReadBooksFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
 
         Files.deleteIfExists(filePathBooks);
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
         assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
@@ -153,21 +189,41 @@ class GsonHandlerTest {
     }
 
     @Test
-    void workWithTwoFilesTest_magazinesFileNotExists() throws IOException {
+    void workWithFilesPerTypeTest_magazinesFileNotExists() throws IOException {
         String userName = "testProblemToReadMagazinesFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
 
         Files.deleteIfExists(filePathMagazines);
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
         assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
         assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
         assertTrue(shelf2.getMagazines().isEmpty());
+
+        assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
+    }
+
+    @Test
+    void workWithFilesPerTypeTest_gazettesFileNotExists() throws IOException {
+        String userName = "testProblemToReadGazettesFile";
+        setPaths(userName);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
+
+        Shelf shelf = new Shelf(printWriter);
+        initShelfWithItems(shelf);
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
+
+        Files.deleteIfExists(filePathGazettes);
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
+
+        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
+        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
+        assertTrue(shelf2.getGazettes().isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
     }
@@ -178,7 +234,7 @@ class GsonHandlerTest {
         setPaths(userName);
         GsonHandler gsonHandlerOneFile = new GsonHandler(WORK_WITH_ONE_FILE, userName, printWriter);
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
+        initShelfWithItems(shelf);
 
         gsonHandlerOneFile.saveShelfInGson(shelf);
         Shelf shelf2 = gsonHandlerOneFile.readShelfFromGson();
@@ -187,25 +243,29 @@ class GsonHandlerTest {
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
         assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
         assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
+        assertEquals(expectedGazette1.toString(), shelf2.getGazettes().get(0).toString());
+        assertEquals(expectedGazette2.toString(), shelf2.getGazettes().get(1).toString());
 
         assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
     }
 
     @Test
-    void readWriteTwoFilesTest() {
-        userName = "testTwoFiles";
+    void readWriteFilesPerTypeTest() {
+        userName = "testFilesPerType";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerFilesPerType = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
         Shelf shelf = new Shelf(printWriter);
-        setTwoBooksAndTwoMagazinesToShelf(shelf);
+        initShelfWithItems(shelf);
 
-        gsonHandlerTwoFiles.saveShelfInGson(shelf);
-        Shelf shelf2 = gsonHandlerTwoFiles.readShelfFromGson();
+        gsonHandlerFilesPerType.saveShelfInGson(shelf);
+        Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
         assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
         assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
         assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
         assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
+        assertEquals(expectedGazette1.toString(), shelf2.getGazettes().get(0).toString());
+        assertEquals(expectedGazette2.toString(), shelf2.getGazettes().get(1).toString());
 
         assertTrue(deleteDirectory(Paths.get(PROGRAM_HOME_PROPERTY, userName).toFile()));
     }
@@ -214,13 +274,16 @@ class GsonHandlerTest {
         filePathAll = Paths.get(PROGRAM_HOME_PROPERTY, name, (name + "_" + SHELF_FILE_NAME_PREFIX + FILE_TYPE));
         filePathBooks = Paths.get(PROGRAM_HOME_PROPERTY, name, (name + "_" + BOOKS_FILE_NAME_PREFIX + FILE_TYPE));
         filePathMagazines = Paths.get(PROGRAM_HOME_PROPERTY, name, (name + "_" + MAGAZINES_FILE_NAME_PREFIX + FILE_TYPE));
+        filePathGazettes = Paths.get(PROGRAM_HOME_PROPERTY, name, (name + "_" + GAZETTES_FILE_NAME_PREFIX + FILE_TYPE));
     }
 
-    private void setTwoBooksAndTwoMagazinesToShelf(Shelf shelf) {
+    private void initShelfWithItems(Shelf shelf) {
         shelf.addLiteratureObject(book1);
         shelf.addLiteratureObject(book2);
         shelf.addLiteratureObject(magazine1);
         shelf.addLiteratureObject(magazine2);
+        shelf.addLiteratureObject(gazette1);
+        shelf.addLiteratureObject(gazette2);
     }
 
     boolean deleteDirectory(File directoryToBeDeleted) {

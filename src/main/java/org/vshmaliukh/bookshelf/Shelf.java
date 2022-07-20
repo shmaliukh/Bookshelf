@@ -3,6 +3,7 @@ package org.vshmaliukh.bookshelf;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
@@ -30,13 +31,16 @@ public class Shelf implements BaseActionsWithShelf {
         itemList.forEach(this::addLiteratureObject);
     }
 
-    public Shelf(List<Book> books, List<Magazine> magazines, PrintWriter printWriter) {
+    public Shelf(List<Book> books, List<Magazine> magazines, List<Gazette> gazettes, PrintWriter printWriter) {
         this(printWriter);
         if (!books.isEmpty()) {
             books.forEach(this::addLiteratureObject);
         }
         if (!magazines.isEmpty()) {
             magazines.forEach(this::addLiteratureObject);
+        }
+        if (!gazettes.isEmpty()) {
+            gazettes.forEach((this::addLiteratureObject));
         }
     }
 
@@ -99,6 +103,13 @@ public class Shelf implements BaseActionsWithShelf {
         return itemsOfShelf.stream()
                 .filter(Magazine.class::isInstance)
                 .map(Magazine.class::cast)
+                .collect(Collectors.toList());
+    }
+
+    public List<Gazette> getGazettes() {
+        return itemsOfShelf.stream()
+                .filter(Gazette.class::isInstance)
+                .map(Gazette.class::cast)
                 .collect(Collectors.toList());
     }
 

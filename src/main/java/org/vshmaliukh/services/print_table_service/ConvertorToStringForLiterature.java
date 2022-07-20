@@ -1,6 +1,7 @@
 package org.vshmaliukh.services.print_table_service;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
@@ -12,12 +13,15 @@ public class ConvertorToStringForLiterature <T extends Item> {
 
     public static final String MAGAZINE_CLASS_NAME = Magazine.class.getSimpleName();
     public static final String BOOK_CLASS_NAME = Book.class.getSimpleName();
+    public static final String GAZETTE_CLASS_NAME = Gazette.class.getSimpleName();
 
     public List<String> getConvertedLiterature(T item) {
         if (item instanceof Magazine) {
             return new ConvertorToStringForMagazine().convertObjectToListOfString((Magazine) item);
         } else if (item instanceof Book) {
             return new ConvertorToStringForBook().convertObjectToListOfString((Book) item);
+        } else if (item instanceof Gazette) {
+            return new ConvertorToStringForGazette().convertObjectToListOfString((Gazette) item);
         }
         return Collections.emptyList(); //FIXME fix cast
     }
