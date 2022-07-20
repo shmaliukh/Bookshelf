@@ -9,7 +9,7 @@ public class Gazette extends Item{
      * @param pagesNumber
      * @param isBorrowed
      */
-    protected Gazette(String name, int pagesNumber, boolean isBorrowed) {
+    public Gazette(String name, int pagesNumber, boolean isBorrowed) {
         super(name, pagesNumber, isBorrowed);
     }
 

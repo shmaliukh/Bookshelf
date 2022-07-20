@@ -1,6 +1,7 @@
 package org.vshmaliukh;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
@@ -266,11 +267,17 @@ public class Terminal {
             case ADD_CUSTOM_MAGAZINE:
                 shelf.addLiteratureObject(getUserMagazine());
                 break;
+            case ADD_CUSTOM_GAZETTE:
+                shelf.addLiteratureObject(getUserGazette());
+                break;
             case ADD_CUSTOM_BOOK:
                 shelf.addLiteratureObject(getUserBook());
                 break;
             case ADD_RANDOM_MAGAZINE:
                 shelf.addLiteratureObject(getRandomMagazine());
+                break;
+            case ADD_RANDOM_GAZETTE:
+                shelf.addLiteratureObject(getRandomGazette());
                 break;
             case ADD_RANDOM_BOOK:
                 shelf.addLiteratureObject(getRandomBook());
@@ -305,6 +312,26 @@ public class Terminal {
         userMagazine = new Magazine(name, pages, isBorrowed);
         informAboutAddedLiteratureObject(userMagazine);
         return userMagazine;
+    }
+
+    /**
+     * Method give ability to create custom Gazette
+     *
+     * @return user created Gazette
+     */
+    public Gazette getUserGazette() {
+        Gazette userGazette;
+        String name;
+        int pages;
+        boolean isBorrowed;
+
+        name = inputHandlerForLiterature.getUserLiteratureName();
+        pages = inputHandlerForLiterature.getUserLiteraturePages();
+        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+
+        userGazette = new Gazette(name, pages, isBorrowed);
+        informAboutAddedLiteratureObject(userGazette);
+        return userGazette;
     }
 
     /**
@@ -370,6 +397,23 @@ public class Terminal {
 
         informAboutAddedLiteratureObject(randomBook);
         return randomBook;
+    }
+
+    /**
+     * Method forms new Gazette with random parameters (isBorrowed = false -> constant)
+     *
+     * @return Gazette with
+     * random name (max string length = 20),
+     * random number of pages (max = 1000)
+     */
+    public Gazette getRandomGazette() {
+        Gazette randomGazette = new Gazette(
+                getRandomString(randomNumber.nextInt(20)),
+                randomNumber.nextInt(1000),
+                false);
+
+        informAboutAddedLiteratureObject(randomGazette);
+        return randomGazette;
     }
 
     /**
