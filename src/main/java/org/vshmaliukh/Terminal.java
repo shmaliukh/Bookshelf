@@ -112,7 +112,7 @@ public class Terminal {
             case FILE_MODE_WORK_WITH_ONE_FILE:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
-            case FILE_MODE_WORK_WITH_TWO_FILES:
+            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
                 printWriter.println("FILE_MODE_WORK_WITH_TWO_FILES");
                 break;
             default:
