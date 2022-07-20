@@ -4,6 +4,7 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
@@ -227,7 +228,7 @@ public class GsonHandler {
         } else if (typeOfClass.equals(MAGAZINE_CLASS_NAME)) {
             return gson.fromJson(itemObject, Magazine.class);
         } else if (typeOfClass.equals(GAZETTE_CLASS_NAME)) {
-            return gson.fromJson(itemObject, Magazine.class);
+            return gson.fromJson(itemObject, Gazette.class);
         }
         return null;
     }
