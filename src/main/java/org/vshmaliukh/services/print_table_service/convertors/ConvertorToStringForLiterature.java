@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.print_table_service;
+package org.vshmaliukh.services.print_table_service.convertors;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
