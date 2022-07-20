@@ -9,8 +9,10 @@ public enum MenuForAddingLiterature {
 
     ADD_CUSTOM_MAGAZINE(1, "Magazine"),
     ADD_CUSTOM_BOOK(2, "Book"),
-    ADD_RANDOM_MAGAZINE(3, "Random Magazine"),
-    ADD_RANDOM_BOOK(4, "Random Book"),
+    ADD_CUSTOM_GAZETTE(3, "Book"),
+    ADD_RANDOM_MAGAZINE(4, "Random Magazine"),
+    ADD_RANDOM_BOOK(5, "Random Book"),
+    ADD_RANDOM_GAZETTE(6, "Random Gazette"),
     UNKNOWN(WRONG_INPUT);
 
     public final int i;
