@@ -29,6 +29,7 @@ public class GsonHandler {
             .setPrettyPrinting()
             .create();
 
+    private String programDirectory;
     private Path userDirectory;
     private File gsonFile;
 
@@ -45,14 +46,29 @@ public class GsonHandler {
         generateFileNames();
     }
 
-    private void generateFileNames() {
-        userDirectory = Paths.get(PROGRAM_HOME_PROPERTY, userName);
+    public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter, boolean saveAsTemp) {
+        this.userName = userName;
+        this.printWriter = printWriter;
+        this.typeOfWorkWithFiles = typeOfWorkWithFiles;
+        generateDirectoryForSaving(saveAsTemp);
+        generateFileNames();
+    }
 
+    private void generateFileNames() {
         fileNameForAll = userName + "_" + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + "_" + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + "_" + MAGAZINES_FILE_NAME_PREFIX;
-
         fileNameForGazettes = userName + "_" + GAZETTES_FILE_NAME_PREFIX;
+    }
+
+    private void generateDirectoryForSaving(boolean needTempDir) {
+        if(needTempDir){
+            programDirectory = SYSTEM_TEMP_PROPERTY;
+        }
+        else {
+            programDirectory = PROGRAM_HOME_PROPERTY;
+        }
+        userDirectory = Paths.get(programDirectory, userName);
     }
 
     public void saveShelfInGson(Shelf shelf) {
@@ -96,7 +112,7 @@ public class GsonHandler {
     }
 
     private void createUserDirectoryIfNoExist() {
-        File dirForProgram = new File(PROGRAM_HOME_PROPERTY);
+        File dirForProgram = new File(programDirectory);
         createDirIfNotExists(dirForProgram);
         File dirForUser = new File(String.valueOf(userDirectory));
         createDirIfNotExists(dirForUser);

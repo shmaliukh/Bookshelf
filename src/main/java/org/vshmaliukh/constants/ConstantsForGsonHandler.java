@@ -21,6 +21,7 @@ public final class ConstantsForGsonHandler {
 
     public static final String PROGRAM_DIRECTORY_NAME = "book_shelf";
     public static final String PROGRAM_HOME_PROPERTY = String.valueOf(Paths.get(System.getProperty("user.home"), PROGRAM_DIRECTORY_NAME));
+    public static final String SYSTEM_TEMP_PROPERTY = String.valueOf(Paths.get(System.getProperty("java.io.tmpdir"), PROGRAM_DIRECTORY_NAME));
 
     public static final int WORK_WITH_ONE_FILE = FILE_MODE_WORK_WITH_ONE_FILE;
     public static final int WORK_WITH_FILE_PER_TYPE = FILE_MODE_WORK_WITH_FILE_PER_TYPE;
