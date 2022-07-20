@@ -2,6 +2,7 @@ package org.vshmaliukh.bookshelf.actionsWithShelf;
 
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,12 @@ class BaseActionsWithShelfTest {
 
     Magazine expectedBorrowedMagazine = new Magazine("noNameMagazine1",1,true);
     Magazine expectedNotBorrowedMagazine = new Magazine("noNameMagazine2",2,false);
+
+    Gazette gazetteIsBorrowed = new Gazette("noNameGazette1",1,true);
+    Gazette gazetteNotBorrowed = new Gazette("noNameGazette2",2,false);
+
+    Gazette expectedBorrowedGazette = new Gazette("noNameGazette1",1,true);
+    Gazette expectedNotBorrowedGazette = new Gazette("noNameGazette2",2,false);
 
     /**
      * Special capture variables for the capture console output
@@ -62,6 +69,34 @@ class BaseActionsWithShelfTest {
         assertEquals(expectedOutShelfSize, shelf.getLiteratureOutShelf().size());
         assertEquals(expectedBorrowedMagazine.getPagesNumber(), shelf.getLiteratureOutShelf().get(0).getPagesNumber());
         assertEquals(expectedBorrowedMagazine.getName(), shelf.getLiteratureOutShelf().get(0).getName());
+    }
+
+    @Test
+    @DisplayName("test to add one not borrowed gazette to the shelf")
+    void addLiteratureObject_gazetteNotBorrowed() {
+        int expectedInShelfSize = 1;
+        int expectedOutShelfSize = 0;
+        Shelf shelf = new Shelf(printWriter);
+        shelf.addLiteratureObject(gazetteNotBorrowed);
+
+        assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelf.getLiteratureOutShelf().size());
+        assertEquals(expectedNotBorrowedGazette.getPagesNumber(), shelf.getLiteratureInShelf().get(0).getPagesNumber());
+        assertEquals(expectedNotBorrowedGazette.getName(), shelf.getLiteratureInShelf().get(0).getName());
+    }
+
+    @Test
+    @DisplayName("test to add one borrowed gazette to the shelf")
+    void addLiteratureObject_gazetteIsBorrowed() {
+        int expectedInShelfSize = 0;
+        int expectedOutShelfSize = 1;
+        Shelf shelf = new Shelf(printWriter);
+        shelf.addLiteratureObject(gazetteIsBorrowed);
+
+        assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelf.getLiteratureOutShelf().size());
+        assertEquals(expectedBorrowedGazette.getPagesNumber(), shelf.getLiteratureOutShelf().get(0).getPagesNumber());
+        assertEquals(expectedBorrowedGazette.getName(), shelf.getLiteratureOutShelf().get(0).getName());
     }
 
     @Test
@@ -105,6 +140,18 @@ class BaseActionsWithShelfTest {
     }
 
     @Test
+    @DisplayName("test to delete gazette from the shelf)")
+    void deleteLiteratureObjectByIndex_gazette() {
+        int expectedInShelfSize = 0;
+        Shelf shelf = new Shelf(printWriter);
+        shelf.addLiteratureObject(gazetteNotBorrowed);
+
+        shelf.deleteLiteratureObjectByIndex(1);
+
+        assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
+    }
+
+    @Test
     @DisplayName("test to delete magazine from the shelf)")
     void deleteLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
@@ -115,6 +162,7 @@ class BaseActionsWithShelfTest {
 
         assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
     }
+
 
     @Test
     @DisplayName("test to delete literature object from the shelf when empty")
@@ -159,6 +207,20 @@ class BaseActionsWithShelfTest {
         int expectedOutShelfSize = 1;
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(magazineNotBorrowed);
+
+        shelf.borrowLiteratureObjectFromShelfByIndex(1);
+
+        assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelf.getLiteratureOutShelf().size());
+    }
+
+    @Test
+    @DisplayName("test to borrow gazette from the shelf")
+    void borrowLiteratureObjectByIndex_gazette() {
+        int expectedInShelfSize = 0;
+        int expectedOutShelfSize = 1;
+        Shelf shelf = new Shelf(printWriter);
+        shelf.addLiteratureObject(gazetteNotBorrowed);
 
         shelf.borrowLiteratureObjectFromShelfByIndex(1);
 
@@ -224,6 +286,20 @@ class BaseActionsWithShelfTest {
         int expectedOutShelfSize = 0;
         Shelf shelf = new Shelf(printWriter);
         shelf.addLiteratureObject(bookIsBorrowed);
+
+        shelf.arriveLiteratureObjectFromShelfByIndex(1);
+
+        assertEquals(expectedInShelfSize, shelf.getLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelf.getLiteratureOutShelf().size());
+    }
+
+    @Test
+    @DisplayName("test to arrive gazette back to the shelf")
+    void arriveLiteratureObjectByIndex_gazette() {
+        int expectedInShelfSize = 1;
+        int expectedOutShelfSize = 0;
+        Shelf shelf = new Shelf(printWriter);
+        shelf.addLiteratureObject(gazetteIsBorrowed);
 
         shelf.arriveLiteratureObjectFromShelfByIndex(1);
 
