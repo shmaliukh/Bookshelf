@@ -14,9 +14,9 @@ public final class ConstantsForGsonHandler {
 
     public static final String FILE_TYPE = ".json";
 
-    public static final String SHELF_FILE_NAME_PREFIX = "ShelfAll";
-    public static final String BOOKS_FILE_NAME_PREFIX = "ShelfBooks";
-    public static final String MAGAZINES_FILE_NAME_PREFIX = "ShelfMagazines";
+    public static final String SHELF_FILE_NAME_PREFIX = "shelfAll";
+    public static final String BOOKS_FILE_NAME_PREFIX = "shelfBooks";
+    public static final String MAGAZINES_FILE_NAME_PREFIX = "shelfMagazines";
 
     public static final String PROGRAM_DIRECTORY_NAME = "book_shelf";
     public static final String PROGRAM_HOME_PROPERTY = String.valueOf(Paths.get(System.getProperty("user.home"), PROGRAM_DIRECTORY_NAME));

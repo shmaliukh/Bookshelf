@@ -8,6 +8,7 @@ import org.vshmaliukh.constants.enums_for_menu.MainMenu;
 import org.vshmaliukh.constants.enums_for_menu.MenuForAddingLiterature;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
+import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
@@ -18,6 +19,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
+import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 
@@ -46,7 +48,7 @@ public class Terminal {
 
     // TODO delete title list if new version is ready
     List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
-    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
+    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -66,7 +68,7 @@ public class Terminal {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
     }
 
-    public void startWork(boolean userMode) throws ParseException, FileNotFoundException {
+    public void startWork(boolean userMode) throws ParseException {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
@@ -208,6 +210,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -221,6 +224,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -234,6 +238,7 @@ public class Terminal {
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
             TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -422,16 +427,24 @@ public class Terminal {
         MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_BOOKS_BY_NAME:
-                bookList.addAll(shelf.getSortedBooksByName());
+                bookList.addAll(
+                        new LiteratureSorterHandler<>(shelf.getBooks())
+                                .getSortedLiterature(BOOK_COMPARATOR_BY_NAME));
                 break;
             case SORT_BOOKS_BY_PAGES_NUMBER:
-                bookList.addAll(shelf.getSortedBooksByPages());
+                bookList.addAll(
+                        new LiteratureSorterHandler<>(shelf.getBooks())
+                                .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES));
                 break;
             case SORT_BOOKS_BY_AUTHOR:
-                bookList.addAll(shelf.getSortedBooksByAuthor());
+                bookList.addAll(
+                        new LiteratureSorterHandler<>(shelf.getBooks())
+                                .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR));
                 break;
             case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                bookList.addAll(shelf.getSortedBooksByDate());
+                bookList.addAll(
+                        new LiteratureSorterHandler<>(shelf.getBooks())
+                                .getSortedLiterature(BOOK_COMPARATOR_BY_DATE));
                 break;
             default:
                 break;
@@ -444,10 +457,12 @@ public class Terminal {
         MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:
-                magazineList.addAll(shelf.getSortedMagazinesByName());
+                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
+                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
                 break;
             case SORT_MAGAZINES_BY_PAGES:
-                magazineList.addAll(shelf.getSortedMagazinesByPages());
+                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
+                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
                 break;
             default:
                 break;
