@@ -16,8 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
-import static org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature.BOOK_CLASS_NAME;
-import static org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature.MAGAZINE_CLASS_NAME;
+import static org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature.*;
 
 @Slf4j
 public class GsonHandler {
@@ -35,6 +34,7 @@ public class GsonHandler {
     private String fileNameForAll;
     private String fileNameForBooks;
     private String fileNameForMagazines;
+    private String fileNameForGazettes;
 
     public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter) {
         this.userName = userName;
@@ -50,6 +50,8 @@ public class GsonHandler {
         fileNameForAll = userName + "_" + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + "_" + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + "_" + MAGAZINES_FILE_NAME_PREFIX;
+
+        fileNameForGazettes = userName + "_" + GAZETTES_FILE_NAME_PREFIX;
     }
 
     public void saveShelfInGson(Shelf shelf) {
@@ -57,7 +59,7 @@ public class GsonHandler {
             case WORK_WITH_ONE_FILE:
                 saveInOneGsonFile(shelf);
                 break;
-            case WORK_WITH_TWO_FILES:
+            case WORK_WITH_FILE_PER_TYPE:
                 saveInTwoGsonFiles(shelf);
                 break;
             default:
@@ -72,6 +74,7 @@ public class GsonHandler {
     private void saveInTwoGsonFiles(Shelf shelf) {
         saveListToGsonFile(fileNameForBooks, shelf.getBooks());
         saveListToGsonFile(fileNameForMagazines, shelf.getMagazines());
+        saveListToGsonFile(fileNameForGazettes, shelf.getGazettes());
     }
 
     private <T extends Item> void saveListToGsonFile(String fileName, List<T> literatureList) {
@@ -104,9 +107,10 @@ public class GsonHandler {
             case WORK_WITH_ONE_FILE:
                 readShelfItemsFromGsonFile(fileNameForAll).forEach(shelf::addLiteratureObject);
                 break;
-            case WORK_WITH_TWO_FILES:
+            case WORK_WITH_FILE_PER_TYPE:
                 readShelfItemsFromGsonFile(fileNameForBooks).forEach(shelf::addLiteratureObject);
                 readShelfItemsFromGsonFile(fileNameForMagazines).forEach(shelf::addLiteratureObject);
+                readShelfItemsFromGsonFile(fileNameForGazettes).forEach(shelf::addLiteratureObject);
                 break;
             default:
                 break;
@@ -221,6 +225,8 @@ public class GsonHandler {
         if (typeOfClass.equals(BOOK_CLASS_NAME)) {
             return gson.fromJson(itemObject, Book.class);
         } else if (typeOfClass.equals(MAGAZINE_CLASS_NAME)) {
+            return gson.fromJson(itemObject, Magazine.class);
+        } else if (typeOfClass.equals(GAZETTE_CLASS_NAME)) {
             return gson.fromJson(itemObject, Magazine.class);
         }
         return null;

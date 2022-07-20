@@ -65,7 +65,7 @@ class GsonHandlerTest {
     void workWithTwoFilesTest_brokenTwoFile() throws IOException {
         String userName = "testProblemToReadBrokenBooksFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
@@ -92,7 +92,7 @@ class GsonHandlerTest {
     void workWithTwoFilesTest_brokenBooksFile() throws IOException {
         String userName = "testProblemToReadBrokenBooksFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
@@ -115,7 +115,7 @@ class GsonHandlerTest {
     void workWithTwoFilesTest_brokenMagazinesFile() throws IOException {
         String userName = "testProblemToReadBrokenMagazinesFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
         gsonHandlerTwoFiles.saveShelfInGson(shelf);
@@ -137,7 +137,7 @@ class GsonHandlerTest {
     void workWithTwoFilesTest_booksFileNotExists() throws IOException {
         String userName = "testProblemToReadBooksFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
@@ -156,7 +156,7 @@ class GsonHandlerTest {
     void workWithTwoFilesTest_magazinesFileNotExists() throws IOException {
         String userName = "testProblemToReadMagazinesFile";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
 
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
@@ -195,7 +195,7 @@ class GsonHandlerTest {
     void readWriteTwoFilesTest() {
         userName = "testTwoFiles";
         setPaths(userName);
-        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_TWO_FILES, userName, printWriter);
+        GsonHandler gsonHandlerTwoFiles = new GsonHandler(WORK_WITH_FILE_PER_TYPE, userName, printWriter);
         Shelf shelf = new Shelf(printWriter);
         setTwoBooksAndTwoMagazinesToShelf(shelf);
 
