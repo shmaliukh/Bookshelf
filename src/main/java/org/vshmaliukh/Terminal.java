@@ -4,10 +4,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.constants.enums_for_menu.MainMenu;
-import org.vshmaliukh.constants.enums_for_menu.MenuForAddingLiterature;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
+import org.vshmaliukh.constants.enums_for_menu.*;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.gson_service.GsonHandler;
@@ -49,6 +46,7 @@ public class Terminal {
     // TODO delete title list if new version is ready
     List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
     List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
+    List<String> titleListForGazette = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED")); // = titleListForMagazine;
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -113,7 +111,7 @@ public class Terminal {
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                printWriter.println("FILE_MODE_WORK_WITH_TWO_FILES");
+                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
             default:
                 break;
@@ -147,6 +145,9 @@ public class Terminal {
                 break;
             case PRINT_SORTED_MAGAZINES:
                 clarificationForSortingMagazines();
+                break;
+            case PRINT_SORTED_GAZETTES:
+                clarificationForSortingGazettes();
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -199,6 +200,19 @@ public class Terminal {
             printMenuForBooksSorting();
             printSortedBooks(getUserChoice());
         }
+    }
+
+    /**
+     * Method gives ability to choose method for sorting Gazettes and print sorted list
+     */
+    private void clarificationForSortingGazettes() {
+        if (shelf.getGazettes().isEmpty()) {
+            printWriter.println("No available gazettes IN shelf for sorting");
+        } else {
+            printMenuForGazettesSorting();
+            printSortedGazettes(getUserChoice());
+        }
+
     }
 
     /**
@@ -404,6 +418,10 @@ public class Terminal {
         MenuForSortingMagazines.printMenu(printWriter);
     }
 
+    private void printMenuForGazettesSorting() {
+        MenuForSortingGazettes.printMenu(printWriter);
+    }
+
     private void printMenuForAddingLiterature() {
         MenuForAddingLiterature.printMenu(printWriter);
     }
@@ -468,6 +486,24 @@ public class Terminal {
                 break;
         }
         TablePrinter.printTable(printWriter, titleListForMagazine, convertorToStringForLiterature.getTable(magazineList), true);
+    }
+
+    public void printSortedGazettes(int typeOfSorting) {
+        List<Item> gazetteList = new ArrayList<>();
+        MenuForSortingGazettes byIndex = MenuForSortingGazettes.getByIndex(typeOfSorting);
+        switch (byIndex) {
+            case SORT_GAZETTES_BY_NAME:
+                gazetteList.addAll( new LiteratureSorterHandler<>(shelf.getGazettes())
+                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME));
+                break;
+            case SORT_GAZETTES_BY_PAGES:
+                gazetteList.addAll( new LiteratureSorterHandler<>(shelf.getGazettes())
+                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES));
+                break;
+            default:
+                break;
+        }
+        TablePrinter.printTable(printWriter, titleListForGazette, convertorToStringForLiterature.getTable(gazetteList), true);
     }
 }
 
