@@ -28,7 +28,7 @@ public class Main {
             try {
                 terminal.startWork(false);
             } catch (Exception e) {
-                log.error("[TerminalThread] problem to start thread. Exception: " + e);
+                log.error("[TerminalThread] problem to start thread. Exception: " , e);
             }
         }
     }

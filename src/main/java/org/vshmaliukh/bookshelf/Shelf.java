@@ -99,13 +99,6 @@ public class Shelf implements BaseActionsWithShelf {
                 .collect(Collectors.toList());
     }
 
-    public List<Magazine> getMagazines() { // TODO refactor (get clazz type as parameter)
-        return itemsOfShelf.stream()
-                .filter(Magazine.class::isInstance)
-                .map(Magazine.class::cast)
-                .collect(Collectors.toList());
-    }
-
     public List<Gazette> getGazettes() {
         return itemsOfShelf.stream()
                 .filter(Gazette.class::isInstance)
@@ -126,7 +119,7 @@ public class Shelf implements BaseActionsWithShelf {
     }
 
     public List<Item> getAllLiteratureObjects() {
-        return itemsOfShelf;
+        return new ArrayList<>(itemsOfShelf);
     }
 
     @Override

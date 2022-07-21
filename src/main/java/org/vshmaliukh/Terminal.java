@@ -6,6 +6,8 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.constants.enums_for_menu.*;
+import org.vshmaliukh.handlers.ItemHandlerProvider;
+import org.vshmaliukh.handlers.MagazineHandler;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.gson_service.GsonHandler;
@@ -17,6 +19,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
+import static org.vshmaliukh.Utils.getRandomString;
 import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
@@ -36,6 +39,7 @@ public class Terminal {
 
     private final Scanner scanner;
     private final PrintWriter printWriter;
+
     private final InputHandlerForUser inputHandlerForUser;
     private InputHandlerForLiterature inputHandlerForLiterature;
 
@@ -46,7 +50,6 @@ public class Terminal {
 
     // TODO delete title list if new version is ready
     List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
-    List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
     List<String> titleListForGazette = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED")); // = titleListForMagazine;
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
@@ -182,13 +185,11 @@ public class Terminal {
      * Method gives ability to choose method for sorting Magazines and print sorted list
      */
     private void clarificationForSortingMagazines() {
-        if (shelf.getMagazines().isEmpty()) {
-            printWriter.println("No available magazines IN shelf for sorting");
-        } else {
-            printMenuForMagazinesSorting();
-            printSortedMagazines(getUserChoice());
-        }
-
+        List<Magazine> magazines = Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects());
+        int userChoice = getUserChoice();
+        MagazineHandler magazineHandler = ItemHandlerProvider.getMagazineHandler();
+        List<Magazine> magazineList = magazineHandler.clarificationForSortingItems(magazines, userChoice, printWriter);
+        TablePrinter.printTable(printWriter, magazineHandler.getTitlesList(), convertorToStringForLiterature.getTable(magazineList), true);
     }
 
     /**
@@ -263,28 +264,32 @@ public class Terminal {
      */
     private void addNewLiteratureObject() throws ParseException {
         MenuForAddingLiterature byIndex = MenuForAddingLiterature.getByIndex(getUserChoice());
+        Item item;
         switch (byIndex) {
             case ADD_CUSTOM_MAGAZINE:
-                shelf.addLiteratureObject(getUserMagazine());
+                item = getUserMagazine();
                 break;
             case ADD_CUSTOM_GAZETTE:
-                shelf.addLiteratureObject(getUserGazette());
+                item = getUserGazette();
                 break;
             case ADD_CUSTOM_BOOK:
-                shelf.addLiteratureObject(getUserBook());
+                item = getUserBook();
                 break;
             case ADD_RANDOM_MAGAZINE:
-                shelf.addLiteratureObject(getRandomMagazine());
+                item = getRandomMagazine();
                 break;
             case ADD_RANDOM_GAZETTE:
-                shelf.addLiteratureObject(getRandomGazette());
+                item = getRandomGazette();
                 break;
             case ADD_RANDOM_BOOK:
-                shelf.addLiteratureObject(getRandomBook());
+                item = getRandomBook();
                 break;
             default:
+                item = null;
                 break;
         }
+        shelf.addLiteratureObject(item);
+        informAboutAddedLiteratureObject(item);
     }
 
     /**
@@ -300,18 +305,7 @@ public class Terminal {
      * @return user created Magazine
      */
     public Magazine getUserMagazine() {
-        Magazine userMagazine;
-        String name;
-        int pages;
-        boolean isBorrowed;
-
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-
-        userMagazine = new Magazine(name, pages, isBorrowed);
-        informAboutAddedLiteratureObject(userMagazine);
-        return userMagazine;
+        return ItemHandlerProvider.getMagazineHandler().getByUserInput(inputHandlerForLiterature, printWriter);
     }
 
     /**
@@ -330,7 +324,6 @@ public class Terminal {
         isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
 
         userGazette = new Gazette(name, pages, isBorrowed);
-        informAboutAddedLiteratureObject(userGazette);
         return userGazette;
     }
 
@@ -354,7 +347,6 @@ public class Terminal {
         dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
 
         userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
-        informAboutAddedLiteratureObject(userBook);
         return userBook;
     }
 
@@ -366,14 +358,8 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
+        return ItemHandlerProvider.getMagazineHandler().getRandomItem(randomNumber);
         //his method is only for developer
-        Magazine randomMagazine = new Magazine(
-                getRandomString(randomNumber.nextInt(20)),
-                randomNumber.nextInt(1000),
-                false);
-
-        informAboutAddedLiteratureObject(randomMagazine);
-        return randomMagazine;
     }
 
     /**
@@ -389,13 +375,11 @@ public class Terminal {
         //his method is only for developer
         randomNumber = new Random();
         Book randomBook = new Book(
-                getRandomString(randomNumber.nextInt(20)),
+                getRandomString(randomNumber.nextInt(20), randomNumber),
                 randomNumber.nextInt(1000),
                 false,
-                getRandomString(randomNumber.nextInt(10)),
+                getRandomString(randomNumber.nextInt(10), randomNumber),
                 new Date(randomNumber.nextInt(1000000)));
-
-        informAboutAddedLiteratureObject(randomBook);
         return randomBook;
     }
 
@@ -408,29 +392,13 @@ public class Terminal {
      */
     public Gazette getRandomGazette() {
         Gazette randomGazette = new Gazette(
-                getRandomString(randomNumber.nextInt(20)),
+                getRandomString(randomNumber.nextInt(20), randomNumber),
                 randomNumber.nextInt(1000),
                 false);
-
-        informAboutAddedLiteratureObject(randomGazette);
         return randomGazette;
     }
 
-    /**
-     * Method which gives opportunity to get string with random characters ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ")
-     *
-     * @param length is value of expected string size
-     * @return string with random symbols
-     */
-    public String getRandomString(int length) {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            int number = randomNumber.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
-    }
+
 
     /**
      * Method which gives opportunity to get user choice by entered integer value in console
@@ -456,10 +424,6 @@ public class Terminal {
 
     private void printMenuForBooksSorting() {
         MenuForSortingBooks.printMenu(printWriter);
-    }
-
-    private void printMenuForMagazinesSorting() {
-        MenuForSortingMagazines.printMenu(printWriter);
     }
 
     private void printMenuForGazettesSorting() {
@@ -514,34 +478,16 @@ public class Terminal {
         TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(bookList), true);
     }
 
-    public void printSortedMagazines(int typeOfSorting) {
-        List<Item> magazineList = new ArrayList<>();
-        MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_MAGAZINES_BY_NAME:
-                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
-                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
-                break;
-            case SORT_MAGAZINES_BY_PAGES:
-                magazineList.addAll( new LiteratureSorterHandler<>(shelf.getMagazines())
-                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
-                break;
-            default:
-                break;
-        }
-        TablePrinter.printTable(printWriter, titleListForMagazine, convertorToStringForLiterature.getTable(magazineList), true);
-    }
-
     public void printSortedGazettes(int typeOfSorting) {
         List<Item> gazetteList = new ArrayList<>();
         MenuForSortingGazettes byIndex = MenuForSortingGazettes.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_GAZETTES_BY_NAME:
-                gazetteList.addAll( new LiteratureSorterHandler<>(shelf.getGazettes())
+                gazetteList.addAll(new LiteratureSorterHandler<>(shelf.getGazettes())
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME));
                 break;
             case SORT_GAZETTES_BY_PAGES:
-                gazetteList.addAll( new LiteratureSorterHandler<>(shelf.getGazettes())
+                gazetteList.addAll(new LiteratureSorterHandler<>(shelf.getGazettes())
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES));
                 break;
             default:

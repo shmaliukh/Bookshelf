@@ -2,11 +2,13 @@ package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
+import org.vshmaliukh.handlers.ItemHandlerProvider;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -42,7 +44,7 @@ public class GsonHandler {
         this.userName = userName;
         this.printWriter = printWriter;
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
-
+        generateDirectoryForSaving(false);
         generateFileNames();
     }
 
@@ -90,7 +92,7 @@ public class GsonHandler {
 
     private void saveInTwoGsonFiles(Shelf shelf) {
         saveListToGsonFile(fileNameForBooks, shelf.getBooks());
-        saveListToGsonFile(fileNameForMagazines, shelf.getMagazines());
+        saveListToGsonFile(fileNameForMagazines, Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()));
         saveListToGsonFile(fileNameForGazettes, shelf.getGazettes());
     }
 
@@ -112,6 +114,7 @@ public class GsonHandler {
     }
 
     private void createUserDirectoryIfNoExist() {
+        log.info("programDirectory: {}", programDirectory);
         File dirForProgram = new File(programDirectory);
         createDirIfNotExists(dirForProgram);
         File dirForUser = new File(String.valueOf(userDirectory));
@@ -239,14 +242,8 @@ public class GsonHandler {
     }
 
     private Item getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
-        if (typeOfClass.equals(BOOK_CLASS_NAME)) {
-            return gson.fromJson(itemObject, Book.class);
-        } else if (typeOfClass.equals(MAGAZINE_CLASS_NAME)) {
-            return gson.fromJson(itemObject, Magazine.class);
-        } else if (typeOfClass.equals(GAZETTE_CLASS_NAME)) {
-            return gson.fromJson(itemObject, Gazette.class);
-        }
-        return null;
+
+        return gson.fromJson(itemObject, ItemHandlerProvider.getClassByName(typeOfClass));
     }
 
     private JsonArray getJsonArr() {
