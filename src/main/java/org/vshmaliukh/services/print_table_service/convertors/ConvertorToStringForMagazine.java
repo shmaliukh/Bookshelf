@@ -4,6 +4,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ConvertorToStringForMagazine implements ConvertorToString<Magazine> {
