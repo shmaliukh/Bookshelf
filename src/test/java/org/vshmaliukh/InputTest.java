@@ -19,8 +19,9 @@ import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
 class InputTest {
 
-    private Scanner scanner = new Scanner(System.in);
     private final PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);
+    private Scanner scanner = new Scanner(System.in);
+
     private InputHandlerForLiterature userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
 
     private final String entersForRecursion;
@@ -28,7 +29,7 @@ class InputTest {
     {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < MAX_RECURSION_LEVEL; i++) {
-            stringBuilder.append("\n");
+            stringBuilder.append(System.lineSeparator());
         }
         entersForRecursion = stringBuilder.toString();
     }

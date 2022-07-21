@@ -31,6 +31,7 @@ public class TablePrinter {
     }
 
     public static void printTable(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, boolean isNeedIndex) {
+        // TODO is it necessary to keep this method as static one
         TablePrinter tablePrinter = new TablePrinter(printWriter, titleList, tableList, isNeedIndex);
         tablePrinter.printFormattedTable();
     }
@@ -111,9 +112,7 @@ public class TablePrinter {
 
     private void appendEmptyItemsForTable() {
         fillStringListWithSpaces(titleList);
-        for (List<String> stringList : tableList) {
-            fillStringListWithSpaces(stringList);
-        }
+        tableList.forEach(this::fillStringListWithSpaces);
     }
 
     private void fillStringListWithSpaces(List<String> stringList) {

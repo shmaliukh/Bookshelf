@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
-import static org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature.*;
+import static org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForLiterature.*;
 
 @Slf4j
 public class GsonHandler {
