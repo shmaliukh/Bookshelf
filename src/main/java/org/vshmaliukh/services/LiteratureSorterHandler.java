@@ -1,13 +1,11 @@
 package org.vshmaliukh.services;
 
-import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LiteratureSorterHandler <T extends Item> {
+public class LiteratureSorterHandler <T> {
 
     List<T> literatureList;
 

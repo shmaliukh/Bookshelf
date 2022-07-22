@@ -4,7 +4,6 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
@@ -19,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
-import static org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForLiterature.*;
 
 @Slf4j
 public class GsonHandler {
@@ -41,6 +39,7 @@ public class GsonHandler {
     private String fileNameForGazettes;
 
     public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter) {
+        // TODO use params for saving dir fors files
         this.userName = userName;
         this.printWriter = printWriter;
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
@@ -57,6 +56,7 @@ public class GsonHandler {
     }
 
     private void generateFileNames() {
+        // TODO create method for getting file names by provider
         fileNameForAll = userName + "_" + SHELF_FILE_NAME_PREFIX;
         fileNameForBooks = userName + "_" + BOOKS_FILE_NAME_PREFIX;
         fileNameForMagazines = userName + "_" + MAGAZINES_FILE_NAME_PREFIX;
@@ -79,7 +79,7 @@ public class GsonHandler {
                 saveInOneGsonFile(shelf);
                 break;
             case WORK_WITH_FILE_PER_TYPE:
-                saveInTwoGsonFiles(shelf);
+                saveInFevGsonFiles(shelf);
                 break;
             default:
                 break;
@@ -90,10 +90,12 @@ public class GsonHandler {
         saveListToGsonFile(fileNameForAll, shelf.getAllLiteratureObjects());
     }
 
-    private void saveInTwoGsonFiles(Shelf shelf) {
+    private void saveInFevGsonFiles(Shelf shelf) {
+        // TODO loop for saving to file by provided classes
         saveListToGsonFile(fileNameForBooks, shelf.getBooks());
+
         saveListToGsonFile(fileNameForMagazines, Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()));
-        saveListToGsonFile(fileNameForGazettes, shelf.getGazettes());
+        saveListToGsonFile(fileNameForGazettes, Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()));
     }
 
     private <T extends Item> void saveListToGsonFile(String fileName, List<T> literatureList) {
@@ -242,7 +244,6 @@ public class GsonHandler {
     }
 
     private Item getLiteratureObjectFromJson(String typeOfClass, JsonObject itemObject) {
-
         return gson.fromJson(itemObject, ItemHandlerProvider.getClassByName(typeOfClass));
     }
 

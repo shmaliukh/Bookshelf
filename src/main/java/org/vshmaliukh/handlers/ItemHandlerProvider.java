@@ -13,9 +13,10 @@ public class ItemHandlerProvider {
     private static Map<String, Class> itemNameClassMap = new ConcurrentHashMap<>();
 
     static {
-        itemHandlerMap.put(Book.class, new MagazineHandler());
+        itemHandlerMap.put(Book.class, new MagazineHandler()); // TODO
+
+        itemHandlerMap.put(Gazette.class, new GazetteHandler());
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
-        itemHandlerMap.put(Gazette.class, new MagazineHandler());
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
     }
 
@@ -27,7 +28,7 @@ public class ItemHandlerProvider {
         return getHandlerByClass(getClassByName(name));
     }
 
-    public static Class getClassByName(String typeOfClass) {
+    public static Class<? extends Item> getClassByName(String typeOfClass) {
         return itemNameClassMap.get(typeOfClass);
     }
 
@@ -38,6 +39,10 @@ public class ItemHandlerProvider {
     //TODO remove
     public static MagazineHandler getMagazineHandler() {
         return new MagazineHandler();
+    }
+
+    public static GazetteHandler getGazetteHandler() {
+        return new GazetteHandler();
     }
 
 }

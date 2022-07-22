@@ -26,7 +26,7 @@ public class Utils {
     }
 
 
-    public static <T> List<T> getItemsByType(Class<T> clazz, List<?> items) { // TODO refactor (get clazz type as parameter)
+    public static <T> List<T> getItemsByType(Class<T> clazz, List<?> items) {
         return items.stream()
                 .filter(clazz::isInstance)
                 .map(clazz::cast)

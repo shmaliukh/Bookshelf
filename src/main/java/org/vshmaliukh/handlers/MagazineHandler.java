@@ -5,49 +5,50 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.services.print_table_service.ConvertorToString;
+import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForMagazine;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
-public class MagazineHandler implements ItemHandler<Magazine>, HasCrossword {
+public class MagazineHandler implements ItemHandler<Magazine> {
 
     private List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
 
+    @Override
+    public ConvertorToString getConvertorToString() {
+        return new ConvertorToStringForMagazine();
+    }
 
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
-        List<Magazine> magazineList = new ArrayList<>();
         MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:
-                magazineList.addAll( new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
-                break;
             case SORT_MAGAZINES_BY_PAGES:
-                magazineList.addAll( new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
-                break;
             default:
-                break;
+                return Collections.emptyList();
         }
-        return magazineList;
-
     }
 
     @Override
     public void printSortingMenu(PrintWriter printWriter) {
         MenuForSortingMagazines.printMenu(printWriter);
     }
-    public List<String> getTitlesList(){
+
+    @Override
+    public List<String> getTitlesList() {
         return new ArrayList<>(titleListForMagazine);
     }
 
+    @Override
     public List<Magazine> clarificationForSortingItems(List<Magazine> magazines, int userChoice, PrintWriter printWriter) {
         if (magazines.isEmpty()) {
             printWriter.println("No available magazines IN shelf for sorting");
@@ -58,6 +59,7 @@ public class MagazineHandler implements ItemHandler<Magazine>, HasCrossword {
         return magazines;
     }
 
+    @Override
     public Magazine getByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         Magazine userMagazine;
         String name;
@@ -72,6 +74,7 @@ public class MagazineHandler implements ItemHandler<Magazine>, HasCrossword {
         return userMagazine;
     }
 
+    @Override
     public Magazine getRandomItem(Random random) {
         Magazine randomMagazine = new Magazine(
                 Utils.getRandomString(random.nextInt(20), random),
@@ -79,8 +82,4 @@ public class MagazineHandler implements ItemHandler<Magazine>, HasCrossword {
                 false);
         return randomMagazine;
     }
-
-    public String getCrossword(){
-
-    };
 }

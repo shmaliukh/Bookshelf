@@ -6,6 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.constants.enums_for_menu.*;
+import org.vshmaliukh.handlers.GazetteHandler;
 import org.vshmaliukh.handlers.ItemHandlerProvider;
 import org.vshmaliukh.handlers.MagazineHandler;
 import org.vshmaliukh.services.LiteratureSorterHandler;
@@ -46,11 +47,10 @@ public class Terminal {
     private ConvertorToStringForLiterature convertorToStringForLiterature;
 
     private GsonHandler gsonHandler;
-    private Random randomNumber;
+    private Random random;
 
     // TODO delete title list if new version is ready
     List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
-    List<String> titleListForGazette = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED")); // = titleListForMagazine;
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -86,7 +86,7 @@ public class Terminal {
     }
 
     private void initServicesForTerminal(int typeOfWorkWithFiles) {
-        randomNumber = new Random();
+        random = new Random();
         gsonHandler = new GsonHandler(typeOfWorkWithFiles, user.getName(), printWriter);
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
 
@@ -144,14 +144,18 @@ public class Terminal {
             case ARRIVE_LITERATURE:
                 menuForArrivingLiterature();
                 break;
+
+                // TODO use new method for printing menu for items actions
             case PRINT_SORTED_BOOKS:
                 clarificationForSortingBooks();
                 break;
             case PRINT_SORTED_MAGAZINES:
-                clarificationForSortingMagazines();
+                clarificationForSortingMagazines(); // TODO extract method to magazine handler
                 break;
             case PRINT_SORTED_GAZETTES:
                 clarificationForSortingGazettes();
+
+
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -208,13 +212,11 @@ public class Terminal {
      * Method gives ability to choose method for sorting Gazettes and print sorted list
      */
     private void clarificationForSortingGazettes() {
-        if (shelf.getGazettes().isEmpty()) {
-            printWriter.println("No available gazettes IN shelf for sorting");
-        } else {
-            printMenuForGazettesSorting();
-            printSortedGazettes(getUserChoice());
-        }
-
+        List<Gazette> gazetteList = Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects());
+        int userChoice = getUserChoice();
+        GazetteHandler gazetteHandler = ItemHandlerProvider.getGazetteHandler();
+        List<Gazette> sortedGazettes = gazetteHandler.clarificationForSortingItems(gazetteList, userChoice, printWriter);
+        TablePrinter.printTable(printWriter, gazetteHandler.getTitlesList(), convertorToStringForLiterature.getTable(sortedGazettes), true);
     }
 
     /**
@@ -314,17 +316,9 @@ public class Terminal {
      * @return user created Gazette
      */
     public Gazette getUserGazette() {
-        Gazette userGazette;
-        String name;
-        int pages;
-        boolean isBorrowed;
+        return ItemHandlerProvider.getGazetteHandler().getByUserInput(inputHandlerForLiterature, printWriter);
 
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
 
-        userGazette = new Gazette(name, pages, isBorrowed);
-        return userGazette;
     }
 
     /**
@@ -358,7 +352,7 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Magazine getRandomMagazine() {
-        return ItemHandlerProvider.getMagazineHandler().getRandomItem(randomNumber);
+        return ItemHandlerProvider.getMagazineHandler().getRandomItem(random);
         //his method is only for developer
     }
 
@@ -373,13 +367,13 @@ public class Terminal {
      */
     public Book getRandomBook() {
         //his method is only for developer
-        randomNumber = new Random();
+        random = new Random();
         Book randomBook = new Book(
-                getRandomString(randomNumber.nextInt(20), randomNumber),
-                randomNumber.nextInt(1000),
+                getRandomString(random.nextInt(20), random),
+                random.nextInt(1000),
                 false,
-                getRandomString(randomNumber.nextInt(10), randomNumber),
-                new Date(randomNumber.nextInt(1000000)));
+                getRandomString(random.nextInt(10), random),
+                new Date(random.nextInt(1000000)));
         return randomBook;
     }
 
@@ -391,14 +385,8 @@ public class Terminal {
      * random number of pages (max = 1000)
      */
     public Gazette getRandomGazette() {
-        Gazette randomGazette = new Gazette(
-                getRandomString(randomNumber.nextInt(20), randomNumber),
-                randomNumber.nextInt(1000),
-                false);
-        return randomGazette;
+        return ItemHandlerProvider.getGazetteHandler().getRandomItem(random);
     }
-
-
 
     /**
      * Method which gives opportunity to get user choice by entered integer value in console
@@ -424,10 +412,6 @@ public class Terminal {
 
     private void printMenuForBooksSorting() {
         MenuForSortingBooks.printMenu(printWriter);
-    }
-
-    private void printMenuForGazettesSorting() {
-        MenuForSortingGazettes.printMenu(printWriter);
     }
 
     private void printMenuForAddingLiterature() {
@@ -476,24 +460,6 @@ public class Terminal {
                 break;
         }
         TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(bookList), true);
-    }
-
-    public void printSortedGazettes(int typeOfSorting) {
-        List<Item> gazetteList = new ArrayList<>();
-        MenuForSortingGazettes byIndex = MenuForSortingGazettes.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_GAZETTES_BY_NAME:
-                gazetteList.addAll(new LiteratureSorterHandler<>(shelf.getGazettes())
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME));
-                break;
-            case SORT_GAZETTES_BY_PAGES:
-                gazetteList.addAll(new LiteratureSorterHandler<>(shelf.getGazettes())
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES));
-                break;
-            default:
-                break;
-        }
-        TablePrinter.printTable(printWriter, titleListForGazette, convertorToStringForLiterature.getTable(gazetteList), true);
     }
 }
 

@@ -6,7 +6,6 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForBook;
-import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForGazette;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForMagazine;
 
 import java.text.ParseException;
