@@ -91,7 +91,7 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByName =
-                new LiteratureSorterHandler<Magazine>(shelf.getMagazines())
+                new LiteratureSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -112,9 +112,8 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByPages =
-                new LiteratureSorterHandler<Magazine>(shelf.getMagazines())
+                new LiteratureSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES);
-        ;
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
         assertEquals(expectedLastName, sortedMagazinesByPages.get(1).getName());
@@ -134,8 +133,8 @@ class ShelfTest {
         shelf.addLiteratureObject(gazette1);
 
         List<Gazette> sortedGazettesByName =
-                new LiteratureSorterHandler<>(shelf.getGazettes())
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME);
+                new LiteratureSorterHandler(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
+                .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedGazettesByName.size());
         assertEquals(expectedLastName, sortedGazettesByName.get(1).getName());
@@ -155,7 +154,7 @@ class ShelfTest {
         shelf.addLiteratureObject(gazette1);
 
         List<Gazette> sortedGazettesByPages =
-                new LiteratureSorterHandler<>(shelf.getGazettes())
+                new LiteratureSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES);
         ;
 
@@ -177,7 +176,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByName =
-                new LiteratureSorterHandler<Book>(shelf.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
@@ -198,7 +197,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByPages =
-                new LiteratureSorterHandler<Book>(shelf.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
@@ -220,7 +219,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByAuthor =
-                new LiteratureSorterHandler<Book>(shelf.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR);
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());

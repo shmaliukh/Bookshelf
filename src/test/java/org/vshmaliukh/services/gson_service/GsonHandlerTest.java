@@ -1,6 +1,7 @@
 package org.vshmaliukh.services.gson_service;
 
 import org.junit.jupiter.api.Test;
+import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
@@ -63,9 +64,9 @@ class GsonHandlerTest {
         fw.close();
         Shelf shelf2 = gsonHandlerOneFile.readShelfFromGson();
 
-        assertTrue(shelf2.getMagazines().isEmpty());
-        assertTrue(shelf2.getBooks().isEmpty());
-        assertTrue(shelf2.getGazettes().isEmpty());
+        assertTrue(Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).isEmpty());
+        assertTrue(Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).isEmpty());
+        assertTrue(Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -96,9 +97,9 @@ class GsonHandlerTest {
         fw.close();
         Shelf shelf2 = gsonHandlerFilePerType.readShelfFromGson();
 
-        assertTrue(shelf2.getMagazines().isEmpty());
-        assertTrue(shelf2.getBooks().isEmpty());
-        assertTrue(shelf2.getGazettes().isEmpty());
+        assertTrue(Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).isEmpty());
+        assertTrue(Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).isEmpty());
+        assertTrue(Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -119,9 +120,9 @@ class GsonHandlerTest {
         fw.close();
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        assertTrue(shelf2.getBooks().isEmpty());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertTrue(Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -141,9 +142,9 @@ class GsonHandlerTest {
         fw.close();
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
-        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
-        assertTrue(shelf2.getMagazines().isEmpty());
+        assertEquals(expectedBook1.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedBook2.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertTrue(Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -163,9 +164,9 @@ class GsonHandlerTest {
         fw.close();
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        assertTrue(shelf2.getGazettes().isEmpty());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertTrue(Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -183,8 +184,8 @@ class GsonHandlerTest {
         Files.deleteIfExists(filePathBooks);
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -202,9 +203,9 @@ class GsonHandlerTest {
         Files.deleteIfExists(filePathMagazines);
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
-        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
-        assertTrue(shelf2.getMagazines().isEmpty());
+        assertEquals(expectedBook1.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedBook2.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertTrue(Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -222,11 +223,11 @@ class GsonHandlerTest {
         Files.deleteIfExists(filePathGazettes);
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
-        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        //assertTrue(shelf2.getGazettes().isEmpty());
+        assertEquals(expectedBook1.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedBook2.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        //assertTrue(Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).isEmpty());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -242,12 +243,12 @@ class GsonHandlerTest {
         gsonHandlerOneFile.saveShelfInGson(shelf);
         Shelf shelf2 = gsonHandlerOneFile.readShelfFromGson();
 
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
-        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
-        assertEquals(expectedGazette1.toString(), shelf2.getGazettes().get(0).toString());
-        assertEquals(expectedGazette2.toString(), shelf2.getGazettes().get(1).toString());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertEquals(expectedBook1.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedBook2.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertEquals(expectedGazette1.toString(), Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedGazette2.toString(), Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).get(1).toString());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }
@@ -263,12 +264,12 @@ class GsonHandlerTest {
         gsonHandlerFilesPerType.saveShelfInGson(shelf);
         Shelf shelf2 = gsonHandlerFilesPerType.readShelfFromGson();
 
-        assertEquals(expectedMagazine1.toString(), shelf2.getMagazines().get(0).toString());
-        assertEquals(expectedMagazine2.toString(), shelf2.getMagazines().get(1).toString());
-        assertEquals(expectedBook1.toString(), shelf2.getBooks().get(0).toString());
-        assertEquals(expectedBook2.toString(), shelf2.getBooks().get(1).toString());
-        assertEquals(expectedGazette1.toString(), shelf2.getGazettes().get(0).toString());
-        assertEquals(expectedGazette2.toString(), shelf2.getGazettes().get(1).toString());
+        assertEquals(expectedMagazine1.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedMagazine2.toString(), Utils.getItemsByType(Magazine.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertEquals(expectedBook1.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedBook2.toString(), Utils.getItemsByType(Book.class, shelf2.getAllLiteratureObjects()).get(1).toString());
+        assertEquals(expectedGazette1.toString(), Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).get(0).toString());
+        assertEquals(expectedGazette2.toString(), Utils.getItemsByType(Gazette.class, shelf2.getAllLiteratureObjects()).get(1).toString());
 
         assertTrue(deleteDirectory(Paths.get(SYSTEM_TEMP_PROPERTY, userName).toFile()));
     }

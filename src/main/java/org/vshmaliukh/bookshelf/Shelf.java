@@ -31,19 +31,6 @@ public class Shelf implements BaseActionsWithShelf {
         itemList.forEach(this::addLiteratureObject);
     }
 
-    public Shelf(List<Book> books, List<Magazine> magazines, List<Gazette> gazettes, PrintWriter printWriter) {
-        this(printWriter);
-        if (!books.isEmpty()) {
-            books.forEach(this::addLiteratureObject);
-        }
-        if (!magazines.isEmpty()) {
-            magazines.forEach(this::addLiteratureObject);
-        }
-        if (!gazettes.isEmpty()) {
-            gazettes.forEach((this::addLiteratureObject));
-        }
-    }
-
     @Override
     public void addLiteratureObject(Item item) {
         if (item != null) {
@@ -90,20 +77,6 @@ public class Shelf implements BaseActionsWithShelf {
                 printWriter.println("Wrong index");
             }
         } else printWriter.println("No available literature");
-    }
-
-    public List<Book> getBooks() {
-        return itemsOfShelf.stream()
-                .filter(Book.class::isInstance)
-                .map(Book.class::cast)
-                .collect(Collectors.toList());
-    }
-
-    public List<Gazette> getGazettes() {
-        return itemsOfShelf.stream()
-                .filter(Gazette.class::isInstance)
-                .map(Gazette.class::cast)
-                .collect(Collectors.toList());
     }
 
     public List<Item> getLiteratureInShelf() {

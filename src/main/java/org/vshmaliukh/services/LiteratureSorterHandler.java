@@ -13,9 +13,9 @@ public class LiteratureSorterHandler <T> {
         this.literatureList = new ArrayList<>(literatureList);
     }
 
-    public List<T> getSortedLiterature(Comparator<T> bookComparator) {
+    public List<T> getSortedLiterature(Comparator<T> itemsComparator) {
         return literatureList.stream()
-                .sorted(bookComparator)
+                .sorted(itemsComparator)
                 .collect(Collectors.toList());
     }
 }

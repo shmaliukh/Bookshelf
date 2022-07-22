@@ -1,5 +1,6 @@
 package org.vshmaliukh.bookshelf.actionsWithShelf;
 
+import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ class ActionsWithBooksTest {
     @DisplayName("test printable stings of sorted Books by Name")
     void printSortedBooksByName() {
         List<Book> sortedBooksByName =
-                new LiteratureSorterHandler<Book>(shelf1.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
@@ -56,7 +57,7 @@ class ActionsWithBooksTest {
     @DisplayName("test printable stings of sorted Books by Pages")
     void printSortedBooksByPages() {
         List<Book> sortedBooksByPages =
-                new LiteratureSorterHandler<Book>(shelf1.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
@@ -68,7 +69,7 @@ class ActionsWithBooksTest {
     @DisplayName("test printable stings of sorted Books by Author")
     void printSortedBooksByAuthor() {
         List<Book> sortedBooksByAuthor =
-                new LiteratureSorterHandler<Book>(shelf1.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR);
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());
@@ -80,7 +81,7 @@ class ActionsWithBooksTest {
     @DisplayName("test printable stings of sorted Books by Date")
     void printSortedBooksByDate() {
         List<Book> sortedBooksByDate =
-                new LiteratureSorterHandler<Book>(shelf1.getBooks())
+                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_DATE);
 
         assertEquals(expectedArraySize, sortedBooksByDate.size());

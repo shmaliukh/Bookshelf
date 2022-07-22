@@ -4,6 +4,7 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
@@ -92,8 +93,7 @@ public class GsonHandler {
 
     private void saveInFevGsonFiles(Shelf shelf) {
         // TODO loop for saving to file by provided classes
-        saveListToGsonFile(fileNameForBooks, shelf.getBooks());
-
+        saveListToGsonFile(fileNameForBooks, Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()));
         saveListToGsonFile(fileNameForMagazines, Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()));
         saveListToGsonFile(fileNameForGazettes, Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()));
     }
