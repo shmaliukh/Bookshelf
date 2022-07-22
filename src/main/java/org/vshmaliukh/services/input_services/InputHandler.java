@@ -1,5 +1,7 @@
 package org.vshmaliukh.services.input_services;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +12,7 @@ import java.util.regex.Pattern;
 
 import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
 
+@Slf4j
 public abstract class InputHandler {
 
     private final Scanner scanner;
@@ -102,12 +105,16 @@ public abstract class InputHandler {
         return DEFAULT_INTEGER;
     }
 
-    protected Date getUserDate(String message, SimpleDateFormat dateFormat) throws ParseException {
+    protected Date getUserDate(String message, SimpleDateFormat dateFormat){
         getUserString(message);
         validationResult = isValidInputDate(inputString, dateFormat);
         if (validationResult) {
             currentRecursionLevel = 0;
-            return dateFormat.parse(inputString);
+            try {
+                return dateFormat.parse(inputString);
+            } catch (ParseException pe) {
+                log.error("[InputHandler] Problem to parse user date input. Exception: ", pe);
+            }
         }
         if(tryAgain(DATE_FORMAT_FOR_INPUT_HANDLER.format(DEFAULT_DATE))){
             return getUserDate(message, dateFormat);

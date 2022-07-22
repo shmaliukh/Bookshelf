@@ -9,14 +9,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ItemHandlerProvider {
-    private static Map<Class<? extends Item>, ItemHandler> itemHandlerMap = new ConcurrentHashMap<>();
-    private static Map<String, Class> itemNameClassMap = new ConcurrentHashMap<>();
+    private static final Map<Class<? extends Item>, ItemHandler> itemHandlerMap = new ConcurrentHashMap<>();
+    private static final Map<String, Class> itemNameClassMap = new ConcurrentHashMap<>();
 
     static {
-        itemHandlerMap.put(Book.class, new MagazineHandler()); // TODO
-
+        itemHandlerMap.put(Book.class, new BookHandler());
         itemHandlerMap.put(Gazette.class, new GazetteHandler());
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
+
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
     }
 
@@ -43,6 +43,10 @@ public class ItemHandlerProvider {
 
     public static GazetteHandler getGazetteHandler() {
         return new GazetteHandler();
+    }
+
+    public static BookHandler getBookHandler() {
+        return new BookHandler();
     }
 
 }

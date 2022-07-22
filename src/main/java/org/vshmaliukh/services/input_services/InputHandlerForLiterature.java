@@ -38,7 +38,7 @@ public class InputHandlerForLiterature extends InputHandler {
                 PATTERN_FOR_PAGES);
     }
 
-    public Date getUserLiteratureDateOfIssue() throws ParseException {
+    public Date getUserLiteratureDateOfIssue() {
         return getUserDate(
                 MESSAGE_ENTER_LITERATURE_DATE,
                 DATE_FORMAT);

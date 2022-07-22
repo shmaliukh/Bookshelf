@@ -6,10 +6,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.constants.enums_for_menu.*;
-import org.vshmaliukh.handlers.GazetteHandler;
-import org.vshmaliukh.handlers.ItemHandlerProvider;
-import org.vshmaliukh.handlers.MagazineHandler;
-import org.vshmaliukh.services.LiteratureSorterHandler;
+import org.vshmaliukh.handlers.*;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
@@ -20,8 +17,6 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 
@@ -48,9 +43,6 @@ public class Terminal {
 
     private GsonHandler gsonHandler;
     private Random random;
-
-    // TODO delete title list if new version is ready
-    List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
@@ -145,7 +137,7 @@ public class Terminal {
                 menuForArrivingLiterature();
                 break;
 
-                // TODO use new method for printing menu for items actions
+            // TODO use new method for printing menu for items actions
             case PRINT_SORTED_BOOKS:
                 clarificationForSortingBooks();
                 break;
@@ -174,7 +166,8 @@ public class Terminal {
      */
     private void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
+        TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+                convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
     }
 
     /**
@@ -190,9 +183,8 @@ public class Terminal {
      */
     private void clarificationForSortingMagazines() {
         List<Magazine> magazines = Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects());
-        int userChoice = getUserChoice();
         MagazineHandler magazineHandler = ItemHandlerProvider.getMagazineHandler();
-        List<Magazine> magazineList = magazineHandler.clarificationForSortingItems(magazines, userChoice, printWriter);
+        List<Magazine> magazineList = magazineHandler.clarificationForSortingItems(magazines, getUserChoice(), printWriter);
         TablePrinter.printTable(printWriter, magazineHandler.getTitlesList(), convertorToStringForLiterature.getTable(magazineList), true);
     }
 
@@ -200,12 +192,12 @@ public class Terminal {
      * Method gives ability to choose method for sorting Books and print sorted list
      */
     private void clarificationForSortingBooks() {
-        if (shelf.getBooks().isEmpty()) {
-            printWriter.println("No available books IN shelf for sorting");
-        } else {
-            printMenuForBooksSorting();
-            printSortedBooks(getUserChoice());
-        }
+        List<Book> itemsByType = Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects());
+        BookHandler bookHandler = ItemHandlerProvider.getBookHandler();
+        bookHandler.clarificationForSortingItems(itemsByType, getUserChoice(), printWriter);
+        TablePrinter.printTable(printWriter, bookHandler.getTitlesList(), convertorToStringForLiterature.getTable(itemsByType), true);
+
+
     }
 
     /**
@@ -213,9 +205,8 @@ public class Terminal {
      */
     private void clarificationForSortingGazettes() {
         List<Gazette> gazetteList = Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects());
-        int userChoice = getUserChoice();
         GazetteHandler gazetteHandler = ItemHandlerProvider.getGazetteHandler();
-        List<Gazette> sortedGazettes = gazetteHandler.clarificationForSortingItems(gazetteList, userChoice, printWriter);
+        List<Gazette> sortedGazettes = gazetteHandler.clarificationForSortingItems(gazetteList, getUserChoice(), printWriter);
         TablePrinter.printTable(printWriter, gazetteHandler.getTitlesList(), convertorToStringForLiterature.getTable(sortedGazettes), true);
     }
 
@@ -227,7 +218,8 @@ public class Terminal {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
+            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+                    convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -241,7 +233,8 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -255,7 +248,8 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
@@ -264,7 +258,7 @@ public class Terminal {
     /**
      * Method give user ability to add new Literature object to Shelf
      */
-    private void addNewLiteratureObject() throws ParseException {
+    private void addNewLiteratureObject() {
         MenuForAddingLiterature byIndex = MenuForAddingLiterature.getByIndex(getUserChoice());
         Item item;
         switch (byIndex) {
@@ -326,22 +320,8 @@ public class Terminal {
      *
      * @return user created Book
      */
-    private Book getUserBook() throws ParseException {
-        Book userBook;
-        int pages;
-        String name;
-        boolean isBorrowed;
-        String author;
-        Date dateOfIssue;
-
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        author = inputHandlerForLiterature.getUserLiteratureAuthor();
-        dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
-
-        userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
-        return userBook;
+    private Book getUserBook() {
+        return ItemHandlerProvider.getBookHandler().getByUserInput(inputHandlerForLiterature, printWriter);
     }
 
     /**
@@ -366,15 +346,8 @@ public class Terminal {
      * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
      */
     public Book getRandomBook() {
+        return ItemHandlerProvider.getBookHandler().getRandomItem(random);
         //his method is only for developer
-        random = new Random();
-        Book randomBook = new Book(
-                getRandomString(random.nextInt(20), random),
-                random.nextInt(1000),
-                false,
-                getRandomString(random.nextInt(10), random),
-                new Date(random.nextInt(1000000)));
-        return randomBook;
     }
 
     /**
@@ -430,36 +403,6 @@ public class Terminal {
 
     public void setActiveTerminal(boolean activeTerminal) {
         this.isActiveTerminal = activeTerminal;
-    }
-
-    public void printSortedBooks(int typeOfSorting) {
-        List<Item> bookList = new ArrayList<>();
-        MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_BOOKS_BY_NAME:
-                bookList.addAll(
-                        new LiteratureSorterHandler<>(shelf.getBooks())
-                                .getSortedLiterature(BOOK_COMPARATOR_BY_NAME));
-                break;
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                bookList.addAll(
-                        new LiteratureSorterHandler<>(shelf.getBooks())
-                                .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES));
-                break;
-            case SORT_BOOKS_BY_AUTHOR:
-                bookList.addAll(
-                        new LiteratureSorterHandler<>(shelf.getBooks())
-                                .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR));
-                break;
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                bookList.addAll(
-                        new LiteratureSorterHandler<>(shelf.getBooks())
-                                .getSortedLiterature(BOOK_COMPARATOR_BY_DATE));
-                break;
-            default:
-                break;
-        }
-        TablePrinter.printTable(printWriter, titleListForBooks, convertorToStringForLiterature.getTable(bookList), true);
     }
 }
 
