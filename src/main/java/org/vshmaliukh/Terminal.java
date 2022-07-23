@@ -11,7 +11,7 @@ import org.vshmaliukh.handlers.ItemHandlers.BookHandler;
 import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
 import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.services.gson_service.GsonHandler;
+import org.vshmaliukh.services.gson_service.GsonHandler_;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForLiterature;
 import org.vshmaliukh.services.print_table_service.TablePrinter;
@@ -44,7 +44,7 @@ public class Terminal {
 
     private ConvertorToStringForLiterature convertorToStringForLiterature;
 
-    private GsonHandler gsonHandler;
+    private GsonHandler_ gsonHandler;
     private Random random;
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
@@ -82,7 +82,7 @@ public class Terminal {
 
     private void initServicesForTerminal(int typeOfWorkWithFiles) {
         random = new Random();
-        gsonHandler = new GsonHandler(typeOfWorkWithFiles, user.getName(), printWriter);
+        gsonHandler = new GsonHandler_(typeOfWorkWithFiles, user.getName(), printWriter);
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
 
         convertorToStringForLiterature = new ConvertorToStringForLiterature();

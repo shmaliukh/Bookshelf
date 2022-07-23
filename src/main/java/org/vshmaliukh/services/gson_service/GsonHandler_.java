@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import static org.vshmaliukh.services.gson_service.ConstantsForGsonHandler.*;
 
 @Slf4j
-public class GsonHandler {
+public class GsonHandler_ {
 
     private final String userName;
     private final PrintWriter printWriter;
@@ -34,7 +34,7 @@ public class GsonHandler {
 
     private Map<Class<? extends Item>, String> classStringMap;
 
-    public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter) {
+    public GsonHandler_(int typeOfWorkWithFiles, String userName, PrintWriter printWriter) {
         // TODO use params for saving dir for files
         this.userName = userName;
         this.printWriter = printWriter;
@@ -42,13 +42,12 @@ public class GsonHandler {
         generateDirectoryForSaving(false);
     }
 
-    public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter, boolean saveAsTemp) {
+    public GsonHandler_(int typeOfWorkWithFiles, String userName, PrintWriter printWriter, boolean saveAsTemp) {
         this.userName = userName;
         this.printWriter = printWriter;
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
         generateDirectoryForSaving(saveAsTemp);
     }
-
 
     private void generateDirectoryForSaving(boolean needTempDir) {
         if (needTempDir) {
@@ -235,6 +234,7 @@ public class GsonHandler {
     }
 
     private void createDirIfNotExists(File der) {
+        //Files.createDirectories(Paths.get("/Your/Path/Here"));
         if (!der.exists()) {
             der.mkdir();
         }
