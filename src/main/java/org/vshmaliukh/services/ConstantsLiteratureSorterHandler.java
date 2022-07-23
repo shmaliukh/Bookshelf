@@ -1,4 +1,4 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh.services;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;

@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
+import static org.vshmaliukh.services.gson_service.ConstantsForGsonHandler.*;
 
 @Slf4j
 public class GsonHandler {

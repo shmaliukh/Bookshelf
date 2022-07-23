@@ -3,7 +3,7 @@ package org.vshmaliukh.services.input_services;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 
 public class InputHandlerForUser extends InputHandler {
 

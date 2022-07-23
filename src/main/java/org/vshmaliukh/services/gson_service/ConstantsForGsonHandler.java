@@ -1,9 +1,9 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh.services.gson_service;
 
 import java.nio.file.Paths;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.FILE_MODE_WORK_WITH_ONE_FILE;
-import static org.vshmaliukh.constants.ConstantsForTerminal.FILE_MODE_WORK_WITH_FILE_PER_TYPE;
+import static org.vshmaliukh.ConstantsForTerminal.FILE_MODE_WORK_WITH_ONE_FILE;
+import static org.vshmaliukh.ConstantsForTerminal.FILE_MODE_WORK_WITH_FILE_PER_TYPE;
 
 public final class ConstantsForGsonHandler {
 

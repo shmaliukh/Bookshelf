@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.vshmaliukh.constants.ConstantsForTablePrinter.*;
+import static org.vshmaliukh.services.print_table_service.ConstantsForTablePrinter.*;
 
 @Data
 public class TablePrinter {

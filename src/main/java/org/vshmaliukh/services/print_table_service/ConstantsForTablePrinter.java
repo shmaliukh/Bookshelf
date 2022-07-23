@@ -1,4 +1,4 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh.services.print_table_service;
 
 public final class ConstantsForTablePrinter {
 

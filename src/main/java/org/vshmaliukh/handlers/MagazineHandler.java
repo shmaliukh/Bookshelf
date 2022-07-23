@@ -11,8 +11,8 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 

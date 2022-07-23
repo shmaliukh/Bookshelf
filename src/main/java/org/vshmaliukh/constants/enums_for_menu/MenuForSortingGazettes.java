@@ -3,7 +3,7 @@ package org.vshmaliukh.constants.enums_for_menu;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.WRONG_INPUT;
+import static org.vshmaliukh.ConstantsForTerminal.WRONG_INPUT;
 
 public enum MenuForSortingGazettes {
     SORT_GAZETTES_BY_NAME(1, "Sort by 'name' value"),

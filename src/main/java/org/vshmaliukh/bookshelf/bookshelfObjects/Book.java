@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
 
 /**
  * @author ShmaliukhVlad

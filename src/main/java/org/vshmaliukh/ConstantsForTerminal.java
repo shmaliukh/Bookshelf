@@ -1,4 +1,4 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh;
 
 import java.text.SimpleDateFormat;
 

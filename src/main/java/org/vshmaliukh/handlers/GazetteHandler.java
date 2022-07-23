@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
 
 public class GazetteHandler implements ItemHandler<Gazette> {
 

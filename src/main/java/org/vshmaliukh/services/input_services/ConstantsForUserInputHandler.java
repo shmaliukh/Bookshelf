@@ -1,10 +1,10 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh.services.input_services;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.*;
+import static org.vshmaliukh.ConstantsForTerminal.*;
 
 public final class ConstantsForUserInputHandler {
 

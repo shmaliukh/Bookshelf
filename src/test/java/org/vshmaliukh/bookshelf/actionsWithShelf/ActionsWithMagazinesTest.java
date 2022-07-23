@@ -2,16 +2,9 @@ package org.vshmaliukh.bookshelf.actionsWithShelf;
 
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.vshmaliukh.services.LiteratureSorterHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 
 class ActionsWithMagazinesTest {
     PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);

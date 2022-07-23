@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 
 @Slf4j
 public abstract class InputHandler {

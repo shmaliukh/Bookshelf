@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
 
 public class ActionsWithGazetteTest {
 

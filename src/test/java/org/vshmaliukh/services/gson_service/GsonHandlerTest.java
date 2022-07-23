@@ -19,7 +19,7 @@ import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
+import static org.vshmaliukh.services.gson_service.ConstantsForGsonHandler.*;
 
 class GsonHandlerTest {
     String userName = "test";

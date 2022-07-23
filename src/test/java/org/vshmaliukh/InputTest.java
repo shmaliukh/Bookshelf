@@ -14,8 +14,8 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
-import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 
 class InputTest {
 

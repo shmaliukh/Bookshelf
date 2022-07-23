@@ -17,7 +17,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.*;
+import static org.vshmaliukh.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 
 /**

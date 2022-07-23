@@ -11,8 +11,8 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.BOOK_COMPARATOR_BY_DATE;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.BOOK_COMPARATOR_BY_DATE;
 
 public class BookHandler implements ItemHandler<Book> {
 

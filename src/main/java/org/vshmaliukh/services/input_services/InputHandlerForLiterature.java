@@ -1,12 +1,11 @@
 package org.vshmaliukh.services.input_services;
 
 import java.io.PrintWriter;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 
-import static org.vshmaliukh.constants.ConstantsForTerminal.DATE_FORMAT;
-import static org.vshmaliukh.constants.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 
 public class InputHandlerForLiterature extends InputHandler {
 

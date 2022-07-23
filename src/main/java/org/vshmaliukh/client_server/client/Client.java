@@ -1,6 +1,6 @@
 package org.vshmaliukh.client_server.client;
 
-import org.vshmaliukh.constants.ConstantsForClientServerModel;
+import org.vshmaliukh.client_server.ConstantsForClientServerModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;

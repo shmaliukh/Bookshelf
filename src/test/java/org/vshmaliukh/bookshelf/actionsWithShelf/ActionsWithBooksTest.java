@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
 
 class ActionsWithBooksTest {
     PrintWriter printWriter = new PrintWriter(System.out, true);

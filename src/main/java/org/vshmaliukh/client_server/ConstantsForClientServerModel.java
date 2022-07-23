@@ -1,4 +1,4 @@
-package org.vshmaliukh.constants;
+package org.vshmaliukh.client_server;
 
 public final class ConstantsForClientServerModel {
 
