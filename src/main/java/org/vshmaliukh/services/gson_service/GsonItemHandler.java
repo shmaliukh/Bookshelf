@@ -44,12 +44,16 @@ public class GsonItemHandler extends FilesHandler {
         return Paths.get(programDirectoryStr);
     }
 
-    private void createDirectoriesIfNotExists(Path dir) {
+    boolean createDirectoriesIfNotExists(Path dir) {
         try {
-            Files.createDirectories(dir); // TODO
+            Path directories = Files.createDirectories(dir);
+            if(!directories.toString().isEmpty()){
+                return true;
+            }
         } catch (IOException e) {
-            //throw new RuntimeException(e);
+            return false;
         }
+        return false;
     }
 
     public String generateFullFileName() {

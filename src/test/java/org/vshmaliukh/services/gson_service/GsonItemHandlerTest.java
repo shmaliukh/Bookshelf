@@ -1,6 +1,10 @@
 package org.vshmaliukh.services.gson_service;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
@@ -15,7 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Stream;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -302,10 +308,12 @@ class GsonItemHandlerTest {
     //    return directoryToBeDeleted.delete();
     //}
 
+    GsonItemHandler testGsonItemHandler = new GsonItemHandler(TEMP_DIR, "test", new ArrayList<>());
+
     @Test
     void testGeneratePathForGson() {
         Path expectedPath = Paths.get(TEMP_DIR, "shelf", "testGeneratePathForGson", "gson_handler");
-        GsonItemHandler gsonItemHandler = new GsonItemHandler(TEMP_DIR, "testGeneratePathForGson", new ArrayList<>() );
+        GsonItemHandler gsonItemHandler = new GsonItemHandler(TEMP_DIR, "testGeneratePathForGson", new ArrayList<>());
         assertEquals(expectedPath, gsonItemHandler.generatePathForGson());
     }
 
@@ -313,9 +321,22 @@ class GsonItemHandlerTest {
     void generateFullFileName() {
     }
 
-    @Test
-    void crateDirIfNotExists() {
-        crateDirIfNotExists();
+    @ParameterizedTest
+    @MethodSource("provideArgsForCreateDirectoriesIfNotExists")
+    void testCreateDirectoriesIfNotExists(boolean expectedState, Path path) {
+        assertEquals(expectedState, testGsonItemHandler.createDirectoriesIfNotExists(path));
+    }
+
+    private static Stream<Arguments> provideArgsForCreateDirectoriesIfNotExists() {
+        return Stream.of(
+                Arguments.of(true, Paths.get(TEMP_DIR)),
+                Arguments.of(true, Paths.get(TEMP_DIR, "programDir")),
+                Arguments.of(true, Paths.get(TEMP_DIR, "programDir")),
+                Arguments.of(true, Paths.get(TEMP_DIR, "programDir", "fodler")),
+                Arguments.of(false, Paths.get(""))
+
+
+        );
     }
 
     @Test
