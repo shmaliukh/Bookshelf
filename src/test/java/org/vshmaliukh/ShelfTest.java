@@ -5,14 +5,14 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
-import org.vshmaliukh.services.LiteratureSorterHandler;
+import org.vshmaliukh.services.ItemSorterHandler;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
 
 class ShelfTest {
 
@@ -91,7 +91,7 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByName =
-                new LiteratureSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -112,7 +112,7 @@ class ShelfTest {
         shelf.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByPages =
-                new LiteratureSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<Magazine>(Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
@@ -133,7 +133,7 @@ class ShelfTest {
         shelf.addLiteratureObject(gazette1);
 
         List<Gazette> sortedGazettesByName =
-                new LiteratureSorterHandler(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
                 .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedGazettesByName.size());
@@ -154,7 +154,7 @@ class ShelfTest {
         shelf.addLiteratureObject(gazette1);
 
         List<Gazette> sortedGazettesByPages =
-                new LiteratureSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES);
         ;
 
@@ -176,7 +176,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByName =
-                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
@@ -197,7 +197,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByPages =
-                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
@@ -219,7 +219,7 @@ class ShelfTest {
         shelf.addLiteratureObject(book1);
 
         List<Book> sortedBooksByAuthor =
-                new LiteratureSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
+                new ItemSorterHandler<Book>(Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()))
                         .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR);
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());

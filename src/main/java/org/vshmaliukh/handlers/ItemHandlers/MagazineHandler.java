@@ -4,7 +4,7 @@ import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 import org.vshmaliukh.handlers.ItemHandler;
-import org.vshmaliukh.services.LiteratureSorterHandler;
+import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForMagazine;
@@ -12,8 +12,8 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
-import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
+import static org.vshmaliukh.services.ConstantsItemSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.services.ConstantsItemSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
@@ -29,10 +29,10 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_MAGAZINES_BY_NAME:
-                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new ItemSorterHandler<>(inputList)
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
             case SORT_MAGAZINES_BY_PAGES:
-                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new ItemSorterHandler<>(inputList)
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
             default:
                 return Collections.emptyList();

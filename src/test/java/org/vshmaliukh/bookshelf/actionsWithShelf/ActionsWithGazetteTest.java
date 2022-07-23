@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
-import org.vshmaliukh.services.LiteratureSorterHandler;
+import org.vshmaliukh.services.ItemSorterHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
 
 public class ActionsWithGazetteTest {
 
@@ -44,7 +44,7 @@ public class ActionsWithGazetteTest {
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedGazettesByName() {
         List<Gazette> sortedGazettesByName =
-                new LiteratureSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
+                new ItemSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedGazettesByName.size());
@@ -56,7 +56,7 @@ public class ActionsWithGazetteTest {
     @DisplayName("test printable stings of sorted Gazettes by Pages")
     void printSortedGazettesByPages() {
         List<Gazette> sortedGazettesByPages =
-                new LiteratureSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
+                new ItemSorterHandler<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedGazettesByPages.size());

@@ -3,7 +3,7 @@ package org.vshmaliukh.handlers.ItemHandlers;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
 import org.vshmaliukh.handlers.ItemHandler;
-import org.vshmaliukh.services.LiteratureSorterHandler;
+import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForGazette;
@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.services.ConstantsLiteratureSorterHandler.*;
+import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
 
 public class GazetteHandler implements ItemHandler<Gazette> {
 
@@ -28,10 +28,10 @@ public class GazetteHandler implements ItemHandler<Gazette> {
         MenuForSortingGazettes byIndex = MenuForSortingGazettes.getByIndex(typeOfSorting);
         switch (byIndex) {
             case SORT_GAZETTES_BY_NAME:
-                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new ItemSorterHandler<>(inputList)
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME));
             case SORT_GAZETTES_BY_PAGES:
-                return new ArrayList<>(new LiteratureSorterHandler<>(inputList)
+                return new ArrayList<>(new ItemSorterHandler<>(inputList)
                         .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES));
             default:
                 return Collections.emptyList();
