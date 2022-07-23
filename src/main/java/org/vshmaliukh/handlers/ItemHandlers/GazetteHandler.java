@@ -1,7 +1,8 @@
-package org.vshmaliukh.handlers;
+package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
+import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;

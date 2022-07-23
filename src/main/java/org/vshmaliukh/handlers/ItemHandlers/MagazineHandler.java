@@ -1,8 +1,9 @@
-package org.vshmaliukh.handlers;
+package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
+import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.LiteratureSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;

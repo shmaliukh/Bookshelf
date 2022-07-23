@@ -4,6 +4,9 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
+import org.vshmaliukh.handlers.ItemHandlers.BookHandler;
+import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
+import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
 
 import java.util.Collections;
 import java.util.Map;

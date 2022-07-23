@@ -29,7 +29,7 @@ public class ServerToClientHandler {
             scanner = new Scanner(socketForClient.getInputStream());
             printWriter = new PrintWriter(socketForClient.getOutputStream(), true);
         } catch (IOException ioe) {
-            log.error("[ServerToClientHandler]: Problem to start server for client. Exception: " + ioe);
+            log.error("[ServerToClientHandler]: Problem to start server for client. Exception: ",  ioe);
         }
     }
 

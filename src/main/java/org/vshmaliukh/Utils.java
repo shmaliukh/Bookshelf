@@ -30,5 +30,4 @@ public class Utils {
                 .map(clazz::cast)
                 .collect(Collectors.toList());
     }
-
 }
