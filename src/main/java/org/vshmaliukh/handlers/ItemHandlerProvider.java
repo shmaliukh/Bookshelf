@@ -5,12 +5,16 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class ItemHandlerProvider {
     private static final Map<Class<? extends Item>, ItemHandler> itemHandlerMap = new ConcurrentHashMap<>();
     private static final Map<String, Class> itemNameClassMap = new ConcurrentHashMap<>();
+    public static final Set<Class<? extends Item>> uniqueTypeNames;
 
     static {
         itemHandlerMap.put(Book.class, new BookHandler());
@@ -18,6 +22,7 @@ public class ItemHandlerProvider {
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
 
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
+        uniqueTypeNames = Collections.unmodifiableSet(itemHandlerMap.keySet().stream().collect(Collectors.toSet()));
     }
 
     public static ItemHandler getHandlerByClass(Class clazz) {

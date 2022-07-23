@@ -3,7 +3,6 @@ package org.vshmaliukh.handlers;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
 import org.vshmaliukh.services.LiteratureSorterHandler;
-import org.vshmaliukh.services.gson_service.GsonHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForGazette;
@@ -14,12 +13,12 @@ import java.util.*;
 import static org.vshmaliukh.Utils.getRandomString;
 import static org.vshmaliukh.constants.ConstantsLiteratureSorterHandler.*;
 
-public class GazetteHandler implements ItemHandler<Gazette>{
+public class GazetteHandler implements ItemHandler<Gazette> {
 
     private List<String> titleListForGazettes = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
 
     @Override
-    public ConvertorToString getConvertorToString(){
+    public ConvertorToString getConvertorToString() {
         return new ConvertorToStringForGazette();
     }
 

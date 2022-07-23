@@ -16,7 +16,8 @@ public abstract class Item implements Serializable {
     protected int pagesNumber;
     protected boolean isBorrowed;
 
-    private Item(){}
+    private Item() {
+    }
 
     /**
      * Base Constructor for creating Book and Magazine object
@@ -29,10 +30,11 @@ public abstract class Item implements Serializable {
 
     /**
      * Method validate information about pages value
+     *
      * @param pagesNumber must be greater than 0
      */
     public void setPagesNumber(int pagesNumber) {
-        if(pagesNumber < 0){
+        if (pagesNumber < 0) {
             pagesNumber = 1;
         }
         this.pagesNumber = pagesNumber;

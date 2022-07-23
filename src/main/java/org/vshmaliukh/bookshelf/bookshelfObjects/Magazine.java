@@ -19,11 +19,12 @@ public class Magazine extends Item {
 
     /**
      * Simple forming String about Magazine object
+     *
      * @return String about Magazine object
      */
     @Override
     public String toString() {
-        return  "Magazine {" +
+        return "Magazine {" +
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", isBorrowed=" + isBorrowed +

@@ -1,7 +1,5 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -11,7 +9,7 @@ public class Utils {
     /**
      * Method which gives opportunity to get string with random characters ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ")
      *
-     * @param length       is value of expected string size
+     * @param length is value of expected string size
      * @param random
      * @return string with random symbols
      */

@@ -8,7 +8,8 @@ import static org.vshmaliukh.constants.ConstantsForTerminal.*;
 
 public final class ConstantsForUserInputHandler {
 
-    private ConstantsForUserInputHandler(){}
+    private ConstantsForUserInputHandler() {
+    }
 
     public static final int MAX_RECURSION_LEVEL = 5;
 
@@ -28,8 +29,8 @@ public final class ConstantsForUserInputHandler {
     public static final String MESSAGE_ENTER_LITERATURE_DATE = "Enter book's date of issue 'DD-MM-YYYY' (28-06-2022),\r\n" +
             "DD - day, MM - month, YYYY -year (numbers), use '-' between numbers";
     public static final String MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = "Enter type number of work with files: (program ignores all not number symbols\r\n" +
-            FILE_MODE_NO_WORK_WITH_FILES  + " - no work with files\r\n" +
-            FILE_MODE_WORK_WITH_ONE_FILE  + " - work with one file\r\n" +
+            FILE_MODE_NO_WORK_WITH_FILES + " - no work with files\r\n" +
+            FILE_MODE_WORK_WITH_ONE_FILE + " - work with one file\r\n" +
             FILE_MODE_WORK_WITH_FILE_PER_TYPE + " - work with file per type files";
 
 

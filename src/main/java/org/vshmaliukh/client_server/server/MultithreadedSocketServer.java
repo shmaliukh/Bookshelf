@@ -17,7 +17,7 @@ public class MultithreadedSocketServer {
     private int userCounter;
     private boolean isServerActive;
 
-    public MultithreadedSocketServer(){
+    public MultithreadedSocketServer() {
         userCounter = 0;
         isServerActive = true;
 
@@ -35,7 +35,7 @@ public class MultithreadedSocketServer {
     public void start() throws IOException {
         log.info("Server start");
 
-        while (isServerActive){
+        while (isServerActive) {
             userCounter++;
             Socket serverClient = serverSocket.accept();
             log.info("    [Client] " + userCounter + " - connected");

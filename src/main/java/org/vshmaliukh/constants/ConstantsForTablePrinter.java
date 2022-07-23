@@ -2,7 +2,8 @@ package org.vshmaliukh.constants;
 
 public final class ConstantsForTablePrinter {
 
-    private ConstantsForTablePrinter(){}
+    private ConstantsForTablePrinter() {
+    }
 
     public static final String SEPARATOR_VALUE = "│";
     public static final String SPACE_VALUE = " ";

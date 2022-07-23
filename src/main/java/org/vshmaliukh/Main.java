@@ -10,7 +10,12 @@ import java.util.Scanner;
 @Slf4j
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        try {
+            Thread.sleep(60_000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         TerminalThread terminalThread = new TerminalThread();
         terminalThread.start();
 
@@ -18,7 +23,7 @@ public class Main {
         serverThread.start();
     }
 
-    static class TerminalThread extends Thread{
+    static class TerminalThread extends Thread {
         private final Scanner scanner = new Scanner(System.in);
         private final PrintWriter printWriter = new PrintWriter(System.out, true);
         private final Terminal terminal = new Terminal(scanner, printWriter);
@@ -28,12 +33,12 @@ public class Main {
             try {
                 terminal.startWork(false);
             } catch (Exception e) {
-                log.error("[TerminalThread] problem to start thread. Exception: " , e);
+                log.error("[TerminalThread] problem to start thread. Exception: ", e);
             }
         }
     }
 
-    static class ServerThread extends Thread{
+    static class ServerThread extends Thread {
         MultithreadedSocketServer multithreadedSocketServer = new MultithreadedSocketServer();
 
         @Override

@@ -4,10 +4,7 @@ import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.handlers.ItemHandlerProvider;
 
 import java.io.*;
@@ -17,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static org.vshmaliukh.constants.ConstantsForGsonHandler.*;
 
@@ -34,18 +32,14 @@ public class GsonHandler {
     private Path userDirectory;
     private File gsonFile;
 
-    private String fileNameForAll;
-    private String fileNameForBooks;
-    private String fileNameForMagazines;
-    private String fileNameForGazettes;
+    private Map<Class<? extends Item>, String> classStringMap;
 
     public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter) {
-        // TODO use params for saving dir fors files
+        // TODO use params for saving dir for files
         this.userName = userName;
         this.printWriter = printWriter;
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
         generateDirectoryForSaving(false);
-        generateFileNames();
     }
 
     public GsonHandler(int typeOfWorkWithFiles, String userName, PrintWriter printWriter, boolean saveAsTemp) {
@@ -53,22 +47,13 @@ public class GsonHandler {
         this.printWriter = printWriter;
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
         generateDirectoryForSaving(saveAsTemp);
-        generateFileNames();
     }
 
-    private void generateFileNames() {
-        // TODO create method for getting file names by provider
-        fileNameForAll = userName + "_" + SHELF_FILE_NAME_PREFIX;
-        fileNameForBooks = userName + "_" + BOOKS_FILE_NAME_PREFIX;
-        fileNameForMagazines = userName + "_" + MAGAZINES_FILE_NAME_PREFIX;
-        fileNameForGazettes = userName + "_" + GAZETTES_FILE_NAME_PREFIX;
-    }
 
     private void generateDirectoryForSaving(boolean needTempDir) {
-        if(needTempDir){
+        if (needTempDir) {
             programDirectory = SYSTEM_TEMP_PROPERTY;
-        }
-        else {
+        } else {
             programDirectory = PROGRAM_HOME_PROPERTY;
         }
         userDirectory = Paths.get(programDirectory, userName);
@@ -88,17 +73,18 @@ public class GsonHandler {
     }
 
     private void saveInOneGsonFile(Shelf shelf) {
-        saveListToGsonFile(fileNameForAll, shelf.getAllLiteratureObjects());
+        saveListToGsonFile(shelf.getAllLiteratureObjects(), userName + "_" + SHELF_FILE_NAME_PREFIX);
     }
 
     private void saveInFevGsonFiles(Shelf shelf) {
-        // TODO loop for saving to file by provided classes
-        saveListToGsonFile(fileNameForBooks, Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects()));
-        saveListToGsonFile(fileNameForMagazines, Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects()));
-        saveListToGsonFile(fileNameForGazettes, Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()));
+        classStringMap = new HashMap<>();
+        if(!shelf.getAllLiteratureObjects().isEmpty()){
+            shelf.getAllLiteratureObjects().forEach(o -> classStringMap.put(o.getClass(), o.getClass().getSimpleName()));
+            classStringMap.forEach((k, v) -> saveListToGsonFile(Utils.getItemsByType(k, shelf.getAllLiteratureObjects()), (userName + "_" + v)));
+        }
     }
 
-    private <T extends Item> void saveListToGsonFile(String fileName, List<T> literatureList) {
+    private <T extends Item> void saveListToGsonFile(List<T> literatureList, String fileName) {
         initFile(fileName);
         List<Container> containerList = getContainerForLiteratureObjects(literatureList);
         try (FileWriter fw = new FileWriter(gsonFile)) {
@@ -127,17 +113,43 @@ public class GsonHandler {
         Shelf shelf = new Shelf(printWriter);
         switch (typeOfWorkWithFiles) {
             case WORK_WITH_ONE_FILE:
-                readShelfItemsFromGsonFile(fileNameForAll).forEach(shelf::addLiteratureObject);
+                readShelfItemsFromGsonFile(userName + "_" + SHELF_FILE_NAME_PREFIX).forEach(shelf::addLiteratureObject);
                 break;
             case WORK_WITH_FILE_PER_TYPE:
-                readShelfItemsFromGsonFile(fileNameForBooks).forEach(shelf::addLiteratureObject);
-                readShelfItemsFromGsonFile(fileNameForMagazines).forEach(shelf::addLiteratureObject);
-                readShelfItemsFromGsonFile(fileNameForGazettes).forEach(shelf::addLiteratureObject);
+                initMapOfFilteredFiles();
+                readFilesWithExpectedClasses(shelf);
                 break;
             default:
                 break;
         }
         return shelf;
+    }
+
+    private void initMapOfFilteredFiles() { // TODO rename method
+        classStringMap = new HashMap<>();
+        List<File> files = new ArrayList<>();
+        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
+            String simpleName = uniqueTypeName.getSimpleName();
+        }
+        userDirectory.iterator();
+        try (Stream<Path> pathStream = Files.walk(userDirectory, 1)) {
+            pathStream.filter(o -> !Files.isDirectory(o))
+                    .forEach(o -> classStringMap.put(
+                    ItemHandlerProvider.getClassByName(o.getFileName().toString().substring(userName.length()+1, o.getFileName().toString().lastIndexOf("."))),
+                    o.getFileName().toString().substring(userName.length()+1, o.getFileName().toString().lastIndexOf("."))));
+
+        } catch (IOException ioe) {
+            informAboutErr("problem to get info about type of classes need to read. Exception: "+ ioe.getMessage());
+        }
+    }
+
+    private void readFilesWithExpectedClasses(Shelf shelf) {
+        for (Map.Entry<Class<? extends Item>, String> entry : classStringMap.entrySet()) {
+            if (entry.getKey() != null) {
+                readShelfItemsFromGsonFile(userName + "_" + entry.getValue()).forEach(shelf::addLiteratureObject);
+
+            }
+        }
     }
 
     private List<Item> readShelfItemsFromGsonFile(String fileName) {

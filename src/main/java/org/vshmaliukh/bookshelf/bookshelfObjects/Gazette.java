@@ -1,6 +1,6 @@
 package org.vshmaliukh.bookshelf.bookshelfObjects;
 
-public class Gazette extends Item{
+public class Gazette extends Item {
 
     /**
      * Base Constructor for creating Book and Magazine object
@@ -15,7 +15,7 @@ public class Gazette extends Item{
 
     @Override
     public String toString() {
-        return  "Gazette {" +
+        return "Gazette {" +
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", isBorrowed=" + isBorrowed +

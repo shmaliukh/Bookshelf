@@ -17,7 +17,7 @@ public class ServerToClientHandler {
     private Scanner scanner;
     private PrintWriter printWriter;
 
-    public ServerToClientHandler(Socket socket, int userCounter){
+    public ServerToClientHandler(Socket socket, int userCounter) {
         this.socketForClient = socket;
         this.userCounter = userCounter;
 
@@ -33,7 +33,7 @@ public class ServerToClientHandler {
         }
     }
 
-    void start(){
+    void start() {
         TerminalToClientThread terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner, printWriter));
         terminalToClientThread.start();
     }

@@ -28,16 +28,17 @@ public class Book extends Item {
 
     /**
      * Simple forming String about Book object
+     *
      * @return String about Book object
      */
     @Override
     public String toString() {
         return "Book {" +
-               " name='" + name + '\'' +
-               ", pagesNumber=" + pagesNumber +
-               ", author='" + author + '\'' +
-               ", issuanceDate=" + DATE_FORMAT.format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
-               ", isBorrowed=" + isBorrowed +
-               " }";
+                " name='" + name + '\'' +
+                ", pagesNumber=" + pagesNumber +
+                ", author='" + author + '\'' +
+                ", issuanceDate=" + DATE_FORMAT.format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
+                ", isBorrowed=" + isBorrowed +
+                " }";
     }
 }
