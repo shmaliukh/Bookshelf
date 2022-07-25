@@ -2,7 +2,6 @@ package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.handlers.ItemHandlerProvider;
 
@@ -143,10 +142,8 @@ public abstract class ItemGsonHandler extends FilesHandler {
 
     File getOldestProblemFile(File gsonFile) {
         List<File> filesList = new ArrayList<>();
-        String folderForProblemFilesStr = String.valueOf(generatePathForProblemFiles());
-
         for (int i = 0; i < MAX_PROBLEM_FILES; i++) {
-            File problemFile = new File(folderForProblemFilesStr, ("problemFileToRead_" + i + "_" + gsonFile.getName()));
+            File problemFile = new File(String.valueOf(generatePathForProblemFiles()), ("problemFileToRead_" + i + "_" + gsonFile.getName()));
             if (!problemFile.exists()) {
                 return problemFile;
             }

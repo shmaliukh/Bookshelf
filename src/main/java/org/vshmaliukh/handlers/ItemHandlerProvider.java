@@ -20,9 +20,9 @@ public class ItemHandlerProvider {
     public static final Set<Class<? extends Item>> uniqueTypeNames;
 
     static {
-        itemHandlerMap.put(Book.class, new BookHandler());
         itemHandlerMap.put(Gazette.class, new GazetteHandler());
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
+        itemHandlerMap.put(Book.class, new BookHandler());
 
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
         uniqueTypeNames = Collections.unmodifiableSet(new HashSet<>(itemHandlerMap.keySet()));

@@ -2,7 +2,6 @@ package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
@@ -60,7 +59,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public Magazine getByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
+    public Magazine getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         Magazine userMagazine;
         String name;
         int pages;

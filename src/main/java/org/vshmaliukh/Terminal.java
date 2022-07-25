@@ -73,6 +73,10 @@ public class Terminal {
     private void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
         String property = System.getProperty("user.home");
+        setUpGsonHandler(property);
+    }
+
+    private void setUpGsonHandler(String property) {
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
                 itemGsonHandler = new ItemGsonHandlerOneFile(property, user.getName());
@@ -156,19 +160,6 @@ public class Terminal {
                 break;
             case ARRIVE_LITERATURE:
                 menuForArrivingLiterature();
-                break;
-
-            // TODO use new method for printing menu for items actions
-            case PRINT_SORTED_BOOKS:
-                clarificationForSortingBooks();
-                break;
-            case PRINT_SORTED_MAGAZINES:
-                clarificationForSortingMagazines();
-                break;
-            case PRINT_SORTED_GAZETTES:
-                clarificationForSortingGazettes();
-
-
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -280,33 +271,21 @@ public class Terminal {
      * Method give user ability to add new Literature object to Shelf
      */
     private void addNewLiteratureObject() {
-        MenuForAddingLiterature byIndex = MenuForAddingLiterature.getByIndex(getUserChoice());
-        Item item;
-        switch (byIndex) {
-            case ADD_CUSTOM_MAGAZINE:
-                item = getUserMagazine();
-                break;
-            case ADD_CUSTOM_GAZETTE:
-                item = getUserGazette();
-                break;
-            case ADD_CUSTOM_BOOK:
-                item = getUserBook();
-                break;
-            case ADD_RANDOM_MAGAZINE:
-                item = getRandomMagazine();
-                break;
-            case ADD_RANDOM_GAZETTE:
-                item = getRandomGazette();
-                break;
-            case ADD_RANDOM_BOOK:
-                item = getRandomBook();
-                break;
-            default:
-                item = null;
-                break;
+        int userChoice = getUserChoice();
+        if (userChoice > 0 && userChoice - 1 < Menu.addingMenuItems.size()) {
+            Class classType = Menu.addingMenuItems.get(userChoice - 1).getClassType();
+            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+            Item item;
+            if ((userChoice - 1) % 2 == 0) {
+                item = handlerByClass.getItemByUserInput(inputHandlerForLiterature, printWriter);
+            } else {
+                item = handlerByClass.getRandomItem(random);
+            }
+            shelf.addLiteratureObject(item);
+            informAboutAddedLiteratureObject(item);
+        } else {
+            printWriter.println("Wrong input");
         }
-        shelf.addLiteratureObject(item);
-        informAboutAddedLiteratureObject(item);
     }
 
     /**
@@ -314,72 +293,6 @@ public class Terminal {
      */
     private void informAboutAddedLiteratureObject(Item item) {
         printWriter.println(item + " has added to shelf");
-    }
-
-    /**
-     * Method give ability to create custom Magazine
-     *
-     * @return user created Magazine
-     */
-    public Magazine getUserMagazine() {
-        return ItemHandlerProvider.getMagazineHandler().getByUserInput(inputHandlerForLiterature, printWriter);
-    }
-
-    /**
-     * Method give ability to create custom Gazette
-     *
-     * @return user created Gazette
-     */
-    public Gazette getUserGazette() {
-        return ItemHandlerProvider.getGazetteHandler().getByUserInput(inputHandlerForLiterature, printWriter);
-
-
-    }
-
-    /**
-     * Method give ability to create custom Book
-     *
-     * @return user created Book
-     */
-    private Book getUserBook() {
-        return ItemHandlerProvider.getBookHandler().getByUserInput(inputHandlerForLiterature, printWriter);
-    }
-
-    /**
-     * Method forms new Magazine with random parameters (isBorrowed = false -> constant)
-     *
-     * @return Magazine with
-     * random name (max string length = 20),
-     * random number of pages (max = 1000)
-     */
-    public Magazine getRandomMagazine() {
-        return ItemHandlerProvider.getMagazineHandler().getRandomItem(random);
-        //his method is only for developer
-    }
-
-    /**
-     * Method forms new Book with random parameters (isBorrowed = false -> constant)
-     *
-     * @return Book with
-     * random name (max string length = 20),
-     * random number of pages (max = 1000),
-     * random author (max string length = 10),
-     * random date of issue (random number (up to 1 000 000)  milliseconds since January 1, 1970, 00:00:00)
-     */
-    public Book getRandomBook() {
-        return ItemHandlerProvider.getBookHandler().getRandomItem(random);
-        //his method is only for developer
-    }
-
-    /**
-     * Method forms new Gazette with random parameters (isBorrowed = false -> constant)
-     *
-     * @return Gazette with
-     * random name (max string length = 20),
-     * random number of pages (max = 1000)
-     */
-    public Gazette getRandomGazette() {
-        return ItemHandlerProvider.getGazetteHandler().getRandomItem(random);
     }
 
     /**
@@ -405,7 +318,7 @@ public class Terminal {
     }
 
     private void printMenuForAddingLiterature() {
-        MenuForAddingLiterature.printMenu(printWriter);
+        Menu.printAddingMenu(printWriter);
     }
 
     public void stop() {

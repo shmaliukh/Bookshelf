@@ -1,7 +1,6 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
@@ -66,7 +65,7 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public Book getByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
+    public Book getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         Book userBook;
         int pages;
         String name;
