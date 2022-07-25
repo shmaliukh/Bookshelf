@@ -24,7 +24,7 @@ class FilesHandlerTest {
         tempDirStr = String.valueOf(tempDir);
     }
 
-    FilesHandler filesHandler = new ItemGsonHandlerOneFile(tempDirStr, "filesHandler", new ArrayList<>());
+    FilesHandler filesHandler = new ItemGsonHandlerOneFile(tempDirStr, "filesHandler");
 
     @ParameterizedTest
     @MethodSource("provideArgsForCreateDirectoriesIfNotExists")

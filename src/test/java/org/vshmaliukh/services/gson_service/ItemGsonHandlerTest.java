@@ -5,6 +5,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
+import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.File;
@@ -13,10 +14,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ItemGsonHandlerTest {
+
+    @TempDir
+    static Path tempDir;
+    static String tempDirStr;
+
+    static {
+        tempDirStr = String.valueOf(tempDir);
+    }
+
+    //static String TEMP_DIR_STR = System.getProperty("java.io.tmpdir");
 
     Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000));
     Book book2 = new Book("noNameBook2", 2, true, "NoAuthor2", new Date());
@@ -27,24 +39,14 @@ class ItemGsonHandlerTest {
     Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
     Gazette gazette2 = new Gazette("noNameGazette2", 2, true);
 
-    @TempDir
-    static Path tempDir;
-    static String tempDirStr;
 
-    static {
-        tempDirStr = String.valueOf(tempDir);
-    }
-
-    static String TEMP_DIR_STR = System.getProperty("java.io.tmpdir");
-
-    ItemGsonHandlerOneFile testGsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGsonItemHandler", new ArrayList<>());
+    ItemGsonHandlerOneFile testGsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGsonItemHandler");
 
 
     @Test
     void testGeneratePathForGson() {
-        Path expectedPath = Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", "gson_handler");
-        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGeneratePathForGson", new ArrayList<>());
-        assertEquals(expectedPath, gsonHandlerOneFile.generatePathForGson());
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGeneratePathForGson");
+        assertEquals(Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", gsonHandlerOneFile.gsonHandlerFolderStr), gsonHandlerOneFile.generatePathForGson());
     }
 
     @Test
@@ -59,7 +61,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testReadItemListFromGsonFile() {
-        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(TEMP_DIR_STR, "testReadItemListFromGsonFile", new ArrayList<>());
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadItemListFromGsonFile");
         File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
         assertTrue(gsonHandlerOneFile.saveListToFile(gsonFile, new ArrayList<>()));
         assertTrue(gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).isEmpty());
@@ -75,14 +77,20 @@ class ItemGsonHandlerTest {
         shelf1.addLiteratureObject(gazette1);
         shelf1.addLiteratureObject(gazette2);
 
-        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile", shelf1.getAllLiteratureObjects());
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile");
         File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
 
-        gsonHandlerOneFile.saveToFile();
+        gsonHandlerOneFile.saveToFile(shelf1.getAllLiteratureObjects());
         Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).forEach(shelf2::addLiteratureObject);
 
-        assertEquals(shelf1.toString(), shelf2.toString());
+        assertEquals(shelf1.getAllLiteratureObjects().size(), shelf2.getAllLiteratureObjects().size());
+        assertTrue(shelf1.getAllLiteratureObjects().stream()
+                .map(Item::toString)
+                .collect(Collectors.toList())
+                .containsAll(shelf2.getAllLiteratureObjects().stream()
+                        .map(Item::toString)
+                        .collect(Collectors.toList())));
     }
 
     @Test
@@ -97,12 +105,18 @@ class ItemGsonHandlerTest {
         shelf1.addLiteratureObject(gazette1);
         shelf1.addLiteratureObject(gazette2);
 
-        ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(TEMP_DIR_STR, "testGsonHandlerPerType", shelf1.getAllLiteratureObjects());
-        itemGsonHandlerPerType.saveToFile();
+        ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(tempDirStr, "testGsonHandlerPerType");
+        itemGsonHandlerPerType.saveToFile(shelf1.getAllLiteratureObjects());
 
         itemGsonHandlerPerType.readListFromFile().forEach(shelf2::addLiteratureObject);
 
-        assertEquals(shelf1.toString(), shelf2.toString());
+        assertEquals(shelf1.getAllLiteratureObjects().size(), shelf2.getAllLiteratureObjects().size());
+        assertTrue(shelf1.getAllLiteratureObjects().stream()
+                .map(Item::toString)
+                .collect(Collectors.toList())
+                .containsAll(shelf2.getAllLiteratureObjects().stream()
+                        .map(Item::toString)
+                        .collect(Collectors.toList())));
     }
 
     //String userName = "test";

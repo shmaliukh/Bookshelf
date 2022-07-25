@@ -12,10 +12,10 @@ import java.util.List;
 @Slf4j
 public class ItemGsonHandlerOneFile extends ItemGsonHandler {
 
-    String gsonHandlerFolderStr = "gson_item_handler";
+    String gsonHandlerFolderStr = "gson_item_one_file";
 
-    public ItemGsonHandlerOneFile(String homeDir, String userName, List<? extends Item> listToSave) {
-        super(homeDir, userName, listToSave);
+    public ItemGsonHandlerOneFile(String homeDir, String userName) {
+        super(homeDir, userName);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ItemGsonHandlerOneFile extends ItemGsonHandler {
     }
 
     @Override
-    public void saveToFile() {
+    public void saveToFile(List<Item> listToSave) {
         saveListToFile(new File(String.valueOf(generatePathForGsonFile())), listToSave);
     }
 

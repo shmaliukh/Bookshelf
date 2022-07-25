@@ -10,8 +10,10 @@ import org.vshmaliukh.handlers.*;
 import org.vshmaliukh.handlers.ItemHandlers.BookHandler;
 import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
 import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
+import org.vshmaliukh.services.gson_service.ItemGsonHandler;
+import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;
+import org.vshmaliukh.services.gson_service.ItemGsonHandlerPerType;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.services.gson_service.GsonHandler_;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForLiterature;
 import org.vshmaliukh.services.print_table_service.TablePrinter;
@@ -33,7 +35,7 @@ public class Terminal {
     private boolean isActiveTerminal;
     private int typeOfWorkWithFiles;
 
-    private Shelf shelf;
+    private final Shelf shelf;
     private User user;
 
     private final Scanner scanner;
@@ -44,7 +46,7 @@ public class Terminal {
 
     private ConvertorToStringForLiterature convertorToStringForLiterature;
 
-    private GsonHandler_ gsonHandler;
+    private ItemGsonHandler itemGsonHandler;
     private Random random;
 
     public Terminal(Scanner scanner, PrintWriter printWriter) {
@@ -63,6 +65,18 @@ public class Terminal {
 
     private void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
+        String property = System.getProperty("user.home");
+        switch (typeOfWorkWithFiles) {
+            case FILE_MODE_WORK_WITH_ONE_FILE:
+                itemGsonHandler = new ItemGsonHandlerOneFile(property, user.getName());
+                break;
+            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+                itemGsonHandler = new ItemGsonHandlerPerType(property, user.getName());
+                break;
+            default:
+                itemGsonHandler = new ItemGsonHandlerOneFile(property, user.getName());
+                break;
+        }
     }
 
     public void startWork(boolean userMode) throws ParseException {
@@ -70,19 +84,18 @@ public class Terminal {
 
         startWithUserConfig(userMode);
         setUpTypeOfWorkWithFiles();
-        initServicesForTerminal(typeOfWorkWithFiles);
+        initServicesForTerminal();
         informAboutFileTypeWork(typeOfWorkWithFiles);
 
-        shelf = gsonHandler.readShelfFromGson();
+        itemGsonHandler.readListFromFile().forEach(shelf::addLiteratureObject);
         while (isActiveTerminal()) {
             generateUserInterface();
-            gsonHandler.saveShelfInGson(shelf);
+            itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
         }
     }
 
-    private void initServicesForTerminal(int typeOfWorkWithFiles) {
+    private void initServicesForTerminal() {
         random = new Random();
-        gsonHandler = new GsonHandler_(typeOfWorkWithFiles, user.getName(), printWriter);
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
 
         convertorToStringForLiterature = new ConvertorToStringForLiterature();
@@ -103,9 +116,6 @@ public class Terminal {
     private void informAboutFileTypeWork(int typeOfWorkWithFiles) {
         printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles) {
-            case FILE_MODE_NO_WORK_WITH_FILES:
-                printWriter.println("FILE_MODE_NO_WORK_WITH_FILES");
-                break;
             case FILE_MODE_WORK_WITH_ONE_FILE:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
@@ -113,6 +123,7 @@ public class Terminal {
                 printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
             default:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
         }
     }
@@ -384,10 +395,6 @@ public class Terminal {
 
     private void printMainMenu() {
         MainMenu.printMainMenu(printWriter);
-    }
-
-    private void printMenuForBooksSorting() {
-        MenuForSortingBooks.printMenu(printWriter);
     }
 
     private void printMenuForAddingLiterature() {

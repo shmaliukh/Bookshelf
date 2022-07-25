@@ -2,6 +2,7 @@ package org.vshmaliukh.services.gson_service;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.handlers.ItemHandlerProvider;
 
@@ -20,12 +21,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.vshmaliukh.services.gson_service.ConstantsForGsonHandler.MAX_PROBLEM_FILES;
-
 @Slf4j
 public abstract class ItemGsonHandler extends FilesHandler {
 
-    List<Item> listToSave;
+    public static final int MAX_PROBLEM_FILES = 5;
+
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
@@ -34,9 +34,8 @@ public abstract class ItemGsonHandler extends FilesHandler {
     String logFileFullName = "log.txt";
     String problemFilesFolderStr = "problem_files";
 
-    ItemGsonHandler(String homeDir, String userName, List listToSave) {
+    ItemGsonHandler(String homeDir, String userName) {
         super(homeDir, userName);
-        this.listToSave = new ArrayList<>(listToSave);
     }
 
     abstract String generateFullFileName();
@@ -171,7 +170,7 @@ public abstract class ItemGsonHandler extends FilesHandler {
         return filesList.get(0);
     }
 
-    public abstract void saveToFile();
+    public abstract void saveToFile(List<Item> listToSave);
 
     public abstract List<Item> readListFromFile();
 }

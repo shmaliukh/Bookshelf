@@ -18,8 +18,8 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
     String gsonHandlerFolderStr = "gson_handler_per_type";
     String typeStr;
 
-    public ItemGsonHandlerPerType(String homeDir, String userName, List<?> listToSave) {
-        super(homeDir, userName, listToSave);
+    public ItemGsonHandlerPerType(String homeDir, String userName) {
+        super(homeDir, userName);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
     }
 
     @Override
-    public void saveToFile() {
-        for (Class<? extends Item> classType : getClassTypes()) {
+    public void saveToFile(List<Item> listToSave) {
+        for (Class<? extends Item> classType : getClassTypes(listToSave)) {
             typeStr = classType.getSimpleName();
             List<? extends Item> listPerType = listToSave.stream()
                     .filter(o -> o.getClass().equals(classType))
@@ -55,7 +55,7 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
         return resultList;
     }
 
-    private Set<Class<? extends Item>> getClassTypes() {
+    private Set<Class<? extends Item>> getClassTypes(List<Item> listToSave) {
         return listToSave.stream()
                 .map(Item::getClass)
                 .collect(Collectors.toSet());
