@@ -161,6 +161,9 @@ public class Terminal {
             case ARRIVE_LITERATURE:
                 menuForArrivingLiterature();
                 break;
+            case SORT_LITERATURE:
+                printMenuForSortingLiterature();
+                break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
                 break;
@@ -171,6 +174,25 @@ public class Terminal {
                 printWriter.println("Wrong input");
                 break;
         }
+    }
+
+    private void printMenuForSortingLiterature() {
+        Menu.printSortingMenu(printWriter);
+        int userChoice = getUserChoice();
+        for (MenuItem sortingMenuItem : Menu.sortingMenuItems) {
+            if (userChoice == sortingMenuItem.getIndex()) {
+                printMenuForForSortingItemsByType(sortingMenuItem);
+            }
+        }
+    }
+
+    private void printMenuForForSortingItemsByType(MenuItem sortingMenuItem) {
+        Class classType = sortingMenuItem.getClassType();
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+        List<Item> typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
+        handlerByClass.printSortingMenu(printWriter);
+        List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
+        TablePrinter.printTable(printWriter, handlerByClass.getTitlesList(), convertorToStringForLiterature.getTable(sortedList), true);
     }
 
     /**
@@ -188,38 +210,6 @@ public class Terminal {
     private void closeTerminal() {
         this.stop();
         printWriter.println("Terminal STOP");
-    }
-
-    /**
-     * Method gives ability to choose method for sorting Magazines and print sorted list
-     */
-    private void clarificationForSortingMagazines() {
-        List<Magazine> magazines = Utils.getItemsByType(Magazine.class, shelf.getAllLiteratureObjects());
-        MagazineHandler magazineHandler = ItemHandlerProvider.getMagazineHandler();
-        List<Magazine> magazineList = magazineHandler.clarificationForSortingItems(magazines, getUserChoice(), printWriter);
-        TablePrinter.printTable(printWriter, magazineHandler.getTitlesList(), convertorToStringForLiterature.getTable(magazineList), true);
-    }
-
-    /**
-     * Method gives ability to choose method for sorting Books and print sorted list
-     */
-    private void clarificationForSortingBooks() {
-        List<Book> itemsByType = Utils.getItemsByType(Book.class, shelf.getAllLiteratureObjects());
-        BookHandler bookHandler = ItemHandlerProvider.getBookHandler();
-        bookHandler.clarificationForSortingItems(itemsByType, getUserChoice(), printWriter);
-        TablePrinter.printTable(printWriter, bookHandler.getTitlesList(), convertorToStringForLiterature.getTable(itemsByType), true);
-
-
-    }
-
-    /**
-     * Method gives ability to choose method for sorting Gazettes and print sorted list
-     */
-    private void clarificationForSortingGazettes() {
-        List<Gazette> gazetteList = Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects());
-        GazetteHandler gazetteHandler = ItemHandlerProvider.getGazetteHandler();
-        List<Gazette> sortedGazettes = gazetteHandler.clarificationForSortingItems(gazetteList, getUserChoice(), printWriter);
-        TablePrinter.printTable(printWriter, gazetteHandler.getTitlesList(), convertorToStringForLiterature.getTable(sortedGazettes), true);
     }
 
     /**

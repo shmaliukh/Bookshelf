@@ -10,7 +10,8 @@ public enum MainMenu { // TODO refactor terminal in menu
     ADD_NEW_LITERATURE(1, "Add new Literature object to Shelf"),
     DELETE_LITERATURE(2, "Delete  Literature object by index from Shelf"),
     BORROW_LITERATURE(3, "Borrow  Literature object by index from Shelf"),
-    ARRIVE_LITERATURE(4, "Print list of shelf's type of literature sorted by parameter..."),
+    ARRIVE_LITERATURE(4, "Arrive  Literature object by index back to Shelf"),
+    SORT_LITERATURE(5, "Print list of shelf's type of literature sorted by parameter..."),
     PRINT_SHELF(9, "Print current state of Shelf"),
     EXIT(0, "Exit"),
     UNKNOWN(WRONG_INPUT);

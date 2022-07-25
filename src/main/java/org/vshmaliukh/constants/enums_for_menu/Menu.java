@@ -21,8 +21,8 @@ public class Menu {
         mainMenuItems.add(new MenuItem(1, "Add new Literature object to Shelf"));
         mainMenuItems.add(new MenuItem(2, "Delete  Literature object by index from Shelf"));
         mainMenuItems.add(new MenuItem(3, "Borrow  Literature object by index from Shelf"));
-        mainMenuItems.add(new MenuItem(3, "Arrive  Literature object by index back to Shelf"));
-        mainMenuItems.add(new MenuItem(4, "Print list of shelf's type of literature sorted by parameter...")); // TODO rename item str
+        mainMenuItems.add(new MenuItem(4, "Arrive  Literature object by index back to Shelf"));
+        mainMenuItems.add(new MenuItem(5, "Print list of shelf's type of literature sorted by parameter...")); // TODO rename item str
         mainMenuItems.add(new MenuItem(9, "Print current state of Shelf"));
         mainMenuItems.add(new MenuItem(0, "Exit"));
     }

@@ -1,7 +1,9 @@
 package org.vshmaliukh.constants.enums_for_menu;
 
+import lombok.Data;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 
+@Data
 public class MenuItem {
 
     final int index;
@@ -18,10 +20,6 @@ public class MenuItem {
         this.index = index;
         this.str = str;
         this.classType = classType;
-    }
-
-    public Class getClassType(){
-        return classType;
     }
 
     @Override

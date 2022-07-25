@@ -8,19 +8,19 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
 
-public interface ItemHandler<Item extends org.vshmaliukh.bookshelf.bookshelfObjects.Item> {
+public interface ItemHandler<T extends Item> {
 
     ConvertorToString getConvertorToString();
 
-    List<Item> getSortedItems(int typeOfSorting, List<Item> inputList);
+    List<T> getSortedItems(int typeOfSorting, List<T> inputList);
 
     void printSortingMenu(PrintWriter printWriter);
 
     List<String> getTitlesList();
 
-    List<Item> clarificationForSortingItems(List<Item> items, int userChoice, PrintWriter printWriter);
+    List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter);
 
-    Item getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter);
+    T getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter);
 
-    Item getRandomItem(Random random);
+    T getRandomItem(Random random);
 }
