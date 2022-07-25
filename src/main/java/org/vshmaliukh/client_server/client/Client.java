@@ -21,7 +21,7 @@ public class Client {
 
     public Client() throws IOException {
 
-        socket = new Socket(ConstantsForClientServerModel.HOST_NAME, ConstantsForClientServerModel.SOCKET_PORT_NUMBER);
+        socket = new Socket("localhost", 8888);
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);

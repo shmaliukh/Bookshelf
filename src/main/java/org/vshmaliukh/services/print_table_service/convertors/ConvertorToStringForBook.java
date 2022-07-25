@@ -6,7 +6,7 @@ import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.Terminal.DATE_FORMAT;
 
 public class ConvertorToStringForBook implements ConvertorToString<Book> {
 

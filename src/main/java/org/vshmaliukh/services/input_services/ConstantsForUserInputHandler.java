@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.ConstantsForTerminal.*;
+import static org.vshmaliukh.Terminal.*;
 
 public final class ConstantsForUserInputHandler {
 

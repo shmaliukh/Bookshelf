@@ -2,7 +2,7 @@ package org.vshmaliukh.bookshelf.actionsWithShelf;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.Utils;
+import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.services.ItemSorterHandler;
@@ -12,7 +12,8 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_PAGES;
 
 public class ActionsWithGazetteTest {
 

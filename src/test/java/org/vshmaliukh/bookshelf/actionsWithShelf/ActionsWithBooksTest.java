@@ -1,6 +1,6 @@
 package org.vshmaliukh.bookshelf.actionsWithShelf;
 
-import org.vshmaliukh.Utils;
+import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
+import static org.vshmaliukh.handlers.ItemHandlers.BookHandler.*;
 
 class ActionsWithBooksTest {
     PrintWriter printWriter = new PrintWriter(System.out, true);

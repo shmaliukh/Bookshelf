@@ -11,13 +11,15 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.BOOK_COMPARATOR_BY_DATE;
+import static org.vshmaliukh.services.Utils.getRandomString;
 
 public class BookHandler implements ItemHandler<Book> {
 
-    List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
+    private static final List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(o -> o.getAuthor().toLowerCase());
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_PAGES = Comparator.comparing(Book::getPagesNumber);
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_DATE = Comparator.comparing(Book::getIssuanceDate);
 
     @Override
     public ConvertorToString getConvertorToString() {

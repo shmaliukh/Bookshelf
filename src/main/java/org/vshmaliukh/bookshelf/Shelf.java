@@ -2,10 +2,7 @@ package org.vshmaliukh.bookshelf;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.bookshelf.actionsWithShelf.BaseActionsWithShelf;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.*;
 import java.util.*;

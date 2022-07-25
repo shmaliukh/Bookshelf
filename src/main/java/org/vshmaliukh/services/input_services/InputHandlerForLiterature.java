@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.Scanner;
 
-import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 
 public class InputHandlerForLiterature extends InputHandler {

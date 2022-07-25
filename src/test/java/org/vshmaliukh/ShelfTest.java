@@ -6,13 +6,18 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.junit.jupiter.api.*;
 import org.vshmaliukh.services.ItemSorterHandler;
+import org.vshmaliukh.services.Utils;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
+import static org.vshmaliukh.handlers.ItemHandlers.BookHandler.*;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_PAGES;
+import static org.vshmaliukh.handlers.ItemHandlers.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.handlers.ItemHandlers.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
 class ShelfTest {
 

@@ -9,10 +9,10 @@ import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
 import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class ItemHandlerProvider {
     private static final Map<Class<? extends Item>, ItemHandler> itemHandlerMap = new ConcurrentHashMap<>();
@@ -25,7 +25,7 @@ public class ItemHandlerProvider {
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
 
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
-        uniqueTypeNames = Collections.unmodifiableSet(itemHandlerMap.keySet().stream().collect(Collectors.toSet()));
+        uniqueTypeNames = Collections.unmodifiableSet(new HashSet<>(itemHandlerMap.keySet()));
     }
 
     public static ItemHandler getHandlerByClass(Class clazz) {
@@ -38,10 +38,6 @@ public class ItemHandlerProvider {
 
     public static Class<? extends Item> getClassByName(String typeOfClass) {
         return itemNameClassMap.get(typeOfClass);
-    }
-
-    void initProvider() {
-
     }
 
     //TODO remove

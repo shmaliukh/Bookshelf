@@ -10,6 +10,7 @@ import org.vshmaliukh.handlers.*;
 import org.vshmaliukh.handlers.ItemHandlers.BookHandler;
 import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
 import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
+import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerPerType;
@@ -19,10 +20,9 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import org.vshmaliukh.services.print_table_service.TablePrinter;
 
 import java.io.*;
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.ConstantsForTerminal.*;
 import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
 
 /**
@@ -31,6 +31,13 @@ import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
  * Class which gives user interactive interface
  */
 public class Terminal {
+
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+
+    public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
+    public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
+
+    public static final int WRONG_INPUT = -1;
 
     private boolean isActiveTerminal;
     private int typeOfWorkWithFiles;
@@ -79,7 +86,7 @@ public class Terminal {
         }
     }
 
-    public void startWork(boolean userMode) throws ParseException {
+    public void startWork(boolean userMode) {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
@@ -133,7 +140,7 @@ public class Terminal {
      * Continually print menu items and wait for user choice
      * Works till user enter '0' (Exit)
      */
-    private void generateUserInterface() throws ParseException {
+    private void generateUserInterface() {
         printMainMenu();
         MainMenu byIndex = getByIndex(getUserChoice());
         switch (byIndex) {
@@ -156,7 +163,7 @@ public class Terminal {
                 clarificationForSortingBooks();
                 break;
             case PRINT_SORTED_MAGAZINES:
-                clarificationForSortingMagazines(); // TODO extract method to magazine handler
+                clarificationForSortingMagazines();
                 break;
             case PRINT_SORTED_GAZETTES:
                 clarificationForSortingGazettes();

@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.vshmaliukh.services.print_table_service.ConstantsForTablePrinter.*;
-
 @Data
 public class TablePrinter {
 
@@ -49,7 +47,7 @@ public class TablePrinter {
 
     private void appendWithDefaultValuesList(List<String> stringList, int max) {
         while (stringList.size() < max) {
-            stringList.add(EMPTY_ITEM_VALUE);
+            stringList.add("~~");
         }
     }
 
@@ -89,7 +87,7 @@ public class TablePrinter {
     }
 
     private void addIndexBeforeLines() {
-        titleList.add(0, INDEX_VALUE);
+        titleList.add(0, "#");
         for (int counter = 0; counter < tableList.size(); counter++) {
             tableList.get(counter).add(0, String.valueOf(counter + 1));
         }
@@ -100,7 +98,7 @@ public class TablePrinter {
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append(LINE_VALUE);
+                stringBuilder.append("─");
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);
@@ -118,7 +116,7 @@ public class TablePrinter {
     private void fillStringListWithSpaces(List<String> stringList) {
         for (int i = 0; i < stringList.size(); i++) {
             while (stringList.get(i).length() < sizeList.get(i)) {
-                stringList.set(i, stringList.get(i) + SPACE_VALUE);
+                stringList.set(i, stringList.get(i) + " ");
             }
         }
     }
@@ -129,12 +127,12 @@ public class TablePrinter {
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(SEPARATOR_VALUE);
+        stringBuilder.append("│");
         for (String value : stringList) {
-            stringBuilder.append(SPACE_VALUE);
+            stringBuilder.append(" ");
             stringBuilder.append(value);
-            stringBuilder.append(SPACE_VALUE);
-            stringBuilder.append(SEPARATOR_VALUE);
+            stringBuilder.append(" ");
+            stringBuilder.append("│");
         }
         return stringBuilder.toString();
     }

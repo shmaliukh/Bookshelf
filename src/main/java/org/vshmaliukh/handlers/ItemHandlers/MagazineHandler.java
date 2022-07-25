@@ -1,6 +1,6 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
-import org.vshmaliukh.Utils;
+import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
 import org.vshmaliukh.handlers.ItemHandler;
@@ -12,12 +12,11 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.MAGAZINE_COMPARATOR_BY_NAME;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.MAGAZINE_COMPARATOR_BY_PAGES;
-
 public class MagazineHandler implements ItemHandler<Magazine> {
 
-    private List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
+    private static final List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
+    public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
+    public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
 
     @Override
     public ConvertorToString getConvertorToString() {

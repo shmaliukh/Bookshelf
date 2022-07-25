@@ -12,7 +12,7 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.ConstantsForTerminal.DATE_FORMAT;
+import static org.vshmaliukh.Terminal.DATE_FORMAT;
 
 class ConvertorToStringForItemTest {
 

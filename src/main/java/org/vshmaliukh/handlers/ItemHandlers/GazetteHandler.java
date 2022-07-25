@@ -11,12 +11,13 @@ import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringF
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.Utils.getRandomString;
-import static org.vshmaliukh.services.ConstantsItemSorterHandler.*;
+import static org.vshmaliukh.services.Utils.getRandomString;
 
 public class GazetteHandler implements ItemHandler<Gazette> {
 
-    private List<String> titleListForGazettes = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
+    private static final List<String> titleListForGazettes = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
+    public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_PAGES = Comparator.comparing(Gazette::getPagesNumber);
+    public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
 
     @Override
     public ConvertorToString getConvertorToString() {

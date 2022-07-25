@@ -1,10 +1,13 @@
-package org.vshmaliukh;
+package org.vshmaliukh.services;
 
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 public class Utils {
+
+    private Utils() {
+    }
 
     /**
      * Method which gives opportunity to get string with random characters ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ")
