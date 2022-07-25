@@ -1,35 +1,110 @@
 package org.vshmaliukh.services.gson_service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.Utils;
+import org.junit.jupiter.api.io.TempDir;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ItemGsonHandlerTest {
+
+    Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000));
+    Book book2 = new Book("noNameBook2", 2, true, "NoAuthor2", new Date());
+
+    Magazine magazine1 = new Magazine("noNameMagazine1", 1, false);
+    Magazine magazine2 = new Magazine("noNameMagazine2", 2, true);
+
+    Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
+    Gazette gazette2 = new Gazette("noNameGazette2", 2, true);
+
+    @TempDir
+    static Path tempDir;
+    static String tempDirStr;
+
+    static {
+        tempDirStr = String.valueOf(tempDir);
+    }
+
+    static String TEMP_DIR_STR = System.getProperty("java.io.tmpdir");
+
+    ItemGsonHandlerOneFile testGsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGsonItemHandler", new ArrayList<>());
 
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.vshmaliukh.services.gson_service.ConstantsForGsonHandler.*;
+    @Test
+    void testGeneratePathForGson() {
+        Path expectedPath = Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", "gson_handler");
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGeneratePathForGson", new ArrayList<>());
+        assertEquals(expectedPath, gsonHandlerOneFile.generatePathForGson());
+    }
 
-class GsonItemHandlerTest {
-    public static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
+    @Test
+    void testGenerateFullFileName() {
+        assertEquals(testGsonHandlerOneFile.userName + testGsonHandlerOneFile.gsonFileType, testGsonHandlerOneFile.generateFullFileName());
+    }
+
+    @Test
+    void testSaveItemListToFile() {
+        assertTrue(testGsonHandlerOneFile.saveListToFile(new File(String.valueOf(testGsonHandlerOneFile.generatePathForGsonFile())), new ArrayList<>()));
+    }
+
+    @Test
+    void testReadItemListFromGsonFile() {
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(TEMP_DIR_STR, "testReadItemListFromGsonFile", new ArrayList<>());
+        File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
+        assertTrue(gsonHandlerOneFile.saveListToFile(gsonFile, new ArrayList<>()));
+        assertTrue(gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).isEmpty());
+    }
+
+    @Test
+    void testSaveReadShelf_GsonHandlerOneFile() {
+        Shelf shelf1 = new Shelf(new PrintWriter(System.out, true));
+        shelf1.addLiteratureObject(book1);
+        shelf1.addLiteratureObject(book2);
+        shelf1.addLiteratureObject(magazine1);
+        shelf1.addLiteratureObject(magazine2);
+        shelf1.addLiteratureObject(gazette1);
+        shelf1.addLiteratureObject(gazette2);
+
+        ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile", shelf1.getAllLiteratureObjects());
+        File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
+
+        gsonHandlerOneFile.saveToFile();
+        Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
+        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).forEach(shelf2::addLiteratureObject);
+
+        assertEquals(shelf1.toString(), shelf2.toString());
+    }
+
+    @Test
+    void testSaveReadShelf_GsonHandlerPerType() {
+        Shelf shelf1 = new Shelf(new PrintWriter(System.out, true));
+        Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
+
+        shelf1.addLiteratureObject(book1);
+        shelf1.addLiteratureObject(book2);
+        shelf1.addLiteratureObject(magazine1);
+        shelf1.addLiteratureObject(magazine2);
+        shelf1.addLiteratureObject(gazette1);
+        shelf1.addLiteratureObject(gazette2);
+
+        ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(TEMP_DIR_STR, "testGsonHandlerPerType", shelf1.getAllLiteratureObjects());
+        itemGsonHandlerPerType.saveToFile();
+
+        itemGsonHandlerPerType.readListFromFile().forEach(shelf2::addLiteratureObject);
+
+        assertEquals(shelf1.toString(), shelf2.toString());
+    }
+
     //String userName = "test";
     //PrintWriter printWriter = new PrintWriter(System.out, true);
 //
@@ -38,20 +113,16 @@ class GsonItemHandlerTest {
     //Path filePathMagazines;
     //Path filePathGazettes;
 //
-    //Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000));
-    //Book book2 = new Book("noNameBook2", 2, true, "NoAuthor2", new Date());
 //
     //Book expectedBook1 = new Book("noNameBook1", 1, false, "NoAuthor1", new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000));
     //Book expectedBook2 = new Book("noNameBook2", 2, true, "NoAuthor2", new Date());
 //
-    //Magazine magazine1 = new Magazine("noNameMagazine1", 1, false);
-    //Magazine magazine2 = new Magazine("noNameMagazine2", 2, true);
+
 //
     //Magazine expectedMagazine1 = new Magazine("noNameMagazine1", 1, false);
     //Magazine expectedMagazine2 = new Magazine("noNameMagazine2", 2, true);
 //
-    //Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
-    //Gazette gazette2 = new Gazette("noNameGazette2", 2, true);
+
 //
     //Gazette expectedGazette1 = new Gazette("noNameGazette1", 1, false);
     //Gazette expectedGazette2 = new Gazette("noNameGazette2", 2, true);
@@ -306,56 +377,8 @@ class GsonItemHandlerTest {
     //        }
     //    }
     //    return directoryToBeDeleted.delete();
+
     //}
 
-    GsonItemHandler testGsonItemHandler = new GsonItemHandler(TEMP_DIR, "test", new ArrayList<>());
 
-    @Test
-    void testGeneratePathForGson() {
-        Path expectedPath = Paths.get(TEMP_DIR, "shelf", "testGeneratePathForGson", "gson_handler");
-        GsonItemHandler gsonItemHandler = new GsonItemHandler(TEMP_DIR, "testGeneratePathForGson", new ArrayList<>());
-        assertEquals(expectedPath, gsonItemHandler.generatePathForGson());
-    }
-
-    @Test
-    void generateFullFileName() {
-    }
-
-    @ParameterizedTest
-    @MethodSource("provideArgsForCreateDirectoriesIfNotExists")
-    void testCreateDirectoriesIfNotExists(boolean expectedState, Path path) {
-        assertEquals(expectedState, testGsonItemHandler.createDirectoriesIfNotExists(path));
-    }
-
-    private static Stream<Arguments> provideArgsForCreateDirectoriesIfNotExists() {
-        return Stream.of(
-                Arguments.of(true, Paths.get(TEMP_DIR)),
-                Arguments.of(true, Paths.get(TEMP_DIR, "programDir")),
-                Arguments.of(true, Paths.get(TEMP_DIR, "programDir")),
-                Arguments.of(true, Paths.get(TEMP_DIR, "programDir", "fodler")),
-                Arguments.of(false, Paths.get(""))
-
-
-        );
-    }
-
-    @Test
-    void saveListToFile() {
-    }
-
-    @Test
-    void readItemListFromFile() {
-    }
-
-    @Test
-    void getItemFromJsonElement() {
-    }
-
-    @Test
-    void getJsonObjectFromJsonElement() {
-    }
-
-    @Test
-    void getContainerListForObjects() {
-    }
 }
