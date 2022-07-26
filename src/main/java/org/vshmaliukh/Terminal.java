@@ -2,8 +2,10 @@ package org.vshmaliukh;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.constants.enums_for_menu.*;
 import org.vshmaliukh.handlers.*;
+import org.vshmaliukh.menus.MainMenu;
+import org.vshmaliukh.menus.Menu;
+import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;
@@ -17,7 +19,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.constants.enums_for_menu.MainMenu.getByIndex;
+import static org.vshmaliukh.menus.MainMenu.getByIndex;
 
 /**
  * @author ShmaliukhVlad

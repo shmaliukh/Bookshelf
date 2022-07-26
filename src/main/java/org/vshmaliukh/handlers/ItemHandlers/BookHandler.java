@@ -1,8 +1,8 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
-import org.vshmaliukh.constants.enums_for_menu.MenuItem;
+import org.vshmaliukh.menus.MenuForSortingBooks;
+import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;

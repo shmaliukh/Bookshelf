@@ -11,11 +11,11 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        //try {
-        //    Thread.sleep(60_000L);
-        //} catch (InterruptedException e) {
-        //    throw new RuntimeException(e);
-        //}
+        try {
+            Thread.sleep(60_000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         TerminalThread terminalThread = new TerminalThread();
         terminalThread.start();
 
@@ -46,7 +46,7 @@ public class Main {
             try {
                 multithreadedSocketServer.start();
             } catch (IOException e) {
-                log.error("[ServerThread] problem to start thread. Exception: " + e);
+                log.error("[ServerThread] problem to start thread. Exception: ", e);
             }
         }
     }

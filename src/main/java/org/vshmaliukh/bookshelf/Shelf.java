@@ -33,7 +33,7 @@ public class Shelf implements BaseActionsWithShelf {
         if (item != null) {
             itemsOfShelf.add(item);
         } else {
-            log.error("The literature object is empty");
+            log.error("The literature item to add is null");
         }
     }
 

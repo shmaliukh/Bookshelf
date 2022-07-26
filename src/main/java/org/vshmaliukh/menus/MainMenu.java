@@ -1,4 +1,4 @@
-package org.vshmaliukh.constants.enums_for_menu;
+package org.vshmaliukh.menus;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
