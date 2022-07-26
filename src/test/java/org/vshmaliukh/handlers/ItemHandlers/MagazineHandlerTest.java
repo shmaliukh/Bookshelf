@@ -52,7 +52,7 @@ class MagazineHandlerTest {
         List<Magazine> sortedItems = magazineHandler.getSortedItems(typeOfSorting, magazines);
 
         assertTrue(magazines.containsAll(sortedItems));
-        assertFalse(magazine2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(magazine2.toString(), sortedItems.get(0).toString());
     }
 
     private static Stream<Arguments> providedArgsForSorting() {
@@ -80,7 +80,7 @@ class MagazineHandlerTest {
                 .collect(Collectors.toList());
 
         assertTrue(stringList.containsAll(stringList1));
-        assertFalse(magazine2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(magazine2.toString(), sortedItems.get(0).toString());
     }
 
     @Test

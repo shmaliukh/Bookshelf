@@ -3,7 +3,6 @@ package org.vshmaliukh.services;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForBook;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForGazette;
@@ -64,18 +63,5 @@ class ConvertorToStringForItemTest {
     void testConvertLiteratureObjectToListOfString_book2() {
         String expectedStr = "{PAGES=22, DATE=13-07-2022, BORROWED=true, AUTHOR=NoAuthor2___, TYPE=Book, NAME=noNameBook2___}";
         assertEquals(expectedStr, convertorBook.convertObjectToListOfString(book2).toString());
-    }
-
-    @Test
-    void testForClass_methods(){
-        System.out.println("Literature.class.getClass() = " + Item.class.getPackage().getName());
-        System.out.println("Literature.class.getClass() = " + Item.class.getClass());
-        System.out.println("Literature.class.getName()  = " + Item.class.getName());
-        System.out.println("Literature.class.getCanonicalName()  = " + Item.class.getCanonicalName());
-        System.out.println("Literature.class.getSimpleName()  = " + Item.class.getSimpleName());
-        System.out.println("Literature.class.getTypeName()  = " + Item.class.getTypeName());
-        System.out.println("Literature.class.getName()  = " + Item.class.getName());
-        System.out.println("Literature.class.getName()  = " + Item.class.getName());
-        Item.class.getClass();
     }
 }

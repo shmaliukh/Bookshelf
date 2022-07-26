@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,8 +28,7 @@ class FilesHandlerTest {
     @ParameterizedTest
     @MethodSource("provideArgsForCreateDirectoriesIfNotExists")
     void testCreateDirectoriesIfNotExists(boolean expectedState, Path path) {
-        Path path1 = path;
-        assertEquals(expectedState, filesHandler.createDirectoryIfNotExists(path1));
+        assertEquals(expectedState, filesHandler.createDirectoryIfNotExists(path));
     }
 
     private static Stream<Arguments> provideArgsForCreateDirectoriesIfNotExists() {

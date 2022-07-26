@@ -15,10 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
 import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
-import static org.vshmaliukh.services.print_table_service.convertors.Titles.DATE;
 
 class GazetteHandlerTest {
 
@@ -53,7 +51,7 @@ class GazetteHandlerTest {
         List<Gazette> sortedItems = gazetteHandler.getSortedItems(typeOfSorting, gazettes);
 
         assertTrue(gazettes.containsAll(sortedItems));
-        assertFalse(gazette2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(gazette2.toString(), sortedItems.get(0).toString());
     }
 
     private static Stream<Arguments> providedArgsForSorting() {
@@ -81,7 +79,7 @@ class GazetteHandlerTest {
                 .collect(Collectors.toList());
 
         assertTrue(stringList.containsAll(stringList1));
-        assertFalse(gazette2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(gazette2.toString(), sortedItems.get(0).toString());
     }
 
     @Test

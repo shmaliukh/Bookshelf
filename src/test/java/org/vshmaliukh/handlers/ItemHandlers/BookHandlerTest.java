@@ -55,7 +55,7 @@ class BookHandlerTest {
         List<Book> sortedItems = bookHandler.getSortedItems(typeOfSorting, books);
 
         assertTrue(books.containsAll(sortedItems));
-        assertFalse(book2.equals(sortedItems.get(0)));
+        assertNotEquals(book2, sortedItems.get(0));
         assertNotEquals(book1, sortedItems.get(1));
     }
 
@@ -88,7 +88,7 @@ class BookHandlerTest {
                 .collect(Collectors.toList());
 
         assertTrue(stringList.containsAll(stringList1));
-        assertFalse(book2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(book2.toString(), sortedItems.get(0).toString());
     }
 
     @Test
