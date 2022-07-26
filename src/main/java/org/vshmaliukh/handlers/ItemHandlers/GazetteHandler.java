@@ -4,7 +4,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.menus.MenuForSortingGazettes;
 import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
-import org.vshmaliukh.services.ItemSorterHandler;
+import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForGazette;
@@ -26,10 +26,10 @@ public class GazetteHandler implements ItemHandler<Gazette> {
 
     @Override
     public List<Gazette> getSortedItems(int typeOfSorting, List<Gazette> inputList) {
-        ItemSorterHandler<Gazette> gazetteItemSorterHandler = new ItemSorterHandler<>(inputList);
+        ItemSorterService<Gazette> gazetteItemSorterService = new ItemSorterService<>(inputList);
         for (MenuItem menuItem : MenuForSortingGazettes.menuForSortingGazettesItems) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(gazetteItemSorterHandler.getSortedLiterature(menuItem.getComparator()));
+                return new ArrayList<>(gazetteItemSorterService.getSortedLiterature(menuItem.getComparator()));
             }// TODO is it normal to save comparator in menu item
         }
         return Collections.emptyList();

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-import org.vshmaliukh.services.ItemSorterHandler;
+import org.vshmaliukh.services.ItemSorterService;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -45,7 +45,7 @@ class ActionsWithMagazinesTest {
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
         List<Magazine> sortedMagazinesByName =
-                new ItemSorterHandler<>(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()))
+                new ItemSorterService<>(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -57,7 +57,7 @@ class ActionsWithMagazinesTest {
     @DisplayName("test printable stings of sorted Magazines by Pages")
     void printSortedMagazinesByPages() {
         List<Magazine> sortedMagazinesByPages =
-                new ItemSorterHandler<>(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()))
+                new ItemSorterService<>(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()))
                         .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());

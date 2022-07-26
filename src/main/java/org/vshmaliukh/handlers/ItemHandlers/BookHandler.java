@@ -4,7 +4,7 @@ import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.menus.MenuForSortingBooks;
 import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
-import org.vshmaliukh.services.ItemSorterHandler;
+import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
 import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForBook;
@@ -28,10 +28,10 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
-        ItemSorterHandler<Book> bookItemSorterHandler = new ItemSorterHandler<>(inputList);
+        ItemSorterService<Book> bookItemSorterService = new ItemSorterService<>(inputList);
         for (MenuItem menuItem : MenuForSortingBooks.menuForSortingBooksItems) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(menuItem.getComparator()));
+                return new ArrayList<>(bookItemSorterService.getSortedLiterature(menuItem.getComparator()));
             }// TODO is it normal to save comparator in menu item
         }
         return Collections.emptyList();

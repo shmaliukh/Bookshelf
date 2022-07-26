@@ -5,11 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ItemSorterHandler<T> {
+public class ItemSorterService<T> {
 
     List<T> literatureList;
 
-    public ItemSorterHandler(List<T> literatureList){
+    public ItemSorterService(List<T> literatureList){
         this.literatureList = new ArrayList<>(literatureList);
     }
 
