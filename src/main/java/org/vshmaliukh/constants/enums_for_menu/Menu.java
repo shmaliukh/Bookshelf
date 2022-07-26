@@ -31,9 +31,9 @@ public class Menu {
         int index = 1;
         for (Class<? extends Item> typeName : uniqueTypeNames) {
             addingMenuItems.add(new MenuItem(index, "Add new " + typeName.getSimpleName() + " item to Shelf", typeName));
-            index ++;
+            index++;
             addingMenuItems.add(new MenuItem(index, "Add random " + typeName.getSimpleName() + " item to Shelf", typeName));
-            index ++;
+            index++;
         }
     }
 
@@ -41,18 +41,19 @@ public class Menu {
         int index = 1;
         for (Class<? extends Item> typeName : uniqueTypeNames) {
             sortingMenuItems.add(new MenuItem(index, "Sort " + typeName.getSimpleName() + " items by value...", typeName));
-            index ++;
+            index++;
         }
     }
 
-    public static void printMainMenu(PrintWriter printWriter){
+    public static void printMainMenu(PrintWriter printWriter) {
         printMenu(printWriter, mainMenuItems);
     }
 
-    public static void printAddingMenu(PrintWriter printWriter){
+    public static void printAddingMenu(PrintWriter printWriter) {
         printMenu(printWriter, addingMenuItems);
     }
-    public static void printSortingMenu(PrintWriter printWriter){
+
+    public static void printSortingMenu(PrintWriter printWriter) {
         printMenu(printWriter, sortingMenuItems);
     }
 

@@ -76,6 +76,6 @@ public class BookHandler implements ItemHandler<Book> {
                 random.nextInt(1000),
                 false,
                 getRandomString(random.nextInt(10), random),
-                new Date(random.nextInt(1000000)));
+                new Date(random.nextLong()));
     }
 }

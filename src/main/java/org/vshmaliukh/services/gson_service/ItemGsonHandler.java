@@ -120,7 +120,8 @@ public abstract class ItemGsonHandler extends FilesHandler {
         File problemFile = getOldestProblemFile(gsonFile);
         try {
             Files.copy(gsonFile.toPath(), problemFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            problemFile.setLastModified(new Date().getTime());
+            long time = new Date().getTime();
+            problemFile.setLastModified(time);
             saveErrorToLogFile(problemMessage, exception, new File(String.valueOf(generatePathForProblemFiles()), logFileFullName));
             log.info("[GsonHandler]: save problem file as '" + problemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(problemFile.lastModified()));
         } catch (IOException ioe) {

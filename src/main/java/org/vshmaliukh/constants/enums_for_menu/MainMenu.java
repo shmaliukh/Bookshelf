@@ -35,7 +35,6 @@ public enum MainMenu { // TODO refactor terminal in menu
             MainMenu value = values[j];
             printWriter.println(value.i + " - " + value.str);
         }
-        printWriter.println("Enter another value to return");
     }
 
     public static MainMenu getByIndex(int index){
