@@ -34,35 +34,35 @@ class ConvertorToStringForItemTest {
 
     @Test
     void testConvertLiteratureObjectToListOfString_magazine1() {
-        String expectedStr = "[Magazine, noNameMagazine1, 1, false]";
+        String expectedStr = "{PAGES=1, BORROWED=false, TYPE=Magazine, NAME=noNameMagazine1}";
         assertEquals(expectedStr, convertorMagazine.convertObjectToListOfString(magazine1).toString());
     }
     @Test
     void testConvertLiteratureObjectToListOfString_magazine2() {
-        String expectedStr = "[Magazine, noNameMagazine2___, 222222222, true]";
+        String expectedStr = "{PAGES=222222222, BORROWED=true, TYPE=Magazine, NAME=noNameMagazine2___}";
         assertEquals(expectedStr, convertorMagazine.convertObjectToListOfString(magazine2).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_gazette1() {
-        String expectedStr = "[Gazette, noNameGazette1, 1, false]";
+        String expectedStr = "{PAGES=1, BORROWED=false, TYPE=Gazette, NAME=noNameGazette1}";
         assertEquals(expectedStr, convertorGazette.convertObjectToListOfString(gazette1).toString());
     }
     @Test
     void testConvertLiteratureObjectToListOfString_gazette2() {
-        String expectedStr = "[Gazette, noNameGazette2___, 222222222, true]";
+        String expectedStr = "{PAGES=222222222, BORROWED=true, TYPE=Gazette, NAME=noNameGazette2___}";
         assertEquals(expectedStr, convertorGazette.convertObjectToListOfString(gazette2).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_book1() {
-        String expectedStr = "[Book, noNameBook1, 1, false, NoAuthor1, 10-07-2022]";
+        String expectedStr = "{PAGES=1, DATE=10-07-2022, BORROWED=false, AUTHOR=NoAuthor1, TYPE=Book, NAME=noNameBook1}";
         assertEquals(expectedStr, convertorBook.convertObjectToListOfString(book1).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_book2() {
-        String expectedStr = "[Book, noNameBook2___, 22, true, NoAuthor2___, 13-07-2022]";
+        String expectedStr = "{PAGES=22, DATE=13-07-2022, BORROWED=true, AUTHOR=NoAuthor2___, TYPE=Book, NAME=noNameBook2___}";
         assertEquals(expectedStr, convertorBook.convertObjectToListOfString(book2).toString());
     }
 
@@ -78,19 +78,4 @@ class ConvertorToStringForItemTest {
         System.out.println("Literature.class.getName()  = " + Item.class.getName());
         Item.class.getClass();
     }
-
-    //@Test
-    //void testGetConvertedToStringList() {
-    //    String expectedStr = "[[Book, noNameBook1, 1, false, NoAuthor1, 10-07-2022], " +
-    //            "[Book, noNameBook2___, 22, true, NoAuthor2___, 13-07-2022], " +
-    //            "[Magazine, noNameMagazine1, 1, false], " +
-    //            "[Magazine, noNameMagazine2___, 222222222, true]]";
-    //    List<Literature> stringList = new ArrayList<>();
-    //    stringList.add(book1);
-    //    stringList.add(book2);
-    //    stringList.add(magazine1);
-    //    stringList.add(magazine2);
-//
-    //    assertEquals(expectedStr, convertor.convertObjectToListOfStringt(stringList).toString());
-    //}
 }

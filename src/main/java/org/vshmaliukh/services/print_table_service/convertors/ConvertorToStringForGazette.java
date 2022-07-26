@@ -6,7 +6,6 @@ import java.util.HashMap;
 
 import java.util.Map;
 
-import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
 
 public class ConvertorToStringForGazette implements ConvertorToString<Gazette> {

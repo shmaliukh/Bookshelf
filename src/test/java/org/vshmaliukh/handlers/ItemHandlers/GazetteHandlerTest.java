@@ -15,7 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.DATE;
 
 class GazetteHandlerTest {
 
@@ -31,16 +34,17 @@ class GazetteHandlerTest {
     @Test
     void testGetConvertorToString() {
         ConvertorToString<Gazette> convertorToString = gazetteHandler.getConvertorToString();
-        Map<String, String> convertObjectToListOfString = convertorToString.convertObjectToListOfString(gazette1);
+        Map<String, String> convertObjectToMapOfString = convertorToString.convertObjectToListOfString(gazette1);
 
-        List<String> stringList = new ArrayList<>();
-        stringList.add(gazette1.getClass().getSimpleName());
-        stringList.add(gazette1.getName());
-        stringList.add(String.valueOf(gazette1.getPagesNumber()));
-        stringList.add(String.valueOf(gazette1.isBorrowed()));
+        Map<String, String> map = new HashMap<>();
+        map.put(TYPE, gazette1.getClass().getSimpleName());
+        map.put(NAME, gazette1.getName());
+        map.put(PAGES, String.valueOf(gazette1.getPagesNumber()));
+        map.put(BORROWED, String.valueOf(gazette1.isBorrowed()));
 
-        assertEquals(stringList.size(), convertObjectToListOfString.size());
-        //assertTrue(stringList.containsAll(convertObjectToListOfString));
+        assertEquals(map.size(), convertObjectToMapOfString.size());
+        assertTrue(map.values().containsAll(convertObjectToMapOfString.values()));
+        assertTrue(map.keySet().containsAll(convertObjectToMapOfString.keySet()));
     }
 
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")

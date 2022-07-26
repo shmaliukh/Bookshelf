@@ -5,10 +5,10 @@ public class Titles {
     private Titles() {
     }
 
-    static final String TYPE = "TYPE";
-    static final String NAME = "NAME";
-    static final String PAGES = "PAGES";
-    static final String BORROWED = "BORROWED";
-    static final String AUTHOR = "AUTHOR";
-    static final String DATE = "DATE";
+    public static final String TYPE = "TYPE";
+    public static final String NAME = "NAME";
+    public static final String PAGES = "PAGES";
+    public static final String BORROWED = "BORROWED";
+    public static final String AUTHOR = "AUTHOR";
+    public static final String DATE = "DATE";
 }
