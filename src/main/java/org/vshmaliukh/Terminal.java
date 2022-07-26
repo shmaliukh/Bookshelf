@@ -187,7 +187,7 @@ public class Terminal {
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
         List<Item> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
-        TablePrinter.printTable(printWriter, handlerByClass.getTitlesList(), convertorToStringForLiterature.getTable(sortedList), true);
+        TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(sortedList), true);
     }
 
     /**
@@ -195,8 +195,7 @@ public class Terminal {
      */
     private void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
-                convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
+        TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
     }
 
     /**
@@ -215,8 +214,7 @@ public class Terminal {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
-                    convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
+            TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -230,7 +228,7 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+            TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
@@ -245,7 +243,7 @@ public class Terminal {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            TablePrinter.printTable(printWriter, Collections.emptyList(), // FIXME create validation for choosing column titles list
+            TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
