@@ -3,8 +3,7 @@ package org.vshmaliukh.services.print_table_service;
 import lombok.Data;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 public class TablePrinter {
@@ -12,42 +11,61 @@ public class TablePrinter {
     private final PrintWriter printWriter;
     private final boolean isNeedIndex;
 
-    private final List<String> titleList;
-    private final List<List<String>> tableList;
+    private List<String> titleList;
+    private List<List<String>> tableList;
 
     private List<Integer> sizeList = new ArrayList<>();
 
 
-    private TablePrinter(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, Boolean isNeedIndex) {
+    private TablePrinter(PrintWriter printWriter, List<Map<String, String>> tableList, Boolean isNeedIndex) {
         this.printWriter = printWriter;
         this.isNeedIndex = isNeedIndex;
-        this.titleList = new ArrayList<>(titleList);
-        this.tableList = new ArrayList<>();
-        for (List<String> stringList : tableList) {
-            this.tableList.add(new ArrayList<>(stringList));
+        initTitles(tableList);
+        initTable(tableList);
+    }
+
+    private void initTable(List<Map<String, String>> inputTable) {
+        List<Map<String, String>> buffTable = new ArrayList<>();
+        for (Map<String, String> stringMap : inputTable) {
+            buffTable.add(new HashMap<>(stringMap));
+        }
+        fillTableByTitles(buffTable);
+    }
+
+    private void fillTableByTitles(List<Map<String, String>> buffTable) {
+        tableList = new ArrayList<>();
+        for (Map<String, String> titleValueMap : buffTable) {
+            List<String> raw = new ArrayList<>();
+            for (String title : titleList) {
+                raw.add(titleValueMap.getOrDefault(title, "~~"));
+            }
+            tableList.add(raw);
         }
     }
 
-    public static void printTable(PrintWriter printWriter, List<String> titleList, List<List<String>> tableList, boolean isNeedIndex) {
+    private void initTitles(List<Map<String, String>> tableList) {
+        Set<String> buffSet = new HashSet<>();
+        for (Map<String, String> titleValueMap : tableList) {
+            buffSet.addAll(titleValueMap.keySet());
+        }
+        this.titleList = new ArrayList<>(buffSet);
+        Collections.sort(titleList);
+    }
+
+    public static void printTable(PrintWriter printWriter, List<Map<String, String>> tableList, boolean isNeedIndex) {
         // TODO is it necessary to keep this method as static one
-        TablePrinter tablePrinter = new TablePrinter(printWriter, titleList, tableList, isNeedIndex);
+        TablePrinter tablePrinter = new TablePrinter(printWriter, tableList, isNeedIndex);
         tablePrinter.printFormattedTable();
     }
 
     public void appendTableWithDefaultValues() {
-        int maxSize = titleList.size();
-        for (List<String> stringList : tableList) {
-            maxSize = Math.max(stringList.size(), maxSize);
-        }
-        appendWithDefaultValuesList(titleList, maxSize);
-        for (List<String> stringList : tableList) {
-            appendWithDefaultValuesList(stringList, maxSize);
-        }
+
+
     }
 
-    private void appendWithDefaultValuesList(List<String> stringList, int max) {
-        while (stringList.size() < max) {
-            stringList.add("~~");
+    private void appendWithDefaultValuesList(Map<String, String> titleValueMap, int max) {
+        while (titleValueMap.size() < max) {
+            titleValueMap.put("", "~~");
         }
     }
 

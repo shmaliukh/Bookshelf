@@ -162,7 +162,7 @@ class InputTest {
     }
 
     @Test
-    void testRecursion_wrongInputMaxTimesForLiteratureDate() throws ParseException {
+    void testRecursion_wrongInputMaxTimesForLiteratureDate() {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
 

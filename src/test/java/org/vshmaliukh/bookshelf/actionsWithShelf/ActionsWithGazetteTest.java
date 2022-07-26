@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_PAGES;
 
-public class ActionsWithGazetteTest {
+class ActionsWithGazetteTest {
 
     PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);
 

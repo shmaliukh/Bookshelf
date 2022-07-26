@@ -16,8 +16,6 @@ public interface ItemHandler<T extends Item> {
 
     void printSortingMenu(PrintWriter printWriter);
 
-    List<String> getTitlesList();
-
     List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter);
 
     T getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter);

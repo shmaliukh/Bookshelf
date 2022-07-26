@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.BORROWED;
 
 class MagazineHandlerTest {
 
@@ -31,16 +33,17 @@ class MagazineHandlerTest {
     @Test
     void testGetConvertorToString() {
         ConvertorToString<Magazine> convertorToString = magazineHandler.getConvertorToString();
-        List<String> convertObjectToListOfString = convertorToString.convertObjectToListOfString(magazine1);
+        Map<String, String> convertObjectToMapOfString = convertorToString.convertObjectToListOfString(magazine1);
 
-        List<String> stringList = new ArrayList<>();
-        stringList.add(magazine1.getClass().getSimpleName());
-        stringList.add(magazine1.getName());
-        stringList.add(String.valueOf(magazine1.getPagesNumber()));
-        stringList.add(String.valueOf(magazine1.isBorrowed()));
+        Map<String, String> map = new HashMap<>();
+        map.put(TYPE, magazine1.getClass().getSimpleName());
+        map.put(NAME, magazine1.getName());
+        map.put(PAGES, String.valueOf(magazine1.getPagesNumber()));
+        map.put(BORROWED, String.valueOf(magazine1.isBorrowed()));
 
-        assertEquals(stringList.size(), convertObjectToListOfString.size());
-        assertTrue(stringList.containsAll(convertObjectToListOfString));
+        assertEquals(map.size(), convertObjectToMapOfString.size());
+        assertTrue(map.values().containsAll(convertObjectToMapOfString.values()));
+        assertTrue(map.keySet().containsAll(convertObjectToMapOfString.keySet()));
     }
 
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
@@ -49,7 +52,7 @@ class MagazineHandlerTest {
         List<Magazine> sortedItems = magazineHandler.getSortedItems(typeOfSorting, magazines);
 
         assertTrue(magazines.containsAll(sortedItems));
-        assertFalse(magazine2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(magazine2.toString(), sortedItems.get(0).toString());
     }
 
     private static Stream<Arguments> providedArgsForSorting() {
@@ -77,7 +80,7 @@ class MagazineHandlerTest {
                 .collect(Collectors.toList());
 
         assertTrue(stringList.containsAll(stringList1));
-        assertFalse(magazine2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(magazine2.toString(), sortedItems.get(0).toString());
     }
 
     @Test

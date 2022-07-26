@@ -15,7 +15,6 @@ import java.util.*;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
-    private static final List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(Magazine::getName, String.CASE_INSENSITIVE_ORDER);
 
@@ -38,11 +37,6 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public void printSortingMenu(PrintWriter printWriter) {
         MenuForSortingMagazines.printMenu(printWriter);
-    }
-
-    @Override
-    public List<String> getTitlesList() {
-        return new ArrayList<>(titleListForMagazine);
     }
 
     @Override

@@ -17,6 +17,8 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
+import static org.vshmaliukh.services.print_table_service.convertors.Titles.DATE;
 
 class BookHandlerTest {
 
@@ -32,18 +34,19 @@ class BookHandlerTest {
     @Test
     void testGetConvertorToString() {
         ConvertorToString<Book> convertorToString = bookHandler.getConvertorToString();
-        List<String> convertObjectToListOfString = convertorToString.convertObjectToListOfString(book1);
+        Map<String, String> convertObjectToMapOfString = convertorToString.convertObjectToListOfString(book1);
 
-        List<String> stringList = new ArrayList<>();
-        stringList.add(book1.getClass().getSimpleName());
-        stringList.add(book1.getName());
-        stringList.add(book1.getAuthor());
-        stringList.add(String.valueOf(book1.getPagesNumber()));
-        stringList.add(DATE_FORMAT.format(book1.getIssuanceDate()));
-        stringList.add(String.valueOf(book1.isBorrowed()));
+        Map<String, String> map = new HashMap<>();
+        map.put(TYPE, book1.getClass().getSimpleName());
+        map.put(NAME, book1.getName());
+        map.put(PAGES, String.valueOf(book1.getPagesNumber()));
+        map.put(BORROWED, String.valueOf(book1.isBorrowed()));
+        map.put(AUTHOR, book1.getAuthor());
+        map.put(DATE, DATE_FORMAT.format(book1.getIssuanceDate()));
 
-        assertEquals(stringList.size(), convertObjectToListOfString.size());
-        assertTrue(stringList.containsAll(convertObjectToListOfString));
+        assertEquals(map.size(), convertObjectToMapOfString.size());
+        assertTrue(map.values().containsAll(convertObjectToMapOfString.values()));
+        assertTrue(map.keySet().containsAll(convertObjectToMapOfString.keySet()));
     }
 
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
@@ -52,7 +55,7 @@ class BookHandlerTest {
         List<Book> sortedItems = bookHandler.getSortedItems(typeOfSorting, books);
 
         assertTrue(books.containsAll(sortedItems));
-        assertFalse(book2.equals(sortedItems.get(0)));
+        assertNotEquals(book2, sortedItems.get(0));
         assertNotEquals(book1, sortedItems.get(1));
     }
 
@@ -85,7 +88,7 @@ class BookHandlerTest {
                 .collect(Collectors.toList());
 
         assertTrue(stringList.containsAll(stringList1));
-        assertFalse(book2.toString().equals(sortedItems.get(0).toString()));
+        assertNotEquals(book2.toString(), sortedItems.get(0).toString());
     }
 
     @Test
