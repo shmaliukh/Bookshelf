@@ -71,13 +71,11 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public Book getRandomItem(Random random) {
-        random = new Random();
-        Book randomBook = new Book(
+        return new Book(
                 getRandomString(random.nextInt(20), random),
                 random.nextInt(1000),
                 false,
                 getRandomString(random.nextInt(10), random),
                 new Date(random.nextInt(1000000)));
-        return randomBook;
     }
 }

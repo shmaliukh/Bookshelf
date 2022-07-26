@@ -68,10 +68,9 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public Magazine getRandomItem(Random random) {
-        Magazine randomMagazine = new Magazine(
+        return new Magazine(
                 Utils.getRandomString(random.nextInt(20), random),
                 random.nextInt(1000),
                 false);
-        return randomMagazine;
     }
 }

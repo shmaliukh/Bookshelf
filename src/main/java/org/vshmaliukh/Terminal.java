@@ -84,7 +84,7 @@ public class Terminal {
         }
     }
 
-    public void startWork(boolean userMode) {
+    public boolean startWork(boolean userMode) {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
@@ -97,6 +97,7 @@ public class Terminal {
             generateUserInterface();
             itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
         }
+        return false;
     }
 
     private void initServicesForTerminal() {
@@ -156,7 +157,7 @@ public class Terminal {
                 menuForArrivingLiterature();
                 break;
             case SORT_LITERATURE:
-                printMenuForSortingLiterature();
+                menuForSortingLiterature();
                 break;
             case PRINT_SHELF:
                 printCurrentStateOfShelf();
@@ -170,22 +171,22 @@ public class Terminal {
         }
     }
 
-    private void printMenuForSortingLiterature() {
+    private void menuForSortingLiterature() {
         Menu.printSortingMenu(printWriter);
         int userChoice = getUserChoice();
         for (MenuItem sortingMenuItem : Menu.sortingMenuItems) {
             if (userChoice == sortingMenuItem.getIndex()) {
-                printMenuForForSortingItemsByType(sortingMenuItem);
+                menuForForSortingItemsByType(sortingMenuItem);
             }
         }
     }
 
-    private void printMenuForForSortingItemsByType(MenuItem sortingMenuItem) {
+    private void menuForForSortingItemsByType(MenuItem sortingMenuItem) {
         Class classType = sortingMenuItem.getClassType();
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-        List<Item> typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
+        List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
-        List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
+        List<Item> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
         TablePrinter.printTable(printWriter, handlerByClass.getTitlesList(), convertorToStringForLiterature.getTable(sortedList), true);
     }
 
@@ -317,6 +318,10 @@ public class Terminal {
 
     public void setActiveTerminal(boolean activeTerminal) {
         this.isActiveTerminal = activeTerminal;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
 
