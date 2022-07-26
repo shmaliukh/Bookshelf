@@ -16,7 +16,6 @@ import static org.vshmaliukh.services.Utils.getRandomString;
 
 public class GazetteHandler implements ItemHandler<Gazette> {
 
-    private static final List<String> titleListForGazettes = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
     public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_PAGES = Comparator.comparing(Gazette::getPagesNumber);
     public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_NAME = Comparator.comparing(Gazette::getName, String.CASE_INSENSITIVE_ORDER);
 
@@ -39,11 +38,6 @@ public class GazetteHandler implements ItemHandler<Gazette> {
     @Override
     public void printSortingMenu(PrintWriter printWriter) {
         MenuForSortingGazettes.printMenu(printWriter);
-    }
-
-    @Override
-    public List<String> getTitlesList() {
-        return new ArrayList<>(titleListForGazettes);
     }
 
     @Override

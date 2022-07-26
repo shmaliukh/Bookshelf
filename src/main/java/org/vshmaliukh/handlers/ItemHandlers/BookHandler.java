@@ -16,7 +16,6 @@ import static org.vshmaliukh.services.Utils.getRandomString;
 
 public class BookHandler implements ItemHandler<Book> {
 
-    private static final List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_PAGES = Comparator.comparing(Book::getPagesNumber);
@@ -41,11 +40,6 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public void printSortingMenu(PrintWriter printWriter) {
         MenuForSortingBooks.printMenu(printWriter);
-    }
-
-    @Override
-    public List<String> getTitlesList() {
-        return new ArrayList<>(titleListForBooks);
     }
 
     @Override
