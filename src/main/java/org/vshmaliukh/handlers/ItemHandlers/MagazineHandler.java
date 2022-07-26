@@ -1,7 +1,5 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
-import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
-import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
 import org.vshmaliukh.constants.enums_for_menu.MenuItem;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
