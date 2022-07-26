@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static org.vshmaliukh.client_server.ConstantsForClientServerModel.MAX_CONNECTION_NUMBER;
 import static org.vshmaliukh.client_server.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
 
 @Slf4j
 public class MultithreadedSocketServer {
+
+    public static final int MAX_CONNECTION_NUMBER = 10;
 
     private ServerSocket serverSocket;
 

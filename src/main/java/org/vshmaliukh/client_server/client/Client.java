@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+import static org.vshmaliukh.client_server.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
+
 public class Client {
 
     private final Socket socket;
@@ -19,7 +21,7 @@ public class Client {
 
     public Client() throws IOException {
 
-        socket = new Socket("localhost", 8888);
+        socket = new Socket("localhost", SOCKET_PORT_NUMBER);
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);
