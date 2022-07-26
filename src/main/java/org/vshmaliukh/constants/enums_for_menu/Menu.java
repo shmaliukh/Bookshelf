@@ -46,18 +46,20 @@ public class Menu {
     }
 
     public static void printMainMenu(PrintWriter printWriter){
-        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
-        mainMenuItems.forEach(printWriter::println);
-        printWriter.println("Enter another value to return");
+        printMenu(printWriter, mainMenuItems);
     }
 
     public static void printAddingMenu(PrintWriter printWriter){
-        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
-        addingMenuItems.forEach(printWriter::println);
-        printWriter.println("Enter another value to return");
+        printMenu(printWriter, addingMenuItems);
     }
     public static void printSortingMenu(PrintWriter printWriter){
+        printMenu(printWriter, sortingMenuItems);
+    }
+
+    private static void printMenu(PrintWriter printWriter, List<MenuItem> sortingMenuItems) {
+        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
         sortingMenuItems.forEach(printWriter::println);
+        printWriter.println("Enter another value to return");
     }
 
 }

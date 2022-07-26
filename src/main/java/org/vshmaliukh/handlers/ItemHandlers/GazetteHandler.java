@@ -1,7 +1,10 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
+import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
+import org.vshmaliukh.constants.enums_for_menu.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
@@ -17,7 +20,7 @@ public class GazetteHandler implements ItemHandler<Gazette> {
 
     private static final List<String> titleListForGazettes = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
     public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_PAGES = Comparator.comparing(Gazette::getPagesNumber);
-    public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
+    public static final Comparator<Gazette> GAZETTE_COMPARATOR_BY_NAME = Comparator.comparing(Gazette::getName, String.CASE_INSENSITIVE_ORDER);
 
     @Override
     public ConvertorToString getConvertorToString() {
@@ -26,17 +29,13 @@ public class GazetteHandler implements ItemHandler<Gazette> {
 
     @Override
     public List<Gazette> getSortedItems(int typeOfSorting, List<Gazette> inputList) {
-        MenuForSortingGazettes byIndex = MenuForSortingGazettes.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_GAZETTES_BY_NAME:
-                return new ArrayList<>(new ItemSorterHandler<>(inputList)
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME));
-            case SORT_GAZETTES_BY_PAGES:
-                return new ArrayList<>(new ItemSorterHandler<>(inputList)
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES));
-            default:
-                return Collections.emptyList();
+        ItemSorterHandler<Gazette> gazetteItemSorterHandler = new ItemSorterHandler<>(inputList);
+        for (MenuItem menuItem : MenuForSortingGazettes.menuForSortingGazettesItems) {
+            if (typeOfSorting == menuItem.getIndex()) {
+                return new ArrayList<>(gazetteItemSorterHandler.getSortedLiterature(menuItem.getComparator()));
+            }// TODO is it normal to save comparator in menu item
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -62,17 +61,10 @@ public class GazetteHandler implements ItemHandler<Gazette> {
 
     @Override
     public Gazette getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        Gazette userGazette;
-        String name;
-        int pages;
-        boolean isBorrowed;
-
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-
-        userGazette = new Gazette(name, pages, isBorrowed);
-        return userGazette;
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        return new Gazette(name, pages, isBorrowed);
     }
 
     @Override

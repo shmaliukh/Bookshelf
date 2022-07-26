@@ -39,18 +39,4 @@ public class ItemHandlerProvider {
     public static Class<? extends Item> getClassByName(String typeOfClass) {
         return itemNameClassMap.get(typeOfClass);
     }
-
-    //TODO remove
-    public static MagazineHandler getMagazineHandler() {
-        return new MagazineHandler();
-    }
-
-    public static GazetteHandler getGazetteHandler() {
-        return new GazetteHandler();
-    }
-
-    public static BookHandler getBookHandler() {
-        return new BookHandler();
-    }
-
 }

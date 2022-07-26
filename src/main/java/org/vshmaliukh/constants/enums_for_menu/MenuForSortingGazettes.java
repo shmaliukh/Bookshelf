@@ -1,43 +1,24 @@
 package org.vshmaliukh.constants.enums_for_menu;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.vshmaliukh.Terminal.WRONG_INPUT;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.handlers.ItemHandlers.GazetteHandler.GAZETTE_COMPARATOR_BY_PAGES;
 
-public enum MenuForSortingGazettes {
-    SORT_GAZETTES_BY_NAME(1, "Sort by 'name' value"),
-    SORT_GAZETTES_BY_PAGES(2, "Sort by 'pages' value"),
-    UNKNOWN(WRONG_INPUT);
+public class MenuForSortingGazettes {
 
-    private final int i;
-    private final String str;
+    public static final List<MenuItem> menuForSortingGazettesItems = new ArrayList();
 
-    MenuForSortingGazettes(int i, String str) {
-        this.i = i;
-        this.str = str;
-    }
-
-    MenuForSortingGazettes(int i) {
-        this(i, "");
+    static {
+        menuForSortingGazettesItems.add(new MenuItem(1, "Sort by 'name' value", GAZETTE_COMPARATOR_BY_NAME));
+        menuForSortingGazettesItems.add(new MenuItem(2, "Sort by 'pages' value", GAZETTE_COMPARATOR_BY_PAGES));
     }
 
     public static void printMenu(PrintWriter printWriter) {
         printWriter.println("Choose type of sorting:");
-        MenuForSortingGazettes[] values = values();
-        for (int j = 0; j < values.length - 1; j++) {
-            MenuForSortingGazettes value = values[j];
-            printWriter.println(value.i + " - " + value.str);
-        }
+        menuForSortingGazettesItems.forEach(printWriter::println);
         printWriter.println("Enter another value to return");
     }
-
-    public static MenuForSortingGazettes getByIndex(int index) {
-        return Arrays
-                .stream(values())
-                .filter(e -> e.i == index)
-                .findFirst()
-                .orElse(UNKNOWN);
-    }
-
 }

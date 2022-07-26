@@ -1,5 +1,8 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
+import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
+import org.vshmaliukh.constants.enums_for_menu.MenuForSortingGazettes;
+import org.vshmaliukh.constants.enums_for_menu.MenuItem;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingMagazines;
@@ -16,7 +19,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     private static final List<String> titleListForMagazine = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED"));
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
-    public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
+    public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(Magazine::getName, String.CASE_INSENSITIVE_ORDER);
 
     @Override
     public ConvertorToString getConvertorToString() {
@@ -25,17 +28,13 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
-        MenuForSortingMagazines byIndex = MenuForSortingMagazines.getByIndex(typeOfSorting);
-        switch (byIndex) {
-            case SORT_MAGAZINES_BY_NAME:
-                return new ArrayList<>(new ItemSorterHandler<>(inputList)
-                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_NAME));
-            case SORT_MAGAZINES_BY_PAGES:
-                return new ArrayList<>(new ItemSorterHandler<>(inputList)
-                        .getSortedLiterature(MAGAZINE_COMPARATOR_BY_PAGES));
-            default:
-                return Collections.emptyList();
+        ItemSorterHandler<Magazine> magazineItemSorterHandler = new ItemSorterHandler<>(inputList);
+        for (MenuItem menuItem : MenuForSortingMagazines.menuForSortingMagazinesItems) {
+            if (typeOfSorting == menuItem.getIndex()) {
+                return new ArrayList<>(magazineItemSorterHandler.getSortedLiterature(menuItem.getComparator()));
+            }// TODO is it normal to save comparator in menu item
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -61,17 +60,10 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public Magazine getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        Magazine userMagazine;
-        String name;
-        int pages;
-        boolean isBorrowed;
-
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-
-        userMagazine = new Magazine(name, pages, isBorrowed);
-        return userMagazine;
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        return new Magazine(name, pages, isBorrowed);
     }
 
     @Override

@@ -1,43 +1,24 @@
 package org.vshmaliukh.constants.enums_for_menu;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.vshmaliukh.Terminal.WRONG_INPUT;
+import static org.vshmaliukh.handlers.ItemHandlers.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
+import static org.vshmaliukh.handlers.ItemHandlers.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
-public enum MenuForSortingMagazines {
+public class MenuForSortingMagazines {
 
-    SORT_MAGAZINES_BY_NAME(1, "Sort by 'name' value"),
-    SORT_MAGAZINES_BY_PAGES(2, "Sort by 'pages' value"),
-    UNKNOWN(WRONG_INPUT);
+    public static final List<MenuItem> menuForSortingMagazinesItems = new ArrayList();
 
-    private final int i;
-    private final String str;
-
-    MenuForSortingMagazines(int i, String str){
-        this.i = i;
-        this.str = str;
+    static {
+        menuForSortingMagazinesItems.add(new MenuItem(1, "Sort by 'name' value", MAGAZINE_COMPARATOR_BY_NAME));
+        menuForSortingMagazinesItems.add(new MenuItem(2, "Sort by 'pages' value", MAGAZINE_COMPARATOR_BY_PAGES));
     }
 
-    MenuForSortingMagazines(int i){
-        this(i, "");
-    }
-
-    public static void printMenu(PrintWriter printWriter){
+    public static void printMenu(PrintWriter printWriter) {
         printWriter.println("Choose type of sorting:");
-        MenuForSortingMagazines[] values = values();
-        for (int j = 0; j < values.length - 1 ; j++) {
-            MenuForSortingMagazines value = values[j];
-            printWriter.println(value.i + " - " + value.str);
-        }
+        menuForSortingMagazinesItems.forEach(printWriter::println);
         printWriter.println("Enter another value to return");
-    }
-
-    public static MenuForSortingMagazines getByIndex(int index){
-        return Arrays
-                .stream(values())
-                .filter(e -> e.i == index)
-                .findFirst()
-                .orElse(UNKNOWN);
     }
 }

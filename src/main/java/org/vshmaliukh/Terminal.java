@@ -1,15 +1,9 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
-import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.constants.enums_for_menu.*;
 import org.vshmaliukh.handlers.*;
-import org.vshmaliukh.handlers.ItemHandlers.BookHandler;
-import org.vshmaliukh.handlers.ItemHandlers.GazetteHandler;
-import org.vshmaliukh.handlers.ItemHandlers.MagazineHandler;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;

@@ -2,6 +2,7 @@ package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.constants.enums_for_menu.MenuForSortingBooks;
+import org.vshmaliukh.constants.enums_for_menu.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterHandler;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
@@ -16,8 +17,8 @@ import static org.vshmaliukh.services.Utils.getRandomString;
 public class BookHandler implements ItemHandler<Book> {
 
     private static final List<String> titleListForBooks = new ArrayList<>(Arrays.asList("TYPE", "NAME", "PAGES", "IS BORROWED", "AUTHOR", "DATE"));
-    public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(o -> o.getName().toLowerCase());
-    public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(o -> o.getAuthor().toLowerCase());
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
+    public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_PAGES = Comparator.comparing(Book::getPagesNumber);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_DATE = Comparator.comparing(Book::getIssuanceDate);
 
@@ -28,20 +29,13 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
-        MenuForSortingBooks byIndex = MenuForSortingBooks.getByIndex(typeOfSorting);
         ItemSorterHandler<Book> bookItemSorterHandler = new ItemSorterHandler<>(inputList);
-        switch (byIndex) {
-            case SORT_BOOKS_BY_NAME:
-                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(BOOK_COMPARATOR_BY_NAME));
-            case SORT_BOOKS_BY_PAGES_NUMBER:
-                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(BOOK_COMPARATOR_BY_PAGES));
-            case SORT_BOOKS_BY_AUTHOR:
-                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR));
-            case SORT_BOOKS_BY_DATE_OF_ISSUE:
-                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(BOOK_COMPARATOR_BY_DATE));
-            default:
-                return Collections.emptyList();
+        for (MenuItem menuItem : MenuForSortingBooks.menuForSortingBooksItems) {
+            if (typeOfSorting == menuItem.getIndex()) {
+                return new ArrayList<>(bookItemSorterHandler.getSortedLiterature(menuItem.getComparator()));
+            }// TODO is it normal to save comparator in menu item
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -67,22 +61,12 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public Book getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        Book userBook;
-        int pages;
-        String name;
-        boolean isBorrowed;
-        String author;
-        Date dateOfIssue;
-
-        name = inputHandlerForLiterature.getUserLiteratureName();
-        pages = inputHandlerForLiterature.getUserLiteraturePages();
-        isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        author = inputHandlerForLiterature.getUserLiteratureAuthor();
-        dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
-
-
-        userBook = new Book(name, pages, isBorrowed, author, dateOfIssue);
-        return userBook;
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        String author = inputHandlerForLiterature.getUserLiteratureAuthor();
+        Date dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
+        return new Book(name, pages, isBorrowed, author, dateOfIssue);
     }
 
     @Override
