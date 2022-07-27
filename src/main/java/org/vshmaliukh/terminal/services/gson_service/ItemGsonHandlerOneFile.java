@@ -32,11 +32,11 @@ public class ItemGsonHandlerOneFile extends ItemGsonHandler {
 
     @Override
     public void saveToFile(List<Item> listToSave) {
-        saveListToFile(new File(String.valueOf(generatePathForGsonFile())), listToSave);
+        saveListToFile(generatePathForGsonFile(), listToSave);
     }
 
     @Override
     public List<Item> readListFromFile() {
-        return readItemListFromGsonFile(new File(String.valueOf(generatePathForGsonFile())));
+        return readItemListFromGsonFile(generatePathForGsonFile());
     }
 }

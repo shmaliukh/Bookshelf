@@ -43,7 +43,7 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
                     .collect(Collectors.toList());
 
             generatePathForGsonFile().toFile().toPath().toFile().toPath();
-            saveListToFile(new File(String.valueOf(generatePathForGsonFile())), listPerType);
+            saveListToFile(generatePathForGsonFile(), listPerType);
         }
     }
 
@@ -52,7 +52,7 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
         List<Item> resultList = new ArrayList<>();
         for (Class<? extends Item> typeName : ItemHandlerProvider.uniqueTypeNames) {
             typeStr = typeName.getSimpleName();
-            resultList.addAll(readItemListFromGsonFile(new File(String.valueOf(generatePathForGsonFile()))));
+            resultList.addAll(readItemListFromGsonFile(generatePathForGsonFile()));
         }
         return resultList;
     }

@@ -45,15 +45,15 @@ public abstract class ItemGsonHandler extends FilesHandler {
         return Paths.get(String.valueOf(generatePathForGson()), generateFullFileName());
     }
 
-    Path generatePathForProblemFiles() { // TODO refactor methods
+    Path generatePathForProblemFiles() {
         Path path = Paths.get(String.valueOf(generatePathForGson()), problemFilesFolderStr);
         createDirectoryIfNotExists(path);
         return path;
     }
 
-    List<Item> readItemListFromGsonFile(File gsonFileToRead) {
+    List<Item> readItemListFromGsonFile(Path gsonFilePathToRead) {
         List<Item> itemListFromFile = new ArrayList<>();
-        JsonArray jsonArrayFromFile = getJsonArrayFromFile(gsonFileToRead);
+        JsonArray jsonArrayFromFile = getJsonArrayFromFile(gsonFilePathToRead);
         if (jsonArrayFromFile != null) {
             for (JsonElement jsonElement : jsonArrayFromFile) {
                 Item itemFromJsonElement = getItemFromJsonElement(jsonElement);
@@ -90,17 +90,19 @@ public abstract class ItemGsonHandler extends FilesHandler {
                 .orElse(null);
     }
 
-    JsonArray getJsonArrayFromFile(File gsonFile) {
+    JsonArray getJsonArrayFromFile(Path gsonFilePath) {
+        File gsonFile = gsonFilePath.toFile();
         try (FileReader fileReader = new FileReader(gsonFile)) {
             return gson.fromJson(fileReader, JsonArray.class);
         } catch (Exception e) {
-            saveProblemFile(gsonFile, "Problem to get Json arr from file '" + gsonFile.getAbsolutePath() + "'.", e);
+            saveProblemFile(gsonFilePath, "Problem to get Json arr from file '" + gsonFile.getAbsolutePath() + "'.", e);
         }
         return new JsonArray();
     }
 
 
-    boolean saveListToFile(File gsonFileToSave, List listToSave) {
+    boolean saveListToFile(Path gsonFilePathToSave, List listToSave) {
+        File gsonFileToSave = gsonFilePathToSave.toFile();
         try (FileWriter fileWriter = new FileWriter(gsonFileToSave)) {
             gson.toJson(getContainerListForObjects(listToSave), fileWriter);
         } catch (IOException ioe) {
@@ -116,41 +118,48 @@ public abstract class ItemGsonHandler extends FilesHandler {
                 .collect(Collectors.toList());
     }
 
-    void saveProblemFile(File gsonFile, String problemMessage, Exception exception) {
-        File problemFile = getOldestProblemFile(gsonFile);
+    void saveProblemFile(Path gsonFilePath, String problemMessage, Exception exception) {
+        Path oldestProblemFilePath = getOldestProblemFile(gsonFilePath);
+        File oldestProblemFile = oldestProblemFilePath.toFile();
         try {
-            Files.copy(gsonFile.toPath(), problemFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(gsonFilePath, oldestProblemFilePath, StandardCopyOption.REPLACE_EXISTING);
             long time = new Date().getTime();
-            problemFile.setLastModified(time);
-            saveErrorToLogFile(problemMessage, exception, new File(String.valueOf(generatePathForProblemFiles()), logFileFullName));
-            log.info("[GsonHandler]: save problem file as '" + problemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(problemFile.lastModified()));
+            oldestProblemFile.setLastModified(time);
+            saveErrorToLogFile(problemMessage, exception, Paths.get(generatePathForProblemFiles().toString(), logFileFullName));
+            log.info("[GsonHandler]: save problem file as '" + oldestProblemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(oldestProblemFile.lastModified()));
         } catch (IOException ioe) {
-            informAboutErr("Problem to save copy of problem file'" + problemFile.getAbsolutePath() + "'", ioe);
+            informAboutErr("Problem to save copy of problem file'" + oldestProblemFile.getAbsolutePath() + "'", ioe);
         }
     }
 
-    void saveErrorToLogFile(String problemMessage, Exception exception, File logFile) {
+    void saveErrorToLogFile(String problemMessage, Exception exception, Path logFilePath) {
         informAboutErr(problemMessage, exception);
+        File logFile = logFilePath.toFile();
         try (FileWriter fileWriter = new FileWriter(logFile, true)) {
-            fileWriter.append("\t" + new Date() + System.lineSeparator()
-                    + problemMessage + System.lineSeparator()
-                    + exception.getMessage() + System.lineSeparator());
+            fileWriter.append("\t")
+                    .append(new Date().toString())
+                    .append(System.lineSeparator())
+                    .append(problemMessage)
+                    .append(System.lineSeparator())
+                    .append(exception.getMessage())
+                    .append(System.lineSeparator());
             fileWriter.flush();
         } catch (IOException ioe) {
             informAboutErr("Problem to add message to log file '" + logFile.getAbsolutePath() + "'.", ioe);
         }
     }
 
-    File getOldestProblemFile(File gsonFile) {
+    Path getOldestProblemFile(Path gsonFilePath) {
         List<File> filesList = new ArrayList<>();
         for (int i = 0; i < MAX_PROBLEM_FILES; i++) {
-            File problemFile = new File(String.valueOf(generatePathForProblemFiles()), ("problemFileToRead_" + i + "_" + gsonFile.getName()));
+            File problemGsonFile = gsonFilePath.toFile();
+            File problemFile = new File(String.valueOf(generatePathForProblemFiles()), ("problemFileToRead_" + i + "_" + problemGsonFile.getName()));
             if (!problemFile.exists()) {
-                return problemFile;
+                return problemFile.toPath();
             }
             filesList.add(problemFile);
         }
-        return getTheOldestFile(filesList);
+        return getTheOldestFile(filesList).toPath();
     }
 
     File getTheOldestFile(List<File> filesList) {

@@ -56,15 +56,15 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveItemListToFile() {
-        assertTrue(testGsonHandlerOneFile.saveListToFile(new File(String.valueOf(testGsonHandlerOneFile.generatePathForGsonFile())), new ArrayList<>()));
+        assertTrue(testGsonHandlerOneFile.saveListToFile(testGsonHandlerOneFile.generatePathForGsonFile(), new ArrayList<>()));
     }
 
     @Test
     void testReadItemListFromGsonFile() {
         ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadItemListFromGsonFile");
-        File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
-        assertTrue(gsonHandlerOneFile.saveListToFile(gsonFile, new ArrayList<>()));
-        assertTrue(gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).isEmpty());
+        File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
+        assertTrue(gsonHandlerOneFile.saveListToFile(gsonFile.toPath(), new ArrayList<>()));
+        assertTrue(gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).isEmpty());
     }
 
     @Test
@@ -78,11 +78,11 @@ class ItemGsonHandlerTest {
         shelf1.addLiteratureObject(gazette2);
 
         ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile");
-        File gsonFile = new File(String.valueOf(gsonHandlerOneFile.generatePathForGsonFile()));
+        File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveToFile(shelf1.getAllLiteratureObjects());
         Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
-        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile).forEach(shelf2::addLiteratureObject);
+        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(shelf2::addLiteratureObject);
 
         assertEquals(shelf1.getAllLiteratureObjects().size(), shelf2.getAllLiteratureObjects().size());
         assertTrue(shelf1.getAllLiteratureObjects().stream()
