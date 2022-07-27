@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.services.print_table_service.ConvertorToString;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -16,8 +15,8 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
-import static org.vshmaliukh.services.print_table_service.convertors.Titles.BORROWED;
+import static org.vshmaliukh.handlers.ItemTitles.*;
+import static org.vshmaliukh.handlers.ItemTitles.BORROWED;
 
 class MagazineHandlerTest {
 
@@ -32,8 +31,7 @@ class MagazineHandlerTest {
 
     @Test
     void testGetConvertorToString() {
-        ConvertorToString<Magazine> convertorToString = magazineHandler.getConvertorToString();
-        Map<String, String> convertObjectToMapOfString = convertorToString.convertObjectToListOfString(magazine1);
+        Map<String, String> convertObjectToMapOfString = new MagazineHandler().convertItemToListOfString(magazine1);
 
         Map<String, String> map = new HashMap<>();
         map.put(TYPE, magazine1.getClass().getSimpleName());

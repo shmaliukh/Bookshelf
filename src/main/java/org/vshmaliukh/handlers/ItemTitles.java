@@ -1,8 +1,8 @@
-package org.vshmaliukh.services.print_table_service.convertors;
+package org.vshmaliukh.handlers;
 
-public class Titles {
+public class ItemTitles {
 
-    private Titles() {
+    private ItemTitles() {
     }
 
     public static final String TYPE = "TYPE";

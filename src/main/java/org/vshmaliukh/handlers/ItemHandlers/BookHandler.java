@@ -3,16 +3,16 @@ package org.vshmaliukh.handlers.ItemHandlers;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.menus.MenuItemForSorting;
-import org.vshmaliukh.menus.MenuItemWithInfoAboutType;
 import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.services.print_table_service.ConvertorToString;
-import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForBook;
 
 import java.io.PrintWriter;
 import java.util.*;
 
+import static org.vshmaliukh.Terminal.DATE_FORMAT;
 import static org.vshmaliukh.services.Utils.getRandomString;
+import static org.vshmaliukh.handlers.ItemTitles.*;
+import static org.vshmaliukh.handlers.ItemTitles.DATE;
 
 public class BookHandler implements ItemHandler<Book> {
 
@@ -20,11 +20,6 @@ public class BookHandler implements ItemHandler<Book> {
     public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_PAGES = Comparator.comparing(Book::getPagesNumber);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_DATE = Comparator.comparing(Book::getIssuanceDate);
-
-    @Override
-    public ConvertorToString getConvertorToString() {
-        return new ConvertorToStringForBook();
-    }
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
@@ -76,5 +71,17 @@ public class BookHandler implements ItemHandler<Book> {
                 false,
                 getRandomString(random.nextInt(10), random),
                 new Date(random.nextLong()));
+    }
+
+    @Override
+    public Map<String, String> convertItemToListOfString(Book book) {
+        Map<String, String> map = new HashMap<>();
+        map.put(TYPE, book.getClass().getSimpleName());
+        map.put(NAME, book.getName());
+        map.put(PAGES, String.valueOf(book.getPagesNumber()));
+        map.put(BORROWED, String.valueOf(book.isBorrowed()));
+        map.put(AUTHOR, book.getAuthor());
+        map.put(DATE, DATE_FORMAT.format(book.getIssuanceDate()));
+        return new HashMap<>(map);
     }
 }

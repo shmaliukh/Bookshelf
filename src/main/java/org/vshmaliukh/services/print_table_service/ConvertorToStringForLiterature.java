@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.print_table_service.convertors;
+package org.vshmaliukh.services.print_table_service;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.handlers.ItemHandlerProvider;
@@ -12,8 +12,7 @@ public class ConvertorToStringForLiterature<T extends Item> {
     public Map<String, String> getConvertedLiterature(T item) {
         return ItemHandlerProvider
                 .getHandlerByName(item.getClass().getSimpleName())
-                .getConvertorToString()
-                .convertObjectToListOfString(item);
+                .convertItemToListOfString(item);
     }
 
     public List<Map<String, String>> getTable(List<T> literatureList) {

@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.services.print_table_service.ConvertorToString;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -16,7 +15,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.services.print_table_service.convertors.Titles.*;
+import static org.vshmaliukh.handlers.ItemTitles.*;
 
 class GazetteHandlerTest {
 
@@ -31,8 +30,8 @@ class GazetteHandlerTest {
 
     @Test
     void testGetConvertorToString() {
-        ConvertorToString<Gazette> convertorToString = gazetteHandler.getConvertorToString();
-        Map<String, String> convertObjectToMapOfString = convertorToString.convertObjectToListOfString(gazette1);
+
+        Map<String, String> convertObjectToMapOfString = new GazetteHandler().convertItemToListOfString(gazette1);
 
         Map<String, String> map = new HashMap<>();
         map.put(TYPE, gazette1.getClass().getSimpleName());

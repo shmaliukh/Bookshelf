@@ -10,7 +10,7 @@ import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerPerType;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.input_services.InputHandlerForUser;
-import org.vshmaliukh.services.print_table_service.convertors.ConvertorToStringForLiterature;
+import org.vshmaliukh.services.print_table_service.ConvertorToStringForLiterature;
 import org.vshmaliukh.services.print_table_service.TablePrinter;
 
 import java.io.*;
