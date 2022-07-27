@@ -1,4 +1,4 @@
-package org.vshmaliukh.terminal.menus;
+package org.vshmaliukh.terminal.menus.menu_items;
 
 public class MenuItemWithInfoAboutType<T> extends MenuItem{ // TODO rename
 

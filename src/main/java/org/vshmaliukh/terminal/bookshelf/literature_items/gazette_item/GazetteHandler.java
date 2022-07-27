@@ -2,7 +2,7 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
-import org.vshmaliukh.terminal.menus.MenuItemForSorting;
+import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.ItemSorterService;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 

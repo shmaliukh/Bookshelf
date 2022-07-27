@@ -1,9 +1,9 @@
-package org.vshmaliukh.terminal.menus;
+package org.vshmaliukh.terminal.menus.menu_items;
 
 import lombok.Data;
 
 @Data
-public abstract class MenuItem {
+public class MenuItem {
 
     final int index;
     final String str;

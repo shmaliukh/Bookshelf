@@ -1,4 +1,4 @@
-package org.vshmaliukh.terminal.menus;
+package org.vshmaliukh.terminal.menus.menu_items;
 
 import java.util.Comparator;
 

@@ -1,6 +1,6 @@
 package org.vshmaliukh.terminal.bookshelf.literature_items;
 
-import org.vshmaliukh.terminal.menus.MenuItemForSorting;
+import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;

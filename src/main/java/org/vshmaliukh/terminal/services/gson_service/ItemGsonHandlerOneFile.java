@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 public class ItemGsonHandlerOneFile extends ItemGsonHandler {
 
-    String gsonHandlerFolderStr = "gson_item_one_file";
+    String gsonHandlerFolderStr = "gson_handler_one_file";
 
     public ItemGsonHandlerOneFile(String homeDir, String userName) {
         super(homeDir, userName);
