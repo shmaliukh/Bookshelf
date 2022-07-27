@@ -19,7 +19,6 @@ import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringFor
 import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
@@ -31,7 +30,7 @@ import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
  */
 public class Terminal {
 
-    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
 
     public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
     public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;

@@ -1,10 +1,11 @@
 package org.vshmaliukh.terminal.services.input_services;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 public class InputHandlerForLiterature extends InputHandler {
@@ -40,6 +41,6 @@ public class InputHandlerForLiterature extends InputHandler {
     public Date getUserLiteratureDateOfIssue() {
         return getUserDate(
                 MESSAGE_ENTER_LITERATURE_DATE,
-                DATE_FORMAT);
+                new SimpleDateFormat(DATE_FORMAT_STR));
     }
 }

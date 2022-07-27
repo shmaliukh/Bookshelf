@@ -9,9 +9,10 @@ import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.GazetteHa
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.MagazineHandler;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 
@@ -19,8 +20,8 @@ class ConvertorToStringForItemTest {
     MagazineHandler magazineHandler = new MagazineHandler();
     GazetteHandler gazetteHandler = new GazetteHandler();
     
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", DATE_FORMAT.parse("10-07-2022"));
-    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___",DATE_FORMAT.parse("13-07-2022"));
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new SimpleDateFormat(DATE_FORMAT_STR).parse("10-07-2022"));
+    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___", new SimpleDateFormat(DATE_FORMAT_STR).parse("13-07-2022"));
 
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2___",222222222,true);

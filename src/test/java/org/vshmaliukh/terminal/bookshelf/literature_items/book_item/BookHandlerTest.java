@@ -5,17 +5,16 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.BookHandler;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.DATE;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
@@ -41,7 +40,7 @@ class BookHandlerTest {
         map.put(PAGES, String.valueOf(book1.getPagesNumber()));
         map.put(BORROWED, String.valueOf(book1.isBorrowed()));
         map.put(AUTHOR, book1.getAuthor());
-        map.put(DATE, DATE_FORMAT.format(book1.getIssuanceDate()));
+        map.put(DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book1.getIssuanceDate()));
 
         assertEquals(map.size(), convertObjectToMapOfString.size());
         assertTrue(map.values().containsAll(convertObjectToMapOfString.values()));

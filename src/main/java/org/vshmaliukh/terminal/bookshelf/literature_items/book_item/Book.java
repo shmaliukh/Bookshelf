@@ -3,9 +3,10 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.book_item;
 import lombok.Data;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 
 /**
  * @author ShmaliukhVlad
@@ -38,7 +39,7 @@ public class Book extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
-                ", issuanceDate=" + DATE_FORMAT.format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
+                ", issuanceDate=" + new SimpleDateFormat(DATE_FORMAT_STR).format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
                 ", isBorrowed=" + isBorrowed +
                 " }";
     }

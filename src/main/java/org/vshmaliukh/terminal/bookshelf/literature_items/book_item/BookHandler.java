@@ -7,9 +7,10 @@ import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.services.Utils.getRandomString;
 
 public class BookHandler implements ItemHandler<Book> {
@@ -66,7 +67,7 @@ public class BookHandler implements ItemHandler<Book> {
                 getRandomString(random.nextInt(20), random),
                 random.nextInt(1000),
                 false,
-                getRandomString(random.nextInt(10), random),
+                getRandomString(random.nextInt(20), random),
                 new Date(random.nextLong()));
     }
 
@@ -78,7 +79,7 @@ public class BookHandler implements ItemHandler<Book> {
         map.put(ItemTitles.PAGES, String.valueOf(book.getPagesNumber()));
         map.put(ItemTitles.BORROWED, String.valueOf(book.isBorrowed()));
         map.put(ItemTitles.AUTHOR, book.getAuthor());
-        map.put(ItemTitles.DATE, DATE_FORMAT.format(book.getIssuanceDate()));
+        map.put(ItemTitles.DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()));
         return new HashMap<>(map);
     }
 }

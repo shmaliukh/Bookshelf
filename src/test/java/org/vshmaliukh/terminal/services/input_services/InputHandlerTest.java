@@ -8,12 +8,13 @@ import org.junit.jupiter.params.provider.*;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT;
+import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 class InputHandlerTest {
@@ -53,7 +54,7 @@ class InputHandlerTest {
                     "  01/01/2022   |  false" + "\n" +
                     "  01_01_2022   |  false" )
     void testDateValidation(String input, boolean expectedBoolean) {
-        assertEquals(expectedBoolean, userInputHandler.isValidInputDate(input.trim(), DATE_FORMAT));
+        assertEquals(expectedBoolean, userInputHandler.isValidInputDate(input.trim(), new SimpleDateFormat(DATE_FORMAT_STR)));
     }
 
     @DisplayName("test user input for name of Literature object")
@@ -69,9 +70,10 @@ class InputHandlerTest {
     @MethodSource("providedStringForDateInput")
     void testDateInput(String  expectedOut, String input) throws ParseException {
         userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
-        DATE_FORMAT.setLenient(false);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STR);
+        dateFormat.setLenient(false);
         Date currentDate = userInputHandler.getUserLiteratureDateOfIssue();
-        Date expectedDate = DATE_FORMAT.parse(expectedOut);
+        Date expectedDate = dateFormat.parse(expectedOut);
         assertEquals(expectedDate.getTime(),  currentDate.getTime());
     }
 

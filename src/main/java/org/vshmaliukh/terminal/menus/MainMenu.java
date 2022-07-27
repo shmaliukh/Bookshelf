@@ -33,7 +33,7 @@ public enum MainMenu {
         MainMenu[] values = values();
         for (int j = 0; j < values.length - 1; j++) {
             MainMenu value = values[j];
-            printWriter.println(value.getMenuItem().getIndex() + " - " + value.getMenuItem().getStr());
+            printWriter.println(value.getMenuItem());
         }
     }
 

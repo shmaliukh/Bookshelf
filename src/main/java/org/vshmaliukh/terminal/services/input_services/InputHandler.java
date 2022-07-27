@@ -116,7 +116,7 @@ public abstract class InputHandler {
                 log.error("[InputHandler] Problem to parse user date input. Exception: ", pe);
             }
         }
-        if(tryAgain(DATE_FORMAT_FOR_INPUT_HANDLER.format(DEFAULT_DATE))){
+        if(tryAgain(new SimpleDateFormat(DATE_FORMAT_FOR_INPUT_HANDLER).format(DEFAULT_DATE))){
             return getUserDate(message, dateFormat);
         }
         return DEFAULT_DATE;
