@@ -16,13 +16,10 @@ public abstract class Item implements Serializable {
     protected int pagesNumber;
     protected boolean isBorrowed;
 
-    private Item() {
-    }
-
     /**
      * Base Constructor for creating Book and Magazine object
      */
-    protected Item(String name, int pagesNumber, boolean isBorrowed) { // TODO is private right?
+    protected Item(String name, int pagesNumber, boolean isBorrowed) {
         this.name = name;
         setPagesNumber(pagesNumber);
         this.isBorrowed = isBorrowed;

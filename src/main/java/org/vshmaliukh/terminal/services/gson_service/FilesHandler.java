@@ -47,6 +47,6 @@ public abstract class FilesHandler {
     protected void informAboutErr(String problemMessage, Exception exception) {
         log.error("[User]: name: '" + userName + "'"
                 + " // [FilesHandler]: " + problemMessage
-                + " // [Exception]: " + exception.getMessage()); // TODO is ok to use .getMessage ???
+                + " // [Exception]: " + exception.getMessage());
     }
 }

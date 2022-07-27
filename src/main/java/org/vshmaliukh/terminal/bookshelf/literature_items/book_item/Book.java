@@ -39,7 +39,7 @@ public class Book extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
-                ", issuanceDate=" + new SimpleDateFormat(DATE_FORMAT_STR).format(issuanceDate) + // TODO delete DATE_FORMAT from toString method
+                ", issuanceDate=" + new SimpleDateFormat(DATE_FORMAT_STR).format(issuanceDate) +
                 ", isBorrowed=" + isBorrowed +
                 " }";
     }

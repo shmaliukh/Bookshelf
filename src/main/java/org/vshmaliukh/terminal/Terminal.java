@@ -8,7 +8,7 @@ import org.vshmaliukh.terminal.menus.GeneratedMenu;
 import org.vshmaliukh.terminal.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.terminal.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.terminal.menus.MainMenu;
-import org.vshmaliukh.terminal.menus.menu_items.MenuItemWithInfoAboutType;
+import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandlerOneFile;
@@ -179,14 +179,14 @@ public class Terminal {
         GeneratedMenu menuForSorting = new GeneratedMenuForSorting();
         menuForSorting.printMenu(printWriter);
         int userChoice = getUserChoice();
-        for (MenuItemWithInfoAboutType sortingMenuItem : menuForSorting.getMenuItems()) {
+        for (MenuItemClassType sortingMenuItem : menuForSorting.getMenuItems()) {
             if (userChoice == sortingMenuItem.getIndex()) {
                 menuForForSortingItemsByType(sortingMenuItem);
             }
         }
     }
 
-    private void menuForForSortingItemsByType(MenuItemWithInfoAboutType sortingMenuItem) {
+    private void menuForForSortingItemsByType(MenuItemClassType sortingMenuItem) {
         Class classType = sortingMenuItem.getClassType();
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());

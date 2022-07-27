@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.terminal.menus.menu_items.MenuItemWithInfoAboutType;
+import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -45,7 +45,7 @@ class GeneratedMenuTest {
     @MethodSource("providedArgsForInitMenuItems")
     void testInitMenuItems_menuForSorting(GeneratedMenu menuForSorting, int coef) {
         Set<Class> classSet = menuForSorting.generatedMenu.stream()
-                .map(MenuItemWithInfoAboutType::getClassType)
+                .map(MenuItemClassType::getClassType)
                 .collect(Collectors.toSet());
 
         assertFalse(menuForSorting.generatedMenu.isEmpty());
