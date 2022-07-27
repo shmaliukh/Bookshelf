@@ -7,18 +7,21 @@ import java.util.*;
 
 public abstract class GeneratedMenu {
 
+    public static final String MESSAGE_TO_ENTER = "Enter number of command you wand to execute: (program ignores all not number symbols)";
+    public static final String MESSAGE_TO_RETURN = "Enter another value to return";
+
     List<MenuItemWithInfoAboutType> generatedMenu;
 
     public List<MenuItemWithInfoAboutType> getMenuItems() {
-        return generatedMenu;
+        return Collections.unmodifiableList(generatedMenu);
     }
 
     abstract void initMenuItems();
 
     public void printMenu(PrintWriter printWriter) {
-        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
+        printWriter.println(MESSAGE_TO_ENTER);
         generatedMenu.forEach(printWriter::println);
-        printWriter.println("Enter another value to return");
+        printWriter.println(MESSAGE_TO_RETURN);
     }
 }
 

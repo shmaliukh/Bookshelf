@@ -5,7 +5,7 @@ import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.terminal.menus.GeneratedMenu;
-import org.vshmaliukh.terminal.menus.GeneratedMenuForAddingItems;
+import org.vshmaliukh.terminal.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.terminal.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.terminal.menus.MainMenu;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemWithInfoAboutType;
@@ -261,7 +261,7 @@ public class Terminal {
      */
     private void addNewLiteratureObject() {
         int userChoice = getUserChoice();
-        GeneratedMenu generatedMenu = new GeneratedMenuForAddingItems();
+        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
         if (userChoice > 0 && userChoice - 1 < generatedMenu.getMenuItems().size()) {
             Class classType = generatedMenu.getMenuItems().get(userChoice - 1).getClassType();
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
@@ -308,7 +308,7 @@ public class Terminal {
     }
 
     private void printMenuForAddingLiterature() {
-        GeneratedMenu generatedMenu = new GeneratedMenuForAddingItems();
+        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
         generatedMenu.printMenu(printWriter);
     }
 

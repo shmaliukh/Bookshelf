@@ -9,9 +9,9 @@ import java.util.List;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider.uniqueTypeNames;
 
-public class GeneratedMenuForAddingItems extends GeneratedMenu {
+public class GeneratedMenuForAdding extends GeneratedMenu {
 
-    public GeneratedMenuForAddingItems() {
+    public GeneratedMenuForAdding() {
         initMenuItems();
     }
 
