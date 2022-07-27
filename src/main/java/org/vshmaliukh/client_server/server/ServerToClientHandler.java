@@ -1,7 +1,7 @@
 package org.vshmaliukh.client_server.server;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.Terminal;
+import org.vshmaliukh.terminal.Terminal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
