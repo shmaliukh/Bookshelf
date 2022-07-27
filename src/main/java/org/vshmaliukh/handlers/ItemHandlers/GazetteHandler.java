@@ -1,9 +1,9 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Gazette;
-import org.vshmaliukh.menus.MenuForSortingGazettes;
-import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
+import org.vshmaliukh.menus.MenuItemForSorting;
+import org.vshmaliukh.menus.MenuItemWithInfoAboutType;
 import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
@@ -27,17 +27,20 @@ public class GazetteHandler implements ItemHandler<Gazette> {
     @Override
     public List<Gazette> getSortedItems(int typeOfSorting, List<Gazette> inputList) {
         ItemSorterService<Gazette> gazetteItemSorterService = new ItemSorterService<>(inputList);
-        for (MenuItem menuItem : MenuForSortingGazettes.menuForSortingGazettesItems) {
+        for (MenuItemForSorting menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(gazetteItemSorterService.getSortedLiterature(menuItem.getComparator()));
-            }// TODO is it normal to save comparator in menu item
+            }
         }
         return Collections.emptyList();
     }
 
     @Override
-    public void printSortingMenu(PrintWriter printWriter) {
-        MenuForSortingGazettes.printMenu(printWriter);
+    public List<MenuItemForSorting> getSortingMenuList() {
+        return Collections.unmodifiableList(Arrays.asList(
+                new MenuItemForSorting(1, "Sort by 'name' value", GAZETTE_COMPARATOR_BY_NAME),
+                new MenuItemForSorting(2, "Sort by 'pages' value", GAZETTE_COMPARATOR_BY_PAGES)
+        ));
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 import static org.vshmaliukh.Terminal.WRONG_INPUT;
 
-public enum MainMenu { // TODO refactor terminal in menu
+public enum MainMenu {
 
     ADD_NEW_LITERATURE(1, "Add new Literature object to Shelf"),
     DELETE_LITERATURE(2, "Delete  Literature object by index from Shelf"),

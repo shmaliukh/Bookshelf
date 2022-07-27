@@ -1,9 +1,8 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
-import org.vshmaliukh.menus.MenuItem;
+import org.vshmaliukh.menus.MenuItemForSorting;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Magazine;
-import org.vshmaliukh.menus.MenuForSortingMagazines;
 import org.vshmaliukh.handlers.ItemHandler;
 import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
@@ -26,17 +25,20 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
         ItemSorterService<Magazine> magazineItemSorterService = new ItemSorterService<>(inputList);
-        for (MenuItem menuItem : MenuForSortingMagazines.menuForSortingMagazinesItems) {
+        for (MenuItemForSorting menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(magazineItemSorterService.getSortedLiterature(menuItem.getComparator()));
-            }// TODO is it normal to save comparator in menu item
+            }
         }
         return Collections.emptyList();
     }
 
     @Override
-    public void printSortingMenu(PrintWriter printWriter) {
-        MenuForSortingMagazines.printMenu(printWriter);
+    public List<MenuItemForSorting> getSortingMenuList() {
+        return Collections.unmodifiableList(Arrays.asList(
+                new MenuItemForSorting(1, "Sort by 'name' value", MAGAZINE_COMPARATOR_BY_NAME),
+                new MenuItemForSorting(2, "Sort by 'pages' value", MAGAZINE_COMPARATOR_BY_PAGES)
+        ));
     }
 
     @Override

@@ -3,9 +3,7 @@ package org.vshmaliukh;
 import org.vshmaliukh.bookshelf.bookshelfObjects.Item;
 import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.handlers.*;
-import org.vshmaliukh.menus.MainMenu;
-import org.vshmaliukh.menus.Menu;
-import org.vshmaliukh.menus.MenuItem;
+import org.vshmaliukh.menus.*;
 import org.vshmaliukh.services.Utils;
 import org.vshmaliukh.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.services.gson_service.ItemGsonHandlerOneFile;
@@ -174,16 +172,16 @@ public class Terminal {
     }
 
     private void menuForSortingLiterature() {
-        Menu.printSortingMenu(printWriter);
+        GeneratedMenus.printSortingMenu(printWriter);
         int userChoice = getUserChoice();
-        for (MenuItem sortingMenuItem : Menu.sortingMenuItems) {
+        for (MenuItemWithInfoAboutType sortingMenuItem : GeneratedMenus.sortingMenuItems) {
             if (userChoice == sortingMenuItem.getIndex()) {
                 menuForForSortingItemsByType(sortingMenuItem);
             }
         }
     }
 
-    private void menuForForSortingItemsByType(MenuItem sortingMenuItem) {
+    private void menuForForSortingItemsByType(MenuItemWithInfoAboutType sortingMenuItem) {
         Class classType = sortingMenuItem.getClassType();
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
@@ -257,8 +255,8 @@ public class Terminal {
      */
     private void addNewLiteratureObject() {
         int userChoice = getUserChoice();
-        if (userChoice > 0 && userChoice - 1 < Menu.addingMenuItems.size()) {
-            Class classType = Menu.addingMenuItems.get(userChoice - 1).getClassType();
+        if (userChoice > 0 && userChoice - 1 < GeneratedMenus.addingMenuItems.size()) {
+            Class classType = GeneratedMenus.addingMenuItems.get(userChoice - 1).getClassType();
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
             Item item;
             if ((userChoice - 1) % 2 == 0) {
@@ -303,7 +301,7 @@ public class Terminal {
     }
 
     private void printMenuForAddingLiterature() {
-        Menu.printAddingMenu(printWriter);
+        GeneratedMenus.printAddingMenu(printWriter);
     }
 
     public void stop() {

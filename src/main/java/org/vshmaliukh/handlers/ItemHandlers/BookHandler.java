@@ -1,9 +1,9 @@
 package org.vshmaliukh.handlers.ItemHandlers;
 
 import org.vshmaliukh.bookshelf.bookshelfObjects.Book;
-import org.vshmaliukh.menus.MenuForSortingBooks;
-import org.vshmaliukh.menus.MenuItem;
 import org.vshmaliukh.handlers.ItemHandler;
+import org.vshmaliukh.menus.MenuItemForSorting;
+import org.vshmaliukh.menus.MenuItemWithInfoAboutType;
 import org.vshmaliukh.services.ItemSorterService;
 import org.vshmaliukh.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.services.print_table_service.ConvertorToString;
@@ -29,17 +29,22 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
         ItemSorterService<Book> bookItemSorterService = new ItemSorterService<>(inputList);
-        for (MenuItem menuItem : MenuForSortingBooks.menuForSortingBooksItems) {
+        for (MenuItemForSorting menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(bookItemSorterService.getSortedLiterature(menuItem.getComparator()));
-            }// TODO is it normal to save comparator in menu item
+            }
         }
         return Collections.emptyList();
     }
 
     @Override
-    public void printSortingMenu(PrintWriter printWriter) {
-        MenuForSortingBooks.printMenu(printWriter);
+    public List<MenuItemForSorting> getSortingMenuList() {
+        return Collections.unmodifiableList(Arrays.asList(
+                new MenuItemForSorting(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
+                new MenuItemForSorting(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
+                new MenuItemForSorting(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
+        ));
     }
 
     @Override

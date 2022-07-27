@@ -41,6 +41,8 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
             List<? extends Item> listPerType = listToSave.stream()
                     .filter(o -> o.getClass().equals(classType))
                     .collect(Collectors.toList());
+
+            generatePathForGsonFile().toFile().toPath().toFile().toPath();
             saveListToFile(new File(String.valueOf(generatePathForGsonFile())), listPerType);
         }
     }

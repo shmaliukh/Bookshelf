@@ -11,11 +11,11 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            Thread.sleep(60_000L);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        //try {
+        //    Thread.sleep(60_000L);
+        //} catch (InterruptedException e) {
+        //    throw new RuntimeException(e);
+        //}
         TerminalThread terminalThread = new TerminalThread();
         terminalThread.start();
 
