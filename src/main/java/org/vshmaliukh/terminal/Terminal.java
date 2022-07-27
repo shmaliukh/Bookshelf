@@ -261,7 +261,7 @@ public class Terminal {
      */
     private void addNewLiteratureObject() {
         int userChoice = getUserChoice();
-        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
+        GeneratedMenuForAdding generatedMenu = new GeneratedMenuForAdding();
         if (userChoice > 0 && userChoice - 1 < generatedMenu.getMenuItems().size()) {
             Class classType = generatedMenu.getMenuItems().get(userChoice - 1).getClassType();
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);

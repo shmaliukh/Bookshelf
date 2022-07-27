@@ -3,7 +3,6 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.book_item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
-import org.vshmaliukh.terminal.services.ItemSorterService;
 import org.vshmaliukh.terminal.services.Utils;
 
 import java.io.PrintWriter;
@@ -45,8 +44,8 @@ class ActionsWithBookTest {
     @DisplayName("test printable stings of sorted Books by Name")
     void printSortedBooksByName() {
         List<Book> sortedBooksByName =
-                new ItemSorterService<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(BOOK_COMPARATOR_BY_NAME);
+                Utils.getSortedLiterature(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()),
+                        BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
         assertEquals(expectedBook1.toString(), sortedBooksByName.get(0).toString());
@@ -57,8 +56,8 @@ class ActionsWithBookTest {
     @DisplayName("test printable stings of sorted Books by Pages")
     void printSortedBooksByPages() {
         List<Book> sortedBooksByPages =
-                new ItemSorterService<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(BOOK_COMPARATOR_BY_PAGES);
+                Utils.getSortedLiterature(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()),
+                        BOOK_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
         assertEquals(expectedBook1.toString(), sortedBooksByPages.get(0).toString());
@@ -69,8 +68,8 @@ class ActionsWithBookTest {
     @DisplayName("test printable stings of sorted Books by Author")
     void printSortedBooksByAuthor() {
         List<Book> sortedBooksByAuthor =
-                new ItemSorterService<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(BOOK_COMPARATOR_BY_AUTHOR);
+                Utils.getSortedLiterature(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()),
+                        BOOK_COMPARATOR_BY_AUTHOR);
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());
         assertEquals(expectedBook1.toString(), sortedBooksByAuthor.get(0).toString());
@@ -81,8 +80,8 @@ class ActionsWithBookTest {
     @DisplayName("test printable stings of sorted Books by Date")
     void printSortedBooksByDate() {
         List<Book> sortedBooksByDate =
-                new ItemSorterService<Book>(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(BOOK_COMPARATOR_BY_DATE);
+                Utils.getSortedLiterature(Utils.getItemsByType(Book.class, shelf1.getAllLiteratureObjects()),
+                        BOOK_COMPARATOR_BY_DATE);
 
         assertEquals(expectedArraySize, sortedBooksByDate.size());
         assertEquals(expectedBook1.toString(), sortedBooksByDate.get(0).toString());

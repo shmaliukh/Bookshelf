@@ -27,7 +27,7 @@ public class ItemGsonHandlerOneFile extends ItemGsonHandler {
 
     @Override
     public String generateFullFileName() {
-        return userName + gsonFileType;
+        return userName + JSON_FILE_TYPE;
     }
 
     @Override

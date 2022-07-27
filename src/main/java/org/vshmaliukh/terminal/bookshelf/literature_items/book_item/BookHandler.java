@@ -3,7 +3,7 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.book_item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
-import org.vshmaliukh.terminal.services.ItemSorterService;
+import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;
@@ -21,10 +21,9 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
-        ItemSorterService<Book> bookItemSorterService = new ItemSorterService<>(inputList);
         for (MenuItemForSorting menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(bookItemSorterService.getSortedLiterature(menuItem.getComparator()));
+                return new ArrayList<>(Utils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
         }
         return Collections.emptyList();

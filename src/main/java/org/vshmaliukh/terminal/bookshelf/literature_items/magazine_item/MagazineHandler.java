@@ -4,7 +4,6 @@ import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
-import org.vshmaliukh.terminal.services.ItemSorterService;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;
@@ -17,10 +16,9 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
-        ItemSorterService<Magazine> magazineItemSorterService = new ItemSorterService<>(inputList);
         for (MenuItemForSorting menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(magazineItemSorterService.getSortedLiterature(menuItem.getComparator()));
+                return new ArrayList<>(Utils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
         }
         return Collections.emptyList();

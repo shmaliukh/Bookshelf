@@ -3,7 +3,6 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
-import org.vshmaliukh.terminal.services.ItemSorterService;
 import org.vshmaliukh.terminal.services.Utils;
 
 import java.io.OutputStreamWriter;
@@ -44,8 +43,8 @@ class ActionsWithGazetteTest {
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedGazettesByName() {
         List<Gazette> sortedGazettesByName =
-                new ItemSorterService<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_NAME);
+                 Utils.getSortedLiterature(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()),
+                         GAZETTE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedGazettesByName.size());
         assertEquals(expectedGazette1.toString(), sortedGazettesByName.get(0).toString());
@@ -56,8 +55,8 @@ class ActionsWithGazetteTest {
     @DisplayName("test printable stings of sorted Gazettes by Pages")
     void printSortedGazettesByPages() {
         List<Gazette> sortedGazettesByPages =
-                new ItemSorterService<>(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()))
-                        .getSortedLiterature(GAZETTE_COMPARATOR_BY_PAGES);
+                 Utils.getSortedLiterature(Utils.getItemsByType(Gazette.class, shelf1.getAllLiteratureObjects()),
+                         GAZETTE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedGazettesByPages.size());
         assertEquals(expectedGazette1.toString(), sortedGazettesByPages.get(0).toString());

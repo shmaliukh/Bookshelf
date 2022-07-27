@@ -22,7 +22,7 @@ public abstract class Item implements Serializable {
     /**
      * Base Constructor for creating Book and Magazine object
      */
-    protected Item(String name, int pagesNumber, boolean isBorrowed) { // TODO is private wright?
+    protected Item(String name, int pagesNumber, boolean isBorrowed) { // TODO is private right?
         this.name = name;
         setPagesNumber(pagesNumber);
         this.isBorrowed = isBorrowed;

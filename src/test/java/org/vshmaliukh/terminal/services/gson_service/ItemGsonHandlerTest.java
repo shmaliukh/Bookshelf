@@ -7,8 +7,6 @@ import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
 import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.Gazette;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
-import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandlerOneFile;
-import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandlerPerType;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -53,7 +51,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testGenerateFullFileName() {
-        assertEquals(testGsonHandlerOneFile.userName + testGsonHandlerOneFile.gsonFileType, testGsonHandlerOneFile.generateFullFileName());
+        assertEquals(testGsonHandlerOneFile.userName + testGsonHandlerOneFile.JSON_FILE_TYPE, testGsonHandlerOneFile.generateFullFileName());
     }
 
     @Test

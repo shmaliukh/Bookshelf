@@ -122,6 +122,7 @@ public class TablePrinter {
                 stringBuilder.append(crossedSymbol);
             }
         }
+
         stringBuilder.append(endSymbol);
         printWriter.println(stringBuilder);
     }

@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
 public abstract class ItemGsonHandler extends FilesHandler {
 
     public static final int MAX_PROBLEM_FILES = 5;
+    public static final String JSON_FILE_TYPE = ".json";
 
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
-    String gsonFileType = ".json";
     String logFileFullName = "log.txt";
     String problemFilesFolderStr = "problem_files";
 

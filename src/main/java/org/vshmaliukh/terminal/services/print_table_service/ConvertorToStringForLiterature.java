@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConvertorToStringForLiterature<T extends Item> {
+public class ConvertorToStringForLiterature {
 
-    public Map<String, String> getConvertedLiterature(T item) {
+    public static <T extends Item> Map<String, String> getConvertedLiterature(T item) {
         return ItemHandlerProvider
                 .getHandlerByName(item.getClass().getSimpleName())
                 .convertItemToListOfString(item);
     }
 
-    public List<Map<String, String>> getTable(List<T> literatureList) {
+    public static <T extends Item> List<Map<String, String>> getTable(List<T> literatureList) {
         return literatureList.stream()
-                .map(this::getConvertedLiterature)
+                .map(ConvertorToStringForLiterature::getConvertedLiterature)
                 .collect(Collectors.toList());
     }
 }
