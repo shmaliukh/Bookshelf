@@ -11,7 +11,7 @@ import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProv
 
 public class GeneratedMenuForAddingItems extends GeneratedMenu {
 
-    public GeneratedMenuForAddingItems(){
+    public GeneratedMenuForAddingItems() {
         initMenuItems();
     }
 

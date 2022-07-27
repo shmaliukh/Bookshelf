@@ -6,6 +6,7 @@ import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.terminal.menus.GeneratedMenu;
 import org.vshmaliukh.terminal.menus.GeneratedMenuForAddingItems;
+import org.vshmaliukh.terminal.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.terminal.menus.MainMenu;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemWithInfoAboutType;
 import org.vshmaliukh.terminal.services.Utils;
@@ -176,9 +177,10 @@ public class Terminal {
     }
 
     private void menuForSortingLiterature() {
-        GeneratedMenu generatedMenu = new GeneratedMenuForAddingItems();
+        GeneratedMenu menuForSorting = new GeneratedMenuForSorting();
+        menuForSorting.printMenu(printWriter);
         int userChoice = getUserChoice();
-        for (MenuItemWithInfoAboutType sortingMenuItem : generatedMenu.getMenuItems()) {
+        for (MenuItemWithInfoAboutType sortingMenuItem : menuForSorting.getMenuItems()) {
             if (userChoice == sortingMenuItem.getIndex()) {
                 menuForForSortingItemsByType(sortingMenuItem);
             }

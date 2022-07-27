@@ -20,7 +20,7 @@ public enum MainMenu {
 
     final MenuItem menuItem;
 
-    MainMenu(MenuItem menuItem){
+    MainMenu(MenuItem menuItem) {
         this.menuItem = menuItem;
     }
 
@@ -28,7 +28,7 @@ public enum MainMenu {
         return menuItem;
     }
 
-    public static void printMainMenu(PrintWriter printWriter){
+    public static void printMainMenu(PrintWriter printWriter) {
         printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)");
         MainMenu[] values = values();
         for (int j = 0; j < values.length - 1; j++) {
@@ -37,7 +37,7 @@ public enum MainMenu {
         }
     }
 
-    public static MainMenu getByIndex(int index){
+    public static MainMenu getByIndex(int index) {
         return Arrays
                 .stream(values())
                 .filter(e -> e.getMenuItem().getIndex() == index)

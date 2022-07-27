@@ -8,14 +8,10 @@ import java.util.*;
 public abstract class GeneratedMenu {
 
     List<MenuItemWithInfoAboutType> generatedMenu;
-    //public static final List<MenuItemWithInfoAboutType> sortingMenuItems;
-    //static {
-    //    List<MenuItemWithInfoAboutType> sortingMenu = new ArrayList<>();
-    //    int index = 1;
-    //    for (Class<? extends Item> typeName : uniqueTypeNames) {
-    //        sortingMenu.add(new MenuItemWithInfoAboutType<>(index++, "Sort " + typeName.getSimpleName() + " items by value...", typeName));
-    //    }
-    //    sortingMenuItems = Collections.unmodifiableList(sortingMenu);
+
+    public List<MenuItemWithInfoAboutType> getMenuItems() {
+        return generatedMenu;
+    }
 
     abstract void initMenuItems();
 

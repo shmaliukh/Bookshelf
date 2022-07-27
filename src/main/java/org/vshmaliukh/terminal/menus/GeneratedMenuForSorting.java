@@ -11,7 +11,7 @@ import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProv
 
 public class GeneratedMenuForSorting extends GeneratedMenu {
 
-    public GeneratedMenuForSorting(){
+    public GeneratedMenuForSorting() {
         initMenuItems();
     }
 
