@@ -3,7 +3,7 @@ package org.vshmaliukh.terminal.bookshelf;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.Gazette;
+
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.terminal.services.Utils;
 
@@ -13,8 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.book_item.BookHandler.*;
-import static org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.GazetteHandler.GAZETTE_COMPARATOR_BY_NAME;
-import static org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.GazetteHandler.GAZETTE_COMPARATOR_BY_PAGES;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
@@ -30,10 +28,6 @@ class ShelfTest {
     Magazine magazine2 = new Magazine("noNameMagazine2", 2, false);
     Magazine magazine3 = new Magazine("noNameMagazine3", 3, true);
 
-    Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
-    Gazette gazette2 = new Gazette("noNameGazette2", 2, false);
-    Gazette gazette3 = new Gazette("noNameGazette3", 3, true);
-
 
     @Test
     @DisplayName("Add one Book, Magazine and Gazette (are not borrowed) to empty Shelf")
@@ -43,11 +37,9 @@ class ShelfTest {
         Magazine magazine1 = new Magazine("4", 4, false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
-        shelf1.addLiteratureObject(gazette1);
 
         assertTrue(shelf1.getLiteratureInShelf().get(0) instanceof Book
-                && shelf1.getLiteratureInShelf().get(1) instanceof Magazine
-                && shelf1.getLiteratureInShelf().get(2) instanceof Gazette);
+                && shelf1.getLiteratureInShelf().get(1) instanceof Magazine);
     }
 
     @Test
@@ -56,30 +48,12 @@ class ShelfTest {
         Shelf shelf1 = new Shelf(printWriter);
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
-        Gazette gazette1 = new Gazette("666", 666, false);
         shelf1.addLiteratureObject(book1);
         shelf1.addLiteratureObject(magazine1);
-        shelf1.addLiteratureObject(gazette1);
 
         assertTrue(shelf1.getLiteratureOutShelf().get(0) instanceof Book
-                && shelf1.getLiteratureInShelf().get(0) instanceof Magazine
-                && shelf1.getLiteratureInShelf().get(1) instanceof Gazette);
-    }
+                && shelf1.getLiteratureInShelf().get(0) instanceof Magazine);
 
-    @Test
-    @DisplayName("Generating Shelf with one Book, Magazine and Gazette")
-    void generateShelf() {
-        Shelf shelfTest = new Shelf(printWriter);
-        Shelf shelfExpect = new Shelf(printWriter);
-        Book book1 = new Book("1", 1, false, "NoAuthor1", new Date());
-        Magazine magazine1 = new Magazine("4", 4, false);
-        Gazette gazette1 = new Gazette("666", 666, false);
-        shelfTest.addLiteratureObject(book1);
-        shelfTest.addLiteratureObject(gazette1);
-        shelfExpect.addLiteratureObject(magazine1);
-        shelfExpect.addLiteratureObject(gazette1);
-
-        assertEquals(shelfTest.getLiteratureInShelf().size(), shelfExpect.getLiteratureInShelf().size());
     }
 
     @Test
@@ -124,48 +98,6 @@ class ShelfTest {
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
         assertEquals(expectedLastName, sortedMagazinesByPages.get(1).getName());
         assertEquals(expectedLastPagesNumber, sortedMagazinesByPages.get(1).getPagesNumber());
-    }
-
-    @Test
-    @DisplayName("Get sorted only Gazette objects by name")
-    void sortedGazettesByName() {
-        String expectedLastName = "noNameGazette2";
-        int expectedLastPagesNumber = 2;
-        int expectedArraySize = 3;
-
-        Shelf shelf = new Shelf(printWriter);
-        shelf.addLiteratureObject(gazette3);
-        shelf.addLiteratureObject(gazette2);
-        shelf.addLiteratureObject(gazette1);
-
-        List<Gazette> sortedGazettesByName =
-                Utils.getSortedLiterature(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()),
-                        GAZETTE_COMPARATOR_BY_NAME);
-
-        assertEquals(expectedArraySize, sortedGazettesByName.size());
-        assertEquals(expectedLastName, sortedGazettesByName.get(1).getName());
-        assertEquals(expectedLastPagesNumber, sortedGazettesByName.get(1).getPagesNumber());
-    }
-
-    @Test
-    @DisplayName("Get sorted only Gazette objects by pages")
-    void sortedGazettesByPages() {
-        String expectedLastName = "noNameGazette2";
-        int expectedLastPagesNumber = 2;
-        int expectedArraySize = 3;
-
-        Shelf shelf = new Shelf(printWriter);
-        shelf.addLiteratureObject(gazette3);
-        shelf.addLiteratureObject(gazette2);
-        shelf.addLiteratureObject(gazette1);
-
-        List<Gazette> sortedGazettesByPages =
-                Utils.getSortedLiterature(Utils.getItemsByType(Gazette.class, shelf.getAllLiteratureObjects()),
-                        GAZETTE_COMPARATOR_BY_PAGES);
-
-        assertEquals(expectedArraySize, sortedGazettesByPages.size());
-        assertEquals(expectedLastName, sortedGazettesByPages.get(1).getName());
-        assertEquals(expectedLastPagesNumber, sortedGazettesByPages.get(1).getPagesNumber());
     }
 
     @Test

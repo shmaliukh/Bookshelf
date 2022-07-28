@@ -10,5 +10,6 @@ public class ItemTitles {
     public static final String PAGES = "PAGES";
     public static final String BORROWED = "BORROWED";
     public static final String AUTHOR = "AUTHOR";
+    public static final String PUBLISHER = "PUBLISHER";
     public static final String DATE = "DATE";
 }
