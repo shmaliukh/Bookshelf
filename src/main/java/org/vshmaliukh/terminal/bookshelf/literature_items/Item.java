@@ -16,6 +16,8 @@ public abstract class Item implements Serializable {
     protected int pagesNumber;
     protected boolean isBorrowed;
 
+    private Item(){}
+
     /**
      * Base Constructor for creating Book and Magazine object
      */

@@ -1,11 +1,13 @@
 package org.vshmaliukh.terminal.bookshelf.literature_items;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.Gazette;
+import org.vshmaliukh.terminal.bookshelf.literature_items.comics_item.Comics;
+import org.vshmaliukh.terminal.bookshelf.literature_items.comics_item.ComicsHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.BookHandler;
-import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.GazetteHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.MagazineHandler;
+import org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item.Newspaper;
+import org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item.NewspaperHandler;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,9 +21,10 @@ public class ItemHandlerProvider {
     public static final Set<Class<? extends Item>> uniqueTypeNames;
 
     static {
-        itemHandlerMap.put(Gazette.class, new GazetteHandler());
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
+        itemHandlerMap.put(Newspaper.class, new NewspaperHandler());
         itemHandlerMap.put(Book.class, new BookHandler());
+        itemHandlerMap.put(Comics.class, new ComicsHandler());
 
         itemHandlerMap.forEach((k, v) -> itemNameClassMap.put(k.getSimpleName(), k));
         uniqueTypeNames = Collections.unmodifiableSet(new HashSet<>(itemHandlerMap.keySet()));

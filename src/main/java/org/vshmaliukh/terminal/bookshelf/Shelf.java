@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * This is Shelf class which simulates real shelf with books and magazines
  */
 @Slf4j
-public class Shelf implements BaseActionsWithShelf {
+public class Shelf {
 
     private final PrintWriter printWriter;
     private final List<Item> itemsOfShelf = new ArrayList<>();
@@ -27,7 +27,6 @@ public class Shelf implements BaseActionsWithShelf {
         itemList.forEach(this::addLiteratureObject);
     }
 
-    @Override
     public void addLiteratureObject(Item item) {
         if (item != null) {
             itemsOfShelf.add(item);
@@ -36,7 +35,6 @@ public class Shelf implements BaseActionsWithShelf {
         }
     }
 
-    @Override
     public void deleteLiteratureObjectByIndex(int index) {
         if (!this.getLiteratureInShelf().isEmpty()) {
             if (index > 0 && index <= itemsOfShelf.size()) {
@@ -58,7 +56,6 @@ public class Shelf implements BaseActionsWithShelf {
         changeStateOfLiteratureItem(this.getLiteratureInShelf(), index, true, "has borrowed from shelf");
     }
 
-    @Override
     public void arriveLiteratureObjectFromShelfByIndex(int index) {
         changeStateOfLiteratureItem(this.getLiteratureOutShelf(), index, false, "has arriver back to shelf");
     }

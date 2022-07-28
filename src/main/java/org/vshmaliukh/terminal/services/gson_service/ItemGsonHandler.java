@@ -71,7 +71,13 @@ public abstract class ItemGsonHandler extends FilesHandler {
         if (classOfItem == null || jsonObject == null) {
             return null;
         } else {
-            return gson.fromJson(jsonObject, ItemHandlerProvider.getClassByName(classOfItem));
+            Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(classOfItem);
+            if(classByName != null){
+                return gson.fromJson(jsonObject, classByName);
+            }
+            else {
+                return null;
+            }
         }
     }
 

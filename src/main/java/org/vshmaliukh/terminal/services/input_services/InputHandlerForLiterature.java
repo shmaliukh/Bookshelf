@@ -20,6 +20,12 @@ public class InputHandlerForLiterature extends InputHandler {
                 PATTERN_FOR_NAME);
     }
 
+    public String getUserLiteraturePublisher() {
+        return getUserString(
+                MESSAGE_ENTER_LITERATURE_PUBLISHER,
+                PATTERN_FOR_PUBLISHER);
+    }
+
     public String getUserLiteratureAuthor() {
         return getUserString(
                 MESSAGE_ENTER_LITERATURE_AUTHOR,

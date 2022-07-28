@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.gazette_item.Gazette;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
 
@@ -35,9 +34,6 @@ class ItemGsonHandlerTest {
 
     Magazine magazine1 = new Magazine("noNameMagazine1", 1, false);
     Magazine magazine2 = new Magazine("noNameMagazine2", 2, true);
-
-    Gazette gazette1 = new Gazette("noNameGazette1", 1, false);
-    Gazette gazette2 = new Gazette("noNameGazette2", 2, true);
 
 
     ItemGsonHandlerOneFile testGsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testGsonItemHandler");
@@ -74,8 +70,6 @@ class ItemGsonHandlerTest {
         shelf1.addLiteratureObject(book2);
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
-        shelf1.addLiteratureObject(gazette1);
-        shelf1.addLiteratureObject(gazette2);
 
         ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
@@ -102,8 +96,6 @@ class ItemGsonHandlerTest {
         shelf1.addLiteratureObject(book2);
         shelf1.addLiteratureObject(magazine1);
         shelf1.addLiteratureObject(magazine2);
-        shelf1.addLiteratureObject(gazette1);
-        shelf1.addLiteratureObject(gazette2);
 
         ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(tempDirStr, "testGsonHandlerPerType");
         itemGsonHandlerPerType.saveToFile(shelf1.getAllLiteratureObjects());
