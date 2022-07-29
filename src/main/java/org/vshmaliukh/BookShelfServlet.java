@@ -16,9 +16,14 @@ public class BookShelfServlet extends HttpServlet {
 
 
         PrintWriter writer = response.getWriter();
-        writer.println("<html><title>Addition</title><body>");
-        writer.println("<h1>" + result + "</h1");
-        writer.println("</body></html>");
+
+        String title = "";
+
+        WebPageBuilder webPageBuilder = new WebPageBuilder(title);
+
+
+
+        webPageBuilder.buildPage(title);
 
 
     }

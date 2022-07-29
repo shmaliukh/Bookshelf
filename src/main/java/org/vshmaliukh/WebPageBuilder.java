@@ -1,13 +1,24 @@
 package org.vshmaliukh;
 
+import lombok.Data;
+
+@Data
 public class WebPageBuilder {
-    StringBuilder stringBuilder = new StringBuilder();
+
     StringBuilder sb = new StringBuilder();
+    StringBuilder body = new StringBuilder();
+
+    String title;
 
 
     public WebPageBuilder(String title) {
-
+        this.title = title;
     }
+
+    public void addToBody(StringBuilder bodyItem) {
+        body.append(bodyItem);
+    }
+
 
     public StringBuilder bodyStartHTML() {
         return new StringBuilder().append("<body>");
@@ -39,19 +50,21 @@ public class WebPageBuilder {
     }
 
 
-    StringBuilder buildPage(String title) {
+    StringBuilder buildPage() {
+        if(title == null){
+            title = "";
+        }
+
         sb = new StringBuilder();
         sb.append(baseStartHTML())
                 .append(baseStartHTML())
-                .append(initHeader(title))
+                .append(title)
+                .append(bodyStartHTML())
+
+                .append(getBody())
+
                 .append(bodyEndHTML())
                 .append(baseEndHTML());
-
-
-        sb.append("<a href=\" html / add.html\">Add item</a><br>");
-        sb.append("<a href=\"\">Borrow item</a><br>");
-        sb.append("<a href=\"\">Arrive item</a><br>");
-
         return sb;
     }
 
