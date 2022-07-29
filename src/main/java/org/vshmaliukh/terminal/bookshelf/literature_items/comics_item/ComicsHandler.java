@@ -37,17 +37,6 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public List<Comics> clarificationForSortingItems(List<Comics> items, int userChoice, PrintWriter printWriter) {
-        if (items.isEmpty()) {
-            printWriter.println("No available comics IN shelf for sorting");
-        } else {
-            printSortingMenu(printWriter);
-            return getSortedItems(userChoice, items);
-        }
-        return items;
-    }
-
-    @Override
     public Comics getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

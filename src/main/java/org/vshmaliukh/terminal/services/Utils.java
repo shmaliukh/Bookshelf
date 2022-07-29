@@ -16,8 +16,8 @@ public class Utils {
         String charactersForRandomStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            int number = random.nextInt(charactersForRandomStr.length());
-            sb.append(charactersForRandomStr.charAt(number));
+            int characterPosition = random.nextInt(charactersForRandomStr.length());
+            sb.append(charactersForRandomStr.charAt(characterPosition));
         }
         return sb.toString();
     }

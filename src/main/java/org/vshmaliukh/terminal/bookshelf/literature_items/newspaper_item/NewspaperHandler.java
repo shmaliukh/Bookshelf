@@ -34,17 +34,6 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public List<Newspaper> clarificationForSortingItems(List<Newspaper> newspapers, int userChoice, PrintWriter printWriter) {
-        if (newspapers.isEmpty()) {
-            printWriter.println("No available newspapers IN shelf for sorting");
-        } else {
-            printSortingMenu(printWriter);
-            return getSortedItems(userChoice, newspapers);
-        }
-        return newspapers;
-    }
-
-    @Override
     public Newspaper getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

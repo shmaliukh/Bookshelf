@@ -41,17 +41,6 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public List<Book> clarificationForSortingItems(List<Book> items, int userChoice, PrintWriter printWriter) {
-        if (items.isEmpty()) {
-            printWriter.println("No available books IN shelf for sorting");
-        } else {
-            printSortingMenu(printWriter);
-            return getSortedItems(userChoice, items);
-        }
-        return items;
-    }
-
-    @Override
     public Book getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

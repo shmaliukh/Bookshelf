@@ -33,17 +33,6 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public List<Magazine> clarificationForSortingItems(List<Magazine> magazines, int userChoice, PrintWriter printWriter) {
-        if (magazines.isEmpty()) {
-            printWriter.println("No available magazines IN shelf for sorting");
-        } else {
-            printSortingMenu(printWriter);
-            return getSortedItems(userChoice, magazines);
-        }
-        return magazines;
-    }
-
-    @Override
     public Magazine getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();
