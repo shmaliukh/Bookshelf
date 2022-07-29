@@ -37,7 +37,7 @@ public class TablePrinter {
         for (Map<String, String> titleValueMap : buffTable) {
             List<String> raw = new ArrayList<>();
             for (String title : titleList) {
-                raw.add(titleValueMap.getOrDefault(title, "~~"));
+                raw.add(titleValueMap.getOrDefault(title, "~~" + System.lineSeparator()));
             }
             tableList.add(raw);
         }
@@ -65,7 +65,7 @@ public class TablePrinter {
 
     private void appendWithDefaultValuesList(Map<String, String> titleValueMap, int max) {
         while (titleValueMap.size() < max) {
-            titleValueMap.put("", "~~");
+            titleValueMap.put("", "~~" + System.lineSeparator());
         }
     }
 
@@ -105,7 +105,7 @@ public class TablePrinter {
     }
 
     private void addIndexBeforeLines() {
-        titleList.add(0, "#");
+        titleList.add(0, "#" + System.lineSeparator());
         for (int counter = 0; counter < tableList.size(); counter++) {
             tableList.get(counter).add(0, String.valueOf(counter + 1));
         }
@@ -116,7 +116,7 @@ public class TablePrinter {
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append("─");
+                stringBuilder.append("─" + System.lineSeparator());
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);
@@ -135,7 +135,7 @@ public class TablePrinter {
     private void fillStringListWithSpaces(List<String> stringList) {
         for (int i = 0; i < stringList.size(); i++) {
             while (stringList.get(i).length() < sizeList.get(i)) {
-                stringList.set(i, stringList.get(i) + " ");
+                stringList.set(i, stringList.get(i) + " " + System.lineSeparator());
             }
         }
     }
@@ -146,12 +146,12 @@ public class TablePrinter {
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("│");
+        stringBuilder.append("│" + System.lineSeparator());
         for (String value : stringList) {
-            stringBuilder.append(" ");
+            stringBuilder.append(" " + System.lineSeparator());
             stringBuilder.append(value);
-            stringBuilder.append(" ");
-            stringBuilder.append("│");
+            stringBuilder.append(" " + System.lineSeparator());
+            stringBuilder.append("│" + System.lineSeparator());
         }
         return stringBuilder.toString();
     }

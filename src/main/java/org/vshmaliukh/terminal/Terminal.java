@@ -90,7 +90,7 @@ public class Terminal {
     }
 
     public boolean startWork(boolean userMode) {
-        printWriter.println("Terminal START");
+        printWriter.println("Terminal START" + System.lineSeparator());
 
         startWithUserConfig(userMode);
         setUpTypeOfWorkWithFiles();
@@ -125,16 +125,16 @@ public class Terminal {
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
-        printWriter.print("Type of work with save/read shelf with files: ");
+        printWriter.print("Type of work with save/read shelf with files: " + System.lineSeparator());
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
-                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE" + System.lineSeparator());
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
+                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE" + System.lineSeparator());
                 break;
             default:
-                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE" + System.lineSeparator());
                 break;
         }
     }
@@ -171,7 +171,7 @@ public class Terminal {
                 closeTerminal();
                 break;
             default:
-                printWriter.println("Wrong input");
+                printWriter.println("Wrong input" + System.lineSeparator());
                 break;
         }
     }
@@ -200,7 +200,7 @@ public class Terminal {
      * Method print info Shelf and it's Literature objects
      */
     private void printCurrentStateOfShelf() {
-        printWriter.println("Current state of Shelf:");
+        printWriter.println("Current state of Shelf:" + System.lineSeparator());
         TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
     }
 
@@ -209,7 +209,7 @@ public class Terminal {
      */
     private void closeTerminal() {
         this.stop();
-        printWriter.println("Terminal STOP");
+        printWriter.println("Terminal STOP" + System.lineSeparator());
     }
 
     /**
@@ -217,11 +217,11 @@ public class Terminal {
      */
     private void menuForArrivingLiterature() {
         if (shelf.getLiteratureOutShelf().isEmpty()) {
-            printWriter.println("No literature OUT shelf to arrive");
+            printWriter.println("No literature OUT shelf to arrive" + System.lineSeparator());
         } else {
-            printWriter.println("Enter INDEX of Literature object to arrive one:");
+            printWriter.println("Enter INDEX of Literature object to arrive one:" + System.lineSeparator());
             TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
-            printWriter.println("Enter another value to return");
+            printWriter.println("Enter another value to return" + System.lineSeparator());
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -231,12 +231,12 @@ public class Terminal {
      */
     private void menuForBorrowingLiterature() {
         if (shelf.getLiteratureInShelf().isEmpty()) {
-            printWriter.println("No available literature IN shelf to borrow");
+            printWriter.println("No available literature IN shelf to borrow" + System.lineSeparator());
         } else {
-            printWriter.println("Enter INDEX of Literature object to borrow one:");
+            printWriter.println("Enter INDEX of Literature object to borrow one:" + System.lineSeparator());
             TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
-            printWriter.println("Enter another value to return");
+            printWriter.println("Enter another value to return" + System.lineSeparator());
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -246,12 +246,12 @@ public class Terminal {
      */
     private void menuForDeletingLiterature() {
         if (shelf.getLiteratureInShelf().isEmpty()) {
-            printWriter.println("No available literature IN shelf to delete");
+            printWriter.println("No available literature IN shelf to delete" + System.lineSeparator());
         } else {
-            printWriter.println("Enter INDEX of Literature object to delete one:");
+            printWriter.println("Enter INDEX of Literature object to delete one:" + System.lineSeparator());
             TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
-            printWriter.println("Enter another value to return");
+            printWriter.println("Enter another value to return" + System.lineSeparator());
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -274,7 +274,7 @@ public class Terminal {
             shelf.addLiteratureObject(item);
             informAboutAddedLiteratureObject(item);
         } else {
-            printWriter.println("Wrong input");
+            printWriter.println("Wrong input" + System.lineSeparator());
         }
     }
 
@@ -282,7 +282,7 @@ public class Terminal {
      * Method simply inform user about added Literature object
      */
     private void informAboutAddedLiteratureObject(Item item) {
-        printWriter.println(item + " has added to shelf");
+        printWriter.println(item + " has added to shelf" + System.lineSeparator());
     }
 
     /**
@@ -291,12 +291,12 @@ public class Terminal {
      * @return entered integer value from console
      */
     public int getUserChoice() {
-        if (scanner.hasNextLine() && !scanner.nextLine().equals("")) {
-            String str = scanner.nextLine().replaceAll("[\\D]", "").trim();
+        if (scanner.hasNextLine() && !scanner.nextLine().equals("" + System.lineSeparator())) {
+            String str = scanner.nextLine().replaceAll("[\\D]", "" + System.lineSeparator()).trim();
             if (str.length() > 8) {
                 str = str.substring(0, 8);
             }
-            if (!str.equals("")) {
+            if (!str.equals("" + System.lineSeparator())) {
                 return Integer.parseInt(str);
             }
         }
