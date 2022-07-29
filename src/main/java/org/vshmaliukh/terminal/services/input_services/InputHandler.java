@@ -1,6 +1,7 @@
 package org.vshmaliukh.terminal.services.input_services;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.ScannerWrapper;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -15,14 +16,14 @@ import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserIn
 @Slf4j
 public abstract class InputHandler {
 
-    private final Scanner scanner;
+    private final ScannerWrapper scanner;
     private final PrintWriter printWriter;
 
     private boolean validationResult;
     private String inputString = "";
     private int currentRecursionLevel;
 
-    protected InputHandler(Scanner scanner, PrintWriter printWriter) {
+    protected InputHandler(ScannerWrapper scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
     }

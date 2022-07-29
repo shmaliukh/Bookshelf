@@ -1,5 +1,7 @@
 package org.vshmaliukh.terminal.services.input_services;
 
+import org.vshmaliukh.ScannerWrapper;
+
 import java.io.PrintWriter;
 import java.util.Scanner;
 
@@ -7,7 +9,7 @@ import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserIn
 
 public class InputHandlerForUser extends InputHandler {
 
-    public InputHandlerForUser(Scanner scanner, PrintWriter printWriter) {
+    public InputHandlerForUser(ScannerWrapper scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

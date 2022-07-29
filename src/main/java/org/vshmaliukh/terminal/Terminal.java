@@ -1,5 +1,6 @@
 package org.vshmaliukh.terminal;
 
+import org.vshmaliukh.ScannerWrapper;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
@@ -40,10 +41,10 @@ public class Terminal {
     private boolean isActiveTerminal;
     private int typeOfWorkWithFiles;
 
-    private final Shelf shelf;
+    public final Shelf shelf;
     private User user;
 
-    private final Scanner scanner;
+    private final ScannerWrapper scanner;
     private final PrintWriter printWriter;
 
     private final InputHandlerForUser inputHandlerForUser;
@@ -51,10 +52,10 @@ public class Terminal {
 
     private ConvertorToStringForLiterature convertorToStringForLiterature;
 
-    private ItemGsonHandler itemGsonHandler;
+    public ItemGsonHandler itemGsonHandler;
     private Random random;
 
-    public Terminal(Scanner scanner, PrintWriter printWriter) {
+    public Terminal(ScannerWrapper scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
 
@@ -68,7 +69,7 @@ public class Terminal {
         setUpUserName(userMode);
     }
 
-    private void setUpTypeOfWorkWithFiles() {
+    public void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
         String property = System.getProperty("user.home");
         setUpGsonHandler(property);
@@ -104,7 +105,7 @@ public class Terminal {
         return false;
     }
 
-    private void initServicesForTerminal() {
+    public void initServicesForTerminal() {
         random = new Random();
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
 
@@ -123,7 +124,7 @@ public class Terminal {
         user = new User(inputHandlerForUser.getUserName());
     }
 
-    private void informAboutFileTypeWork(int typeOfWorkWithFiles) {
+    public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
         printWriter.print("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
@@ -143,7 +144,7 @@ public class Terminal {
      * Continually print menu items and wait for user choice
      * Works till user enter '0' (Exit)
      */
-    private void generateUserInterface() {
+    public void generateUserInterface() {
         printMainMenu();
         MainMenu byIndex = getByIndex(getUserChoice());
         switch (byIndex) {
@@ -290,7 +291,7 @@ public class Terminal {
      * @return entered integer value from console
      */
     public int getUserChoice() {
-        if (scanner.hasNextLine()) {
+        if (scanner.hasNextLine() && !scanner.nextLine().equals("")) {
             String str = scanner.nextLine().replaceAll("[\\D]", "").trim();
             if (str.length() > 8) {
                 str = str.substring(0, 8);

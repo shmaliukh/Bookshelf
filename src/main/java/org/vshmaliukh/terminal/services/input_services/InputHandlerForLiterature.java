@@ -1,5 +1,7 @@
 package org.vshmaliukh.terminal.services.input_services;
 
+import org.vshmaliukh.ScannerWrapper;
+
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +12,7 @@ import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserIn
 
 public class InputHandlerForLiterature extends InputHandler {
 
-    public InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
+    public InputHandlerForLiterature(ScannerWrapper scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

@@ -27,7 +27,7 @@ public class Main {
     static class TerminalThread extends Thread {
         private final Scanner scanner = new Scanner(System.in);
         private final PrintWriter printWriter = new PrintWriter(System.out, true);
-        private final Terminal terminal = new Terminal(scanner, printWriter);
+        private final Terminal terminal = new Terminal(new ScannerWrapper(scanner), printWriter);
 
         @Override
         public synchronized void run() {
