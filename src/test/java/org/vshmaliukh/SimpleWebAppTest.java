@@ -22,9 +22,9 @@ class SimpleWebAppTest {
                     throws ServletException, IOException {
                 PrintWriter writer = resp.getWriter();
 
-                writer.println("<html><title>Welcome</title><body>");
-                writer.println("<h1>Have a Great Day!</h1>");
-                writer.println("</body></html>");
+                writer.print("<html><title>Welcome</title><body>");
+                writer.print("<h1>Have a Great Day!</h1>");
+                writer.print("</body></html>");
             }
         };
     }

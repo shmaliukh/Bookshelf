@@ -74,7 +74,11 @@ public abstract class InputHandler {
 
     private void readStringFromLine(){
         if(scanner.hasNextLine()) {
-            inputString = scanner.nextLine().trim();
+            String trim = scanner.nextLine().trim();
+            if(trim.equals("")){
+                scanner.close();
+            }
+            inputString = trim;
         }
     }
 

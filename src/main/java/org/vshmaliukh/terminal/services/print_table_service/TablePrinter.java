@@ -116,7 +116,7 @@ public class TablePrinter {
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append("─" + System.lineSeparator());
+                stringBuilder.append("─");
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);
@@ -146,12 +146,12 @@ public class TablePrinter {
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("│" + System.lineSeparator());
+        stringBuilder.append("│");
         for (String value : stringList) {
-            stringBuilder.append(" " + System.lineSeparator());
+            stringBuilder.append(" ");
             stringBuilder.append(value);
-            stringBuilder.append(" " + System.lineSeparator());
-            stringBuilder.append("│" + System.lineSeparator());
+            stringBuilder.append(" ");
+            stringBuilder.append("│");
         }
         return stringBuilder.toString();
     }

@@ -94,7 +94,7 @@ class BookHandlerTest {
         Scanner scanner = new Scanner(System.lineSeparator());
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
         Book itemByUserInput = bookHandler.getItemByUserInput(inputHandlerForLiterature, printWriter);
-        System.out.println(itemByUserInput);
+        System.out.print(itemByUserInput);
 
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());

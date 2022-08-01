@@ -58,7 +58,7 @@ class TerminalTest {
         Scanner scanner = new Scanner(str);
         Terminal terminal = new Terminal(scanner, new PrintWriter(System.out, true));
         int userChoice = terminal.getUserChoice();
-        System.out.println("userChoice = " + userChoice);
+        System.out.print("userChoice = " + userChoice);
         assertTrue(userChoice >= 0 && userChoice < Integer.MAX_VALUE);
     }
 
