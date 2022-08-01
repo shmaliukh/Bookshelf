@@ -43,7 +43,7 @@ public class BookShelfServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
 
         terminal.generateUserInterface();
-        writer.println("<br>" +baos.toString() + "<br>");
+        writer.println("<br>" + baos.toString().replaceAll(System.lineSeparator(), "<br>") + "<br>");
         baos.reset();
 
         String userRequestParameter = request.getParameter(USER_INPUT);
@@ -52,7 +52,7 @@ public class BookShelfServlet extends HttpServlet {
 
         webPageBuilder.addToBody(
                 "<form action = \"HelloForm\" method = \"POST\">\n" +
-                        "         User input: <input type = \"text\" name = \""+USER_INPUT+"\">\n" +
+                        "         User input: <input type = \"text\" name = \"" + USER_INPUT + "\">\n" +
                         "         <br />\n" +
                         "         <input type = \"submit\" value = \"Submit\" />\n" +
                         "      </form>"

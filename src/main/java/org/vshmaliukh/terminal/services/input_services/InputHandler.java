@@ -142,6 +142,6 @@ public abstract class InputHandler {
     }
 
     private void informMessageToUser(String message) {
-        printWriter.println(message);
+        printWriter.print(message + System.lineSeparator());
     }
 }
