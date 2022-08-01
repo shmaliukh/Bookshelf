@@ -1,9 +1,8 @@
 package org.vshmaliukh.terminal.services.input_services;
 
-import org.vshmaliukh.ScannerWrapper;
+import org.vshmaliukh.web.ScannerWrapper;
 
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 

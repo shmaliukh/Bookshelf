@@ -1,4 +1,4 @@
-package org.vshmaliukh;
+package org.vshmaliukh.web;
 
 import javax.servlet.http.HttpServlet;
 import java.io.Closeable;
@@ -6,8 +6,9 @@ import java.util.Scanner;
 
 public class ScannerWrapper implements Closeable {
     private Scanner scanner;
+    boolean state = false;
 
-    public  ScannerWrapper(Scanner scanner){
+    public ScannerWrapper(Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -17,6 +18,10 @@ public class ScannerWrapper implements Closeable {
 
     public String nextLine() {
         return scanner.nextLine();
+    }
+
+    private void waitForResponse() {
+
     }
 
     @Override

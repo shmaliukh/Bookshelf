@@ -1,7 +1,6 @@
 package org.vshmaliukh.terminal;
 
-import lombok.Data;
-import org.vshmaliukh.ScannerWrapper;
+import org.vshmaliukh.web.ScannerWrapper;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
@@ -30,7 +29,7 @@ import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
  * @version 1.1.3
  * Class which gives user interactive interface
  */
-public class Terminal {
+public class Terminal{
 
     public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
 
@@ -297,7 +296,7 @@ public class Terminal {
             if (str.length() > 8) {
                 str = str.substring(0, 8);
             }
-            if (!str.equals("" + System.lineSeparator())) {
+            if (!str.equals("")) {
                 return Integer.parseInt(str);
             }
         }

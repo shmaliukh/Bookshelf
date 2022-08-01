@@ -1,4 +1,4 @@
-package org.vshmaliukh;
+package org.vshmaliukh.web;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package org.vshmaliukh;
+package org.vshmaliukh.web;
 
 import java.io.File;
 
@@ -20,7 +20,9 @@ public class SimpleWebApp {
 
         String servletName = "book_shelf_servlet";
         String urlPattern = "/book_shelf/*";
-        tomcat.addServlet(contextPath, servletName, new BookShelfServlet());
+        BookShelfServlet bookShelfServlet = new BookShelfServlet();
+
+        tomcat.addServlet(contextPath, servletName, bookShelfServlet);
         context.addServletMappingDecoded(urlPattern, servletName);
 
         tomcat.start();

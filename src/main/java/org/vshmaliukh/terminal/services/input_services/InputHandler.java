@@ -1,13 +1,12 @@
 package org.vshmaliukh.terminal.services.input_services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.ScannerWrapper;
+import org.vshmaliukh.web.ScannerWrapper;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
