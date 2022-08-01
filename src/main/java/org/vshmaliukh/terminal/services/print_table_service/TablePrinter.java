@@ -124,7 +124,7 @@ public class TablePrinter {
         }
 
         stringBuilder.append(endSymbol);
-        printWriter.println(stringBuilder);
+        printWriter.print(stringBuilder + System.lineSeparator());
     }
 
     private void appendEmptyItemsForTable() {
@@ -141,7 +141,7 @@ public class TablePrinter {
     }
 
     private void printLine(List<String> stringList) {
-        printWriter.println(getLineString(stringList));
+        printWriter.print(getLineString(stringList) + System.lineSeparator());
     }
 
     public String getLineString(List<String> stringList) {

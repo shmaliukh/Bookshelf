@@ -40,16 +40,16 @@ public class Shelf {
             if (index > 0 && index <= itemsOfShelf.size()) {
                 informAboutActionWithLiterature(itemsOfShelf.remove(index - 1), "has deleted from shelf");
             } else {
-                printWriter.println("Wrong index");
+                printWriter.print("Wrong index" + System.lineSeparator());
             }
-        } else printWriter.println("Empty shelf");
+        } else printWriter.print("Empty shelf" + System.lineSeparator());
     }
 
     /**
      * Method simply inform user about deleted Literature object
      */
     private void informAboutActionWithLiterature(Item item, String message) {
-        printWriter.println(item + " " + message);
+        printWriter.print(item + " " + message + System.lineSeparator());
     }
 
     public void borrowLiteratureObjectFromShelfByIndex(int index) {
@@ -67,9 +67,11 @@ public class Shelf {
                 buffer.setBorrowed(stateBorrowed);
                 informAboutActionWithLiterature(buffer, messageAboutAction);
             } else {
-                printWriter.println("Wrong index");
+                printWriter.print("Wrong index" + System.lineSeparator());
             }
-        } else printWriter.println("No available literature");
+        } else {
+            printWriter.print("No available literature" + System.lineSeparator());
+        }
     }
 
     public List<Item> getLiteratureInShelf() {
