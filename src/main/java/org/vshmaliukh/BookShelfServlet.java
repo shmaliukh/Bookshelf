@@ -12,28 +12,37 @@ import java.util.Map;
 public class BookShelfServlet extends HttpServlet {
 
 
+    public static final String USER_INPUT = "user_input";
+
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, String[]> parameterMap = req.getParameterMap();
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        System.out.println("doPost");
+        Map<String, String[]> parameterMap = request.getParameterMap();
         parameterMap.forEach((k, v) -> System.out.println(k + "=" + Arrays.toString(v)));
 
+        doGet(request, response);
     }
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
         String title = "book_shelf";
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
+
+        webPageBuilder.addToBody(request.getParameter(USER_INPUT) + "<br>");
 
 
 
 
         webPageBuilder.addToBody(
-                "<form action=\"\" method=\"get\" target=\"_blank\">\n" +
-                        "User input: <input type=\"text\" name=\"user_input\">\n" +
-                        "<input type=\"button\" value=\"Submit\">\n" +
-                        "</form>"
+                "<form action = \"HelloForm\" method = \"POST\">\n" +
+                        "         User input: <input type = \"text\" name = \""+USER_INPUT+"\">\n" +
+                        "         <br />\n" +
+                        "         <input type = \"submit\" value = \"Submit\" />\n" +
+                        "      </form>"
         );
         writer.println(webPageBuilder.buildPage());
     }

@@ -24,7 +24,9 @@ public class WebPageBuilder {
     }
 
     public StringBuilder bodyStartHTML() {
-        return new StringBuilder().append("<body>");
+        return new StringBuilder().append("<body" +
+                //" bgcolor = \\\"#DBF4AD\\\"" + // TODO use color background
+                ">");
     }
 
     public StringBuilder bodyEndHTML() {
