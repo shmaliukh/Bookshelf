@@ -43,8 +43,6 @@ public class LogInServlet extends HttpServlet {
                 "   <input type = \"text\" name = \"" + userName + "\">\n" +
                 "       <br />\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "       <br />\n" +
-                //"   <input type = \"button\" value = \"Back\" />\n" +
                 "</form>");
         writer.println(webPageBuilder.buildPage());
     }

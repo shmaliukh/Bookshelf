@@ -45,7 +45,7 @@ public class WorkWithFilesServlet extends HttpServlet {
                 "       <br />\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>" +
-                "   <button onclick=\"window.location.href='http://localhost:8080/book_shelf/log_in';\">Back</button>\n");
+                "   <button onclick=\"window.location.href='" + LOG_IN_TITLE + "';\">Back</button>\n");
         writer.println(webPageBuilder.buildPage());
     }
 }

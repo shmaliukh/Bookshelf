@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static org.vshmaliukh.web.SimpleWebApp.MAIN_MENU_TITLE;
-import static org.vshmaliukh.web.SimpleWebApp.TERMINAL;
+import static org.vshmaliukh.web.SimpleWebApp.*;
 
 public class MainMenuServlet extends HttpServlet {
     String title = MAIN_MENU_TITLE;
@@ -27,7 +26,7 @@ public class MainMenuServlet extends HttpServlet {
             webPageBuilder.addToBody(menuItem.toString() + " <br> ");
         }
 
-        webPageBuilder.addToBody("   <button onclick=\"window.location.href='http://localhost:8080/book_shelf/log_in';\">Back</button>\n");
+        webPageBuilder.addToBody("<br> <button onclick=\"window.location.href='" + LOG_IN_TITLE + "';\">Log out</button>\n");
         writer.println(webPageBuilder.buildPage());
     }
 }
