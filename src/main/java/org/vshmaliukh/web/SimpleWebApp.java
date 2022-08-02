@@ -32,24 +32,20 @@ public class SimpleWebApp {
 
         Context context = tomcat.addContext(contextPath, docBase);
 
-        String servletName = "book_shelf_servlet";
-        String urlPattern = "/book_shelf/*";
-
-        //TerminalThread terminalThread = new TerminalThread();
-        //terminalThread.start();
-
-        BookShelfServlet bookShelfServlet = new BookShelfServlet();
-        tomcat.addServlet(contextPath, servletName, bookShelfServlet);
-        context.addServletMappingDecoded(urlPattern, servletName);
+        //String servletName = "book_shelf_servlet";
+        //String urlPattern = "/book_shelf/*";//
+        //BookShelfServlet bookShelfServlet = new BookShelfServlet();
+        //tomcat.addServlet(contextPath, servletName, bookShelfServlet);
+        //context.addServletMappingDecoded(urlPattern, servletName);
 
         tomcat.addServlet(contextPath, "log_in_servlet", new LogInServlet());
-        context.addServletMappingDecoded("/book_shelf/" + LOG_IN_TITLE, "log_in_servlet");
+        context.addServletMappingDecoded('/' + LOG_IN_TITLE, "log_in_servlet");
 
         tomcat.addServlet(contextPath, "select_work_with_files_servlet", new WorkWithFilesServlet());
-        context.addServletMappingDecoded("/book_shelf/"+ SELECT_WORK_WITH_FILES_TITLE, "select_work_with_files_servlet");
+        context.addServletMappingDecoded('/' + SELECT_WORK_WITH_FILES_TITLE, "select_work_with_files_servlet");
 
         tomcat.addServlet(contextPath, "main_menu_servlet", new MainMenuServlet());
-        context.addServletMappingDecoded("/book_shelf/"+ MAIN_MENU_TITLE, "main_menu_servlet");
+        context.addServletMappingDecoded('/' + MAIN_MENU_TITLE, "main_menu_servlet");
 
         tomcat.start();
         tomcat.getServer().await();

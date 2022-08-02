@@ -1,5 +1,6 @@
 package org.vshmaliukh.web;
 
+import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForUser;
 
@@ -14,20 +15,23 @@ import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserIn
 import static org.vshmaliukh.web.SimpleWebApp.*;
 
 public class LogInServlet extends HttpServlet {
+    public static final String USER_NAME = "user_name";
     private String title = LOG_IN_TITLE;
-    private String userName = "user_name";
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userInputName = request.getParameter(userName);
+        String userInputName = request.getParameter(USER_NAME);
         InputHandlerForUser inputHandlerForUser = new InputHandlerForUser(null, null);
         if (inputHandlerForUser.isValidInputString(userInputName, PATTERN_FOR_USER_NAME)) {
-            TERMINAL.setUser(new User(userInputName));
-            response.sendRedirect(request.getContextPath() + "/book_shelf/" + SELECT_WORK_WITH_FILES_TITLE);
+
+            String redirectorURL = new URIBuilder()
+                    .setPath(SELECT_WORK_WITH_FILES_TITLE)
+                    .addParameter(USER_NAME, userInputName)
+                    .toString();
+            response.sendRedirect(redirectorURL);
         } else {
             doGet(request, response); // TODO add message about wrong input
         }
-        //URIBuilder uriBuilder = new URIBuilder(); // TODO use uriBuilder
     }
 
     @Override
@@ -39,9 +43,9 @@ public class LogInServlet extends HttpServlet {
         webPageBuilder.addToBody("" +
                 "<form action = \"" + title + "\" method = \"POST\">\n" +
                 MESSAGE_ENTER_USER_NAME + "\n" +
-                "       <br />\n" +
-                "   <input type = \"text\" name = \"" + userName + "\">\n" +
-                "       <br />\n" +
+                "       <br>\n" +
+                "   <input type = \"text\" name = \"" + USER_NAME + "\">\n" +
+                "       <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>");
         writer.println(webPageBuilder.buildPage());

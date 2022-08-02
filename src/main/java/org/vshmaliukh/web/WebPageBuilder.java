@@ -23,6 +23,16 @@ public class WebPageBuilder {
         body.append(bodyItem);
     }
 
+    public void addButton(String reference, String label) {
+        body.append(" <br> \n" +
+                "<button " +
+                "onclick=\"window.location.href='" +
+                reference +
+                "';\"> " +
+                label +
+                "</button> \n");
+    }
+
     public StringBuilder bodyStartHTML() {
         return new StringBuilder().append("<body" +
                 //" bgcolor = \\\"#DBF4AD\\\"" + // TODO use color background

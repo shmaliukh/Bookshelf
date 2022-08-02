@@ -20,13 +20,14 @@ public class MainMenuServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         response.setContentType("text/html");
 
+
         List<MainMenu> allMenuItems = MainMenu.getAllMenuItems();
         for (int i = 0; i < allMenuItems.size() - 1; i++) {
             MainMenu menuItem = allMenuItems.get(i);
             webPageBuilder.addToBody(menuItem.toString() + " <br> ");
         }
 
-        webPageBuilder.addToBody("<br> <button onclick=\"window.location.href='" + LOG_IN_TITLE + "';\">Log out</button>\n");
+        webPageBuilder.addButton(LOG_IN_TITLE, "Log out");
         writer.println(webPageBuilder.buildPage());
     }
 }
