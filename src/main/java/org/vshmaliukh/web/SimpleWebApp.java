@@ -12,6 +12,11 @@ import org.vshmaliukh.terminal.Terminal;
 
 public class SimpleWebApp {
 
+    public static ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
+    public static Scanner scanner = new Scanner("");
+    public static PrintWriter printWriter = new PrintWriter(BAOS, true);
+    public static Terminal TERMINAL = new Terminal(new ScannerWrapper(scanner), printWriter);
+
     public static void main(String[] args) throws LifecycleException {
         Tomcat tomcat = new Tomcat();
         tomcat.setBaseDir("web_content");
@@ -29,29 +34,18 @@ public class SimpleWebApp {
         //terminalThread.start();
 
         BookShelfServlet bookShelfServlet = new BookShelfServlet();
-
         tomcat.addServlet(contextPath, servletName, bookShelfServlet);
         context.addServletMappingDecoded(urlPattern, servletName);
+
+        tomcat.addServlet(contextPath, "log_in_servlet", new LogInServlet());
+        context.addServletMappingDecoded("/book_shelf/log_in", "log_in_servlet");
+
+        tomcat.addServlet(contextPath, "select_work_with_files_servlet", new WorkWithFilesServlet());
+        context.addServletMappingDecoded("/book_shelf/select_work_with_files", "select_work_with_files_servlet");
 
         tomcat.start();
         tomcat.getServer().await();
 
 
-    }
-
-    static class TerminalThread extends Thread {
-        public static final ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
-        public static Scanner scanner = new Scanner("");
-        public static PrintWriter printWriter = new PrintWriter(BAOS, true);
-        public static final Terminal TERMINAL = new Terminal(new ScannerWrapper(scanner), printWriter);
-
-        @Override
-        public synchronized void run() {
-            try {
-                TERMINAL.startWork(false);
-            } catch (Exception e) {
-                //log.error("[TerminalThread] problem to start thread. Exception: ", e);
-            }
-        }
     }
 }

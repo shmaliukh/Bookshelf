@@ -1,5 +1,6 @@
 package org.vshmaliukh.terminal;
 
+import lombok.Data;
 import org.vshmaliukh.web.ScannerWrapper;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
@@ -29,6 +30,7 @@ import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
  * @version 1.1.3
  * Class which gives user interactive interface
  */
+@Data
 public class Terminal {
 
     public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
@@ -43,6 +45,7 @@ public class Terminal {
 
     public final Shelf shelf;
     private User user;
+    private String property = System.getProperty("user.home");
 
     public ScannerWrapper scanner;
     public PrintWriter printWriter;
@@ -71,11 +74,10 @@ public class Terminal {
 
     public void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
-        String property = System.getProperty("user.home");
-        setUpGsonHandler(property);
+        setUpGsonHandler();
     }
 
-    private void setUpGsonHandler(String property) {
+    public void setUpGsonHandler() {
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
                 itemGsonHandler = new ItemGsonHandlerOneFile(property, user.getName());
@@ -108,7 +110,6 @@ public class Terminal {
     public void initServicesForTerminal() {
         random = new Random();
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
-
         convertorToStringForLiterature = new ConvertorToStringForLiterature();
     }
 

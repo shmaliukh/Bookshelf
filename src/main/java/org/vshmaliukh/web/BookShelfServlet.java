@@ -6,21 +6,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Scanner;
 
-import static org.vshmaliukh.web.SimpleWebApp.TerminalThread.BAOS;
-import static org.vshmaliukh.web.SimpleWebApp.TerminalThread.TERMINAL;
+import static org.vshmaliukh.web.SimpleWebApp.BAOS;
+import static org.vshmaliukh.web.SimpleWebApp.TERMINAL;
 
 public class BookShelfServlet extends HttpServlet {
 
     public static final String TITLE = "book_shelf";
     public static final String USER_INPUT = "user_input";
-    public static final String USER_INPUT_FORM = "<form action = \"user_interface\" method = \"POST\">\n" +
+    public static final String USER_INPUT_FORM =
+            "<form action = \"user_interface\" method = \"POST\">\n" +
             "         <input type = \"text\" name = \"" + USER_INPUT + "\">\n" +
             "         <br />\n" +
             "         <input type = \"submit\" value = \"Submit\" />\n" +
@@ -34,7 +34,7 @@ public class BookShelfServlet extends HttpServlet {
         parameterMap.forEach((k, v) -> System.out.println(k + "=" + Arrays.toString(v)));
 
         String userRequestParameter = request.getParameter(USER_INPUT);
-        TERMINAL.scanner = new ScannerWrapper(new Scanner(userRequestParameter));
+        //TERMINAL.scanner = new ScannerWrapper(new Scanner(userRequestParameter));
 
         doGet(request, response);
     }
@@ -66,9 +66,7 @@ public class BookShelfServlet extends HttpServlet {
     }
 
     private void printTerminalInterface(PrintWriter writer) {
-        TERMINAL.printWriter.flush();
-        System.out.println(BAOS);
-        String message = BAOS.toString().replaceAll(System.lineSeparator(), "<br>");
+        String message = BAOS.toString().replaceAll(System.lineSeparator(), " <br> ");
         writer.println("<br>" + message + "<br>");
         BAOS.reset();
     }
