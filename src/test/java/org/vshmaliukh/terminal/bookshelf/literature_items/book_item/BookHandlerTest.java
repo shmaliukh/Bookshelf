@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.web.ScannerWrapper;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -91,10 +92,10 @@ class BookHandlerTest {
 
     @Test
     void getItemByUserInput() {
-        Scanner scanner = new Scanner(System.lineSeparator());
+        ScannerWrapper scanner = new ScannerWrapper( new Scanner(System.lineSeparator()));
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
         Book itemByUserInput = bookHandler.getItemByUserInput(inputHandlerForLiterature, printWriter);
-        System.out.print(itemByUserInput);
+        System.out.println(itemByUserInput);
 
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());

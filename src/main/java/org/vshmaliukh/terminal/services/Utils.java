@@ -29,7 +29,7 @@ public class Utils {
                 .collect(Collectors.toList());
     }
 
-    public static  <T extends Item> List<T> getSortedLiterature(List<T> literatureList, Comparator<T> itemsComparator) {
+    public static <T extends Item> List<T> getSortedLiterature(List<T> literatureList, Comparator<T> itemsComparator) {
         return literatureList.stream()
                 .sorted(itemsComparator)
                 .collect(Collectors.toList());

@@ -27,8 +27,8 @@ public abstract class InputHandler {
         this.printWriter = printWriter;
     }
 
-    public <T> boolean tryAgain(T defaultValue){
-        if(currentRecursionLevel < MAX_RECURSION_LEVEL){
+    public <T> boolean tryAgain(T defaultValue) {
+        if (currentRecursionLevel < MAX_RECURSION_LEVEL) {
             informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN + " "
                     + (MAX_RECURSION_LEVEL - currentRecursionLevel)
                     + " more attempt(s) left");
@@ -58,7 +58,7 @@ public abstract class InputHandler {
         if (inputStr == null) {
             return false;
         }
-        try{
+        try {
             dateFormat.setLenient(false);
             dateFormat.parse(inputStr);
             return true;
@@ -72,30 +72,27 @@ public abstract class InputHandler {
         return matcher.matches();
     }
 
-    private void readStringFromLine(){
-        if(scanner.hasNextLine()) {
+    private void readStringFromLine() {
+        if (scanner.hasNextLine()) {
             String trim = scanner.nextLine().trim();
-            if(trim.equals("")){
-                scanner.close();
-            }
             inputString = trim;
         }
     }
 
-    protected  String getUserString(String message, Pattern pattern){
+    protected String getUserString(String message, Pattern pattern) {
         getUserString(message);
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
             currentRecursionLevel = 0;
             return inputString;
         }
-        if(tryAgain(DEFAULT_STRING)){
+        if (tryAgain(DEFAULT_STRING)) {
             return getUserString(message, pattern);
         }
         return DEFAULT_STRING;
     }
 
-    protected  int getUserInteger(String message, Pattern pattern){
+    protected int getUserInteger(String message, Pattern pattern) {
         getUserString(message);
         inputString = inputString.replaceAll("[\\D]", "");
         validationResult = isValidInputInteger(inputString, pattern);
@@ -103,13 +100,13 @@ public abstract class InputHandler {
             currentRecursionLevel = 0;
             return Integer.parseInt(inputString);
         }
-        if(tryAgain(DEFAULT_INTEGER)){
+        if (tryAgain(DEFAULT_INTEGER)) {
             return getUserInteger(message, pattern);
         }
         return DEFAULT_INTEGER;
     }
 
-    protected Date getUserDate(String message, SimpleDateFormat dateFormat){
+    protected Date getUserDate(String message, SimpleDateFormat dateFormat) {
         getUserString(message);
         validationResult = isValidInputDate(inputString, dateFormat);
         if (validationResult) {
@@ -120,7 +117,7 @@ public abstract class InputHandler {
                 log.error("[InputHandler] Problem to parse user date input. Exception: ", pe);
             }
         }
-        if(tryAgain(new SimpleDateFormat(DATE_FORMAT_FOR_INPUT_HANDLER).format(DEFAULT_DATE))){
+        if (tryAgain(new SimpleDateFormat(DATE_FORMAT_FOR_INPUT_HANDLER).format(DEFAULT_DATE))) {
             return getUserDate(message, dateFormat);
         }
         return DEFAULT_DATE;
@@ -138,13 +135,13 @@ public abstract class InputHandler {
             currentRecursionLevel = 0;
             return Boolean.parseBoolean(inputString);
         }
-        if(tryAgain(DEFAULT_BOOLEAN)){
+        if (tryAgain(DEFAULT_BOOLEAN)) {
             return getUserBoolean(message, pattern);
         }
         return DEFAULT_BOOLEAN;
     }
 
     private void informMessageToUser(String message) {
-        printWriter.print(message + System.lineSeparator());
+        printWriter.println(message);
     }
 }

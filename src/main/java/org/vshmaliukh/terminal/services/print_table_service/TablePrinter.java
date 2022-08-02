@@ -37,7 +37,7 @@ public class TablePrinter {
         for (Map<String, String> titleValueMap : buffTable) {
             List<String> raw = new ArrayList<>();
             for (String title : titleList) {
-                raw.add(titleValueMap.getOrDefault(title, "~~" + System.lineSeparator()));
+                raw.add(titleValueMap.getOrDefault(title, "~~" ));
             }
             tableList.add(raw);
         }
@@ -65,7 +65,7 @@ public class TablePrinter {
 
     private void appendWithDefaultValuesList(Map<String, String> titleValueMap, int max) {
         while (titleValueMap.size() < max) {
-            titleValueMap.put("", "~~" + System.lineSeparator());
+            titleValueMap.put("", "~~" );
         }
     }
 
@@ -105,7 +105,7 @@ public class TablePrinter {
     }
 
     private void addIndexBeforeLines() {
-        titleList.add(0, "#" + System.lineSeparator());
+        titleList.add(0, "#" );
         for (int counter = 0; counter < tableList.size(); counter++) {
             tableList.get(counter).add(0, String.valueOf(counter + 1));
         }
@@ -124,7 +124,7 @@ public class TablePrinter {
         }
 
         stringBuilder.append(endSymbol);
-        printWriter.print(stringBuilder + System.lineSeparator());
+        printWriter.println(stringBuilder );
     }
 
     private void appendEmptyItemsForTable() {
@@ -135,13 +135,13 @@ public class TablePrinter {
     private void fillStringListWithSpaces(List<String> stringList) {
         for (int i = 0; i < stringList.size(); i++) {
             while (stringList.get(i).length() < sizeList.get(i)) {
-                stringList.set(i, stringList.get(i) + " " + System.lineSeparator());
+                stringList.set(i, stringList.get(i) + " " );
             }
         }
     }
 
     private void printLine(List<String> stringList) {
-        printWriter.print(getLineString(stringList) + System.lineSeparator());
+        printWriter.println(getLineString(stringList) );
     }
 
     public String getLineString(List<String> stringList) {

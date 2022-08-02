@@ -22,7 +22,7 @@ public class ScannerToWriterRedirector extends Thread {
                 break;
                 // TODO create another exit value
             }
-            printWriter.print(userInput);
+            printWriter.println(userInput);
         }
     }
 }

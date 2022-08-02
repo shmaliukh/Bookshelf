@@ -55,7 +55,7 @@ public class WebPageBuilder {
     }
 
     StringBuilder buildPage() {
-        if(title == null){
+        if (title == null) {
             title = "";
         }
 

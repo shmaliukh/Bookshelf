@@ -81,7 +81,7 @@ class ItemHandlerTest {
         for (Class<? extends Item> uniqueTypeName : uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(uniqueTypeName);
             handlerByClass.printSortingMenu(printWriter);
-            System.out.print(baos);
+            System.out.println(baos);
 
             output = baos.toString().trim();
             assertFalse(output.isEmpty());
@@ -96,7 +96,7 @@ class ItemHandlerTest {
         for (Class<? extends Item> uniqueTypeName : uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(uniqueTypeName);
             handlerByClass.clarificationForSortingItems(new ArrayList<>(), 0, printWriter);
-            System.out.print(baos);
+            System.out.println(baos);
 
             String output = baos.toString().trim();
             assertEquals(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING, output);

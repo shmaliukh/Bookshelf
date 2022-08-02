@@ -17,7 +17,7 @@ public class ScannerWrapper implements Closeable {
         return b;
     }
 
-    public String nextLine(){
+    public String nextLine() {
         String s = scanner.nextLine();
         return s;
     }

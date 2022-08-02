@@ -19,9 +19,9 @@ public abstract class GeneratedMenu {
     abstract void initMenuItems();
 
     public void printMenu(PrintWriter printWriter) {
-        printWriter.print(MESSAGE_TO_ENTER);
+        printWriter.println(MESSAGE_TO_ENTER);
         generatedMenu.forEach(printWriter::println);
-        printWriter.print(MESSAGE_TO_RETURN);
+        printWriter.println(MESSAGE_TO_RETURN);
     }
 }
 

@@ -32,7 +32,7 @@ class TablePrinterTest {
         assertEquals(expected, baos.toString().trim());
     }
 
-    private static Stream<Arguments> provideItemsForTableprint() {
+    private static Stream<Arguments> provideItemsForTableprintln() {
         Map<String, String> map1 = new HashMap<>();
         map1.put("t1", "v1");
         map1.put("t2", "v2");
@@ -49,43 +49,43 @@ class TablePrinterTest {
                         Arrays.asList(map1, map2, map3)
                         ,
                         "" +
-                        "┌─────┬────┬────┬─────┬─────┬──────┐" + System.lineSeparator() +
-                        "│ t1  │ t2 │ t3 │ t4  │ t5  │ t7   │" + System.lineSeparator() +
-                        "│─────┼────┼────┼─────┼─────┼──────│" + System.lineSeparator() +
-                        "│ v1  │ v2 │ v3 │ v4  │ ~~  │ ~~   │" + System.lineSeparator() +
-                        "│ _v1 │ ~~ │ ~~ │ _v4 │ _v5 │ ~~   │" + System.lineSeparator() +
-                        "│ ~~  │ ~~ │ ~~ │ ~~  │ ~~  │ _v7_ │" + System.lineSeparator() +
+                        "┌─────┬────┬────┬─────┬─────┬──────┐"  +
+                        "│ t1  │ t2 │ t3 │ t4  │ t5  │ t7   │"  +
+                        "│─────┼────┼────┼─────┼─────┼──────│"  +
+                        "│ v1  │ v2 │ v3 │ v4  │ ~~  │ ~~   │"  +
+                        "│ _v1 │ ~~ │ ~~ │ _v4 │ _v5 │ ~~   │"  +
+                        "│ ~~  │ ~~ │ ~~ │ ~~  │ ~~  │ _v7_ │"  +
                         "└─────┴────┴────┴─────┴─────┴──────┘"
                 ),
                 Arguments.of(
                         Arrays.asList(map1, map2)
                         ,
                         "" +
-                        "┌─────┬────┬────┬─────┬─────┐" + System.lineSeparator() +
-                        "│ t1  │ t2 │ t3 │ t4  │ t5  │" + System.lineSeparator() +
-                        "│─────┼────┼────┼─────┼─────│" + System.lineSeparator() +
-                        "│ v1  │ v2 │ v3 │ v4  │ ~~  │" + System.lineSeparator() +
-                        "│ _v1 │ ~~ │ ~~ │ _v4 │ _v5 │" + System.lineSeparator() +
+                        "┌─────┬────┬────┬─────┬─────┐"  +
+                        "│ t1  │ t2 │ t3 │ t4  │ t5  │"  +
+                        "│─────┼────┼────┼─────┼─────│"  +
+                        "│ v1  │ v2 │ v3 │ v4  │ ~~  │"  +
+                        "│ _v1 │ ~~ │ ~~ │ _v4 │ _v5 │"  +
                         "└─────┴────┴────┴─────┴─────┘"
                 ),
                 Arguments.of(
                         Collections.singletonList(map2)
                         ,
                         "" +
-                                "┌─────┬─────┬─────┐" + System.lineSeparator() +
-                                "│ t1  │ t4  │ t5  │" + System.lineSeparator() +
-                                "│─────┼─────┼─────│" + System.lineSeparator() +
-                                "│ _v1 │ _v4 │ _v5 │" + System.lineSeparator() +
+                                "┌─────┬─────┬─────┐"  +
+                                "│ t1  │ t4  │ t5  │"  +
+                                "│─────┼─────┼─────│"  +
+                                "│ _v1 │ _v4 │ _v5 │"  +
                                 "└─────┴─────┴─────┘"
                 ),
                 Arguments.of(
                         Collections.singletonList(map1)
                         ,
                         "" +
-                                "┌────┬────┬────┬────┐" + System.lineSeparator() +
-                                "│ t1 │ t2 │ t3 │ t4 │" + System.lineSeparator() +
-                                "│────┼────┼────┼────│" + System.lineSeparator() +
-                                "│ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
+                                "┌────┬────┬────┬────┐"  +
+                                "│ t1 │ t2 │ t3 │ t4 │"  +
+                                "│────┼────┼────┼────│"  +
+                                "│ v1 │ v2 │ v3 │ v4 │"  +
                                 "└────┴────┴────┴────┘"
                 ),
                 Arguments.of(
@@ -94,11 +94,11 @@ class TablePrinterTest {
                                 map1)
                         ,
                         "" +
-                                "┌────┬────┬────┬────┐" + System.lineSeparator() +
-                                "│ t1 │ t2 │ t3 │ t4 │" + System.lineSeparator() +
-                                "│────┼────┼────┼────│" + System.lineSeparator() +
-                                "│ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
-                                "│ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
+                                "┌────┬────┬────┬────┐"  +
+                                "│ t1 │ t2 │ t3 │ t4 │"  +
+                                "│────┼────┼────┼────│"  +
+                                "│ v1 │ v2 │ v3 │ v4 │"  +
+                                "│ v1 │ v2 │ v3 │ v4 │"  +
                                 "└────┴────┴────┴────┘"
                 ),
                 Arguments.of(
@@ -107,11 +107,11 @@ class TablePrinterTest {
                                 Collections.singletonMap("2 title__________", "v2"))
                         ,
                         "" +
-                                "┌─────────┬───────────────────┐" + System.lineSeparator() +
-                                "│ 1 title │ 2 title__________ │" + System.lineSeparator() +
-                                "│─────────┼───────────────────│" + System.lineSeparator() +
-                                "│ v1      │ ~~                │" + System.lineSeparator() +
-                                "│ ~~      │ v2                │" + System.lineSeparator() +
+                                "┌─────────┬───────────────────┐"  +
+                                "│ 1 title │ 2 title__________ │"  +
+                                "│─────────┼───────────────────│"  +
+                                "│ v1      │ ~~                │"  +
+                                "│ ~~      │ v2                │"  +
                                 "└─────────┴───────────────────┘"
                 ),
                 Arguments.of(
@@ -120,11 +120,11 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", "v2__________"))
                         ,
                         "" +
-                                "┌──────────────┐" + System.lineSeparator() +
-                                "│ 1 title      │" + System.lineSeparator() +
-                                "│──────────────│" + System.lineSeparator() +
-                                "│ v1           │" + System.lineSeparator() +
-                                "│ v2__________ │" + System.lineSeparator() +
+                                "┌──────────────┐"  +
+                                "│ 1 title      │"  +
+                                "│──────────────│"  +
+                                "│ v1           │"  +
+                                "│ v2__________ │"  +
                                 "└──────────────┘"
                 ),
                 Arguments.of(
@@ -132,10 +132,10 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", "v1__________"))
                         ,
                         "" +
-                                "┌──────────────┐" + System.lineSeparator() +
-                                "│ 1 title      │" + System.lineSeparator() +
-                                "│──────────────│" + System.lineSeparator() +
-                                "│ v1__________ │" + System.lineSeparator() +
+                                "┌──────────────┐"  +
+                                "│ 1 title      │"  +
+                                "│──────────────│"  +
+                                "│ v1__________ │"  +
                                 "└──────────────┘"
                 ),
                 Arguments.of(
@@ -147,14 +147,14 @@ class TablePrinterTest {
                                 Collections.singletonMap("2 title", "v5"))
                         ,
                         "" +
-                                "┌─────────┬─────────┐" + System.lineSeparator() +
-                                "│ 1 title │ 2 title │" + System.lineSeparator() +
-                                "│─────────┼─────────│" + System.lineSeparator() +
-                                "│ v1      │ ~~      │" + System.lineSeparator() +
-                                "│ v2      │ ~~      │" + System.lineSeparator() +
-                                "│ v3      │ ~~      │" + System.lineSeparator() +
-                                "│ ~~      │ v4      │" + System.lineSeparator() +
-                                "│ ~~      │ v5      │" + System.lineSeparator() +
+                                "┌─────────┬─────────┐"  +
+                                "│ 1 title │ 2 title │"  +
+                                "│─────────┼─────────│"  +
+                                "│ v1      │ ~~      │"  +
+                                "│ v2      │ ~~      │"  +
+                                "│ v3      │ ~~      │"  +
+                                "│ ~~      │ v4      │"  +
+                                "│ ~~      │ v5      │"  +
                                 "└─────────┴─────────┘"
                 ),
                 Arguments.of(
@@ -164,12 +164,12 @@ class TablePrinterTest {
                                 Collections.singletonMap("3 title", "v3"))
                         ,
                         "" +
-                                "┌─────────┬─────────┬─────────┐" + System.lineSeparator() +
-                                "│ 1 title │ 2 title │ 3 title │" + System.lineSeparator() +
-                                "│─────────┼─────────┼─────────│" + System.lineSeparator() +
-                                "│ v1      │ ~~      │ ~~      │" + System.lineSeparator() +
-                                "│ ~~      │ v2      │ ~~      │" + System.lineSeparator() +
-                                "│ ~~      │ ~~      │ v3      │" + System.lineSeparator() +
+                                "┌─────────┬─────────┬─────────┐"  +
+                                "│ 1 title │ 2 title │ 3 title │"  +
+                                "│─────────┼─────────┼─────────│"  +
+                                "│ v1      │ ~~      │ ~~      │"  +
+                                "│ ~~      │ v2      │ ~~      │"  +
+                                "│ ~~      │ ~~      │ v3      │"  +
                                 "└─────────┴─────────┴─────────┘"
                 ),
                 Arguments.of(
@@ -179,12 +179,12 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", "v3"))
                         ,
                         "" +
-                                "┌─────────┐" + System.lineSeparator() +
-                                "│ 1 title │" + System.lineSeparator() +
-                                "│─────────│" + System.lineSeparator() +
-                                "│ v1      │" + System.lineSeparator() +
-                                "│ v2      │" + System.lineSeparator() +
-                                "│ v3      │" + System.lineSeparator() +
+                                "┌─────────┐"  +
+                                "│ 1 title │"  +
+                                "│─────────│"  +
+                                "│ v1      │"  +
+                                "│ v2      │"  +
+                                "│ v3      │"  +
                                 "└─────────┘"
                 ),
                 Arguments.of(
@@ -193,11 +193,11 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", "v2"))
                         ,
                         "" +
-                                "┌─────────┐" + System.lineSeparator() +
-                                "│ 1 title │" + System.lineSeparator() +
-                                "│─────────│" + System.lineSeparator() +
-                                "│ v1      │" + System.lineSeparator() +
-                                "│ v2      │" + System.lineSeparator() +
+                                "┌─────────┐"  +
+                                "│ 1 title │"  +
+                                "│─────────│"  +
+                                "│ v1      │"  +
+                                "│ v2      │"  +
                                 "└─────────┘"
                 ),
                 Arguments.of(
@@ -206,11 +206,11 @@ class TablePrinterTest {
                                 Collections.singletonMap("2 title", "-"))
                         ,
                         "" +
-                                "┌─────────┬─────────┐" + System.lineSeparator() +
-                                "│ 1 title │ 2 title │" + System.lineSeparator() +
-                                "│─────────┼─────────│" + System.lineSeparator() +
-                                "│ -       │ ~~      │" + System.lineSeparator() +
-                                "│ ~~      │ -       │" + System.lineSeparator() +
+                                "┌─────────┬─────────┐"  +
+                                "│ 1 title │ 2 title │"  +
+                                "│─────────┼─────────│"  +
+                                "│ -       │ ~~      │"  +
+                                "│ ~~      │ -       │"  +
                                 "└─────────┴─────────┘"
                 ),
                 Arguments.of(
@@ -218,10 +218,10 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", ""))
                         ,
                         "" +
-                                "┌─────────┐" + System.lineSeparator() +
-                                "│ 1 title │" + System.lineSeparator() +
-                                "│─────────│" + System.lineSeparator() +
-                                "│         │" + System.lineSeparator() +
+                                "┌─────────┐"  +
+                                "│ 1 title │"  +
+                                "│─────────│"  +
+                                "│         │"  +
                                 "└─────────┘"
                 )
         );
@@ -240,21 +240,21 @@ class TablePrinterTest {
                                 map)
                         ,
                         "" +
-                                "┌───┬────┬────┬────┬────┐" + System.lineSeparator() +
-                                "│ # │ t1 │ t2 │ t3 │ t4 │" + System.lineSeparator() +
-                                "│───┼────┼────┼────┼────│" + System.lineSeparator() +
-                                "│ 1 │ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
-                                "│ 2 │ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
+                                "┌───┬────┬────┬────┬────┐"  +
+                                "│ # │ t1 │ t2 │ t3 │ t4 │"  +
+                                "│───┼────┼────┼────┼────│"  +
+                                "│ 1 │ v1 │ v2 │ v3 │ v4 │"  +
+                                "│ 2 │ v1 │ v2 │ v3 │ v4 │"  +
                                 "└───┴────┴────┴────┴────┘"
                 ),
                 Arguments.of(
                         Collections.singletonList(map)
                         ,
                         "" +
-                                "┌───┬────┬────┬────┬────┐" + System.lineSeparator() +
-                                "│ # │ t1 │ t2 │ t3 │ t4 │" + System.lineSeparator() +
-                                "│───┼────┼────┼────┼────│" + System.lineSeparator() +
-                                "│ 1 │ v1 │ v2 │ v3 │ v4 │" + System.lineSeparator() +
+                                "┌───┬────┬────┬────┬────┐"  +
+                                "│ # │ t1 │ t2 │ t3 │ t4 │"  +
+                                "│───┼────┼────┼────┼────│"  +
+                                "│ 1 │ v1 │ v2 │ v3 │ v4 │"  +
                                 "└───┴────┴────┴────┴────┘"
                 ),
                 Arguments.of(
@@ -271,19 +271,19 @@ class TablePrinterTest {
                                 Collections.singletonMap("1 title", "v10"))
                         ,
                         "" +
-                                "┌────┬─────────┐" + System.lineSeparator() +
-                                "│ #  │ 1 title │" + System.lineSeparator() +
-                                "│────┼─────────│" + System.lineSeparator() +
-                                "│ 1  │ v1      │" + System.lineSeparator() +
-                                "│ 2  │ v2      │" + System.lineSeparator() +
-                                "│ 3  │ v3      │" + System.lineSeparator() +
-                                "│ 4  │ v4      │" + System.lineSeparator() +
-                                "│ 5  │ v5      │" + System.lineSeparator() +
-                                "│ 6  │ v6      │" + System.lineSeparator() +
-                                "│ 7  │ v7      │" + System.lineSeparator() +
-                                "│ 8  │ v8      │" + System.lineSeparator() +
-                                "│ 9  │ v9      │" + System.lineSeparator() +
-                                "│ 10 │ v10     │" + System.lineSeparator() +
+                                "┌────┬─────────┐"  +
+                                "│ #  │ 1 title │"  +
+                                "│────┼─────────│"  +
+                                "│ 1  │ v1      │"  +
+                                "│ 2  │ v2      │"  +
+                                "│ 3  │ v3      │"  +
+                                "│ 4  │ v4      │"  +
+                                "│ 5  │ v5      │"  +
+                                "│ 6  │ v6      │"  +
+                                "│ 7  │ v7      │"  +
+                                "│ 8  │ v8      │"  +
+                                "│ 9  │ v9      │"  +
+                                "│ 10 │ v10     │"  +
                                 "└────┴─────────┘"
                 ),
                 Arguments.of(
@@ -292,11 +292,11 @@ class TablePrinterTest {
                                 Collections.singletonMap("2 title__________", "v2"))
                         ,
                         "" +
-                                "┌───┬─────────┬───────────────────┐" + System.lineSeparator() +
-                                "│ # │ 1 title │ 2 title__________ │" + System.lineSeparator() +
-                                "│───┼─────────┼───────────────────│" + System.lineSeparator() +
-                                "│ 1 │ v1      │ ~~                │" + System.lineSeparator() +
-                                "│ 2 │ ~~      │ v2                │" + System.lineSeparator() +
+                                "┌───┬─────────┬───────────────────┐"  +
+                                "│ # │ 1 title │ 2 title__________ │"  +
+                                "│───┼─────────┼───────────────────│"  +
+                                "│ 1 │ v1      │ ~~                │"  +
+                                "│ 2 │ ~~      │ v2                │"  +
                                 "└───┴─────────┴───────────────────┘"
                 )
         );

@@ -29,12 +29,12 @@ public class BookShelfServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.print("doPost");
+        System.out.println("doPost");
         Map<String, String[]> parameterMap = request.getParameterMap();
-        parameterMap.forEach((k, v) -> System.out.print(k + "=" + Arrays.toString(v)));
+        parameterMap.forEach((k, v) -> System.out.println(k + "=" + Arrays.toString(v)));
 
-        String userRequestParameter = request.getParameter(USER_INPUT) + System.lineSeparator();
-        TERMINAL.scanner = new ScannerWrapper( new Scanner(userRequestParameter));
+        String userRequestParameter = request.getParameter(USER_INPUT);
+        TERMINAL.scanner = new ScannerWrapper(new Scanner(userRequestParameter));
 
         doGet(request, response);
     }
@@ -60,7 +60,7 @@ public class BookShelfServlet extends HttpServlet {
 //        }
 
         webPageBuilder.addToBody(USER_INPUT_FORM);
-        writer.print(webPageBuilder.buildPage());
+        writer.println(webPageBuilder.buildPage());
 
         printTerminalInterface(writer);
     }

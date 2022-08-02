@@ -87,7 +87,7 @@ class MagazineHandlerTest {
         Scanner scanner = new Scanner(System.lineSeparator());
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
         Magazine itemByUserInput = magazineHandler.getItemByUserInput(inputHandlerForLiterature, printWriter);
-        System.out.print(itemByUserInput);
+        System.out.println(itemByUserInput);
 
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());

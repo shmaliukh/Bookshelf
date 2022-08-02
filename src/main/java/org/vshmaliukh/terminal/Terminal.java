@@ -29,7 +29,7 @@ import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
  * @version 1.1.3
  * Class which gives user interactive interface
  */
-public class Terminal{
+public class Terminal {
 
     public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
 
@@ -90,7 +90,7 @@ public class Terminal{
     }
 
     public boolean startWork(boolean userMode) {
-        printWriter.print("Terminal START" + System.lineSeparator());
+        printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
         setUpTypeOfWorkWithFiles();
@@ -125,16 +125,16 @@ public class Terminal{
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
-        printWriter.print("Type of work with save/read shelf with files: " + System.lineSeparator());
+        printWriter.println("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
-                printWriter.print("FILE_MODE_WORK_WITH_ONE_FILE" + System.lineSeparator());
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                printWriter.print("FILE_MODE_WORK_WITH_FILE_PER_TYPE" + System.lineSeparator());
+                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
             default:
-                printWriter.print("FILE_MODE_WORK_WITH_ONE_FILE" + System.lineSeparator());
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
         }
     }
@@ -171,7 +171,7 @@ public class Terminal{
                 closeTerminal();
                 break;
             default:
-                printWriter.print("Wrong input" + System.lineSeparator());
+                printWriter.println("Wrong input");
                 break;
         }
     }
@@ -200,7 +200,7 @@ public class Terminal{
      * Method print info Shelf and it's Literature objects
      */
     private void printCurrentStateOfShelf() {
-        printWriter.print("Current state of Shelf:" + System.lineSeparator());
+        printWriter.println("Current state of Shelf:");
         TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
     }
 
@@ -209,7 +209,7 @@ public class Terminal{
      */
     private void closeTerminal() {
         this.stop();
-        printWriter.print("Terminal STOP" + System.lineSeparator());
+        printWriter.println("Terminal STOP");
     }
 
     /**
@@ -217,11 +217,11 @@ public class Terminal{
      */
     private void menuForArrivingLiterature() {
         if (shelf.getLiteratureOutShelf().isEmpty()) {
-            printWriter.print("No literature OUT shelf to arrive" + System.lineSeparator());
+            printWriter.println("No literature OUT shelf to arrive");
         } else {
-            printWriter.print("Enter INDEX of Literature object to arrive one:" + System.lineSeparator());
+            printWriter.println("Enter INDEX of Literature object to arrive one:");
             TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
-            printWriter.print("Enter another value to return" + System.lineSeparator());
+            printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -231,12 +231,12 @@ public class Terminal{
      */
     private void menuForBorrowingLiterature() {
         if (shelf.getLiteratureInShelf().isEmpty()) {
-            printWriter.print("No available literature IN shelf to borrow" + System.lineSeparator());
+            printWriter.println("No available literature IN shelf to borrow");
         } else {
-            printWriter.print("Enter INDEX of Literature object to borrow one:" + System.lineSeparator());
+            printWriter.println("Enter INDEX of Literature object to borrow one:");
             TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
-            printWriter.print("Enter another value to return" + System.lineSeparator());
+            printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
         }
     }
@@ -246,12 +246,12 @@ public class Terminal{
      */
     private void menuForDeletingLiterature() {
         if (shelf.getLiteratureInShelf().isEmpty()) {
-            printWriter.print("No available literature IN shelf to delete" + System.lineSeparator());
+            printWriter.println("No available literature IN shelf to delete");
         } else {
-            printWriter.print("Enter INDEX of Literature object to delete one:" + System.lineSeparator());
+            printWriter.println("Enter INDEX of Literature object to delete one:");
             TablePrinter.printTable(printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
-            printWriter.print("Enter another value to return" + System.lineSeparator());
+            printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -274,7 +274,7 @@ public class Terminal{
             shelf.addLiteratureObject(item);
             informAboutAddedLiteratureObject(item);
         } else {
-            printWriter.print("Wrong input" + System.lineSeparator());
+            printWriter.println("Wrong input");
         }
     }
 
@@ -282,7 +282,7 @@ public class Terminal{
      * Method simply inform user about added Literature object
      */
     private void informAboutAddedLiteratureObject(Item item) {
-        printWriter.print(item + " has added to shelf" + System.lineSeparator());
+        printWriter.println(item + " has added to shelf");
     }
 
     /**

@@ -29,11 +29,11 @@ public enum MainMenu {
     }
 
     public static void printMainMenu(PrintWriter printWriter) {
-        printWriter.print("Enter number of command you wand to execute: (program ignores all not number symbols)" + System.lineSeparator());
+        printWriter.println("Enter number of command you wand to execute: (program ignores all not number symbols)" );
         MainMenu[] values = values();
         for (int j = 0; j < values.length - 1; j++) {
             MainMenu value = values[j];
-            printWriter.print(value.getMenuItem() + System.lineSeparator());
+            printWriter.println(value.getMenuItem() );
         }
     }
 

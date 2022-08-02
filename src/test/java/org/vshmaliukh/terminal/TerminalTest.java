@@ -33,21 +33,21 @@ class TerminalTest {
 
     @Test
     void testStartWork_oneFileMode() {
-        //Scanner scanner = new Scanner("1" + System.lineSeparator() + "0");
+        //Scanner scanner = new Scanner("1"  + "0");
         //Terminal terminal = new Terminal(scanner, new PrintWriter(System.out, true));
         //terminal.startWork(false);
     }
 
     @Test
     void testStartWork_perTypeFileMode() {
-        //Scanner scanner = new Scanner("2" + System.lineSeparator() + "0");
+        //Scanner scanner = new Scanner("2"  + "0");
         //Terminal terminal = new Terminal(scanner, new PrintWriter(System.out, true));
         //terminal.startWork(false);
     }
 
     @Test
     void testStartWork_perTypeFileMode_user() {
-        //Scanner scanner = new Scanner("test" + System.lineSeparator() + "2" + System.lineSeparator() + "0");
+        //Scanner scanner = new Scanner("test"  + "2"  + "0");
         //Terminal terminal = new Terminal(scanner, new PrintWriter(System.out, true));
         //assertFalse(terminal.startWork(true));
     }
@@ -58,7 +58,7 @@ class TerminalTest {
         Scanner scanner = new Scanner(str);
         Terminal terminal = new Terminal(scanner, new PrintWriter(System.out, true));
         int userChoice = terminal.getUserChoice();
-        System.out.print("userChoice = " + userChoice);
+        System.out.println("userChoice = " + userChoice);
         assertTrue(userChoice >= 0 && userChoice < Integer.MAX_VALUE);
     }
 
