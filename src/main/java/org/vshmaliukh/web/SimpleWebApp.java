@@ -12,6 +12,11 @@ import org.vshmaliukh.terminal.Terminal;
 
 public class SimpleWebApp {
 
+    public static final String LOG_IN_TITLE = "log_in";
+    public static final String SELECT_WORK_WITH_FILES_TITLE = "select_work_with_files";
+    public static final String MAIN_MENU_TITLE = "main_menu";
+
+
     public static ByteArrayOutputStream BAOS = new ByteArrayOutputStream();
     public static Scanner scanner = new Scanner("");
     public static PrintWriter printWriter = new PrintWriter(BAOS, true);
@@ -38,14 +43,15 @@ public class SimpleWebApp {
         context.addServletMappingDecoded(urlPattern, servletName);
 
         tomcat.addServlet(contextPath, "log_in_servlet", new LogInServlet());
-        context.addServletMappingDecoded("/book_shelf/log_in", "log_in_servlet");
+        context.addServletMappingDecoded("/book_shelf/" + LOG_IN_TITLE, "log_in_servlet");
 
         tomcat.addServlet(contextPath, "select_work_with_files_servlet", new WorkWithFilesServlet());
-        context.addServletMappingDecoded("/book_shelf/select_work_with_files", "select_work_with_files_servlet");
+        context.addServletMappingDecoded("/book_shelf/"+ SELECT_WORK_WITH_FILES_TITLE, "select_work_with_files_servlet");
+
+        tomcat.addServlet(contextPath, "main_menu_servlet", new MainMenuServlet());
+        context.addServletMappingDecoded("/book_shelf/"+ MAIN_MENU_TITLE, "main_menu_servlet");
 
         tomcat.start();
         tomcat.getServer().await();
-
-
     }
 }

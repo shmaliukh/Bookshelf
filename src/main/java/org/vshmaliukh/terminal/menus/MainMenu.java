@@ -3,7 +3,7 @@ package org.vshmaliukh.terminal.menus;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItem;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.util.*;
 
 import static org.vshmaliukh.terminal.Terminal.WRONG_INPUT;
 
@@ -37,11 +37,20 @@ public enum MainMenu {
         }
     }
 
+    public static List<MainMenu> getAllMenuItems(){
+        return Collections.unmodifiableList(Arrays.asList(values()));
+    }
+
     public static MainMenu getByIndex(int index) {
         return Arrays
                 .stream(values())
                 .filter(e -> e.getMenuItem().getIndex() == index)
                 .findFirst()
                 .orElse(UNKNOWN);
+    }
+
+    @Override
+    public String toString() {
+        return menuItem.toString();
     }
 }

@@ -1,6 +1,5 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForUser;
 
 import javax.servlet.http.HttpServlet;
@@ -10,10 +9,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.web.SimpleWebApp.TERMINAL;
+import static org.vshmaliukh.web.SimpleWebApp.*;
 
 public class WorkWithFilesServlet extends HttpServlet {
-
+    String title = SELECT_WORK_WITH_FILES_TITLE;
     private String typeOfWorkWithFiles = "type_of_work_with_files";
 
     @Override
@@ -24,7 +23,7 @@ public class WorkWithFilesServlet extends HttpServlet {
             TERMINAL.setTypeOfWorkWithFiles(Integer.parseInt(userInputNumberStr));
             TERMINAL.setUpGsonHandler();
 
-            response.sendRedirect(request.getContextPath() + "/book_shelf/");
+            response.sendRedirect(request.getContextPath() + "/book_shelf/" + MAIN_MENU_TITLE);
         } else {
             doGet(request, response); // TODO add message about wrong input
         }
@@ -33,11 +32,10 @@ public class WorkWithFilesServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String title = "log_in";
+
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
         PrintWriter writer = response.getWriter();
         response.setContentType("text/html");
-
 
         webPageBuilder.addToBody("" +
                 "<form action = \"" + title + "\" method = \"POST\">\n" +
@@ -46,7 +44,8 @@ public class WorkWithFilesServlet extends HttpServlet {
                 "   <input type = \"number\" name = \"" + typeOfWorkWithFiles + "\">\n" +
                 "       <br />\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>");
+                "</form>" +
+                "   <button onclick=\"window.location.href='http://localhost:8080/book_shelf/log_in';\">Back</button>\n");
         writer.println(webPageBuilder.buildPage());
     }
 }
