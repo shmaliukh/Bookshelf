@@ -41,7 +41,7 @@ public class SimpleWebApp {
         tomcat.addServlet(contextPath, "log_in_servlet", new LogInServlet());
         context.addServletMappingDecoded('/' + LOG_IN_TITLE, "log_in_servlet");
 
-        tomcat.addServlet(contextPath, "select_work_with_files_servlet", new WorkWithFilesServlet());
+        tomcat.addServlet(contextPath, "select_work_with_files_servlet", new LogInServlet());
         context.addServletMappingDecoded('/' + SELECT_WORK_WITH_FILES_TITLE, "select_work_with_files_servlet");
 
         tomcat.addServlet(contextPath, "main_menu_servlet", new MainMenuServlet());
