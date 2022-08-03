@@ -37,7 +37,11 @@ public class MainMenuServlet extends HttpServlet {
                             .toString());
                     break;
                 case DELETE_LITERATURE:
-                    //menuForDeletingLiterature();
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(DELETE_ITEM_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
                     break;
                 case BORROW_LITERATURE:
                     response.sendRedirect(new URIBuilder()
@@ -45,10 +49,13 @@ public class MainMenuServlet extends HttpServlet {
                             .addParameter(USER_NAME, userName)
                             .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                             .toString());
-                    //menuForBorrowingLiterature();
                     break;
                 case ARRIVE_LITERATURE:
-                    //menuForArrivingLiterature();
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(ARRIVE_ITEM_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
                     break;
                 case SORT_LITERATURE:
                     //menuForSortingLiterature();

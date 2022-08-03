@@ -8,22 +8,22 @@ import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringFor
 import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.SimpleWebApp.*;
 
-public class BorrowItemServlet extends HttpServlet {
+public class DeleteItemServlet extends HttpServlet {
 
     public static final String INDEX_OF_ITEM = "index_of_item";
 
-    String title = BORROW_ITEM_TITLE;
+    String title = DELETE_ITEM_TITLE;
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -34,7 +34,7 @@ public class BorrowItemServlet extends HttpServlet {
         if (!indexOfItem.equals("")) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            terminal.shelf.borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
+            terminal.shelf.deleteLiteratureObjectByIndex(Integer.parseInt(indexOfItem));
 
             terminal.saveShelfItemsToJson();
         }
@@ -60,11 +60,13 @@ public class BorrowItemServlet extends HttpServlet {
         Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (terminal.shelf.getLiteratureInShelf().isEmpty()) {
-            terminal.printWriter.println("No available literature IN shelf to borrow");
+        if (terminal.shelf.getAllLiteratureObjects().isEmpty()) {
+            terminal.printWriter.println("No available literature of Shelf to delete");
         } else {
-            terminal.printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getLiteratureInShelf()), true);
+            terminal.printWriter.println("Enter INDEX of Literature object of Shelf to delete one:");
+            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getAllLiteratureObjects()), true);
+
+
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     new URIBuilder()

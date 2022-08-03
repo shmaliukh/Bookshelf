@@ -36,7 +36,7 @@ public class Shelf {
     }
 
     public void deleteLiteratureObjectByIndex(int index) {
-        if (!this.getLiteratureInShelf().isEmpty()) {
+        if (!itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= itemsOfShelf.size()) {
                 informAboutActionWithLiterature(itemsOfShelf.remove(index - 1), "has deleted from shelf");
             } else {

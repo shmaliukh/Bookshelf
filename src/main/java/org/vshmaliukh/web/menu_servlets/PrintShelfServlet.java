@@ -39,7 +39,12 @@ public class PrintShelfServlet extends HttpServlet {
         terminal.setUpGsonHandler();
 
         terminal.readShelfItemsFromJson();
-        TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getAllLiteratureObjects()), false);
+        if (terminal.shelf.getAllLiteratureObjects().isEmpty()) {
+            terminal.printWriter.println("No available literature of Shelf to print");
+        } else {
+            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getAllLiteratureObjects()), false);
+        }
+
         webPageBuilder.addToBody(baos.toString());
 
         webPageBuilder.addButton(new URIBuilder()

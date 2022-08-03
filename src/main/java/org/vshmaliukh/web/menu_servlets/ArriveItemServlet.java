@@ -8,22 +8,22 @@ import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringFor
 import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.SimpleWebApp.*;
 
-public class BorrowItemServlet extends HttpServlet {
+public class ArriveItemServlet extends HttpServlet {
 
     public static final String INDEX_OF_ITEM = "index_of_item";
 
-    String title = BORROW_ITEM_TITLE;
+    String title = ARRIVE_ITEM_TITLE;
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -31,10 +31,10 @@ public class BorrowItemServlet extends HttpServlet {
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         String indexOfItem = request.getParameter(INDEX_OF_ITEM);
 
-        if (!indexOfItem.equals("")) {
+        if(!indexOfItem.equals("")){
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            terminal.shelf.borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
+            terminal.shelf.arriveLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
 
             terminal.saveShelfItemsToJson();
         }
@@ -60,11 +60,11 @@ public class BorrowItemServlet extends HttpServlet {
         Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (terminal.shelf.getLiteratureInShelf().isEmpty()) {
-            terminal.printWriter.println("No available literature IN shelf to borrow");
+        if (terminal.shelf.getLiteratureOutShelf().isEmpty()) {
+            terminal.printWriter.println("No available literature OUT shelf to arrive");
         } else {
-            terminal.printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getLiteratureInShelf()), true);
+            terminal.printWriter.println("Enter INDEX of Literature object to arrive one:");
+            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getLiteratureOutShelf()), true);
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     new URIBuilder()
@@ -83,10 +83,10 @@ public class BorrowItemServlet extends HttpServlet {
         webPageBuilder.addToBody(baos.toString());
 
         webPageBuilder.addButton(new URIBuilder()
-                        .setPath(MAIN_MENU_TITLE)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                        .toString(),
+                .setPath(MAIN_MENU_TITLE)
+                .addParameter(USER_NAME, userName)
+                .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                .toString(),
                 "Button to " + MAIN_MENU_TITLE);
         writer.println(webPageBuilder.buildPage());
     }
