@@ -49,13 +49,12 @@ public class LogInServlet extends HttpServlet {
                 "<form action = \"" + title + "\" method = \"POST\">\n" +
                 MESSAGE_ENTER_USER_NAME + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name=\"" + USER_NAME + "\" id=\"" + USER_NAME + "\" value=\"" + request.getParameter(USER_NAME) + "\">\n " +
+                "<input type = \"text\" name=\"" + USER_NAME + "\">\n " +
                 "       <br>\n" +
                 "       <br>\n" +
                 MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES.replaceAll(System.lineSeparator(), " <br> ") + "\n" +
                 "       <br>\n" +
-                "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\" id=\"" + TYPE_OF_WORK_WITH_FILES + "\" value=\"" + request.getParameter(TYPE_OF_WORK_WITH_FILES) + "\">\n " +
-                //"   <input type = \"number\" name = \"" + TYPE_OF_WORK_WITH_FILES + "\">\n" +
+                "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\">\n " +
                 "       <br>\n" +
                 "       <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +

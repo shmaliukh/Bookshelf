@@ -39,7 +39,7 @@ public class PrintShelfServlet extends HttpServlet {
         terminal.readShelfItemsFromJson();
         terminal.printCurrentStateOfShelf();
 
-        webPageBuilder.addToBody(baos.toString("UTF-8"));
+        webPageBuilder.addToBody(baos.toString("UTF-8").replaceAll(System.lineSeparator(), " <br> "));
         webPageBuilder.addButton(new URIBuilder()
                 .setPath(MAIN_MENU_TITLE)
                 .addParameter(USER_NAME, userName)
