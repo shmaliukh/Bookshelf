@@ -9,6 +9,7 @@ import org.apache.tomcat.util.descriptor.web.FilterDef;
 import org.apache.tomcat.util.descriptor.web.FilterMap;
 import org.vshmaliukh.web.menu_servlets.AddItemServlet;
 import org.vshmaliukh.web.menu_servlets.AddMenuServlet;
+import org.vshmaliukh.web.menu_servlets.BorrowItemServlet;
 import org.vshmaliukh.web.menu_servlets.PrintShelfServlet;
 
 import javax.servlet.Servlet;
@@ -23,6 +24,7 @@ public class SimpleWebApp {
     public static final String MAIN_MENU_TITLE = "main_menu";
     public static final String ADD_MENU_TITLE = "add_menu";
     public static final String ADD_ITEM_TITLE = "add_item";
+    public static final String BORROW_ITEM_TITLE = "borrow_item";
     public static final String PRINT_SHELF_TITLE = "print_shelf";
 
     public static void main(String[] args) throws LifecycleException {
@@ -40,6 +42,7 @@ public class SimpleWebApp {
         addServletToTomcat(new PrintShelfServlet(), PRINT_SHELF_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new AddMenuServlet(), ADD_MENU_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new AddItemServlet(), ADD_ITEM_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new BorrowItemServlet(), BORROW_ITEM_TITLE, tomcat, contextPath, context);
 
         tomcat.start();
         tomcat.getServer().await();

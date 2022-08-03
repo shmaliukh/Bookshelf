@@ -20,7 +20,7 @@ public class WebPageBuilder {
     }
 
     public void addToBody(String bodyItem) {
-        body.append(bodyItem);
+        body.append(bodyItem.replaceAll(System.lineSeparator(), " <br> "));
     }
 
     public void addButton(String reference, String label) {

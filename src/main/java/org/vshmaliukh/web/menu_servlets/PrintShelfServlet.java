@@ -3,6 +3,8 @@ package org.vshmaliukh.web.menu_servlets;
 import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.Terminal;
 import org.vshmaliukh.terminal.User;
+import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
+import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 
 import javax.servlet.http.HttpServlet;
@@ -37,9 +39,9 @@ public class PrintShelfServlet extends HttpServlet {
         terminal.setUpGsonHandler();
 
         terminal.readShelfItemsFromJson();
-        terminal.printCurrentStateOfShelf();
+        TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getAllLiteratureObjects()), false);
+        webPageBuilder.addToBody(baos.toString());
 
-        webPageBuilder.addToBody(baos.toString("UTF-8").replaceAll(System.lineSeparator(), " <br> "));
         webPageBuilder.addButton(new URIBuilder()
                 .setPath(MAIN_MENU_TITLE)
                 .addParameter(USER_NAME, userName)
@@ -47,9 +49,5 @@ public class PrintShelfServlet extends HttpServlet {
                 .toString(),
                 "Button to " + MAIN_MENU_TITLE);
         writer.println(webPageBuilder.buildPage());
-        //byte[] bytes = webPageBuilder.getBody().toString().getBytes(StandardCharsets.UTF_8);
-        //response.getOutputStream().write(bytes);
-        //response.setContentType("text/plain");
-        //response.setCharacterEncoding("UTF-8");
     }
 }

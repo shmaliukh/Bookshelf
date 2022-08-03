@@ -40,6 +40,11 @@ public class MainMenuServlet extends HttpServlet {
                     //menuForDeletingLiterature();
                     break;
                 case BORROW_LITERATURE:
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(BORROW_ITEM_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
                     //menuForBorrowingLiterature();
                     break;
                 case ARRIVE_LITERATURE:
