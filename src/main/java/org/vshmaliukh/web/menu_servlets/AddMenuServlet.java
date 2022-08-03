@@ -42,40 +42,48 @@ public class AddMenuServlet extends HttpServlet {
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         String menuItemIndex = request.getParameter(ADD_MENU_ITEM_INDEX);
+        if(menuItemIndex != null){
+            GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
+            MenuItemClassType menuItemClassType = generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
+            int index = menuItemClassType.getIndex();
+            if (index % 2 == 0) { //add random item
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                PrintWriter printWriter = new PrintWriter(baos, true);
 
-        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
-        MenuItemClassType menuItemClassType = generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
-        int index = menuItemClassType.getIndex();
-        if (index % 2 == 0) { //add random item
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            PrintWriter printWriter = new PrintWriter(baos, true);
+                Terminal terminal = new Terminal(null, printWriter); // TODO change later
+                terminal.setUser(new User(userName));
+                terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
+                terminal.setUpGsonHandler();
+                terminal.readShelfItemsFromJson();
 
-            Terminal terminal = new Terminal(null, printWriter); // TODO change later
-            terminal.setUser(new User(userName));
-            terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
-            terminal.setUpGsonHandler();
-            terminal.readShelfItemsFromJson();
+                ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
+                Item item = handlerByClass.getRandomItem(random);
+                terminal.shelf.addLiteratureObject(item);
+                terminal.informAboutAddedLiteratureObject(item); //TODO add message about added Item
+                terminal.saveShelfItemsToJson();
 
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
-            Item item = handlerByClass.getRandomItem(random);
-            terminal.shelf.addLiteratureObject(item);
-            terminal.informAboutAddedLiteratureObject(item); //TODO add message about added Item
-            terminal.saveShelfItemsToJson();
-
+                response.sendRedirect(new URIBuilder()
+                        .setPath(title)
+                        .addParameter(USER_NAME, userName)
+                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                        .addParameter(INFORM_MESSAGE, baos.toString())
+                        .toString());
+                //doGet(request, response);
+            } else {
+                String classSimpleName = menuItemClassType.getClassType().getSimpleName();
+                response.sendRedirect(new URIBuilder()
+                        .setPath(ADD_ITEM_TITLE)
+                        .addParameter(USER_NAME, userName)
+                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                        .addParameter(ITEM_CLASS_TYPE, classSimpleName)
+                        .toString());
+            }
+        }
+        else {
             response.sendRedirect(new URIBuilder()
                     .setPath(title)
                     .addParameter(USER_NAME, userName)
                     .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                    .addParameter(INFORM_MESSAGE, baos.toString())
-                    .toString());
-            //doGet(request, response);
-        } else {
-            String classSimpleName = menuItemClassType.getClassType().getSimpleName();
-            response.sendRedirect(new URIBuilder()
-                    .setPath(ADD_ITEM_TITLE)
-                    .addParameter(USER_NAME, userName)
-                    .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                    .addParameter(ITEM_CLASS_TYPE, classSimpleName)
                     .toString());
         }
 
