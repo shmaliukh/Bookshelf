@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class WebPageBuilder {
 
-    String title;
+    private String title;
 
-    StringBuilder sb = new StringBuilder(); // TODO rename (buffer StringBuilder)
-    StringBuilder body = new StringBuilder();
+    private StringBuilder sb = new StringBuilder(); // TODO rename (sb = buffer StringBuilder)
+    private StringBuilder body = new StringBuilder();
 
 
     public WebPageBuilder(String title) {
@@ -59,12 +59,11 @@ public class WebPageBuilder {
         sb.append("<head>");
         sb.append("<meta charset=\" UTF - 8\">");
         sb.append("<title>" + title + "</title>");
-        //sb.append("<base href=\" file:///C:/Users/zskat/Vlad_projects/Practice_1/\">"); // TODO get abs path
         sb.append("</head>");
         return sb;
     }
 
-    StringBuilder buildPage() {
+    public StringBuilder buildPage() {
         if (title == null) {
             title = "";
         }
@@ -77,6 +76,5 @@ public class WebPageBuilder {
 
                 .append(bodyEndHTML())
                 .append(baseEndHTML());
-        //return sb;
     }
 }

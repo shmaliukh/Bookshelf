@@ -1,8 +1,9 @@
-package org.vshmaliukh.web;
+package org.vshmaliukh.web.menu_servlets;
 
 import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.Terminal;
 import org.vshmaliukh.terminal.User;
+import org.vshmaliukh.web.WebPageBuilder;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +14,10 @@ import java.io.PrintWriter;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
-import static org.vshmaliukh.web.SimpleWebApp.*;
+import static org.vshmaliukh.web.SimpleWebApp.MAIN_MENU_TITLE;
+import static org.vshmaliukh.web.SimpleWebApp.PRINT_SHELF_TITLE;
 
-public class PrintShelfServlet extends HttpServlet {
+public class AddItemServlet extends HttpServlet {
 
     String title = PRINT_SHELF_TITLE;
 
