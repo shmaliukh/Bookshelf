@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
@@ -24,7 +23,7 @@ public class PrintShelfServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
-
+        PrintWriter writer = response.getWriter();
 
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
@@ -47,10 +46,10 @@ public class PrintShelfServlet extends HttpServlet {
                 .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                 .toString(),
                 "Button to " + MAIN_MENU_TITLE);
-//        writer.println(webPageBuilder.buildPage());
-        byte[] bytes = webPageBuilder.getBody().toString().getBytes(StandardCharsets.UTF_8);
-        response.getOutputStream().write(bytes);
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
+        writer.println(webPageBuilder.buildPage());
+        //byte[] bytes = webPageBuilder.getBody().toString().getBytes(StandardCharsets.UTF_8);
+        //response.getOutputStream().write(bytes);
+        //response.setContentType("text/plain");
+        //response.setCharacterEncoding("UTF-8");
     }
 }

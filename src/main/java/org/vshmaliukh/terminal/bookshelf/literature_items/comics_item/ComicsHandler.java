@@ -9,6 +9,7 @@ import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature
 import java.io.PrintWriter;
 import java.util.*;
 
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.terminal.services.Utils.getRandomString;
 
 public class ComicsHandler implements ItemHandler<Comics> {
@@ -63,5 +64,16 @@ public class ComicsHandler implements ItemHandler<Comics> {
         map.put(ItemTitles.BORROWED, String.valueOf(comics.isBorrowed()));
         map.put(ItemTitles.PUBLISHER, comics.getPublisher());
         return new HashMap<>(map);
+    }
+
+    @Override
+    public String generateHTMLFormBodyToCreateItem() {
+        return "" +
+                Utils.generateHTMLFormItem(NAME) +
+                Utils.generateHTMLFormItem(PAGES) +
+                Utils.generateHTMLFormItem(BORROWED) +
+                Utils.generateHTMLFormItem(PUBLISHER) +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
     }
 }

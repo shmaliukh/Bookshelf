@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.NAME;
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.PAGES;
+
 public class Utils {
 
     private Utils() {
@@ -33,5 +36,15 @@ public class Utils {
         return literatureList.stream()
                 .sorted(itemsComparator)
                 .collect(Collectors.toList());
+    }
+
+    public static String generateHTMLFormItem(String value) {
+        return "" +
+                "       <br>\n" +
+                "Enter " + value + "\n"+
+                "       <br>\n" +
+                "<input type = \"text\" " + value + "=\"" + value + "\" id=\"" + value + "\">\n "+
+                "       <br>\n";
+
     }
 }

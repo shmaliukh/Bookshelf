@@ -26,10 +26,12 @@ import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.SimpleWebApp.*;
+import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class AddMenuServlet extends HttpServlet {
 
     public static final String ADD_MENU_ITEM_INDEX = "add_menu_item_index";
+
 
     String title = ADD_MENU_TITLE;
 
@@ -66,9 +68,18 @@ public class AddMenuServlet extends HttpServlet {
                     .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                     .addParameter(INFORM_MESSAGE, baos.toString())
                     .toString());
+            //doGet(request, response);
+        } else {
+            String classSimpleName = menuItemClassType.getClassType().getSimpleName();
+            response.sendRedirect(new URIBuilder()
+                    .setPath(ADD_ITEM_TITLE)
+                    .addParameter(USER_NAME, userName)
+                    .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                    .addParameter(ITEM_CLASS_TYPE, classSimpleName)
+                    .toString());
         }
 
-        doGet(request, response);
+
     }
 
     @Override

@@ -9,6 +9,8 @@ import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature
 import java.io.PrintWriter;
 import java.util.*;
 
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
+
 public class MagazineHandler implements ItemHandler<Magazine> {
 
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
@@ -56,5 +58,15 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         map.put(ItemTitles.PAGES, String.valueOf(magazine.getPagesNumber()));
         map.put(ItemTitles.BORROWED, String.valueOf(magazine.isBorrowed()));
         return new HashMap<>(map);
+    }
+
+    @Override
+    public String generateHTMLFormBodyToCreateItem() {
+        return "" +
+                Utils.generateHTMLFormItem(NAME) +
+                Utils.generateHTMLFormItem(PAGES) +
+                Utils.generateHTMLFormItem(BORROWED) +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
     }
 }

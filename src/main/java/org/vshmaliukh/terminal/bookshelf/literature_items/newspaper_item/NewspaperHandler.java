@@ -1,5 +1,6 @@
 package org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item;
 
+import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item.Newspaper;
@@ -9,6 +10,13 @@ import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature
 
 import java.io.PrintWriter;
 import java.util.*;
+
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.MESSAGE_ENTER_USER_NAME;
+import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.SimpleWebApp.ADD_ITEM_TITLE;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
@@ -53,9 +61,19 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     public Map<String, String> convertItemToListOfString(Newspaper newspaper) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, newspaper.getClass().getSimpleName());
-        map.put(ItemTitles.NAME, newspaper.getName());
+        map.put(NAME, newspaper.getName());
         map.put(ItemTitles.PAGES, String.valueOf(newspaper.getPagesNumber()));
         map.put(ItemTitles.BORROWED, String.valueOf(newspaper.isBorrowed()));
         return new HashMap<>(map);
+    }
+
+    @Override
+    public String generateHTMLFormBodyToCreateItem() {
+        return "" +
+                Utils.generateHTMLFormItem(NAME) +
+                Utils.generateHTMLFormItem(PAGES) +
+                Utils.generateHTMLFormItem(BORROWED) +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
     }
 }

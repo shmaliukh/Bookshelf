@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.PUBLISHER;
 import static org.vshmaliukh.terminal.services.Utils.getRandomString;
 
 public class BookHandler implements ItemHandler<Book> {
@@ -70,5 +72,16 @@ public class BookHandler implements ItemHandler<Book> {
         map.put(ItemTitles.AUTHOR, book.getAuthor());
         map.put(ItemTitles.DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()));
         return new HashMap<>(map);
+    }
+
+    @Override
+    public String generateHTMLFormBodyToCreateItem() {
+        return "" +
+                Utils.generateHTMLFormItem(NAME) +
+                Utils.generateHTMLFormItem(PAGES) +
+                Utils.generateHTMLFormItem(AUTHOR) +
+                Utils.generateHTMLFormItem(DATE) +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
     }
 }

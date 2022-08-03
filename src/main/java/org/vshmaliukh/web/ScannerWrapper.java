@@ -1,6 +1,5 @@
 package org.vshmaliukh.web;
 
-import javax.servlet.http.HttpServlet;
 import java.io.Closeable;
 import java.util.Scanner;
 

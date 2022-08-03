@@ -45,4 +45,6 @@ public interface ItemHandler<T extends Item> {
     T getRandomItem(Random random);
 
     Map<String, String> convertItemToListOfString(T item);
+
+    String generateHTMLFormBodyToCreateItem();
 }
