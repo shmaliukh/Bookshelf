@@ -30,7 +30,6 @@ import static org.vshmaliukh.web.SimpleWebApp.*;
 public class AddMenuServlet extends HttpServlet {
 
     public static final String ADD_MENU_ITEM_INDEX = "add_menu_item_index";
-    public static final String INFORM_MESSAGE = "inform_message";
 
     String title = ADD_MENU_TITLE;
 
@@ -95,7 +94,7 @@ public class AddMenuServlet extends HttpServlet {
                         .addParameter(USER_NAME, userName)
                         .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                         .toString(),
-                "Button to main menu");
+                "Button to " + MAIN_MENU_TITLE);
 
         if (informMessage != null) {
             webPageBuilder.addToBody("" +

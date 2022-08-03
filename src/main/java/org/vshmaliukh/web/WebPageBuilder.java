@@ -58,6 +58,7 @@ public class WebPageBuilder {
         sb = new StringBuilder();
         sb.append("<head>");
         sb.append("<meta charset=\" UTF - 8\">");
+        sb.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />");
         sb.append("<title>" + title + "</title>");
         sb.append("</head>");
         return sb;

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
@@ -23,8 +24,7 @@ public class PrintShelfServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
-        PrintWriter writer = response.getWriter();
-        response.setContentType("text/html");
+
 
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
@@ -40,13 +40,17 @@ public class PrintShelfServlet extends HttpServlet {
         terminal.readShelfItemsFromJson();
         terminal.printCurrentStateOfShelf();
 
-        webPageBuilder.addToBody(baos.toString().replace(System.lineSeparator(), " <br> "));
+        webPageBuilder.addToBody(baos.toString("UTF-8"));
         webPageBuilder.addButton(new URIBuilder()
                 .setPath(MAIN_MENU_TITLE)
                 .addParameter(USER_NAME, userName)
                 .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                 .toString(),
-                "Button to main menu");
-        writer.println(webPageBuilder.buildPage());
+                "Button to " + MAIN_MENU_TITLE);
+//        writer.println(webPageBuilder.buildPage());
+        byte[] bytes = webPageBuilder.getBody().toString().getBytes(StandardCharsets.UTF_8);
+        response.getOutputStream().write(bytes);
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
     }
 }
