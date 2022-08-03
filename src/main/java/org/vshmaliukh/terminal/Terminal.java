@@ -99,12 +99,20 @@ public class Terminal {
         initServicesForTerminal();
         informAboutFileTypeWork(typeOfWorkWithFiles);
 
-        itemGsonHandler.readListFromFile().forEach(shelf::addLiteratureObject);
+        readShelfItemsFromJson();
         while (isActiveTerminal()) {
             generateUserInterface();
-            itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
+            saveShelfItemsToJson();
         }
         return false;
+    }
+
+    private void saveShelfItemsToJson() {
+        itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
+    }
+
+    public void readShelfItemsFromJson() {
+        itemGsonHandler.readListFromFile().forEach(shelf::addLiteratureObject);
     }
 
     public void initServicesForTerminal() {
@@ -200,7 +208,7 @@ public class Terminal {
     /**
      * Method print info Shelf and it's Literature objects
      */
-    private void printCurrentStateOfShelf() {
+    public void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
         TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
     }
