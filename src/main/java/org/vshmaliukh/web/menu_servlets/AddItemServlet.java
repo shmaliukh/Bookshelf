@@ -1,6 +1,9 @@
 package org.vshmaliukh.web.menu_servlets;
 
 import org.apache.http.client.utils.URIBuilder;
+import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.User;
+import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.web.WebPageBuilder;
@@ -8,6 +11,7 @@ import org.vshmaliukh.web.WebPageBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -28,18 +32,39 @@ public class AddItemServlet extends HttpServlet {
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
 
         ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
+        if (handlerByName.isValidHTMLFormData(request)) {
 
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintWriter printWriter = new PrintWriter(baos, true);
+
+            Terminal terminal = new Terminal(null, printWriter); // TODO change later
+            terminal.setUser(new User(userName));
+            terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
+            terminal.setUpGsonHandler();
+
+            terminal.readShelfItemsFromJson();
+
+            Item item = handlerByName.generateItemByHTMLFormData(request, printWriter);
+
+            terminal.shelf.addLiteratureObject(item);
+            terminal.saveShelfItemsToJson();
+        }
+
+        response.sendRedirect(new URIBuilder()
+                .setPath(ADD_MENU_TITLE)
+                .addParameter(USER_NAME, userName)
+                .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                .toString());
     }
 
 
-        @Override
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
         PrintWriter writer = response.getWriter();
         response.setContentType("text/html");
 
-        String userName = request.getParameter(USER_NAME);
-        String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
 
         ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
@@ -49,12 +74,13 @@ public class AddItemServlet extends HttpServlet {
                 new URIBuilder().setPath(ADD_ITEM_TITLE)
                         .addParameter(USER_NAME, request.getParameter(USER_NAME))
                         .addParameter(TYPE_OF_WORK_WITH_FILES, request.getParameter(TYPE_OF_WORK_WITH_FILES))
-                        .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE))
+                        .addParameter(ITEM_CLASS_TYPE, itemClassType)
+
                         .toString()
                 + "\" method = \"POST\">\n" +
                 "Create " + itemClassType + "\n" +
-                "       " + MY_LINE_SEPARATOR + "\n" +
-                handlerByName.generateHTMLFormBodyToCreateItem());
+                "       <br>\n" +
+                handlerByName.generateHTMLFormBodyToCreateItem(request));
 
         writer.println(webPageBuilder.buildPage());
     }

@@ -41,9 +41,10 @@ public class Utils {
     public static String generateHTMLFormItem(String value) {
         return "" +
                 "       <br>\n" +
-                "Enter " + value + "\n"+
+                "Enter " + value + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" " + value + "=\"" + value + "\" id=\"" + value + "\">\n "+
+                "<input type = \"text\" name = \"" + value + "\">\n" +
+                //"<input type = \"text\" name=\"" + value + ">\n " +
                 "       <br>\n";
 
     }

@@ -2,15 +2,18 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.comics_item;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
+import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.terminal.services.Utils.getRandomString;
+import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 public class ComicsHandler implements ItemHandler<Comics> {
 
@@ -67,7 +70,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem() {
+    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
@@ -75,5 +78,41 @@ public class ComicsHandler implements ItemHandler<Comics> {
                 Utils.generateHTMLFormItem(PUBLISHER) +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>";
+    }
+
+    @Override
+    public boolean isValidHTMLFormData(HttpServletRequest request) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+        String publisherParameter = request.getParameter(PUBLISHER);
+        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED) &&
+                InputHandlerForLiterature.isValidInputString(publisherParameter, PATTERN_FOR_PUBLISHER)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Comics generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+        String publisherParameter = request.getParameter(PUBLISHER);
+
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+
+        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        inputHandlerForLiterature.scanner = new Scanner(publisherParameter);
+        String publisher = inputHandlerForLiterature.getUserLiteraturePublisher();
+
+        return new Comics(name, pages, isBorrowed, publisher);
     }
 }

@@ -3,6 +3,7 @@ package org.vshmaliukh.terminal.bookshelf.literature_items;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -46,5 +47,9 @@ public interface ItemHandler<T extends Item> {
 
     Map<String, String> convertItemToListOfString(T item);
 
-    String generateHTMLFormBodyToCreateItem();
+    String generateHTMLFormBodyToCreateItem(HttpServletRequest request);
+
+    boolean isValidHTMLFormData(HttpServletRequest request);
+
+    T generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter);
 }

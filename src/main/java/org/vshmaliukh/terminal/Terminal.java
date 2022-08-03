@@ -1,7 +1,6 @@
 package org.vshmaliukh.terminal;
 
 import lombok.Data;
-import org.vshmaliukh.web.ScannerWrapper;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
@@ -47,7 +46,7 @@ public class Terminal {
     private User user;
     private String property = System.getProperty("user.home");
 
-    public ScannerWrapper scanner;
+    public Scanner scanner;
     public PrintWriter printWriter;
 
     private final InputHandlerForUser inputHandlerForUser;
@@ -58,7 +57,7 @@ public class Terminal {
     public ItemGsonHandler itemGsonHandler;
     private Random random;
 
-    public Terminal(ScannerWrapper scanner, PrintWriter printWriter) {
+    public Terminal(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
 

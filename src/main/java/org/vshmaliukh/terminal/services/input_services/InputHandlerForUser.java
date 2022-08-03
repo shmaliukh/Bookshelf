@@ -1,14 +1,13 @@
 package org.vshmaliukh.terminal.services.input_services;
 
-import org.vshmaliukh.web.ScannerWrapper;
-
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 public class InputHandlerForUser extends InputHandler {
 
-    public InputHandlerForUser(ScannerWrapper scanner, PrintWriter printWriter) {
+    public InputHandlerForUser(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

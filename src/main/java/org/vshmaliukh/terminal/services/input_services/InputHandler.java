@@ -1,12 +1,12 @@
 package org.vshmaliukh.terminal.services.input_services;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.web.ScannerWrapper;
 
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,14 +15,14 @@ import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserIn
 @Slf4j
 public abstract class InputHandler {
 
-    private final ScannerWrapper scanner;
-    private final PrintWriter printWriter;
+    public Scanner scanner;
+    public PrintWriter printWriter;
 
     private boolean validationResult;
     private String inputString = "";
     private int currentRecursionLevel;
 
-    protected InputHandler(ScannerWrapper scanner, PrintWriter printWriter) {
+    protected InputHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
     }
@@ -40,21 +40,21 @@ public abstract class InputHandler {
         return false;
     }
 
-    public boolean isValidInputString(String inputStr, Pattern pattern) {
+    public static boolean isValidInputString(String inputStr, Pattern pattern) {
         if (inputStr == null) {
             return false;
         }
         return isMatcher(inputStr, pattern);
     }
 
-    public boolean isValidInputInteger(String inputStr, Pattern pattern) {
+    public static boolean isValidInputInteger(String inputStr, Pattern pattern) {
         if (inputStr == null || inputStr.length() > 8 || inputStr.length() == 0) {
             return false;
         }
         return isMatcher(inputStr, pattern);
     }
 
-    public boolean isValidInputDate(String inputStr, SimpleDateFormat dateFormat) {
+    public static boolean isValidInputDate(String inputStr, SimpleDateFormat dateFormat) {
         if (inputStr == null) {
             return false;
         }
@@ -67,7 +67,7 @@ public abstract class InputHandler {
         }
     }
 
-    private boolean isMatcher(String inputStr, Pattern pattern) {
+    private static boolean isMatcher(String inputStr, Pattern pattern) {
         Matcher matcher = pattern.matcher(inputStr);
         return matcher.matches();
     }

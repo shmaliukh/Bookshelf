@@ -2,14 +2,17 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
+import org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item.Newspaper;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
@@ -61,12 +64,43 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem() {
+    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
                 Utils.generateHTMLFormItem(BORROWED) +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>";
+    }
+
+    @Override
+    public boolean isValidHTMLFormData(HttpServletRequest request) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Magazine generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+
+        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+
+        return new Magazine(name, pages, isBorrowed);
     }
 }

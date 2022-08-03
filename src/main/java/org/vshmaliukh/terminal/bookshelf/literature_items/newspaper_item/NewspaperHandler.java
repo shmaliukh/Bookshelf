@@ -8,15 +8,16 @@ import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.MESSAGE_ENTER_USER_NAME;
+import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.SimpleWebApp.ADD_ITEM_TITLE;
+import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
@@ -68,12 +69,43 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem() {
+    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
                 Utils.generateHTMLFormItem(BORROWED) +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>";
+    }
+
+    @Override
+    public boolean isValidHTMLFormData(HttpServletRequest request) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Newspaper generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
+        String nameParameter = request.getParameter(NAME);
+        String pagesParameter = request.getParameter(PAGES);
+        String borrowedParameter = request.getParameter(BORROWED);
+
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+
+        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
+        String name = inputHandlerForLiterature.getUserLiteratureName();
+        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
+        int pages = inputHandlerForLiterature.getUserLiteraturePages();
+        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
+        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+
+        return new Newspaper(name, pages, isBorrowed);
     }
 }
