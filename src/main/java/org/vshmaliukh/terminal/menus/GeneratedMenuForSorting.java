@@ -5,7 +5,9 @@ import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider.uniqueTypeNames;
 
@@ -19,7 +21,8 @@ public class GeneratedMenuForSorting extends GeneratedMenu {
     void initMenuItems() {
         List<MenuItemClassType> sortingMenuItems = new ArrayList<>();
         int index = 1;
-        for (Class<? extends Item> typeName : uniqueTypeNames) {
+        List<Class<? extends Item>> uniqueTypeNamesList = uniqueTypeNames.stream().sorted(Comparator.comparing(Class::getSimpleName)).collect(Collectors.toList());
+        for (Class<? extends Item> typeName : uniqueTypeNamesList) {
             sortingMenuItems.add(new MenuItemClassType<>(index++, "Sort " + typeName.getSimpleName() + " items by value...", typeName));
         }
         generatedMenu = Collections.unmodifiableList(sortingMenuItems);

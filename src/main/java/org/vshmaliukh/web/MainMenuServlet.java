@@ -18,6 +18,7 @@ import static org.vshmaliukh.web.SimpleWebApp.*;
 public class MainMenuServlet extends HttpServlet {
 
     public static final String MENU_ITEM_INDEX = "menu_item_index";
+
     String title = MAIN_MENU_TITLE;
 
     @Override
@@ -29,8 +30,11 @@ public class MainMenuServlet extends HttpServlet {
         MainMenu byIndex = getByIndex(Integer.parseInt(menuItemIndex));
         switch (byIndex) {
             case ADD_NEW_LITERATURE:
-                //printMenuForAddingLiterature();
-                //addNewLiteratureObject();
+                response.sendRedirect(new URIBuilder()
+                        .setPath(ADD_MENU_TITLE)
+                        .addParameter(USER_NAME, userName)
+                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                        .toString());
                 break;
             case DELETE_LITERATURE:
                 //menuForDeletingLiterature();
@@ -75,7 +79,6 @@ public class MainMenuServlet extends HttpServlet {
         //    doGet(request, response); // TODO add message about wrong input
         //}
 
-        doGet(request, response);
     }
 
     @Override

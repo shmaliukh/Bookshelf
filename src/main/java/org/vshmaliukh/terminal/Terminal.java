@@ -107,7 +107,7 @@ public class Terminal {
         return false;
     }
 
-    private void saveShelfItemsToJson() {
+    public void saveShelfItemsToJson() {
         itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
     }
 
