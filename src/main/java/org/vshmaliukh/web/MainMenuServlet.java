@@ -26,59 +26,50 @@ public class MainMenuServlet extends HttpServlet {
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         String menuItemIndex = request.getParameter(MENU_ITEM_INDEX);
+        if(menuItemIndex != null){
+            MainMenu byIndex = getByIndex(Integer.parseInt(menuItemIndex));
+            switch (byIndex) {
+                case ADD_NEW_LITERATURE:
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(ADD_MENU_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
+                    break;
+                case DELETE_LITERATURE:
+                    //menuForDeletingLiterature();
+                    break;
+                case BORROW_LITERATURE:
+                    //menuForBorrowingLiterature();
+                    break;
+                case ARRIVE_LITERATURE:
+                    //menuForArrivingLiterature();
+                    break;
+                case SORT_LITERATURE:
+                    //menuForSortingLiterature();
+                    break;
+                case PRINT_SHELF:
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(PRINT_SHELF_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
+                    break;
+                case EXIT:
+                    //closeTerminal();
+                    break;
+                default:
 
-        MainMenu byIndex = getByIndex(Integer.parseInt(menuItemIndex));
-        switch (byIndex) {
-            case ADD_NEW_LITERATURE:
-                response.sendRedirect(new URIBuilder()
-                        .setPath(ADD_MENU_TITLE)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                        .toString());
-                break;
-            case DELETE_LITERATURE:
-                //menuForDeletingLiterature();
-                break;
-            case BORROW_LITERATURE:
-                //menuForBorrowingLiterature();
-                break;
-            case ARRIVE_LITERATURE:
-                //menuForArrivingLiterature();
-                break;
-            case SORT_LITERATURE:
-                //menuForSortingLiterature();
-                break;
-            case PRINT_SHELF:
-                response.sendRedirect(new URIBuilder()
-                        .setPath(PRINT_SHELF_TITLE)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                        .toString());
-                break;
-            case EXIT:
-                //closeTerminal();
-                break;
-            default:
-                doGet(request, response);
-                //printWriter.println("Wrong input");
-                break;
+                    break;
+            }
         }
-
-
-        //InputHandlerForUser inputHandlerForUser = new InputHandlerForUser(null, null);
-        //if (inputHandlerForUser.isValidInputString(userInputName, PATTERN_FOR_USER_NAME)
-        //        && inputHandlerForUser.isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
-//
-        //    String redirectorURL = new URIBuilder()
-        //            .setPath(MAIN_MENU_TITLE)
-        //            .addParameter(USER_NAME, userInputName)
-        //            .addParameter(TYPE_OF_WORK_WITH_FILES, userInputNumberStr)
-        //            .toString();
-        //    response.sendRedirect(redirectorURL);
-        //} else {
-        //    doGet(request, response); // TODO add message about wrong input
-        //}
-
+        else {
+            response.sendRedirect(new URIBuilder()
+                    .setPath(title)
+                    .addParameter(USER_NAME, userName)
+                    .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                    .toString());
+        }
     }
 
     @Override
