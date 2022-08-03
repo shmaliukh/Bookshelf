@@ -290,7 +290,7 @@ public class Terminal {
     /**
      * Method simply inform user about added Literature object
      */
-    private void informAboutAddedLiteratureObject(Item item) {
+    public void informAboutAddedLiteratureObject(Item item) {
         printWriter.println(item + " has added to shelf");
     }
 

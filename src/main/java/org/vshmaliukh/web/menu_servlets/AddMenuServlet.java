@@ -15,6 +15,7 @@ import org.vshmaliukh.web.WebPageBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -29,6 +30,7 @@ import static org.vshmaliukh.web.SimpleWebApp.*;
 public class AddMenuServlet extends HttpServlet {
 
     public static final String ADD_MENU_ITEM_INDEX = "add_menu_item_index";
+    public static final String INFORM_MESSAGE = "inform_message";
 
     String title = ADD_MENU_TITLE;
 
@@ -44,7 +46,10 @@ public class AddMenuServlet extends HttpServlet {
         MenuItemClassType menuItemClassType = generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
         int index = menuItemClassType.getIndex();
         if (index % 2 == 0) { //add random item
-            Terminal terminal = new Terminal(null, null); // TODO change later
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            PrintWriter printWriter = new PrintWriter(baos, true);
+
+            Terminal terminal = new Terminal(null, printWriter); // TODO change later
             terminal.setUser(new User(userName));
             terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
             terminal.setUpGsonHandler();
@@ -53,9 +58,15 @@ public class AddMenuServlet extends HttpServlet {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
             Item item = handlerByClass.getRandomItem(random);
             terminal.shelf.addLiteratureObject(item);
-            //informAboutAddedLiteratureObject(item); //TODO add message about added Item
-
+            terminal.informAboutAddedLiteratureObject(item); //TODO add message about added Item
             terminal.saveShelfItemsToJson();
+
+            response.sendRedirect(new URIBuilder()
+                    .setPath(title)
+                    .addParameter(USER_NAME, userName)
+                    .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                    .addParameter(INFORM_MESSAGE, baos.toString())
+                    .toString());
         }
 
         doGet(request, response);
@@ -69,6 +80,7 @@ public class AddMenuServlet extends HttpServlet {
 
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+        String informMessage = request.getParameter(INFORM_MESSAGE);
 
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
 
@@ -84,6 +96,14 @@ public class AddMenuServlet extends HttpServlet {
                         .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                         .toString(),
                 "Button to main menu");
+
+        if (informMessage != null) {
+            webPageBuilder.addToBody("" +
+                    " <br>\n" +
+                    " <br>\n" +
+                    informMessage +
+                    " <br>\n");
+        }
         writer.println(webPageBuilder.buildPage());
     }
 
