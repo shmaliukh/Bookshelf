@@ -2,9 +2,7 @@ package org.vshmaliukh.terminal.services;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.NAME;
@@ -43,9 +41,22 @@ public class Utils {
                 "       <br>\n" +
                 "Enter " + value + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name = \"" + value + "\">\n" +
+                "<input type = \"text\" name = \"" + value + "\" value=\"" + value + "\">\n" +
                 //"<input type = \"text\" name=\"" + value + ">\n " +
                 "       <br>\n";
+
+    }
+
+    public static String generateHTMLFormItems(String... values) {
+        return generateHTMLFormItems(Arrays.asList(values));
+    }
+
+    public static String generateHTMLFormItems(Collection<String> values) {
+        StringBuilder sb = new StringBuilder();
+        for (String value : values) {
+            sb.append(generateHTMLFormItem(value));
+        }
+        return sb.toString();
 
     }
 }

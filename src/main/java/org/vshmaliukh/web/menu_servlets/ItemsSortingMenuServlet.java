@@ -45,8 +45,9 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         if (classTypeStr != null && !classTypeStr.equals("")) {
 
             ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(classTypeStr);
-            List sortingMenuList = handlerByName.getSortingMenuList();
-            webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(request, servletTitle, sortingMenuList));
+
+            webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
+            webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(request, servletTitle, handlerByName.getSortingMenuList()));
 
             printSortedTable(request, webPageBuilder, menuIndexStr, classTypeStr, handlerByName);
         }

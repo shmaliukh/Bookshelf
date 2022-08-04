@@ -85,7 +85,6 @@ public class WebUtils {
         StringBuilder sb = new StringBuilder();
         sb.append("<form action = \"" +
                 WebUtils.generateBaseURLBuilder(servletTitle, request)
-                        //.addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
                         .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE))
                         .toString() +
                 "\" method = \"POST\">\n");
