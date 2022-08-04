@@ -3,6 +3,8 @@ package org.vshmaliukh.terminal.services.input_services;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import static org.vshmaliukh.terminal.Terminal.*;
+
 public final class ConstantsForUserInputHandler {
 
     private ConstantsForUserInputHandler() {

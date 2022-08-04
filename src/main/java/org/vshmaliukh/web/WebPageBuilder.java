@@ -70,7 +70,7 @@ public class WebPageBuilder {
         }
 
         sb = new StringBuilder();
-        return sb.append(this.initHeader(title))
+        return sb.append(initHeader(title))
                 .append(bodyStartHTML())
 
                 .append(getBody())

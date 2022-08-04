@@ -31,7 +31,7 @@ public class BorrowItemServlet extends HttpServlet {
         if (!indexOfItem.equals("")) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            consoleTerminal.shelf.borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
+            consoleTerminal.getShelf().borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
 
             consoleTerminal.saveShelfItemsToJson();
         }
@@ -57,11 +57,11 @@ public class BorrowItemServlet extends HttpServlet {
         ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (consoleTerminal.shelf.getLiteratureInShelf().isEmpty()) {
+        if (consoleTerminal.getShelf().getLiteratureInShelf().isEmpty()) {
             consoleTerminal.printWriter.println("No available literature IN shelf to borrow");
         } else {
             consoleTerminal.printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getLiteratureInShelf()), true);
+            //TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getLiteratureInShelf()), true);
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     new URIBuilder()

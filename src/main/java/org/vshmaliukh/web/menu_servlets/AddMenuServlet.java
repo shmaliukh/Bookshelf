@@ -58,11 +58,12 @@ public class AddMenuServlet extends HttpServlet {
 
                 ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
                 Item item = handlerByClass.getRandomItem(random);
-                consoleTerminal.shelf.addLiteratureObject(item);
+                consoleTerminal.getShelf().addLiteratureObject(item);
                 consoleTerminal.informAboutAddedLiteratureObject(item); //TODO add message about added Item
                 consoleTerminal.saveShelfItemsToJson();
-                Paths.get("")
-String servletPath = "/${user}/${type_of_work}"
+
+                //Paths.get("")
+                //String servletPath = "/${user}/${type_of_work}"
                 response.sendRedirect(new URIBuilder()
                         .setPath(title)
                         .addParameter(USER_NAME, userName)

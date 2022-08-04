@@ -1,5 +1,6 @@
 package org.vshmaliukh.terminal;
 
+import lombok.Data;
 import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.bookshelf.Shelf;
 import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandler;
@@ -8,7 +9,7 @@ import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandlerPerType;
 
 import java.io.PrintWriter;
 import java.util.Random;
-
+@Data
 public abstract class Terminal {
 
     public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
@@ -65,6 +66,6 @@ public abstract class Terminal {
         }
     }
 
-    public abstract void printCurrentStateOfShelf();
+    public void printCurrentStateOfShelf(){}
 
 }

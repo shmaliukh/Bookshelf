@@ -46,7 +46,7 @@ public class AddItemServlet extends HttpServlet {
 
             Item item = handlerByName.generateItemByHTMLFormData(request, printWriter);
 
-            consoleTerminal.shelf.addLiteratureObject(item);
+            consoleTerminal.getShelf().addLiteratureObject(item);
             consoleTerminal.saveShelfItemsToJson();
         }
 
@@ -64,24 +64,24 @@ public class AddItemServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         response.setContentType("text/html");
 
-
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
+        if (itemClassType != null && !itemClassType.equals("")) {
+            ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
 
-        ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
+            webPageBuilder.addToBody("" +
+                    "<form action = \"" +
+                    new URIBuilder().setPath(ADD_ITEM_TITLE)
+                            .addParameter(USER_NAME, request.getParameter(USER_NAME))
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, request.getParameter(TYPE_OF_WORK_WITH_FILES))
+                            .addParameter(ITEM_CLASS_TYPE, itemClassType)
 
-        webPageBuilder.addToBody("" +
-                "<form action = \"" +
-                new URIBuilder().setPath(ADD_ITEM_TITLE)
-                        .addParameter(USER_NAME, request.getParameter(USER_NAME))
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, request.getParameter(TYPE_OF_WORK_WITH_FILES))
-                        .addParameter(ITEM_CLASS_TYPE, itemClassType)
+                            .toString()
+                    + "\" method = \"POST\">\n" +
+                    "Create " + itemClassType + "\n" +
+                    "       <br>\n" +
+                    handlerByName.generateHTMLFormBodyToCreateItem(request));
 
-                        .toString()
-                + "\" method = \"POST\">\n" +
-                "Create " + itemClassType + "\n" +
-                "       <br>\n" +
-                handlerByName.generateHTMLFormBodyToCreateItem(request));
-
-        writer.println(webPageBuilder.buildPage());
+            writer.println(webPageBuilder.buildPage());
+        }
     }
 }

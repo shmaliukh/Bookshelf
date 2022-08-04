@@ -33,7 +33,7 @@ public class DeleteItemServlet extends HttpServlet {
         if (!indexOfItem.equals("")) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            consoleTerminal.shelf.deleteLiteratureObjectByIndex(Integer.parseInt(indexOfItem));
+            consoleTerminal.getShelf().deleteLiteratureObjectByIndex(Integer.parseInt(indexOfItem));
 
             consoleTerminal.saveShelfItemsToJson();
         }
@@ -59,11 +59,11 @@ public class DeleteItemServlet extends HttpServlet {
         ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (consoleTerminal.shelf.getAllLiteratureObjects().isEmpty()) {
+        if (consoleTerminal.getShelf().getAllLiteratureObjects().isEmpty()) {
             consoleTerminal.printWriter.println("No available literature of Shelf to delete");
         } else {
             consoleTerminal.printWriter.println("Enter INDEX of Literature object of Shelf to delete one:");
-            TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getAllLiteratureObjects()), true);
+            //TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getAllLiteratureObjects()), true);
 
 
             webPageBuilder.addToBody("" +

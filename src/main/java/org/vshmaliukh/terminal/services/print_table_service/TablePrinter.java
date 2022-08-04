@@ -76,7 +76,35 @@ public class TablePrinter {
     }
 
 
+    public static void printHTMLTable(PrintWriter printWriter, List<Map<String, String>> tableList, boolean isNeedIndex) {
+        // TODO is it necessary to keep this method as static one
+        TablePrinter tablePrinter = new TablePrinter(printWriter, tableList, isNeedIndex);
+        tablePrinter.printFormattedHTMLTable();
+    }
 
+    public void printFormattedHTMLTable() {
+        setUpValuesSettings();
+        printWriter.printf("<table style = \"border:1px solid black\">");
+        printHTMLLine(titleList);
+        tableList.forEach(this::printHTMLLine);
+        printWriter.printf("</table>");
+    }
+
+    public String getLineHTMLString(List<String> stringList) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<tr style = \"border:1px solid black\">");
+        for (String value : stringList) {
+            stringBuilder.append("<td style = \"border:1px solid black\">");
+            stringBuilder.append(value);
+            stringBuilder.append("</td>");
+        }
+        stringBuilder.append("</tr>");
+        return stringBuilder.toString();
+    }
+
+    private void printHTMLLine(List<String> stringList){
+        printWriter.printf(getLineHTMLString(stringList));
+    }
 
 
     private void printFormattedTable() {

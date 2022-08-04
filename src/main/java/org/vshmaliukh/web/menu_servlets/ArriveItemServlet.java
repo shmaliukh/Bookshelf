@@ -33,7 +33,7 @@ public class ArriveItemServlet extends HttpServlet {
         if(!indexOfItem.equals("")){
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            consoleTerminal.shelf.arriveLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
+            consoleTerminal.getShelf().arriveLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
 
             consoleTerminal.saveShelfItemsToJson();
         }
@@ -59,11 +59,11 @@ public class ArriveItemServlet extends HttpServlet {
         ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (consoleTerminal.shelf.getLiteratureOutShelf().isEmpty()) {
+        if (consoleTerminal.getShelf().getLiteratureOutShelf().isEmpty()) {
             consoleTerminal.printWriter.println("No available literature OUT shelf to arrive");
         } else {
             consoleTerminal.printWriter.println("Enter INDEX of Literature object to arrive one:");
-            TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getLiteratureOutShelf()), true);
+            //TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getLiteratureOutShelf()), true);
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     new URIBuilder()
