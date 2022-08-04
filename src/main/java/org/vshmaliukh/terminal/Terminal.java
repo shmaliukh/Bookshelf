@@ -21,7 +21,7 @@ public abstract class Terminal {
 
     public static final  String HOME_PROPERTY = System.getProperty("user.home");
 
-    protected Random random = new Random(); // TODO
+    protected Random random;
     protected ItemGsonHandler itemGsonHandler;
 
     protected Shelf shelf;

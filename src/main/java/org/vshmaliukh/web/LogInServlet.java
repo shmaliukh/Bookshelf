@@ -27,13 +27,7 @@ public class LogInServlet extends HttpServlet {
         InputHandlerForUser inputHandlerForUser = new InputHandlerForUser(null, null);
         if (inputHandlerForUser.isValidInputString(userInputName, PATTERN_FOR_USER_NAME)
                 && inputHandlerForUser.isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
-
-            String redirectorURL = new URIBuilder()
-                    .setPath(MAIN_MENU_TITLE)
-                    .addParameter(USER_NAME, userInputName)
-                    .addParameter(TYPE_OF_WORK_WITH_FILES, userInputNumberStr)
-                    .toString();
-            response.sendRedirect(redirectorURL);
+            WebUtils.redirectTo(MAIN_MENU_TITLE, response, request);
         } else {
             doGet(request, response); // TODO add message about wrong input
         }
@@ -42,8 +36,6 @@ public class LogInServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebPageBuilder webPageBuilder = new WebPageBuilder(title);
-        PrintWriter writer = response.getWriter();
-        response.setContentType("text/html");
 
         webPageBuilder.addToBody("" +
                 "<form action = \"" + title + "\" method = \"POST\">\n" +
@@ -59,6 +51,6 @@ public class LogInServlet extends HttpServlet {
                 "       <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>");
-        writer.println(webPageBuilder.buildPage());
+        response.getWriter().println(webPageBuilder.buildPage());
     }
 }

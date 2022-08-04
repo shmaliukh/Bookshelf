@@ -1,8 +1,5 @@
 package org.vshmaliukh.web.menu_servlets;
 
-import org.apache.http.client.utils.URIBuilder;
-import org.vshmaliukh.terminal.ConsoleTerminal;
-import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
@@ -11,15 +8,13 @@ import org.vshmaliukh.terminal.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItem;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.web.WebPageBuilder;
+import org.vshmaliukh.web.WebShelfHandler;
+import org.vshmaliukh.web.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.Random;
 
 import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
@@ -31,92 +26,66 @@ import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 public class AddMenuServlet extends HttpServlet {
 
     public static final String ADD_MENU_ITEM_INDEX = "add_menu_item_index";
-
-
-    String title = ADD_MENU_TITLE;
+    
+    String servletTitle = ADD_MENU_TITLE;
 
     Random random = new Random();
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userName = request.getParameter(USER_NAME);
-        String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+        String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         String menuItemIndex = request.getParameter(ADD_MENU_ITEM_INDEX);
-        if(menuItemIndex != null && !menuItemIndex.equals("")){
+        if(menuItemIndex != null && typeOfWorkWithFilesStr != null && !menuItemIndex.equals("") && !typeOfWorkWithFilesStr.equals("")){
             GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
-            MenuItemClassType menuItemClassType = (MenuItemClassType) generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
+            MenuItemClassType menuItemClassType = generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
             int index = menuItemClassType.getIndex();
-            if (index % 2 == 0) { //add random item
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                PrintWriter printWriter = new PrintWriter(baos, true);
 
-                ConsoleTerminal consoleTerminal = new ConsoleTerminal(null, printWriter); // TODO change later
-                consoleTerminal.setUser(new User(userName));
-                consoleTerminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
-                consoleTerminal.setUpGsonHandler();
-                consoleTerminal.readShelfItemsFromJson();
+            if (index % 2 == 0) { //add random item
+                int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
+                WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
 
                 ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
                 Item item = handlerByClass.getRandomItem(random);
-                consoleTerminal.getShelf().addLiteratureObject(item);
-                consoleTerminal.informAboutAddedLiteratureObject(item); //TODO add message about added Item
-                consoleTerminal.saveShelfItemsToJson();
+
+                webShelfHandler.getShelf().addLiteratureObject(item);
+                webShelfHandler.saveShelfItemsToJson();
 
                 //Paths.get("")
                 //String servletPath = "/${user}/${type_of_work}"
-                response.sendRedirect(new URIBuilder()
-                        .setPath(title)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                        .addParameter(INFORM_MESSAGE, baos.toString())
+                response.sendRedirect(
+                        WebUtils.generateBaseURLBuilder(servletTitle, request)
+                        .addParameter(INFORM_MESSAGE, "Added " + item)
                         .toString());
-                //doGet(request, response);
             } else {
                 String classSimpleName = menuItemClassType.getClassType().getSimpleName();
-                response.sendRedirect(new URIBuilder()
-                        .setPath(ADD_ITEM_TITLE)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                response.sendRedirect(
+                        WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, request)
                         .addParameter(ITEM_CLASS_TYPE, classSimpleName)
                         .toString());
             }
         }
         else {
-            response.sendRedirect(new URIBuilder()
-                    .setPath(title)
-                    .addParameter(USER_NAME, userName)
-                    .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                    .toString());
+            WebUtils.redirectTo(servletTitle, response, request);
         }
-
-
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        WebPageBuilder webPageBuilder = new WebPageBuilder(title);
-        PrintWriter writer = response.getWriter();
-        response.setContentType("text/html");
-
-        String userName = request.getParameter(USER_NAME);
-        String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
-        String informMessage = request.getParameter(INFORM_MESSAGE);
-
-        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
+        WebPageBuilder webPageBuilder = new WebPageBuilder(servletTitle);
 
         webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
+
         initPageFormStart(request, webPageBuilder);
-        initPageMenuItems(webPageBuilder, generatedMenu.getMenuItems());
+        initPageMenuItems(webPageBuilder);
         initPageFormEnd(webPageBuilder);
 
+        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, request), "Button to " + MAIN_MENU_TITLE);
+        addInformBlock(webPageBuilder, request.getParameter(INFORM_MESSAGE));
+        response.getWriter().println(webPageBuilder.buildPage());
+    }
 
-        webPageBuilder.addButton(new URIBuilder()
-                        .setPath(MAIN_MENU_TITLE)
-                        .addParameter(USER_NAME, userName)
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
-                        .toString(),
-                "Button to " + MAIN_MENU_TITLE);
-
+    private void addInformBlock(WebPageBuilder webPageBuilder, String informMessage) {
         if (informMessage != null) {
             webPageBuilder.addToBody("" +
                     " <br>\n" +
@@ -124,7 +93,6 @@ public class AddMenuServlet extends HttpServlet {
                     informMessage +
                     " <br>\n");
         }
-        writer.println(webPageBuilder.buildPage());
     }
 
     private void initPageFormEnd(WebPageBuilder webPageBuilder) {
@@ -136,15 +104,13 @@ public class AddMenuServlet extends HttpServlet {
     private void initPageFormStart(HttpServletRequest request, WebPageBuilder webPageBuilder) {
         webPageBuilder.addToBody("" +
                 "<form action = \"" +
-                new URIBuilder().setPath(title)
-                        .addParameter(USER_NAME, request.getParameter(USER_NAME))
-                        .addParameter(TYPE_OF_WORK_WITH_FILES, request.getParameter(TYPE_OF_WORK_WITH_FILES))
-                        .toString()
-                + "\" method = \"POST\">\n");
+                WebUtils.generateBaseURLString(servletTitle, request) +
+                "\" method = \"POST\">\n");
     }
 
-    private void initPageMenuItems(WebPageBuilder webPageBuilder, List<? extends MenuItem> allMenuItems) {
-        for (MenuItem menuItem : allMenuItems) {
+    private void initPageMenuItems(WebPageBuilder webPageBuilder) {
+        GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
+        for (MenuItem menuItem : generatedMenu.getMenuItems()) {
             webPageBuilder.addToBody("" +
                     "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
                     "     name=\"" + ADD_MENU_ITEM_INDEX + "\" " +

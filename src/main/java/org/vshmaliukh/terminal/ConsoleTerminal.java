@@ -22,11 +22,6 @@ import java.util.*;
 
 import static org.vshmaliukh.terminal.menus.MainMenu.getByIndex;
 
-/**
- * @author ShmaliukhVlad
- * @version 1.1.3
- * Class which gives user interactive interface
- */
 @Data
 public class ConsoleTerminal extends Terminal {
 
@@ -76,6 +71,7 @@ public class ConsoleTerminal extends Terminal {
     }
 
     public void initServicesForTerminal() {
+        random = new Random();
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
         convertorToStringForLiterature = new ConvertorToStringForLiterature();
     }

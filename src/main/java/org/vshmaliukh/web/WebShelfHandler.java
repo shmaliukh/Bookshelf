@@ -11,9 +11,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class WebTerminal extends Terminal {
+public class WebShelfHandler extends Terminal {
 
-    public WebTerminal(String userName, int typeOfWorkWithFiles) {
+    public WebShelfHandler(String userName, int typeOfWorkWithFiles) {
         this.user = new User(userName);
         this.shelf = new Shelf(null); // TODO
         this.typeOfWorkWithFiles = typeOfWorkWithFiles;
@@ -23,14 +23,13 @@ public class WebTerminal extends Terminal {
     }
 
 
-    public String generateTableOfShelf() {
-        List<Item> shelfAllLiteratureObjects = shelf.getAllLiteratureObjects();
-        if (shelfAllLiteratureObjects.isEmpty()) {
+    public String generateTableOfShelfItems(List<Item> shelfLiteratureObjects, boolean isNeedIndex, boolean isForEditing) {
+        if (shelfLiteratureObjects.isEmpty()) {
              return "No available literature of Shelf to print";
         } else {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream(); // TODO remove baos
             PrintWriter printWriter = new PrintWriter(baos, true);
-            TablePrinter.printHTMLTable(printWriter, ConvertorToStringForLiterature.getTable(shelfAllLiteratureObjects), false);
+            TablePrinter.printHTMLTable(printWriter, ConvertorToStringForLiterature.getTable(shelfLiteratureObjects), isNeedIndex, isForEditing);
             return baos.toString();
         }
     }
