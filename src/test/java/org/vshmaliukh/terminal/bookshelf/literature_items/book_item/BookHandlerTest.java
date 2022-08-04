@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.terminal.ConsoleTerminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.DATE;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;

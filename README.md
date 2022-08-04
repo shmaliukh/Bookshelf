@@ -25,7 +25,7 @@ The bookshelf can contain books and magazines, the user can perform the followin
 * Number of pages
 * Note whether the magazine is borrowed from the shelf
 
-Interaction with the user should take place through the terminal, menu items can be selected via menu item numbers.
+Interaction with the user should take place through the consoleTerminal, menu items can be selected via menu item numbers.
 Exit the program must be through a separate menu item.
 Books and magazines should be saved in a file (number of files and format - optional)
 

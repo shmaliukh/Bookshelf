@@ -2,7 +2,7 @@ package org.vshmaliukh;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
-import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.ConsoleTerminal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,12 +27,12 @@ public class Main {
     static class TerminalThread extends Thread {
         private final Scanner scanner = new Scanner(System.in);
         private final PrintWriter printWriter = new PrintWriter(System.out, true);
-        private final Terminal terminal = new Terminal(scanner, printWriter);
+        private final ConsoleTerminal consoleTerminal = new ConsoleTerminal(scanner, printWriter);
 
         @Override
         public synchronized void run() {
             try {
-                terminal.startWork(false);
+                consoleTerminal.startWork(false);
             } catch (Exception e) {
                 log.error("[TerminalThread] problem to start thread. Exception: ", e);
             }

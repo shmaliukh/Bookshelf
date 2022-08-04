@@ -2,23 +2,19 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.book_item;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
-import org.vshmaliukh.terminal.bookshelf.literature_items.comics_item.Comics;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.terminal.Terminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.terminal.ConsoleTerminal.DATE_FORMAT_STR;
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.PUBLISHER;
 import static org.vshmaliukh.terminal.services.Utils.getRandomString;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.PATTERN_FOR_PUBLISHER;
 
 public class BookHandler implements ItemHandler<Book> {
 

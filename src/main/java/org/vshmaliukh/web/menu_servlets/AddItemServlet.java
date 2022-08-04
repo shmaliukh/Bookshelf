@@ -1,7 +1,7 @@
 package org.vshmaliukh.web.menu_servlets;
 
 import org.apache.http.client.utils.URIBuilder;
-import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.ConsoleTerminal;
 import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
@@ -37,17 +37,17 @@ public class AddItemServlet extends HttpServlet {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintWriter printWriter = new PrintWriter(baos, true);
 
-            Terminal terminal = new Terminal(null, printWriter); // TODO change later
-            terminal.setUser(new User(userName));
-            terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
-            terminal.setUpGsonHandler();
+            ConsoleTerminal consoleTerminal = new ConsoleTerminal(null, printWriter); // TODO change later
+            consoleTerminal.setUser(new User(userName));
+            consoleTerminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
+            consoleTerminal.setUpGsonHandler();
 
-            terminal.readShelfItemsFromJson();
+            consoleTerminal.readShelfItemsFromJson();
 
             Item item = handlerByName.generateItemByHTMLFormData(request, printWriter);
 
-            terminal.shelf.addLiteratureObject(item);
-            terminal.saveShelfItemsToJson();
+            consoleTerminal.shelf.addLiteratureObject(item);
+            consoleTerminal.saveShelfItemsToJson();
         }
 
         response.sendRedirect(new URIBuilder()

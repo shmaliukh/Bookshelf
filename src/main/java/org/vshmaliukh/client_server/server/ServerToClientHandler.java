@@ -1,7 +1,7 @@
 package org.vshmaliukh.client_server.server;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.ConsoleTerminal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +34,7 @@ public class ServerToClientHandler {
     }
 
     void start() {
-        TerminalToClientThread terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner, printWriter));
+        TerminalToClientThread terminalToClientThread = new TerminalToClientThread(userCounter, new ConsoleTerminal(scanner, printWriter));
         terminalToClientThread.start();
     }
 }

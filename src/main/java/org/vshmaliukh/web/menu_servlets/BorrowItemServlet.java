@@ -1,19 +1,16 @@
 package org.vshmaliukh.web.menu_servlets;
 
 import org.apache.http.client.utils.URIBuilder;
-import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.ConsoleTerminal;
 import org.vshmaliukh.terminal.User;
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
 import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
@@ -33,10 +30,10 @@ public class BorrowItemServlet extends HttpServlet {
 
         if (!indexOfItem.equals("")) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
-            terminal.shelf.borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
+            ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
+            consoleTerminal.shelf.borrowLiteratureObjectFromShelfByIndex(Integer.parseInt(indexOfItem));
 
-            terminal.saveShelfItemsToJson();
+            consoleTerminal.saveShelfItemsToJson();
         }
         doGet(request, response);
         //response.sendRedirect(new URIBuilder()
@@ -57,14 +54,14 @@ public class BorrowItemServlet extends HttpServlet {
         String typeOfWorkWithFiles = request.getParameter(TYPE_OF_WORK_WITH_FILES);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        Terminal terminal = getTerminal(userName, typeOfWorkWithFiles, baos);
+        ConsoleTerminal consoleTerminal = getTerminal(userName, typeOfWorkWithFiles, baos);
         //terminal.
 
-        if (terminal.shelf.getLiteratureInShelf().isEmpty()) {
-            terminal.printWriter.println("No available literature IN shelf to borrow");
+        if (consoleTerminal.shelf.getLiteratureInShelf().isEmpty()) {
+            consoleTerminal.printWriter.println("No available literature IN shelf to borrow");
         } else {
-            terminal.printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getLiteratureInShelf()), true);
+            consoleTerminal.printWriter.println("Enter INDEX of Literature object to borrow one:");
+            TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getLiteratureInShelf()), true);
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     new URIBuilder()
@@ -91,15 +88,15 @@ public class BorrowItemServlet extends HttpServlet {
         writer.println(webPageBuilder.buildPage());
     }
 
-    private Terminal getTerminal(String userName, String typeOfWorkWithFiles, ByteArrayOutputStream baos) {
+    private ConsoleTerminal getTerminal(String userName, String typeOfWorkWithFiles, ByteArrayOutputStream baos) {
         PrintWriter printWriter = new PrintWriter(baos, true);
 
-        Terminal terminal = new Terminal(null, printWriter); // TODO change later
-        terminal.setUser(new User(userName));
-        terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
-        terminal.setUpGsonHandler();
+        ConsoleTerminal consoleTerminal = new ConsoleTerminal(null, printWriter); // TODO change later
+        consoleTerminal.setUser(new User(userName));
+        consoleTerminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
+        consoleTerminal.setUpGsonHandler();
 
-        terminal.readShelfItemsFromJson();
-        return terminal;
+        consoleTerminal.readShelfItemsFromJson();
+        return consoleTerminal;
     }
 }

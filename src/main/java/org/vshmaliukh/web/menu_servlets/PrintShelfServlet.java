@@ -1,7 +1,7 @@
 package org.vshmaliukh.web.menu_servlets;
 
 import org.apache.http.client.utils.URIBuilder;
-import org.vshmaliukh.terminal.Terminal;
+import org.vshmaliukh.terminal.ConsoleTerminal;
 import org.vshmaliukh.terminal.User;
 import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
 import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
@@ -33,16 +33,16 @@ public class PrintShelfServlet extends HttpServlet {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintWriter printWriter = new PrintWriter(baos, true);
 
-        Terminal terminal = new Terminal(null, printWriter); // TODO change later
-        terminal.setUser(new User(userName));
-        terminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
-        terminal.setUpGsonHandler();
+        ConsoleTerminal consoleTerminal = new ConsoleTerminal(null, printWriter); // TODO change later
+        consoleTerminal.setUser(new User(userName));
+        consoleTerminal.setTypeOfWorkWithFiles(Integer.parseInt(typeOfWorkWithFiles));
+        consoleTerminal.setUpGsonHandler();
 
-        terminal.readShelfItemsFromJson();
-        if (terminal.shelf.getAllLiteratureObjects().isEmpty()) {
-            terminal.printWriter.println("No available literature of Shelf to print");
+        consoleTerminal.readShelfItemsFromJson();
+        if (consoleTerminal.shelf.getAllLiteratureObjects().isEmpty()) {
+            consoleTerminal.printWriter.println("No available literature of Shelf to print");
         } else {
-            TablePrinter.printHTMLTable(terminal.printWriter, ConvertorToStringForLiterature.getTable(terminal.shelf.getAllLiteratureObjects()), false);
+            TablePrinter.printHTMLTable(consoleTerminal.printWriter, ConvertorToStringForLiterature.getTable(consoleTerminal.shelf.getAllLiteratureObjects()), false);
         }
 
         webPageBuilder.addToBody(baos.toString());

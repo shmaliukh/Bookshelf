@@ -58,7 +58,11 @@ public class MainMenuServlet extends HttpServlet {
                             .toString());
                     break;
                 case SORT_LITERATURE:
-                    //menuForSortingLiterature();
+                    response.sendRedirect(new URIBuilder()
+                            .setPath(SORTING_TYPES_MENU_TITLE)
+                            .addParameter(USER_NAME, userName)
+                            .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
+                            .toString());
                     break;
                 case PRINT_SHELF:
                     response.sendRedirect(new URIBuilder()

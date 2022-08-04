@@ -5,7 +5,7 @@ import org.vshmaliukh.terminal.menus.menu_items.MenuItem;
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.terminal.Terminal.WRONG_INPUT;
+import static org.vshmaliukh.terminal.ConsoleTerminal.WRONG_INPUT;
 
 public enum MainMenu {
 
