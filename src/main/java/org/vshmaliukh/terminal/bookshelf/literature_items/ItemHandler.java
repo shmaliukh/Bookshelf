@@ -19,21 +19,21 @@ public interface ItemHandler<T extends Item> {
 
     List<MenuItemForSorting> getSortingMenuList();
 
-    default void printSortingMenu(PrintWriter printWriter){
+    default void printSortingMenu(PrintWriter printWriter) {
         myCustomPrintln(printWriter, CHOOSE_TYPE_OF_SORTING);
         for (MenuItemForSorting menuItemForSorting : getSortingMenuList()) {
-            printWriter.println(menuItemForSorting );
+            printWriter.println(menuItemForSorting);
         }
-        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN );
+        printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
     }
 
-     static void myCustomPrintln(PrintWriter printWriter, String str) {
+    static void myCustomPrintln(PrintWriter printWriter, String str) {
         printWriter.println(str);
     }
 
-    default List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter){
+    default List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter) {
         if (items.isEmpty()) {
-            printWriter.println(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING );
+            printWriter.println(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING);
         } else {
             printSortingMenu(printWriter);
             return getSortedItems(userChoice, items);

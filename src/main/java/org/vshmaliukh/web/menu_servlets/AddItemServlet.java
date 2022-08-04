@@ -20,7 +20,7 @@ public class AddItemServlet extends HttpServlet {
 
     public static final String ITEM_CLASS_TYPE = "item_class_type";
 
-    String title = ADD_ITEM_TITLE;
+    final String servletTitle = ADD_ITEM_TITLE;
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -29,27 +29,24 @@ public class AddItemServlet extends HttpServlet {
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
 
         ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        if (handlerByName.isValidHTMLFormData(request)) {
-            if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
-                WebShelfHandler webShelfHandler = new WebShelfHandler(userName, Integer.parseInt(typeOfWorkWithFilesStr));
-                Item item = handlerByName.generateItemByHTMLFormData(request, response.getWriter()); // TODO fix writer
+        if (handlerByName.isValidHTMLFormData(request) && typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
+            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, Integer.parseInt(typeOfWorkWithFilesStr));
+            Item item = handlerByName.generateItemByHTMLFormData(request, response.getWriter()); // TODO fix writer
 
-                webShelfHandler.getShelf().addLiteratureObject(item);
-                webShelfHandler.saveShelfItemsToJson();
+            webShelfHandler.getShelf().addLiteratureObject(item);
+            webShelfHandler.saveShelfItemsToJson();
 
-                response.sendRedirect(
-                        WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, request)
-                                .addParameter(INFORM_MESSAGE, "Added " + item)
-                                .toString());
-            }
+            response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, request)
+                            .addParameter(INFORM_MESSAGE, "Added " + item)
+                            .toString());
         } else {
             WebUtils.redirectTo(ADD_MENU_TITLE, response, request);
         }
     }
-    
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        WebPageBuilder webPageBuilder = new WebPageBuilder(title);
+        WebPageBuilder webPageBuilder = new WebPageBuilder(servletTitle);
 
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
         if (itemClassType != null && !itemClassType.equals("")) {

@@ -19,6 +19,7 @@ public class SimpleWebApp {
     public static final String MAIN_MENU_TITLE = "main_menu";
     public static final String ADD_MENU_TITLE = "add_menu";
     public static final String SORTING_TYPES_MENU_TITLE = "sorting_types_menu";
+    public static final String ITEMS_SORTING_MENU_TITLE = "items_sorting_menu";
     public static final String ADD_ITEM_TITLE = "add_item";
     public static final String ARRIVE_ITEM_TITLE = "arrive_item_index";
     public static final String DELETE_ITEM_TITLE = "delete_item_index";
@@ -43,6 +44,7 @@ public class SimpleWebApp {
         addServletToTomcat(new EditItemsServlet(), EDIT_ITEMS_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new DeleteItemServlet(), DELETE_ITEM_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new SortingTypesMenuServlet(), SORTING_TYPES_MENU_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new ItemsSortingMenuServlet(), ITEMS_SORTING_MENU_TITLE, tomcat, contextPath, context);
 
         tomcat.start();
         tomcat.getServer().await();

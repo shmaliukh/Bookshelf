@@ -5,6 +5,7 @@ import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.menus.GeneratedMenu;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItem;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import java.util.List;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.SimpleWebApp.INFORM_MESSAGE;
+import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class WebUtils {
     public static final String MENU_ITEM_INDEX = "menu_item_index";
@@ -32,7 +35,7 @@ public class WebUtils {
                 .addParameter(TYPE_OF_WORK_WITH_FILES, request.getParameter(TYPE_OF_WORK_WITH_FILES));
     }
 
-    public static WebShelfHandler generateShelfHandler(HttpServletRequest request){
+    public static WebShelfHandler generateShelfHandler(HttpServletRequest request) {
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
@@ -50,17 +53,21 @@ public class WebUtils {
         return "";
     }
 
-    public static List<List<String>> generateTable(List<Item> itemList){
+    public static List<List<String>> generateTable(List<Item> itemList) {
         ConvertorToStringForLiterature.getTable(itemList);
         return null; // todo
+    }
+
+    public static String generateFormHTMLStart(HttpServletRequest request, String servletTitle) {
+        return "<form action = \"" +
+                WebUtils.generateBaseURLString(servletTitle, request) +
+                "\" method = \"POST\">\n";
     }
 
     public static String generateMenuItemsFormHTML(HttpServletRequest request, String servletTitle, GeneratedMenu generatedMenu) {
         StringBuilder sb = new StringBuilder();
         List<MenuItemClassType> menuItems = generatedMenu.getMenuItems();
-        sb.append("<form action = \"" +
-                WebUtils.generateBaseURLString(servletTitle, request) +
-                "\" method = \"POST\">\n");
+        sb.append(generateFormHTMLStart(request, servletTitle));
         for (MenuItem menuItem : menuItems) {
             sb.append("" +
                     "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
@@ -72,5 +79,37 @@ public class WebUtils {
         }
         sb.append("<input type = \"submit\" value = \"Submit\" />\n" + "</form>");
         return sb.toString();
+    }
+
+    public static String generateMenuItemsFormHTML(HttpServletRequest request, String servletTitle, List<MenuItemForSorting> menuItemForSortingList) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<form action = \"" +
+                WebUtils.generateBaseURLBuilder(servletTitle, request)
+                        //.addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
+                        .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE))
+                        .toString() +
+                "\" method = \"POST\">\n");
+        for (MenuItemForSorting menuItem : menuItemForSortingList) {
+            sb.append("" +
+                    "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
+                    "     name=\"" + MENU_ITEM_INDEX + "\" " +
+                    "     value=\"" + menuItem.getIndex() + "\">\n" +
+                    "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
+                    "<br>\n"
+            );
+        }
+        sb.append("<input type = \"submit\" value = \"Submit\" />\n" + "</form>");
+        return sb.toString();
+    }
+
+    public static void addMessageBlock(HttpServletRequest request, WebPageBuilder webPageBuilder) {
+        String informMessage = request.getParameter(INFORM_MESSAGE);
+        if (informMessage != null) {
+            webPageBuilder.addToBody("" +
+                    " <br>\n" +
+                    " <br>\n" +
+                    informMessage +
+                    " <br>\n");
+        }
     }
 }
