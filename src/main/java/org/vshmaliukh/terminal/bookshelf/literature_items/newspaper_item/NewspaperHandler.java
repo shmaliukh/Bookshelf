@@ -1,9 +1,7 @@
 package org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item;
 
-import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
-import org.vshmaliukh.terminal.bookshelf.literature_items.newspaper_item.Newspaper;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
@@ -14,10 +12,6 @@ import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.web.LogInServlet.USER_NAME;
-import static org.vshmaliukh.web.SimpleWebApp.ADD_ITEM_TITLE;
-import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
@@ -83,12 +77,16 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         String nameParameter = request.getParameter(NAME);
         String pagesParameter = request.getParameter(PAGES);
         String borrowedParameter = request.getParameter(BORROWED);
-        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED)) {
+        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter)) {
             return true;
         }
         return false;
+    }
+
+    public boolean isValidBookInput(String name, String pages, String borrowed) {
+        return InputHandlerForLiterature.isValidInputString(name, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
     }
 
     @Override
@@ -98,12 +96,11 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         String borrowedParameter = request.getParameter(BORROWED);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
+        inputHandlerForLiterature.scanner = new Scanner(join);
 
-        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
         String name = inputHandlerForLiterature.getUserLiteratureName();
-        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
         int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
         boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
 
         return new Newspaper(name, pages, isBorrowed);

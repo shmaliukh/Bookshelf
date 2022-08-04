@@ -42,7 +42,7 @@ public class SortingTypesMenuServlet extends HttpServlet {
 
         webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
         webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(request, servletTitle, new GeneratedMenuForSorting()));
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, request), "Button to " + MAIN_MENU_TITLE);
+        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, request), MAIN_MENU_TITLE);
         WebUtils.addMessageBlock(request, webPageBuilder);
 
         response.getWriter().println(webPageBuilder.buildPage());

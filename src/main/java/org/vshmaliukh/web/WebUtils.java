@@ -53,11 +53,6 @@ public class WebUtils {
         return "";
     }
 
-    public static List<List<String>> generateTable(List<Item> itemList) {
-        ConvertorToStringForLiterature.getTable(itemList);
-        return null; // todo
-    }
-
     public static String generateFormHTMLStart(HttpServletRequest request, String servletTitle) {
         return "<form action = \"" +
                 WebUtils.generateBaseURLString(servletTitle, request) +
@@ -69,13 +64,7 @@ public class WebUtils {
         List<MenuItemClassType> menuItems = generatedMenu.getMenuItems();
         sb.append(generateFormHTMLStart(request, servletTitle));
         for (MenuItem menuItem : menuItems) {
-            sb.append("" +
-                    "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
-                    "     name=\"" + MENU_ITEM_INDEX + "\" " +
-                    "     value=\"" + menuItem.getIndex() + "\">\n" +
-                    "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
-                    "<br>\n"
-            );
+            sb.append(generateMenuItemRadio(menuItem));
         }
         sb.append("<input type = \"submit\" value = \"Submit\" />\n" + "</form>");
         return sb.toString();
@@ -89,16 +78,19 @@ public class WebUtils {
                         .toString() +
                 "\" method = \"POST\">\n");
         for (MenuItemForSorting menuItem : menuItemForSortingList) {
-            sb.append("" +
-                    "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
-                    "     name=\"" + MENU_ITEM_INDEX + "\" " +
-                    "     value=\"" + menuItem.getIndex() + "\">\n" +
-                    "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
-                    "<br>\n"
-            );
+            sb.append(generateMenuItemRadio(menuItem));
         }
         sb.append("<input type = \"submit\" value = \"Submit\" />\n" + "</form>");
         return sb.toString();
+    }
+
+    private static String generateMenuItemRadio(MenuItem menuItem) {
+        return "" +
+                "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
+                "     name=\"" + MENU_ITEM_INDEX + "\" " +
+                "     value=\"" + menuItem.getIndex() + "\">\n" +
+                "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
+                "<br>\n";
     }
 
     public static void addMessageBlock(HttpServletRequest request, WebPageBuilder webPageBuilder) {

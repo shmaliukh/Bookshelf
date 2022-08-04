@@ -3,7 +3,6 @@ package org.vshmaliukh.terminal.services.print_table_service;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -21,14 +20,14 @@ class TablePrinterTest {
     @ParameterizedTest
     @MethodSource("provideItemsForTablePrint")
     void testPrintTable(List<Map<String, String>> providedTable, String expected) {
-        TablePrinter.printTable(printWriter, providedTable, false);
+        new PlainTextTablePrinter(printWriter, providedTable, false).print();
         assertEquals(expected, baos.toString().trim());
     }
 
     @ParameterizedTest
     @MethodSource("provideItemsForTablePrintWithIndex")
     void testPrintTableWithIndex(List<Map<String, String>> providedTable, String expected) {
-        TablePrinter.printTable(printWriter, providedTable, true);
+        new PlainTextTablePrinter(printWriter, providedTable, true).print();
         assertEquals(expected, baos.toString().trim());
     }
 

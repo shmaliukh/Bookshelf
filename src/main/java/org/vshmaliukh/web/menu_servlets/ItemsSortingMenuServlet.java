@@ -1,12 +1,9 @@
 package org.vshmaliukh.web.menu_servlets;
 
-import lombok.SneakyThrows;
 import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.terminal.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.terminal.services.Utils;
-import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 import org.vshmaliukh.web.WebShelfHandler;
 import org.vshmaliukh.web.WebUtils;
@@ -53,8 +50,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         }
 
         webPageBuilder.addButton(
-                WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, request),
-                "Button to " + SORTING_TYPES_MENU_TITLE);
+                WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, request), SORTING_TYPES_MENU_TITLE);
         WebUtils.addMessageBlock(request, webPageBuilder); // TODO
 
         response.getWriter().println(webPageBuilder.buildPage());

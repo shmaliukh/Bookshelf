@@ -27,7 +27,10 @@ public class LogInServlet extends HttpServlet {
                 && inputHandlerForUser.isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
             WebUtils.redirectTo(MAIN_MENU_TITLE, response, request);
         } else {
-            doGet(request, response); // TODO add message about wrong input
+            response.sendRedirect(
+                    WebUtils.generateBaseURLBuilder(servletTitle, request)
+                            .addParameter(INFORM_MESSAGE, "Wrong input")
+                            .toString());
         }
     }
 
@@ -35,21 +38,25 @@ public class LogInServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         WebPageBuilder webPageBuilder = new WebPageBuilder(servletTitle);
 
+        String userNameStr = request.getParameter(USER_NAME) != null ? request.getParameter(USER_NAME) : "";
+        String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES) != null ? request.getParameter(TYPE_OF_WORK_WITH_FILES) : "";
+
         webPageBuilder.addToBody("" +
                 "<form action = \"" + servletTitle + "\" method = \"POST\">\n" +
                 MESSAGE_ENTER_USER_NAME + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name=\"" + USER_NAME + "\">\n " +
+                "<input type = \"text\" name=\"" + USER_NAME + "\" value=\"" + userNameStr + "\">\n " +
                 "       <br>\n" +
                 "       <br>\n" +
                 MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES + "\n" +
                 "       <br>\n" +
-                "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\">\n " +
+                "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\"value=\"" + typeOfWorkWithFilesStr + "\">\n " +
                 "       <br>\n" +
                 "       <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>");
-
+        //request.get
+        WebUtils.addMessageBlock(request, webPageBuilder);
         response.getWriter().println(webPageBuilder.buildPage());
     }
 }

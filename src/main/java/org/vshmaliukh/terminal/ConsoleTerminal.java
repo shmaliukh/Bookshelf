@@ -15,7 +15,8 @@ import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForUser;
 import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
-import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
+import org.vshmaliukh.terminal.services.print_table_service.PlainTextTablePrinter;
+import org.vshmaliukh.terminal.services.print_table_service.PlainTextTablePrinter;
 
 import java.io.*;
 import java.util.*;
@@ -142,7 +143,7 @@ public class ConsoleTerminal extends Terminal {
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
         List<Item> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
-        TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(sortedList), true);
+        new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(sortedList), true).print();
     }
 
     /**
@@ -151,7 +152,7 @@ public class ConsoleTerminal extends Terminal {
     @Override
     public void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false);
+        new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false).print();
     }
 
     /**
@@ -170,7 +171,7 @@ public class ConsoleTerminal extends Terminal {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            TablePrinter.printTable(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true);
+            new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true).print();
             printWriter.println("Enter another value to return");
             shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
         }
@@ -184,7 +185,7 @@ public class ConsoleTerminal extends Terminal {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            TablePrinter.printTable(printWriter,
+            new PlainTextTablePrinter (printWriter,
                     convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
             printWriter.println("Enter another value to return");
             shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
@@ -199,8 +200,8 @@ public class ConsoleTerminal extends Terminal {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            TablePrinter.printTable(printWriter,
-                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
+            new PlainTextTablePrinter(printWriter,
+                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true).print();
             printWriter.println("Enter another value to return");
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }

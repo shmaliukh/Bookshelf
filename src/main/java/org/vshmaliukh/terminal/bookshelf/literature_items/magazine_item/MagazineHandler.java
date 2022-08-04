@@ -78,12 +78,16 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         String nameParameter = request.getParameter(NAME);
         String pagesParameter = request.getParameter(PAGES);
         String borrowedParameter = request.getParameter(BORROWED);
-        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED)) {
+        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter)) {
             return true;
         }
         return false;
+    }
+
+    public boolean isValidBookInput(String name, String pages, String borrowed) {
+        return InputHandlerForLiterature.isValidInputString(name, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
     }
 
     @Override
@@ -93,12 +97,11 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         String borrowedParameter = request.getParameter(BORROWED);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
+        inputHandlerForLiterature.scanner = new Scanner(join);
 
-        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
         String name = inputHandlerForLiterature.getUserLiteratureName();
-        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
         int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
         boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
 
         return new Magazine(name, pages, isBorrowed);

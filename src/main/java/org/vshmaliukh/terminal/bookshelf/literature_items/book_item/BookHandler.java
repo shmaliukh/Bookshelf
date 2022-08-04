@@ -78,8 +78,7 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
         return "" +
-                Utils.generateHTMLFormItems(NAME, PAGES, BORROWED, AUTHOR, DATE)
-                +
+                Utils.generateHTMLFormItems(NAME, PAGES, BORROWED, AUTHOR, DATE) +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>";
     }
@@ -91,11 +90,7 @@ public class BookHandler implements ItemHandler<Book> {
         String borrowedParameter = request.getParameter(BORROWED);
         String authorParameter = request.getParameter(AUTHOR);
         String dateParameter = request.getParameter(DATE);
-        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED) &&
-                InputHandlerForLiterature.isValidInputDate(dateParameter, new SimpleDateFormat(DATE_FORMAT_FOR_INPUT_HANDLER)) &&
-                InputHandlerForLiterature.isValidInputString(authorParameter, PATTERN_FOR_AUTHOR)) {
+        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter)) {
             return true;
         }
         return false;
@@ -111,25 +106,20 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public Book generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
-
         String nameParameter = request.getParameter(NAME);
         String pagesParameter = request.getParameter(PAGES);
         String borrowedParameter = request.getParameter(BORROWED);
         String authorParameter = request.getParameter(AUTHOR);
         String dateParameter = request.getParameter(DATE);
 
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);
         inputHandlerForLiterature.scanner = new Scanner(join);
-//        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
+
         String name = inputHandlerForLiterature.getUserLiteratureName();
-//        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
         int pages = inputHandlerForLiterature.getUserLiteraturePages();
-//        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
         boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-//        inputHandlerForLiterature.scanner = new Scanner(authorParameter);
         String author = inputHandlerForLiterature.getUserLiteratureAuthor();
-//        inputHandlerForLiterature.scanner = new Scanner(dateParameter);
         Date date = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
 
         return new Book(name, pages, isBorrowed, author, date);

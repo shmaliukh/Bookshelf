@@ -27,17 +27,19 @@ public class MainMenuServlet extends HttpServlet {
         return "" +
                 "MENU:" +
                 "   <br>\n " +
-                "   <br>\n " +
-                "<a href=\"" + WebUtils.generateBaseURLString(ADD_MENU_TITLE, request) + "\">" + "ADD item </a>" +
-                "   <br>\n " +
-                "<a href=\"" + WebUtils.generateBaseURLString(EDIT_ITEMS_TITLE, request) + "\">" + "EDIT items </a>" +
-                "   <br>\n " +
-                "<a href=\"" + WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, request) + "\">" + "SORTING items </a>" +
-                "   <br>\n " +
-                "<a href=\"" + LOG_IN_TITLE + "\">" + "EXIT </a>" +
-                "   <br>\n " +
+                generateMainMenuItem(ADD_MENU_TITLE, "ADD item", request) +
+                generateMainMenuItem(EDIT_ITEMS_TITLE, "EDIT items", request) +
+                generateMainMenuItem(SORTING_TYPES_MENU_TITLE, "SORTING items", request) +
+                generateMainMenuItem(LOG_IN_TITLE, "EXIT", request) +
                 "   <br>\n " +
                 "Current state of shelf:\n " +
                 "   <br>\n";
+    }
+
+    private String generateMainMenuItem(String servletTitle, String itemTitle, HttpServletRequest request) {
+        return "" +
+                "   <br>\n " +
+                "<a href=\"" + WebUtils.generateBaseURLString(servletTitle, request) + "\">" + itemTitle + "</a>\n" +
+                "   <br>\n ";
     }
 }

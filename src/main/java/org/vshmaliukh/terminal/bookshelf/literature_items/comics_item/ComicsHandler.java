@@ -9,6 +9,7 @@ import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
@@ -86,13 +87,17 @@ public class ComicsHandler implements ItemHandler<Comics> {
         String pagesParameter = request.getParameter(PAGES);
         String borrowedParameter = request.getParameter(BORROWED);
         String publisherParameter = request.getParameter(PUBLISHER);
-        if (InputHandlerForLiterature.isValidInputString(nameParameter, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pagesParameter, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowedParameter, PATTERN_FOR_IS_BORROWED) &&
-                InputHandlerForLiterature.isValidInputString(publisherParameter, PATTERN_FOR_PUBLISHER)) {
+        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter)) {
             return true;
         }
         return false;
+    }
+
+    public boolean isValidBookInput(String name, String pages, String borrowed, String publisherParameter) {
+        return InputHandlerForLiterature.isValidInputString(name, PATTERN_FOR_NAME) &&
+                InputHandlerForLiterature.isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
+                InputHandlerForLiterature.isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED) &&
+                InputHandlerForLiterature.isValidInputString(publisherParameter, PATTERN_FOR_PUBLISHER);
     }
 
     @Override
@@ -103,14 +108,12 @@ public class ComicsHandler implements ItemHandler<Comics> {
         String publisherParameter = request.getParameter(PUBLISHER);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
+        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, publisherParameter);
+        inputHandlerForLiterature.scanner = new Scanner(join);
 
-        inputHandlerForLiterature.scanner = new Scanner(nameParameter);
         String name = inputHandlerForLiterature.getUserLiteratureName();
-        inputHandlerForLiterature.scanner = new Scanner(pagesParameter);
         int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        inputHandlerForLiterature.scanner = new Scanner(borrowedParameter);
         boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        inputHandlerForLiterature.scanner = new Scanner(publisherParameter);
         String publisher = inputHandlerForLiterature.getUserLiteraturePublisher();
 
         return new Comics(name, pages, isBorrowed, publisher);

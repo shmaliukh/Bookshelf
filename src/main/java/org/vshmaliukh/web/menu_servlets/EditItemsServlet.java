@@ -76,7 +76,7 @@ public class EditItemsServlet extends HttpServlet {
                         .addParameter(USER_NAME, userName)
                         .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                         .toString(),
-                "Button to " + MAIN_MENU_TITLE);
+                MAIN_MENU_TITLE);
         response.getWriter().println(webPageBuilder.buildPage());
     }
 }

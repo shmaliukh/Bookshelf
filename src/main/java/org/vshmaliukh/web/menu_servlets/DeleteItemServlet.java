@@ -3,8 +3,6 @@ package org.vshmaliukh.web.menu_servlets;
 import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.terminal.ConsoleTerminal;
 import org.vshmaliukh.terminal.User;
-import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
-import org.vshmaliukh.terminal.services.print_table_service.TablePrinter;
 import org.vshmaliukh.web.WebPageBuilder;
 
 import javax.servlet.http.HttpServlet;
@@ -88,7 +86,7 @@ public class DeleteItemServlet extends HttpServlet {
                         .addParameter(USER_NAME, userName)
                         .addParameter(TYPE_OF_WORK_WITH_FILES, typeOfWorkWithFiles)
                         .toString(),
-                "Button to " + MAIN_MENU_TITLE);
+                MAIN_MENU_TITLE);
         writer.println(webPageBuilder.buildPage());
     }
 
