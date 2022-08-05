@@ -49,6 +49,8 @@ public interface ItemHandler<T extends Item> {
 
     String generateHTMLFormBodyToCreateItem(HttpServletRequest request);
 
+    String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random);
+
     boolean isValidHTMLFormData(HttpServletRequest request);
 
     T generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter);

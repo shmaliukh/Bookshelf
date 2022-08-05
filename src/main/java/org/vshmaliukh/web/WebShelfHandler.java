@@ -23,8 +23,7 @@ public class WebShelfHandler extends Terminal {
         readShelfItemsFromJson();
     }
 
-
-    public String generateTableOfShelfItems(List<Item> shelfLiteratureObjects, boolean isNeedIndex, boolean isForEditing) {
+    public static String generateTableOfShelfItems(List<Item> shelfLiteratureObjects, boolean isNeedIndex, boolean isForEditing) {
         if (shelfLiteratureObjects.isEmpty()) {
             return "No available literature of Shelf to print";
         } else {

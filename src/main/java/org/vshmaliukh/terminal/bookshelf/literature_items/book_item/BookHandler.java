@@ -60,7 +60,7 @@ public class BookHandler implements ItemHandler<Book> {
                 random.nextInt(1000),
                 false,
                 getRandomString(random.nextInt(20), random),
-                new Date(random.nextLong()));
+                new Date(random.nextInt(2500)));
     }
 
     @Override
@@ -78,7 +78,23 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
         return "" +
-                Utils.generateHTMLFormItems(NAME, PAGES, BORROWED, AUTHOR, DATE) +
+                Utils.generateHTMLFormItem(NAME) +
+                Utils.generateHTMLFormItem(PAGES) +
+                Utils.generateHTMLFormItem(BORROWED) +
+                Utils.generateHTMLFormItem(AUTHOR) +
+                Utils.generateHTMLFormItem(DATE) +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
+    }
+
+    @Override
+    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random) {
+        return "" +
+                Utils.generateHTMLFormItem(NAME, getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormItem(BORROWED, "n") +
+                Utils.generateHTMLFormItem(AUTHOR, getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(new Date())) +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
                 "</form>";
     }

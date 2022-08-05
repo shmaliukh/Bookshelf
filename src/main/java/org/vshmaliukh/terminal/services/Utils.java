@@ -36,15 +36,22 @@ public class Utils {
                 .collect(Collectors.toList());
     }
 
+    public static String generateHTMLFormItem(String value, String defaultValue) {
+        return "" +
+                "       <br>\n" +
+                "Enter " + value + "\n" +
+                "       <br>\n" +
+                "<input type = \"text\" name = \"" + value + "\" value=\"" + defaultValue + "\">\n" +
+                "       <br>\n";
+    }
+
     public static String generateHTMLFormItem(String value) {
         return "" +
                 "       <br>\n" +
                 "Enter " + value + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name = \"" + value + "\" value=\"" + value + "\">\n" +
-                //"<input type = \"text\" name=\"" + value + ">\n " +
+                "<input type = \"text\" name = \"" + value + "\">\n" +
                 "       <br>\n";
-
     }
 
     public static String generateHTMLFormItems(String... values) {
@@ -54,7 +61,7 @@ public class Utils {
     public static String generateHTMLFormItems(Collection<String> values) {
         StringBuilder sb = new StringBuilder();
         for (String value : values) {
-            sb.append(generateHTMLFormItem(value));
+            //sb.append(generateHTMLFormItem(value));
         }
         return sb.toString();
 

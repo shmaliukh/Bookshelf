@@ -26,6 +26,7 @@ import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class AddMenuServlet extends HttpServlet {
 
+    public static final String IS_RANDOM = "is_random";
 
     String servletTitle = ADD_MENU_TITLE;
 
@@ -40,7 +41,7 @@ public class AddMenuServlet extends HttpServlet {
             GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
             MenuItemClassType menuItemClassType = generatedMenu.getMenuItems().get(Integer.parseInt(menuItemIndex) - 1);
             int index = menuItemClassType.getIndex();
-            addItemByType(request, response, userName, typeOfWorkWithFilesStr, menuItemClassType, index);
+            addItemByType(request, response, menuItemClassType, index);
         }
         else {
             WebUtils.redirectTo(servletTitle, response, request);
@@ -60,25 +61,14 @@ public class AddMenuServlet extends HttpServlet {
     }
 
 
-    private void addItemByType(HttpServletRequest request, HttpServletResponse response, String userName, String typeOfWorkWithFilesStr, MenuItemClassType menuItemClassType, int index) throws IOException {
+    private void addItemByType(HttpServletRequest request, HttpServletResponse response, MenuItemClassType menuItemClassType, int index) throws IOException {
+        String classSimpleName = menuItemClassType.getClassType().getSimpleName();
         if (index % 2 == 0) { //add random item
-            int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
-            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
-
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(menuItemClassType.getClassType());
-            Item item = handlerByClass.getRandomItem(random);
-
-            webShelfHandler.getShelf().addLiteratureObject(item);
-            webShelfHandler.saveShelfItemsToJson();
-
-            //Paths.get("")
-            //String servletPath = "/${user}/${type_of_work}"
-            response.sendRedirect(
-                    WebUtils.generateBaseURLBuilder(servletTitle, request)
-                            .addParameter(INFORM_MESSAGE, "Added " + item)
-                            .toString());
+            response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, request)
+                    .addParameter(ITEM_CLASS_TYPE, classSimpleName)
+                    .addParameter(IS_RANDOM, "true")
+                    .toString());
         } else {
-            String classSimpleName = menuItemClassType.getClassType().getSimpleName();
             response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, request)
                     .addParameter(ITEM_CLASS_TYPE, classSimpleName)
                     .toString());

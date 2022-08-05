@@ -74,6 +74,16 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
+    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random) {
+        return "" +
+                Utils.generateHTMLFormItem(NAME, Utils.getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormItem(BORROWED, "n") +
+                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "</form>";
+    }
+
+    @Override
     public boolean isValidHTMLFormData(HttpServletRequest request) {
         String nameParameter = request.getParameter(NAME);
         String pagesParameter = request.getParameter(PAGES);

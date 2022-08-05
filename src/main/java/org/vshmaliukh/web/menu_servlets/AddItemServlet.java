@@ -11,16 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Random;
 
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.SimpleWebApp.*;
+import static org.vshmaliukh.web.menu_servlets.AddMenuServlet.IS_RANDOM;
 
 public class AddItemServlet extends HttpServlet {
 
     public static final String ITEM_CLASS_TYPE = "item_class_type";
 
     final String servletTitle = ADD_ITEM_TITLE;
+
+    Random random = new Random();
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -37,8 +41,8 @@ public class AddItemServlet extends HttpServlet {
             webShelfHandler.saveShelfItemsToJson();
 
             response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, request)
-                            .addParameter(INFORM_MESSAGE, "Added " + item)
-                            .toString());
+                    .addParameter(INFORM_MESSAGE, "Added " + item)
+                    .toString());
         } else {
             WebUtils.redirectTo(ADD_MENU_TITLE, response, request);
         }
@@ -49,6 +53,8 @@ public class AddItemServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(servletTitle);
 
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
+        String isRandom = request.getParameter(IS_RANDOM);
+
         if (itemClassType != null && !itemClassType.equals("")) {
             ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
 
@@ -59,9 +65,14 @@ public class AddItemServlet extends HttpServlet {
                             .toString()
                     + "\" method = \"POST\">\n" +
                     "Create " + itemClassType + "\n" +
-                    "       <br>\n" +
-                    handlerByName.generateHTMLFormBodyToCreateItem(request));
+                    "       <br>\n");
+            if (isRandom != null) {
+                webPageBuilder.addToBody(handlerByName.generateHTMLFormBodyToCreateItem(request, random));
+            } else {
+                webPageBuilder.addToBody(handlerByName.generateHTMLFormBodyToCreateItem(request));
+            }
         }
+        webPageBuilder.addButton(WebUtils.generateBaseURLString(ADD_MENU_TITLE, request), ADD_MENU_TITLE);
         response.getWriter().println(webPageBuilder.buildPage());
     }
 }

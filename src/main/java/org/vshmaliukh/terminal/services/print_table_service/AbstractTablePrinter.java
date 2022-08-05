@@ -2,7 +2,6 @@ package org.vshmaliukh.terminal.services.print_table_service;
 
 import java.io.PrintWriter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class AbstractTablePrinter {
 
@@ -14,7 +13,6 @@ public abstract class AbstractTablePrinter {
     protected List<Map<String, String>> bufferTableListOfMaps;
 
     protected List<Integer> sizeList = new ArrayList<>();
-
 
     protected AbstractTablePrinter(PrintWriter printWriter, List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {
         this.printWriter = printWriter;
