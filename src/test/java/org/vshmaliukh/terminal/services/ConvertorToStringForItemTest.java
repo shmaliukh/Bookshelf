@@ -1,16 +1,16 @@
 package org.vshmaliukh.terminal.services;
 
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
-import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.BookHandler;
-import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.MagazineHandler;
+import org.vshmaliukh.bookshelf.literature_items.book_item.Book;
+import org.vshmaliukh.bookshelf.literature_items.magazine_item.Magazine;
+import org.vshmaliukh.bookshelf.literature_items.book_item.BookHandler;
+import org.vshmaliukh.bookshelf.literature_items.magazine_item.MagazineHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 

@@ -1,6 +1,6 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.terminal.services.print_table_service.AbstractTablePrinter;
+import org.vshmaliukh.console_terminal.services.print_table_service.AbstractTablePrinter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;

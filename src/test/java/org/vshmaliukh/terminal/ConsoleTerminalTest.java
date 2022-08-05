@@ -3,6 +3,7 @@ package org.vshmaliukh.terminal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.vshmaliukh.console_terminal.ConsoleTerminal;
 
 import java.io.PrintWriter;
 import java.util.Scanner;

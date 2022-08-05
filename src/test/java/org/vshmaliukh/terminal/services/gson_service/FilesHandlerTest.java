@@ -6,15 +6,15 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.terminal.services.gson_service.FilesHandler;
-import org.vshmaliukh.terminal.services.gson_service.ItemGsonHandlerOneFile;
+import org.vshmaliukh.console_terminal.services.gson_service.FilesHandler;
+import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.terminal.services.gson_service.FilesHandler.PROGRAM_DIR_NAME;
+import static org.vshmaliukh.console_terminal.services.gson_service.FilesHandler.PROGRAM_DIR_NAME;
 
 class FilesHandlerTest {
 

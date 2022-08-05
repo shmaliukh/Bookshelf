@@ -3,9 +3,12 @@ package org.vshmaliukh.terminal.menus;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
-import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.bookshelf.literature_items.Item;
+import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenuForAdding;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenuForSorting;
+import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemClassType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -14,8 +17,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
-import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_RETURN;
+import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
+import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_RETURN;
 
 class GeneratedMenuTest {
 

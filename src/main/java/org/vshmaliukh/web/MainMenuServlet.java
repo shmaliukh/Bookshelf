@@ -1,6 +1,6 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
+import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

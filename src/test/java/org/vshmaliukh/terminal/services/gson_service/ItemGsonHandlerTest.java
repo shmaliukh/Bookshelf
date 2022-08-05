@@ -2,10 +2,12 @@ package org.vshmaliukh.terminal.services.gson_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.terminal.bookshelf.Shelf;
-import org.vshmaliukh.terminal.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
-import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
+import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.bookshelf.literature_items.book_item.Book;
+import org.vshmaliukh.bookshelf.literature_items.Item;
+import org.vshmaliukh.bookshelf.literature_items.magazine_item.Magazine;
+import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
+import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerPerType;
 
 import java.io.File;
 import java.io.PrintWriter;

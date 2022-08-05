@@ -1,6 +1,6 @@
 package org.vshmaliukh.web.menu_servlets;
 
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
+import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.web.WebShelfHandler;
 import org.vshmaliukh.web.WebUtils;
 

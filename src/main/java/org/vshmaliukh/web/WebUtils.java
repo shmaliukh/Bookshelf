@@ -2,10 +2,10 @@ package org.vshmaliukh.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
-import org.vshmaliukh.terminal.menus.GeneratedMenu;
-import org.vshmaliukh.terminal.menus.menu_items.MenuItem;
-import org.vshmaliukh.terminal.services.print_table_service.ConvertorToStringForLiterature;
+import org.vshmaliukh.bookshelf.literature_items.Item;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
+import org.vshmaliukh.console_terminal.menus.menu_items.MenuItem;
+import org.vshmaliukh.console_terminal.services.print_table_service.ConvertorToStringForLiterature;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

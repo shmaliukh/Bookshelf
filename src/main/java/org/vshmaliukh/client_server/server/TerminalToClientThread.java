@@ -1,7 +1,7 @@
 package org.vshmaliukh.client_server.server;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.terminal.ConsoleTerminal;
+import org.vshmaliukh.console_terminal.ConsoleTerminal;
 
 @Slf4j
 public class TerminalToClientThread extends Thread {

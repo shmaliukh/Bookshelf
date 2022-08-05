@@ -6,9 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
-import static org.vshmaliukh.terminal.services.input_services.InputHandler.isValidInputInteger;
-import static org.vshmaliukh.terminal.services.input_services.InputHandler.isValidInputString;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 
 public class LogInServlet extends HttpServlet {

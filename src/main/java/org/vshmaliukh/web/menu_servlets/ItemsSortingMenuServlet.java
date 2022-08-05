@@ -1,9 +1,9 @@
 package org.vshmaliukh.web.menu_servlets;
 
-import org.vshmaliukh.terminal.bookshelf.literature_items.Item;
-import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
-import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.terminal.services.Utils;
+import org.vshmaliukh.bookshelf.literature_items.Item;
+import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
+import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
+import org.vshmaliukh.console_terminal.services.Utils;
 import org.vshmaliukh.web.WebPageBuilder;
 import org.vshmaliukh.web.WebShelfHandler;
 import org.vshmaliukh.web.WebUtils;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
+import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.web.BookShelfWebApp.ITEMS_SORTING_MENU_TITLE;
 import static org.vshmaliukh.web.BookShelfWebApp.SORTING_TYPES_MENU_TITLE;
 import static org.vshmaliukh.web.WebUtils.*;

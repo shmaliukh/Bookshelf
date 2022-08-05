@@ -1,8 +1,8 @@
 package org.vshmaliukh.web.menu_servlets;
 
-import org.vshmaliukh.terminal.menus.GeneratedMenu;
-import org.vshmaliukh.terminal.menus.GeneratedMenuForAdding;
-import org.vshmaliukh.terminal.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
+import org.vshmaliukh.console_terminal.menus.GeneratedMenuForAdding;
+import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.web.WebPageBuilder;
 import org.vshmaliukh.web.WebUtils;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
+import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.MENU_ITEM_INDEX;

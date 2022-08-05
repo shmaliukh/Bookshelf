@@ -1,8 +1,8 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.terminal.Terminal;
-import org.vshmaliukh.terminal.User;
-import org.vshmaliukh.terminal.bookshelf.Shelf;
+import org.vshmaliukh.console_terminal.Terminal;
+import org.vshmaliukh.console_terminal.User;
+import org.vshmaliukh.bookshelf.Shelf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
