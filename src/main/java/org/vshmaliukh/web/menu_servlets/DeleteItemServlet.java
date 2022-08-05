@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.generateShelfHandler;
@@ -19,7 +20,8 @@ public class DeleteItemServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         String indexOfItem = request.getParameter(INDEX_OF_ITEM);
-        List<String> userAtr = readUserAtr(request);
+        Map<String, String> userAtr = readUserAtr(request);
+
         try {
             int index = Integer.parseInt(indexOfItem);
             WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);

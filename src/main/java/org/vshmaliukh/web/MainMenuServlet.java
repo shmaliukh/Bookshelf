@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 
@@ -18,7 +19,7 @@ public class MainMenuServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response){
         WebPageBuilder webPageBuilder = new WebPageBuilder(MAIN_MENU_TITLE);
-        List<String> userAtr = WebUtils.readUserAtr(request);
+        Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         webPageBuilder.addToBody(initMainMenu(userAtr));
         webPageBuilder.addToBody(WebUtils.generateCurrentStateOfShelf(userAtr, TITLE_LIST));
@@ -30,7 +31,7 @@ public class MainMenuServlet extends HttpServlet {
         }
     }
 
-    private String initMainMenu(List<String> userAtr) {
+    private String initMainMenu(Map<String, String> userAtr) {
         return "" +
                 "MENU:" +
                 "   <br>\n " +
@@ -43,7 +44,7 @@ public class MainMenuServlet extends HttpServlet {
                 "   <br>\n";
     }
 
-    private String generateMainMenuItem(String servletTitle, String itemTitle, List<String> userAtr) {
+    private String generateMainMenuItem(String servletTitle, String itemTitle, Map<String, String> userAtr) {
         return "" +
                 "   <br>\n " +
                 "<a href=\"" + WebUtils.generateBaseURLString(servletTitle, userAtr) + "\">" + itemTitle + "</a>\n" +

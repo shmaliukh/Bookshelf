@@ -17,9 +17,8 @@ import static org.vshmaliukh.web.LogInServlet.USER_NAME;
 
 public class BookShelfWebApp {
 
-    public static List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));
+    public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));
 
-    public static final String INFORM_MESSAGE = "inform_message";
     public static final String SERVLET_NAME_POSTFIX = "_servlet";
 
     public static final String LOG_IN_TITLE = "log_in";
@@ -33,6 +32,7 @@ public class BookShelfWebApp {
     public static final String CHANGE_ITEM_BORROWED_STATE = "change_item_borrowed_state";
 
     public static void main(String[] args) throws LifecycleException {
+
         Tomcat tomcat = new Tomcat();
         tomcat.setBaseDir("web_content");
         tomcat.setPort(8080);

@@ -2,8 +2,7 @@ package org.vshmaliukh.bookshelf.literature_items.magazine_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.bookshelf.Shelf;
-import org.vshmaliukh.bookshelf.literature_items.magazine_item.Magazine;
+import org.vshmaliukh.bookshelf.ConsoleShelf;
 import org.vshmaliukh.console_terminal.services.Utils;
 
 import java.io.OutputStreamWriter;
@@ -30,21 +29,21 @@ class ActionsWithMagazineTest {
      */
     int expectedArraySize = 3;
 
-    Shelf shelf1 = new Shelf(printWriter);
+    ConsoleShelf consoleShelf1 = new ConsoleShelf(printWriter);
 
     /*
       Adding magazines in revers order
      */ {
-        shelf1.addLiteratureObject(magazine3);
-        shelf1.addLiteratureObject(magazine2);
-        shelf1.addLiteratureObject(magazine1);
+        consoleShelf1.addLiteratureObject(magazine3);
+        consoleShelf1.addLiteratureObject(magazine2);
+        consoleShelf1.addLiteratureObject(magazine1);
     }
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
         List<Magazine> sortedMagazinesByName =
-                Utils.getSortedLiterature(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()),
+                Utils.getSortedLiterature(Utils.getItemsByType(Magazine.class, consoleShelf1.getAllLiteratureObjects()),
                         MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -56,7 +55,7 @@ class ActionsWithMagazineTest {
     @DisplayName("test printable stings of sorted Magazines by Pages")
     void printSortedMagazinesByPages() {
         List<Magazine> sortedMagazinesByPages =
-                Utils.getSortedLiterature(Utils.getItemsByType(Magazine.class, shelf1.getAllLiteratureObjects()),
+                Utils.getSortedLiterature(Utils.getItemsByType(Magazine.class, consoleShelf1.getAllLiteratureObjects()),
                         MAGAZINE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());

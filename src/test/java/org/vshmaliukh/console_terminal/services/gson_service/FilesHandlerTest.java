@@ -1,4 +1,4 @@
-package org.vshmaliukh.terminal.services.gson_service;
+package org.vshmaliukh.console_terminal.services.gson_service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,6 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.console_terminal.services.gson_service.FilesHandler;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

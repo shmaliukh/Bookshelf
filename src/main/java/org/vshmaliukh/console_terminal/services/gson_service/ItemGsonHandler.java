@@ -41,7 +41,7 @@ public abstract class ItemGsonHandler extends FilesHandler {
 
     abstract Path generatePathForGson();
 
-    Path generatePathForGsonFile() {
+    public Path generatePathForGsonFile() {
         return Paths.get(String.valueOf(generatePathForGson()), generateFullFileName());
     }
 
@@ -51,7 +51,7 @@ public abstract class ItemGsonHandler extends FilesHandler {
         return path;
     }
 
-    List<Item> readItemListFromGsonFile(Path gsonFilePathToRead) {
+    public List<Item> readItemListFromGsonFile(Path gsonFilePathToRead) {
         List<Item> itemListFromFile = new ArrayList<>();
         JsonArray jsonArrayFromFile = getJsonArrayFromFile(gsonFilePathToRead);
         if (jsonArrayFromFile != null) {

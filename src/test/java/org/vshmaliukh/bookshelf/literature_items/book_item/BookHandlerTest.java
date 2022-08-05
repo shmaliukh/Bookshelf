@@ -5,8 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.vshmaliukh.bookshelf.literature_items.book_item.Book;
-import org.vshmaliukh.bookshelf.literature_items.book_item.BookHandler;
 import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
 
 import java.io.PrintWriter;
@@ -16,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.DATE;
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;

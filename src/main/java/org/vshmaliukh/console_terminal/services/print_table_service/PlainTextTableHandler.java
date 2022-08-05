@@ -4,12 +4,15 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-public class PlainTextTablePrinter extends AbstractTablePrinter {
-    public PlainTextTablePrinter(PrintWriter printWriter, List<Map<String, String>> tableList, Boolean isNeedIndex) {
-        super(printWriter, tableList, isNeedIndex);
+public class PlainTextTableHandler extends AbstractTableHandler {
+
+    protected final PrintWriter printWriter;
+
+    public PlainTextTableHandler(PrintWriter printWriter, List<Map<String, String>> tableList, Boolean isNeedIndex) {
+        super(tableList, isNeedIndex);
+        this.printWriter = printWriter;
     }
 
-    @Override
     public void print() {
         setUpValuesSettings();
 

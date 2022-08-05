@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.MainMenuServlet.TITLE_LIST;
@@ -22,14 +22,15 @@ public class EditItemsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
         WebPageBuilder webPageBuilder = new WebPageBuilder(EDIT_ITEMS_TITLE);
-        List<String> userAtr = readUserAtr(request);
+        Map<String, String> userAtr = readUserAtr(request);
 
         WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
 
-        if (webShelfHandler.getShelf().getLiteratureInShelf().isEmpty()) {
+        if (webShelfHandler.getShelf().getAllLiteratureObjects().isEmpty()) {
             webPageBuilder.addToBody("No available literature IN shelf to edit");
         } else {
-            WebUtils.printTableForEditingItems(userAtr, request, TITLE_LIST, writer); // TODO not use request as parameter
+            String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr, request, TITLE_LIST);// TODO not use request as parameter
+            webPageBuilder.addToBody(tableForEditingItems);
         }
 
         webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);

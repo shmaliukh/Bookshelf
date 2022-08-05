@@ -1,11 +1,9 @@
-package org.vshmaliukh.terminal.services.input_services;
+package org.vshmaliukh.console_terminal.services.input_services;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForUser;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -16,7 +14,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
 
 class InputHandlerTest {

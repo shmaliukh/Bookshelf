@@ -49,6 +49,14 @@ public class WebPageBuilder {
                 .append("</head>");
     }
 
+    public void addMessageBlock(String informMessage) {
+        if (informMessage != null) {
+            bodyStringBuilder.append("<br>\n")
+                    .append(informMessage)
+                    .append("<br>\n");
+        }
+    }
+
     public StringBuilder buildPage() {
         if (title == null) {
             title = "";

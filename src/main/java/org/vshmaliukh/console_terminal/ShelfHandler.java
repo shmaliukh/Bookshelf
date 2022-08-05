@@ -1,32 +1,35 @@
 package org.vshmaliukh.console_terminal;
 
-import lombok.Data;
-import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.bookshelf.AbstractShelf;
 import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandler;
 import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
 import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerPerType;
 
-import java.io.PrintWriter;
 import java.util.Random;
-@Data
-public abstract class Terminal {
+
+public abstract class ShelfHandler {
 
     public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
 
     public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
     public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
 
-    public static final int WRONG_INPUT = -1;
-
-    public static final  String HOME_PROPERTY = System.getProperty("user.home");
+    public static final String HOME_PROPERTY = System.getProperty("user.home");
 
     protected Random random;
     protected ItemGsonHandler itemGsonHandler;
 
-    protected Shelf shelf;
-    protected PrintWriter printWriter;
+    protected AbstractShelf shelf;
     protected User user;
     protected int typeOfWorkWithFiles;
+
+    protected ShelfHandler() {
+    }
+
+    protected ShelfHandler(String userName, int typeOfWorkWithFiles) {
+        this.user = new User(userName);
+        this.typeOfWorkWithFiles = typeOfWorkWithFiles;
+    }
 
     public void setUpGsonHandler() {
         switch (typeOfWorkWithFiles) {
@@ -50,21 +53,7 @@ public abstract class Terminal {
         itemGsonHandler.readListFromFile().forEach(shelf::addLiteratureObject);
     }
 
-    public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
-        printWriter.println("Type of work with save/read shelf with files: ");
-        switch (typeOfWorkWithFiles) {
-            case FILE_MODE_WORK_WITH_ONE_FILE:
-                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
-                break;
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
-                break;
-            default:
-                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
-                break;
-        }
+    public AbstractShelf getShelf() {
+        return shelf;
     }
-
-    public void printCurrentStateOfShelf(){}
-
 }

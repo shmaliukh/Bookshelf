@@ -1,46 +1,57 @@
 package org.vshmaliukh.console_terminal;
 
-import lombok.Data;
+import org.vshmaliukh.bookshelf.ConsoleShelf;
 import org.vshmaliukh.bookshelf.literature_items.Item;
-import org.vshmaliukh.bookshelf.Shelf;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
 import org.vshmaliukh.console_terminal.menus.MainMenu;
-import org.vshmaliukh.console_terminal.menus.menu_items.MenuItem;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.console_terminal.services.Utils;
 import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
 import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForUser;
 import org.vshmaliukh.console_terminal.services.print_table_service.ConvertorToStringForLiterature;
-import org.vshmaliukh.console_terminal.services.print_table_service.PlainTextTablePrinter;
+import org.vshmaliukh.console_terminal.services.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.console_terminal.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.console_terminal.menus.GeneratedMenuForSorting;
 
 import java.io.*;
 import java.util.*;
 
-@Data
-public class ConsoleTerminal extends Terminal {
+public class ConsoleShelfHandler extends ShelfHandler {
 
-    private boolean isActiveTerminal;
+    public static final int WRONG_INPUT = -1;
+    public static final String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
 
-    public Scanner scanner;
-    public PrintWriter printWriter;
+    private boolean isActiveTerminal = true;
+
+    public final Scanner scanner;
+    public final PrintWriter printWriter;
 
     private final InputHandlerForUser inputHandlerForUser;
     private InputHandlerForLiterature inputHandlerForLiterature;
 
-    private ConvertorToStringForLiterature convertorToStringForLiterature;
-
-    public ConsoleTerminal(Scanner scanner, PrintWriter printWriter) {
+    public ConsoleShelfHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
 
-        isActiveTerminal = true;
-        shelf = new Shelf(printWriter);
-
+        shelf = new ConsoleShelf(printWriter);
         inputHandlerForUser = new InputHandlerForUser(scanner, printWriter);
+    }
+
+    public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
+        printWriter.println("Type of work with save/read shelf with files: ");
+        switch (typeOfWorkWithFiles) {
+            case FILE_MODE_WORK_WITH_ONE_FILE:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                break;
+            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
+                break;
+            default:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                break;
+        }
     }
 
     public void startWithUserConfig(boolean userMode) {
@@ -52,7 +63,7 @@ public class ConsoleTerminal extends Terminal {
         setUpGsonHandler();
     }
 
-    public boolean startWork(boolean userMode) {
+    public void startWork(boolean userMode) {
         printWriter.println("Terminal START");
 
         startWithUserConfig(userMode);
@@ -65,13 +76,11 @@ public class ConsoleTerminal extends Terminal {
             generateUserInterface();
             saveShelfItemsToJson();
         }
-        return false;
     }
 
     public void initServicesForTerminal() {
         random = new Random();
         inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
-        convertorToStringForLiterature = new ConvertorToStringForLiterature();
     }
 
     private void setUpUserName(boolean userMode) {
@@ -127,29 +136,28 @@ public class ConsoleTerminal extends Terminal {
         GeneratedMenu menuForSorting = new GeneratedMenuForSorting();
         menuForSorting.printMenu(printWriter);
         int userChoice = getUserChoice();
-        for (MenuItem sortingMenuItem : menuForSorting.getMenuItems()) {
+        for (MenuItemClassType<?> sortingMenuItem : menuForSorting.getMenuItems()) {
             if (userChoice == sortingMenuItem.getIndex()) {
-                menuForForSortingItemsByType((MenuItemClassType) sortingMenuItem);
+                menuForForSortingItemsByType(sortingMenuItem);
             }
         }
     }
 
-    private void menuForForSortingItemsByType(MenuItemClassType sortingMenuItem) {
-        Class classType = sortingMenuItem.getClassType();
-        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+    private void menuForForSortingItemsByType(MenuItemClassType<?> sortingMenuItem) {
+        Class<?> classType = sortingMenuItem.getClassType();
+        ItemHandler<?> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
-        List<Item> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
-        new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(sortedList), true).print();
+        List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
+        new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(sortedList), true).print();
     }
 
     /**
      * Method print info Shelf and it's Literature objects
      */
-    @Override
     public void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false).print();
+        new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false).print();
     }
 
     /**
@@ -164,13 +172,14 @@ public class ConsoleTerminal extends Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void menuForArrivingLiterature() {
-        if (shelf.getLiteratureOutShelf().isEmpty()) {
+        List<Item> itemList = shelf.readLiteratureOutShelf();
+        if (itemList.isEmpty()) {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            new PlainTextTablePrinter(printWriter, convertorToStringForLiterature.getTable(shelf.getLiteratureOutShelf()), true).print();
-            printWriter.println("Enter another value to return");
-            shelf.arriveLiteratureObjectFromShelfByIndex(getUserChoice());
+            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(itemList), true).print();
+            printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
+            shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -178,14 +187,14 @@ public class ConsoleTerminal extends Terminal {
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void menuForBorrowingLiterature() {
-        if (shelf.getLiteratureInShelf().isEmpty()) {
+        List<Item> itemList = shelf.readLiteratureInShelf();
+        if (itemList.isEmpty()) {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            new PlainTextTablePrinter (printWriter,
-                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true);
-            printWriter.println("Enter another value to return");
-            shelf.borrowLiteratureObjectFromShelfByIndex(getUserChoice());
+            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(itemList), true).print();
+            printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
+            shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -193,13 +202,12 @@ public class ConsoleTerminal extends Terminal {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void menuForDeletingLiterature() {
-        if (shelf.getLiteratureInShelf().isEmpty()) {
+        if (shelf.readLiteratureInShelf().isEmpty()) {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            new PlainTextTablePrinter(printWriter,
-                    convertorToStringForLiterature.getTable(shelf.getLiteratureInShelf()), true).print();
-            printWriter.println("Enter another value to return");
+            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(shelf.readLiteratureInShelf()), true).print();
+            printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
@@ -211,9 +219,9 @@ public class ConsoleTerminal extends Terminal {
         int userChoice = getUserChoice();
         GeneratedMenuForAdding generatedMenu = new GeneratedMenuForAdding();
         if (userChoice > 0 && userChoice - 1 < generatedMenu.getMenuItems().size()) {
-            MenuItemClassType menuItem = (MenuItemClassType) generatedMenu.getMenuItems().get(userChoice - 1);
-            Class classType = menuItem.getClassType();
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+            MenuItemClassType<?> menuItem = generatedMenu.getMenuItems().get(userChoice - 1);
+            Class<?> classType = menuItem.getClassType();
+            ItemHandler<?> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
             Item item;
             if ((userChoice - 1) % 2 == 0) {
                 item = handlerByClass.getItemByUserInput(inputHandlerForLiterature, printWriter);
@@ -221,18 +229,12 @@ public class ConsoleTerminal extends Terminal {
                 item = handlerByClass.getRandomItem(random);
             }
             shelf.addLiteratureObject(item);
-            informAboutAddedLiteratureObject(item);
+            printWriter.println(item + " has added to shelf");
         } else {
             printWriter.println("Wrong input");
         }
     }
 
-    /**
-     * Method simply inform user about added Literature object
-     */
-    public void informAboutAddedLiteratureObject(Item item) {
-        printWriter.println(item + " has added to shelf");
-    }
 
     /**
      * Method which gives opportunity to get user choice by entered integer value in console

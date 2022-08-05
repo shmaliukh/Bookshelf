@@ -6,7 +6,7 @@ import org.vshmaliukh.bookshelf.literature_items.Item;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 
 /**
  * @author ShmaliukhVlad

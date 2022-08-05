@@ -10,7 +10,7 @@ public abstract class GeneratedMenu {
     public static final String MESSAGE_TO_ENTER = "Enter number of command you wand to execute: (program ignores all not number symbols)";
     public static final String MESSAGE_TO_RETURN = "Enter another value to return";
 
-    List<MenuItemClassType> generatedMenu;
+    public List<MenuItemClassType> generatedMenu;
 
     public List<MenuItemClassType> getMenuItems() {
         return Collections.unmodifiableList(generatedMenu);

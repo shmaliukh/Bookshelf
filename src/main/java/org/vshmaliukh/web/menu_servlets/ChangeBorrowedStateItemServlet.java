@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.generateShelfHandler;
@@ -19,15 +20,16 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         String indexOfItem = request.getParameter(INDEX_OF_ITEM);
-        List<String> userAtr = WebUtils.readUserAtr(request);
+        Map<String, String> userAtr = WebUtils.readUserAtr(request);
+
         try{
             int index = Integer.parseInt(indexOfItem);
             WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-
-            Item item = webShelfHandler.getShelf().getAllLiteratureObjects().get(index - 1);
-            item.setBorrowed(!item.isBorrowed());
+            List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
+            webShelfHandler.getShelf().changeBorrowedStateOfItem(allLiteratureObjects, index);
 
             webShelfHandler.saveShelfItemsToJson();
+
         } catch (NumberFormatException nfe) {
             WebUtils.logServletErr(CHANGE_ITEM_BORROWED_STATE, nfe);
         }
