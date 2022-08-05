@@ -63,7 +63,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
+    public String generateHTMLFormBodyToCreateItem() {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
@@ -73,7 +73,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random) {
+    public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
                 Utils.generateHTMLFormItem(NAME, Utils.getRandomString(random.nextInt(20), random)) +
                 Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
@@ -83,10 +83,11 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public boolean isValidHTMLFormData(HttpServletRequest request) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
+    public boolean isValidHTMLFormData(Map<String, String> mapFieldValue) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
+
         if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter)) {
             return true;
         }
@@ -100,10 +101,10 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public Newspaper generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
+    public Newspaper generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);

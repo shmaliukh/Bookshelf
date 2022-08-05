@@ -2,14 +2,12 @@ package org.vshmaliukh.terminal.bookshelf.literature_items.comics_item;
 
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles;
-import org.vshmaliukh.terminal.bookshelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.terminal.services.Utils;
 import org.vshmaliukh.terminal.services.input_services.InputHandlerForLiterature;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.terminal.bookshelf.literature_items.ItemTitles.*;
@@ -71,7 +69,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
+    public String generateHTMLFormBodyToCreateItem() {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
@@ -82,7 +80,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random) {
+    public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
                 Utils.generateHTMLFormItem(NAME, getRandomString(random.nextInt(20), random)) +
                 Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
@@ -93,11 +91,11 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public boolean isValidHTMLFormData(HttpServletRequest request) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
-        String publisherParameter = request.getParameter(PUBLISHER);
+    public boolean isValidHTMLFormData(Map<String, String> mapFieldValue) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
+        String publisherParameter = mapFieldValue.get(PUBLISHER);
         if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter)) {
             return true;
         }
@@ -112,11 +110,11 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public Comics generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
-        String publisherParameter = request.getParameter(PUBLISHER);
+    public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
+        String publisherParameter = mapFieldValue.get(PUBLISHER);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, publisherParameter);

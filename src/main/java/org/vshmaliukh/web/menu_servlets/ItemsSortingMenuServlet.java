@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static org.vshmaliukh.terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
-import static org.vshmaliukh.web.SimpleWebApp.*;
+import static org.vshmaliukh.web.BookShelfWebApp.ITEMS_SORTING_MENU_TITLE;
+import static org.vshmaliukh.web.BookShelfWebApp.SORTING_TYPES_MENU_TITLE;
 import static org.vshmaliukh.web.WebUtils.*;
 import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
@@ -24,7 +25,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         try {
-            response.sendRedirect(WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, request)
+            response.sendRedirect(WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, WebUtils.readUserAtr(request))
                     .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
                     .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE))
                     .toString());
@@ -36,6 +37,8 @@ public class ItemsSortingMenuServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         WebPageBuilder webPageBuilder = new WebPageBuilder(ITEMS_SORTING_MENU_TITLE);
+        List<String> userAtr = readUserAtr(request);
+
 
         String menuIndexStr = request.getParameter(MENU_ITEM_INDEX);
         String classTypeStr = request.getParameter(ITEM_CLASS_TYPE);
@@ -47,10 +50,10 @@ public class ItemsSortingMenuServlet extends HttpServlet {
             webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
             webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(request, ITEMS_SORTING_MENU_TITLE, handlerByName.getSortingMenuList()));
 
-            printSortedTable(request, webPageBuilder, menuIndexStr, classTypeStr, handlerByName);
+            printSortedTable(userAtr, webPageBuilder, menuIndexStr, classTypeStr, handlerByName);
         }
 
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, request), SORTING_TYPES_MENU_TITLE);
+        webPageBuilder.addButton(WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE);
         WebUtils.addMessageBlock(request, webPageBuilder); // TODO
 
         try {
@@ -60,9 +63,10 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         }
     }
 
-    private void printSortedTable(HttpServletRequest request, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
+    private void printSortedTable(List<String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
         if (menuIndexStr != null && !menuIndexStr.equals("")) {
-            WebShelfHandler webShelfHandler = generateShelfHandler(request);
+            WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+
             int typeOfSorting = Integer.parseInt(menuIndexStr);
             Class<? extends Item> classType = ItemHandlerProvider.getClassByName(classTypeStr);
             List typedItemList = null;
@@ -71,7 +75,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
             }
             // TODO Raw use of parameterized class 'List'
             List<? extends Item> sortedList = handlerByName.getSortedItems(typeOfSorting, typedItemList);
-            webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true, false));
+            webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true));
         }
     }
 }

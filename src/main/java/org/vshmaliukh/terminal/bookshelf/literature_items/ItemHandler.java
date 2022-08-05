@@ -47,11 +47,11 @@ public interface ItemHandler<T extends Item> {
 
     Map<String, String> convertItemToListOfString(T item);
 
-    String generateHTMLFormBodyToCreateItem(HttpServletRequest request);
+    String generateHTMLFormBodyToCreateItem();
 
-    String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random);
+    String generateHTMLFormBodyToCreateItem(Random random);
 
-    boolean isValidHTMLFormData(HttpServletRequest request);
+    boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
 
-    T generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter);
+    T generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter);
 }

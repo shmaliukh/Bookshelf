@@ -4,11 +4,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static org.vshmaliukh.terminal.services.input_services.ConstantsForUserInputHandler.*;
 import static org.vshmaliukh.terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.terminal.services.input_services.InputHandler.isValidInputString;
-import static org.vshmaliukh.web.SimpleWebApp.*;
+import static org.vshmaliukh.web.BookShelfWebApp.*;
 
 public class LogInServlet extends HttpServlet {
 
@@ -19,20 +20,20 @@ public class LogInServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String userInputName = request.getParameter(USER_NAME);
         String userInputNumberStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+        List<String> userAtr = WebUtils.readUserAtr(request);
 
         if (isValidInputString(userInputName, PATTERN_FOR_USER_NAME) && isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
-            WebUtils.redirectTo(MAIN_MENU_TITLE, response, request);
+            WebUtils.redirectTo(MAIN_MENU_TITLE, response, userAtr);
         } else {
             try {
                 response.sendRedirect(
-                        WebUtils.generateBaseURLBuilder(LOG_IN_TITLE, request)
+                        WebUtils.generateBaseURLBuilder(LOG_IN_TITLE, WebUtils.readUserAtr(request))
                                 .addParameter(INFORM_MESSAGE, "Wrong input")
                                 .toString());
             } catch (IOException ioe) {
                 WebUtils.logServletErr(LOG_IN_TITLE, ioe);
             }
         }
-
     }
 
     @Override

@@ -20,7 +20,7 @@ public abstract class AbstractTablePrinter {
         this.bufferTableListOfMaps = bufferTableListOfMaps;
     }
 
-    private void initTable(List<Map<String, String>> inputTable) {
+    protected void initTable(List<Map<String, String>> inputTable) {
         List<Map<String, String>> buffTable = new ArrayList<>();
         for (Map<String, String> stringMap : inputTable) {
             buffTable.add(new HashMap<>(stringMap));
@@ -39,15 +39,12 @@ public abstract class AbstractTablePrinter {
         }
     }
 
-    private void initTitles(List<Map<String, String>> tableList) {
+    protected void initTitles(List<Map<String, String>> tableList) {
         Set<String> buffSet = new HashSet<>();
         for (Map<String, String> titleValueMap : tableList) {
             buffSet.addAll(titleValueMap.keySet());
         }
-        if (this.titleList.isEmpty()) {
-            this.titleList = new ArrayList<>(buffSet);
-            Collections.sort(titleList);
-        } else {
+        if (this.titleList != null && !this.titleList.isEmpty()) {
             List<String> list = new ArrayList<>();
             for (String s : this.titleList) {
                 if (buffSet.contains(s)) {
@@ -55,6 +52,9 @@ public abstract class AbstractTablePrinter {
                 }
             }
             this.titleList = list;
+        } else {
+            this.titleList = new ArrayList<>(buffSet);
+            Collections.sort(titleList);
         }
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractTablePrinter {
         appendEmptyItemsForTable();
     }
 
-    private void addIndexBeforeLines() {
+    protected void addIndexBeforeLines() {
         titleList.add(0, "#");
         for (int counter = 0; counter < tableListOfLists.size(); counter++) {
             tableListOfLists.get(counter).add(0, String.valueOf(counter + 1));

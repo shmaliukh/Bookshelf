@@ -76,7 +76,7 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request) {
+    public String generateHTMLFormBodyToCreateItem() {
         return "" +
                 Utils.generateHTMLFormItem(NAME) +
                 Utils.generateHTMLFormItem(PAGES) +
@@ -88,7 +88,7 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public String generateHTMLFormBodyToCreateItem(HttpServletRequest request, Random random) {
+    public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
                 Utils.generateHTMLFormItem(NAME, getRandomString(random.nextInt(20), random)) +
                 Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
@@ -100,12 +100,13 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public boolean isValidHTMLFormData(HttpServletRequest request) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
-        String authorParameter = request.getParameter(AUTHOR);
-        String dateParameter = request.getParameter(DATE);
+    public boolean isValidHTMLFormData(Map<String, String> mapFieldValue) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
+        String authorParameter = mapFieldValue.get(AUTHOR);
+        String dateParameter = mapFieldValue.get(DATE);
+
         if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter)) {
             return true;
         }
@@ -121,12 +122,12 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public Book generateItemByHTMLFormData(HttpServletRequest request, PrintWriter printWriter) {
-        String nameParameter = request.getParameter(NAME);
-        String pagesParameter = request.getParameter(PAGES);
-        String borrowedParameter = request.getParameter(BORROWED);
-        String authorParameter = request.getParameter(AUTHOR);
-        String dateParameter = request.getParameter(DATE);
+    public Book generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter) {
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
+        String authorParameter = mapFieldValue.get(AUTHOR);
+        String dateParameter = mapFieldValue.get(DATE);
 
         InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);

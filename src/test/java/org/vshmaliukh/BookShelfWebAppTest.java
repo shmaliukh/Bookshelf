@@ -12,7 +12,7 @@ import java.io.PrintWriter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SimpleWebAppTest {
+class BookShelfWebAppTest {
 
     @Test
     void test(){

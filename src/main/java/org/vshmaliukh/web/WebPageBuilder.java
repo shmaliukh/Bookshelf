@@ -20,13 +20,7 @@ public class WebPageBuilder {
     }
 
     public void addButton(String reference, String label) {
-        bodyStringBuilder.append(" <br> \n")
-                .append("<button ")
-                .append("onclick=\"window.location.href='")
-                .append(reference)
-                .append("';\"> ")
-                .append(label)
-                .append("</button> \n");
+        bodyStringBuilder.append(WebUtils.formHTMLButton(reference, label));
     }
 
     public StringBuilder bodyStartHTML() {
