@@ -1,11 +1,11 @@
 package org.vshmaliukh.client_server.client;
 
-import org.vshmaliukh.constants.ConstantsForClientServerModel;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+
+import static org.vshmaliukh.client_server.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
 
 public class Client {
 
@@ -21,7 +21,7 @@ public class Client {
 
     public Client() throws IOException {
 
-        socket = new Socket(ConstantsForClientServerModel.HOST_NAME, ConstantsForClientServerModel.SOCKET_PORT_NUMBER);
+        socket = new Socket("localhost", SOCKET_PORT_NUMBER);
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);

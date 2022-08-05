@@ -1,7 +1,7 @@
 package org.vshmaliukh.client_server.server;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.Terminal;
+import org.vshmaliukh.terminal.Terminal;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ public class ServerToClientHandler {
     private Scanner scanner;
     private PrintWriter printWriter;
 
-    public ServerToClientHandler(Socket socket, int userCounter){
+    public ServerToClientHandler(Socket socket, int userCounter) {
         this.socketForClient = socket;
         this.userCounter = userCounter;
 
@@ -29,11 +29,11 @@ public class ServerToClientHandler {
             scanner = new Scanner(socketForClient.getInputStream());
             printWriter = new PrintWriter(socketForClient.getOutputStream(), true);
         } catch (IOException ioe) {
-            log.error("[ServerToClientHandler]: Problem to start server for client. Exception: " + ioe);
+            log.error("[ServerToClientHandler]: Problem to start server for client. Exception: ",  ioe);
         }
     }
 
-    void start(){
+    void start() {
         TerminalToClientThread terminalToClientThread = new TerminalToClientThread(userCounter, new Terminal(scanner, printWriter));
         terminalToClientThread.start();
     }

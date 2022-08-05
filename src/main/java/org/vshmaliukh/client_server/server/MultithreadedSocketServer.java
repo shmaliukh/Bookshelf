@@ -6,18 +6,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import static org.vshmaliukh.constants.ConstantsForClientServerModel.MAX_CONNECTION_NUMBER;
-import static org.vshmaliukh.constants.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
+import static org.vshmaliukh.client_server.ConstantsForClientServerModel.SOCKET_PORT_NUMBER;
 
 @Slf4j
 public class MultithreadedSocketServer {
+
+    public static final int MAX_CONNECTION_NUMBER = 10;
 
     private ServerSocket serverSocket;
 
     private int userCounter;
     private boolean isServerActive;
 
-    public MultithreadedSocketServer(){
+    public MultithreadedSocketServer() {
         userCounter = 0;
         isServerActive = true;
 
@@ -35,7 +36,7 @@ public class MultithreadedSocketServer {
     public void start() throws IOException {
         log.info("Server start");
 
-        while (isServerActive){
+        while (isServerActive) {
             userCounter++;
             Socket serverClient = serverSocket.accept();
             log.info("    [Client] " + userCounter + " - connected");
