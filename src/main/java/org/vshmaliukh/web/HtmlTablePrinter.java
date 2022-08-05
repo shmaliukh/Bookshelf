@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HtmlTablePrinter extends AbstractTablePrinter {
+
     private boolean isForEditing;
 
     public HtmlTablePrinter(PrintWriter printWriter, List<Map<String, String>> tableList, Boolean isNeedIndex, boolean isForEditing) {
@@ -21,10 +22,10 @@ public class HtmlTablePrinter extends AbstractTablePrinter {
     public void printFormattedHTMLTable(boolean isForEditing) {
         setUpValuesSettings();
 
-        printWriter.printf("<table style = \"border:1px solid black\">");
+        printWriter.println("<table style = \"border:1px solid black\">");
         printHTMLLine(titleList, isForEditing);
         tableListOfLists.forEach(o -> printHTMLLine(o, isForEditing));
-        printWriter.printf("</table>");
+        printWriter.println("</table>");
     }
 
     public String getLineHTMLString(List<String> stringList, boolean isForEditing) {

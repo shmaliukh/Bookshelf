@@ -1,14 +1,10 @@
 package org.vshmaliukh.web;
 
-import lombok.Data;
-
-@Data
 public class WebPageBuilder {
 
     private String title;
 
-    private StringBuilder sb = new StringBuilder(); // TODO rename (sb = buffer StringBuilder)
-    private StringBuilder body = new StringBuilder();
+    private final StringBuilder bodyStringBuilder = new StringBuilder();
 
 
     public WebPageBuilder(String title) {
@@ -16,38 +12,32 @@ public class WebPageBuilder {
     }
 
     public void addToBody(StringBuilder bodyItem) {
-        body.append(bodyItem);
+        bodyStringBuilder.append(bodyItem);
     }
 
     public void addToBody(String bodyItem) {
-        body.append(bodyItem.replaceAll(System.lineSeparator(), " <br> "));
+        bodyStringBuilder.append(bodyItem.replaceAll(System.lineSeparator(), " <br> "));
     }
 
     public void addButton(String reference, String label) {
-        body.append(" <br> \n" +
-                "<button " +
-                "onclick=\"window.location.href='" +
-                reference +
-                "';\"> " +
-                label +
-                "</button> \n");
+        bodyStringBuilder.append(" <br> \n")
+                .append("<button ")
+                .append("onclick=\"window.location.href='")
+                .append(reference)
+                .append("';\"> ")
+                .append(label)
+                .append("</button> \n");
     }
 
     public StringBuilder bodyStartHTML() {
-        return new StringBuilder().append("<body" +
-                //" bgcolor = \\\"#DBF4AD\\\"" + // TODO use color background
-                ">");
+        return new StringBuilder()
+                .append("<body")
+                .append(" bgcolor = \"#EAF7CF\"")
+                .append(">\n");
     }
 
     public StringBuilder bodyEndHTML() {
         return new StringBuilder().append("</body>");
-    }
-
-    public StringBuilder baseStartHTML() {
-        sb = new StringBuilder();
-        sb.append("<!DOCTYPE html>");
-        sb.append("<html lang=\" en\">");
-        return sb;
     }
 
     public StringBuilder baseEndHTML() {
@@ -55,25 +45,25 @@ public class WebPageBuilder {
     }
 
     public StringBuilder initHeader(String title) {
-        sb = new StringBuilder();
-        sb.append("<head>");
-        sb.append("<meta charset=\" UTF - 8\">");
-        sb.append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />");
-        sb.append("<title>" + title + "</title>");
-        sb.append("</head>");
-        return sb;
+        return new StringBuilder()
+                .append("<head>")
+                .append("<meta charset=\" UTF - 8\">")
+                .append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />")
+                .append("<title>")
+                .append(title)
+                .append("</title>")
+                .append("</head>");
     }
 
     public StringBuilder buildPage() {
         if (title == null) {
             title = "";
         }
-
-        sb = new StringBuilder();
-        return sb.append(initHeader(title))
+        return new StringBuilder()
+                .append(initHeader(title))
                 .append(bodyStartHTML())
 
-                .append(getBody())
+                .append(bodyStringBuilder)
 
                 .append(bodyEndHTML())
                 .append(baseEndHTML());

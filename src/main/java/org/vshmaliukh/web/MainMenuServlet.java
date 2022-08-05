@@ -4,23 +4,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import static org.vshmaliukh.web.SimpleWebApp.*;
 
 public class MainMenuServlet extends HttpServlet {
 
-    String servletTitle = MAIN_MENU_TITLE;
-
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        PrintWriter writer = response.getWriter();
-        WebPageBuilder webPageBuilder = new WebPageBuilder(servletTitle);
+    public void doGet(HttpServletRequest request, HttpServletResponse response){
+        WebPageBuilder webPageBuilder = new WebPageBuilder(MAIN_MENU_TITLE);
 
         webPageBuilder.addToBody(initMainMenu(request));
         webPageBuilder.addToBody(WebUtils.generateCurrentStateOfShelf(request));
 
-        writer.println(webPageBuilder.buildPage());
+        try {
+            response.getWriter().println(webPageBuilder.buildPage());
+        } catch (IOException ioe) {
+            WebUtils.logServletErr(MAIN_MENU_TITLE, ioe);
+        }
     }
 
     private String initMainMenu(HttpServletRequest request) {

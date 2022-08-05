@@ -1,6 +1,7 @@
 package org.vshmaliukh.web;
 
 import java.io.File;
+import java.util.Random;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
@@ -12,6 +13,7 @@ import javax.servlet.Servlet;
 public class SimpleWebApp {
 
     public static final String INFORM_MESSAGE = "inform_message";
+    public static final String SERVLET_NAME_POSTFIX = "_servlet";
 
     public static final String LOG_IN_TITLE = "log_in";
     public static final String MAIN_MENU_TITLE = "main_menu";
@@ -21,7 +23,6 @@ public class SimpleWebApp {
     public static final String ADD_ITEM_TITLE = "add_item";
     public static final String ARRIVE_ITEM_TITLE = "arrive_item_index";
     public static final String DELETE_ITEM_TITLE = "delete_item_index";
-    public static final String PRINT_SHELF_TITLE = "print_shelf";
     public static final String EDIT_ITEMS_TITLE = "edit_items_index";
 
     public static void main(String[] args) throws LifecycleException {
@@ -48,12 +49,12 @@ public class SimpleWebApp {
     }
 
     private static void addServletToTomcat(Servlet servlet, String servletTitle, Tomcat tomcat, String contextPath, Context context) {
-        tomcat.addServlet(contextPath, servletTitle + "_servlet", servlet);
-        context.addServletMappingDecoded('/' + servletTitle, servletTitle + "_servlet");
+        tomcat.addServlet(contextPath, servletTitle + SERVLET_NAME_POSTFIX, servlet);
+        context.addServletMappingDecoded('/' + servletTitle, servletTitle + SERVLET_NAME_POSTFIX);
     }
 
     private static void addServletToTomcat(Servlet servlet, String servletTitle, String servletPattern, Tomcat tomcat, String contextPath, Context context) {
-        tomcat.addServlet(contextPath, servletTitle + "_servlet", servlet);
-        context.addServletMappingDecoded(servletPattern, servletTitle + "_servlet");
+        tomcat.addServlet(contextPath, servletTitle + SERVLET_NAME_POSTFIX, servlet);
+        context.addServletMappingDecoded(servletPattern, servletTitle + SERVLET_NAME_POSTFIX);
     }
 }
