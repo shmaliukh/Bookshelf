@@ -57,8 +57,10 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
     }
 
     private Set<Class<? extends Item>> getClassTypes(List<Item> listToSave) {
-        return listToSave.stream()
-                .map(Item::getClass)
-                .collect(Collectors.toSet());
+        return ItemHandlerProvider.uniqueTypeNames;
+        //return listToSave.stream()
+        //        .map(Item::getClass)
+        //        .collect(Collectors.toSet());
+        // TODO fix
     }
 }

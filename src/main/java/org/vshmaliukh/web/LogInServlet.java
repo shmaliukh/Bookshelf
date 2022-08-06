@@ -4,12 +4,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
+import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
 
 public class LogInServlet extends HttpServlet {
 
@@ -20,7 +21,7 @@ public class LogInServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String userInputName = request.getParameter(USER_NAME);
         String userInputNumberStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
-        List<String> userAtr = WebUtils.readUserAtr(request);
+        Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         if (isValidInputString(userInputName, PATTERN_FOR_USER_NAME) && isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
             WebUtils.redirectTo(MAIN_MENU_TITLE, response, userAtr);
@@ -43,7 +44,19 @@ public class LogInServlet extends HttpServlet {
         String userNameStr = request.getParameter(USER_NAME) != null ? request.getParameter(USER_NAME) : "";
         String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES) != null ? request.getParameter(TYPE_OF_WORK_WITH_FILES) : "";
 
-        webPageBuilder.addToBody("" +
+        webPageBuilder.addToBody(logInFormStr(userNameStr, typeOfWorkWithFilesStr));
+
+        webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
+
+        try {
+            response.getWriter().println(webPageBuilder.buildPage());
+        } catch (IOException ioe) {
+            WebUtils.logServletErr(LOG_IN_TITLE, ioe);
+        }
+    }
+
+    private String logInFormStr(String userNameStr, String typeOfWorkWithFilesStr) {
+        return "" +
                 "<form action = \"" + LOG_IN_TITLE + "\" method = \"POST\">\n" +
                 MESSAGE_ENTER_USER_NAME + "\n" +
                 "       <br>\n" +
@@ -56,13 +69,6 @@ public class LogInServlet extends HttpServlet {
                 "       <br>\n" +
                 "       <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>");
-        WebUtils.addMessageBlock(request, webPageBuilder);
-
-        try {
-            response.getWriter().println(webPageBuilder.buildPage());
-        } catch (IOException ioe) {
-            WebUtils.logServletErr(LOG_IN_TITLE, ioe);
-        }
+                "</form>";
     }
 }

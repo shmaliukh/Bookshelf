@@ -2,7 +2,7 @@ package org.vshmaliukh;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
-import org.vshmaliukh.console_terminal.ConsoleTerminal;
+import org.vshmaliukh.console_terminal.ConsoleShelfHandler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,7 +27,7 @@ public class Main {
     static class TerminalThread extends Thread {
         private final Scanner scanner = new Scanner(System.in);
         private final PrintWriter printWriter = new PrintWriter(System.out, true);
-        private final ConsoleTerminal consoleTerminal = new ConsoleTerminal(scanner, printWriter);
+        private final ConsoleShelfHandler consoleTerminal = new ConsoleShelfHandler(scanner, printWriter);
 
         @Override
         public synchronized void run() {

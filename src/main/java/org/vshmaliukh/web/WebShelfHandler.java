@@ -1,23 +1,14 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.console_terminal.Terminal;
-import org.vshmaliukh.console_terminal.User;
-import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.console_terminal.ShelfHandler;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
-
-public class WebShelfHandler extends Terminal {
+public class WebShelfHandler extends ShelfHandler {
 
     public WebShelfHandler(String userName, int typeOfWorkWithFiles) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PrintWriter printWriter = new PrintWriter(baos, true);
-
-        this.user = new User(userName);
-        this.shelf = new Shelf(printWriter); // TODO
-        this.typeOfWorkWithFiles = typeOfWorkWithFiles;
+        super(userName, typeOfWorkWithFiles);
+        this.shelf = new WebShelf();
 
         setUpGsonHandler();
-        readShelfItemsFromJson();
+        readShelfItemsFromJson(); // TODO refactor constructor (or delete class)
     }
 }

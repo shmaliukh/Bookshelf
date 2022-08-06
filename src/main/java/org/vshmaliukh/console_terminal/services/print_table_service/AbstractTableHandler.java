@@ -1,11 +1,9 @@
 package org.vshmaliukh.console_terminal.services.print_table_service;
 
-import java.io.PrintWriter;
 import java.util.*;
 
-public abstract class AbstractTablePrinter {
+public abstract class AbstractTableHandler {
 
-    protected final PrintWriter printWriter;
     protected final boolean isNeedIndex;
 
     protected List<String> titleList;
@@ -14,8 +12,8 @@ public abstract class AbstractTablePrinter {
 
     protected List<Integer> sizeList = new ArrayList<>();
 
-    protected AbstractTablePrinter(PrintWriter printWriter, List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {
-        this.printWriter = printWriter;
+    protected AbstractTableHandler(List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {
+        // TODO rename class
         this.isNeedIndex = isNeedIndex;
         this.bufferTableListOfMaps = bufferTableListOfMaps;
     }
@@ -74,8 +72,6 @@ public abstract class AbstractTablePrinter {
         }
     }
 
-    public abstract void print();
-
     protected void setUpValuesSettings() {
         initTitles(bufferTableListOfMaps);
 
@@ -106,9 +102,5 @@ public abstract class AbstractTablePrinter {
                 stringList.set(i, stringList.get(i) + " ");
             }
         }
-    }
-
-    public void setTitleList(List<String> titleList) {
-        this.titleList = new ArrayList<>(titleList);
     }
 }

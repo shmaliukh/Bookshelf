@@ -1,4 +1,4 @@
-package org.vshmaliukh.terminal.services;
+package org.vshmaliukh.console_terminal.services;
 
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.bookshelf.literature_items.book_item.Book;
@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 

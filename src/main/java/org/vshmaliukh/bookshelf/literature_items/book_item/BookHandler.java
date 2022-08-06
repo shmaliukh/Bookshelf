@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.console_terminal.ConsoleTerminal.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.console_terminal.services.Utils.getRandomString;
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
 

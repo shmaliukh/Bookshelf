@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
-import static org.vshmaliukh.web.BookShelfWebApp.ITEMS_SORTING_MENU_TITLE;
-import static org.vshmaliukh.web.BookShelfWebApp.SORTING_TYPES_MENU_TITLE;
+import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.*;
 import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
@@ -37,7 +37,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         WebPageBuilder webPageBuilder = new WebPageBuilder(ITEMS_SORTING_MENU_TITLE);
-        List<String> userAtr = readUserAtr(request);
+        Map<String, String> userAtr = readUserAtr(request);
 
 
         String menuIndexStr = request.getParameter(MENU_ITEM_INDEX);
@@ -48,13 +48,13 @@ public class ItemsSortingMenuServlet extends HttpServlet {
             ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(classTypeStr);
 
             webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
-            webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(request, ITEMS_SORTING_MENU_TITLE, handlerByName.getSortingMenuList()));
+            webPageBuilder.addToBody(initMenu(request, handlerByName));
 
             printSortedTable(userAtr, webPageBuilder, menuIndexStr, classTypeStr, handlerByName);
         }
 
         webPageBuilder.addButton(WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE);
-        WebUtils.addMessageBlock(request, webPageBuilder); // TODO
+        webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
 
         try {
             response.getWriter().println(webPageBuilder.buildPage());
@@ -63,7 +63,13 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         }
     }
 
-    private void printSortedTable(List<String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
+    private String initMenu(HttpServletRequest request, ItemHandler<?> handlerByName) {
+        return generateMenuItemsFormHTML(generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
+                .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)),
+                handlerByName.getSortingMenuList());
+    }
+
+    private void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
         if (menuIndexStr != null && !menuIndexStr.equals("")) {
             WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
 

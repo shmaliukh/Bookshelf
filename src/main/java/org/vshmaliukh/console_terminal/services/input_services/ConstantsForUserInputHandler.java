@@ -3,7 +3,7 @@ package org.vshmaliukh.console_terminal.services.input_services;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import static org.vshmaliukh.console_terminal.Terminal.*;
+import static org.vshmaliukh.console_terminal.ShelfHandler.*;
 
 public final class ConstantsForUserInputHandler {
 

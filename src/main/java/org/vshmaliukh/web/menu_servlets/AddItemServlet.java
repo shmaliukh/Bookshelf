@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
 import static org.vshmaliukh.web.menu_servlets.AddMenuServlet.IS_RANDOM;
 
 public class AddItemServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class AddItemServlet extends HttpServlet {
         String userName = request.getParameter(USER_NAME);
         String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
-        List<String> userAtr = WebUtils.readUserAtr(request);
+        Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> mapFieldValue = WebUtils.readMapOfItemFields(request);
@@ -54,7 +54,7 @@ public class AddItemServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(ADD_ITEM_TITLE);
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
         String isRandom = request.getParameter(IS_RANDOM);
-        List<String> userAtr = WebUtils.readUserAtr(request);
+        Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         if (itemClassType != null && !itemClassType.equals("")) {
             ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);

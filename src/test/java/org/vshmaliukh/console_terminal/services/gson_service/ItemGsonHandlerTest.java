@@ -1,13 +1,11 @@
-package org.vshmaliukh.terminal.services.gson_service;
+package org.vshmaliukh.console_terminal.services.gson_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.bookshelf.Shelf;
+import org.vshmaliukh.bookshelf.ConsoleShelf;
 import org.vshmaliukh.bookshelf.literature_items.book_item.Book;
 import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.bookshelf.literature_items.magazine_item.Magazine;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerPerType;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -49,7 +47,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testGenerateFullFileName() {
-        assertEquals(testGsonHandlerOneFile.userName + testGsonHandlerOneFile.JSON_FILE_TYPE, testGsonHandlerOneFile.generateFullFileName());
+        assertEquals(testGsonHandlerOneFile.userName + ItemGsonHandler.JSON_FILE_TYPE, testGsonHandlerOneFile.generateFullFileName());
     }
 
     @Test
@@ -67,48 +65,48 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerOneFile() {
-        Shelf shelf1 = new Shelf(new PrintWriter(System.out, true));
-        shelf1.addLiteratureObject(book1);
-        shelf1.addLiteratureObject(book2);
-        shelf1.addLiteratureObject(magazine1);
-        shelf1.addLiteratureObject(magazine2);
+        ConsoleShelf consoleShelf1 = new ConsoleShelf(new PrintWriter(System.out, true));
+        consoleShelf1.addLiteratureObject(book1);
+        consoleShelf1.addLiteratureObject(book2);
+        consoleShelf1.addLiteratureObject(magazine1);
+        consoleShelf1.addLiteratureObject(magazine2);
 
         ItemGsonHandlerOneFile gsonHandlerOneFile = new ItemGsonHandlerOneFile(tempDirStr, "testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
-        gsonHandlerOneFile.saveToFile(shelf1.getAllLiteratureObjects());
-        Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
-        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(shelf2::addLiteratureObject);
+        gsonHandlerOneFile.saveToFile(consoleShelf1.getAllLiteratureObjects());
+        ConsoleShelf consoleShelf2 = new ConsoleShelf(new PrintWriter(System.out, true));
+        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelf2::addLiteratureObject);
 
-        assertEquals(shelf1.getAllLiteratureObjects().size(), shelf2.getAllLiteratureObjects().size());
-        assertTrue(shelf1.getAllLiteratureObjects().stream()
+        assertEquals(consoleShelf1.getAllLiteratureObjects().size(), consoleShelf2.getAllLiteratureObjects().size());
+        assertTrue(consoleShelf1.getAllLiteratureObjects().stream()
                 .map(Item::toString)
                 .collect(Collectors.toList())
-                .containsAll(shelf2.getAllLiteratureObjects().stream()
+                .containsAll(consoleShelf2.getAllLiteratureObjects().stream()
                         .map(Item::toString)
                         .collect(Collectors.toList())));
     }
 
     @Test
     void testSaveReadShelf_GsonHandlerPerType() {
-        Shelf shelf1 = new Shelf(new PrintWriter(System.out, true));
-        Shelf shelf2 = new Shelf(new PrintWriter(System.out, true));
+        ConsoleShelf consoleShelf1 = new ConsoleShelf(new PrintWriter(System.out, true));
+        ConsoleShelf consoleShelf2 = new ConsoleShelf(new PrintWriter(System.out, true));
 
-        shelf1.addLiteratureObject(book1);
-        shelf1.addLiteratureObject(book2);
-        shelf1.addLiteratureObject(magazine1);
-        shelf1.addLiteratureObject(magazine2);
+        consoleShelf1.addLiteratureObject(book1);
+        consoleShelf1.addLiteratureObject(book2);
+        consoleShelf1.addLiteratureObject(magazine1);
+        consoleShelf1.addLiteratureObject(magazine2);
 
         ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(tempDirStr, "testGsonHandlerPerType");
-        itemGsonHandlerPerType.saveToFile(shelf1.getAllLiteratureObjects());
+        itemGsonHandlerPerType.saveToFile(consoleShelf1.getAllLiteratureObjects());
 
-        itemGsonHandlerPerType.readListFromFile().forEach(shelf2::addLiteratureObject);
+        itemGsonHandlerPerType.readListFromFile().forEach(consoleShelf2::addLiteratureObject);
 
-        assertEquals(shelf1.getAllLiteratureObjects().size(), shelf2.getAllLiteratureObjects().size());
-        assertTrue(shelf1.getAllLiteratureObjects().stream()
+        assertEquals(consoleShelf1.getAllLiteratureObjects().size(), consoleShelf2.getAllLiteratureObjects().size());
+        assertTrue(consoleShelf1.getAllLiteratureObjects().stream()
                 .map(Item::toString)
                 .collect(Collectors.toList())
-                .containsAll(shelf2.getAllLiteratureObjects().stream()
+                .containsAll(consoleShelf2.getAllLiteratureObjects().stream()
                         .map(Item::toString)
                         .collect(Collectors.toList())));
     }

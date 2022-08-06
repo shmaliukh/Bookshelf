@@ -1,13 +1,10 @@
-package org.vshmaliukh.terminal.menus;
+package org.vshmaliukh.console_terminal.menus;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
-import org.vshmaliukh.console_terminal.menus.GeneratedMenuForAdding;
-import org.vshmaliukh.console_terminal.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemClassType;
 
 import java.io.ByteArrayOutputStream;

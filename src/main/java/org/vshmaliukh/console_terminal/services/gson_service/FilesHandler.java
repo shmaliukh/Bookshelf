@@ -23,7 +23,7 @@ public abstract class FilesHandler {
     }
 
     public boolean createDirectoryIfNotExists(Path dir) {
-        if (dir == null || dir.equals("")) {
+        if (dir == null || dir.toString().equals("")) {
             return false;
         }
         if (dir.toFile().exists()) {
@@ -38,7 +38,7 @@ public abstract class FilesHandler {
         return false;
     }
 
-    protected Path generatePathForUser() {
+    public Path generatePathForUser() {
         Path path = Paths.get(programDirectoryStr, userName);
         createDirectoryIfNotExists(path);
         return path;
