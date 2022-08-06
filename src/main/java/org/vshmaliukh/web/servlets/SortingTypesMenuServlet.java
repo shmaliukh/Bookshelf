@@ -1,4 +1,4 @@
-package org.vshmaliukh.web.menu_servlets;
+package org.vshmaliukh.web.servlets;
 
 import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
 import org.vshmaliukh.console_terminal.menus.GeneratedMenuForSorting;
@@ -15,7 +15,7 @@ import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENT
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
 import static org.vshmaliukh.web.WebUtils.MENU_ITEM_INDEX;
-import static org.vshmaliukh.web.menu_servlets.AddItemServlet.ITEM_CLASS_TYPE;
+import static org.vshmaliukh.web.servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class SortingTypesMenuServlet extends HttpServlet {
 

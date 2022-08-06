@@ -1,4 +1,4 @@
-package org.vshmaliukh.web.menu_servlets;
+package org.vshmaliukh.web.servlets;
 
 import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
@@ -14,10 +14,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
-import static org.vshmaliukh.web.menu_servlets.AddMenuServlet.IS_RANDOM;
+import static org.vshmaliukh.web.servlets.AddMenuServlet.IS_RANDOM;
 
 public class AddItemServlet extends HttpServlet {
 

@@ -1,4 +1,7 @@
-package org.vshmaliukh.web;
+package org.vshmaliukh.web.servlets;
+
+import org.vshmaliukh.web.WebPageBuilder;
+import org.vshmaliukh.web.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

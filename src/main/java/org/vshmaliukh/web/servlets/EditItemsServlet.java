@@ -1,4 +1,4 @@
-package org.vshmaliukh.web.menu_servlets;
+package org.vshmaliukh.web.servlets;
 
 import org.vshmaliukh.web.WebPageBuilder;
 import org.vshmaliukh.web.WebShelfHandler;
@@ -11,7 +11,7 @@ import java.io.*;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.MainMenuServlet.TITLE_LIST;
+import static org.vshmaliukh.web.servlets.MainMenuServlet.TITLE_LIST;
 import static org.vshmaliukh.web.WebUtils.readUserAtr;
 
 public class EditItemsServlet extends HttpServlet {

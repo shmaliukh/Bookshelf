@@ -8,12 +8,12 @@ import java.util.List;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
-import org.vshmaliukh.web.menu_servlets.*;
+import org.vshmaliukh.web.servlets.*;
 
 import javax.servlet.Servlet;
 
-import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 
 public class BookShelfWebApp {
 

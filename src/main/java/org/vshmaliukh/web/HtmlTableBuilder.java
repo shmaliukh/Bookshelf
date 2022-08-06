@@ -1,6 +1,5 @@
 package org.vshmaliukh.web;
 
-import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.console_terminal.services.print_table_service.AbstractTableHandler;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,8 +8,8 @@ import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
 import static org.vshmaliukh.web.BookShelfWebApp.DELETE_ITEM_TITLE;
-import static org.vshmaliukh.web.MainMenuServlet.TITLE_LIST;
-import static org.vshmaliukh.web.menu_servlets.EditItemsServlet.INDEX_OF_ITEM;
+import static org.vshmaliukh.web.servlets.MainMenuServlet.TITLE_LIST;
+import static org.vshmaliukh.web.servlets.EditItemsServlet.INDEX_OF_ITEM;
 
 public class HtmlTableBuilder extends AbstractTableHandler {
 

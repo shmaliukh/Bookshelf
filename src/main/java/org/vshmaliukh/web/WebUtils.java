@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 
 import static org.vshmaliukh.web.BookShelfWebApp.USER_PARAMETER_LIST;
 
-import static org.vshmaliukh.web.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.web.LogInServlet.USER_NAME;
+import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 
 @Slf4j
 public final class WebUtils {
