@@ -2,7 +2,6 @@ package org.vshmaliukh.web;
 
 import org.vshmaliukh.console_terminal.services.print_table_service.AbstractTableHandler;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -15,27 +14,27 @@ public class HtmlTableBuilder extends AbstractTableHandler {
 
     private final StringBuilder tableStringBuilder = new StringBuilder();
     private final boolean isForEditing;
-    private final HttpServletRequest request;
+    private final Map<String, String> userAtr;
 
-    public HtmlTableBuilder(List<Map<String, String>> tableList, Boolean isNeedIndex) {
+    public HtmlTableBuilder(List<Map<String, String>> tableList, boolean isNeedIndex) {
         super(tableList, isNeedIndex);
         super.titleList = TITLE_LIST; // TODO remove ?
         this.isForEditing = false;
-        this.request = null;
+        this.userAtr = null;
     }
 
-    public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, Boolean isNeedIndex) {
+    public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, boolean isNeedIndex) {
         super(tableList, isNeedIndex);
         super.titleList = titleList;
         this.isForEditing = false;
-        this.request = null;
+        this.userAtr = null;
     }
 
-    public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, Boolean isNeedIndex, boolean isForEditing, HttpServletRequest request) {
-        super(tableList, isNeedIndex);
+    public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList,  Map<String, String> userAtr) {
+        super(tableList, true);
+        this.isForEditing = true;
         super.titleList = titleList;
-        this.isForEditing = isForEditing;
-        this.request = request;
+        this.userAtr = userAtr;
     }
 
     public String generateHTMLTableStr() {
@@ -73,18 +72,10 @@ public class HtmlTableBuilder extends AbstractTableHandler {
             stringBuilder.append("</td>");
         }
         if (isForEditing) {
-            stringBuilder.append(generateButton(CHANGE_ITEM_BORROWED_STATE, stringList));
-            stringBuilder.append(generateButton(DELETE_ITEM_TITLE, stringList));
+            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(CHANGE_ITEM_BORROWED_STATE, stringList.get(0), userAtr));
+            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(DELETE_ITEM_TITLE, stringList.get(0), userAtr));
         }
         stringBuilder.append("</tr>");
         return stringBuilder.toString();
-    }
-
-    private String generateButton(String servletTitle, List<String> stringList) {
-        return "<td style = \"border:1px solid black\">" +
-                WebUtils.formHTMLButton(WebUtils.generateBaseURLBuilder(servletTitle, WebUtils.readUserAtr(request))
-                        .addParameter(INDEX_OF_ITEM, stringList.get(0))
-                        .toString(), servletTitle) +
-                "</td>";
     }
 }
