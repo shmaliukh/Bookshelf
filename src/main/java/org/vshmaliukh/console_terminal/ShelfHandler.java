@@ -1,9 +1,9 @@
 package org.vshmaliukh.console_terminal;
 
 import org.vshmaliukh.bookshelf.AbstractShelf;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandler;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerOneFile;
-import org.vshmaliukh.console_terminal.services.gson_service.ItemGsonHandlerPerType;
+import org.vshmaliukh.console_terminal.services.file_service.ItemGsonHandler;
+import org.vshmaliukh.console_terminal.services.file_service.ItemGsonHandlerOneFile;
+import org.vshmaliukh.console_terminal.services.file_service.ItemGsonHandlerPerType;
 
 import java.util.Random;
 

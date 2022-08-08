@@ -1,4 +1,4 @@
-package org.vshmaliukh.console_terminal.services.gson_service;
+package org.vshmaliukh.console_terminal.services.file_service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.console_terminal.services.gson_service.FilesHandler.PROGRAM_DIR_NAME;
+import static org.vshmaliukh.console_terminal.services.file_service.FilesHandler.PROGRAM_DIR_NAME;
 
 class FilesHandlerTest {
 

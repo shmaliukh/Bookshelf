@@ -1,4 +1,4 @@
-package org.vshmaliukh.console_terminal.services.gson_service;
+package org.vshmaliukh.console_terminal.services.file_service;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;

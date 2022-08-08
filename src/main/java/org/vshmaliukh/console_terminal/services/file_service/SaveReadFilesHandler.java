@@ -1,4 +1,4 @@
-package org.vshmaliukh.console_terminal.services.gson_service;
+package org.vshmaliukh.console_terminal.services.file_service;
 
 import org.vshmaliukh.bookshelf.literature_items.Item;
 
