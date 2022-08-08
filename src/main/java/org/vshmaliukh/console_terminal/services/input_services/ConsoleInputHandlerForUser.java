@@ -3,11 +3,11 @@ package org.vshmaliukh.console_terminal.services.input_services;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
-public class InputHandlerForUser extends InputHandler {
+public class ConsoleInputHandlerForUser extends AbstractConsoleInputHandler {
 
-    public InputHandlerForUser(Scanner scanner, PrintWriter printWriter) {
+    public ConsoleInputHandlerForUser(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

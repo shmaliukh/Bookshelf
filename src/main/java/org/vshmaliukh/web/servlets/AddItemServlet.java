@@ -31,9 +31,10 @@ public class AddItemServlet extends HttpServlet {
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
             WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
             Item item = handlerByName.generateItemByHTMLFormData(itemFieldValueMap);
-
-            webShelfHandler.getShelf().addLiteratureObject(item);
-            webShelfHandler.saveShelfItemsToJson();
+            if(item != null){
+                webShelfHandler.getShelf().addLiteratureObject(item);
+                webShelfHandler.saveShelfItemsToJson();
+            }
 
             try {
                 response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)

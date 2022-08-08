@@ -4,13 +4,14 @@ import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.WebInputHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 
@@ -38,10 +39,10 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public Newspaper getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+    public Newspaper getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter) {
+        String name = consoleInputHandlerForLiterature.getUserLiteratureName();
+        int pages = consoleInputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = consoleInputHandlerForLiterature.getUserLiteratureIsBorrowed();
         return new Newspaper(name, pages, isBorrowed);
     }
 
@@ -95,10 +96,10 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
         String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
 
-        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter);
+        return isValidUserParametersInput(nameParameter, pagesParameter, borrowedParameter);
     }
 
-    public boolean isValidBookInput(String name, String pages, String borrowed) {
+    public boolean isValidUserParametersInput(String name, String pages, String borrowed) {
         return isValidInputString(name, PATTERN_FOR_NAME) &&
                 isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
                 isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
@@ -106,17 +107,16 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
 
     @Override
     public Newspaper generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
-        String nameParameter = mapFieldValue.get(ItemTitles.NAME);
-        String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
-        String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
+        WebInputHandler webInputHandler = new WebInputHandler();
 
-        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
+        String name = webInputHandler.getUserString(mapFieldValue.get(NAME), PATTERN_FOR_NAME);
+        Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), PATTERN_FOR_PAGES);
+        Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), PATTERN_FOR_IS_BORROWED);
 
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        if (name != null && pages != null && isBorrowed != null) {
+            return new Newspaper(name, pages, isBorrowed);
+        }
+        return null;
 
-        return new Newspaper(name, pages, isBorrowed);
     }
 }

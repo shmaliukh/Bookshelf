@@ -6,11 +6,11 @@ import java.util.Date;
 import java.util.Scanner;
 
 import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
-public class InputHandlerForLiterature extends InputHandler {
+public class ConsoleInputHandlerForLiterature extends AbstractConsoleInputHandler {
 
-    public  InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
+    public ConsoleInputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

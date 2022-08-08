@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         }
 
         webPageBuilder.addButton(WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE);
+
         webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
 
         try {
@@ -69,18 +71,17 @@ public class ItemsSortingMenuServlet extends HttpServlet {
                 handlerByName.getSortingMenuList());
     }
 
-    private void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
-        Class<? extends Item> classType = ItemHandlerProvider.getClassByName(classTypeStr);
+    private <T extends Item> void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
+        Class<T> classType = (Class<T>) ItemHandlerProvider.getClassByName(classTypeStr);
         WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-        List typedItemList = null;
+        List<T> typedItemList = new ArrayList<>();
         if (webShelfHandler != null) {
-            typedItemList = Utils.getItemsByType(classType, webShelfHandler.getShelf().getAllLiteratureObjects());
+            List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
+            typedItemList = Utils.getItemsByType(classType, allLiteratureObjects);
         }
-        // TODO Raw use of parameterized class 'List'
         if (menuIndexStr != null && !menuIndexStr.equals("")) {
-
             int typeOfSorting = Integer.parseInt(menuIndexStr);
-            List<? extends Item> sortedList = handlerByName.getSortedItems(typeOfSorting, typedItemList);
+            List<T> sortedList = handlerByName.getSortedItems(typeOfSorting, typedItemList);
             webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true));
         }
         else {

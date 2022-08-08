@@ -4,16 +4,17 @@ import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.WebInputHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.console_terminal.services.Utils.getRandomString;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.*;
 import static org.vshmaliukh.web.WebUtils.DATE_FORMAT_WEB_STR;
 
@@ -45,12 +46,12 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public Book getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        String author = inputHandlerForLiterature.getUserLiteratureAuthor();
-        Date dateOfIssue = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
+    public Book getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter) {
+        String name = consoleInputHandlerForLiterature.getUserLiteratureName();
+        int pages = consoleInputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = consoleInputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        String author = consoleInputHandlerForLiterature.getUserLiteratureAuthor();
+        Date dateOfIssue = consoleInputHandlerForLiterature.getUserLiteratureDateOfIssue();
         return new Book(name, pages, isBorrowed, author, dateOfIssue);
     }
 
@@ -68,9 +69,9 @@ public class BookHandler implements ItemHandler<Book> {
     public Map<String, String> convertItemToListOfString(Book book) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, book.getClass().getSimpleName());
-        map.put(ItemTitles.NAME, book.getName());
-        map.put(ItemTitles.PAGES, String.valueOf(book.getPagesNumber()));
-        map.put(ItemTitles.BORROWED, String.valueOf(book.isBorrowed()));
+        map.put(NAME, book.getName());
+        map.put(PAGES, String.valueOf(book.getPagesNumber()));
+        map.put(BORROWED, String.valueOf(book.isBorrowed()));
         map.put(ItemTitles.AUTHOR, book.getAuthor());
         map.put(ItemTitles.DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()));
         return new HashMap<>(map);
@@ -79,9 +80,9 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String generateHTMLFormBodyToCreateItem() {
         return "" +
-                Utils.generateHTMLFormItem(ItemTitles.NAME, "text") +
-                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number") +
-                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                Utils.generateHTMLFormItem(NAME, "text") +
+                Utils.generateHTMLFormItem(PAGES, "number") +
+                Utils.generateHTMLFormRadio(BORROWED) +
                 Utils.generateHTMLFormItem(ItemTitles.AUTHOR, "text") +
                 Utils.generateHTMLFormItem(ItemTitles.DATE, "date") +
                 "   <br>\n" +
@@ -95,9 +96,9 @@ public class BookHandler implements ItemHandler<Book> {
     public String generateHTMLFormBodyToCreateItem(Random random) {
         String defaultDate = new SimpleDateFormat(DATE_FORMAT_WEB_STR).format(new Date());
         return "" +
-                Utils.generateHTMLFormItem(ItemTitles.NAME, "text", getRandomString(random.nextInt(20), random)) +
-                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number", String.valueOf(random.nextInt(1000))) +
-                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                Utils.generateHTMLFormItem(NAME, "text", getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(PAGES, "number", String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormRadio(BORROWED) +
                 Utils.generateHTMLFormItem(ItemTitles.AUTHOR, "text", getRandomString(random.nextInt(20), random)) +
                 Utils.generateHTMLFormItem(ItemTitles.DATE, "date", defaultDate) +
                 "   <br>\n" +
@@ -109,16 +110,16 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public boolean isValidHTMLFormData(Map<String, String> mapFieldValue) {
-        String nameParameter = mapFieldValue.get(ItemTitles.NAME);
-        String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
-        String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
+        String nameParameter = mapFieldValue.get(NAME);
+        String pagesParameter = mapFieldValue.get(PAGES);
+        String borrowedParameter = mapFieldValue.get(BORROWED);
         String authorParameter = mapFieldValue.get(ItemTitles.AUTHOR);
         String dateParameter = mapFieldValue.get(ItemTitles.DATE);
 
-        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);
+        return isValidUserParametersInput(nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);
     }
 
-    public boolean isValidBookInput(String name, String pages, String borrowed, String author, String date) {
+    public boolean isValidUserParametersInput(String name, String pages, String borrowed, String author, String date) {
         return isValidInputString(name, PATTERN_FOR_NAME) &&
                 isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
                 isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED) &&
@@ -128,21 +129,17 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public Book generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
-        String nameParameter = mapFieldValue.get(ItemTitles.NAME);
-        String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
-        String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
-        String authorParameter = mapFieldValue.get(ItemTitles.AUTHOR);
-        String dateParameter = mapFieldValue.get(ItemTitles.DATE);
+        WebInputHandler webInputHandler = new WebInputHandler();
 
-        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
+        String name = webInputHandler.getUserString(mapFieldValue.get(NAME), PATTERN_FOR_NAME);
+        Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), PATTERN_FOR_PAGES);
+        Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), PATTERN_FOR_IS_BORROWED);
+        String author = webInputHandler.getUserString(mapFieldValue.get(AUTHOR), PATTERN_FOR_AUTHOR);
+        Date date = webInputHandler.getUserDate(mapFieldValue.get(DATE), new SimpleDateFormat(DATE_FORMAT_WEB_STR));
 
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        String author = inputHandlerForLiterature.getUserLiteratureAuthor();
-        Date date = inputHandlerForLiterature.getUserLiteratureDateOfIssue();
-
-        return new Book(name, pages, isBorrowed, author, date);
+        if (name != null && pages != null && isBorrowed != null && author != null && date != null) {
+            return new Book(name, pages, isBorrowed, author, date);
+        }
+        return null;
     }
 }

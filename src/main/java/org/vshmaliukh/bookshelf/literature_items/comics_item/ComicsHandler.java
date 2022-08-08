@@ -4,15 +4,15 @@ import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.WebInputHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.console_terminal.services.Utils.getRandomString;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 
@@ -42,11 +42,11 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public Comics getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        String publisher = inputHandlerForLiterature.getUserLiteraturePublisher();
+    public Comics getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter) {
+        String name = consoleInputHandlerForLiterature.getUserLiteratureName();
+        int pages = consoleInputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = consoleInputHandlerForLiterature.getUserLiteratureIsBorrowed();
+        String publisher = consoleInputHandlerForLiterature.getUserLiteraturePublisher();
         return new Comics(name, pages, isBorrowed, publisher);
     }
 
@@ -104,10 +104,10 @@ public class ComicsHandler implements ItemHandler<Comics> {
         String pagesParameter = mapFieldValue.get(PAGES);
         String borrowedParameter = mapFieldValue.get(BORROWED);
         String publisherParameter = mapFieldValue.get(PUBLISHER);
-        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter);
+        return isValidUserParametersInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter);
     }
 
-    public boolean isValidBookInput(String name, String pages, String borrowed, String publisherParameter) {
+    public boolean isValidUserParametersInput(String name, String pages, String borrowed, String publisherParameter) {
         return isValidInputString(name, PATTERN_FOR_NAME) &&
                 isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
                 isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED) &&
@@ -116,19 +116,16 @@ public class ComicsHandler implements ItemHandler<Comics> {
 
     @Override
     public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
-        String nameParameter = mapFieldValue.get(NAME);
-        String pagesParameter = mapFieldValue.get(PAGES);
-        String borrowedParameter = mapFieldValue.get(BORROWED);
-        String publisherParameter = mapFieldValue.get(PUBLISHER);
+        WebInputHandler webInputHandler = new WebInputHandler();
 
-        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, publisherParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
+        String name = webInputHandler.getUserString(mapFieldValue.get(NAME), PATTERN_FOR_NAME);
+        Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), PATTERN_FOR_PAGES);
+        Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), PATTERN_FOR_IS_BORROWED);
+        String publisher = webInputHandler.getUserString(mapFieldValue.get(PUBLISHER), PATTERN_FOR_PUBLISHER);
 
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-        String publisher = inputHandlerForLiterature.getUserLiteraturePublisher();
-
-        return new Comics(name, pages, isBorrowed, publisher);
+        if (name != null && pages != null && isBorrowed != null && publisher != null) {
+            return new Comics(name, pages, isBorrowed, publisher);
+        }
+        return null;
     }
 }

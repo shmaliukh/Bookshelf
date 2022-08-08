@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 import static org.vshmaliukh.web.BookShelfWebApp.*;

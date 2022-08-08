@@ -79,6 +79,9 @@ public final class WebUtils {
                 label +
                 "</button> \n";
     }
+    public static String formHTMLButton(Object stringBuilder, String label) {
+        return formHTMLButton(stringBuilder.toString(), label);
+    }
 
     public static String generateFormHTMLStart(Map<String, String> userAtr, String servletTitle) {
         return "<form action = \"" +

@@ -5,9 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.vshmaliukh.bookshelf.literature_items.magazine_item.Magazine;
-import org.vshmaliukh.bookshelf.literature_items.magazine_item.MagazineHandler;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -17,7 +15,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.BORROWED;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
 class MagazineHandlerTest {
 
@@ -85,8 +83,8 @@ class MagazineHandlerTest {
     @Test
     void getItemByUserInput() {
         Scanner scanner = new Scanner(System.lineSeparator());
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
-        Magazine itemByUserInput = magazineHandler.getItemByUserInput(inputHandlerForLiterature, printWriter);
+        ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
+        Magazine itemByUserInput = magazineHandler.getItemByUserInput(consoleInputHandlerForLiterature, printWriter);
         System.out.println(itemByUserInput);
 
         assertNotNull(itemByUserInput);

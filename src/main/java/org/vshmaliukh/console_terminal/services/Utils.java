@@ -11,7 +11,7 @@ public class Utils {
     }
 
     public static String getRandomString(int length, Random random) {
-        String charactersForRandomStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_ ";
+        String charactersForRandomStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_      ";
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int characterPosition = random.nextInt(charactersForRandomStr.length());
@@ -20,7 +20,7 @@ public class Utils {
         return sb.toString();
     }
 
-    public static <T> List<T> getItemsByType(Class<T> clazz, List<?> items) {
+    public static <T extends Item> List<T> getItemsByType(Class<T> clazz, List<? extends Item> items) {
         if (clazz == null || items == null) {
             return Collections.emptyList();
         }

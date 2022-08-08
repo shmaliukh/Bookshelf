@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 import static org.vshmaliukh.console_terminal.ShelfHandler.*;
 
-public final class ConstantsForUserInputHandler {
+public final class ConstantsForConsoleUserInputHandler {
 
-    private ConstantsForUserInputHandler() {
+    private ConstantsForConsoleUserInputHandler() {
     }
 
     public static final int MAX_RECURSION_LEVEL = 3;

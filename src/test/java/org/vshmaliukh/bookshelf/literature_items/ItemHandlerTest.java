@@ -2,12 +2,9 @@ package org.vshmaliukh.bookshelf.literature_items;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.bookshelf.literature_items.Item;
-import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
-import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
@@ -15,7 +12,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.bookshelf.literature_items.ItemHandler.*;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
 @Slf4j
 class ItemHandlerTest {
@@ -138,10 +135,10 @@ class ItemHandlerTest {
     @Test
     void testGetItemByUserInput() {
         Scanner scanner = new Scanner(System.lineSeparator());
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
+        ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
         for (Class<? extends Item> uniqueTypeName : uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(uniqueTypeName);
-            Item itemByUserInput = handlerByClass.getItemByUserInput(inputHandlerForLiterature, printWriter);
+            Item itemByUserInput = handlerByClass.getItemByUserInput(consoleInputHandlerForLiterature, printWriter);
 
             assertNotNull(itemByUserInput);
             assertNotNull(itemByUserInput.toString());
