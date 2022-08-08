@@ -1,7 +1,6 @@
 package org.vshmaliukh.web.servlets;
 
 import org.vshmaliukh.web.WebPageBuilder;
-import org.vshmaliukh.web.WebShelfHandler;
 import org.vshmaliukh.web.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -24,14 +23,8 @@ public class EditItemsServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(EDIT_ITEMS_TITLE);
         Map<String, String> userAtr = readUserAtr(request);
 
-        WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
-
-        if (webShelfHandler.getShelf().getAllLiteratureObjects().isEmpty()) {
-            webPageBuilder.addToBody("No available literature IN shelf to edit");
-        } else {
-            String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr, TITLE_LIST);
-            webPageBuilder.addToBody(tableForEditingItems);
-        }
+        String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr, TITLE_LIST);
+        webPageBuilder.addToBody(tableForEditingItems);
 
         webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
 

@@ -15,10 +15,6 @@ public abstract class AbstractShelf {
     protected AbstractShelf() {
     }
 
-    protected AbstractShelf(List<Item> itemList) {
-        itemList.forEach(this::addLiteratureObject);
-    }
-
     public void addLiteratureObject(Item item) {
         if (item != null) {
             itemsOfShelf.add(item);

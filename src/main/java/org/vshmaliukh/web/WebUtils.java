@@ -26,8 +26,7 @@ public final class WebUtils {
     public static final String MENU_ITEM_INDEX = "menu_item_index";
     public static final String INFORM_MESSAGE = "inform_message";
 
-    private WebUtils() {
-    }
+    private WebUtils() {}
 
     public static void logServletErr(String servletTitle, Exception e) {
         log.error("[Servlet] '" + servletTitle + "' got err. Exception: ", e);
@@ -53,7 +52,6 @@ public final class WebUtils {
         return uriBuilder;
     }
 
-    // TODO write test
     public static WebShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
         String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
@@ -136,22 +134,19 @@ public final class WebUtils {
         if (webShelfHandler != null) {
             return generateTableOfShelfItems(webShelfHandler.getShelf().getAllLiteratureObjects(), titleList, true);
         }
-        return "";
+        return "No available literature items to display <br>\n";
     }
 
     public static String generateTableForEditingItems(Map<String, String> userAtr, List<String> titleList) {
         WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
-            if(allLiteratureObjects.isEmpty()){
-                return "No available literature IN shelf to edit <br>\n ";
-            }
-            else {
+            if(!allLiteratureObjects.isEmpty()){
                 HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(titleList, ConvertorToStringForLiterature.getTable(allLiteratureObjects), userAtr);
                 return htmlTableBuilder.generateHTMLTableStr();
             }
         }
-        return "";
+        return "No available literature items to edit <br>\n";
     }
 
     public static Map<String, String> readUserAtr(HttpServletRequest request) {

@@ -28,6 +28,9 @@ public class Utils {
     }
 
     public static <T extends Item> List<T> getSortedLiterature(List<T> literatureList, Comparator<T> itemsComparator) {
+        if(literatureList == null){
+            return Collections.emptyList();
+        }
         return literatureList.stream()
                 .sorted(itemsComparator)
                 .collect(Collectors.toList());
