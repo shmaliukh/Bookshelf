@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-public abstract class ItemGsonHandler extends FilesHandler {
+public abstract class ItemGsonHandler extends SaveReadFilesHandler {
 
     public static final int MAX_PROBLEM_FILES = 5;
     public static final String JSON_FILE_TYPE = ".json";
@@ -37,9 +37,7 @@ public abstract class ItemGsonHandler extends FilesHandler {
         super(homeDir, userName);
     }
 
-    abstract String generateFullFileName();
 
-    abstract Path generatePathForGson();
 
     public Path generatePathForGsonFile() {
         return Paths.get(String.valueOf(generatePathForGson()), generateFullFileName());
@@ -182,8 +180,4 @@ public abstract class ItemGsonHandler extends FilesHandler {
         }
         return filesList.get(0);
     }
-
-    public abstract void saveToFile(List<Item> listToSave);
-
-    public abstract List<Item> readListFromFile();
 }

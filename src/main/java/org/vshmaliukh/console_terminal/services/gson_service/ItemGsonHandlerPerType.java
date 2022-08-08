@@ -34,20 +34,18 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
     }
 
     @Override
-    public void saveToFile(List<Item> listToSave) {
-        for (Class<? extends Item> classType : getClassTypes(listToSave)) {
+    public void saveItemListToFile(List<Item> listToSave) {
+        for (Class<? extends Item> classType : getClassTypes()) {
             typeStr = classType.getSimpleName();
             List<? extends Item> listPerType = listToSave.stream()
                     .filter(o -> o.getClass().equals(classType))
                     .collect(Collectors.toList());
-
-            generatePathForGsonFile().toFile().toPath().toFile().toPath();
             saveListToFile(generatePathForGsonFile(), listPerType);
         }
     }
 
     @Override
-    public List<Item> readListFromFile() {
+    public List<Item> readItemListFromFile() {
         List<Item> resultList = new ArrayList<>();
         for (Class<? extends Item> typeName : ItemHandlerProvider.uniqueTypeNames) {
             typeStr = typeName.getSimpleName();
@@ -56,11 +54,7 @@ public class ItemGsonHandlerPerType extends ItemGsonHandler {
         return resultList;
     }
 
-    private Set<Class<? extends Item>> getClassTypes(List<Item> listToSave) {
+    private Set<Class<? extends Item>> getClassTypes() {
         return ItemHandlerProvider.uniqueTypeNames;
-        //return listToSave.stream()
-        //        .map(Item::getClass)
-        //        .collect(Collectors.toSet());
-        // TODO fix
     }
 }

@@ -9,7 +9,7 @@ import java.util.Random;
 
 public abstract class ShelfHandler {
 
-    public static final String DATE_FORMAT_STR = "dd-MM-yyyy";
+    public static final String DATE_FORMAT_STR = "dd-MM-yyyy"; // todo create file with config (?)
 
     public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
     public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
@@ -46,11 +46,11 @@ public abstract class ShelfHandler {
     }
 
     public void saveShelfItemsToJson() {
-        itemGsonHandler.saveToFile(shelf.getAllLiteratureObjects());
+        itemGsonHandler.saveItemListToFile(shelf.getAllLiteratureObjects());
     }
 
     public void readShelfItemsFromJson() {
-        itemGsonHandler.readListFromFile().forEach(shelf::addLiteratureObject);
+        itemGsonHandler.readItemListFromFile().forEach(shelf::addLiteratureObject);
     }
 
     public AbstractShelf getShelf() {

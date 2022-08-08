@@ -30,12 +30,12 @@ public class ItemGsonHandlerOneFile extends ItemGsonHandler {
     }
 
     @Override
-    public void saveToFile(List<Item> listToSave) {
+    public void saveItemListToFile(List<Item> listToSave) {
         saveListToFile(generatePathForGsonFile(), listToSave);
     }
 
     @Override
-    public List<Item> readListFromFile() {
+    public List<Item> readItemListFromFile() {
         return readItemListFromGsonFile(generatePathForGsonFile());
     }
 }
