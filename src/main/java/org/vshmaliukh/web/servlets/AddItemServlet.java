@@ -1,5 +1,6 @@
 package org.vshmaliukh.web.servlets;
 
+import com.google.gson.Gson;
 import org.vshmaliukh.bookshelf.literature_items.Item;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemHandlerProvider;
@@ -14,12 +15,13 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
 import static org.vshmaliukh.web.servlets.AddMenuServlet.IS_RANDOM;
+import static org.vshmaliukh.web.servlets.AddMenuServlet.ITEM_GSON_STR;
 
 public class AddItemServlet extends HttpServlet {
 
     public static final String ITEM_CLASS_TYPE = "item_class_type";
+    static Gson gson = new Gson();
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -37,7 +39,8 @@ public class AddItemServlet extends HttpServlet {
 
             try {
                 response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
-                        .addParameter(INFORM_MESSAGE, "Added " + item)
+                        .addParameter(ITEM_GSON_STR, gson.toJson(item))
+                        .addParameter(ITEM_CLASS_TYPE, itemClassType)
                         .toString());
             } catch (IOException ioe) {
                 WebUtils.logServletErr(ADD_ITEM_TITLE, ioe);

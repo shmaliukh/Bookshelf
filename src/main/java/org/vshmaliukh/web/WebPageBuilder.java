@@ -48,6 +48,7 @@ public class WebPageBuilder {
     public void addMessageBlock(String informMessage) {
         if (informMessage != null) {
             bodyStringBuilder.append("<br>\n")
+                    .append("<br>\n")
                     .append(informMessage)
                     .append("<br>\n");
         }
