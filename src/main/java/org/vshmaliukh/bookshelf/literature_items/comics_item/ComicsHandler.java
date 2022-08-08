@@ -115,9 +115,8 @@ public class ComicsHandler implements ItemHandler<Comics> {
         String borrowedParameter = mapFieldValue.get(BORROWED);
         String publisherParameter = mapFieldValue.get(PUBLISHER);
 
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, publisherParameter);
-        inputHandlerForLiterature.scanner = new Scanner(join);
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), printWriter);
 
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

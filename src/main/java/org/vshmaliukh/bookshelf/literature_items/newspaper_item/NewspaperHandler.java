@@ -104,9 +104,8 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
         String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
 
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
-        inputHandlerForLiterature.scanner = new Scanner(join);
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), printWriter);
 
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

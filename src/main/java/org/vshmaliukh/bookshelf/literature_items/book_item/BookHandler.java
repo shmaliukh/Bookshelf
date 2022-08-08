@@ -127,9 +127,8 @@ public class BookHandler implements ItemHandler<Book> {
         String authorParameter = mapFieldValue.get(ItemTitles.AUTHOR);
         String dateParameter = mapFieldValue.get(ItemTitles.DATE);
 
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(null, printWriter);
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, authorParameter, dateParameter);
-        inputHandlerForLiterature.scanner = new Scanner(join);
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), printWriter);
 
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

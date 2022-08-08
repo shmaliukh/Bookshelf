@@ -15,8 +15,8 @@ import static org.vshmaliukh.console_terminal.services.input_services.ConstantsF
 @Slf4j
 public abstract class InputHandler {
 
-    public Scanner scanner;
-    public PrintWriter printWriter;
+    private final Scanner scanner;
+    private final PrintWriter printWriter;
 
     private boolean validationResult;
     private String inputString = "";
@@ -68,14 +68,12 @@ public abstract class InputHandler {
     }
 
     private static boolean isMatcher(String inputStr, Pattern pattern) {
-        Matcher matcher = pattern.matcher(inputStr);
-        return matcher.matches();
+        return pattern.matcher(inputStr).matches();
     }
 
     private void readStringFromLine() {
         if (scanner.hasNextLine()) {
-            String trim = scanner.nextLine().trim();
-            inputString = trim;
+            inputString = scanner.nextLine().trim();
         }
     }
 
