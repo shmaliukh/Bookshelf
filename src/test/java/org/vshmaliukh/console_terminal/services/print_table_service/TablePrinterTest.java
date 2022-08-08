@@ -10,6 +10,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 
 class TablePrinterTest {
 
@@ -31,7 +32,7 @@ class TablePrinterTest {
         assertEquals(expected, baos.toString().trim());
     }
 
-    private static Stream<Arguments> provideItemsForTableprintln() {
+    private static Stream<Arguments> provideItemsForTablePrint() {
         Map<String, String> map1 = new HashMap<>();
         map1.put("t1", "v1");
         map1.put("t2", "v2");

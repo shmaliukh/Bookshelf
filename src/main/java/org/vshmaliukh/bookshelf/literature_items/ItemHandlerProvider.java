@@ -21,7 +21,8 @@ public final class ItemHandlerProvider {
     private static final Map<String, Class<? extends Item>> itemNameClassMap = new ConcurrentHashMap<>();
     public static final Set<Class<? extends Item>> uniqueTypeNames;
 
-    private ItemHandlerProvider(){}
+    private ItemHandlerProvider() {
+    }
 
     static {
         itemHandlerMap.put(Magazine.class, new MagazineHandler());

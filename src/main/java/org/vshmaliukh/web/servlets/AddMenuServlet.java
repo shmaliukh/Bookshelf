@@ -21,12 +21,12 @@ import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENT
 import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.MENU_ITEM_INDEX;
-import static org.vshmaliukh.web.servlets.AddItemServlet.ITEM_CLASS_TYPE;
 
 public class AddMenuServlet extends HttpServlet {
 
-    public static final String IS_RANDOM = "is_random";
+    public static final String ITEM_CLASS_TYPE = "item_class_type";
     public static final String ITEM_GSON_STR = "item_gson_str";
+    public static final String IS_RANDOM = "is_random";
     static Gson gson = new Gson();
 
     @Override

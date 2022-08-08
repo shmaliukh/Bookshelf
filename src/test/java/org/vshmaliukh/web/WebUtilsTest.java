@@ -92,13 +92,13 @@ class WebUtilsTest {
 
     @Test
     void testFormHTMLButton_null() {
-        assertEquals("<button onclick=\"window.location.href='null';\"> null</button> ",
+        assertEquals("<button onclick=\"window.location.href='null';\"> null</button> \n",
                 WebUtils.formHTMLButton(null, null));
     }
 
     @Test
     void testFormHTMLButton_str() {
-        assertEquals("<button onclick=\"window.location.href='log_in';\"> log_in</button> ",
+        assertEquals("<button onclick=\"window.location.href='log_in';\"> log_in</button> \n",
                 WebUtils.formHTMLButton(LOG_IN_TITLE, LOG_IN_TITLE));
     }
 

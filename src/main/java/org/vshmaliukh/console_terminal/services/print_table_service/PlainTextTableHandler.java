@@ -42,7 +42,7 @@ public class PlainTextTableHandler extends AbstractTableHandler {
         }
 
         stringBuilder.append(endSymbol);
-        printWriter.println(stringBuilder );
+        printWriter.println(stringBuilder);
     }
 
     protected void printLine(List<String> stringList) {

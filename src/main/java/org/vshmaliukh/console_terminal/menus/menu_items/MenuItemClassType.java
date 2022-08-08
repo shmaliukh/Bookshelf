@@ -2,7 +2,7 @@ package org.vshmaliukh.console_terminal.menus.menu_items;
 
 import org.vshmaliukh.bookshelf.literature_items.Item;
 
-public class MenuItemClassType<T extends Item> extends MenuItem{ // TODO rename
+public class MenuItemClassType<T extends Item> extends MenuItem {
 
     final Class<T> classType;
 

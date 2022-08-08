@@ -15,12 +15,10 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.servlets.AddMenuServlet.IS_RANDOM;
-import static org.vshmaliukh.web.servlets.AddMenuServlet.ITEM_GSON_STR;
+import static org.vshmaliukh.web.servlets.AddMenuServlet.*;
 
 public class AddItemServlet extends HttpServlet {
 
-    public static final String ITEM_CLASS_TYPE = "item_class_type";
     static Gson gson = new Gson();
 
     @Override

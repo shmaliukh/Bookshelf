@@ -18,7 +18,8 @@ import java.util.Map;
 import static org.vshmaliukh.console_terminal.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 import static org.vshmaliukh.web.WebUtils.*;
-import static org.vshmaliukh.web.servlets.AddItemServlet.ITEM_CLASS_TYPE;
+import static org.vshmaliukh.web.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
+
 
 public class ItemsSortingMenuServlet extends HttpServlet {
 
