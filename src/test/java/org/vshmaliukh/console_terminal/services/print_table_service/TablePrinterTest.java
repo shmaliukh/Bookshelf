@@ -20,14 +20,14 @@ class TablePrinterTest {
     @ParameterizedTest
     @MethodSource("provideItemsForTablePrint")
     void testPrintTable(List<Map<String, String>> providedTable, String expected) {
-        new PlainTextTableHandler(printWriter, providedTable, false).print();
+        new PlainTextTableHandler(printWriter, TITLE_LIST, providedTable, false).print();
         assertEquals(expected, baos.toString().trim());
     }
 
     @ParameterizedTest
     @MethodSource("provideItemsForTablePrintWithIndex")
     void testPrintTableWithIndex(List<Map<String, String>> providedTable, String expected) {
-        new PlainTextTableHandler(printWriter, providedTable, true).print();
+        new PlainTextTableHandler(printWriter, TITLE_LIST, providedTable, true).print();
         assertEquals(expected, baos.toString().trim());
     }
 

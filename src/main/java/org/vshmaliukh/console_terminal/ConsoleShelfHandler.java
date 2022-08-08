@@ -18,6 +18,8 @@ import org.vshmaliukh.console_terminal.menus.GeneratedMenuForSorting;
 import java.io.*;
 import java.util.*;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
+
 public class ConsoleShelfHandler extends ShelfHandler {
 
     public static final int WRONG_INPUT = -1;
@@ -149,7 +151,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
         List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
-        new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(sortedList), true).print();
+        new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(sortedList), true).print();
     }
 
     /**
@@ -157,7 +159,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
      */
     public void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false).print();
+        new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(shelf.getAllLiteratureObjects()), false).print();
     }
 
     /**
@@ -177,7 +179,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
-            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(itemList), true).print();
+            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
             shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
@@ -192,7 +194,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
-            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(itemList), true).print();
+            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
             shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
@@ -206,7 +208,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            new PlainTextTableHandler(printWriter, ConvertorToStringForLiterature.getTable(shelf.readLiteratureInShelf()), true).print();
+            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(shelf.readLiteratureInShelf()), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
             shelf.deleteLiteratureObjectByIndex(getUserChoice());
         }

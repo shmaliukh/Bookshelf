@@ -25,6 +25,8 @@ public class LogInServlet extends HttpServlet {
         String userInputName = request.getParameter(USER_NAME);
         String userInputNumberStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
+        //Paths.get("")
+        //String servletPath = "/${user}/${type_of_work}"
 
         if (isValidInputString(userInputName, PATTERN_FOR_USER_NAME) && isValidInputInteger(userInputNumberStr, PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
             WebUtils.redirectTo(MAIN_MENU_TITLE, response, userAtr);

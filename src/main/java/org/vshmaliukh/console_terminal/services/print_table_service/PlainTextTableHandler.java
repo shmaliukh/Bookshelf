@@ -13,6 +13,12 @@ public class PlainTextTableHandler extends AbstractTableHandler {
         this.printWriter = printWriter;
     }
 
+    public PlainTextTableHandler(PrintWriter printWriter, List<String> titleList, List<Map<String, String>> tableList, Boolean isNeedIndex) {
+        super(tableList, isNeedIndex);
+        super.titleList = titleList;
+        this.printWriter = printWriter;
+    }
+
     public void print() {
         setUpValuesSettings();
 

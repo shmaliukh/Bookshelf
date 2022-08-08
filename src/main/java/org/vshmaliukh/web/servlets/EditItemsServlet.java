@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.Map;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.servlets.MainMenuServlet.TITLE_LIST;
 import static org.vshmaliukh.web.WebUtils.readUserAtr;
 
 public class EditItemsServlet extends HttpServlet {

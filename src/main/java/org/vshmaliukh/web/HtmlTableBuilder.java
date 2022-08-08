@@ -5,10 +5,9 @@ import org.vshmaliukh.console_terminal.services.print_table_service.AbstractTabl
 import java.util.List;
 import java.util.Map;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 import static org.vshmaliukh.web.BookShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
 import static org.vshmaliukh.web.BookShelfWebApp.DELETE_ITEM_TITLE;
-import static org.vshmaliukh.web.servlets.MainMenuServlet.TITLE_LIST;
-import static org.vshmaliukh.web.servlets.EditItemsServlet.INDEX_OF_ITEM;
 
 public class HtmlTableBuilder extends AbstractTableHandler {
 

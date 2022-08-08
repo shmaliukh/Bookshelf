@@ -1,5 +1,8 @@
 package org.vshmaliukh.bookshelf.literature_items;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ItemTitles {
 
     private ItemTitles() {
@@ -12,4 +15,6 @@ public class ItemTitles {
     public static final String AUTHOR = "AUTHOR";
     public static final String PUBLISHER = "PUBLISHER";
     public static final String DATE = "DATE";
+
+    public static final List<String> TITLE_LIST = Arrays.asList(TYPE, NAME, PAGES, BORROWED, AUTHOR, DATE, PUBLISHER);
 }

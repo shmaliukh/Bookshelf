@@ -12,11 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 import static org.vshmaliukh.web.BookShelfWebApp.*;
 
 public class MainMenuServlet extends HttpServlet {
 
-    public static final List<String> TITLE_LIST = Arrays.asList(ItemTitles.TYPE, ItemTitles.NAME, ItemTitles.PAGES, ItemTitles.BORROWED, ItemTitles.AUTHOR, ItemTitles.DATE, ItemTitles.PUBLISHER);
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response){
