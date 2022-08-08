@@ -15,14 +15,14 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
 class InputHandlerTest {
 
     private final PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(System.out), true);
     private Scanner scanner = new Scanner(System.in);
 
-    private InputHandlerForLiterature userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+    private ConsoleInputHandlerForLiterature userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
     private final String entersForRecursion;
 
@@ -61,7 +61,7 @@ class InputHandlerTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{1}''")
     @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     void testNameInput(String input, String expected){
-        userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
         assertEquals(expected, userInputHandler.getUserLiteratureName());
     }
 
@@ -69,7 +69,7 @@ class InputHandlerTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected result ''{1}''")
     @MethodSource("providedStringForDateInput")
     void testDateInput(String  expectedOut, String input) throws ParseException {
-        userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_STR);
         dateFormat.setLenient(false);
         Date currentDate = userInputHandler.getUserLiteratureDateOfIssue();
@@ -93,7 +93,7 @@ class InputHandlerTest {
     @ParameterizedTest(name = "{index} ==> input string ''{0}'' expected string ''{0}''")
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     void testAuthorInput(String input){
-        userInputHandler = new InputHandlerForLiterature(new Scanner(input), printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
         assertEquals(input, userInputHandler.getUserLiteratureName());
     }
 
@@ -149,7 +149,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForLiteraturePages(){
         scanner = new Scanner(entersForRecursion);
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
         assertEquals(DEFAULT_INTEGER, userInputHandler.getUserLiteraturePages());
     }
@@ -157,7 +157,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForLiteratureBoolean(){
         scanner = new Scanner(entersForRecursion);
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
         assertEquals(DEFAULT_BOOLEAN, userInputHandler.getUserLiteratureIsBorrowed());
     }
@@ -165,7 +165,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForLiteratureDate() {
         scanner = new Scanner(entersForRecursion);
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
         assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
     }
@@ -173,7 +173,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForLiteratureName(){
         scanner = new Scanner(entersForRecursion);
-        userInputHandler = new InputHandlerForLiterature(scanner, printWriter);
+        userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
         assertEquals(DEFAULT_STRING, userInputHandler.getUserLiteratureName());
     }
@@ -181,7 +181,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForUserName(){
         scanner = new Scanner(entersForRecursion);
-        InputHandlerForUser userInputHandler = new InputHandlerForUser(scanner, printWriter);
+        ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
         assertEquals(DEFAULT_STRING, userInputHandler.getUserName());
     }
@@ -189,7 +189,7 @@ class InputHandlerTest {
     @Test
     void testRecursion_wrongInputMaxTimesForTypeOfWorkWithFiles(){
         scanner = new Scanner(entersForRecursion);
-        InputHandlerForUser userInputHandler = new InputHandlerForUser(scanner, printWriter);
+        ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
         assertEquals(DEFAULT_INTEGER, userInputHandler.getTypeOfWorkWithFiles());
     }

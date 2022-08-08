@@ -4,13 +4,14 @@ import org.vshmaliukh.bookshelf.literature_items.ItemHandler;
 import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.WebInputHandler;
 
-import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
 import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 
@@ -38,10 +39,10 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public Magazine getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter) {
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
+    public Magazine getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter) {
+        String name = consoleInputHandlerForLiterature.getUserLiteratureName();
+        int pages = consoleInputHandlerForLiterature.getUserLiteraturePages();
+        boolean isBorrowed = consoleInputHandlerForLiterature.getUserLiteratureIsBorrowed();
         return new Magazine(name, pages, isBorrowed);
     }
 
@@ -79,8 +80,8 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
-                Utils.generateHTMLFormItem(ItemTitles.NAME,"text", Utils.getRandomString(random.nextInt(20), random)) +
-                Utils.generateHTMLFormItem(ItemTitles.PAGES,"number", String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormItem(ItemTitles.NAME, "text", Utils.getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number", String.valueOf(random.nextInt(1000))) +
                 Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
                 "   <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
@@ -95,10 +96,10 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
         String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
 
-        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter);
+        return isValidUserParametersInput(nameParameter, pagesParameter, borrowedParameter);
     }
 
-    public boolean isValidBookInput(String name, String pages, String borrowed) {
+    public boolean isValidUserParametersInput(String name, String pages, String borrowed) {
         return isValidInputString(name, PATTERN_FOR_NAME) &&
                 isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
                 isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
@@ -106,17 +107,15 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public Magazine generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
-        String nameParameter = mapFieldValue.get(ItemTitles.NAME);
-        String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
-        String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
+        WebInputHandler webInputHandler = new WebInputHandler();
 
-        String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
+        String name = webInputHandler.getUserString(mapFieldValue.get(NAME), PATTERN_FOR_NAME);
+        Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), PATTERN_FOR_PAGES);
+        Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), PATTERN_FOR_IS_BORROWED);
 
-        String name = inputHandlerForLiterature.getUserLiteratureName();
-        int pages = inputHandlerForLiterature.getUserLiteraturePages();
-        boolean isBorrowed = inputHandlerForLiterature.getUserLiteratureIsBorrowed();
-
-        return new Magazine(name, pages, isBorrowed);
+        if (name != null && pages != null && isBorrowed != null) {
+            return new Magazine(name, pages, isBorrowed);
+        }
+        return null;
     }
 }

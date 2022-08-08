@@ -8,8 +8,8 @@ import org.vshmaliukh.console_terminal.menus.GeneratedMenu;
 import org.vshmaliukh.console_terminal.menus.MainMenu;
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.console_terminal.services.Utils;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForUser;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForUser;
 import org.vshmaliukh.console_terminal.services.print_table_service.ConvertorToStringForLiterature;
 import org.vshmaliukh.console_terminal.services.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.console_terminal.menus.GeneratedMenuForAdding;
@@ -30,15 +30,15 @@ public class ConsoleShelfHandler extends ShelfHandler {
     public final Scanner scanner;
     public final PrintWriter printWriter;
 
-    private final InputHandlerForUser inputHandlerForUser;
-    private InputHandlerForLiterature inputHandlerForLiterature;
+    private final ConsoleInputHandlerForUser consoleInputHandlerForUser;
+    private ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
 
     public ConsoleShelfHandler(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
 
         shelf = new ConsoleShelf(printWriter);
-        inputHandlerForUser = new InputHandlerForUser(scanner, printWriter);
+        consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
@@ -61,7 +61,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
     }
 
     public void setUpTypeOfWorkWithFiles() {
-        typeOfWorkWithFiles = inputHandlerForUser.getTypeOfWorkWithFiles();
+        typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
         setUpGsonHandler();
     }
 
@@ -82,7 +82,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
 
     public void initServicesForTerminal() {
         random = new Random();
-        inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
+        consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
     }
 
     private void setUpUserName(boolean userMode) {
@@ -94,7 +94,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
     }
 
     private void userLogin() {
-        user = new User(inputHandlerForUser.getUserName());
+        user = new User(consoleInputHandlerForUser.getUserName());
     }
 
     /**
@@ -145,12 +145,12 @@ public class ConsoleShelfHandler extends ShelfHandler {
         }
     }
 
-    private void menuForForSortingItemsByType(MenuItemClassType<?> sortingMenuItem) {
-        Class<? extends Item> classType = sortingMenuItem.getClassType();
-        ItemHandler<? extends Item> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-        List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
+    private <T extends Item> void menuForForSortingItemsByType(MenuItemClassType<T> sortingMenuItem) {
+        Class<T> classType = sortingMenuItem.getClassType();
+        ItemHandler<T> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+        List<T> typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
-        List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
+        List<T> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
         new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForLiterature.getTable(sortedList), true).print();
     }
 
@@ -226,7 +226,7 @@ public class ConsoleShelfHandler extends ShelfHandler {
             ItemHandler<? extends Item> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
             Item item;
             if ((userChoice - 1) % 2 == 0) {
-                item = handlerByClass.getItemByUserInput(inputHandlerForLiterature, printWriter);
+                item = handlerByClass.getItemByUserInput(consoleInputHandlerForLiterature, printWriter);
             } else {
                 item = handlerByClass.getRandomItem(random);
             }

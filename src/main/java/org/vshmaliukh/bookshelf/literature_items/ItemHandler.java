@@ -1,7 +1,7 @@
 package org.vshmaliukh.bookshelf.literature_items;
 
 import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -40,7 +40,7 @@ public interface ItemHandler<T extends Item> {
         return items;
     }
 
-    T getItemByUserInput(InputHandlerForLiterature inputHandlerForLiterature, PrintWriter printWriter);
+    T getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter);
 
     T getRandomItem(Random random);
 

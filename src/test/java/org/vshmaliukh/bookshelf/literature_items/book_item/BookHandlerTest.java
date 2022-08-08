@@ -5,7 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
+import org.vshmaliukh.console_terminal.services.input_services.ConsoleInputHandlerForLiterature;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.console_terminal.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.DATE;
-import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForConsoleUserInputHandler.*;
 
 class BookHandlerTest {
 
@@ -92,8 +92,8 @@ class BookHandlerTest {
     @Test
     void getItemByUserInput() {
         Scanner scanner = new Scanner(System.lineSeparator());
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(scanner, printWriter);
-        Book itemByUserInput = bookHandler.getItemByUserInput(inputHandlerForLiterature, printWriter);
+        ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
+        Book itemByUserInput = bookHandler.getItemByUserInput(consoleInputHandlerForLiterature, printWriter);
         System.out.println(itemByUserInput);
 
         assertNotNull(itemByUserInput);
