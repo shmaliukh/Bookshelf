@@ -175,7 +175,7 @@ class ItemHandlerTest {
                 assertFalse(map.values().isEmpty());
                 assertFalse(map.keySet().isEmpty());
                 assertFalse(map.keySet().isEmpty());
-                // TODO make better validation
+                // TODO do better validation
             }
         }
     }

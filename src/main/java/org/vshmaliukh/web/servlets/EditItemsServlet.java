@@ -29,7 +29,7 @@ public class EditItemsServlet extends HttpServlet {
         if (webShelfHandler.getShelf().getAllLiteratureObjects().isEmpty()) {
             webPageBuilder.addToBody("No available literature IN shelf to edit");
         } else {
-            String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr, request, TITLE_LIST);// TODO not use request as parameter
+            String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr, TITLE_LIST);
             webPageBuilder.addToBody(tableForEditingItems);
         }
 

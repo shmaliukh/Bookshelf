@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import static org.vshmaliukh.web.BookShelfWebApp.USER_PARAMETER_LIST;
 
+import static org.vshmaliukh.web.servlets.EditItemsServlet.INDEX_OF_ITEM;
 import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 
@@ -52,6 +53,7 @@ public final class WebUtils {
         return uriBuilder;
     }
 
+    // TODO write test
     public static WebShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
         String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
@@ -102,7 +104,7 @@ public final class WebUtils {
         return sb.toString();
     }
 
-    private static String generateMenuItemRadio(MenuItem menuItem) {
+    public static String generateMenuItemRadio(MenuItem menuItem) {
         return "" +
                 "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
                 "     name=\"" + MENU_ITEM_INDEX + "\" " +
@@ -137,7 +139,7 @@ public final class WebUtils {
         return "";
     }
 
-    public static String generateTableForEditingItems(Map<String, String> userAtr, HttpServletRequest request, List<String> titleList) {
+    public static String generateTableForEditingItems(Map<String, String> userAtr, List<String> titleList) {
         WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
@@ -145,7 +147,7 @@ public final class WebUtils {
                 return "No available literature IN shelf to edit <br>\n ";
             }
             else {
-                HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(titleList, ConvertorToStringForLiterature.getTable(allLiteratureObjects), true, true, request);
+                HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(titleList, ConvertorToStringForLiterature.getTable(allLiteratureObjects), userAtr);
                 return htmlTableBuilder.generateHTMLTableStr();
             }
         }
@@ -162,5 +164,13 @@ public final class WebUtils {
                 .collect(Collectors.toMap(parameterName -> parameterName, request::getParameter));
         USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
         return mapOfItemFields;
+    }
+
+    public static String generateButtonWithIndexOfItem(String servletTitle, String itemIndex, Map<String, String> userAtr) {
+        return "<td style = \"border:1px solid black\">" +
+                WebUtils.formHTMLButton(WebUtils.generateBaseURLBuilder(servletTitle, userAtr)
+                        .addParameter(INDEX_OF_ITEM, itemIndex)
+                        .toString(), servletTitle) +
+                "</td>";
     }
 }
