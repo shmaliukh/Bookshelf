@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.web.BookShelfWebApp.*;
-import static org.vshmaliukh.web.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 import static org.vshmaliukh.web.WebUtils.INFORM_MESSAGE;
 import static org.vshmaliukh.web.servlets.AddMenuServlet.IS_RANDOM;
 
@@ -24,26 +22,26 @@ public class AddItemServlet extends HttpServlet {
     public static final String ITEM_CLASS_TYPE = "item_class_type";
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException { // TODO cover with try-catch
-        String userName = request.getParameter(USER_NAME);
-        String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        Map<String, String> mapFieldValue = WebUtils.readMapOfItemFields(request);
-        if (handlerByName.isValidHTMLFormData(mapFieldValue) && typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
-            int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
-            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
-            Item item = handlerByName.generateItemByHTMLFormData(mapFieldValue, response.getWriter()); // FIXME fix writer
-
+        Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
+        if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
+            WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+            Item item = handlerByName.generateItemByHTMLFormData(itemFieldValueMap);
 
             webShelfHandler.getShelf().addLiteratureObject(item);
             webShelfHandler.saveShelfItemsToJson();
 
-            response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
-                    .addParameter(INFORM_MESSAGE, "Added " + item)
-                    .toString());
+            try {
+                response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
+                        .addParameter(INFORM_MESSAGE, "Added " + item)
+                        .toString());
+            } catch (IOException ioe) {
+                WebUtils.logServletErr(ADD_ITEM_TITLE, ioe);
+            }
         } else {
             WebUtils.redirectTo(ADD_MENU_TITLE, response, userAtr);
         }

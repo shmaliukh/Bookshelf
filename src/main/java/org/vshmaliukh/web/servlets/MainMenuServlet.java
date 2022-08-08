@@ -1,6 +1,5 @@
 package org.vshmaliukh.web.servlets;
 
-import org.vshmaliukh.bookshelf.literature_items.ItemTitles;
 import org.vshmaliukh.web.WebPageBuilder;
 import org.vshmaliukh.web.WebUtils;
 
@@ -8,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
@@ -48,7 +45,6 @@ public class MainMenuServlet extends HttpServlet {
 
     private String generateMainMenuItem(String servletTitle, String itemTitle, Map<String, String> userAtr) {
         return "" +
-                "   <br>\n " +
                 "<a href=\"" + WebUtils.generateBaseURLString(servletTitle, userAtr) + "\">" + itemTitle + "</a>\n" +
                 "   <br>\n ";
     }

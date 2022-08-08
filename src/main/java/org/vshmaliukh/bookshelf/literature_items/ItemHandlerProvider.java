@@ -15,10 +15,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class ItemHandlerProvider {
-    private static final Map<Class<? extends Item>, ItemHandler> itemHandlerMap = new ConcurrentHashMap<>();
-    private static final Map<String, Class> itemNameClassMap = new ConcurrentHashMap<>();
+public final class ItemHandlerProvider {
+
+    private static final Map<Class<? extends Item>, ItemHandler<?>> itemHandlerMap = new ConcurrentHashMap<>();
+    private static final Map<String, Class<? extends Item>> itemNameClassMap = new ConcurrentHashMap<>();
     public static final Set<Class<? extends Item>> uniqueTypeNames;
+
+    private ItemHandlerProvider(){}
 
     static {
         itemHandlerMap.put(Magazine.class, new MagazineHandler());
@@ -30,7 +33,7 @@ public class ItemHandlerProvider {
         uniqueTypeNames = Collections.unmodifiableSet(new HashSet<>(itemHandlerMap.keySet()));
     }
 
-    public static ItemHandler getHandlerByClass(Class clazz) {
+    public static ItemHandler getHandlerByClass(Class<? extends Item> clazz) {
         return itemHandlerMap.get(clazz);
     }
 

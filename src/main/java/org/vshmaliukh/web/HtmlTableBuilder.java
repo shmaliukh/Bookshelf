@@ -5,7 +5,6 @@ import org.vshmaliukh.console_terminal.services.print_table_service.AbstractTabl
 import java.util.List;
 import java.util.Map;
 
-import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 import static org.vshmaliukh.web.BookShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
 import static org.vshmaliukh.web.BookShelfWebApp.DELETE_ITEM_TITLE;
 
@@ -14,13 +13,6 @@ public class HtmlTableBuilder extends AbstractTableHandler {
     private final StringBuilder tableStringBuilder = new StringBuilder();
     private final boolean isForEditing;
     private final Map<String, String> userAtr;
-
-    public HtmlTableBuilder(List<Map<String, String>> tableList, boolean isNeedIndex) {
-        super(tableList, isNeedIndex);
-        super.titleList = TITLE_LIST; // TODO remove ?
-        this.isForEditing = false;
-        this.userAtr = null;
-    }
 
     public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, boolean isNeedIndex) {
         super(tableList, isNeedIndex);

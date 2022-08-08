@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.TITLE_LIST;
 import static org.vshmaliukh.web.BookShelfWebApp.USER_PARAMETER_LIST;
 
 import static org.vshmaliukh.web.servlets.EditItemsServlet.INDEX_OF_ITEM;
@@ -21,6 +22,8 @@ import static org.vshmaliukh.web.servlets.LogInServlet.USER_NAME;
 
 @Slf4j
 public final class WebUtils {
+
+    public static final String DATE_FORMAT_WEB_STR = "yyyy-MM-dd";
 
     public static final Random RANDOM = new Random();
     public static final String MENU_ITEM_INDEX = "menu_item_index";
@@ -58,9 +61,13 @@ public final class WebUtils {
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
-            return new WebShelfHandler(userName, typeOfWorkWithFiles);
+            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
+
+            webShelfHandler.setUpGsonHandler();
+            webShelfHandler.readShelfItemsFromJson();
+            return webShelfHandler;
         }
-        return null;
+        return null; // TODO
     }
 
     public static String formHTMLButton(String referenceStr, String label) {
@@ -124,7 +131,7 @@ public final class WebUtils {
         if (shelfLiteratureObjects.isEmpty()) {
             return "No available literature of Shelf to print <br>\n";
         } else {
-            HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(ConvertorToStringForLiterature.getTable(shelfLiteratureObjects), isNeedIndex);
+            HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(TITLE_LIST, ConvertorToStringForLiterature.getTable(shelfLiteratureObjects), isNeedIndex);
             return htmlTableBuilder.generateHTMLTableStr();
         }
     }
@@ -137,12 +144,12 @@ public final class WebUtils {
         return "No available literature items to display <br>\n";
     }
 
-    public static String generateTableForEditingItems(Map<String, String> userAtr, List<String> titleList) {
+    public static String generateTableForEditingItems(Map<String, String> userAtr) {
         WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             if(!allLiteratureObjects.isEmpty()){
-                HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(titleList, ConvertorToStringForLiterature.getTable(allLiteratureObjects), userAtr);
+                HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(TITLE_LIST, ConvertorToStringForLiterature.getTable(allLiteratureObjects), userAtr);
                 return htmlTableBuilder.generateHTMLTableStr();
             }
         }

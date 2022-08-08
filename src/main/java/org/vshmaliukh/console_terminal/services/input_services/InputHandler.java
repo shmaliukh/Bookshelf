@@ -7,7 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
@@ -131,7 +130,7 @@ public abstract class InputHandler {
         validationResult = isValidInputString(inputString, pattern);
         if (validationResult) {
             currentRecursionLevel = 0;
-            return Boolean.parseBoolean(inputString);
+            return inputString.equals("y") || inputString.equals("true");
         }
         if (tryAgain(DEFAULT_BOOLEAN)) {
             return getUserBoolean(message, pattern);

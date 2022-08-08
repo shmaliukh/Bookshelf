@@ -10,7 +10,7 @@ import static org.vshmaliukh.console_terminal.services.input_services.ConstantsF
 
 public class InputHandlerForLiterature extends InputHandler {
 
-    public InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
+    public  InputHandlerForLiterature(Scanner scanner, PrintWriter printWriter) {
         super(scanner, printWriter);
     }
 

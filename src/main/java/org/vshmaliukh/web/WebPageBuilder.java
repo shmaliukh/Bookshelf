@@ -11,10 +11,6 @@ public class WebPageBuilder {
         this.title = title;
     }
 
-    public void addToBody(StringBuilder bodyItem) {
-        bodyStringBuilder.append(bodyItem);
-    }
-
     public void addToBody(String bodyItem) {
         bodyStringBuilder.append(bodyItem.replaceAll(System.lineSeparator(), " <br> "));
     }

@@ -39,7 +39,6 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(ITEMS_SORTING_MENU_TITLE);
         Map<String, String> userAtr = readUserAtr(request);
 
-
         String menuIndexStr = request.getParameter(MENU_ITEM_INDEX);
         String classTypeStr = request.getParameter(ITEM_CLASS_TYPE);
 
@@ -65,23 +64,26 @@ public class ItemsSortingMenuServlet extends HttpServlet {
 
     private String initMenu(HttpServletRequest request, ItemHandler<?> handlerByName) {
         return generateMenuItemsFormHTML(generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
-                .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)),
+                        .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)),
                 handlerByName.getSortingMenuList());
     }
 
     private void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<? extends Item> handlerByName) {
+        Class<? extends Item> classType = ItemHandlerProvider.getClassByName(classTypeStr);
+        WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+        List typedItemList = null;
+        if (webShelfHandler != null) {
+            typedItemList = Utils.getItemsByType(classType, webShelfHandler.getShelf().getAllLiteratureObjects());
+        }
+        // TODO Raw use of parameterized class 'List'
         if (menuIndexStr != null && !menuIndexStr.equals("")) {
-            WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
 
             int typeOfSorting = Integer.parseInt(menuIndexStr);
-            Class<? extends Item> classType = ItemHandlerProvider.getClassByName(classTypeStr);
-            List typedItemList = null;
-            if (webShelfHandler != null) {
-                typedItemList = Utils.getItemsByType(classType, webShelfHandler.getShelf().getAllLiteratureObjects());
-            }
-            // TODO Raw use of parameterized class 'List'
             List<? extends Item> sortedList = handlerByName.getSortedItems(typeOfSorting, typedItemList);
             webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true));
+        }
+        else {
+            webPageBuilder.addToBody(generateTableOfShelfItems(typedItemList, true));
         }
     }
 }

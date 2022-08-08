@@ -6,10 +6,13 @@ import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
 import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
@@ -63,21 +66,27 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public String generateHTMLFormBodyToCreateItem() {
         return "" +
-                Utils.generateHTMLFormItem(ItemTitles.NAME) +
-                Utils.generateHTMLFormItem(ItemTitles.PAGES) +
-                Utils.generateHTMLFormItem(ItemTitles.BORROWED) +
+                Utils.generateHTMLFormItem(ItemTitles.NAME, "text") +
+                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number") +
+                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                "   <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>";
+                "   <br>\n" +
+                "   <br>\n" +
+                "</form>\n";
     }
 
     @Override
     public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
-                Utils.generateHTMLFormItem(ItemTitles.NAME, Utils.getRandomString(random.nextInt(20), random)) +
-                Utils.generateHTMLFormItem(ItemTitles.PAGES, String.valueOf(random.nextInt(1000))) +
-                Utils.generateHTMLFormItem(ItemTitles.BORROWED, "n") +
+                Utils.generateHTMLFormItem(ItemTitles.NAME,"text", Utils.getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(ItemTitles.PAGES,"number", String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                "   <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>";
+                "   <br>\n" +
+                "   <br>\n" +
+                "</form>\n";
     }
 
     @Override
@@ -86,26 +95,23 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
         String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
 
-        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter)) {
-            return true;
-        }
-        return false;
+        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter);
     }
 
     public boolean isValidBookInput(String name, String pages, String borrowed) {
-        return InputHandlerForLiterature.isValidInputString(name, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
+        return isValidInputString(name, PATTERN_FOR_NAME) &&
+                isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
+                isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED);
     }
 
     @Override
-    public Magazine generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter) {
+    public Magazine generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
         String nameParameter = mapFieldValue.get(ItemTitles.NAME);
         String pagesParameter = mapFieldValue.get(ItemTitles.PAGES);
         String borrowedParameter = mapFieldValue.get(ItemTitles.BORROWED);
 
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), printWriter);
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
 
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

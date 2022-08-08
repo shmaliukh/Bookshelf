@@ -6,12 +6,15 @@ import org.vshmaliukh.console_terminal.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal.services.Utils;
 import org.vshmaliukh.console_terminal.services.input_services.InputHandlerForLiterature;
 
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.bookshelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.console_terminal.services.Utils.getRandomString;
 import static org.vshmaliukh.console_terminal.services.input_services.ConstantsForUserInputHandler.*;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputInteger;
+import static org.vshmaliukh.console_terminal.services.input_services.InputHandler.isValidInputString;
 
 public class ComicsHandler implements ItemHandler<Comics> {
 
@@ -70,23 +73,29 @@ public class ComicsHandler implements ItemHandler<Comics> {
     @Override
     public String generateHTMLFormBodyToCreateItem() {
         return "" +
-                Utils.generateHTMLFormItem(NAME) +
-                Utils.generateHTMLFormItem(PAGES) +
-                Utils.generateHTMLFormItem(BORROWED) +
-                Utils.generateHTMLFormItem(PUBLISHER) +
+                Utils.generateHTMLFormItem(ItemTitles.NAME, "text") +
+                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number") +
+                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                Utils.generateHTMLFormItem(PUBLISHER, "text") +
+                "   <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>";
+                "   <br>\n" +
+                "   <br>\n" +
+                "</form>\n";
     }
 
     @Override
     public String generateHTMLFormBodyToCreateItem(Random random) {
         return "" +
-                Utils.generateHTMLFormItem(NAME, getRandomString(random.nextInt(20), random)) +
-                Utils.generateHTMLFormItem(PAGES, String.valueOf(random.nextInt(1000))) +
-                Utils.generateHTMLFormItem(BORROWED, "n") +
-                Utils.generateHTMLFormItem(PUBLISHER, getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(ItemTitles.NAME, "text", Utils.getRandomString(random.nextInt(20), random)) +
+                Utils.generateHTMLFormItem(ItemTitles.PAGES, "number", String.valueOf(random.nextInt(1000))) +
+                Utils.generateHTMLFormRadio(ItemTitles.BORROWED) +
+                Utils.generateHTMLFormItem(PUBLISHER, "text", getRandomString(random.nextInt(20), random)) +
+                "   <br>\n" +
                 "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "</form>";
+                "   <br>\n" +
+                "   <br>\n" +
+                "</form>\n";
     }
 
     @Override
@@ -95,28 +104,25 @@ public class ComicsHandler implements ItemHandler<Comics> {
         String pagesParameter = mapFieldValue.get(PAGES);
         String borrowedParameter = mapFieldValue.get(BORROWED);
         String publisherParameter = mapFieldValue.get(PUBLISHER);
-        if (isValidBookInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter)) {
-            return true;
-        }
-        return false;
+        return isValidBookInput(nameParameter, pagesParameter, borrowedParameter, publisherParameter);
     }
 
     public boolean isValidBookInput(String name, String pages, String borrowed, String publisherParameter) {
-        return InputHandlerForLiterature.isValidInputString(name, PATTERN_FOR_NAME) &&
-                InputHandlerForLiterature.isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
-                InputHandlerForLiterature.isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED) &&
-                InputHandlerForLiterature.isValidInputString(publisherParameter, PATTERN_FOR_PUBLISHER);
+        return isValidInputString(name, PATTERN_FOR_NAME) &&
+                isValidInputInteger(pages, PATTERN_FOR_PAGES) &&
+                isValidInputString(borrowed, PATTERN_FOR_IS_BORROWED) &&
+                isValidInputString(publisherParameter, PATTERN_FOR_PUBLISHER);
     }
 
     @Override
-    public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue, PrintWriter printWriter) {
+    public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
         String nameParameter = mapFieldValue.get(NAME);
         String pagesParameter = mapFieldValue.get(PAGES);
         String borrowedParameter = mapFieldValue.get(BORROWED);
         String publisherParameter = mapFieldValue.get(PUBLISHER);
 
         String join = String.join(System.lineSeparator(), nameParameter, pagesParameter, borrowedParameter, publisherParameter);
-        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), printWriter);
+        InputHandlerForLiterature inputHandlerForLiterature = new InputHandlerForLiterature(new Scanner(join), new PrintWriter(new ByteArrayOutputStream()));
 
         String name = inputHandlerForLiterature.getUserLiteratureName();
         int pages = inputHandlerForLiterature.getUserLiteraturePages();

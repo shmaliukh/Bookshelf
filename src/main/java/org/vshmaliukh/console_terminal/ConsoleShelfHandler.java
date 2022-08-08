@@ -146,8 +146,8 @@ public class ConsoleShelfHandler extends ShelfHandler {
     }
 
     private void menuForForSortingItemsByType(MenuItemClassType<?> sortingMenuItem) {
-        Class<?> classType = sortingMenuItem.getClassType();
-        ItemHandler<?> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+        Class<? extends Item> classType = sortingMenuItem.getClassType();
+        ItemHandler<? extends Item> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
         List typedItemList = Utils.getItemsByType(classType, shelf.getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
         List sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
@@ -222,8 +222,8 @@ public class ConsoleShelfHandler extends ShelfHandler {
         GeneratedMenuForAdding generatedMenu = new GeneratedMenuForAdding();
         if (userChoice > 0 && userChoice - 1 < generatedMenu.getMenuItems().size()) {
             MenuItemClassType<?> menuItem = generatedMenu.getMenuItems().get(userChoice - 1);
-            Class<?> classType = menuItem.getClassType();
-            ItemHandler<?> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+            Class<? extends Item> classType = menuItem.getClassType();
+            ItemHandler<? extends Item> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
             Item item;
             if ((userChoice - 1) % 2 == 0) {
                 item = handlerByClass.getItemByUserInput(inputHandlerForLiterature, printWriter);

@@ -21,6 +21,9 @@ public class Utils {
     }
 
     public static <T> List<T> getItemsByType(Class<T> clazz, List<?> items) {
+        if (clazz == null || items == null) {
+            return Collections.emptyList();
+        }
         return items.stream()
                 .filter(clazz::isInstance)
                 .map(clazz::cast)
@@ -28,7 +31,7 @@ public class Utils {
     }
 
     public static <T extends Item> List<T> getSortedLiterature(List<T> literatureList, Comparator<T> itemsComparator) {
-        if(literatureList == null){
+        if (literatureList == null || itemsComparator == null) {
             return Collections.emptyList();
         }
         return literatureList.stream()
@@ -36,21 +39,43 @@ public class Utils {
                 .collect(Collectors.toList());
     }
 
-    public static String generateHTMLFormItem(String value, String defaultValue) {
+    public static String generateHTMLFormItem(String value, String inputType, String defaultValue) {
         return "" +
                 "       <br>\n" +
                 "Enter " + value + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name = \"" + value + "\" value=\"" + defaultValue + "\">\n" +
+                "<input type = \"" + inputType + "\" " +
+                "       name = \"" + value + "\" " +
+                "       value= \"" + defaultValue + "\">\n" +
                 "       <br>\n";
     }
 
-    public static String generateHTMLFormItem(String value) {
+    public static String generateHTMLFormItem(String value, String inputType) {
         return "" +
                 "       <br>\n" +
                 "Enter " + value + "\n" +
                 "       <br>\n" +
-                "<input type = \"text\" name = \"" + value + "\">\n" +
+                "<input type = \"" + inputType + "\" " +
+                "       name = \"" + value + "\">\n" +
+                "       <br>\n";
+    }
+
+    public static String generateHTMLFormRadio(String value) {
+        return "" +
+                "       <br>\n" +
+                value +
+                "       <br>\n" +
+                "<input type=\"radio\" " +
+                "       id=\"true\"\n" +
+                "       name=\"" + value + "\"" +
+                "       value=\"y\" checked>\n" +
+                "<label for=\"true\"> true <label/>\n" +
+                "       <br>\n" +
+                "<input type=\"radio\" " +
+                "       id=\"false\"\n" +
+                "       name=\"" + value + "\"" +
+                "       value=\"n\">\n" +
+                "<label for=\"false\"> false <label/>\n" +
                 "       <br>\n";
     }
 
@@ -66,4 +91,6 @@ public class Utils {
         return sb.toString();
 
     }
+
+
 }
