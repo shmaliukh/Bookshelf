@@ -147,17 +147,18 @@ public class BookHandler implements ItemHandler<Book> {
     public String generateSqlTableStr() {
         return "books (\n" +
                 "book_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL,\n" +
-                "pages TEXT NOT NULL,\n" +
-                "borrowed TEXT NOT NULL,\n" +
-                "author TEXT NOT NULL,\n" +
-                "date TEXT NOT NULL\n" +
+                "name TEXT NOT NULL, \n" +
+                "pages TEXT NOT NULL, \n" +
+                "borrowed TEXT NOT NULL, \n" +
+                "author TEXT NOT NULL, \n" +
+                "date TEXT NOT NULL, \n" +
+                "UNIQUE (name, pages, borrowed, author, date) ON CONFLICT IGNORE" +
                 ");";
     }
 
     @Override
     public String generateSqlInsertStr(Book book) {
-        return "INSERT INTO books \n" +
+        return "INSERT OR IGNORE INTO  books \n" +
                 "(name, pages, borrowed, author, date) \n" +
                 "VALUES (" +
                 "'" + book.getName() + "', " +

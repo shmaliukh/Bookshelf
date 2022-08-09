@@ -126,13 +126,14 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
                 "newspaper_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "name TEXT NOT NULL,\n" +
                 "pages TEXT NOT NULL,\n" +
-                "borrowed TEXT NOT NULL\n" +
+                "borrowed TEXT NOT NULL, \n" +
+                "UNIQUE (name, pages, borrowed) ON CONFLICT IGNORE" +
                 ");";
     }
 
     @Override
     public String generateSqlInsertStr(Newspaper item) {
-        return "INSERT INTO newspapers\n" +
+        return "INSERT OR IGNORE INTO newspapers\n" +
                 "(name, pages, borrowed)\n" +
                 "VALUES (" +
                 "'" + item.getName() + "', " +

@@ -135,16 +135,17 @@ public class ComicsHandler implements ItemHandler<Comics> {
     public String generateSqlTableStr() {
         return "comics (\n" +
                 "comics_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL,\n" +
-                "pages TEXT NOT NULL,\n" +
-                "borrowed TEXT NOT NULL,\n" +
-                "publisher TEXT NOT NULL\n" +
+                "name TEXT NOT NULL, \n" +
+                "pages TEXT NOT NULL, \n" +
+                "borrowed TEXT NOT NULL, \n" +
+                "publisher TEXT NOT NULL, \n" +
+                "UNIQUE (name, pages, borrowed, publisher) ON CONFLICT IGNORE" +
                 ");";
     }
 
     @Override
     public String generateSqlInsertStr(Comics item) {
-        return "INSERT INTO comics\n" +
+        return "INSERT OR IGNORE INTO comics\n" +
                 "(name, pages, borrowed, publisher)\n" +
                 "VALUES (" +
                 "'" + item.getName() + "', " +

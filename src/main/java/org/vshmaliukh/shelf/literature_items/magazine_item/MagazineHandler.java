@@ -123,15 +123,16 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     public String generateSqlTableStr() {
         return "magazines (\n" +
                 "magazine_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL,\n" +
-                "pages TEXT NOT NULL,\n" +
-                "borrowed TEXT NOT NULL\n" +
+                "name TEXT NOT NULL, \n" +
+                "pages TEXT NOT NULL, \n" +
+                "borrowed TEXT NOT NULL, \n" +
+                "UNIQUE (name, pages, borrowed) ON CONFLICT IGNORE" +
                 ");";
     }
 
     @Override
     public String generateSqlInsertStr(Magazine item) { //TODO use map for saving
-        return "INSERT INTO magazines\n" +
+        return "INSERT OR IGNORE INTO magazines\n" +
                 "(name, pages, borrowed)\n" +
                 "VALUES (" +
                 "'" + item.getName() + "', " +
