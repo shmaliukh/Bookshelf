@@ -11,7 +11,7 @@ public class Utils {
     }
 
     public static String convertBorrowed(boolean booleanState) {
-        if(booleanState){
+        if (booleanState) {
             return "yes";
         }
         return "no";
@@ -75,13 +75,13 @@ public class Utils {
                 "<input type=\"radio\" " +
                 "       id=\"true\"\n" +
                 "       name=\"" + value + "\"" +
-                "       value=\"y\" checked>\n" +
+                "       value=\"y\">\n" +
                 "<label for=\"true\"> yes <label/>\n" +
                 "       <br>\n" +
                 "<input type=\"radio\" " +
                 "       id=\"false\"\n" +
                 "       name=\"" + value + "\"" +
-                "       value=\"n\">\n" +
+                "       value=\"n\" checked>\n" +
                 "<label for=\"false\"> no <label/>\n" +
                 "       <br>\n";
     }
