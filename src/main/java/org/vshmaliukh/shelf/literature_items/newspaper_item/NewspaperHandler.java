@@ -119,4 +119,25 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         return null;
 
     }
+
+    @Override
+    public String generateSqlTableStr() {
+        return "newspapers (\n" +
+                "newspaper_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "name TEXT NOT NULL,\n" +
+                "pages TEXT NOT NULL,\n" +
+                "borrowed TEXT NOT NULL\n" +
+                ");";
+    }
+
+    @Override
+    public String generateSqlInsertStr(Newspaper item) {
+        return "INSERT INTO newspapers\n" +
+                "(name, pages, borrowed)\n" +
+                "VALUES (" +
+                "'" + item.getName() + "', " +
+                "'" + item.getPagesNumber() + "', " +
+                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "'" +
+                ")";
+    }
 }

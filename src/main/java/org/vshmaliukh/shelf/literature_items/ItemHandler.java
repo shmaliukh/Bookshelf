@@ -53,4 +53,8 @@ public interface ItemHandler<T extends Item> {
     boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
 
     T generateItemByHTMLFormData(Map<String, String> mapFieldValue);
+
+    String generateSqlTableStr();
+
+    String generateSqlInsertStr(T item);
 }

@@ -3,12 +3,14 @@ package org.vshmaliukh.services.file_service.sqllite;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.literature_items.ItemHandler;
+import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -45,8 +47,21 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     @Override
     public void saveItemList(List<Item> listToSave) {
+        generateTablesIfNotExists();
 
+        for (Item item : listToSave) {
+            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+            String sqlInsertStr = handlerByClass.generateSqlInsertStr(item);
+            SqlLiteUtils.insert(dbPathStr, sqlInsertStr);
+        }
+    }
 
+    private void generateTablesIfNotExists() {
+        for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
+            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+            String tableStr = handlerByClass.generateSqlTableStr();
+            SqlLiteUtils.createNewTable(dbPathStr, tableStr);
+        }
     }
 
     @Override
@@ -54,12 +69,13 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         return null;
     }
 
-
-
     public static void main(String[] args) {
         SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), "sql_test");
         SqlLiteUtils.createNewDatabase(sqlLiteHandler.getDbPathStr());
 
+        Book book = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
+        List<Item> itemList = Collections.singletonList(book);
+        sqlLiteHandler.saveItemList(itemList);
     }
 }
 

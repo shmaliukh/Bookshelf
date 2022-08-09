@@ -46,25 +46,16 @@ public final class SqlLiteUtils {
     }
 
     public static void createNewTable(String url, String sql) {
-        sql = "CREATE TABLE IF NOT EXISTS " + sql; // TODO
-        //String sql = "CREATE TABLE IF NOT EXISTS employees (\n"
-        //        + " id integer PRIMARY KEY,\n"
-        //        + " name text NOT NULL,\n"
-        //        + " capacity real\n"
-        //        + ");";
-
         try{
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
-            stmt.execute(sql);
+            stmt.execute("CREATE TABLE IF NOT EXISTS " + sql);
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
         }
     }
 
-    public void insert(String url, String name, double capacity) {
-        String sql = "INSERT INTO employees(name, capacity) VALUES(?,?)";
-
+    public static void insert(String url, String sql) {
         try{
             Connection conn = null;
             try {
@@ -73,8 +64,6 @@ public final class SqlLiteUtils {
                 System.out.println(e.getMessage());
             }
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

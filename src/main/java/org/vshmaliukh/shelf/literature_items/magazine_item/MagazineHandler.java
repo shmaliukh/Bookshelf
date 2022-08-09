@@ -118,4 +118,25 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         }
         return null;
     }
+
+    @Override
+    public String generateSqlTableStr() {
+        return "magazines (\n" +
+                "magazine_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "name TEXT NOT NULL,\n" +
+                "pages TEXT NOT NULL,\n" +
+                "borrowed TEXT NOT NULL\n" +
+                ");";
+    }
+
+    @Override
+    public String generateSqlInsertStr(Magazine item) { //TODO use map for saving
+        return "INSERT INTO magazines\n" +
+                "(name, pages, borrowed)\n" +
+                "VALUES (" +
+                "'" + item.getName() + "', " +
+                "'" + item.getPagesNumber() + "', " +
+                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "'" +
+                ")";
+    }
 }

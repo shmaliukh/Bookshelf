@@ -9,12 +9,14 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
 
 public class ComicsHandler implements ItemHandler<Comics> {
 
@@ -127,5 +129,28 @@ public class ComicsHandler implements ItemHandler<Comics> {
             return new Comics(name, pages, isBorrowed, publisher);
         }
         return null;
+    }
+
+    @Override
+    public String generateSqlTableStr() {
+        return "comics (\n" +
+                "comics_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "name TEXT NOT NULL,\n" +
+                "pages TEXT NOT NULL,\n" +
+                "borrowed TEXT NOT NULL,\n" +
+                "publisher TEXT NOT NULL\n" +
+                ");";
+    }
+
+    @Override
+    public String generateSqlInsertStr(Comics item) {
+        return "INSERT INTO comics\n" +
+                "(name, pages, borrowed, publisher)\n" +
+                "VALUES (" +
+                "'" + item.getName() + "', " +
+                "'" + item.getPagesNumber() + "', " +
+                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "', " +
+                "'" + item.getPublisher() +"'" +
+                ")";
     }
 }

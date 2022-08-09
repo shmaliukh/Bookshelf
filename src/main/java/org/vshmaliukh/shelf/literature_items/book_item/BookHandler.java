@@ -142,4 +142,29 @@ public class BookHandler implements ItemHandler<Book> {
         }
         return null;
     }
+
+    @Override
+    public String generateSqlTableStr() {
+        return "books (\n" +
+                "book_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
+                "name TEXT NOT NULL,\n" +
+                "pages TEXT NOT NULL,\n" +
+                "borrowed TEXT NOT NULL,\n" +
+                "author TEXT NOT NULL,\n" +
+                "date TEXT NOT NULL\n" +
+                ");";
+    }
+
+    @Override
+    public String generateSqlInsertStr(Book book) {
+        return "INSERT INTO books \n" +
+                "(name, pages, borrowed, author, date) \n" +
+                "VALUES (" +
+                "'" + book.getName() + "', " +
+                "'" + book.getPagesNumber() + "', " +
+                "'" + ItemUtils.convertBorrowed(book.isBorrowed()) + "', " +
+                "'" + book.getAuthor() + "', " +
+                "'" + new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()) + "'" +
+                ")";
+    }
 }
