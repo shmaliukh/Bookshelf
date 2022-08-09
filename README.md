@@ -8,8 +8,8 @@ SHELFBOOK PROJECT
 The bookshelf can contain books and magazines, the user can perform the following actions with them:
 * Add
 * Delete
-* Borrow from the shelf
-* Return to the shelf
+* Borrow from the consoleShelf
+* Return to the consoleShelf
 * Display a list of available books with the ability to sort by author, or by name, or by date of publication, or by number of pages
 * Display a list of available journals with the ability to sort by title or number of pages
 
@@ -18,14 +18,14 @@ The bookshelf can contain books and magazines, the user can perform the followin
 * Author
 * Date of publication
 * Number of pages
-* Note whether the book is borrowed from the shelf
+* Note whether the book is borrowed from the consoleShelf
 
 ***Magazine*** properties:
 * Name
 * Number of pages
-* Note whether the magazine is borrowed from the shelf
+* Note whether the magazine is borrowed from the consoleShelf
 
-Interaction with the user should take place through the terminal, menu items can be selected via menu item numbers.
+Interaction with the user should take place through the consoleTerminal, menu items can be selected via menu item numbers.
 Exit the program must be through a separate menu item.
 Books and magazines should be saved in a file (number of files and format - optional)
 

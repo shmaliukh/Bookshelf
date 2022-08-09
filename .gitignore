@@ -38,3 +38,6 @@ build/
 logs
 HOME_LOG_IS_UNDEFINED
 my_temp
+dependency-reduced-pom.xml
+null/
+out/

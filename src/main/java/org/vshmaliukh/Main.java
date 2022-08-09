@@ -1,7 +1,8 @@
 package org.vshmaliukh;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
+import org.vshmaliukh.client_server_app.server.MultithreadedSocketServer;
+import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,7 +11,12 @@ import java.util.Scanner;
 @Slf4j
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        //try {
+        //    Thread.sleep(60_000L);
+        //} catch (InterruptedException e) {
+        //    throw new RuntimeException(e);
+        //}
         TerminalThread terminalThread = new TerminalThread();
         terminalThread.start();
 
@@ -18,22 +24,22 @@ public class Main {
         serverThread.start();
     }
 
-    static class TerminalThread extends Thread{
+    static class TerminalThread extends Thread {
         private final Scanner scanner = new Scanner(System.in);
         private final PrintWriter printWriter = new PrintWriter(System.out, true);
-        private final Terminal terminal = new Terminal(scanner, printWriter);
+        private final ConsoleShelfHandler consoleTerminal = new ConsoleShelfHandler(scanner, printWriter);
 
         @Override
         public synchronized void run() {
             try {
-                terminal.startWork(false);
+                consoleTerminal.startWork(false);
             } catch (Exception e) {
-                log.error("[TerminalThread] problem to start thread. Exception: " + e);
+                log.error("[TerminalThread] problem to start thread. Exception: ", e);
             }
         }
     }
 
-    static class ServerThread extends Thread{
+    static class ServerThread extends Thread {
         MultithreadedSocketServer multithreadedSocketServer = new MultithreadedSocketServer();
 
         @Override
@@ -41,7 +47,7 @@ public class Main {
             try {
                 multithreadedSocketServer.start();
             } catch (IOException e) {
-                log.error("[ServerThread] problem to start thread. Exception: " + e);
+                log.error("[ServerThread] problem to start thread. Exception: ", e);
             }
         }
     }
