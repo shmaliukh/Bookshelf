@@ -1,8 +1,8 @@
 package org.vshmaliukh;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.client_server.server.MultithreadedSocketServer;
-import org.vshmaliukh.console_terminal.ConsoleShelfHandler;
+import org.vshmaliukh.client_server_app.server.MultithreadedSocketServer;
+import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
