@@ -60,7 +60,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         map.put(ItemTitles.TYPE, newspaper.getClass().getSimpleName());
         map.put(ItemTitles.NAME, newspaper.getName());
         map.put(ItemTitles.PAGES, String.valueOf(newspaper.getPagesNumber()));
-        map.put(ItemTitles.BORROWED, String.valueOf(newspaper.isBorrowed()));
+        map.put(BORROWED, Utils.convertBorrowed(newspaper.isBorrowed()));
         return new HashMap<>(map);
     }
 

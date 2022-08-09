@@ -65,7 +65,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
         map.put(ItemTitles.TYPE, comics.getClass().getSimpleName());
         map.put(ItemTitles.NAME, comics.getName());
         map.put(ItemTitles.PAGES, String.valueOf(comics.getPagesNumber()));
-        map.put(ItemTitles.BORROWED, String.valueOf(comics.isBorrowed()));
+        map.put(BORROWED, Utils.convertBorrowed(comics.isBorrowed()));
         map.put(ItemTitles.PUBLISHER, comics.getPublisher());
         return new HashMap<>(map);
     }

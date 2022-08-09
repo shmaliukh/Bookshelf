@@ -38,4 +38,6 @@ public abstract class Item implements Serializable {
         }
         this.pagesNumber = pagesNumber;
     }
+
+
 }

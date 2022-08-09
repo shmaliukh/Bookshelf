@@ -10,6 +10,13 @@ public class Utils {
     private Utils() {
     }
 
+    public static String convertBorrowed(boolean booleanState) {
+        if(booleanState){
+            return "yes";
+        }
+        return "no";
+    }
+
     public static String getRandomString(int length, Random random) {
         String charactersForRandomStr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_      ";
         StringBuilder sb = new StringBuilder();
@@ -69,13 +76,13 @@ public class Utils {
                 "       id=\"true\"\n" +
                 "       name=\"" + value + "\"" +
                 "       value=\"y\" checked>\n" +
-                "<label for=\"true\"> true <label/>\n" +
+                "<label for=\"true\"> yes <label/>\n" +
                 "       <br>\n" +
                 "<input type=\"radio\" " +
                 "       id=\"false\"\n" +
                 "       name=\"" + value + "\"" +
                 "       value=\"n\">\n" +
-                "<label for=\"false\"> false <label/>\n" +
+                "<label for=\"false\"> no <label/>\n" +
                 "       <br>\n";
     }
 

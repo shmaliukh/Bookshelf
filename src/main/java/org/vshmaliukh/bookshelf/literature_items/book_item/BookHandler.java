@@ -71,7 +71,7 @@ public class BookHandler implements ItemHandler<Book> {
         map.put(ItemTitles.TYPE, book.getClass().getSimpleName());
         map.put(NAME, book.getName());
         map.put(PAGES, String.valueOf(book.getPagesNumber()));
-        map.put(BORROWED, String.valueOf(book.isBorrowed()));
+        map.put(BORROWED, Utils.convertBorrowed(book.isBorrowed()));
         map.put(ItemTitles.AUTHOR, book.getAuthor());
         map.put(ItemTitles.DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()));
         return new HashMap<>(map);

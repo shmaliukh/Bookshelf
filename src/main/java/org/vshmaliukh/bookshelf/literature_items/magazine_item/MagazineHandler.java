@@ -60,7 +60,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         map.put(ItemTitles.TYPE, magazine.getClass().getSimpleName());
         map.put(ItemTitles.NAME, magazine.getName());
         map.put(ItemTitles.PAGES, String.valueOf(magazine.getPagesNumber()));
-        map.put(ItemTitles.BORROWED, String.valueOf(magazine.isBorrowed()));
+        map.put(BORROWED, Utils.convertBorrowed(magazine.isBorrowed()));
         return new HashMap<>(map);
     }
 
