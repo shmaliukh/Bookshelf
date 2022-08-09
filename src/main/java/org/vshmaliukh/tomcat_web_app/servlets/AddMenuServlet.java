@@ -74,7 +74,7 @@ public class AddMenuServlet extends HttpServlet {
     private String generateMessageAboutAddedItem(HttpServletRequest request) { // todo create test
         String typeOfClass = request.getParameter(ITEM_CLASS_TYPE);
         String itemStr = request.getParameter(ITEM_GSON_STR);
-        if(itemStr != null && typeOfClass != null){
+        if (itemStr != null && typeOfClass != null) {
             Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(typeOfClass);
             Item item = gson.fromJson(itemStr, classByName);
 
@@ -88,21 +88,17 @@ public class AddMenuServlet extends HttpServlet {
 
 
     private void addItemByType(Map<String, String> userAtr, HttpServletResponse response, MenuItemClassType<?> menuItemClassType, int index) {
-        try {
-            String classSimpleName = menuItemClassType.getClassType().getSimpleName();
-            if (index % 2 == 0) { //add random item
-                response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
-                        .addParameter(ITEM_CLASS_TYPE, classSimpleName)
-                        .addParameter(IS_RANDOM, "true")
-                        .toString());
+        String classSimpleName = menuItemClassType.getClassType().getSimpleName();
+        if (index % 2 == 0) { //add random item
+            WebUtils.redirectTo(ADD_ITEM_TITLE, response,
+                    WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+                            .addParameter(ITEM_CLASS_TYPE, classSimpleName)
+                            .addParameter(IS_RANDOM, "true"));
 
-            } else {
-                response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
-                        .addParameter(ITEM_CLASS_TYPE, classSimpleName)
-                        .toString());
-            }
-        } catch (IOException ioe) {
-            WebUtils.logServletErr(ADD_MENU_TITLE, ioe);
+        } else {
+            WebUtils.redirectTo(ADD_ITEM_TITLE, response,
+                    WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+                            .addParameter(ITEM_CLASS_TYPE, classSimpleName));
         }
     }
 }

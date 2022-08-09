@@ -32,19 +32,14 @@ public class LogInServlet extends HttpServlet {
         if (isValidInputString(userInputName, ConstantsForItemInputValidation.PATTERN_FOR_USER_NAME) && isValidInputInteger(userInputNumberStr, ConstantsForItemInputValidation.PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
             WebUtils.redirectTo(MAIN_MENU_TITLE, response, userAtr);
         } else {
-            try {
-                response.sendRedirect(
-                        WebUtils.generateBaseURLBuilder(LOG_IN_TITLE, WebUtils.readUserAtr(request))
-                                .addParameter(INFORM_MESSAGE, "Wrong input")
-                                .toString());
-            } catch (IOException ioe) {
-                WebUtils.logServletErr(LOG_IN_TITLE, ioe);
-            }
+            WebUtils.redirectTo(LOG_IN_TITLE, response,
+                    WebUtils.generateBaseURLBuilder(LOG_IN_TITLE, WebUtils.readUserAtr(request))
+                            .addParameter(INFORM_MESSAGE, "Wrong input"));
         }
     }
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response){
+    public void doGet(HttpServletRequest request, HttpServletResponse response) {
         WebPageBuilder webPageBuilder = new WebPageBuilder(LOG_IN_TITLE);
 
         String userNameStr = request.getParameter(USER_NAME) != null ? request.getParameter(USER_NAME) : "";

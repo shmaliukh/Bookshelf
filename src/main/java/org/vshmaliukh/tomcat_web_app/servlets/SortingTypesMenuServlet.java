@@ -30,11 +30,11 @@ public class SortingTypesMenuServlet extends HttpServlet {
                 int parseInt = Integer.parseInt(menuItemIndex);
                 String classType = generatedMenu.getMenuItems().get(parseInt - 1).getClassType().getSimpleName();
 
-                response.sendRedirect(WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, userAtr)
-                        .addParameter(ITEM_CLASS_TYPE, classType)
-                        .toString());
-            } catch (Exception e) {
-                WebUtils.logServletErr(SORTING_TYPES_MENU_TITLE, e);
+                WebUtils.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
+                        WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, userAtr)
+                                .addParameter(ITEM_CLASS_TYPE, classType));
+            } catch (NumberFormatException nfe) {
+                WebUtils.logServletErr(SORTING_TYPES_MENU_TITLE, nfe);
             }
         } else {
             WebUtils.redirectTo(SORTING_TYPES_MENU_TITLE, response, userAtr);

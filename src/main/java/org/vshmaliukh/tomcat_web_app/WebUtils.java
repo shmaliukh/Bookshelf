@@ -43,6 +43,14 @@ public final class WebUtils {
         }
     }
 
+    public static void redirectTo(String servletTitle, HttpServletResponse response, URIBuilder uriBuilder) {
+        try {
+            response.sendRedirect(uriBuilder.toString());
+        } catch (IOException ioe) {
+            logServletErr(servletTitle, ioe);
+        }
+    }
+
     public static String generateBaseURLString(String servletTitle, Map<String, String> userAtr) {
         return generateBaseURLBuilder(servletTitle, userAtr).toString();
     }

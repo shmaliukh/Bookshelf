@@ -21,19 +21,14 @@ import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.WebUtils.*;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
 
-
 public class ItemsSortingMenuServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            response.sendRedirect(WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, WebUtils.readUserAtr(request))
-                    .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
-                    .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE))
-                    .toString());
-        } catch (IOException ioe) {
-            WebUtils.logServletErr(ITEMS_SORTING_MENU_TITLE, ioe);
-        }
+        WebUtils.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
+                WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, WebUtils.readUserAtr(request))
+                        .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
+                        .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)));
     }
 
     @Override
@@ -83,8 +78,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
             int typeOfSorting = Integer.parseInt(menuIndexStr);
             List<T> sortedList = handlerByName.getSortedItems(typeOfSorting, typedItemList);
             webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true));
-        }
-        else {
+        } else {
             webPageBuilder.addToBody(generateTableOfShelfItems(typedItemList, true));
         }
     }

@@ -31,19 +31,16 @@ public class AddItemServlet extends HttpServlet {
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
             WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
             Item item = handlerByName.generateItemByHTMLFormData(itemFieldValueMap);
-            if(item != null){
+            if (item != null) {
                 webShelfHandler.getShelf().addLiteratureObject(item);
                 webShelfHandler.saveShelfItemsToJson();
             }
 
-            try {
-                response.sendRedirect(WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
-                        .addParameter(ITEM_GSON_STR, gson.toJson(item))
-                        .addParameter(ITEM_CLASS_TYPE, itemClassType)
-                        .toString());
-            } catch (IOException ioe) {
-                WebUtils.logServletErr(ADD_ITEM_TITLE, ioe);
-            }
+            WebUtils.redirectTo(ADD_MENU_TITLE, response,
+                    WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
+                            .addParameter(ITEM_GSON_STR, gson.toJson(item))
+                            .addParameter(ITEM_CLASS_TYPE, itemClassType)
+            );
         } else {
             WebUtils.redirectTo(ADD_MENU_TITLE, response, userAtr);
         }
@@ -62,9 +59,8 @@ public class AddItemServlet extends HttpServlet {
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
                     WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
-                            .addParameter(ITEM_CLASS_TYPE, itemClassType)
-                            .toString()
-                    + "\" method = \"POST\">\n" +
+                            .addParameter(ITEM_CLASS_TYPE, itemClassType) + "\" " +
+                    "method = \"POST\">\n" +
                     "Create " + itemClassType + "\n" +
                     "       <br>\n");
             if (isRandom != null) {
