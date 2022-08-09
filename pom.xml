@@ -16,6 +16,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.36.0.3</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
@@ -32,7 +39,6 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.13</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
