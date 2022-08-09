@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.newspaper_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
+import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -16,6 +17,10 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
+
+    public List<String> parameterList() {
+        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+    }
 
     public static final Comparator<Newspaper> NEWSPAPER_COMPARATOR_BY_PAGES = Comparator.comparing(Newspaper::getPagesNumber);
     public static final Comparator<Newspaper> NEWSPAPER_COMPARATOR_BY_NAME = Comparator.comparing(Newspaper::getName, String.CASE_INSENSITIVE_ORDER);
@@ -117,28 +122,5 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
             return new Newspaper(name, pages, isBorrowed);
         }
         return null;
-
-    }
-
-    @Override
-    public String generateSqlTableStr() {
-        return "newspapers (\n" +
-                "newspaper_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL,\n" +
-                "pages TEXT NOT NULL,\n" +
-                "borrowed TEXT NOT NULL, \n" +
-                "UNIQUE (name, pages, borrowed) ON CONFLICT IGNORE" +
-                ");";
-    }
-
-    @Override
-    public String generateSqlInsertStr(Newspaper item) {
-        return "INSERT OR IGNORE INTO newspapers\n" +
-                "(name, pages, borrowed)\n" +
-                "VALUES (" +
-                "'" + item.getName() + "', " +
-                "'" + item.getPagesNumber() + "', " +
-                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "'" +
-                ")";
     }
 }

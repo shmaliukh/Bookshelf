@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.magazine_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
+import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -16,6 +17,10 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
+
+    public List<String> parameterList() {
+        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+    }
 
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(Magazine::getName, String.CASE_INSENSITIVE_ORDER);
@@ -117,27 +122,5 @@ public class MagazineHandler implements ItemHandler<Magazine> {
             return new Magazine(name, pages, isBorrowed);
         }
         return null;
-    }
-
-    @Override
-    public String generateSqlTableStr() {
-        return "magazines (\n" +
-                "magazine_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL, \n" +
-                "pages TEXT NOT NULL, \n" +
-                "borrowed TEXT NOT NULL, \n" +
-                "UNIQUE (name, pages, borrowed) ON CONFLICT IGNORE" +
-                ");";
-    }
-
-    @Override
-    public String generateSqlInsertStr(Magazine item) { //TODO use map for saving
-        return "INSERT OR IGNORE INTO magazines\n" +
-                "(name, pages, borrowed)\n" +
-                "VALUES (" +
-                "'" + item.getName() + "', " +
-                "'" + item.getPagesNumber() + "', " +
-                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "'" +
-                ")";
     }
 }

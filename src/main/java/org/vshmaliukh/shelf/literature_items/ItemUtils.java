@@ -1,11 +1,12 @@
 package org.vshmaliukh.shelf.literature_items;
 
-import org.vshmaliukh.shelf.literature_items.Item;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ItemUtils {
+
+    public static final String COMA_DELIMITER = ", ";
+    public static final String VALUE_DELIMITER = "?";
 
     private ItemUtils() {
     }

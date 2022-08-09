@@ -1,10 +1,8 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
-import org.vshmaliukh.shelf.literature_items.ItemHandler;
-import org.vshmaliukh.shelf.literature_items.ItemTitles;
+import org.vshmaliukh.shelf.literature_items.*;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
-import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
@@ -14,11 +12,15 @@ import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
+import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
 import static org.vshmaliukh.tomcat_web_app.WebUtils.DATE_FORMAT_WEB_STR;
 
 public class BookHandler implements ItemHandler<Book> {
+
+    public List<String> parameterList() {
+        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED, AUTHOR, DATE));
+    }
 
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
@@ -141,31 +143,5 @@ public class BookHandler implements ItemHandler<Book> {
             return new Book(name, pages, isBorrowed, author, date);
         }
         return null;
-    }
-
-    @Override
-    public String generateSqlTableStr() {
-        return "books (\n" +
-                "book_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL, \n" +
-                "pages TEXT NOT NULL, \n" +
-                "borrowed TEXT NOT NULL, \n" +
-                "author TEXT NOT NULL, \n" +
-                "date TEXT NOT NULL, \n" +
-                "UNIQUE (name, pages, borrowed, author, date) ON CONFLICT IGNORE" +
-                ");";
-    }
-
-    @Override
-    public String generateSqlInsertStr(Book book) {
-        return "INSERT OR IGNORE INTO  books \n" +
-                "(name, pages, borrowed, author, date) \n" +
-                "VALUES (" +
-                "'" + book.getName() + "', " +
-                "'" + book.getPagesNumber() + "', " +
-                "'" + ItemUtils.convertBorrowed(book.isBorrowed()) + "', " +
-                "'" + book.getAuthor() + "', " +
-                "'" + new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()) + "'" +
-                ")";
     }
 }

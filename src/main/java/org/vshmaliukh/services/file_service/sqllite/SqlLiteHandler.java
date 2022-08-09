@@ -5,13 +5,10 @@ import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 public class SqlLiteHandler extends SaveReadUserFilesHandler {
@@ -52,14 +49,16 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         for (Item item : listToSave) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
             String sqlInsertStr = handlerByClass.generateSqlInsertStr(item);
-            SqlLiteUtils.insert(dbPathStr, sqlInsertStr);
+            List<String> parameterList = handlerByClass.parameterList();
+            Map<String, String> convertItemToListOfString = handlerByClass.convertItemToListOfString(item);
+            SqlLiteUtils.insert(dbPathStr, sqlInsertStr,parameterList, convertItemToListOfString);
         }
     }
 
     private void generateTablesIfNotExists() {
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String tableStr = handlerByClass.generateSqlTableStr();
+            String tableStr = handlerByClass.generateSqlTableStr(classType);
             SqlLiteUtils.createNewTable(dbPathStr, tableStr);
         }
     }
@@ -70,11 +69,15 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public static void main(String[] args) {
+        Random random = new Random();
         SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), "sql_test");
         SqlLiteUtils.createNewDatabase(sqlLiteHandler.getDbPathStr());
 
-        Book book = new Book("noNameBook2",2,false,"NoAuthor2",new Date());
-        List<Item> itemList = Collections.singletonList(book);
+        List<Item> itemList = new ArrayList<>();
+        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
+            itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
+            itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
+        }
         sqlLiteHandler.saveItemList(itemList);
     }
 }

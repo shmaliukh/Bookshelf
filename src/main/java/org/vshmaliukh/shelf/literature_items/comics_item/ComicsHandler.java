@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.comics_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
+import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -9,16 +10,18 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
-import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
 
 public class ComicsHandler implements ItemHandler<Comics> {
+
+    public List<String> parameterList() {
+        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED, PUBLISHER));
+    }
 
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_NAME = Comparator.comparing(Comics::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_PUBLISHER = Comparator.comparing(Comics::getPublisher, String.CASE_INSENSITIVE_ORDER);
@@ -129,29 +132,5 @@ public class ComicsHandler implements ItemHandler<Comics> {
             return new Comics(name, pages, isBorrowed, publisher);
         }
         return null;
-    }
-
-    @Override
-    public String generateSqlTableStr() {
-        return "comics (\n" +
-                "comics_id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                "name TEXT NOT NULL, \n" +
-                "pages TEXT NOT NULL, \n" +
-                "borrowed TEXT NOT NULL, \n" +
-                "publisher TEXT NOT NULL, \n" +
-                "UNIQUE (name, pages, borrowed, publisher) ON CONFLICT IGNORE" +
-                ");";
-    }
-
-    @Override
-    public String generateSqlInsertStr(Comics item) {
-        return "INSERT OR IGNORE INTO comics\n" +
-                "(name, pages, borrowed, publisher)\n" +
-                "VALUES (" +
-                "'" + item.getName() + "', " +
-                "'" + item.getPagesNumber() + "', " +
-                "'" + ItemUtils.convertBorrowed(item.isBorrowed()) + "', " +
-                "'" + item.getPublisher() +"'" +
-                ")";
     }
 }
