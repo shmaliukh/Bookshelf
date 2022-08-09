@@ -22,7 +22,7 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public Path generatePathForGson() {
+    public Path generatePathForFileHandler() {
         Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
         createDirectoryIfNotExists(path);
         return path;
@@ -34,7 +34,7 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public void saveItemListToFile(List<Item> listToSave) {
+    public void saveItemList(List<Item> listToSave) {
         for (Class<? extends Item> classType : getClassTypes()) {
             typeStr = classType.getSimpleName();
             List<? extends Item> listPerType = listToSave.stream()
@@ -45,7 +45,7 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public List<Item> readItemListFromFile() {
+    public List<Item> readItemList() {
         List<Item> resultList = new ArrayList<>();
         for (Class<? extends Item> typeName : ItemHandlerProvider.uniqueTypeNames) {
             typeStr = typeName.getSimpleName();

@@ -18,7 +18,7 @@ public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public Path generatePathForGson() {
+    public Path generatePathForFileHandler() {
         Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
         createDirectoryIfNotExists(path);
         return path;
@@ -30,12 +30,12 @@ public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public void saveItemListToFile(List<Item> listToSave) {
+    public void saveItemList(List<Item> listToSave) {
         saveListToFile(generatePathForGsonFile(), listToSave);
     }
 
     @Override
-    public List<Item> readItemListFromFile() {
+    public List<Item> readItemList() {
         return readItemListFromGsonFile(generatePathForGsonFile());
     }
 }

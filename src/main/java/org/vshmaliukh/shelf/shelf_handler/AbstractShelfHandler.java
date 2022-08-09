@@ -46,11 +46,11 @@ public abstract class AbstractShelfHandler {
     }
 
     public void saveShelfItemsToJson() {
-        itemGsonHandler.saveItemListToFile(shelf.getAllLiteratureObjects());
+        itemGsonHandler.saveItemList(shelf.getAllLiteratureObjects());
     }
 
     public void readShelfItemsFromJson() {
-        itemGsonHandler.readItemListFromFile().forEach(shelf::addLiteratureObject);
+        itemGsonHandler.readItemList().forEach(shelf::addLiteratureObject);
     }
 
     public AbstractShelf getShelf() {

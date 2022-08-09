@@ -45,7 +45,7 @@ class ItemGsonHandlerTest {
     @Test
     void testGeneratePathForGson() {
         ItemGsonHandlerOneFileUser gsonHandlerOneFile = new ItemGsonHandlerOneFileUser(tempDirStr, "testGeneratePathForGson");
-        assertEquals(Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", gsonHandlerOneFile.gsonHandlerFolderStr), gsonHandlerOneFile.generatePathForGson());
+        assertEquals(Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", gsonHandlerOneFile.gsonHandlerFolderStr), gsonHandlerOneFile.generatePathForFileHandler());
     }
 
     @Test
@@ -77,7 +77,7 @@ class ItemGsonHandlerTest {
         ItemGsonHandlerOneFileUser gsonHandlerOneFile = new ItemGsonHandlerOneFileUser(tempDirStr, "testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
-        gsonHandlerOneFile.saveItemListToFile(consoleShelf1.getAllLiteratureObjects());
+        gsonHandlerOneFile.saveItemList(consoleShelf1.getAllLiteratureObjects());
         ConsoleShelf consoleShelf2 = new ConsoleShelf(new PrintWriter(System.out, true));
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelf2::addLiteratureObject);
 
@@ -101,9 +101,9 @@ class ItemGsonHandlerTest {
         consoleShelf1.addLiteratureObject(magazine2);
 
         ItemGsonHandlerPerTypeUser itemGsonHandlerPerType = new ItemGsonHandlerPerTypeUser(tempDirStr, "testGsonHandlerPerType");
-        itemGsonHandlerPerType.saveItemListToFile(consoleShelf1.getAllLiteratureObjects());
+        itemGsonHandlerPerType.saveItemList(consoleShelf1.getAllLiteratureObjects());
 
-        itemGsonHandlerPerType.readItemListFromFile().forEach(consoleShelf2::addLiteratureObject);
+        itemGsonHandlerPerType.readItemList().forEach(consoleShelf2::addLiteratureObject);
 
         assertEquals(consoleShelf1.getAllLiteratureObjects().size(), consoleShelf2.getAllLiteratureObjects().size());
         assertTrue(consoleShelf1.getAllLiteratureObjects().stream()

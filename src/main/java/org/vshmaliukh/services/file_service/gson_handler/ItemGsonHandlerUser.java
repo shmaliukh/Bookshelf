@@ -41,11 +41,11 @@ public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
 
 
     public Path generatePathForGsonFile() {
-        return Paths.get(String.valueOf(generatePathForGson()), generateFullFileName());
+        return Paths.get(String.valueOf(generatePathForFileHandler()), generateFullFileName());
     }
 
     Path generatePathForProblemFiles() {
-        Path path = Paths.get(String.valueOf(generatePathForGson()), problemFilesFolderStr);
+        Path path = Paths.get(String.valueOf(generatePathForFileHandler()), problemFilesFolderStr);
         createDirectoryIfNotExists(path);
         return path;
     }

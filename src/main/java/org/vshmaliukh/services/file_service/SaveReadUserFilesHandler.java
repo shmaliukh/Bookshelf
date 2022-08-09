@@ -13,9 +13,9 @@ public abstract class SaveReadUserFilesHandler extends UserFilesHandler {
 
     protected abstract String generateFullFileName();
 
-    protected abstract Path generatePathForGson();
+    protected abstract Path generatePathForFileHandler();
 
-    public abstract void saveItemListToFile(List<Item> listToSave);
+    public abstract void saveItemList(List<Item> listToSave);
 
-    public abstract List<Item> readItemListFromFile();
+    public abstract List<Item> readItemList();
 }
