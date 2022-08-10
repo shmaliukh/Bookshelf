@@ -11,10 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.DATE_FORMAT_WEB_STR;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
 
 public class BookHandler implements ItemHandler<Book> {
 
@@ -96,7 +95,7 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public String generateHTMLFormBodyToCreateItem(Random random) {
-        String defaultDate = new SimpleDateFormat(DATE_FORMAT_WEB_STR).format(new Date());
+        String defaultDate = new SimpleDateFormat(DATE_FORMAT_STR).format(new Date());
         return "" +
                 ItemUtils.generateHTMLFormItem(NAME, "text", getRandomString(random.nextInt(20), random)) +
                 ItemUtils.generateHTMLFormItem(PAGES, "number", String.valueOf(random.nextInt(1000))) +
@@ -125,19 +124,19 @@ public class BookHandler implements ItemHandler<Book> {
         return isValidInputString(name, ConstantsForItemInputValidation.PATTERN_FOR_NAME) &&
                 isValidInputInteger(pages, ConstantsForItemInputValidation.PATTERN_FOR_PAGES) &&
                 isValidInputString(borrowed, ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED) &&
-                isValidInputDate(date, new SimpleDateFormat(DATE_FORMAT_WEB_STR)) &&
+                isValidInputDate(date, new SimpleDateFormat(DATE_FORMAT_STR)) &&
                 isValidInputString(author, ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
     }
 
     @Override
-    public Book generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Book generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);
         Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), ConstantsForItemInputValidation.PATTERN_FOR_PAGES);
         Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED);
         String author = webInputHandler.getUserString(mapFieldValue.get(AUTHOR), ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
-        Date date = webInputHandler.getUserDate(mapFieldValue.get(DATE), new SimpleDateFormat(DATE_FORMAT_WEB_STR));
+        Date date = webInputHandler.getUserDate(mapFieldValue.get(DATE), new SimpleDateFormat(DATE_FORMAT_STR));
 
         if (name != null && pages != null && isBorrowed != null && author != null && date != null) {
             return new Book(name, pages, isBorrowed, author, date);

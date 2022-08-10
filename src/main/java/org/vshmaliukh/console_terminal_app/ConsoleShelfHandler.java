@@ -1,5 +1,6 @@
 package org.vshmaliukh.console_terminal_app;
 
+import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -34,11 +35,41 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
     private ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
 
     public ConsoleShelfHandler(Scanner scanner, PrintWriter printWriter) {
+        super();
         this.scanner = scanner;
         this.printWriter = printWriter;
 
-        shelf = new ConsoleShelf(printWriter);
         consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
+    }
+
+    @Override
+    public void deleteLiteratureObjectByIndex(int index) {
+        if (!shelf.itemsOfShelf.isEmpty()) {
+            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
+                printWriter.println(shelf.itemsOfShelf.remove(index - 1) + " " + "has deleted from shelf");
+            } else {
+                printWriter.println("Wrong index");
+            }
+        } else printWriter.println("Empty shelf");
+    }
+
+    @Override
+    public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
+        if (!literatureList.isEmpty()) {
+            if (index > 0 && index <= literatureList.size()) {
+                Item buffer = literatureList.get(index - 1);
+                buffer.setBorrowed(!buffer.isBorrowed());
+                if (buffer.isBorrowed()) {
+                    printWriter.println(buffer + " has borrowed from shelf");
+                } else {
+                    printWriter.println(buffer + " has arriver back to shelf");
+                }
+            } else {
+                printWriter.println("Wrong index");
+            }
+        } else {
+            printWriter.println("No available literature");
+        }
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
@@ -49,6 +80,9 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
                 printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
+                break;
+            case FILE_MODE_WORK_WITH_SQLLITE:
+                printWriter.println("FILE_MODE_WORK_WITH_SQLLITE");
                 break;
             default:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
@@ -174,14 +208,14 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void menuForArrivingLiterature() {
-        List<Item> itemList = shelf.readLiteratureOutShelf();
+        List<Item> itemList = readLiteratureOutShelf();
         if (itemList.isEmpty()) {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
             new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
+            changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -189,14 +223,14 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void menuForBorrowingLiterature() {
-        List<Item> itemList = shelf.readLiteratureInShelf();
+        List<Item> itemList = readLiteratureInShelf();
         if (itemList.isEmpty()) {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
             new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            shelf.changeBorrowedStateOfItem(itemList, getUserChoice());
+            changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -204,13 +238,13 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void menuForDeletingLiterature() {
-        if (shelf.readLiteratureInShelf().isEmpty()) {
+        if (readLiteratureInShelf().isEmpty()) {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(shelf.readLiteratureInShelf()), true).print();
+            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(readLiteratureInShelf()), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            shelf.deleteLiteratureObjectByIndex(getUserChoice());
+            deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
 
@@ -230,7 +264,7 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
             } else {
                 item = handlerByClass.getRandomItem(random);
             }
-            shelf.addLiteratureObject(item);
+            addLiteratureObject(item);
             printWriter.println(item + " has added to shelf");
         } else {
             printWriter.println("Wrong input");

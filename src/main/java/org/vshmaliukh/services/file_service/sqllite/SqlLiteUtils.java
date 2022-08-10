@@ -1,16 +1,15 @@
 package org.vshmaliukh.services.file_service.sqllite;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.sql.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 public final class SqlLiteUtils {
 
-    private SqlLiteUtils(){}
+    private SqlLiteUtils() {
+    }
 
     public static boolean createNewDatabase(String url) { // TODO should all methods return boolean (?)
         try {
@@ -47,7 +46,7 @@ public final class SqlLiteUtils {
     }
 
     public static void createNewTable(String url, String sql) {
-        try{
+        try {
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
@@ -56,13 +55,13 @@ public final class SqlLiteUtils {
         }
     }
 
-    public static void insert(String url, String sql,List<String> parameterList, Map<String, String> parameterValueMap) {
-        try{
+    public static void insert(String url, String sql, List<String> parameterList, Map<String, String> parameterValueMap) {
+        try {
             Connection conn = null;
             try {
                 conn = DriverManager.getConnection(url);
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
+            } catch (SQLException sqle) {
+                log.error(sqle.getMessage());
             }
             PreparedStatement pstmt = conn.prepareStatement(sql);
             for (int i = 0; i < parameterList.size(); i++) {
@@ -74,5 +73,25 @@ public final class SqlLiteUtils {
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
         }
+    }
+
+    public static List<Map<String, String>> selectAllByClass(String url, String sql, List<String> parameterList) {
+        List<Map<String, String>> mapList = new ArrayList<>();
+        Map<String, String> parameterValueMap;
+        try (Connection conn = DriverManager.getConnection(url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                parameterValueMap = new HashMap<>();
+                for (String parameter : parameterList) {
+                    parameterValueMap.put(parameter, rs.getString(parameter));
+                }
+                mapList.add(parameterValueMap);
+            }
+            return mapList;
+        } catch (SQLException sqle) {
+            log.error(sqle.getMessage());
+        }
+        return Collections.emptyList();
     }
 }

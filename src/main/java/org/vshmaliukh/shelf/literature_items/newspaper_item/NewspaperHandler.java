@@ -1,7 +1,6 @@
 package org.vshmaliukh.shelf.literature_items.newspaper_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
-import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -111,7 +110,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public Newspaper generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Newspaper generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);

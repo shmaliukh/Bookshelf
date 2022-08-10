@@ -120,7 +120,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Comics generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);

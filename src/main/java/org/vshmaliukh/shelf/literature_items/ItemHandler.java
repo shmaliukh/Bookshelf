@@ -55,9 +55,9 @@ public interface ItemHandler<T extends Item> {
 
     boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
 
-    T generateItemByHTMLFormData(Map<String, String> mapFieldValue);
+    T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    default String generateSqlTableStr(Class<? extends Item> classType){
+    default <T extends Item> String generateSqlTableStr(Class<T> classType){
         List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
         StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
         parameterList.forEach(parametersJoiner::add);
@@ -72,15 +72,27 @@ public interface ItemHandler<T extends Item> {
         return sb.toString();
     }
 
-    default String generateSqlInsertStr(T item){
+    default <T extends Item> String generateSqlInsertStr(T item){
         StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
         List<String> stringList = ItemHandlerProvider.getHandlerByClass(item.getClass()).parameterList();
         stringList.forEach(parametersJoiner::add);
         StringJoiner valuesJoiner = new StringJoiner(COMA_DELIMITER);
         stringList.forEach(o -> valuesJoiner.add(VALUE_DELIMITER));
 
-        return "INSERT OR IGNORE INTO " + item.getClass().getSimpleName() + "s" +
-                "( " + parametersJoiner + " ) \n" +
-                "VALUES ( " +valuesJoiner + " )";
+        return " INSERT OR IGNORE INTO " + item.getClass().getSimpleName() + "s" +
+                " ( " + parametersJoiner + " ) \n" +
+                " VALUES " +
+                " ( " +valuesJoiner + " ) ";
+    }
+
+    default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType){
+        List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
+        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
+        parameterList.forEach(parametersJoiner::add);
+
+        return " SELECT \n" +
+                parametersJoiner +
+                " FROM \n" +
+                classType.getSimpleName() + "s";
     }
 }

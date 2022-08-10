@@ -26,7 +26,7 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
             int index = Integer.parseInt(indexOfItem);
             WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
-            webShelfHandler.getShelf().changeBorrowedStateOfItem(allLiteratureObjects, index);
+            webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, index);
 
             webShelfHandler.saveShelfItemsToJson();
 

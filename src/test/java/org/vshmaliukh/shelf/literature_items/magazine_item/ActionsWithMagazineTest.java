@@ -2,12 +2,13 @@ package org.vshmaliukh.shelf.literature_items.magazine_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.console_terminal_app.ConsoleShelf;
+import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
@@ -29,21 +30,21 @@ class ActionsWithMagazineTest {
      */
     int expectedArraySize = 3;
 
-    ConsoleShelf consoleShelf1 = new ConsoleShelf(printWriter);
+    ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""),printWriter);
 
     /*
       Adding magazines in revers order
      */ {
-        consoleShelf1.addLiteratureObject(magazine3);
-        consoleShelf1.addLiteratureObject(magazine2);
-        consoleShelf1.addLiteratureObject(magazine1);
+        consoleShelfHandler.addLiteratureObject(magazine3);
+        consoleShelfHandler.addLiteratureObject(magazine2);
+        consoleShelfHandler.addLiteratureObject(magazine1);
     }
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
         List<Magazine> sortedMagazinesByName =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelf1.getAllLiteratureObjects()),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().itemsOfShelf),
                         MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -55,7 +56,7 @@ class ActionsWithMagazineTest {
     @DisplayName("test printable stings of sorted Magazines by Pages")
     void printSortedMagazinesByPages() {
         List<Magazine> sortedMagazinesByPages =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelf1.getAllLiteratureObjects()),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().getAllLiteratureObjects()),
                         MAGAZINE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());

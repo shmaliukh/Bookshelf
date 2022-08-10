@@ -23,8 +23,6 @@ import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 @Slf4j
 public final class WebUtils {
 
-    public static final String DATE_FORMAT_WEB_STR = "yyyy-MM-dd";
-
     public static final Random RANDOM = new Random();
     public static final String MENU_ITEM_INDEX = "menu_item_index";
     public static final String INFORM_MESSAGE = "inform_message";

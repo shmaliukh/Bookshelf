@@ -111,7 +111,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public Magazine generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Magazine generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);

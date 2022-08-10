@@ -24,7 +24,7 @@ public class DeleteItemServlet extends HttpServlet {
         try {
             int index = Integer.parseInt(indexOfItem);
             WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-            webShelfHandler.getShelf().deleteLiteratureObjectByIndex(index);
+            webShelfHandler.deleteLiteratureObjectByIndex(index);
             webShelfHandler.saveShelfItemsToJson();
         } catch (NumberFormatException nfe) {
             WebUtils.logServletErr(DELETE_ITEM_TITLE, nfe);

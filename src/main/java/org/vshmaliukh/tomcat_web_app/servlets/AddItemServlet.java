@@ -30,9 +30,9 @@ public class AddItemServlet extends HttpServlet {
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
             WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
-            Item item = handlerByName.generateItemByHTMLFormData(itemFieldValueMap);
+            Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             if (item != null) {
-                webShelfHandler.getShelf().addLiteratureObject(item);
+                webShelfHandler.addLiteratureObject(item);
                 webShelfHandler.saveShelfItemsToJson();
             }
 
