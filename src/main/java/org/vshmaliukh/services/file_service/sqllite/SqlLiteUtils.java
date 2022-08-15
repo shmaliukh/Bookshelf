@@ -27,15 +27,7 @@ public final class SqlLiteUtils {
         return false;
     }
 
-    public static void createNewTable(String url, String sql) {
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-        } catch (SQLException sqle) {
-            log.error(sqle.getMessage());
-        }
-    }
+
 
     public static void insert(String url, String sql, List<String> parameterList, Map<String, String> parameterValueMap) {
         try {

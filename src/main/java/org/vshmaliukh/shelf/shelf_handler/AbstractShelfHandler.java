@@ -68,7 +68,7 @@ public abstract class AbstractShelfHandler implements ShelfHandlerInterface {
                 saveReadUserFilesHandler = new ItemGsonHandlerPerTypeUser(HOME_PROPERTY, user.getName());
                 break;
             case FILE_MODE_WORK_WITH_SQLLITE:
-                saveReadUserFilesHandler = new SqlLiteHandler(HOME_PROPERTY, user.getName());
+                saveReadUserFilesHandler = new SqlLiteHandler(HOME_PROPERTY, user);
                 break;
             default:
                 saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());
