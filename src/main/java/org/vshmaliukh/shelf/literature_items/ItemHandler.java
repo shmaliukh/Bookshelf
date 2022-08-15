@@ -16,6 +16,8 @@ import static org.vshmaliukh.shelf.literature_items.ItemUtils.VALUE_DELIMITER;
 
 public interface ItemHandler<T extends Item> {
 
+    String ID = "id";
+
     List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 
     String CHOOSE_TYPE_OF_SORTING = "Choose type of sorting:";
@@ -79,19 +81,6 @@ public interface ItemHandler<T extends Item> {
         return sb.toString();
     }
 
-    default <T extends Item> String generateSqlInsertStr(T item){
-        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
-        List<String> stringList = ItemHandlerProvider.getHandlerByClass(item.getClass()).parameterList();
-        stringList.forEach(parametersJoiner::add);
-        StringJoiner valuesJoiner = new StringJoiner(COMA_DELIMITER);
-        stringList.forEach(o -> valuesJoiner.add(VALUE_DELIMITER));
-
-        return " INSERT OR IGNORE INTO " + item.getClass().getSimpleName() + "s" +
-                " ( " + parametersJoiner + " ) \n" +
-                " VALUES " +
-                " ( " +valuesJoiner + " ) ";
-    }
-
     default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType){
         List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
         StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
@@ -108,4 +97,6 @@ public interface ItemHandler<T extends Item> {
     void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
 
     T readItemFromSql(Integer userId, ResultSet rs) throws SQLException;
+
+    String generateSqlTableStr();
 }

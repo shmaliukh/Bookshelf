@@ -28,6 +28,8 @@ import static org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface.DATE_FORM
 
 public class ComicsHandler implements ItemHandler<Comics> {
 
+    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
         List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
         parameterList.add(PUBLISHER);
@@ -157,7 +159,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + Comics.class.getSimpleName() + "s " +
+        return "INSERT INTO " + COMICS_TABLE_TITLE + " " +
                 "(" +
                 USER_ID + " , " +
                 NAME + " , " +
@@ -175,5 +177,17 @@ public class ComicsHandler implements ItemHandler<Comics> {
         pstmt.setString(4, String.valueOf(item.isBorrowed()));
         pstmt.setString(5, item.getPublisher());
         pstmt.executeUpdate();
+    }
+
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE +
+                "(\n" +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID + " INTEGER NOT NULL, \n" +
+                NAME + " TEXT NOT NULL, \n" +
+                PAGES + " INTEGER NOT NULL, \n" +
+                BORROWED + " TEXT NOT NULL, \n" +
+                PUBLISHER + " TEXT NOT NULL \n" +
+                ");";
     }
 }

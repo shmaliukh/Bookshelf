@@ -22,6 +22,8 @@ import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMA
 
 public class BookHandler implements ItemHandler<Book> {
 
+    public static final String BOOK_TABLE_TITLE = Book.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
         List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
         parameterList.add(AUTHOR);
@@ -158,7 +160,7 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + Book.class.getSimpleName() + "s " +
+        return "INSERT INTO " + BOOK_TABLE_TITLE + " " +
                 "(" +
                 USER_ID + " , " +
                 NAME + " , " +
@@ -197,5 +199,19 @@ public class BookHandler implements ItemHandler<Book> {
         );
     }
 
+    @Override
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE +
+                "(\n" +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID + " INTEGER NOT NULL, \n" +
+                NAME + " TEXT NOT NULL, \n" +
+                PAGES + " INTEGER NOT NULL, \n" +
+                BORROWED + " TEXT NOT NULL, \n" +
+                AUTHOR + " TEXT NOT NULL, \n" +
+                DATE + " TEXT NOT NULL \n" +
+                //"UNIQUE ("
+                ");";
+    }
 
 }

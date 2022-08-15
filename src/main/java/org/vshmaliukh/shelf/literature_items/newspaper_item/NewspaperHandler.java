@@ -23,6 +23,8 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
+    public static final String NEWSPAPER_TABLE_TITLE = Newspaper.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
         return parameterList;
     }
@@ -140,7 +142,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + Newspaper.class.getSimpleName() + "s " +
+        return "INSERT INTO " + NEWSPAPER_TABLE_TITLE + " " +
                 "(" +
                 USER_ID + " , " +
                 NAME + " , " +
@@ -156,5 +158,16 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
         pstmt.setInt(3, item.getPagesNumber());
         pstmt.setString(4, String.valueOf(item.isBorrowed()));
         pstmt.executeUpdate();
+    }
+
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + NEWSPAPER_TABLE_TITLE +
+                "(\n" +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+                USER_ID + " INTEGER NOT NULL, \n" +
+                NAME + " TEXT NOT NULL, \n" +
+                PAGES + " INTEGER NOT NULL, \n" +
+                BORROWED + " TEXT NOT NULL \n" +
+                ");";
     }
 }

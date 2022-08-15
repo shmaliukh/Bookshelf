@@ -24,6 +24,8 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
+    public static final String MAGAZINE_TABLE_TITLE = Magazine.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
         return parameterList;
     }
@@ -141,7 +143,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + Magazine.class.getSimpleName() + "s " +
+        return "INSERT INTO " + MAGAZINE_TABLE_TITLE + " " +
                 "(" +
                 USER_ID + " , " +
                 NAME + " , " +
@@ -157,5 +159,16 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         pstmt.setInt(3, item.getPagesNumber());
         pstmt.setString(4, String.valueOf(item.isBorrowed()));
         pstmt.executeUpdate();
+    }
+
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + MAGAZINE_TABLE_TITLE +
+                "(\n" +
+                ID + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID + " INTEGER NOT NULL, \n" +
+                NAME + " TEXT NOT NULL, \n" +
+                PAGES + " INTEGER NOT NULL, \n" +
+                BORROWED + " TEXT NOT NULL \n" +
+                ");";
     }
 }

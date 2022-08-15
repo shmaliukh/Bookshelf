@@ -21,20 +21,22 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
     private final String dburl;// TODO
+    final User user;
 
     Connection conn = null;
 
     public SqlLiteHandler(String homeDir, User user) {
         super(homeDir, user.getName());
+        this.user = user;
 
         dburl = "jdbc:sqlite:" + Paths.get(generatePathForFileHandler().toString(), generateFullFileName());
         connectToDB();
-        createNewDatabase();
-        registrateUser(user);
+        //createNewDatabase();
+        registrateUser();
         generateTablesIfNotExists(); // TODO
     }
 
-    void createNewDatabase() { // TODO should all methods return boolean (?)
+    void createNewDatabase() { // TODO should start once
         try {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
@@ -49,6 +51,14 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     private void connectToDB() {
         try {
             conn = DriverManager.getConnection(dburl);
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
+        }
+    }
+
+    public void createNewTable(String sql) {
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -71,26 +81,17 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         return path;
     }
 
-    public String getDburl() {
-        return dburl;
-    }
-
     @Override
     public void saveItemList(List<Item> listToSave) {
         for (Item item : listToSave) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-            String sqlInsertStr = handlerByClass.generateSqlInsertStr(item);
-            List<String> parameterList = handlerByClass.parameterList();
-            Map<String, String> convertItemToListOfString = handlerByClass.convertItemToListOfString(item);
-            SqlLiteUtils.insert(dburl, sqlInsertStr, parameterList, convertItemToListOfString);
-        }
-    }
-
-    public void createNewTable(String sql) {
-        try (Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException sqle) {
-            logSqlHandler(sqle);
+            String sqlInsertStr = handlerByClass.insertItemSqlStr();
+            try {
+                PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
+                handlerByClass.insertItemValues(pstmt, item, user.getId());
+            } catch (SQLException sqle) {
+                logSqlHandler(sqle);
+            }
         }
     }
 
@@ -104,7 +105,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         }
     }
 
-    private void registrateUser(User user) {
+    private void registrateUser() {
         String sql = "CREATE TABLE IF NOT EXISTS " + USERS + " \n" +
                 "(\n" +
                 USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
@@ -113,10 +114,10 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
                 ");";
         createNewTable(sql);
         insertUser(user.getName());
-        getUserId(user);
+        readUserId(user);
     }
 
-    private void getUserId(User user) {
+    private void readUserId(User user) {
         String sql = "SELECT " + USER_ID + " FROM " + USERS;
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
@@ -129,7 +130,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     private void generateTablesIfNotExists() {
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String tableStr = handlerByClass.generateSqlTableStr(classType);
+            String tableStr = handlerByClass.generateSqlTableStr();
             createNewTable(tableStr);
         }
     }
@@ -154,10 +155,11 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), new User("test_sql"));
 
         List<Item> itemList = new ArrayList<>();
-        //for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
+        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
+            itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
         //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
-        //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
-        //}
+        }
+        sqlLiteHandler.saveItemList(itemList);
 
         //System.out.println(itemList);
         //System.out.println();
