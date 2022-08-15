@@ -7,9 +7,12 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
@@ -19,7 +22,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 public class MagazineHandler implements ItemHandler<Magazine> {
 
     public List<String> parameterList() {
-        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+        return parameterList;
     }
 
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
@@ -122,5 +125,14 @@ public class MagazineHandler implements ItemHandler<Magazine> {
             return new Magazine(name, pages, isBorrowed);
         }
         return null;
+    }
+
+    @Override
+    public Magazine readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+        return new Magazine(
+                rs.getString(NAME),
+                rs.getInt(PAGES),
+                Boolean.parseBoolean(rs.getString(BORROWED))
+        );
     }
 }

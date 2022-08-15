@@ -27,24 +27,6 @@ public final class SqlLiteUtils {
         return false;
     }
 
-    public static void connect(String url) {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-            log.info("Connection to SQLite has been established.");
-        } catch (SQLException sqle) {
-            log.error(sqle.getMessage());
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException sqle) {
-                log.error(sqle.getMessage());
-            }
-        }
-    }
-
     public static void createNewTable(String url, String sql) {
         try {
             Connection conn = DriverManager.getConnection(url);

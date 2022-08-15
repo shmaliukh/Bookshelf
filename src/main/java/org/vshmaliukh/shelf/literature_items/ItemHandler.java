@@ -2,14 +2,20 @@ package org.vshmaliukh.shelf.literature_items;
 
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.COMA_DELIMITER;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.VALUE_DELIMITER;
 
 public interface ItemHandler<T extends Item> {
+
+    List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 
     String CHOOSE_TYPE_OF_SORTING = "Choose type of sorting:";
     String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
@@ -95,4 +101,6 @@ public interface ItemHandler<T extends Item> {
                 " FROM \n" +
                 classType.getSimpleName() + "s";
     }
+
+    T readItemFromSql(Integer userId, ResultSet rs) throws SQLException;
 }

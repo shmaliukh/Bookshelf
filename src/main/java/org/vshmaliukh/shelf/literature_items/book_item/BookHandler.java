@@ -7,6 +7,9 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -18,7 +21,10 @@ import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMA
 public class BookHandler implements ItemHandler<Book> {
 
     public List<String> parameterList() {
-        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED, AUTHOR, DATE));
+        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
+        parameterList.add(AUTHOR);
+        parameterList.add(DATE);
+        return Collections.unmodifiableList(parameterList);
     }
 
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
@@ -143,4 +149,23 @@ public class BookHandler implements ItemHandler<Book> {
         }
         return null;
     }
+
+    @Override
+    public Book readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+        Date issuanceDate;
+        try {
+            issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE));
+        } catch (ParseException e) {
+            issuanceDate = null;
+        }
+        return new Book(
+                rs.getString(NAME),
+                rs.getInt(PAGES),
+                Boolean.parseBoolean(rs.getString(BORROWED)),
+                rs.getString(AUTHOR),
+                issuanceDate
+        );
+    }
+
+
 }

@@ -1,6 +1,5 @@
 package org.vshmaliukh.console_terminal_app;
 
-import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -107,10 +106,10 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
         initServicesForTerminal();
         informAboutFileTypeWork(typeOfWorkWithFiles);
 
-        readShelfItemsFromJson();
+        readShelfItems();
         while (isActiveTerminal()) {
             generateUserInterface();
-            saveShelfItemsToJson();
+            saveShelfItems();
         }
     }
 

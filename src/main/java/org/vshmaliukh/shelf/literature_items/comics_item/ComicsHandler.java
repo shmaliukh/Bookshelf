@@ -7,20 +7,28 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface.DATE_FORMAT_STR;
 
 public class ComicsHandler implements ItemHandler<Comics> {
 
     public List<String> parameterList() {
-        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED, PUBLISHER));
+        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
+        parameterList.add(PUBLISHER);
+        return Collections.unmodifiableList(parameterList);
     }
 
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_NAME = Comparator.comparing(Comics::getName, String.CASE_INSENSITIVE_ORDER);
@@ -132,5 +140,15 @@ public class ComicsHandler implements ItemHandler<Comics> {
             return new Comics(name, pages, isBorrowed, publisher);
         }
         return null;
+    }
+
+    @Override
+    public Comics readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+        return new Comics(
+                rs.getString(NAME),
+                rs.getInt(PAGES),
+                Boolean.parseBoolean(rs.getString(BORROWED)),
+                rs.getString(PUBLISHER)
+        );
     }
 }

@@ -12,11 +12,11 @@ import java.io.Serializable;
 @Data
 public abstract class Item implements Serializable {
 
+    protected Integer id = null;
+
     protected String name;
     protected int pagesNumber;
     protected boolean isBorrowed;
-
-    private Item(){}
 
     /**
      * Base Constructor for creating Book and Magazine object
@@ -38,6 +38,4 @@ public abstract class Item implements Serializable {
         }
         this.pagesNumber = pagesNumber;
     }
-
-
 }

@@ -70,7 +70,7 @@ public final class WebUtils {
             WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
 
             webShelfHandler.setUpGsonHandler();
-            webShelfHandler.readShelfItemsFromJson();
+            webShelfHandler.readShelfItems();
             return webShelfHandler;
         }
         return null; // TODO
