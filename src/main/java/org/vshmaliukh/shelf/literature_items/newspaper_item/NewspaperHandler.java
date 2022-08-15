@@ -6,8 +6,6 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.shelf.literature_items.book_item.Book;
-import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -132,7 +130,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public Newspaper readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+    public Newspaper readItemFromSql(ResultSet rs) throws SQLException {
         return new Newspaper(
                 rs.getString(NAME),
                 rs.getInt(PAGES),
@@ -142,13 +140,23 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + NEWSPAPER_TABLE_TITLE + " " +
-                "(" +
+        return " INSERT INTO " + NEWSPAPER_TABLE_TITLE +
+                " ( " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED + " ) " +
-                "VALUES(?,?,?,?)";
+                " VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr(Integer userId) {
+        return " SELECT " +
+                NAME + " , " +
+                PAGES + " , " +
+                BORROWED +
+                " FROM " + NEWSPAPER_TABLE_TITLE +
+                " WHERE " + USER_ID + " = " + userId + ";";
     }
 
     @Override

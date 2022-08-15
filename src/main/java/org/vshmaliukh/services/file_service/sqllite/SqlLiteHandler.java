@@ -15,9 +15,9 @@ import java.util.*;
 @Slf4j
 public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
-    public static final String USER_NAME = "user_name"; // todo
-    public static final String USER_ID = "user_id";
-    public static final String USERS = "users";
+    public static final String USER_NAME = "USER_NAME"; // todo
+    public static final String USER_ID = "USER_ID";
+    public static final String USER_TABLE_TITLE = User.class.getSimpleName() + "s";
 
     public static final String SQL_FILE_TYPE = ".db";
     private final String dburl;// TODO
@@ -29,7 +29,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         super(homeDir, user.getName());
         this.user = user;
 
-        dburl = "jdbc:sqlite:" + Paths.get(generatePathForFileHandler().toString(), generateFullFileName());
+        dburl = "jdbc:sqlite:" + Paths.get(programDirectoryStr, generateFullFileName());
         connectToDB();
         //createNewDatabase();
         registrateUser();
@@ -70,7 +70,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     @Override
     public String generateFullFileName() {
-        return userName + "_sqllite_db" + SQL_FILE_TYPE;
+        return "sqllite_db" + SQL_FILE_TYPE;
     }
 
     @Override
@@ -96,7 +96,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public void insertUser(String userName) {
-        String sql = "INSERT INTO " + USERS + " ( " + USER_NAME + " ) VALUES(?)";
+        String sql = "INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME + " ) VALUES(?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userName);
             pstmt.executeUpdate();
@@ -106,7 +106,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     private void registrateUser() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + USERS + " \n" +
+        String sql = "CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " \n" +
                 "(\n" +
                 USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
                 USER_NAME + " TEXT NOT NULL, \n" +
@@ -118,9 +118,14 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     private void readUserId(User user) {
-        String sql = "SELECT " + USER_ID + " FROM " + USERS;
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(sql);
+        String sql = "" +
+                " SELECT " + USER_ID +
+                " FROM " + USER_TABLE_TITLE +
+                " WHERE " + USER_NAME + " = ? ";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user.getName());
+
+            ResultSet rs = pstmt.executeQuery();
             user.setId(rs.getInt(USER_ID));
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
@@ -140,11 +145,15 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         List<Item> itemList = new ArrayList<>();
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String sqlSelectAll = handlerByClass.generateSqlSelectAllParametersByClass(classType);
-            List<Map<String, String>> itemMaps = SqlLiteUtils.selectAllByClass(dburl, sqlSelectAll, handlerByClass.parameterList());
-            for (Map<String, String> itemMap : itemMaps) {
-                Item item = handlerByClass.generateItemByParameterValueMap(itemMap);
-                itemList.add(item);
+            String sqlStr = handlerByClass.selectItemSqlStr(user.getId());
+            try (Statement stmt = conn.createStatement()) {
+                ResultSet rs = stmt.executeQuery(sqlStr);
+                while (rs.next()) {
+                    Item item = handlerByClass.readItemFromSql(rs);
+                    itemList.add(item);
+                }
+            } catch (SQLException sqle) {
+                logSqlHandler(sqle);
             }
         }
         return itemList;
@@ -152,14 +161,15 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public static void main(String[] args) {
         Random random = new Random();
-        SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), new User("test_sql"));
+        SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), new User("test_sql_3"));
 
         List<Item> itemList = new ArrayList<>();
         for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
             itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
-        //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
+            //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
         }
         sqlLiteHandler.saveItemList(itemList);
+        System.out.println(sqlLiteHandler.readItemList());
 
         //System.out.println(itemList);
         //System.out.println();

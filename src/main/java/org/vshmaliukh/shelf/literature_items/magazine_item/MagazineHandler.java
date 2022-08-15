@@ -1,14 +1,11 @@
 package org.vshmaliukh.shelf.literature_items.magazine_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
-import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
-import org.vshmaliukh.shelf.literature_items.newspaper_item.Newspaper;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -133,7 +130,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public Magazine readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+    public Magazine readItemFromSql(ResultSet rs) throws SQLException {
         return new Magazine(
                 rs.getString(NAME),
                 rs.getInt(PAGES),
@@ -143,13 +140,23 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + MAGAZINE_TABLE_TITLE + " " +
-                "(" +
+        return " INSERT INTO " + MAGAZINE_TABLE_TITLE  +
+                " ( " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED + " ) " +
-                "VALUES(?,?,?,?)";
+                " VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr(Integer userId) {
+        return " SELECT " +
+                NAME + " , " +
+                PAGES + " , " +
+                BORROWED +
+                " FROM " + MAGAZINE_TABLE_TITLE +
+                " WHERE " + USER_ID + " = " + userId + ";";
     }
 
     @Override

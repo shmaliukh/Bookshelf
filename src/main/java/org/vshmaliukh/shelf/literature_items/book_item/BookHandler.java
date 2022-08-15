@@ -160,15 +160,27 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public String insertItemSqlStr() {
-        return "INSERT INTO " + BOOK_TABLE_TITLE + " " +
-                "(" +
+        return " INSERT INTO " + BOOK_TABLE_TITLE +
+                " ( " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED + " , " +
                 AUTHOR + " , " +
                 DATE + " ) " +
-                "VALUES(?,?,?,?,?,?)";
+                " VALUES(?,?,?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr(Integer userId) {
+        return " SELECT " +
+                NAME + " , " +
+                PAGES + " , " +
+                BORROWED + " , " +
+                AUTHOR + " , " +
+                DATE +
+                " FROM " + BOOK_TABLE_TITLE + " " +
+                " WHERE " + USER_ID  + " = " + userId + ";"; // todo use PrepareStatement
     }
 
     @Override
@@ -183,7 +195,7 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public Book readItemFromSql(Integer userId, ResultSet rs) throws SQLException {
+    public Book readItemFromSql(ResultSet rs) throws SQLException {
         Date issuanceDate;
         try {
             issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE));
