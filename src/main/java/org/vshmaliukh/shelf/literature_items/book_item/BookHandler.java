@@ -7,12 +7,14 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler.USER_ID;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
@@ -148,6 +150,34 @@ public class BookHandler implements ItemHandler<Book> {
             return new Book(name, pages, isBorrowed, author, date);
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
+    @Override
+    public String insertItemSqlStr() {
+        return "INSERT INTO " + Book.class.getSimpleName() + "s " +
+                "(" +
+                USER_ID + " , " +
+                NAME + " , " +
+                PAGES + " , " +
+                BORROWED + " , " +
+                AUTHOR + " , " +
+                DATE + " ) " +
+                "VALUES(?,?,?,?,?,?)";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.setString(5, item.getAuthor());
+        pstmt.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        pstmt.executeUpdate();
     }
 
     @Override

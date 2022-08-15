@@ -31,7 +31,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         connectToDB();
         createNewDatabase();
         registrateUser(user);
-        //generateTablesIfNotExists(); // TODO
+        generateTablesIfNotExists(); // TODO
     }
 
     void createNewDatabase() { // TODO should all methods return boolean (?)

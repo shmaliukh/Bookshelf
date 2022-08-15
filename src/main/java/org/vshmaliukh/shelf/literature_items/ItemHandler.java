@@ -5,6 +5,7 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -101,6 +102,10 @@ public interface ItemHandler<T extends Item> {
                 " FROM \n" +
                 classType.getSimpleName() + "s";
     }
+
+    String insertItemSqlStr();
+
+    void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
 
     T readItemFromSql(Integer userId, ResultSet rs) throws SQLException;
 }

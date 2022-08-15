@@ -8,13 +8,16 @@ import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
+import org.vshmaliukh.shelf.literature_items.newspaper_item.Newspaper;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler.USER_ID;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
@@ -134,5 +137,25 @@ public class MagazineHandler implements ItemHandler<Magazine> {
                 rs.getInt(PAGES),
                 Boolean.parseBoolean(rs.getString(BORROWED))
         );
+    }
+
+    @Override
+    public String insertItemSqlStr() {
+        return "INSERT INTO " + Magazine.class.getSimpleName() + "s " +
+                "(" +
+                USER_ID + " , " +
+                NAME + " , " +
+                PAGES + " , " +
+                BORROWED + " ) " +
+                "VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Magazine item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.executeUpdate();
     }
 }
