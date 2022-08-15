@@ -144,6 +144,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     @Override
     public Comics readItemFromSql(ResultSet rs) throws SQLException {
         return new Comics(
+                rs.getInt(ID),
                 rs.getString(NAME),
                 rs.getInt(PAGES),
                 Boolean.parseBoolean(rs.getString(BORROWED)),
@@ -166,6 +167,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     @Override
     public String selectItemSqlStr(Integer userId) {
         return " SELECT " +
+                ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED + " , " +

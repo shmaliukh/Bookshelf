@@ -132,6 +132,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     @Override
     public Newspaper readItemFromSql(ResultSet rs) throws SQLException {
         return new Newspaper(
+                rs.getInt(ID),
                 rs.getString(NAME),
                 rs.getInt(PAGES),
                 Boolean.parseBoolean(rs.getString(BORROWED))
@@ -142,6 +143,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     public String insertItemSqlStr() {
         return " INSERT INTO " + NEWSPAPER_TABLE_TITLE +
                 " ( " +
+                ID + " , " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +

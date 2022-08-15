@@ -132,6 +132,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public Magazine readItemFromSql(ResultSet rs) throws SQLException {
         return new Magazine(
+                rs.getInt(ID),
                 rs.getString(NAME),
                 rs.getInt(PAGES),
                 Boolean.parseBoolean(rs.getString(BORROWED))
@@ -142,6 +143,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     public String insertItemSqlStr() {
         return " INSERT INTO " + MAGAZINE_TABLE_TITLE  +
                 " ( " +
+                ID + " , " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +

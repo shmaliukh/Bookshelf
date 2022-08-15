@@ -7,6 +7,7 @@ import org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
@@ -17,17 +18,23 @@ public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return sqlLiteHandler.readItemList();
+        return sqlLiteHandler.readItemList().stream()
+                .filter(o -> !o.isBorrowed())
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return null;
+        return sqlLiteHandler.readItemList().stream()
+                .filter(Item::isBorrowed)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void addLiteratureObject(Item item) {
-
+        if(item != null){
+            sqlLiteHandler.saveItemToDB(item);
+        }
     }
 
     @Override

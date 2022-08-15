@@ -83,15 +83,17 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     @Override
     public void saveItemList(List<Item> listToSave) {
-        for (Item item : listToSave) {
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-            String sqlInsertStr = handlerByClass.insertItemSqlStr();
-            try {
-                PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
-                handlerByClass.insertItemValues(pstmt, item, user.getId());
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        listToSave.forEach(this::saveItemToDB);
+    }
+
+    public void saveItemToDB(Item item){
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String sqlInsertStr = handlerByClass.insertItemSqlStr();
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
+            handlerByClass.insertItemValues(pstmt, item, user.getId());
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 

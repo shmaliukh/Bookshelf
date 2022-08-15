@@ -20,6 +20,13 @@ public abstract class Item implements Serializable {
 
     private Item(){}
 
+    protected Item(Integer id, String name, int pagesNumber, boolean isBorrowed) {
+        this.id = id;
+        this.name = name;
+        setPagesNumber(pagesNumber);
+        this.isBorrowed = isBorrowed;
+    }
+
     /**
      * Base Constructor for creating Book and Magazine object
      */

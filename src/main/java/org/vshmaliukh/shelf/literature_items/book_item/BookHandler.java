@@ -174,6 +174,7 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String selectItemSqlStr(Integer userId) {
         return " SELECT " +
+                ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED + " , " +
@@ -200,9 +201,10 @@ public class BookHandler implements ItemHandler<Book> {
         try {
             issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE));
         } catch (ParseException e) {
-            issuanceDate = null;
+            issuanceDate = new Date(); // TODO
         }
         return new Book(
+                rs.getInt(ID),
                 rs.getString(NAME),
                 rs.getInt(PAGES),
                 Boolean.parseBoolean(rs.getString(BORROWED)),
