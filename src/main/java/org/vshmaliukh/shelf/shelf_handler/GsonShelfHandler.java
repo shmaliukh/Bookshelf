@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GsonShelfHandler extends SaveReadShelfHandler {
 
-    protected GsonShelfHandler(){}
+    //protected GsonShelfHandler(){}
 
     public GsonShelfHandler(String userName, int typeOfWorkWithFiles){
         setUpDataSaver(userName,typeOfWorkWithFiles);

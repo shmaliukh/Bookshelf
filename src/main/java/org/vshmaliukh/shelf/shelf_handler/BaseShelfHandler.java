@@ -6,12 +6,11 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class AbstractShelfHandler implements ShelfHandlerInterface {
+public class BaseShelfHandler implements ShelfHandlerInterface {
 
-    //protected User user;
     protected Shelf shelf;
 
-    protected AbstractShelfHandler() {
+    public BaseShelfHandler() {
         this.shelf = new Shelf();
     }
 

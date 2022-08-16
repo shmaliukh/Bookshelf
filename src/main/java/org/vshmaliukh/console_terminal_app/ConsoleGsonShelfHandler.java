@@ -11,8 +11,8 @@ public class ConsoleGsonShelfHandler extends GsonShelfHandler {
     final Scanner scanner;
     final PrintWriter printWriter;
 
-    public ConsoleGsonShelfHandler(Scanner scanner, PrintWriter printWriter) {
-        super();
+    public ConsoleGsonShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWorkWithFiles) {
+        super(userName, typeOfWorkWithFiles);
         this.scanner = scanner;
         this.printWriter = printWriter;
     }

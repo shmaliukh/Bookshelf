@@ -42,19 +42,19 @@ public class ConsoleUI extends AbstractUI {
         consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
     }
 
-    public void configShelfHandler() {
+    public void configShelfHandler() { // todo refactor
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
-                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
             case FILE_MODE_WORK_WITH_SQLLITE:
                 shelfHandler = new SqlLiteShelfHandler(user.getName());
                 break;
             default:
-                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter);
+                shelfHandler = new SqlLiteShelfHandler(user.getName());
                 break;
         }
     }
