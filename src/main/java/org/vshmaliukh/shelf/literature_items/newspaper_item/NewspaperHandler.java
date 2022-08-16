@@ -18,6 +18,7 @@ import static org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler.USER_I
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_TABLE_TITLE;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
@@ -182,10 +183,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public String deleteItemFromDBStr(Integer id) {
-        return "" +
-                " DELETE FROM " +
-                NEWSPAPER_TABLE_TITLE +
-                " WHERE id = ?";
+    public String getSqlTableTitle() {
+        return MAGAZINE_TABLE_TITLE;
     }
 }

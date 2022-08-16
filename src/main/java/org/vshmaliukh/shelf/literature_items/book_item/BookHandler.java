@@ -181,7 +181,7 @@ public class BookHandler implements ItemHandler<Book> {
                 AUTHOR + " , " +
                 DATE +
                 " FROM " + BOOK_TABLE_TITLE + " " +
-                " WHERE " + USER_ID  + " = " + userId + ";"; // todo use PrepareStatement
+                " WHERE " + USER_ID + " = " + userId + ";"; // todo use PrepareStatement
     }
 
     @Override
@@ -229,11 +229,8 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public String deleteItemFromDBStr(Integer id) {
-        return "" +
-                " DELETE FROM " +
-                BOOK_TABLE_TITLE +
-                " WHERE id = ?";
+    public String getSqlTableTitle() {
+        return BOOK_TABLE_TITLE;
     }
 
 

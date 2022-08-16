@@ -181,9 +181,21 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public void deleteItemFromDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String deleteItemFromDBStr = handlerByClass.deleteItemFromDBStr(item.getId());
+        String deleteItemFromDBStr = handlerByClass.deleteItemFromDBStr();
         try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
             preparedStatement.setInt(1, item.getId());
+            preparedStatement.execute();
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
+        }
+    }
+
+    public void changeItemBorrowedStateInDB(Item item) {
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String deleteItemFromDBStr = handlerByClass.changeItemBorrowedStateInDBStr();
+        try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
+            preparedStatement.setString(1, String.valueOf(!item.isBorrowed()));
+            preparedStatement.setInt(2, item.getId());
             preparedStatement.execute();
         } catch (SQLException sqle) {
             logSqlHandler(sqle);

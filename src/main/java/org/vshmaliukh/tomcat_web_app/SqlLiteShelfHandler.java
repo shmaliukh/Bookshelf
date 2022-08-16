@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
-    String userName;
     Shelf shelf = new Shelf();
 
+    String userName;
     SqlLiteHandler sqlLiteHandler;
 
-    public SqlLiteShelfHandler(String userName, int typeOfWork) {
+    public SqlLiteShelfHandler(String userName) {
         this.userName = userName;
 
         User user = new User(userName);
@@ -53,7 +53,8 @@ public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
     @Override
     public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
-
+        Item item = literatureList.get(index - 1);
+        sqlLiteHandler.changeItemBorrowedStateInDB(item);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.vshmaliukh.shelf;
 
-import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;

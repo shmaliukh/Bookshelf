@@ -95,7 +95,7 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
 
     public void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
-        setUpGsonHandler();
+        setUpDataSaver();
     }
 
     public void startWork(boolean userMode) {

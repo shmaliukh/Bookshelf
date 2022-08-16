@@ -55,11 +55,7 @@ public abstract class AbstractShelfHandler implements ShelfHandlerInterface {
         }
     }
 
-    public abstract void deleteLiteratureObjectByIndex(int index);
-
-    public abstract void changeBorrowedStateOfItem(List<Item> literatureList, int index);
-
-    public void setUpGsonHandler() {
+    public void setUpDataSaver() {
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
                 saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());

@@ -182,10 +182,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public String deleteItemFromDBStr(Integer id) {
-        return "" +
-                " DELETE FROM " +
-                MAGAZINE_TABLE_TITLE +
-                " WHERE id = ?";
+    public String getSqlTableTitle() {
+        return MAGAZINE_TABLE_TITLE;
     }
 }

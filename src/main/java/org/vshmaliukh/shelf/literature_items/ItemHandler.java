@@ -64,7 +64,7 @@ public interface ItemHandler<T extends Item> {
 
     T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType){
+    default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType) {
         List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
         StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
         parameterList.forEach(parametersJoiner::add);
@@ -85,5 +85,20 @@ public interface ItemHandler<T extends Item> {
 
     String generateSqlTableStr();
 
-    String deleteItemFromDBStr(Integer id);
+    default String deleteItemFromDBStr() {
+        return "" +
+                " DELETE FROM " +
+                getSqlTableTitle() +
+                " WHERE " + ID + " = ? ";
+    }
+
+    default String changeItemBorrowedStateInDBStr() {
+        return "" +
+                " UPDATE " +
+                getSqlTableTitle() +
+                " SET " + BORROWED + " = ? " +
+                " WHERE " + ID + " = ? ";
+    }
+
+    String getSqlTableTitle(); // TODO rename
 }

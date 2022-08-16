@@ -199,10 +199,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String deleteItemFromDBStr(Integer id) {
-        return "" +
-                " DELETE FROM " +
-                COMICS_TABLE_TITLE +
-                " WHERE id = ?";
+    public String getSqlTableTitle() {
+        return COMICS_TABLE_TITLE;
     }
 }
