@@ -33,7 +33,7 @@ public class AddItemServlet extends HttpServlet {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             if (item != null) {
                 webShelfHandler.addLiteratureObject(item);
-                webShelfHandler.saveShelfItemsToJson();
+                //webShelfHandler.saveShelfItems();
             }
 
             WebUtils.redirectTo(ADD_MENU_TITLE, response,

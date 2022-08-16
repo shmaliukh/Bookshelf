@@ -4,12 +4,23 @@ import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
-import static org.vshmaliukh.shelf.literature_items.ItemUtils.COMA_DELIMITER;
-import static org.vshmaliukh.shelf.literature_items.ItemUtils.VALUE_DELIMITER;
+import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
 public interface ItemHandler<T extends Item> {
+    String ITEM_ID_SQL_PARAMETER = "id";
+    String NAME_SQL_PARAMETER = NAME.toLowerCase();
+    String PAGES_SQL_PARAMETER = PAGES.toLowerCase();
+    String BORROWED_SQL_PARAMETER = BORROWED.toLowerCase();
+    String AUTHOR_SQL_PARAMETER = AUTHOR.toLowerCase();
+    String DATE_SQL_PARAMETER = DATE.toLowerCase();
+    String PUBLISHER_SQL_PARAMETER = PUBLISHER.toLowerCase();
+
+    List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 
     String CHOOSE_TYPE_OF_SORTING = "Choose type of sorting:";
     String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
@@ -57,42 +68,30 @@ public interface ItemHandler<T extends Item> {
 
     T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    default <T extends Item> String generateSqlTableStr(Class<T> classType){
-        List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
-        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
-        parameterList.forEach(parametersJoiner::add);
+    String insertItemSqlStr();
 
-        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ");
-        sb.append(classType.getSimpleName()).append("s (\n");
-        sb.append(classType.getSimpleName()).append("_id INTEGER PRIMARY KEY AUTOINCREMENT,\n");
-        parameterList.forEach(o -> sb.append(o).append(" TEXT NOT NULL, \n"));
-        sb.append("UNIQUE (").append(parametersJoiner).append(") ON CONFLICT IGNORE");
-        sb.append(");");
+    String selectItemSqlStr();
 
-        return sb.toString();
+    void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
+
+    T readItemFromSql(ResultSet rs) throws SQLException;
+
+    String generateSqlTableStr();
+
+    default String deleteItemFromDBStr() {
+        return "" +
+                " DELETE FROM " +
+                getSqlTableTitle() +
+                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
-    default <T extends Item> String generateSqlInsertStr(T item){
-        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
-        List<String> stringList = ItemHandlerProvider.getHandlerByClass(item.getClass()).parameterList();
-        stringList.forEach(parametersJoiner::add);
-        StringJoiner valuesJoiner = new StringJoiner(COMA_DELIMITER);
-        stringList.forEach(o -> valuesJoiner.add(VALUE_DELIMITER));
-
-        return " INSERT OR IGNORE INTO " + item.getClass().getSimpleName() + "s" +
-                " ( " + parametersJoiner + " ) \n" +
-                " VALUES " +
-                " ( " +valuesJoiner + " ) ";
+    default String changeItemBorrowedStateInDBStr() {
+        return "" +
+                " UPDATE " +
+                getSqlTableTitle() +
+                " SET " + BORROWED + " = ? " +
+                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
-    default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType){
-        List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
-        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
-        parameterList.forEach(parametersJoiner::add);
-
-        return " SELECT \n" +
-                parametersJoiner +
-                " FROM \n" +
-                classType.getSimpleName() + "s";
-    }
+    String getSqlTableTitle(); // TODO rename
 }

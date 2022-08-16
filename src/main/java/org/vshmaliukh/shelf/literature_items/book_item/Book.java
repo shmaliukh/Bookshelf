@@ -19,6 +19,12 @@ public class Book extends Item {
     private String author;
     private Date issuanceDate;
 
+    public Book(Integer id, String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
+        super(id, name, pagesNumber, isBorrowed);
+        this.author = author;
+        this.issuanceDate = issuanceDate;
+    }
+
     /**
      * Constructor for creating Book object
      */

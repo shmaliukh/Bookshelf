@@ -9,16 +9,22 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class NewspaperHandler implements ItemHandler<Newspaper> {
 
+    public static final String NEWSPAPER_TABLE_TITLE = Newspaper.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
-        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+        return parameterList;
     }
 
     public static final Comparator<Newspaper> NEWSPAPER_COMPARATOR_BY_PAGES = Comparator.comparing(Newspaper::getPagesNumber);
@@ -26,7 +32,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
 
     @Override
     public List<Newspaper> getSortedItems(int typeOfSorting, List<Newspaper> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Newspaper> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
@@ -121,5 +127,71 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
             return new Newspaper(name, pages, isBorrowed);
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
+    @Override
+    public Newspaper readItemFromSql(ResultSet rs) throws SQLException {
+        return new Newspaper(
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER))
+        );
+    }
+
+    @Override
+    public String insertItemSqlStr() {
+        return " INSERT OR IGNORE INTO " + NEWSPAPER_TABLE_TITLE +
+                " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr() {
+        return " SELECT " +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
+                " FROM " + NEWSPAPER_TABLE_TITLE +
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Newspaper item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.executeUpdate();
+    }
+
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + NEWSPAPER_TABLE_TITLE +
+                "(\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
+                ");";
+    }
+
+    @Override
+    public String getSqlTableTitle() {
+        return NEWSPAPER_TABLE_TITLE;
     }
 }

@@ -7,6 +7,10 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -14,11 +18,17 @@ import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
 import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class BookHandler implements ItemHandler<Book> {
 
+    public static final String BOOK_TABLE_TITLE = Book.class.getSimpleName() + "s";
+
     public List<String> parameterList() {
-        return Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED, AUTHOR, DATE));
+        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
+        parameterList.add(AUTHOR);
+        parameterList.add(DATE);
+        return Collections.unmodifiableList(parameterList);
     }
 
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
@@ -28,9 +38,9 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Book> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
+                return new ArrayList<Book>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
         }
         return Collections.emptyList();
@@ -39,10 +49,10 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public List<MenuItemForSorting> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
-                new MenuItemForSorting(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
-                new MenuItemForSorting(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
+                new MenuItemForSorting<Book>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Book>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
+                new MenuItemForSorting<Book>(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<Book>(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
         ));
     }
 
@@ -142,5 +152,90 @@ public class BookHandler implements ItemHandler<Book> {
             return new Book(name, pages, isBorrowed, author, date);
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
+    @Override
+    public String insertItemSqlStr() {
+        return " INSERT OR IGNORE INTO " + BOOK_TABLE_TITLE +
+                " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr() {
+        return " SELECT " +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER +
+                " FROM " + BOOK_TABLE_TITLE + " " +
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.setString(5, item.getAuthor());
+        pstmt.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        pstmt.executeUpdate();
+    }
+
+    @Override
+    public Book readItemFromSql(ResultSet rs) throws SQLException {
+        Date issuanceDate;
+        try {
+            issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
+        } catch (ParseException e) {
+            issuanceDate = new Date(); // TODO
+        }
+        return new Book(
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER)),
+                rs.getString(AUTHOR_SQL_PARAMETER),
+                issuanceDate
+        );
+    }
+
+    @Override
+    public String generateSqlTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE +
+                " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
+                ");";
+    }
+
+    @Override
+    public String getSqlTableTitle() {
+        return BOOK_TABLE_TITLE;
     }
 }
