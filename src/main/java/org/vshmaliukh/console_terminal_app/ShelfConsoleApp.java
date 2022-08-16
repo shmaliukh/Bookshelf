@@ -9,8 +9,8 @@ public class ShelfConsoleApp {
         Scanner scanner = new Scanner(System.in);
         PrintWriter printWriter = new PrintWriter(System.out, true);
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(scanner, printWriter);
+        ConsoleUI consoleUI = new ConsoleUI(scanner, printWriter);
 
-        consoleShelfHandler.startWork(true);
+        consoleUI.startWork(true);
     }
 }

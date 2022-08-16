@@ -1,9 +1,9 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
-import org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -11,46 +11,49 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class GsonShelfHandler extends AbstractSaveReadAbleShelfHandler {
+public class GsonShelfHandler extends SaveReadShelfHandler {
 
-    public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
-    public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
+    protected GsonShelfHandler(){}
 
+    public GsonShelfHandler(String userName, int typeOfWorkWithFiles){
+        setUpDataSaver(userName,typeOfWorkWithFiles);
+    }
 
-    public void setUpDataSaver() {
-        switch (typeOfWorkWithFiles) {
+    @Override
+    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+        switch (typeOfWorkWithFiles) {// todo
             case FILE_MODE_WORK_WITH_ONE_FILE:
-                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());
+                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                saveReadUserFilesHandler = new ItemGsonHandlerPerTypeUser(HOME_PROPERTY, user.getName());
-                break;
-            case FILE_MODE_WORK_WITH_SQLLITE:
-                saveReadUserFilesHandler = new SqlLiteHandler(HOME_PROPERTY, user);
+                saveReadUserFilesHandler = new ItemGsonHandlerPerTypeUser(HOME_PROPERTY, userName);
                 break;
             default:
-                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());
+                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
         }
     }
 
+    @Override
     public List<Item> readLiteratureInShelf() {
         return saveReadUserFilesHandler.readItemList().stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Item> readLiteratureOutShelf() {
         return saveReadUserFilesHandler.readItemList().stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public void addLiteratureObject(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
         } else {
-            //log.error("The literature item to add is null");
+            log.error("The literature item to add is null");
         }
         saveShelfItems();
     }
@@ -76,14 +79,17 @@ public class GsonShelfHandler extends AbstractSaveReadAbleShelfHandler {
         }
     }
 
+    @Override
     public void saveShelfItems() {
         saveReadUserFilesHandler.saveItemList(shelf.getAllLiteratureObjects());
     }
 
+    @Override
     public void readShelfItems() {
         saveReadUserFilesHandler.readItemList().forEach(this::addLiteratureObject);
     }
 
+    @Override
     public Shelf getShelf() {
         return shelf;
     }

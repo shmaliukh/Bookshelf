@@ -1,11 +1,12 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUserHandler;
+import org.vshmaliukh.tomcat_web_app.WebUI;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -68,7 +69,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
 
     private <T extends Item> void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
         Class<T> classType = (Class<T>) ItemHandlerProvider.getClassByName(classTypeStr);
-        WebUserHandler webShelfHandler = generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
         List<T> typedItemList = new ArrayList<>();
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();

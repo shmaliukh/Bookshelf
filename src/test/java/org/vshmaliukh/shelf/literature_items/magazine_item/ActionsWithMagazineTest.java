@@ -2,7 +2,7 @@ package org.vshmaliukh.shelf.literature_items.magazine_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 
 import java.io.OutputStreamWriter;
@@ -30,7 +30,7 @@ class ActionsWithMagazineTest {
      */
     int expectedArraySize = 3;
 
-    ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""),printWriter);
+    ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""),printWriter);
 
     /*
       Adding magazines in revers order

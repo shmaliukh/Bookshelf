@@ -2,7 +2,7 @@ package org.vshmaliukh.services.file_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
@@ -69,7 +69,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerOneFile() {
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
         consoleShelfHandler.addLiteratureObject(book1);
         consoleShelfHandler.addLiteratureObject(book2);
         consoleShelfHandler.addLiteratureObject(magazine1);
@@ -79,7 +79,7 @@ class ItemGsonHandlerTest {
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
-        ConsoleShelfHandler consoleShelfHandler1 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        ConsoleGsonShelfHandler consoleShelfHandler1 = new ConsoleGsonShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addLiteratureObject);
 
         assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
@@ -93,8 +93,8 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerPerType() {
-        ConsoleShelfHandler consoleShelfHandler1 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
-        ConsoleShelfHandler consoleShelfHandler2 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        ConsoleGsonShelfHandler consoleShelfHandler1 = new ConsoleGsonShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        ConsoleGsonShelfHandler consoleShelfHandler2 = new ConsoleGsonShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
 
         consoleShelfHandler1 .addLiteratureObject(book1);
         consoleShelfHandler1 .addLiteratureObject(book2);

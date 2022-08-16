@@ -2,7 +2,8 @@ package org.vshmaliukh.console_terminal_app.input_handler;
 
 import java.util.Date;
 
-import static org.vshmaliukh.shelf.shelf_handler.AbstractSaveReadAbleShelfHandler.*;
+import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.*;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.*;
 
 public final class ConstantsForConsoleUserInputHandler {
 

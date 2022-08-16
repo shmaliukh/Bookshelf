@@ -33,7 +33,7 @@ class ConsoleShelfHandlerTest {
     @Test
     @DisplayName("Add one Book, Magazine and Gazette (are not borrowed) to empty Shelf")
     void addItemsToShelf_1() {
-        ConsoleShelfHandler consoleShelf1 = new ConsoleShelfHandler(new Scanner(""),printWriter);
+        ConsoleGsonShelfHandler consoleShelf1 = new ConsoleGsonShelfHandler(new Scanner(""),printWriter);
 
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addLiteratureObject(book1);
@@ -46,7 +46,7 @@ class ConsoleShelfHandlerTest {
     @Test
     @DisplayName("Add one Book (borrowed), one Magazine and Gazette (not borrowed) to empty Shelf")
     void addItemsToShelf_2() {
-        ConsoleShelfHandler consoleShelf1 = new ConsoleShelfHandler(new Scanner(""),printWriter);
+        ConsoleGsonShelfHandler consoleShelf1 = new ConsoleGsonShelfHandler(new Scanner(""),printWriter);
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addLiteratureObject(book1);
@@ -64,7 +64,7 @@ class ConsoleShelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""), printWriter);
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""), printWriter);
         consoleShelfHandler.addLiteratureObject(magazine3);
         consoleShelfHandler.addLiteratureObject(magazine2);
         consoleShelfHandler.addLiteratureObject(magazine1);
@@ -86,7 +86,7 @@ class ConsoleShelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""), printWriter);
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""), printWriter);
         consoleShelfHandler.addLiteratureObject(magazine3);
         consoleShelfHandler.addLiteratureObject(magazine2);
         consoleShelfHandler.addLiteratureObject(magazine1);
@@ -108,7 +108,7 @@ class ConsoleShelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""), printWriter);
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""), printWriter);
         consoleShelfHandler.addLiteratureObject(book3);
         consoleShelfHandler.addLiteratureObject(book2);
         consoleShelfHandler.addLiteratureObject(book1);
@@ -129,7 +129,7 @@ class ConsoleShelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""), printWriter);
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""), printWriter);
         consoleShelfHandler.addLiteratureObject(book3);
         consoleShelfHandler.addLiteratureObject(book2);
         consoleShelfHandler.addLiteratureObject(book1);
@@ -151,7 +151,7 @@ class ConsoleShelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""), printWriter);
+        ConsoleGsonShelfHandler consoleShelfHandler = new ConsoleGsonShelfHandler(new Scanner(""), printWriter);
         consoleShelfHandler.addLiteratureObject(book3);
         consoleShelfHandler.addLiteratureObject(book2);
         consoleShelfHandler.addLiteratureObject(book1);
