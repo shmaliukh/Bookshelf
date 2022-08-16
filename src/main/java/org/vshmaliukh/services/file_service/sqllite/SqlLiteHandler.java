@@ -12,12 +12,10 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
 
+import static org.vshmaliukh.shelf.shelf_handler.User.*;
+
 @Slf4j
 public class SqlLiteHandler extends SaveReadUserFilesHandler {
-
-    public static final String USER_NAME = "USER_NAME"; // todo
-    public static final String USER_ID = "USER_ID";
-    public static final String USER_TABLE_TITLE = User.class.getSimpleName() + "s";
 
     public static final String SQL_FILE_TYPE = ".db";
     private final String dburl;// TODO
@@ -70,7 +68,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     @Override
     public String generateFullFileName() {
-        return "sqllite_db" + SQL_FILE_TYPE;
+        return "shelf_sqllite_db" + SQL_FILE_TYPE;
     }
 
     @Override
@@ -98,7 +96,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public void insertUser(String userName) {
-        String sql = "INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME + " ) VALUES(?)";
+        String sql = "INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userName);
             pstmt.executeUpdate();
@@ -110,9 +108,9 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     private void registrateUser() {
         String sql = "CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " \n" +
                 "(\n" +
-                USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
-                USER_NAME + " TEXT NOT NULL, \n" +
-                "UNIQUE (" + USER_NAME + ") ON CONFLICT IGNORE \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
+                USER_NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                "UNIQUE (" + USER_NAME_SQL_PARAMETER + ") ON CONFLICT IGNORE \n" +
                 ");";
         createNewTable(sql);
         insertUser(user.getName());
@@ -121,14 +119,14 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     private void readUserId(User user) {
         String sql = "" +
-                " SELECT " + USER_ID +
+                " SELECT " + USER_ID_SQL_PARAMETER +
                 " FROM " + USER_TABLE_TITLE +
-                " WHERE " + USER_NAME + " = ? ";
+                " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, user.getName());
 
             ResultSet rs = pstmt.executeQuery();
-            user.setId(rs.getInt(USER_ID));
+            user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -147,9 +145,10 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         List<Item> itemList = new ArrayList<>();
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String sqlStr = handlerByClass.selectItemSqlStr(user.getId());
-            try (Statement stmt = conn.createStatement()) {
-                ResultSet rs = stmt.executeQuery(sqlStr);
+            String sqlStr = handlerByClass.selectItemSqlStr();
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlStr)) {
+                pstmt.setInt(1, user.getId());
+                ResultSet rs = pstmt.executeQuery();
                 while (rs.next()) {
                     Item item = handlerByClass.readItemFromSql(rs);
                     itemList.add(item);
@@ -192,8 +191,8 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public void changeItemBorrowedStateInDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String deleteItemFromDBStr = handlerByClass.changeItemBorrowedStateInDBStr();
-        try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
+        String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateInDBStr();
+        try (PreparedStatement preparedStatement = conn.prepareStatement(changeItemBorrowedStateInDB)) {
             preparedStatement.setString(1, String.valueOf(!item.isBorrowed()));
             preparedStatement.setInt(2, item.getId());
             preparedStatement.execute();

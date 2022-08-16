@@ -25,6 +25,7 @@ public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
     @Override
     public List<Item> readLiteratureInShelf() {
+        //sqlLiteHandler.read
         return shelf.itemsOfShelf.stream() // todo
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());

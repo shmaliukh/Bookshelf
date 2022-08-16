@@ -10,11 +10,15 @@ import java.sql.SQLException;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.shelf.literature_items.ItemUtils.COMA_DELIMITER;
 
 public interface ItemHandler<T extends Item> {
-
-    String ID = "id";
+    String ITEM_ID_SQL_PARAMETER = "id";
+    String NAME_SQL_PARAMETER = NAME.toLowerCase();
+    String PAGES_SQL_PARAMETER = PAGES.toLowerCase();
+    String BORROWED_SQL_PARAMETER = BORROWED.toLowerCase();
+    String AUTHOR_SQL_PARAMETER = AUTHOR.toLowerCase();
+    String DATE_SQL_PARAMETER = DATE.toLowerCase();
+    String PUBLISHER_SQL_PARAMETER = PUBLISHER.toLowerCase();
 
     List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 
@@ -64,20 +68,9 @@ public interface ItemHandler<T extends Item> {
 
     T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    default <T extends Item> String generateSqlSelectAllParametersByClass(Class<T> classType) {
-        List<String> parameterList = ItemHandlerProvider.getHandlerByClass(classType).parameterList();
-        StringJoiner parametersJoiner = new StringJoiner(COMA_DELIMITER);
-        parameterList.forEach(parametersJoiner::add);
-
-        return " SELECT \n" +
-                parametersJoiner +
-                " FROM \n" +
-                classType.getSimpleName() + "s";
-    }
-
     String insertItemSqlStr();
 
-    String selectItemSqlStr(Integer userId);
+    String selectItemSqlStr();
 
     void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
 
@@ -89,7 +82,7 @@ public interface ItemHandler<T extends Item> {
         return "" +
                 " DELETE FROM " +
                 getSqlTableTitle() +
-                " WHERE " + ID + " = ? ";
+                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
     default String changeItemBorrowedStateInDBStr() {
@@ -97,7 +90,7 @@ public interface ItemHandler<T extends Item> {
                 " UPDATE " +
                 getSqlTableTitle() +
                 " SET " + BORROWED + " = ? " +
-                " WHERE " + ID + " = ? ";
+                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
     String getSqlTableTitle(); // TODO rename

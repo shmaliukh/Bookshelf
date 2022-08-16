@@ -3,10 +3,14 @@ package org.vshmaliukh.shelf.literature_items;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
+import static org.vshmaliukh.shelf.literature_items.ItemTitles.PUBLISHER;
+
 public class ItemUtils {
 
+
+
     public static final String COMA_DELIMITER = ", ";
-    public static final String VALUE_DELIMITER = "?";
 
     private ItemUtils() {
     }

@@ -14,10 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler.USER_ID;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
 
@@ -32,7 +32,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Magazine> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
@@ -129,36 +129,40 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         return null;
     }
 
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
     @Override
     public Magazine readItemFromSql(ResultSet rs) throws SQLException {
         return new Magazine(
-                rs.getInt(ID),
-                rs.getString(NAME),
-                rs.getInt(PAGES),
-                Boolean.parseBoolean(rs.getString(BORROWED))
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER))
         );
     }
 
     @Override
     public String insertItemSqlStr() {
-        return " INSERT INTO " + MAGAZINE_TABLE_TITLE  +
+        return " INSERT OR IGNORE INTO " + MAGAZINE_TABLE_TITLE  +
                 " ( " +
-                USER_ID + " , " +
-                NAME + " , " +
-                PAGES + " , " +
-                BORROWED + " ) " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " ) " +
                 " VALUES(?,?,?,?)";
     }
 
     @Override
-    public String selectItemSqlStr(Integer userId) {
+    public String selectItemSqlStr() {
         return " SELECT " +
-                ID + " , " +
-                NAME + " , " +
-                PAGES + " , " +
-                BORROWED +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
                 " FROM " + MAGAZINE_TABLE_TITLE +
-                " WHERE " + USER_ID + " = " + userId + ";";
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
     }
 
     @Override
@@ -173,11 +177,16 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     public String generateSqlTableStr() {
         return "CREATE TABLE IF NOT EXISTS " + MAGAZINE_TABLE_TITLE +
                 "(\n" +
-                ID + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
-                USER_ID + " INTEGER NOT NULL, \n" +
-                NAME + " TEXT NOT NULL, \n" +
-                PAGES + " INTEGER NOT NULL, \n" +
-                BORROWED + " TEXT NOT NULL \n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
                 ");";
     }
 

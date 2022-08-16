@@ -14,11 +14,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler.USER_ID;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
 import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class BookHandler implements ItemHandler<Book> {
 
@@ -38,9 +38,9 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Book> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
+                return new ArrayList<Book>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
         }
         return Collections.emptyList();
@@ -49,10 +49,10 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public List<MenuItemForSorting> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
-                new MenuItemForSorting(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
-                new MenuItemForSorting(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
+                new MenuItemForSorting<Book>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Book>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
+                new MenuItemForSorting<Book>(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<Book>(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
         ));
     }
 
@@ -160,28 +160,28 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public String insertItemSqlStr() {
-        return " INSERT INTO " + BOOK_TABLE_TITLE +
+        return " INSERT OR IGNORE INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID + " , " +
-                NAME + " , " +
-                PAGES + " , " +
-                BORROWED + " , " +
-                AUTHOR + " , " +
-                DATE + " ) " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER + " ) " +
                 " VALUES(?,?,?,?,?,?)";
     }
 
     @Override
-    public String selectItemSqlStr(Integer userId) {
+    public String selectItemSqlStr() {
         return " SELECT " +
-                ID + " , " +
-                NAME + " , " +
-                PAGES + " , " +
-                BORROWED + " , " +
-                AUTHOR + " , " +
-                DATE +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER +
                 " FROM " + BOOK_TABLE_TITLE + " " +
-                " WHERE " + USER_ID + " = " + userId + ";"; // todo use PrepareStatement
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
     }
 
     @Override
@@ -199,16 +199,16 @@ public class BookHandler implements ItemHandler<Book> {
     public Book readItemFromSql(ResultSet rs) throws SQLException {
         Date issuanceDate;
         try {
-            issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE));
+            issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
         } catch (ParseException e) {
             issuanceDate = new Date(); // TODO
         }
         return new Book(
-                rs.getInt(ID),
-                rs.getString(NAME),
-                rs.getInt(PAGES),
-                Boolean.parseBoolean(rs.getString(BORROWED)),
-                rs.getString(AUTHOR),
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER)),
+                rs.getString(AUTHOR_SQL_PARAMETER),
                 issuanceDate
         );
     }
@@ -216,15 +216,21 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String generateSqlTableStr() {
         return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE +
-                "(\n" +
-                ID + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
-                USER_ID + " INTEGER NOT NULL, \n" +
-                NAME + " TEXT NOT NULL, \n" +
-                PAGES + " INTEGER NOT NULL, \n" +
-                BORROWED + " TEXT NOT NULL, \n" +
-                AUTHOR + " TEXT NOT NULL, \n" +
-                DATE + " TEXT NOT NULL \n" +
-                //"UNIQUE ("
+                " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                AUTHOR_SQL_PARAMETER + " , " +
+                DATE_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
                 ");";
     }
 

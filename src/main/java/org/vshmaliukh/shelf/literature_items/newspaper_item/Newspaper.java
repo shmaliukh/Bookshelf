@@ -10,7 +10,6 @@ public class Newspaper extends Item {
         super(id, name, pagesNumber, isBorrowed);
     }
 
-
     public Newspaper(String name, int pagesNumber, boolean isBorrowed) {
         super(name, pagesNumber, isBorrowed);
     }
