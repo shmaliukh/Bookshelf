@@ -238,6 +238,4 @@ public class BookHandler implements ItemHandler<Book> {
     public String getSqlTableTitle() {
         return BOOK_TABLE_TITLE;
     }
-
-
 }

@@ -17,38 +17,41 @@ import static org.vshmaliukh.shelf.shelf_handler.User.*;
 @Slf4j
 public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
-    public static final String SQL_FILE_TYPE = ".db";
-    private final String dburl;// TODO
-    final User user;
+    private static Connection conn;
 
-    Connection conn = null;
+    public static final String SQL_FILE_TYPE = ".db";
+    public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
+    private static final String SqlLiteFileURL = "jdbc:sqlite:" + Paths.get( System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
+    final User user; // TODO
+
+    static {
+        createNewDatabase();
+        connectToDB();
+    }
 
     public SqlLiteHandler(String homeDir, User user) {
         super(homeDir, user.getName());
         this.user = user;
-
-        dburl = "jdbc:sqlite:" + Paths.get(programDirectoryStr, generateFullFileName());
-        connectToDB();
-        //createNewDatabase();
         registrateUser();
-        generateTablesIfNotExists(); // TODO
+        generateTablesIfNotExists();
     }
 
-    void createNewDatabase() { // TODO should start once
+    // TODO should start once
+    static void createNewDatabase() {
         try {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 log.info("The driver name is " + meta.getDriverName());
-                log.info("A new database '" + dburl + "' has been created.");
+                log.info("A new database '" + SqlLiteFileURL + "' has been created.");
             }
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
         }
     }
 
-    private void connectToDB() {
+    static void connectToDB() {
         try {
-            conn = DriverManager.getConnection(dburl);
+            conn = DriverManager.getConnection(SqlLiteFileURL);
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -68,7 +71,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     @Override
     public String generateFullFileName() {
-        return "shelf_sqllite_db" + SQL_FILE_TYPE;
+        return SQLLITE_FILE_NAME;
     }
 
     @Override
@@ -96,7 +99,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public void insertUser(String userName) {
-        String sql = "INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
+        String sql = "INSERT OR IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userName);
             pstmt.executeUpdate();
@@ -158,24 +161,6 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
             }
         }
         return itemList;
-    }
-
-    public static void main(String[] args) {
-        Random random = new Random();
-        SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), new User("test_sql_3"));
-
-        List<Item> itemList = new ArrayList<>();
-        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
-            itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
-            //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
-        }
-        //sqlLiteHandler.saveItemList(itemList);
-        System.out.println(sqlLiteHandler.readItemList().size());
-
-        //System.out.println(itemList);
-        //System.out.println();
-        //System.out.println(sqlLiteHandler.readItemList());
-        //new PlainTextTableHandler(new PrintWriter(System.out), ConvertorToStringForItems.getTable(itemList), true).print();
     }
 
     public void deleteItemFromDB(Item item) {

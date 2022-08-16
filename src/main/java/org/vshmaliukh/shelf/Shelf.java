@@ -18,8 +18,8 @@ public class Shelf {
 
     @Override
     public String toString() {
-        return "Shelf {" +
-                System.lineSeparator() + "literatureOfShelf=" + getAllLiteratureObjects().toString() +
+        return "Shelf {" + System.lineSeparator() +
+                "literatureOfShelf=" + getAllLiteratureObjects().toString() + System.lineSeparator() +
                 "}";
     }
 }
