@@ -61,13 +61,13 @@ public final class WebUtils {
         return uriBuilder;
     }
 
-    public static WebShelfHandler generateShelfHandler(Map<String, String> userAtr) {
+    public static WebUserHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
         String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
-            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
+            WebUserHandler webShelfHandler = new WebUserHandler(userName, typeOfWorkWithFiles);
 
             //webShelfHandler.setUpGsonHandler();
             webShelfHandler.readShelfItems();
@@ -146,7 +146,7 @@ public final class WebUtils {
     }
 
     public static String generateCurrentStateOfShelf(Map<String, String> userAtr, List<String> titleList) {
-        WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        WebUserHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             return generateTableOfShelfItems(webShelfHandler.getShelf().getAllLiteratureObjects(), titleList, true);
         }
@@ -154,7 +154,7 @@ public final class WebUtils {
     }
 
     public static String generateTableForEditingItems(Map<String, String> userAtr) {
-        WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        WebUserHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             if(!allLiteratureObjects.isEmpty()){

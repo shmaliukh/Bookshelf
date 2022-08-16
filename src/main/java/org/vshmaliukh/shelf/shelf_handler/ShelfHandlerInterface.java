@@ -21,9 +21,5 @@ public interface ShelfHandlerInterface {
 
     void changeBorrowedStateOfItem(List<Item> literatureList, int index);
 
-    void saveShelfItems();
-
-    void readShelfItems();
-
     Shelf getShelf();
 }

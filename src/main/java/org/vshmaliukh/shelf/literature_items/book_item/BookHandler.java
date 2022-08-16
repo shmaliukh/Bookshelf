@@ -17,7 +17,7 @@ import java.util.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
-import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractSaveReadAbleShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class BookHandler implements ItemHandler<Book> {

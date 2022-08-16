@@ -5,7 +5,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebShelfHandler;
+import org.vshmaliukh.tomcat_web_app.WebUserHandler;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -29,7 +29,7 @@ public class AddItemServlet extends HttpServlet {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
-            WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+            WebUserHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             if (item != null) {
                 webShelfHandler.addLiteratureObject(item);

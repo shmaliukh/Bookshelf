@@ -12,7 +12,7 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForU
 import org.vshmaliukh.services.print_table_service.ConvertorToStringForItems;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
-import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.AbstractSaveReadAbleShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.io.*;
@@ -20,7 +20,7 @@ import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
 
-public class ConsoleShelfHandler extends AbstractShelfHandler {
+public class ConsoleShelfHandler extends AbstractSaveReadAbleShelfHandler {
 
     public static final int WRONG_INPUT = -1;
     public static final String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
