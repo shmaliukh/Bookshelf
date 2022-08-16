@@ -2,13 +2,15 @@ package org.vshmaliukh.services.file_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
+import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -69,7 +71,8 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerOneFile() {
-        ConsoleShelfHandler consoleShelfHandler = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+
+        GsonShelfHandler consoleShelfHandler = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
         consoleShelfHandler.addLiteratureObject(book1);
         consoleShelfHandler.addLiteratureObject(book2);
         consoleShelfHandler.addLiteratureObject(magazine1);
@@ -79,7 +82,7 @@ class ItemGsonHandlerTest {
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
-        ConsoleShelfHandler consoleShelfHandler1 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addLiteratureObject);
 
         assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
@@ -93,8 +96,8 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerPerType() {
-        ConsoleShelfHandler consoleShelfHandler1 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
-        ConsoleShelfHandler consoleShelfHandler2 = new ConsoleShelfHandler(new Scanner(""),new PrintWriter(System.out, true));
+        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
+        GsonShelfHandler consoleShelfHandler2 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
 
         consoleShelfHandler1 .addLiteratureObject(book1);
         consoleShelfHandler1 .addLiteratureObject(book2);

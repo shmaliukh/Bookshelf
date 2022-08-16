@@ -1,31 +1,28 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh.shelf.shelf_handler;
 
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.sqllite.SqlLiteHandler;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface;
-import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
-    Shelf shelf = new Shelf();
+public class SqlLiteShelfHandler extends SaveReadShelfHandler {
 
-    String userName;
-    SqlLiteHandler sqlLiteHandler;
+    //String userName;
+    User user;
+    protected SqlLiteHandler sqlLiteHandler;
 
     public SqlLiteShelfHandler(String userName) {
-        this.userName = userName;
-
-        User user = new User(userName);
-        sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user);
+        //this.userName = userName;
+        this.user = new User(userName); // TODO
+        sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user.getName());
     }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        //sqlLiteHandler.read
         return shelf.itemsOfShelf.stream() // todo
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
@@ -66,6 +63,11 @@ public class SqlLiteShelfHandler implements ShelfHandlerInterface {
     @Override
     public void readShelfItems() {
         shelf.itemsOfShelf = sqlLiteHandler.readItemList();
+    }
+
+    @Override
+    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+        saveReadUserFilesHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
     }
 
     @Override

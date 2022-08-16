@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractConsoleShelfHandlerTest {
 
-    ConsoleShelfHandler consoleTerminal = new ConsoleShelfHandler(new Scanner(System.in), new PrintWriter(System.out, true));
+    ConsoleUI consoleTerminal = new ConsoleUI(new Scanner(System.in), new PrintWriter(System.out, true));
 
     @Test
     void testStartWithUserConfig_noUser() {
@@ -24,7 +24,7 @@ class AbstractConsoleShelfHandlerTest {
     @Test
     void testStartWithUserConfig_userMode() {
         Scanner scanner = new Scanner("testName");
-        ConsoleShelfHandler consoleTerminal = new ConsoleShelfHandler(scanner, new PrintWriter(System.out, true));
+        ConsoleUI consoleTerminal = new ConsoleUI(scanner, new PrintWriter(System.out, true));
         consoleTerminal.startWithUserConfig(true);
         String name = consoleTerminal.getUser().getName();
         assertFalse(name.isEmpty());
@@ -56,7 +56,7 @@ class AbstractConsoleShelfHandlerTest {
     @ValueSource(strings = {"0", "2147483647", "1", "000", "1_0", "100-000", "1a2sF`;'lj'", "/*-+.0", "01234567891", "________-123", "______________________________________________________________________________________________-123"})
     void getUserChoice(String str) {
         Scanner scanner = new Scanner(str);
-        ConsoleShelfHandler consoleTerminal = new ConsoleShelfHandler(scanner, new PrintWriter(System.out, true));
+        ConsoleUI consoleTerminal = new ConsoleUI(scanner, new PrintWriter(System.out, true));
         int userChoice = consoleTerminal.getUserChoice();
         System.out.println("userChoice = " + userChoice);
         assertTrue(userChoice >= 0 && userChoice < Integer.MAX_VALUE);

@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForUser;
-import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -17,7 +16,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 class InputHandlerTest {

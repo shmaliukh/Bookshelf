@@ -1,74 +1,103 @@
 package org.vshmaliukh.console_terminal_app;
 
+import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForUser;
+import org.vshmaliukh.shelf.AbstractUI;
+import org.vshmaliukh.services.menus.GeneratedMenu;
+import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
+import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
+import org.vshmaliukh.services.menus.MainMenu;
+import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.services.print_table_service.ConvertorToStringForItems;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.services.menus.GeneratedMenu;
-import org.vshmaliukh.services.menus.MainMenu;
-import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForUser;
-import org.vshmaliukh.services.print_table_service.ConvertorToStringForItems;
-import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
-import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
-import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Scanner;
 
+import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
 
-public class ConsoleShelfHandler extends AbstractShelfHandler {
+public class ConsoleUI extends AbstractUI {
 
     public static final int WRONG_INPUT = -1;
     public static final String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
 
-    private boolean isActiveTerminal = true;
+    boolean isActiveTerminal = true;
 
-    public final Scanner scanner;
-    public final PrintWriter printWriter;
+    final Scanner scanner;
+    final PrintWriter printWriter;
 
-    private final ConsoleInputHandlerForUser consoleInputHandlerForUser;
-    private ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
+    final ConsoleInputHandlerForUser consoleInputHandlerForUser;
+    ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
 
-    public ConsoleShelfHandler(Scanner scanner, PrintWriter printWriter) {
-        super();
+    public ConsoleUI(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
-
         consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
     }
 
-    @Override
-    public void deleteLiteratureObjectByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                printWriter.println(shelf.itemsOfShelf.remove(index - 1) + " " + "has deleted from shelf");
-            } else {
-                printWriter.println("Wrong index");
-            }
-        } else printWriter.println("Empty shelf");
+    public void configShelfHandler() { // todo refactor
+        switch (typeOfWorkWithFiles) {
+            case FILE_MODE_WORK_WITH_ONE_FILE:
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                break;
+            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                break;
+            case FILE_MODE_WORK_WITH_SQLLITE:
+                shelfHandler = new SqlLiteShelfHandler(user.getName());
+                break;
+            default:
+                shelfHandler = new SqlLiteShelfHandler(user.getName());
+                break;
+        }
     }
 
-    @Override
-    public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
-        if (!literatureList.isEmpty()) {
-            if (index > 0 && index <= literatureList.size()) {
-                Item buffer = literatureList.get(index - 1);
-                buffer.setBorrowed(!buffer.isBorrowed());
-                if (buffer.isBorrowed()) {
-                    printWriter.println(buffer + " has borrowed from shelf");
-                } else {
-                    printWriter.println(buffer + " has arriver back to shelf");
-                }
-            } else {
-                printWriter.println("Wrong index");
-            }
-        } else {
-            printWriter.println("No available literature");
+    public void startWithUserConfig(boolean userMode) {
+        setUpUserName(userMode);
+    }
+
+    public void setUpTypeOfWorkWithFiles() {
+        typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
+        configShelfHandler();
+        shelfHandler.setUpDataSaver(user.getName(), typeOfWorkWithFiles);
+    }
+
+    public void startWork(boolean userMode) {
+        printWriter.println("Terminal START");
+
+        startWithUserConfig(userMode);
+        setUpTypeOfWorkWithFiles();
+        initServicesForTerminal();
+        informAboutFileTypeWork(typeOfWorkWithFiles);
+
+        shelfHandler.readShelfItems();
+        while (isActiveTerminal()) {
+            generateUserInterface();
+            shelfHandler.saveShelfItems();
         }
+    }
+
+    public void initServicesForTerminal() {
+        consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
+    }
+
+    private void setUpUserName(boolean userMode) {
+        if (userMode) {
+            userLogin();
+        } else {
+            user = new User("no_user");
+        }
+    }
+
+    private void userLogin() {
+        user = new User(consoleInputHandlerForUser.getUserName());
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
@@ -87,47 +116,6 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
         }
-    }
-
-    public void startWithUserConfig(boolean userMode) {
-        setUpUserName(userMode);
-    }
-
-    public void setUpTypeOfWorkWithFiles() {
-        typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
-        setUpDataSaver();
-    }
-
-    public void startWork(boolean userMode) {
-        printWriter.println("Terminal START");
-
-        startWithUserConfig(userMode);
-        setUpTypeOfWorkWithFiles();
-        initServicesForTerminal();
-        informAboutFileTypeWork(typeOfWorkWithFiles);
-
-        readShelfItems();
-        while (isActiveTerminal()) {
-            generateUserInterface();
-            saveShelfItems();
-        }
-    }
-
-    public void initServicesForTerminal() {
-        random = new Random();
-        consoleInputHandlerForLiterature = new ConsoleInputHandlerForLiterature(scanner, printWriter);
-    }
-
-    private void setUpUserName(boolean userMode) {
-        if (userMode) {
-            userLogin();
-        } else {
-            user = new User("no_user");
-        }
-    }
-
-    private void userLogin() {
-        user = new User(consoleInputHandlerForUser.getUserName());
     }
 
     /**
@@ -181,7 +169,7 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
     private <T extends Item> void menuForForSortingItemsByType(MenuItemClassType<T> sortingMenuItem) {
         Class<T> classType = sortingMenuItem.getClassType();
         ItemHandler<T> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-        List<T> typedItemList = ItemUtils.getItemsByType(classType, shelf.getAllLiteratureObjects());
+        List<T> typedItemList = ItemUtils.getItemsByType(classType, shelfHandler.getShelf().getAllLiteratureObjects());
         handlerByClass.printSortingMenu(printWriter);
         List<T> sortedList = handlerByClass.clarificationForSortingItems(typedItemList, getUserChoice(), printWriter);
         new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(sortedList), true).print();
@@ -192,7 +180,7 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      */
     public void printCurrentStateOfShelf() {
         printWriter.println("Current state of Shelf:");
-        new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(shelf.getAllLiteratureObjects()), false).print();
+        new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(shelfHandler.getShelf().getAllLiteratureObjects()), false).print();
     }
 
     /**
@@ -207,14 +195,14 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to borrow some Literature object back to Shelf
      */
     private void menuForArrivingLiterature() {
-        List<Item> itemList = readLiteratureOutShelf();
+        List<Item> itemList = shelfHandler.readLiteratureOutShelf();
         if (itemList.isEmpty()) {
             printWriter.println("No literature OUT shelf to arrive");
         } else {
             printWriter.println("Enter INDEX of Literature object to arrive one:");
             new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            changeBorrowedStateOfItem(itemList, getUserChoice());
+            shelfHandler.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -222,14 +210,14 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to borrow some Literature object from Shelf
      */
     private void menuForBorrowingLiterature() {
-        List<Item> itemList = readLiteratureInShelf();
+        List<Item> itemList = shelfHandler.readLiteratureInShelf();
         if (itemList.isEmpty()) {
             printWriter.println("No available literature IN shelf to borrow");
         } else {
             printWriter.println("Enter INDEX of Literature object to borrow one:");
             new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(itemList), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            changeBorrowedStateOfItem(itemList, getUserChoice());
+            shelfHandler.changeBorrowedStateOfItem(itemList, getUserChoice());
         }
     }
 
@@ -237,13 +225,13 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void menuForDeletingLiterature() {
-        if (readLiteratureInShelf().isEmpty()) {
+        if (shelfHandler.readLiteratureInShelf().isEmpty()) {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(readLiteratureInShelf()), true).print();
+            new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(shelfHandler.readLiteratureInShelf()), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            deleteLiteratureObjectByIndex(getUserChoice());
+            shelfHandler.deleteLiteratureObjectByIndex(getUserChoice());
         }
     }
 
@@ -263,13 +251,12 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
             } else {
                 item = handlerByClass.getRandomItem(random);
             }
-            addLiteratureObject(item);
+            shelfHandler.addLiteratureObject(item);
             printWriter.println(item + " has added to shelf");
         } else {
             printWriter.println("Wrong input");
         }
     }
-
 
     /**
      * Method which gives opportunity to get user choice by entered integer value in console
@@ -316,4 +303,3 @@ public class ConsoleShelfHandler extends AbstractShelfHandler {
         return user;
     }
 }
-

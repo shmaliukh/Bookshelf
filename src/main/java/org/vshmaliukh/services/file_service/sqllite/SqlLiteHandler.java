@@ -29,9 +29,9 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         connectToDB();
     }
 
-    public SqlLiteHandler(String homeDir, User user) {
-        super(homeDir, user.getName());
-        this.user = user;
+    public SqlLiteHandler(String homeDir, String userName) {
+        super(homeDir, userName);
+        this.user = new User(userName);
         registrateUser();
         generateTablesIfNotExists();
     }

@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 public class ConsoleInputHandlerForLiterature extends AbstractConsoleInputHandler {

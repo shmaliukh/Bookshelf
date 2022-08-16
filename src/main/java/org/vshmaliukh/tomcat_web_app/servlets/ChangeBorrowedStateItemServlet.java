@@ -1,7 +1,8 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.tomcat_web_app.WebShelfHandler;
+import org.vshmaliukh.tomcat_web_app.WebUI;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -24,7 +25,7 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
 
         try{
             int index = Integer.parseInt(indexOfItem);
-            WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+            SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
             webShelfHandler.readShelfItems();
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, index);
