@@ -84,4 +84,6 @@ public interface ItemHandler<T extends Item> {
     T readItemFromSql(ResultSet rs) throws SQLException;
 
     String generateSqlTableStr();
+
+    String deleteItemFromDBStr(Integer id);
 }

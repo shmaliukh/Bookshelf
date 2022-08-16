@@ -228,4 +228,13 @@ public class BookHandler implements ItemHandler<Book> {
                 ");";
     }
 
+    @Override
+    public String deleteItemFromDBStr(Integer id) {
+        return "" +
+                " DELETE FROM " +
+                BOOK_TABLE_TITLE +
+                " WHERE id = ?";
+    }
+
+
 }

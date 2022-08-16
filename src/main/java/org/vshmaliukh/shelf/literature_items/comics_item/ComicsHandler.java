@@ -197,4 +197,12 @@ public class ComicsHandler implements ItemHandler<Comics> {
                 PUBLISHER + " TEXT NOT NULL \n" +
                 ");";
     }
+
+    @Override
+    public String deleteItemFromDBStr(Integer id) {
+        return "" +
+                " DELETE FROM " +
+                COMICS_TABLE_TITLE +
+                " WHERE id = ?";
+    }
 }

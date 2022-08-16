@@ -12,34 +12,43 @@ import java.util.stream.Collectors;
 public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
     String userName;
-    User user = new User(userName);
     Shelf shelf = new Shelf();
-    SqlLiteHandler sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user);
+
+    SqlLiteHandler sqlLiteHandler;
+
+    public SqlLiteShelfHandler(String userName, int typeOfWork) {
+        this.userName = userName;
+
+        User user = new User(userName);
+        sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user);
+    }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return sqlLiteHandler.readItemList().stream()
+        return shelf.itemsOfShelf.stream() // todo
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return sqlLiteHandler.readItemList().stream()
+        return shelf.itemsOfShelf.stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
 
     @Override
     public void addLiteratureObject(Item item) {
-        if(item != null){
+        if (item != null) {
+            shelf.itemsOfShelf.add(item);
             sqlLiteHandler.saveItemToDB(item);
         }
     }
 
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
-
+        Item item = shelf.itemsOfShelf.remove(index - 1);
+        sqlLiteHandler.deleteItemFromDB(item);
     }
 
     @Override
@@ -49,16 +58,16 @@ public class SqlLiteShelfHandler implements ShelfHandlerInterface {
 
     @Override
     public void saveShelfItems() {
-
+        sqlLiteHandler.saveItemList(shelf.itemsOfShelf);
     }
 
     @Override
     public void readShelfItems() {
-
+        shelf.itemsOfShelf = sqlLiteHandler.readItemList();
     }
 
     @Override
     public Shelf getShelf() {
-        return null;
+        return shelf;
     }
 }

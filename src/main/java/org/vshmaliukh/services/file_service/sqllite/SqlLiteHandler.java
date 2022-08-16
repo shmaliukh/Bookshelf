@@ -170,13 +170,24 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
             itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
             //    itemList.add(ItemHandlerProvider.getHandlerByClass(uniqueTypeName).getRandomItem(random));
         }
-        sqlLiteHandler.saveItemList(itemList);
-        System.out.println(sqlLiteHandler.readItemList());
+        //sqlLiteHandler.saveItemList(itemList);
+        System.out.println(sqlLiteHandler.readItemList().size());
 
         //System.out.println(itemList);
         //System.out.println();
         //System.out.println(sqlLiteHandler.readItemList());
         //new PlainTextTableHandler(new PrintWriter(System.out), ConvertorToStringForItems.getTable(itemList), true).print();
+    }
+
+    public void deleteItemFromDB(Item item) {
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String deleteItemFromDBStr = handlerByClass.deleteItemFromDBStr(item.getId());
+        try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
+            preparedStatement.setInt(1, item.getId());
+            preparedStatement.execute();
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
+        }
     }
 }
 

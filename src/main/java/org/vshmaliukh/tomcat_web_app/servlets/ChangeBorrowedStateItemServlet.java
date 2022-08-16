@@ -28,7 +28,7 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, index);
 
-            webShelfHandler.saveShelfItems();
+            //webShelfHandler.saveShelfItems();
 
         } catch (NumberFormatException nfe) {
             WebUtils.logServletErr(CHANGE_ITEM_BORROWED_STATE, nfe);

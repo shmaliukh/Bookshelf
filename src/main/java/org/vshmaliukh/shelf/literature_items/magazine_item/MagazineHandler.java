@@ -143,7 +143,6 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     public String insertItemSqlStr() {
         return " INSERT INTO " + MAGAZINE_TABLE_TITLE  +
                 " ( " +
-                ID + " , " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
@@ -154,6 +153,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     @Override
     public String selectItemSqlStr(Integer userId) {
         return " SELECT " +
+                ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED +
@@ -179,5 +179,13 @@ public class MagazineHandler implements ItemHandler<Magazine> {
                 PAGES + " INTEGER NOT NULL, \n" +
                 BORROWED + " TEXT NOT NULL \n" +
                 ");";
+    }
+
+    @Override
+    public String deleteItemFromDBStr(Integer id) {
+        return "" +
+                " DELETE FROM " +
+                MAGAZINE_TABLE_TITLE +
+                " WHERE id = ?";
     }
 }

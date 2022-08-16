@@ -143,7 +143,6 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     public String insertItemSqlStr() {
         return " INSERT INTO " + NEWSPAPER_TABLE_TITLE +
                 " ( " +
-                ID + " , " +
                 USER_ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
@@ -154,6 +153,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     @Override
     public String selectItemSqlStr(Integer userId) {
         return " SELECT " +
+                ID + " , " +
                 NAME + " , " +
                 PAGES + " , " +
                 BORROWED +
@@ -179,5 +179,13 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
                 PAGES + " INTEGER NOT NULL, \n" +
                 BORROWED + " TEXT NOT NULL \n" +
                 ");";
+    }
+
+    @Override
+    public String deleteItemFromDBStr(Integer id) {
+        return "" +
+                " DELETE FROM " +
+                NEWSPAPER_TABLE_TITLE +
+                " WHERE id = ?";
     }
 }

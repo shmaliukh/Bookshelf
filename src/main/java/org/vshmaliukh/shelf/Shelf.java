@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Shelf {
 
-    public final List<Item> itemsOfShelf = new ArrayList<>();
+    public List<Item> itemsOfShelf = new ArrayList<>();
 
     public Shelf() {
     }

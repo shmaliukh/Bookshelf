@@ -69,7 +69,7 @@ public final class WebUtils {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
             WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
 
-            webShelfHandler.setUpGsonHandler();
+            //webShelfHandler.setUpGsonHandler();
             webShelfHandler.readShelfItems();
             return webShelfHandler;
         }
