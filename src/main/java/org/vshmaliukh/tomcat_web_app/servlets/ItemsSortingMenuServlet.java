@@ -69,8 +69,10 @@ public class ItemsSortingMenuServlet extends HttpServlet {
         Class<T> classType = (Class<T>) ItemHandlerProvider.getClassByName(classTypeStr);
         SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
         List<T> sortedItemsByClass = new ArrayList<>();
-        if (webShelfHandler != null && menuIndexStr != null && !menuIndexStr.equals("")) { // FIXME
+        if (webShelfHandler != null) { // FIXME
             sortedItemsByClass = webShelfHandler.getSortedItemsByClass(classType);
+        }
+        if (menuIndexStr != null && !menuIndexStr.equals("")) {
             int typeOfSorting = Integer.parseInt(menuIndexStr);
             List<T> sortedList = handlerByName.getSortedItems(typeOfSorting, sortedItemsByClass);
             webPageBuilder.addToBody(generateTableOfShelfItems(sortedList, true));

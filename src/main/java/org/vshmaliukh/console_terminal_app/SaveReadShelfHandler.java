@@ -12,9 +12,7 @@ public abstract class SaveReadShelfHandler extends BaseShelfHandler {
     public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
     public static final int FILE_MODE_WORK_WITH_SQLLITE = 3;
 
-    //protected int typeOfWorkWithFiles;
     protected SaveReadUserFilesHandler gsonItemHandler;
-
 
     public abstract void saveShelfItems();
 
