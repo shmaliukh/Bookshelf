@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
+public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
 
     public static final int MAX_PROBLEM_FILES = 5;
     public static final String JSON_FILE_TYPE = ".json";
@@ -34,7 +34,7 @@ public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
     String logFileFullName = "log.txt";
     String problemFilesFolderStr = "problem_files";
 
-    ItemGsonHandlerUser(String homeDir, String userName) {
+    ItemGsonHandlerHandler(String homeDir, String userName) {
         super(homeDir, userName);
     }
 

@@ -12,12 +12,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
+public class ItemGsonHandlerPerType extends ItemGsonHandlerHandler {
 
     String gsonHandlerFolderStr = "gson_handler_per_type";
     String typeStr;
 
-    public ItemGsonHandlerPerTypeUser(String homeDir, String userName) {
+    public ItemGsonHandlerPerType(String homeDir, String userName) {
         super(homeDir, userName);
     }
 
@@ -49,12 +49,19 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
         List<Item> resultList = new ArrayList<>();
         for (Class<? extends Item> typeName : ItemHandlerProvider.uniqueTypeNames) {
             typeStr = typeName.getSimpleName();
-            resultList.addAll(readItemListFromGsonFile(generatePathForGsonFile()));
+            List<Item> itemList = readItemListFromGsonFile(generatePathForGsonFile());
+            resultList.addAll(itemList);
         }
         return resultList;
     }
 
     private Set<Class<? extends Item>> getClassTypes() {
         return ItemHandlerProvider.uniqueTypeNames;
+    }
+
+    @Override
+    public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
+        typeStr = classType.getSimpleName();
+        return (List<T>) readItemListFromGsonFile(generatePathForGsonFile());
     }
 }

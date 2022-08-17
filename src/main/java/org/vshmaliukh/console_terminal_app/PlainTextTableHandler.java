@@ -36,7 +36,7 @@ public class PlainTextTableHandler extends AbstractTableHandler {
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append("?");
+                stringBuilder.append("│");
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);

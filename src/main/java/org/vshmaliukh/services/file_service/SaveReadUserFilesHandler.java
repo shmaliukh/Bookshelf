@@ -18,4 +18,6 @@ public abstract class SaveReadUserFilesHandler extends UserFilesHandler {
     public abstract void saveItemList(List<Item> listToSave);
 
     public abstract List<Item> readItemList();
+
+    public abstract <T extends Item> List<T> readItemsByClass(Class<T> classType);
 }

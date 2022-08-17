@@ -2,23 +2,20 @@ package org.vshmaliukh.services.file_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerUser;
+import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
+import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,7 +50,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testGenerateFullFileName() {
-        assertEquals(testGsonHandlerOneFile.userName + ItemGsonHandlerUser.JSON_FILE_TYPE, testGsonHandlerOneFile.generateFullFileName());
+        assertEquals(testGsonHandlerOneFile.userName + ItemGsonHandlerHandler.JSON_FILE_TYPE, testGsonHandlerOneFile.generateFullFileName());
     }
 
     @Test
@@ -104,7 +101,7 @@ class ItemGsonHandlerTest {
         consoleShelfHandler1 .addLiteratureObject(magazine1);
         consoleShelfHandler1 .addLiteratureObject(magazine2);
 
-        ItemGsonHandlerPerTypeUser itemGsonHandlerPerType = new ItemGsonHandlerPerTypeUser(tempDirStr, "testGsonHandlerPerType");
+        ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(tempDirStr, "testGsonHandlerPerType");
         itemGsonHandlerPerType.saveItemList(consoleShelfHandler1.getShelf().getAllLiteratureObjects());
 
         itemGsonHandlerPerType.readItemList().forEach(consoleShelfHandler2::addLiteratureObject);

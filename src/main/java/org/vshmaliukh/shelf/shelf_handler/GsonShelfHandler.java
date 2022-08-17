@@ -3,7 +3,7 @@ package org.vshmaliukh.shelf.shelf_handler;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
+import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -13,37 +13,40 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GsonShelfHandler extends SaveReadShelfHandler {
 
-    //protected GsonShelfHandler(){}
+    public GsonShelfHandler(String userName, int typeOfWorkWithFiles) {
+        setUpDataSaver(userName, typeOfWorkWithFiles);
+    }
 
-    public GsonShelfHandler(String userName, int typeOfWorkWithFiles){
-        setUpDataSaver(userName,typeOfWorkWithFiles);
+    @Override
+    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
+        return gsonItemHandler.readItemsByClass(classType);
     }
 
     @Override
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {// todo
             case FILE_MODE_WORK_WITH_ONE_FILE:
-                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
+                gsonItemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                saveReadUserFilesHandler = new ItemGsonHandlerPerTypeUser(HOME_PROPERTY, userName);
+                gsonItemHandler = new ItemGsonHandlerPerType(HOME_PROPERTY, userName);
                 break;
             default:
-                saveReadUserFilesHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
+                gsonItemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
         }
     }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return saveReadUserFilesHandler.readItemList().stream()
+        return gsonItemHandler.readItemList().stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return saveReadUserFilesHandler.readItemList().stream()
+        return gsonItemHandler.readItemList().stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
@@ -81,12 +84,12 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        saveReadUserFilesHandler.saveItemList(shelf.getAllLiteratureObjects());
+        gsonItemHandler.saveItemList(shelf.getAllLiteratureObjects());
     }
 
     @Override
     public void readShelfItems() {
-        saveReadUserFilesHandler.readItemList().forEach(this::addLiteratureObject);
+        gsonItemHandler.readItemList().forEach(this::addLiteratureObject);
     }
 
     @Override

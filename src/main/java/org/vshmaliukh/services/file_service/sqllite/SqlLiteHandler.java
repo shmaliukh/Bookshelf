@@ -147,18 +147,8 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     public List<Item> readItemList() {
         List<Item> itemList = new ArrayList<>();
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String sqlStr = handlerByClass.selectItemSqlStr();
-            try (PreparedStatement pstmt = conn.prepareStatement(sqlStr)) {
-                pstmt.setInt(1, user.getId());
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    Item item = handlerByClass.readItemFromSql(rs);
-                    itemList.add(item);
-                }
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+            List<? extends Item> itemByClassList = readItemsByClass(classType);
+            itemList.addAll(itemByClassList);
         }
         return itemList;
     }
@@ -184,6 +174,23 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
+    }
+
+    public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
+        ItemHandler<T> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
+        String sqlStr = handlerByClass.selectItemSqlStr();
+        List<T> itemByClassList = new ArrayList<>();
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlStr)) {
+            pstmt.setInt(1, user.getId());
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                T item = handlerByClass.readItemFromSql(rs);
+                itemByClassList.add(item);
+            }
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
+        }
+        return itemByClassList;
     }
 }
 

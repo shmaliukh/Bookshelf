@@ -21,6 +21,10 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
         sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user.getName());
     }
 
+    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
+        return sqlLiteHandler.readItemsByClass(classType);
+    }
+
     @Override
     public List<Item> readLiteratureInShelf() {
         return shelf.itemsOfShelf.stream() // todo
@@ -67,7 +71,7 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
-        saveReadUserFilesHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
+        gsonItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
     }
 
     @Override
