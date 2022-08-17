@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.services.file_service.MySqlHandler;
 import org.vshmaliukh.services.file_service.SqlLiteHandler;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -9,20 +10,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class SqlLiteShelfHandler extends SaveReadShelfHandler {
+public class MySqlShelfHandler extends SaveReadShelfHandler {
 
-    //String userName;
     User user;
-    protected SqlLiteHandler sqlLiteHandler;
+    protected MySqlHandler mySqlHandler;
 
-    public SqlLiteShelfHandler(String userName) {
-        //this.userName = userName;
+    public MySqlShelfHandler(String userName) {
         this.user = new User(userName); // TODO
-        sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), user.getName());
+        mySqlHandler = new MySqlHandler(System.getProperty("user.home"), user.getName());
     }
 
     public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
-        return sqlLiteHandler.readItemsByClass(classType);
+        return mySqlHandler.readItemsByClass(classType);
     }
 
     @Override
@@ -43,30 +42,30 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
     public void addLiteratureObject(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
-            sqlLiteHandler.saveItemToDB(item);
+            mySqlHandler.saveItemToDB(item);
         }
     }
 
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
         Item item = shelf.itemsOfShelf.remove(index - 1);
-        sqlLiteHandler.deleteItemFromDB(item);
+        mySqlHandler.deleteItemFromDB(item);
     }
 
     @Override
     public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
         Item item = literatureList.get(index - 1);
-        sqlLiteHandler.changeItemBorrowedStateInDB(item);
+        mySqlHandler.changeItemBorrowedStateInDB(item);
     }
 
     @Override
     public void saveShelfItems() {
-        sqlLiteHandler.saveItemList(shelf.itemsOfShelf);
+        mySqlHandler.saveItemList(shelf.itemsOfShelf);
     }
 
     @Override
     public void readShelfItems() {
-        shelf.itemsOfShelf = sqlLiteHandler.readItemList();
+        shelf.itemsOfShelf = mySqlHandler.readItemList();
     }
 
     @Override

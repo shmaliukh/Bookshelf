@@ -6,7 +6,6 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUI;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -32,10 +31,7 @@ public class AddItemServlet extends HttpServlet {
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
             SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
-            if (item != null) {
-                webShelfHandler.addLiteratureObject(item);
-                //webShelfHandler.saveShelfItems();
-            }
+            webShelfHandler.addLiteratureObject(item);
 
             WebUtils.redirectTo(ADD_MENU_TITLE, response,
                     WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)

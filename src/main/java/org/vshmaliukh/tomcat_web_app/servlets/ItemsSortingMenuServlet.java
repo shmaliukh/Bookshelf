@@ -66,10 +66,10 @@ public class ItemsSortingMenuServlet extends HttpServlet {
     }
 
     private <T extends Item> void printSortedTable(Map<String, String> userAtr, WebPageBuilder webPageBuilder, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
-        Class<T> classType = (Class<T>) ItemHandlerProvider.getClassByName(classTypeStr);
+        Class classType = ItemHandlerProvider.getClassByName(classTypeStr);
         SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
         List<T> sortedItemsByClass = new ArrayList<>();
-        if (webShelfHandler != null) { // FIXME
+        if (webShelfHandler != null) {
             sortedItemsByClass = webShelfHandler.getSortedItemsByClass(classType);
         }
         if (menuIndexStr != null && !menuIndexStr.equals("")) {

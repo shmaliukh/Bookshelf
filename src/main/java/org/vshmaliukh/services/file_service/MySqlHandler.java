@@ -1,7 +1,6 @@
-package org.vshmaliukh.services.file_service.sqllite;
+package org.vshmaliukh.services.file_service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -10,18 +9,20 @@ import org.vshmaliukh.shelf.shelf_handler.User;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.vshmaliukh.shelf.shelf_handler.User.*;
 
 @Slf4j
-public class SqlLiteHandler extends SaveReadUserFilesHandler {
+public class MySqlHandler extends SaveReadUserFilesHandler {
 
     private static Connection conn;
 
     public static final String SQL_FILE_TYPE = ".db";
-    public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
-    private static final String SqlLiteFileURL = "jdbc:sqlite:" + Paths.get( System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
+    public static final String MYSQL_FILE_NAME = "shelf_mySql_db" + SQL_FILE_TYPE;
+    private static final String MySqlLiteFileURL = "jdbc:mysql://127.0.0.1:3307/my_test"; // todo
+    //private static final String SqlLiteFileURL = "jdbc:sqlite:" + Paths.get( System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
     final User user; // TODO
 
     static {
@@ -29,20 +30,19 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         connectToDB();
     }
 
-    public SqlLiteHandler(String homeDir, String userName) {
+    public MySqlHandler(String homeDir, String userName) {
         super(homeDir, userName);
         this.user = new User(userName);
-        registrateUser();
+        createUser();
         generateTablesIfNotExists();
     }
 
-    // TODO should start once
     static void createNewDatabase() {
         try {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 log.info("The driver name is " + meta.getDriverName());
-                log.info("A new database '" + SqlLiteFileURL + "' has been created.");
+                log.info("A new database '" + MySqlLiteFileURL + "' has been created.");
             }
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
@@ -51,9 +51,12 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     static void connectToDB() {
         try {
-            conn = DriverManager.getConnection(SqlLiteFileURL);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(MySqlLiteFileURL, "test", "test");
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -66,12 +69,12 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public static void logSqlHandler(Exception e) {
-        log.error("[SqlLite_handler] got err. Exception: ", e);
+        log.error("[MySql_handler] got err. Exception: ", e);
     }
 
     @Override
     public String generateFullFileName() {
-        return SQLLITE_FILE_NAME;
+        return MYSQL_FILE_NAME;
     }
 
     @Override
@@ -87,9 +90,9 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         listToSave.forEach(this::saveItemToDB);
     }
 
-    public void saveItemToDB(Item item){
+    public void saveItemToDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String sqlInsertStr = handlerByClass.insertItemSqlStr();
+        String sqlInsertStr = handlerByClass.insertItemMySqlStr();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
             handlerByClass.insertItemValues(pstmt, item, user.getId());
@@ -99,7 +102,9 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     }
 
     public void insertUser(String userName) {
-        String sql = "INSERT OR IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
+        String sql = "INSERT " +
+                //"OR IGNORE" +
+                " INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userName);
             pstmt.executeUpdate();
@@ -108,13 +113,15 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         }
     }
 
-    private void registrateUser() {
-        String sql = "CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " \n" +
-                "(\n" +
-                USER_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
-                USER_NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                "UNIQUE (" + USER_NAME_SQL_PARAMETER + ") ON CONFLICT IGNORE \n" +
-                ");";
+    private void createUser() {
+        String sql = " CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " \n" +
+                " (\n" +
+                USER_ID_SQL_PARAMETER + " INT AUTO_INCREMENT PRIMARY KEY , \n" +
+                USER_NAME_SQL_PARAMETER + " VARCHAR(255) NOT NULL , \n" +
+                " PRIMARY KEY ( " + USER_ID_SQL_PARAMETER + " ) , " +
+                "UNIQUE (" + USER_NAME_SQL_PARAMETER + ")" +
+                //" ON CONFLICT IGNORE \n" +
+                " ); ";
         createNewTable(sql);
         insertUser(user.getName());
         readUserId(user);
@@ -129,7 +136,9 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
             pstmt.setString(1, user.getName());
 
             ResultSet rs = pstmt.executeQuery();
-            user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
+            if(rs.next()){
+                user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
+            }
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -138,7 +147,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     private void generateTablesIfNotExists() {
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String tableStr = handlerByClass.generateSqlTableStr();
+            String tableStr = handlerByClass.generateMySqlTableStr();
             createNewTable(tableStr);
         }
     }

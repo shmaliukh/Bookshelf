@@ -68,7 +68,9 @@ public interface ItemHandler<T extends Item> {
 
     T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    String insertItemSqlStr();
+    String insertItemSqlLiteStr();
+
+    String insertItemMySqlStr();
 
     String selectItemSqlStr();
 
@@ -76,7 +78,9 @@ public interface ItemHandler<T extends Item> {
 
     T readItemFromSql(ResultSet rs) throws SQLException;
 
-    String generateSqlTableStr();
+    String generateSqlLiteTableStr();
+
+    String generateMySqlTableStr();
 
     default String deleteItemFromDBStr() {
         return "" +

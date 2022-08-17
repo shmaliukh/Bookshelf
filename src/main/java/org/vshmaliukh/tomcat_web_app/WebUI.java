@@ -2,6 +2,7 @@ package org.vshmaliukh.tomcat_web_app;
 
 import org.vshmaliukh.shelf.AbstractUI;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.MySqlShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
@@ -17,9 +18,12 @@ public class WebUI extends AbstractUI {
 
     @Override
     public void configShelfHandler() {
-        switch (typeOfWorkWithFiles){
-            case  FILE_MODE_WORK_WITH_SQLLITE:
+        switch (typeOfWorkWithFiles) {
+            case FILE_MODE_WORK_WITH_SQLLITE:
                 shelfHandler = new SqlLiteShelfHandler(user.getName());
+                break;
+            case 4: // TODO
+                shelfHandler = new MySqlShelfHandler(user.getName());
                 break;
             default:
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);

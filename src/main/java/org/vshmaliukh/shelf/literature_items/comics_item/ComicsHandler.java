@@ -157,8 +157,22 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String insertItemSqlStr() {
+    public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + COMICS_TABLE_TITLE +
+                " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                PUBLISHER_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?,?)";
+    }
+
+    @Override
+    public String insertItemMySqlStr() {
+        return " INSERT " +
+                //"OR IGNORE" +
+                " INTO " + getSqlTableTitle() +
                 " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
@@ -190,9 +204,8 @@ public class ComicsHandler implements ItemHandler<Comics> {
         pstmt.executeUpdate();
     }
 
-    public String generateSqlTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE +
-                "(\n" +
+    public String generateSqlLiteTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
                 NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
@@ -205,6 +218,19 @@ public class ComicsHandler implements ItemHandler<Comics> {
                 BORROWED_SQL_PARAMETER + " , " +
                 PUBLISHER_SQL_PARAMETER +
                 " ) ON CONFLICT IGNORE \n" +
+                ");";
+    }
+
+    @Override
+    public String generateMySqlTableStr(){
+        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PUBLISHER_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                "PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) \n" +
                 ");";
     }
 

@@ -37,15 +37,12 @@ public class AddMenuServlet extends HttpServlet {
 
         if (menuItemIndex != null && typeOfWorkWithFilesStr != null && !menuItemIndex.equals("") && !typeOfWorkWithFilesStr.equals("")) {
             GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
-            int parseInt = 0; // TODO
-            try {
-                parseInt = Integer.parseInt(menuItemIndex);
-            } catch (NumberFormatException nfe) {
-                WebUtils.logServletErr(ADD_ITEM_TITLE, nfe);
+            int parseInt = Integer.decode(menuItemIndex);
+            if (parseInt > 0 && parseInt <= generatedMenu.generatedMenu.size()) {
+                MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(parseInt - 1);
+                int index = menuItemClassType.getIndex();
+                addItemByType(userAtr, response, menuItemClassType, index);
             }
-            MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(parseInt - 1);
-            int index = menuItemClassType.getIndex();
-            addItemByType(userAtr, response, menuItemClassType, index);
         } else {
             WebUtils.redirectTo(ADD_MENU_TITLE, response, userAtr);
         }
@@ -57,7 +54,6 @@ public class AddMenuServlet extends HttpServlet {
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
-
 
         webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()));
         webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
@@ -94,7 +90,6 @@ public class AddMenuServlet extends HttpServlet {
                     WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
                             .addParameter(ITEM_CLASS_TYPE, classSimpleName)
                             .addParameter(IS_RANDOM, "true"));
-
         } else {
             WebUtils.redirectTo(ADD_ITEM_TITLE, response,
                     WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
