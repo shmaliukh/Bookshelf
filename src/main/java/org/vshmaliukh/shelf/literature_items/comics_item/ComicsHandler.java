@@ -190,7 +190,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
                 PUBLISHER_SQL_PARAMETER +
-                " FROM " + COMICS_TABLE_TITLE  +
+                " FROM " + COMICS_TABLE_TITLE +
                 " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
     }
 
@@ -222,7 +222,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public String generateMySqlTableStr(){
+    public String generateMySqlTableStr() {
         return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
@@ -230,7 +230,13 @@ public class ComicsHandler implements ItemHandler<Comics> {
                 PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
                 BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
                 PUBLISHER_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                "PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " , \n" +
+                PUBLISHER_SQL_PARAMETER + " )\n" +
                 ");";
     }
 

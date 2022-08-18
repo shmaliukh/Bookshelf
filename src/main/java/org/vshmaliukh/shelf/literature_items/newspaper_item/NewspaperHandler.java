@@ -204,14 +204,19 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     @Override
-    public String generateMySqlTableStr(){
+    public String generateMySqlTableStr() {
         return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
                 NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
                 PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
                 BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                "PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " )\n" +
                 ");";
     }
 

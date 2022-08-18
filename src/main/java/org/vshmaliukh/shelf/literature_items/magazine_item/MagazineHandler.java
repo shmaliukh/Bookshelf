@@ -211,7 +211,12 @@ public class MagazineHandler implements ItemHandler<Magazine> {
                 NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
                 PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
                 BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                "PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " )\n" +
                 ");";
     }
 

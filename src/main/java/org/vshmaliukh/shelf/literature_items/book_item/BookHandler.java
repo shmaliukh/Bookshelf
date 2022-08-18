@@ -250,7 +250,7 @@ public class BookHandler implements ItemHandler<Book> {
     }
 
     @Override
-    public String generateMySqlTableStr(){
+    public String generateMySqlTableStr() {
         return " CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INTEGER  AUTO_INCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
@@ -259,14 +259,14 @@ public class BookHandler implements ItemHandler<Book> {
                 BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
                 AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n" +
                 DATE_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                "PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) \n" +
-                //" UNIQUE (" +
-                //NAME_SQL_PARAMETER + " , " +
-                //PAGES_SQL_PARAMETER + " , " +
-                //BORROWED_SQL_PARAMETER + " , " +
-                //AUTHOR_SQL_PARAMETER + " , " +
-                //DATE_SQL_PARAMETER +
-                //" ) ON CONFLICT IGNORE \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " , \n" +
+                AUTHOR_SQL_PARAMETER + " , \n" +
+                DATE_SQL_PARAMETER + " )\n" +
                 ");";
     }
 
