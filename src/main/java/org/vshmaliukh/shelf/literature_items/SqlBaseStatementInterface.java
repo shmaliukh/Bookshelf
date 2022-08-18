@@ -1,9 +1,13 @@
 package org.vshmaliukh.shelf.literature_items;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.PUBLISHER;
 
-public interface SqlStatementInterface {
+public interface SqlBaseStatementInterface<T> {
 
     String ITEM_ID_SQL_PARAMETER = "id";
     String NAME_SQL_PARAMETER = NAME.toLowerCase();
@@ -29,4 +33,10 @@ public interface SqlStatementInterface {
                 " SET " + BORROWED + " = ? " +
                 " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
+
+    void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
+
+    T readItemFromSql(ResultSet rs) throws SQLException;
+
+    String selectItemSqlStr();
 }

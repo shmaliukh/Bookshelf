@@ -1,7 +1,6 @@
 package org.vshmaliukh.shelf.literature_items.newspaper_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
-import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -42,10 +41,10 @@ public class NewspaperHandler extends ItemHandler<Newspaper>{
     }
 
     @Override
-    public List<MenuItemForSorting> getSortingMenuList() {
+    public List<MenuItemForSorting<Newspaper>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting(1, "Sort by 'name' value", NEWSPAPER_COMPARATOR_BY_NAME),
-                new MenuItemForSorting(2, "Sort by 'pages' value", NEWSPAPER_COMPARATOR_BY_PAGES)
+                new MenuItemForSorting<Newspaper>(1, "Sort by 'name' value", NEWSPAPER_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Newspaper>(2, "Sort by 'pages' value", NEWSPAPER_COMPARATOR_BY_PAGES)
         ));
     }
 

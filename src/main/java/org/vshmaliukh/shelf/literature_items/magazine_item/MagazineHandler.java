@@ -6,7 +6,6 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -42,10 +41,10 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     }
 
     @Override
-    public List<MenuItemForSorting> getSortingMenuList() {
+    public List<MenuItemForSorting<Magazine>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting(1, "Sort by 'name' value", MAGAZINE_COMPARATOR_BY_NAME),
-                new MenuItemForSorting(2, "Sort by 'pages' value", MAGAZINE_COMPARATOR_BY_PAGES)
+                new MenuItemForSorting<Magazine>(1, "Sort by 'name' value", MAGAZINE_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Magazine>(2, "Sort by 'pages' value", MAGAZINE_COMPARATOR_BY_PAGES)
         ));
     }
 

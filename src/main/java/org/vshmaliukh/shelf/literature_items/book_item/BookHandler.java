@@ -40,14 +40,14 @@ public class BookHandler extends ItemHandler<Book> {
     public List<Book> getSortedItems(int typeOfSorting, List<Book> inputList) {
         for (MenuItemForSorting<Book> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
-                return new ArrayList<Book>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
+                return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
         }
         return Collections.emptyList();
     }
 
     @Override
-    public List<MenuItemForSorting> getSortingMenuList() {
+    public List<MenuItemForSorting<Book>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
                 new MenuItemForSorting<Book>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
                 new MenuItemForSorting<Book>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
@@ -231,23 +231,22 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE +
-                " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " UNIQUE (" +
-                NAME_SQL_PARAMETER + " , " +
-                PAGES_SQL_PARAMETER + " , " +
-                BORROWED_SQL_PARAMETER + " , " +
-                AUTHOR_SQL_PARAMETER + " , " +
-                DATE_SQL_PARAMETER +
-                " ) ON CONFLICT IGNORE \n" +
-                ");";
+        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n " +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                " UNIQUE ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                AUTHOR_SQL_PARAMETER + " , \n " +
+                DATE_SQL_PARAMETER + " \n " +
+                " ) ON CONFLICT IGNORE \n " +
+                " ); ";
     }
 
     @Override

@@ -6,7 +6,6 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -21,7 +20,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class ComicsHandler extends ItemHandler<Comics> {
+public class ComicsHandler extends ItemHandler<Comics>{
 
     public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
 
@@ -46,11 +45,11 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public List<MenuItemForSorting> getSortingMenuList() {
+    public List<MenuItemForSorting<Comics>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting(1, "Sort by 'name' value", COMICS_COMPARATOR_BY_NAME),
-                new MenuItemForSorting(2, "Sort by 'page number' value", COMICS_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting(3, "Sort by 'publisher' value", COMICS_COMPARATOR_BY_PUBLISHER)
+                new MenuItemForSorting<Comics>(1, "Sort by 'name' value", COMICS_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Comics>(2, "Sort by 'page number' value", COMICS_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<Comics>(3, "Sort by 'publisher' value", COMICS_COMPARATOR_BY_PUBLISHER)
         ));
     }
 
