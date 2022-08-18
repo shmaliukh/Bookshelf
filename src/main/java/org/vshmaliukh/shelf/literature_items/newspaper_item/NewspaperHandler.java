@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.newspaper_item;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
+import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
@@ -19,7 +20,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class NewspaperHandler implements ItemHandler<Newspaper> {
+public class NewspaperHandler extends ItemHandler<Newspaper>{
 
     public static final String NEWSPAPER_TABLE_TITLE = Newspaper.class.getSimpleName() + "s";
 

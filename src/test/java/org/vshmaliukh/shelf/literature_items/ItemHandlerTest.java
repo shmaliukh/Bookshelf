@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
 import static org.vshmaliukh.shelf.literature_items.ItemHandler.*;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 

@@ -9,30 +9,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
-public interface ItemHandler<T extends Item> {
-    String ITEM_ID_SQL_PARAMETER = "id";
-    String NAME_SQL_PARAMETER = NAME.toLowerCase();
-    String PAGES_SQL_PARAMETER = PAGES.toLowerCase();
-    String BORROWED_SQL_PARAMETER = BORROWED.toLowerCase();
-    String AUTHOR_SQL_PARAMETER = AUTHOR.toLowerCase();
-    String DATE_SQL_PARAMETER = DATE.toLowerCase();
-    String PUBLISHER_SQL_PARAMETER = PUBLISHER.toLowerCase();
+public abstract class ItemHandler<T extends Item>  implements SqlStatementInterface {
 
-    List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+    protected static List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 
-    String CHOOSE_TYPE_OF_SORTING = "Choose type of sorting:";
-    String ENTER_ANOTHER_VALUE_TO_RETURN = "Enter another value to return";
-    String NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING = "No available literature item IN shelf for sorting";
+    public abstract List<T> getSortedItems(int typeOfSorting, List<T> inputList);
 
-    List<String> parameterList();
+    public abstract List<MenuItemForSorting> getSortingMenuList();
 
-    List<T> getSortedItems(int typeOfSorting, List<T> inputList);
-
-    List<MenuItemForSorting> getSortingMenuList();
-
-    default void printSortingMenu(PrintWriter printWriter) {
+    public void printSortingMenu(PrintWriter printWriter) {
         myCustomPrintln(printWriter, CHOOSE_TYPE_OF_SORTING);
         for (MenuItemForSorting menuItemForSorting : getSortingMenuList()) {
             printWriter.println(menuItemForSorting);
@@ -44,7 +32,7 @@ public interface ItemHandler<T extends Item> {
         printWriter.println(str);
     }
 
-    default List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter) {
+    public List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter) {
         if (items.isEmpty()) {
             printWriter.println(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING);
         } else {
@@ -54,48 +42,32 @@ public interface ItemHandler<T extends Item> {
         return items;
     }
 
-    T getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter);
+    public abstract T getItemByUserInput(ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature, PrintWriter printWriter);
 
-    T getRandomItem(Random random);
+    public abstract T getRandomItem(Random random);
 
-    Map<String, String> convertItemToListOfString(T item);
+    public abstract Map<String, String> convertItemToListOfString(T item);
 
-    String generateHTMLFormBodyToCreateItem();
+    public abstract String generateHTMLFormBodyToCreateItem();
 
-    String generateHTMLFormBodyToCreateItem(Random random);
+    public abstract String generateHTMLFormBodyToCreateItem(Random random);
 
-    boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
+    public abstract boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
 
-    T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
+    public abstract T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
 
-    String insertItemSqlLiteStr();
+    public abstract String insertItemSqlLiteStr();
 
-    String insertItemMySqlStr();
+    public abstract String insertItemMySqlStr();
 
-    String selectItemSqlStr();
+    public abstract String selectItemSqlStr();
 
-    void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
+    public abstract void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
 
-    T readItemFromSql(ResultSet rs) throws SQLException;
+    public abstract T readItemFromSql(ResultSet rs) throws SQLException;
 
-    String generateSqlLiteTableStr();
+    public abstract String generateSqlLiteTableStr();
 
-    String generateMySqlTableStr();
+    public abstract String generateMySqlTableStr();
 
-    default String deleteItemFromDBStr() {
-        return "" +
-                " DELETE FROM " +
-                getSqlTableTitle() +
-                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
-    }
-
-    default String changeItemBorrowedStateInDBStr() {
-        return "" +
-                " UPDATE " +
-                getSqlTableTitle() +
-                " SET " + BORROWED + " = ? " +
-                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
-    }
-
-    String getSqlTableTitle(); // TODO rename
 }

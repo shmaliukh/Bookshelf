@@ -8,10 +8,6 @@ import static org.vshmaliukh.shelf.literature_items.ItemTitles.PUBLISHER;
 
 public class ItemUtils {
 
-
-
-    public static final String COMA_DELIMITER = ", ";
-
     private ItemUtils() {
     }
 
@@ -93,7 +89,7 @@ public class ItemUtils {
 
     public static String generateHTMLFormItems(String... values) {
         return generateHTMLFormItems(Arrays.asList(values));
-    }
+    } // TODO is need
 
     public static String generateHTMLFormItems(Collection<String> values) {
         StringBuilder sb = new StringBuilder();

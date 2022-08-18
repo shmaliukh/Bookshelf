@@ -6,6 +6,7 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -20,7 +21,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class ComicsHandler implements ItemHandler<Comics> {
+public class ComicsHandler extends ItemHandler<Comics> {
 
     public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
 

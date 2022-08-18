@@ -6,6 +6,7 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.SqlStatementInterface;
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
@@ -19,7 +20,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class MagazineHandler implements ItemHandler<Magazine> {
+public class MagazineHandler extends ItemHandler<Magazine> {
 
     public static final String MAGAZINE_TABLE_TITLE = Magazine.class.getSimpleName() + "s";
 
@@ -145,7 +146,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public String insertItemSqlLiteStr() {
-        return " INSERT OR IGNORE INTO " + MAGAZINE_TABLE_TITLE  +
+        return " INSERT OR IGNORE INTO " + MAGAZINE_TABLE_TITLE +
                 " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
@@ -201,7 +202,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public String generateMySqlTableStr(){
+    public String generateMySqlTableStr() {
         return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
