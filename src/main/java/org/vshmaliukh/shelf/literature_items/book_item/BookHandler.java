@@ -174,7 +174,8 @@ public class BookHandler implements ItemHandler<Book> {
     @Override
     public String insertItemMySqlStr() {
         return " INSERT " +
-                //"OR IGNORE" +
+                //"OR
+                "IGNORE" +
                 " INTO " + BOOK_TABLE_TITLE +
                 " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
@@ -251,23 +252,23 @@ public class BookHandler implements ItemHandler<Book> {
 
     @Override
     public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER  AUTO_INCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+        return " CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " (\n " +
+                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n " +
+                USER_ID_SQL_PARAMETER + " INT NOT NULL , \n " +
+                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
+                PAGES_SQL_PARAMETER + " INT NOT NULL , \n " +
+                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL , \n " +
+                AUTHOR_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
+                DATE_SQL_PARAMETER + " VARCHAR(50) NOT NULL , \n " +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) , \n " +
                 " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n" +
-                NAME_SQL_PARAMETER + " , \n" +
-                PAGES_SQL_PARAMETER + " , \n" +
-                BORROWED_SQL_PARAMETER + " , \n" +
-                AUTHOR_SQL_PARAMETER + " , \n" +
-                DATE_SQL_PARAMETER + " )\n" +
-                ");";
+                " UNIQUE ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                AUTHOR_SQL_PARAMETER + " , \n " +
+                DATE_SQL_PARAMETER + " ) \n " +
+                " ); ";
     }
 
     @Override

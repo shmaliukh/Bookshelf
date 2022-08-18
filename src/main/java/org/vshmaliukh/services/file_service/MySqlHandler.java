@@ -17,12 +17,12 @@ import static org.vshmaliukh.shelf.shelf_handler.User.*;
 @Slf4j
 public class MySqlHandler extends SaveReadUserFilesHandler {
 
+    public static final String USER_ID_SQL_PARAMETER = "id";
     private static Connection conn;
 
     public static final String SQL_FILE_TYPE = ".db";
     public static final String MYSQL_FILE_NAME = "shelf_mySql_db" + SQL_FILE_TYPE;
     private static final String MySqlLiteFileURL = "jdbc:mysql://127.0.0.1:3307/my_test"; // todo
-    //private static final String SqlLiteFileURL = "jdbc:sqlite:" + Paths.get( System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
     final User user; // TODO
 
     static {
@@ -56,7 +56,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
     }
 
@@ -102,9 +102,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
     }
 
     public void insertUser(String userName) {
-        String sql = "INSERT " +
-                //"OR IGNORE" +
-                " INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
+        String sql = " INSERT IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, userName);
             pstmt.executeUpdate();
@@ -114,14 +112,14 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
     }
 
     private void createUser() {
-        String sql = " CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " \n" +
-                " (\n" +
+        String sql = " CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " (\n" +
                 USER_ID_SQL_PARAMETER + " INT AUTO_INCREMENT PRIMARY KEY , \n" +
                 USER_NAME_SQL_PARAMETER + " VARCHAR(255) NOT NULL , \n" +
-                " PRIMARY KEY ( " + USER_ID_SQL_PARAMETER + " ) , " +
-                "UNIQUE (" + USER_NAME_SQL_PARAMETER + ")" +
-                //" ON CONFLICT IGNORE \n" +
-                " ); ";
+                //" PRIMARY KEY ( id ) , \n" +
+                //" CONSTRAINT UC_" + USER_TABLE_TITLE +
+                " UNIQUE ( \n" +
+                USER_NAME_SQL_PARAMETER + " )\n" +
+                ");";
         createNewTable(sql);
         insertUser(user.getName());
         readUserId(user);

@@ -156,10 +156,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT " +
-                //"OR IGNORE" +
-                " INTO " + getSqlTableTitle() +
-                " ( " +
+        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -208,9 +205,9 @@ public class MagazineHandler implements ItemHandler<Magazine> {
         return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
                 ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
                 USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
                 PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL, \n" +
                 " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
                 " CONSTRAINT UC_" + getSqlTableTitle() +
                 " UNIQUE ( \n" +

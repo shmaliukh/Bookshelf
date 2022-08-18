@@ -156,10 +156,7 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT " +
-                //"OR IGNORE" +
-                " INTO " + getSqlTableTitle() +
-                " ( " +
+        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -188,35 +185,34 @@ public class NewspaperHandler implements ItemHandler<Newspaper> {
     }
 
     public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + NEWSPAPER_TABLE_TITLE +
-                "(\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n" +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " UNIQUE (" +
-                NAME_SQL_PARAMETER + " , " +
-                PAGES_SQL_PARAMETER + " , " +
-                BORROWED_SQL_PARAMETER +
-                " ) ON CONFLICT IGNORE \n" +
+        return "CREATE TABLE IF NOT EXISTS " + NEWSPAPER_TABLE_TITLE + " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n " +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n " +
+                " UNIQUE ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " \n " +
+                ") ON CONFLICT IGNORE \n " +
                 ");";
     }
 
     @Override
     public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n " +
+                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n " +
+                USER_ID_SQL_PARAMETER + " INT NOT NULL , \n " +
+                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
+                PAGES_SQL_PARAMETER + " INT NOT NULL , \n " +
+                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL , \n " +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n" +
-                NAME_SQL_PARAMETER + " , \n" +
-                PAGES_SQL_PARAMETER + " , \n" +
-                BORROWED_SQL_PARAMETER + " )\n" +
+                " UNIQUE ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " )\n " +
                 ");";
     }
 
