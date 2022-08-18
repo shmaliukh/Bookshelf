@@ -24,26 +24,26 @@ public interface SqlItemBaseStatementInterface<T> {
     String SET = " SET ";
     String UNIQUE = " UNIQUE ";
 
-    String sqlTableTitle(); // TODO rename
+    String sqlItemTableTitle();
 
-    default String deleteItemFromDBStr() {
+    default String deleteItemSqlStr() {
         return "" +
                 DELETE_FROM +
-                sqlTableTitle() +
+                sqlItemTableTitle() +
                 WHERE + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
-    default String changeItemBorrowedStateInDBStr() {
+    default String changeItemBorrowedStateSqlStr() {
         return "" +
                 UPDATE +
-                sqlTableTitle() +
+                sqlItemTableTitle() +
                 SET + BORROWED + " = ? " +
                 WHERE + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
-    void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
+    void insertItemValuesToSqlDB(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
 
-    T readItemFromSql(ResultSet rs) throws SQLException;
+    T readItemFromSqlDB(ResultSet rs) throws SQLException;
 
     String selectItemSqlStr();
 }

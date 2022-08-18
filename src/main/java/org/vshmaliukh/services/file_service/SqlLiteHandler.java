@@ -92,7 +92,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
         String sqlInsertStr = handlerByClass.insertItemSqlLiteStr();
         try {
             PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValues(pstmt, item, user.getId());
+            handlerByClass.insertItemValuesToSqlDB(pstmt, item, user.getId());
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -155,7 +155,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public void deleteItemFromDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String deleteItemFromDBStr = handlerByClass.deleteItemFromDBStr();
+        String deleteItemFromDBStr = handlerByClass.deleteItemSqlStr();
         try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
             preparedStatement.setInt(1, item.getId());
             preparedStatement.execute();
@@ -166,7 +166,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
 
     public void changeItemBorrowedStateInDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateInDBStr();
+        String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateSqlStr();
         try (PreparedStatement preparedStatement = conn.prepareStatement(changeItemBorrowedStateInDB)) {
             preparedStatement.setString(1, String.valueOf(!item.isBorrowed()));
             preparedStatement.setInt(2, item.getId());
@@ -184,7 +184,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
             pstmt.setInt(1, user.getId());
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                T item = handlerByClass.readItemFromSql(rs);
+                T item = handlerByClass.readItemFromSqlDB(rs);
                 itemByClassList.add(item);
             }
         } catch (SQLException sqle) {

@@ -3,7 +3,6 @@ package org.vshmaliukh.shelf.shelf_handler;
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.MySqlHandler;
 import org.vshmaliukh.services.file_service.SqlLiteHandler;
-import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
@@ -12,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class MySqlShelfHandler extends SaveReadShelfHandler {
 
-    User user;
+    String userName;
     protected MySqlHandler mySqlHandler;
 
     public MySqlShelfHandler(String userName) {
-        this.user = new User(userName); // TODO
-        mySqlHandler = new MySqlHandler(System.getProperty("user.home"), user.getName());
+        this.userName = userName;
+        mySqlHandler = new MySqlHandler(System.getProperty("user.home"), userName);
     }
 
     public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
@@ -26,14 +25,14 @@ public class MySqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return shelf.itemsOfShelf.stream() // todo
+        return getShelf().itemsOfShelf.stream() // todo
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return shelf.itemsOfShelf.stream()
+        return getShelf().itemsOfShelf.stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
@@ -41,7 +40,7 @@ public class MySqlShelfHandler extends SaveReadShelfHandler {
     @Override
     public void addItem(Item item) {
         if (item != null) {
-            shelf.itemsOfShelf.add(item);
+            getShelf().itemsOfShelf.add(item);
             mySqlHandler.saveItemToDB(item);
         }
     }
@@ -60,21 +59,16 @@ public class MySqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        mySqlHandler.saveItemList(shelf.itemsOfShelf);
+        mySqlHandler.saveItemList(getShelf().itemsOfShelf);
     }
 
     @Override
     public void readShelfItems() {
-        shelf.itemsOfShelf = mySqlHandler.readItemList();
+        getShelf().itemsOfShelf = mySqlHandler.readItemList();
     }
 
     @Override
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
         gsonItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
-    }
-
-    @Override
-    public Shelf getShelf() {
-        return shelf;
     }
 }

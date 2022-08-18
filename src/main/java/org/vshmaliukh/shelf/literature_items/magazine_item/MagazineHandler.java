@@ -23,10 +23,6 @@ public class MagazineHandler extends ItemHandler<Magazine> {
 
     public static final String MAGAZINE_TABLE_TITLE = Magazine.class.getSimpleName() + "s";
 
-    public List<String> parameterList() {
-        return parameterList;
-    }
-
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(Magazine::getName, String.CASE_INSENSITIVE_ORDER);
 
@@ -134,7 +130,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     // -------------------------------------------------------------------
 
     @Override
-    public Magazine readItemFromSql(ResultSet rs) throws SQLException {
+    public Magazine readItemFromSqlDB(ResultSet rs) throws SQLException {
         return new Magazine(
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
@@ -156,7 +152,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + sqlTableTitle() + " ( " +
+        return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -176,7 +172,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Magazine item, Integer userID) throws SQLException {
+    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Magazine item, Integer userID) throws SQLException {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
@@ -185,7 +181,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     }
 
     public String createTableSqlLiteStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -202,14 +198,14 @@ public class MagazineHandler extends ItemHandler<Magazine> {
 
     @Override
     public String createTableMySqlStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
-                CONSTRAINT_UC + sqlTableTitle() +
+                CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -219,7 +215,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     }
 
     @Override
-    public String sqlTableTitle() {
+    public String sqlItemTableTitle() {
         return MAGAZINE_TABLE_TITLE;
     }
 }

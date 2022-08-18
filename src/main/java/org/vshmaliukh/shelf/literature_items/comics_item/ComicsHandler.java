@@ -22,13 +22,7 @@ import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class ComicsHandler extends ItemHandler<Comics> {
 
-    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
-
-    public List<String> parameterList() {
-        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
-        parameterList.add(PUBLISHER);
-        return Collections.unmodifiableList(parameterList);
-    }
+    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName();
 
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_NAME = Comparator.comparing(Comics::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_PUBLISHER = Comparator.comparing(Comics::getPublisher, String.CASE_INSENSITIVE_ORDER);
@@ -146,7 +140,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     // -------------------------------------------------------------------
 
     @Override
-    public Comics readItemFromSql(ResultSet rs) throws SQLException {
+    public Comics readItemFromSqlDB(ResultSet rs) throws SQLException {
         return new Comics(
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
@@ -170,7 +164,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + sqlTableTitle() + " ( " +
+        return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -192,7 +186,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Comics item, Integer userID) throws SQLException {
+    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Comics item, Integer userID) throws SQLException {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
@@ -202,7 +196,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     public String createTableSqlLiteStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -221,7 +215,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
 
     @Override
     public String createTableMySqlStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
@@ -229,7 +223,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
                 PUBLISHER_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
-                CONSTRAINT_UC + sqlTableTitle() +
+                CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -240,7 +234,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public String sqlTableTitle() {
+    public String sqlItemTableTitle() {
         return COMICS_TABLE_TITLE;
     }
 }

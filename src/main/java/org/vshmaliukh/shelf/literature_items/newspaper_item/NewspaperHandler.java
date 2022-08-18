@@ -23,10 +23,6 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
 
     public static final String NEWSPAPER_TABLE_TITLE = Newspaper.class.getSimpleName() + "s";
 
-    public List<String> parameterList() {
-        return parameterList;
-    }
-
     public static final Comparator<Newspaper> NEWSPAPER_COMPARATOR_BY_PAGES = Comparator.comparing(Newspaper::getPagesNumber);
     public static final Comparator<Newspaper> NEWSPAPER_COMPARATOR_BY_NAME = Comparator.comparing(Newspaper::getName, String.CASE_INSENSITIVE_ORDER);
 
@@ -134,7 +130,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     // -------------------------------------------------------------------
 
     @Override
-    public Newspaper readItemFromSql(ResultSet rs) throws SQLException {
+    public Newspaper readItemFromSqlDB(ResultSet rs) throws SQLException {
         return new Newspaper(
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
@@ -156,7 +152,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + sqlTableTitle() + " ( " +
+        return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -176,7 +172,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Newspaper item, Integer userID) throws SQLException {
+    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Newspaper item, Integer userID) throws SQLException {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
@@ -185,7 +181,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     }
 
     public String createTableSqlLiteStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -203,14 +199,14 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
 
     @Override
     public String createTableMySqlStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
-                CONSTRAINT_UC + sqlTableTitle() +
+                CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -220,7 +216,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     }
 
     @Override
-    public String sqlTableTitle() {
+    public String sqlItemTableTitle() {
         return NEWSPAPER_TABLE_TITLE;
     }
 }

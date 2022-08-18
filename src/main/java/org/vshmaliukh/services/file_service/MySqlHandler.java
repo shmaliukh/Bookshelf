@@ -18,12 +18,14 @@ import static org.vshmaliukh.shelf.shelf_handler.User.*;
 public class MySqlHandler extends SaveReadUserFilesHandler {
 
     public static final String USER_ID_SQL_PARAMETER = "id";
+
+    private static final String MYSQL_USER_NAME = "test";
+    private static final String MYSQL_PASSWORD = "test";
+    private static final String MYSQL_DB_URL = "jdbc:mysql://127.0.0.1:3307/my_test";
+
     private static Connection conn;
 
-    public static final String SQL_FILE_TYPE = ".db";
-    public static final String MYSQL_FILE_NAME = "shelf_mySql_db" + SQL_FILE_TYPE;
-    private static final String MySqlLiteFileURL = "jdbc:mysql://127.0.0.1:3307/my_test"; // todo
-    final User user; // TODO
+    final User user; // TODO is necessary to keep reference to the user
 
     static {
         createNewDatabase();
@@ -42,7 +44,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
                 log.info("The driver name is " + meta.getDriverName());
-                log.info("A new database '" + MySqlLiteFileURL + "' has been created.");
+                log.info("A new database '" + MYSQL_DB_URL + "' has been created.");
             }
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
@@ -51,12 +53,9 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
 
     static void connectToDB() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(MySqlLiteFileURL, "test", "test");
+            conn = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD);
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
-        } catch (ClassNotFoundException e) {
-            //throw new RuntimeException(e);
         }
     }
 
@@ -74,11 +73,11 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
 
     @Override
     public String generateFullFileName() {
-        return MYSQL_FILE_NAME;
+        return "";
     }
 
     @Override
-    public Path generatePathForFileHandler() {
+    public Path generatePathForFileHandler() { // todo destruct
         String sqlLiteHandlerFolderStr = "sqlLite_handler";
         Path path = Paths.get(String.valueOf(generatePathForUser()), sqlLiteHandlerFolderStr);
         createDirectoryIfNotExists(path);
@@ -94,8 +93,8 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
         String sqlInsertStr = handlerByClass.insertItemMySqlStr();
         try {
-            PreparedStatement pstmt = conn.prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValues(pstmt, item, user.getId());
+            PreparedStatement preparedStatement = conn.prepareStatement(sqlInsertStr);
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -103,9 +102,9 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
 
     public void insertUser(String userName) {
         String sql = " INSERT IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, userName);
-            pstmt.executeUpdate();
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, userName);
+            preparedStatement.executeUpdate();
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -115,8 +114,6 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
         String sql = " CREATE TABLE IF NOT EXISTS " + USER_TABLE_TITLE + " (\n" +
                 USER_ID_SQL_PARAMETER + " INT AUTO_INCREMENT PRIMARY KEY , \n" +
                 USER_NAME_SQL_PARAMETER + " VARCHAR(255) NOT NULL , \n" +
-                //" PRIMARY KEY ( id ) , \n" +
-                //" CONSTRAINT UC_" + USER_TABLE_TITLE +
                 " UNIQUE ( \n" +
                 USER_NAME_SQL_PARAMETER + " )\n" +
                 ");";
@@ -130,10 +127,10 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
                 " SELECT " + USER_ID_SQL_PARAMETER +
                 " FROM " + USER_TABLE_TITLE +
                 " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, user.getName());
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
 
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
                 user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
             }
@@ -162,7 +159,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
 
     public void deleteItemFromDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String deleteItemFromDBStr = handlerByClass.deleteItemFromDBStr();
+        String deleteItemFromDBStr = handlerByClass.deleteItemSqlStr();
         try (PreparedStatement preparedStatement = conn.prepareStatement(deleteItemFromDBStr)) {
             preparedStatement.setInt(1, item.getId());
             preparedStatement.execute();
@@ -173,7 +170,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
 
     public void changeItemBorrowedStateInDB(Item item) {
         ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateInDBStr();
+        String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateSqlStr();
         try (PreparedStatement preparedStatement = conn.prepareStatement(changeItemBorrowedStateInDB)) {
             preparedStatement.setString(1, String.valueOf(!item.isBorrowed()));
             preparedStatement.setInt(2, item.getId());
@@ -187,11 +184,11 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
         ItemHandler<T> handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
         String sqlStr = handlerByClass.selectItemSqlStr();
         List<T> itemByClassList = new ArrayList<>();
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlStr)) {
-            pstmt.setInt(1, user.getId());
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                T item = handlerByClass.readItemFromSql(rs);
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sqlStr)) {
+            preparedStatement.setInt(1, user.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                T item = handlerByClass.readItemFromSqlDB(resultSet);
                 itemByClassList.add(item);
             }
         } catch (SQLException sqle) {

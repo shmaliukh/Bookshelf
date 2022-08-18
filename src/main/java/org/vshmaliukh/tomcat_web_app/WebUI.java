@@ -6,6 +6,7 @@ import org.vshmaliukh.shelf.shelf_handler.MySqlShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
+import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.FILE_MODE_WORK_WITH_MYSQL;
 import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.FILE_MODE_WORK_WITH_SQLLITE;
 
 public class WebUI extends AbstractUI {
@@ -22,7 +23,7 @@ public class WebUI extends AbstractUI {
             case FILE_MODE_WORK_WITH_SQLLITE:
                 shelfHandler = new SqlLiteShelfHandler(user.getName());
                 break;
-            case 4: // TODO
+            case FILE_MODE_WORK_WITH_MYSQL:
                 shelfHandler = new MySqlShelfHandler(user.getName());
                 break;
             default:

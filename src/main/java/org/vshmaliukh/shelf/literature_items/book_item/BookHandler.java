@@ -24,13 +24,6 @@ public class BookHandler extends ItemHandler<Book> {
 
     public static final String BOOK_TABLE_TITLE = Book.class.getSimpleName() + "s";
 
-    public List<String> parameterList() {
-        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
-        parameterList.add(AUTHOR);
-        parameterList.add(DATE);
-        return Collections.unmodifiableList(parameterList);
-    }
-
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_PAGES = Comparator.comparing(Book::getPagesNumber);
@@ -201,7 +194,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
+    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
@@ -212,7 +205,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public Book readItemFromSql(ResultSet rs) throws SQLException {
+    public Book readItemFromSqlDB(ResultSet rs) throws SQLException {
         Date issuanceDate;
         try {
             issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
@@ -231,7 +224,7 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String createTableSqlLiteStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -252,7 +245,7 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String createTableMySqlStr() {
-        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
                 USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
@@ -261,7 +254,7 @@ public class BookHandler extends ItemHandler<Book> {
                 AUTHOR_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 DATE_SQL_PARAMETER + VARCHAR_25_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
-                CONSTRAINT_UC + sqlTableTitle() +
+                CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -273,7 +266,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public String sqlTableTitle() {
+    public String sqlItemTableTitle() {
         return BOOK_TABLE_TITLE;
     }
 }

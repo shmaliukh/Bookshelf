@@ -91,7 +91,7 @@ class MagazineHandlerTest {
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());
         assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-        assertEquals(DEFAULT_INTEGER, itemByUserInput.getPagesNumber());
+        assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
         assertEquals(DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
     }
 

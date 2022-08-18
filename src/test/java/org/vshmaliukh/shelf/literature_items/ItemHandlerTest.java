@@ -11,7 +11,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
-import static org.vshmaliukh.shelf.literature_items.ItemHandler.*;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 @Slf4j
@@ -143,7 +142,7 @@ class ItemHandlerTest {
             assertNotNull(itemByUserInput);
             assertNotNull(itemByUserInput.toString());
             assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-            assertEquals(DEFAULT_INTEGER, itemByUserInput.getPagesNumber());
+            assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
         }
     }
 
