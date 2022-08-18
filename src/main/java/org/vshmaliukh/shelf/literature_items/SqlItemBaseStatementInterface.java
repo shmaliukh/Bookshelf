@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.PUBLISHER;
 
-public interface SqlBaseStatementInterface<T> {
+public interface SqlItemBaseStatementInterface<T> {
 
     String ITEM_ID_SQL_PARAMETER = "id";
     String NAME_SQL_PARAMETER = NAME.toLowerCase();
@@ -17,21 +17,27 @@ public interface SqlBaseStatementInterface<T> {
     String DATE_SQL_PARAMETER = DATE.toLowerCase();
     String PUBLISHER_SQL_PARAMETER = PUBLISHER.toLowerCase();
 
-    String getSqlTableTitle(); // TODO rename
+    String CREATE_TABLE_IF_NOT_EXISTS = " CREATE TABLE IF NOT EXISTS ";
+    String DELETE_FROM = " DELETE FROM ";
+    String WHERE = " WHERE ";
+    String UPDATE = " UPDATE ";
+    String SET = " SET ";
+
+    String sqlTableTitle(); // TODO rename
 
     default String deleteItemFromDBStr() {
         return "" +
-                " DELETE FROM " +
-                getSqlTableTitle() +
-                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
+                DELETE_FROM +
+                sqlTableTitle() +
+                WHERE + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
     default String changeItemBorrowedStateInDBStr() {
         return "" +
-                " UPDATE " +
-                getSqlTableTitle() +
-                " SET " + BORROWED + " = ? " +
-                " WHERE " + ITEM_ID_SQL_PARAMETER + " = ? ";
+                UPDATE +
+                sqlTableTitle() +
+                SET + BORROWED + " = ? " +
+                WHERE + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
     void insertItemValues(PreparedStatement pstmt, T item, Integer userID) throws SQLException;

@@ -231,47 +231,49 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n " +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                " UNIQUE ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                AUTHOR_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                DATE_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " , \n " +
                 AUTHOR_SQL_PARAMETER + " , \n " +
                 DATE_SQL_PARAMETER + " \n " +
-                " ) ON CONFLICT IGNORE \n " +
+                " ) \n " +
+                ON_CONFLICT_IGNORE +
                 " ); ";
     }
 
     @Override
     public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " (\n " +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n " +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL , \n " +
-                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
-                PAGES_SQL_PARAMETER + " INT NOT NULL , \n " +
-                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL , \n " +
-                AUTHOR_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
-                DATE_SQL_PARAMETER + " VARCHAR(50) NOT NULL , \n " +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) , \n " +
-                " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n " +
-                NAME_SQL_PARAMETER + " , \n " +
-                PAGES_SQL_PARAMETER + " , \n " +
-                BORROWED_SQL_PARAMETER + " , \n " +
-                AUTHOR_SQL_PARAMETER + " , \n " +
-                DATE_SQL_PARAMETER + " ) \n " +
-                " ); ";
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n" +
+                AUTHOR_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
+                DATE_SQL_PARAMETER + VARCHAR_25_NOT_NULL + " , \n" +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                CONSTRAINT_UC + sqlTableTitle() +
+                UNIQUE + " ( \n " +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " , \n" +
+                AUTHOR_SQL_PARAMETER + " , \n" +
+                DATE_SQL_PARAMETER + " \n " +
+                " ) \n " +
+                ");";
     }
 
     @Override
-    public String getSqlTableTitle() {
+    public String sqlTableTitle() {
         return BOOK_TABLE_TITLE;
     }
 }

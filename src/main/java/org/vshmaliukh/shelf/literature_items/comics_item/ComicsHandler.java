@@ -20,9 +20,11 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class ComicsHandler extends ItemHandler<Comics>{
+public class ComicsHandler extends ItemHandler<Comics> {
 
     public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
+
+
 
     public List<String> parameterList() {
         List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
@@ -36,7 +38,7 @@ public class ComicsHandler extends ItemHandler<Comics>{
 
     @Override
     public List<Comics> getSortedItems(int typeOfSorting, List<Comics> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Comics> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
@@ -170,7 +172,7 @@ public class ComicsHandler extends ItemHandler<Comics>{
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
+        return " INSERT IGNORE INTO " + sqlTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -202,43 +204,45 @@ public class ComicsHandler extends ItemHandler<Comics>{
     }
 
     public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PUBLISHER_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " UNIQUE (" +
-                NAME_SQL_PARAMETER + " , " +
-                PAGES_SQL_PARAMETER + " , " +
-                BORROWED_SQL_PARAMETER + " , " +
-                PUBLISHER_SQL_PARAMETER +
-                " ) ON CONFLICT IGNORE \n" +
-                ");";
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                PUBLISHER_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                UNIQUE + " ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                PUBLISHER_SQL_PARAMETER + " \n " +
+                " ) \n " +
+                ON_CONFLICT_IGNORE +
+                " ); ";
     }
 
     @Override
     public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL, \n" +
-                PUBLISHER_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
-                " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n" +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n" +
+                PUBLISHER_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                CONSTRAINT_UC + sqlTableTitle() +
+                UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n" +
                 PAGES_SQL_PARAMETER + " , \n" +
                 BORROWED_SQL_PARAMETER + " , \n" +
-                PUBLISHER_SQL_PARAMETER + " )\n" +
+                PUBLISHER_SQL_PARAMETER + " \n " +
+                " ) \n " +
                 ");";
     }
 
     @Override
-    public String getSqlTableTitle() {
+    public String sqlTableTitle() {
         return COMICS_TABLE_TITLE;
     }
 }

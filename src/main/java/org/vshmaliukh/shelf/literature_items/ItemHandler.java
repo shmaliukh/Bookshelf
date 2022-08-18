@@ -9,7 +9,7 @@ import java.util.*;
 import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
-public abstract class ItemHandler<T extends Item> implements SqlBaseStatementInterface<T>, MySqlStatementInterface, SqlLiteStatementInterface, ItemWebIntegrationInterface<T> {
+public abstract class ItemHandler<T extends Item> implements SqlItemBaseStatementInterface<T>, MySqlItemStatementInterface, SqlLiteItemStatementInterface, ItemWebIntegrationInterface<T> {
 
     protected static List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
 

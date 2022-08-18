@@ -19,7 +19,7 @@ import static org.vshmaliukh.services.input_services.AbstractInputHandler.isVali
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class NewspaperHandler extends ItemHandler<Newspaper>{
+public class NewspaperHandler extends ItemHandler<Newspaper> {
 
     public static final String NEWSPAPER_TABLE_TITLE = Newspaper.class.getSimpleName() + "s";
 
@@ -156,7 +156,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper>{
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
+        return " INSERT IGNORE INTO " + sqlTableTitle() + " ( " +
                 USER_ID_SQL_PARAMETER + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
@@ -185,39 +185,42 @@ public class NewspaperHandler extends ItemHandler<Newspaper>{
     }
 
     public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + NEWSPAPER_TABLE_TITLE + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT, \n " +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                " UNIQUE ( \n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " \n " +
-                ") ON CONFLICT IGNORE \n " +
-                ");";
+                " ) \n " +
+                ON_CONFLICT_IGNORE +
+                " ); ";
     }
+
 
     @Override
     public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n " +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n " +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL , \n " +
-                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
-                PAGES_SQL_PARAMETER + " INT NOT NULL , \n " +
-                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL , \n " +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n " +
-                " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n " +
-                NAME_SQL_PARAMETER + " , \n " +
-                PAGES_SQL_PARAMETER + " , \n " +
-                BORROWED_SQL_PARAMETER + " )\n " +
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n" +
+                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n" +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                CONSTRAINT_UC + sqlTableTitle() +
+                UNIQUE + " ( \n " +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " \n " +
+                " ) \n " +
                 ");";
     }
 
     @Override
-    public String getSqlTableTitle() {
+    public String sqlTableTitle() {
         return NEWSPAPER_TABLE_TITLE;
     }
 }
