@@ -28,10 +28,10 @@ public class AddItemServlet extends HttpServlet {
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
-        if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
-            SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
-            webShelfHandler.addLiteratureObject(item);
+            webShelfHandler.addItem(item);
 
             WebUtils.redirectTo(ADD_MENU_TITLE, response,
                     WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
@@ -60,6 +60,7 @@ public class AddItemServlet extends HttpServlet {
                     "method = \"POST\">\n" +
                     "Create " + itemClassType + "\n" +
                     "       <br>\n");
+
             if (isRandom != null) {
                 webPageBuilder.addToBody(handlerByName.generateHTMLFormBodyToCreateItem(WebUtils.RANDOM));
             } else {

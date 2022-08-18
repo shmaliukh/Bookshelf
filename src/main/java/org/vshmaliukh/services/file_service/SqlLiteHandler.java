@@ -138,7 +138,7 @@ public class SqlLiteHandler extends SaveReadUserFilesHandler {
     private void generateTablesIfNotExists() {
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String tableStr = handlerByClass.generateSqlLiteTableStr();
+            String tableStr = handlerByClass.createTableSqlLiteStr();
             createNewTable(tableStr);
         }
     }

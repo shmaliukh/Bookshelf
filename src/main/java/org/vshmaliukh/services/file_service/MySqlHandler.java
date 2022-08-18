@@ -145,7 +145,7 @@ public class MySqlHandler extends SaveReadUserFilesHandler {
     private void generateTablesIfNotExists() {
         for (Class<? extends Item> classType : ItemHandlerProvider.uniqueTypeNames) {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(classType);
-            String tableStr = handlerByClass.generateMySqlTableStr();
+            String tableStr = handlerByClass.createTableMySqlStr();
             createNewTable(tableStr);
         }
     }

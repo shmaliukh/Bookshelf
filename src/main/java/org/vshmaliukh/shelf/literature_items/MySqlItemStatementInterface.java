@@ -9,10 +9,9 @@ public interface MySqlItemStatementInterface {
     String VARCHAR_10_NOT_NULL = " VARCHAR(10) NOT NULL ";
     String PRIMARY_KEY = " PRIMARY KEY ( ";
     String CONSTRAINT_UC = " CONSTRAINT UC_";
-    String UNIQUE = " UNIQUE ";
 
     String insertItemMySqlStr();
 
-    String generateMySqlTableStr();
+    String createTableMySqlStr();
 
 }

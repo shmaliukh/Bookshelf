@@ -40,7 +40,7 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
             sqlLiteHandler.saveItemToDB(item);
@@ -48,7 +48,7 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         Item item = shelf.itemsOfShelf.remove(index - 1);
         sqlLiteHandler.deleteItemFromDB(item);
     }

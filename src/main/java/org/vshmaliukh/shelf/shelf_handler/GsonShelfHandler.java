@@ -53,7 +53,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
         } else {
@@ -63,7 +63,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         if (!shelf.itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= shelf.itemsOfShelf.size()) {
                 shelf.itemsOfShelf.remove(index - 1);
@@ -91,7 +91,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     @Override
     public void readShelfItems() {
         shelf.itemsOfShelf = new ArrayList<>();
-        gsonItemHandler.readItemList().forEach(this::addLiteratureObject);
+        gsonItemHandler.readItemList().forEach(this::addItem);
     }
 
     @Override

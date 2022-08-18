@@ -2,17 +2,12 @@ package org.vshmaliukh.shelf.literature_items.book_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
 import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
@@ -39,9 +34,9 @@ class ActionsWithBookTest {
     /*
       Adding books in revers order
      */ {
-        consoleShelfHandler.addLiteratureObject(book3);
-        consoleShelfHandler.addLiteratureObject(book2);
-        consoleShelfHandler.addLiteratureObject(book1);
+        consoleShelfHandler.addItem(book3);
+        consoleShelfHandler.addItem(book2);
+        consoleShelfHandler.addItem(book1);
     }
 
 

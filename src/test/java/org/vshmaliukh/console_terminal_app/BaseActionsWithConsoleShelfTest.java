@@ -8,7 +8,6 @@ import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
 
 import java.io.*;
 import java.util.Date;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,7 +39,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazineNotBorrowed);
+        shelfHandler.addItem(magazineNotBorrowed);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
         assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
@@ -54,7 +53,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazineIsBorrowed);
+        shelfHandler.addItem(magazineIsBorrowed);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
         assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
@@ -69,7 +68,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
         assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
@@ -83,7 +82,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookIsBorrowed);
+        shelfHandler.addItem(bookIsBorrowed);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
         assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
@@ -96,9 +95,9 @@ class BaseActionsWithConsoleShelfTest {
     void deleteLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
 
-        shelfHandler.deleteLiteratureObjectByIndex(1);
+        shelfHandler.deleteItemByIndex(1);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
     }
@@ -108,9 +107,9 @@ class BaseActionsWithConsoleShelfTest {
     void deleteLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazineNotBorrowed);
+        shelfHandler.addItem(magazineNotBorrowed);
 
-        shelfHandler.deleteLiteratureObjectByIndex(1);
+        shelfHandler.deleteItemByIndex(1);
 
         assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
     }
@@ -124,7 +123,7 @@ class BaseActionsWithConsoleShelfTest {
         System.setOut(ps);
 
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.deleteLiteratureObjectByIndex(1);
+        shelfHandler.deleteItemByIndex(1);
 
         System.out.flush();
         System.setOut(old);
@@ -138,11 +137,11 @@ class BaseActionsWithConsoleShelfTest {
     void deleteLiteratureObjectByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
 
         System.setOut(ps);
 
-        shelfHandler.deleteLiteratureObjectByIndex(0);
+        shelfHandler.deleteItemByIndex(0);
 
         System.out.flush();
         System.setOut(old);
@@ -158,7 +157,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazineNotBorrowed);
+        shelfHandler.addItem(magazineNotBorrowed);
 
         shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 1);
 
@@ -172,7 +171,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
 
         shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 1);
 
@@ -203,7 +202,7 @@ class BaseActionsWithConsoleShelfTest {
     void borrowLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
 
         System.setOut(ps);
 
@@ -223,7 +222,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookIsBorrowed);
+        shelfHandler.addItem(bookIsBorrowed);
 
         shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(), 1);
 
@@ -237,7 +236,7 @@ class BaseActionsWithConsoleShelfTest {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazineIsBorrowed);
+        shelfHandler.addItem(magazineIsBorrowed);
 
         shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(),  1);
 
@@ -250,7 +249,7 @@ class BaseActionsWithConsoleShelfTest {
     void arriveLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(bookIsBorrowed);
+        shelfHandler.addItem(bookIsBorrowed);
 
         System.setOut(ps);
 
@@ -286,10 +285,10 @@ class BaseActionsWithConsoleShelfTest {
     void saveShelfToFile(){
         BaseShelfHandler shelfHandler = new BaseShelfHandler();
 
-        shelfHandler.addLiteratureObject(bookNotBorrowed);
-        shelfHandler.addLiteratureObject(bookIsBorrowed);
-        shelfHandler.addLiteratureObject(magazineNotBorrowed);
-        shelfHandler.addLiteratureObject(magazineIsBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
+        shelfHandler.addItem(bookIsBorrowed);
+        shelfHandler.addItem(magazineNotBorrowed);
+        shelfHandler.addItem(magazineIsBorrowed);
 
         //TODO
     }

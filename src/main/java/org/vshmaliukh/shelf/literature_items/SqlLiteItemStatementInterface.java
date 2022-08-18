@@ -9,6 +9,6 @@ public interface SqlLiteItemStatementInterface {
 
     String insertItemSqlLiteStr();
 
-    String generateSqlLiteTableStr();
+    String createTableSqlLiteStr();
 
 }

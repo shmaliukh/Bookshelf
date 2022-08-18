@@ -96,11 +96,11 @@ public class BookHandler extends ItemHandler<Book> {
                 ItemUtils.generateHTMLFormRadio(BORROWED) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.AUTHOR, "text") +
                 ItemUtils.generateHTMLFormItem(ItemTitles.DATE, "date") +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -112,11 +112,11 @@ public class BookHandler extends ItemHandler<Book> {
                 ItemUtils.generateHTMLFormRadio(BORROWED) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.AUTHOR, "text", getRandomString(random.nextInt(20), random)) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.DATE, "date", defaultDate) +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -155,7 +155,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     // -------------------------------------------------------------------
-    // SQLlite methods
+    // SQL methods
     // -------------------------------------------------------------------
 
     @Override
@@ -230,15 +230,15 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public String generateSqlLiteTableStr() {
+    public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n" +
-                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
-                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
-                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
-                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
-                AUTHOR_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
-                DATE_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                AUTHOR_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                DATE_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -251,22 +251,22 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public String generateMySqlTableStr() {
+    public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n" +
-                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
-                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
-                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
-                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n" +
-                AUTHOR_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
-                DATE_SQL_PARAMETER + VARCHAR_25_NOT_NULL + " , \n" +
-                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                AUTHOR_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                DATE_SQL_PARAMETER + VARCHAR_25_NOT_NULL + " , \n " +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlTableTitle() +
                 UNIQUE + " ( \n " +
-                NAME_SQL_PARAMETER + " , \n" +
-                PAGES_SQL_PARAMETER + " , \n" +
-                BORROWED_SQL_PARAMETER + " , \n" +
-                AUTHOR_SQL_PARAMETER + " , \n" +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                AUTHOR_SQL_PARAMETER + " , \n " +
                 DATE_SQL_PARAMETER + " \n " +
                 " ) \n " +
                 ");";

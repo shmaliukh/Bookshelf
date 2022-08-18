@@ -70,17 +70,17 @@ class ItemGsonHandlerTest {
     void testSaveReadShelf_GsonHandlerOneFile() {
 
         GsonShelfHandler consoleShelfHandler = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
-        consoleShelfHandler.addLiteratureObject(book1);
-        consoleShelfHandler.addLiteratureObject(book2);
-        consoleShelfHandler.addLiteratureObject(magazine1);
-        consoleShelfHandler.addLiteratureObject(magazine2);
+        consoleShelfHandler.addItem(book1);
+        consoleShelfHandler.addItem(book2);
+        consoleShelfHandler.addItem(magazine1);
+        consoleShelfHandler.addItem(magazine2);
 
         ItemGsonHandlerOneFileUser gsonHandlerOneFile = new ItemGsonHandlerOneFileUser(tempDirStr, "testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
         GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
-        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addLiteratureObject);
+        gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addItem);
 
         assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
         assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
@@ -96,15 +96,15 @@ class ItemGsonHandlerTest {
         GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
         GsonShelfHandler consoleShelfHandler2 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
 
-        consoleShelfHandler1 .addLiteratureObject(book1);
-        consoleShelfHandler1 .addLiteratureObject(book2);
-        consoleShelfHandler1 .addLiteratureObject(magazine1);
-        consoleShelfHandler1 .addLiteratureObject(magazine2);
+        consoleShelfHandler1 .addItem(book1);
+        consoleShelfHandler1 .addItem(book2);
+        consoleShelfHandler1 .addItem(magazine1);
+        consoleShelfHandler1 .addItem(magazine2);
 
         ItemGsonHandlerPerType itemGsonHandlerPerType = new ItemGsonHandlerPerType(tempDirStr, "testGsonHandlerPerType");
         itemGsonHandlerPerType.saveItemList(consoleShelfHandler1.getShelf().getAllLiteratureObjects());
 
-        itemGsonHandlerPerType.readItemList().forEach(consoleShelfHandler2::addLiteratureObject);
+        itemGsonHandlerPerType.readItemList().forEach(consoleShelfHandler2::addItem);
 
         assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler2.getShelf().getAllLiteratureObjects().size());
         assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()

@@ -18,7 +18,7 @@ public class ConsoleGsonShelfHandler extends GsonShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         if (!shelf.itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= shelf.itemsOfShelf.size()) {
                 printWriter.println(shelf.itemsOfShelf.remove(index - 1) + " " + "has deleted from shelf");

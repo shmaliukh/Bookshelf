@@ -29,14 +29,14 @@ public class BaseShelfHandler implements ShelfHandlerInterface {
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
         }
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         if (!shelf.itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= shelf.itemsOfShelf.size()) {
                 shelf.itemsOfShelf.remove(index - 1);

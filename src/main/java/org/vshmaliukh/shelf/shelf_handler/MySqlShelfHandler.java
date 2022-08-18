@@ -39,7 +39,7 @@ public class MySqlShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
             shelf.itemsOfShelf.add(item);
             mySqlHandler.saveItemToDB(item);
@@ -47,7 +47,7 @@ public class MySqlShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         Item item = shelf.itemsOfShelf.remove(index - 1);
         mySqlHandler.deleteItemFromDB(item);
     }

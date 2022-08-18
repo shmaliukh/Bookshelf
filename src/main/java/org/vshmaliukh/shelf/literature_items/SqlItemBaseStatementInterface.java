@@ -22,6 +22,7 @@ public interface SqlItemBaseStatementInterface<T> {
     String WHERE = " WHERE ";
     String UPDATE = " UPDATE ";
     String SET = " SET ";
+    String UNIQUE = " UNIQUE ";
 
     String sqlTableTitle(); // TODO rename
 

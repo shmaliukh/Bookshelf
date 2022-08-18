@@ -24,8 +24,6 @@ public class ComicsHandler extends ItemHandler<Comics> {
 
     public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
 
-
-
     public List<String> parameterList() {
         List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
         parameterList.add(PUBLISHER);
@@ -91,11 +89,11 @@ public class ComicsHandler extends ItemHandler<Comics> {
                 ItemUtils.generateHTMLFormItem(ItemTitles.PAGES, "number") +
                 ItemUtils.generateHTMLFormRadio(ItemTitles.BORROWED) +
                 ItemUtils.generateHTMLFormItem(PUBLISHER, "text") +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -105,11 +103,11 @@ public class ComicsHandler extends ItemHandler<Comics> {
                 ItemUtils.generateHTMLFormItem(ItemTitles.PAGES, "number", String.valueOf(random.nextInt(1000))) +
                 ItemUtils.generateHTMLFormRadio(ItemTitles.BORROWED) +
                 ItemUtils.generateHTMLFormItem(PUBLISHER, "text", getRandomString(random.nextInt(20), random)) +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -144,7 +142,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     // -------------------------------------------------------------------
-    // SQLlite methods
+    // SQL methods
     // -------------------------------------------------------------------
 
     @Override
@@ -203,14 +201,14 @@ public class ComicsHandler extends ItemHandler<Comics> {
         pstmt.executeUpdate();
     }
 
-    public String generateSqlLiteTableStr() {
+    public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n" +
-                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
-                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
-                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n" +
-                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
-                PUBLISHER_SQL_PARAMETER + TEXT_NOT_NULL + " , \n" +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PUBLISHER_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
@@ -222,20 +220,20 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public String generateMySqlTableStr() {
+    public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlTableTitle() + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n" +
-                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
-                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
-                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n" +
-                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n" +
-                PUBLISHER_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n" +
-                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                PUBLISHER_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlTableTitle() +
                 UNIQUE + " ( \n " +
-                NAME_SQL_PARAMETER + " , \n" +
-                PAGES_SQL_PARAMETER + " , \n" +
-                BORROWED_SQL_PARAMETER + " , \n" +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
                 PUBLISHER_SQL_PARAMETER + " \n " +
                 " ) \n " +
                 ");";

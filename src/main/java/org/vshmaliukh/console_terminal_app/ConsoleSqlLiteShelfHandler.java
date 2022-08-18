@@ -20,7 +20,7 @@ public class ConsoleSqlLiteShelfHandler extends SqlLiteShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
+    public void deleteItemByIndex(int index) {
         if (!shelf.itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= shelf.itemsOfShelf.size()) {
                 Item item = shelf.itemsOfShelf.remove(index - 1);

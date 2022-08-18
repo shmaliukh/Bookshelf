@@ -28,7 +28,8 @@ public final class WebUtils {
     public static final String MENU_ITEM_INDEX = "menu_item_index";
     public static final String INFORM_MESSAGE = "inform_message";
 
-    private WebUtils() {}
+    private WebUtils() {
+    }
 
     public static void logServletErr(String servletTitle, Exception e) {
         log.error("[Servlet] '" + servletTitle + "' got err. Exception: ", e);
@@ -74,7 +75,7 @@ public final class WebUtils {
             shelfHandler.readShelfItems();
             return shelfHandler;
         }
-        return null; // TODO
+        return null;
     }
 
     public static String formHTMLButton(String referenceStr, String label) {
@@ -85,9 +86,6 @@ public final class WebUtils {
                 "';\"> " +
                 label +
                 "</button> \n";
-    }
-    public static String formHTMLButton(Object stringBuilder, String label) {
-        return formHTMLButton(stringBuilder.toString(), label);
     }
 
     public static String generateFormHTMLStart(Map<String, String> userAtr, String servletTitle) {
@@ -158,7 +156,7 @@ public final class WebUtils {
         SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
-            if(!allLiteratureObjects.isEmpty()){
+            if (!allLiteratureObjects.isEmpty()) {
                 HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(TITLE_LIST, ConvertorToStringForItems.getTable(allLiteratureObjects), userAtr);
                 return htmlTableBuilder.generateHTMLTableStr();
             }

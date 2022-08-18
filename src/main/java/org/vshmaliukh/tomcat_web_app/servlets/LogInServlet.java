@@ -26,8 +26,6 @@ public class LogInServlet extends HttpServlet {
         String userInputName = request.getParameter(USER_NAME);
         String userInputNumberStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
-        //Paths.get("")
-        //String servletPath = "/${user}/${type_of_work}"
 
         if (isValidInputString(userInputName, ConstantsForItemInputValidation.PATTERN_FOR_USER_NAME) && isValidInputInteger(userInputNumberStr, ConstantsForItemInputValidation.PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
             WebUtils.redirectTo(MAIN_MENU_TITLE, response, userAtr);
@@ -58,18 +56,18 @@ public class LogInServlet extends HttpServlet {
 
     private String logInFormStr(String userNameStr, String typeOfWorkWithFilesStr) {
         return "" +
-                "<form action = \"" + LOG_IN_TITLE + "\" method = \"POST\">\n" +
-                MESSAGE_ENTER_USER_NAME + "\n" +
-                "       <br>\n" +
+                "<form action = \"" + LOG_IN_TITLE + "\" method = \"POST\">\n " +
+                MESSAGE_ENTER_USER_NAME + "\n " +
+                "       <br>\n " +
                 "<input type = \"text\" name=\"" + USER_NAME + "\" value=\"" + userNameStr + "\">\n " +
-                "       <br>\n" +
-                "       <br>\n" +
-                MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES + "\n" +
-                "       <br>\n" +
+                "       <br>\n " +
+                "       <br>\n " +
+                MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES + "\n " +
+                "       <br>\n " +
                 "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\"value=\"" + typeOfWorkWithFilesStr + "\">\n " +
-                "       <br>\n" +
-                "       <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
+                "       <br>\n " +
+                "       <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
                 "</form>";
     }
 }

@@ -234,7 +234,7 @@ public class ConsoleUI extends AbstractUI {
             printWriter.println("Enter INDEX of Literature object to delete one:");
             new PlainTextTableHandler(printWriter, TITLE_LIST, ConvertorToStringForItems.getTable(shelfHandler.readLiteratureInShelf()), true).print();
             printWriter.println(ENTER_ANOTHER_VALUE_TO_RETURN);
-            shelfHandler.deleteLiteratureObjectByIndex(getUserChoice());
+            shelfHandler.deleteItemByIndex(getUserChoice());
         }
     }
 
@@ -254,7 +254,7 @@ public class ConsoleUI extends AbstractUI {
             } else {
                 item = handlerByClass.getRandomItem(random);
             }
-            shelfHandler.addLiteratureObject(item);
+            shelfHandler.addItem(item);
             printWriter.println(item + " has added to shelf");
         } else {
             printWriter.println("Wrong input");

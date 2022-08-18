@@ -11,7 +11,6 @@ import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
@@ -37,8 +36,8 @@ class shelfHandlerTest {
         BaseShelfHandler  consoleShelf1 = new BaseShelfHandler();
 
         Magazine magazine1 = new Magazine("4", 4, false);
-        consoleShelf1.addLiteratureObject(book1);
-        consoleShelf1.addLiteratureObject(magazine1);
+        consoleShelf1.addItem(book1);
+        consoleShelf1.addItem(magazine1);
 
         assertTrue(consoleShelf1.readLiteratureInShelf().get(0) instanceof Book
                 && consoleShelf1.readLiteratureInShelf().get(1) instanceof Magazine);
@@ -50,8 +49,8 @@ class shelfHandlerTest {
         BaseShelfHandler consoleShelf1  = new BaseShelfHandler();
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
-        consoleShelf1.addLiteratureObject(book1);
-        consoleShelf1.addLiteratureObject(magazine1);
+        consoleShelf1.addItem(book1);
+        consoleShelf1.addItem(magazine1);
 
         assertTrue(consoleShelf1.readLiteratureOutShelf().get(0) instanceof Book
                 && consoleShelf1.readLiteratureInShelf().get(0) instanceof Magazine);
@@ -66,9 +65,9 @@ class shelfHandlerTest {
         int expectedArraySize = 3;
 
         BaseShelfHandler shelfHandler  = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazine3);
-        shelfHandler.addLiteratureObject(magazine2);
-        shelfHandler.addLiteratureObject(magazine1);
+        shelfHandler.addItem(magazine3);
+        shelfHandler.addItem(magazine2);
+        shelfHandler.addItem(magazine1);
 
         List<Magazine> sortedMagazinesByName =
                 ItemUtils.getSortedLiterature(
@@ -88,9 +87,9 @@ class shelfHandlerTest {
         int expectedArraySize = 3;
 
         BaseShelfHandler shelfHandler  = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(magazine3);
-        shelfHandler.addLiteratureObject(magazine2);
-        shelfHandler.addLiteratureObject(magazine1);
+        shelfHandler.addItem(magazine3);
+        shelfHandler.addItem(magazine2);
+        shelfHandler.addItem(magazine1);
 
         List<Magazine> sortedMagazinesByPages =
                 ItemUtils.getSortedLiterature(
@@ -110,9 +109,9 @@ class shelfHandlerTest {
         int expectedArraySize = 3;
 
         BaseShelfHandler shelfHandler  = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(book3);
-        shelfHandler.addLiteratureObject(book2);
-        shelfHandler.addLiteratureObject(book1);
+        shelfHandler.addItem(book3);
+        shelfHandler.addItem(book2);
+        shelfHandler.addItem(book1);
 
         List<Book> sortedBooksByName =
                 ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
@@ -131,9 +130,9 @@ class shelfHandlerTest {
         int expectedArraySize = 3;
 
         BaseShelfHandler shelfHandler  = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(book3);
-        shelfHandler.addLiteratureObject(book2);
-        shelfHandler.addLiteratureObject(book1);
+        shelfHandler.addItem(book3);
+        shelfHandler.addItem(book2);
+        shelfHandler.addItem(book1);
 
         List<Book> sortedBooksByPages =
                 ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
@@ -153,9 +152,9 @@ class shelfHandlerTest {
         int expectedArraySize = 3;
 
         BaseShelfHandler shelfHandler  = new BaseShelfHandler();
-        shelfHandler.addLiteratureObject(book3);
-        shelfHandler.addLiteratureObject(book2);
-        shelfHandler.addLiteratureObject(book1);
+        shelfHandler.addItem(book3);
+        shelfHandler.addItem(book2);
+        shelfHandler.addItem(book1);
 
         List<Book> sortedBooksByAuthor =
                 ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
