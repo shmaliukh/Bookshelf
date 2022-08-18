@@ -9,20 +9,30 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class MagazineHandler implements ItemHandler<Magazine> {
+
+    public static final String MAGAZINE_TABLE_TITLE = Magazine.class.getSimpleName() + "s";
+
+    public List<String> parameterList() {
+        return parameterList;
+    }
 
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_PAGES = Comparator.comparing(Magazine::getPagesNumber);
     public static final Comparator<Magazine> MAGAZINE_COMPARATOR_BY_NAME = Comparator.comparing(Magazine::getName, String.CASE_INSENSITIVE_ORDER);
 
     @Override
     public List<Magazine> getSortedItems(int typeOfSorting, List<Magazine> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Magazine> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
@@ -106,7 +116,7 @@ public class MagazineHandler implements ItemHandler<Magazine> {
     }
 
     @Override
-    public Magazine generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Magazine generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);
@@ -117,5 +127,98 @@ public class MagazineHandler implements ItemHandler<Magazine> {
             return new Magazine(name, pages, isBorrowed);
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
+    @Override
+    public Magazine readItemFromSql(ResultSet rs) throws SQLException {
+        return new Magazine(
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER))
+        );
+    }
+
+    @Override
+    public String insertItemSqlLiteStr() {
+        return " INSERT OR IGNORE INTO " + MAGAZINE_TABLE_TITLE  +
+                " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public String insertItemMySqlStr() {
+        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr() {
+        return " SELECT " +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
+                " FROM " + MAGAZINE_TABLE_TITLE +
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Magazine item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.executeUpdate();
+    }
+
+    public String generateSqlLiteTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + MAGAZINE_TABLE_TITLE +
+                "(\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
+                ");";
+    }
+
+    @Override
+    public String generateMySqlTableStr(){
+        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL, \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " )\n" +
+                ");";
+    }
+
+    @Override
+    public String getSqlTableTitle() {
+        return MAGAZINE_TABLE_TITLE;
     }
 }

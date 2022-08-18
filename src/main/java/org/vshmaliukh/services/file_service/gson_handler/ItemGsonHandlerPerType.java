@@ -12,17 +12,17 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
+public class ItemGsonHandlerPerType extends ItemGsonHandlerHandler {
 
     String gsonHandlerFolderStr = "gson_handler_per_type";
     String typeStr;
 
-    public ItemGsonHandlerPerTypeUser(String homeDir, String userName) {
+    public ItemGsonHandlerPerType(String homeDir, String userName) {
         super(homeDir, userName);
     }
 
     @Override
-    public Path generatePathForGson() {
+    public Path generatePathForFileHandler() {
         Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
         createDirectoryIfNotExists(path);
         return path;
@@ -34,7 +34,7 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public void saveItemListToFile(List<Item> listToSave) {
+    public void saveItemList(List<Item> listToSave) {
         for (Class<? extends Item> classType : getClassTypes()) {
             typeStr = classType.getSimpleName();
             List<? extends Item> listPerType = listToSave.stream()
@@ -45,16 +45,23 @@ public class ItemGsonHandlerPerTypeUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public List<Item> readItemListFromFile() {
+    public List<Item> readItemList() {
         List<Item> resultList = new ArrayList<>();
         for (Class<? extends Item> typeName : ItemHandlerProvider.uniqueTypeNames) {
             typeStr = typeName.getSimpleName();
-            resultList.addAll(readItemListFromGsonFile(generatePathForGsonFile()));
+            List<Item> itemList = readItemListFromGsonFile(generatePathForGsonFile());
+            resultList.addAll(itemList);
         }
         return resultList;
     }
 
     private Set<Class<? extends Item>> getClassTypes() {
         return ItemHandlerProvider.uniqueTypeNames;
+    }
+
+    @Override
+    public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
+        typeStr = classType.getSimpleName();
+        return (List<T>) readItemListFromGsonFile(generatePathForGsonFile());
     }
 }

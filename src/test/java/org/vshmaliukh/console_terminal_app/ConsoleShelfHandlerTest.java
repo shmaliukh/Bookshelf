@@ -6,17 +6,19 @@ import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
+import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
-class ConsoleShelfTest {
+class shelfHandlerTest {
 
     PrintWriter printWriter = new PrintWriter(System.out, true);
 
@@ -32,7 +34,7 @@ class ConsoleShelfTest {
     @Test
     @DisplayName("Add one Book, Magazine and Gazette (are not borrowed) to empty Shelf")
     void addItemsToShelf_1() {
-        ConsoleShelf consoleShelf1 = new ConsoleShelf(printWriter);
+        BaseShelfHandler  consoleShelf1 = new BaseShelfHandler();
 
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addLiteratureObject(book1);
@@ -45,7 +47,7 @@ class ConsoleShelfTest {
     @Test
     @DisplayName("Add one Book (borrowed), one Magazine and Gazette (not borrowed) to empty Shelf")
     void addItemsToShelf_2() {
-        ConsoleShelf consoleShelf1 = new ConsoleShelf(printWriter);
+        BaseShelfHandler consoleShelf1  = new BaseShelfHandler();
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addLiteratureObject(book1);
@@ -63,14 +65,14 @@ class ConsoleShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazine3);
-        consoleShelf.addLiteratureObject(magazine2);
-        consoleShelf.addLiteratureObject(magazine1);
+        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        shelfHandler.addLiteratureObject(magazine3);
+        shelfHandler.addLiteratureObject(magazine2);
+        shelfHandler.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByName =
                 ItemUtils.getSortedLiterature(
-                        ItemUtils.getItemsByType(Magazine.class, consoleShelf.getAllLiteratureObjects()),
+                        ItemUtils.getItemsByType(Magazine.class, shelfHandler.getShelf().getAllLiteratureObjects()),
                         MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());
@@ -85,14 +87,14 @@ class ConsoleShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazine3);
-        consoleShelf.addLiteratureObject(magazine2);
-        consoleShelf.addLiteratureObject(magazine1);
+        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        shelfHandler.addLiteratureObject(magazine3);
+        shelfHandler.addLiteratureObject(magazine2);
+        shelfHandler.addLiteratureObject(magazine1);
 
         List<Magazine> sortedMagazinesByPages =
                 ItemUtils.getSortedLiterature(
-                        ItemUtils.getItemsByType(Magazine.class, consoleShelf.getAllLiteratureObjects()),
+                        ItemUtils.getItemsByType(Magazine.class, shelfHandler.getShelf().getAllLiteratureObjects()),
                         MAGAZINE_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedMagazinesByPages.size());
@@ -107,13 +109,13 @@ class ConsoleShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(book3);
-        consoleShelf.addLiteratureObject(book2);
-        consoleShelf.addLiteratureObject(book1);
+        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        shelfHandler.addLiteratureObject(book3);
+        shelfHandler.addLiteratureObject(book2);
+        shelfHandler.addLiteratureObject(book1);
 
         List<Book> sortedBooksByName =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, consoleShelf.getAllLiteratureObjects()),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
                         BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());
@@ -128,13 +130,13 @@ class ConsoleShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(book3);
-        consoleShelf.addLiteratureObject(book2);
-        consoleShelf.addLiteratureObject(book1);
+        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        shelfHandler.addLiteratureObject(book3);
+        shelfHandler.addLiteratureObject(book2);
+        shelfHandler.addLiteratureObject(book1);
 
         List<Book> sortedBooksByPages =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, consoleShelf.getAllLiteratureObjects()),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
                         BOOK_COMPARATOR_BY_PAGES);
 
         assertEquals(expectedArraySize, sortedBooksByPages.size());
@@ -150,13 +152,13 @@ class ConsoleShelfTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(book3);
-        consoleShelf.addLiteratureObject(book2);
-        consoleShelf.addLiteratureObject(book1);
+        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        shelfHandler.addLiteratureObject(book3);
+        shelfHandler.addLiteratureObject(book2);
+        shelfHandler.addLiteratureObject(book1);
 
         List<Book> sortedBooksByAuthor =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, consoleShelf.getAllLiteratureObjects()),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, shelfHandler.getShelf().getAllLiteratureObjects()),
                         BOOK_COMPARATOR_BY_AUTHOR);
 
         assertEquals(expectedArraySize, sortedBooksByAuthor.size());

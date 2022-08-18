@@ -14,7 +14,7 @@ public abstract class UserFilesHandler {
 
     protected String userName;
     protected String homeDirectoryStr;
-    protected String programDirectoryStr;
+    protected static String programDirectoryStr;
 
     protected UserFilesHandler(String homeDir, String userName) {
         this.userName = userName;

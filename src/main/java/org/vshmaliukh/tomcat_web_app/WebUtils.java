@@ -2,6 +2,7 @@ package org.vshmaliukh.tomcat_web_app;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
@@ -22,8 +23,6 @@ import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 @Slf4j
 public final class WebUtils {
-
-    public static final String DATE_FORMAT_WEB_STR = "yyyy-MM-dd";
 
     public static final Random RANDOM = new Random();
     public static final String MENU_ITEM_INDEX = "menu_item_index";
@@ -63,17 +62,17 @@ public final class WebUtils {
         return uriBuilder;
     }
 
-    public static WebShelfHandler generateShelfHandler(Map<String, String> userAtr) {
+    public static SaveReadShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
         String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
-            WebShelfHandler webShelfHandler = new WebShelfHandler(userName, typeOfWorkWithFiles);
+            WebUI webUI = new WebUI(userName, typeOfWorkWithFiles);
 
-            webShelfHandler.setUpGsonHandler();
-            webShelfHandler.readShelfItemsFromJson();
-            return webShelfHandler;
+            SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
+            shelfHandler.readShelfItems();
+            return shelfHandler;
         }
         return null; // TODO
     }
@@ -148,7 +147,7 @@ public final class WebUtils {
     }
 
     public static String generateCurrentStateOfShelf(Map<String, String> userAtr, List<String> titleList) {
-        WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             return generateTableOfShelfItems(webShelfHandler.getShelf().getAllLiteratureObjects(), titleList, true);
         }
@@ -156,7 +155,7 @@ public final class WebUtils {
     }
 
     public static String generateTableForEditingItems(Map<String, String> userAtr) {
-        WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             if(!allLiteratureObjects.isEmpty()){

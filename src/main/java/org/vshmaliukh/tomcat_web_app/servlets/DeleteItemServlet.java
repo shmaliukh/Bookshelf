@@ -1,6 +1,7 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
-import org.vshmaliukh.tomcat_web_app.WebShelfHandler;
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.tomcat_web_app.WebUI;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -23,9 +24,9 @@ public class DeleteItemServlet extends HttpServlet {
 
         try {
             int index = Integer.parseInt(indexOfItem);
-            WebShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-            webShelfHandler.getShelf().deleteLiteratureObjectByIndex(index);
-            webShelfHandler.saveShelfItemsToJson();
+            SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+            webShelfHandler.deleteLiteratureObjectByIndex(index);
+            //webShelfHandler.saveShelfItems();
         } catch (NumberFormatException nfe) {
             WebUtils.logServletErr(DELETE_ITEM_TITLE, nfe);
         } finally {

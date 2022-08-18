@@ -9,14 +9,26 @@ import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForL
 import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
+import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class ComicsHandler implements ItemHandler<Comics> {
+
+    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
+
+    public List<String> parameterList() {
+        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
+        parameterList.add(PUBLISHER);
+        return Collections.unmodifiableList(parameterList);
+    }
 
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_NAME = Comparator.comparing(Comics::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_PUBLISHER = Comparator.comparing(Comics::getPublisher, String.CASE_INSENSITIVE_ORDER);
@@ -115,7 +127,7 @@ public class ComicsHandler implements ItemHandler<Comics> {
     }
 
     @Override
-    public Comics generateItemByHTMLFormData(Map<String, String> mapFieldValue) {
+    public Comics generateItemByParameterValueMap(Map<String, String> mapFieldValue) {
         WebInputHandler webInputHandler = new WebInputHandler();
 
         String name = webInputHandler.getUserString(mapFieldValue.get(NAME), ConstantsForItemInputValidation.PATTERN_FOR_NAME);
@@ -127,5 +139,106 @@ public class ComicsHandler implements ItemHandler<Comics> {
             return new Comics(name, pages, isBorrowed, publisher);
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------
+    // SQLlite methods
+    // -------------------------------------------------------------------
+
+    @Override
+    public Comics readItemFromSql(ResultSet rs) throws SQLException {
+        return new Comics(
+                rs.getInt(ITEM_ID_SQL_PARAMETER),
+                rs.getString(NAME_SQL_PARAMETER),
+                rs.getInt(PAGES_SQL_PARAMETER),
+                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER)),
+                rs.getString(PUBLISHER_SQL_PARAMETER)
+        );
+    }
+
+    @Override
+    public String insertItemSqlLiteStr() {
+        return " INSERT OR IGNORE INTO " + COMICS_TABLE_TITLE +
+                " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                PUBLISHER_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?,?)";
+    }
+
+    @Override
+    public String insertItemMySqlStr() {
+        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
+                USER_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                PUBLISHER_SQL_PARAMETER + " ) " +
+                " VALUES(?,?,?,?,?)";
+    }
+
+    @Override
+    public String selectItemSqlStr() {
+        return " SELECT " +
+                ITEM_ID_SQL_PARAMETER + " , " +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                PUBLISHER_SQL_PARAMETER +
+                " FROM " + COMICS_TABLE_TITLE +
+                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+    }
+
+    @Override
+    public void insertItemValues(PreparedStatement pstmt, Comics item, Integer userID) throws SQLException {
+        pstmt.setInt(1, userID);
+        pstmt.setString(2, item.getName());
+        pstmt.setInt(3, item.getPagesNumber());
+        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.setString(5, item.getPublisher());
+        pstmt.executeUpdate();
+    }
+
+    public String generateSqlLiteTableStr() {
+        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE + " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                PUBLISHER_SQL_PARAMETER + " TEXT NOT NULL, \n" +
+                " UNIQUE (" +
+                NAME_SQL_PARAMETER + " , " +
+                PAGES_SQL_PARAMETER + " , " +
+                BORROWED_SQL_PARAMETER + " , " +
+                PUBLISHER_SQL_PARAMETER +
+                " ) ON CONFLICT IGNORE \n" +
+                ");";
+    }
+
+    @Override
+    public String generateMySqlTableStr() {
+        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
+                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
+                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
+                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
+                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
+                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL, \n" +
+                PUBLISHER_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
+                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
+                " CONSTRAINT UC_" + getSqlTableTitle() +
+                " UNIQUE ( \n" +
+                NAME_SQL_PARAMETER + " , \n" +
+                PAGES_SQL_PARAMETER + " , \n" +
+                BORROWED_SQL_PARAMETER + " , \n" +
+                PUBLISHER_SQL_PARAMETER + " )\n" +
+                ");";
+    }
+
+    @Override
+    public String getSqlTableTitle() {
+        return COMICS_TABLE_TITLE;
     }
 }

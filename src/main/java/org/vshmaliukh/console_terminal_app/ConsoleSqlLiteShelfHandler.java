@@ -1,31 +1,31 @@
 package org.vshmaliukh.console_terminal_app;
 
-import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.shelf.AbstractShelf;
 import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Scanner;
 
-/**
- * @author ShmaliukhVlad
- * @version 1.0.0
- * This is Shelf class which simulates real shelf with books and magazines
- */
-@Slf4j
-public class ConsoleShelf extends AbstractShelf {
+public class ConsoleSqlLiteShelfHandler extends SqlLiteShelfHandler {
 
-    private final PrintWriter printWriter;
+    final Scanner scanner;
+    final PrintWriter printWriter;
 
-    public ConsoleShelf(PrintWriter printWriter) {
+    public ConsoleSqlLiteShelfHandler(Scanner scanner, PrintWriter printWriter, String username) {
+        super(username);
+        this.scanner = scanner;
         this.printWriter = printWriter;
     }
 
     @Override
     public void deleteLiteratureObjectByIndex(int index) {
-        if (!itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= itemsOfShelf.size()) {
-                printWriter.println(itemsOfShelf.remove(index - 1) + " " + "has deleted from shelf");
+        if (!shelf.itemsOfShelf.isEmpty()) {
+            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
+                Item item = shelf.itemsOfShelf.remove(index - 1);
+                printWriter.println(item + " " + "has deleted from shelf");
+                sqlLiteHandler.deleteItemFromDB(item);
             } else {
                 printWriter.println("Wrong index");
             }
@@ -51,3 +51,4 @@ public class ConsoleShelf extends AbstractShelf {
         }
     }
 }
+

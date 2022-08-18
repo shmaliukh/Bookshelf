@@ -7,9 +7,10 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
-public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerUser {
+public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerHandler {
 
     public String gsonHandlerFolderStr = "gson_handler_one_file";
 
@@ -18,7 +19,7 @@ public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public Path generatePathForGson() {
+    public Path generatePathForFileHandler() {
         Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
         createDirectoryIfNotExists(path);
         return path;
@@ -30,12 +31,20 @@ public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerUser {
     }
 
     @Override
-    public void saveItemListToFile(List<Item> listToSave) {
+    public void saveItemList(List<Item> listToSave) {
         saveListToFile(generatePathForGsonFile(), listToSave);
     }
 
     @Override
-    public List<Item> readItemListFromFile() {
+    public List<Item> readItemList() {
         return readItemListFromGsonFile(generatePathForGsonFile());
+    }
+
+    @Override
+    public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
+        return readItemList().stream()
+                .filter(o -> o.getClass().equals(classType))
+                .map(classType::cast)
+                .collect(Collectors.toList());
     }
 }

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class ConvertorToStringForItems {
 
-    public static <T extends Item> Map<String, String> getConvertedLiterature(Item item) {
+    public static <T extends Item> Map<String, String> getConvertedLiterature(T item) {
         return ItemHandlerProvider
                 .getHandlerByName(item.getClass().getSimpleName())
                 .convertItemToListOfString(item);

@@ -1,11 +1,11 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
 import com.google.gson.Gson;
+import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebShelfHandler;
 import org.vshmaliukh.tomcat_web_app.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -29,12 +29,9 @@ public class AddItemServlet extends HttpServlet {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
-            WebShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
-            Item item = handlerByName.generateItemByHTMLFormData(itemFieldValueMap);
-            if (item != null) {
-                webShelfHandler.getShelf().addLiteratureObject(item);
-                webShelfHandler.saveShelfItemsToJson();
-            }
+            SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+            Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
+            webShelfHandler.addLiteratureObject(item);
 
             WebUtils.redirectTo(ADD_MENU_TITLE, response,
                     WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)

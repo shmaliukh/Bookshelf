@@ -11,6 +11,10 @@ import org.vshmaliukh.shelf.literature_items.Item;
 @Data
 public class Magazine extends Item {
 
+    public Magazine(Integer id, String name, int pagesNumber, boolean isBorrowed) {
+        super(id, name, pagesNumber, isBorrowed);
+    }
+
     /**
      * Constructor for creating Magazine object
      */
