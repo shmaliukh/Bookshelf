@@ -69,7 +69,7 @@ class ItemGsonHandlerTest {
     @Test
     void testSaveReadShelf_GsonHandlerOneFile() {
 
-        GsonShelfHandler consoleShelfHandler = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
+        GsonShelfHandler consoleShelfHandler = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE);
         consoleShelfHandler.addItem(book1);
         consoleShelfHandler.addItem(book2);
         consoleShelfHandler.addItem(magazine1);
@@ -79,7 +79,7 @@ class ItemGsonHandlerTest {
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
-        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_ONE_FILE);
+        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE);
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addItem);
 
         assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
@@ -93,8 +93,8 @@ class ItemGsonHandlerTest {
 
     @Test
     void testSaveReadShelf_GsonHandlerPerType() {
-        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
-        GsonShelfHandler consoleShelfHandler2 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.FILE_MODE_WORK_WITH_FILE_PER_TYPE);
+        GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file1", SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE);
+        GsonShelfHandler consoleShelfHandler2 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE);
 
         consoleShelfHandler1 .addItem(book1);
         consoleShelfHandler1 .addItem(book2);

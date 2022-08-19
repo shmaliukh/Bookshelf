@@ -46,12 +46,12 @@ public class ConsoleUI extends AbstractUI {
 
     public void configShelfHandler() {
         switch (typeOfWorkWithFiles) {
-            case FILE_MODE_WORK_WITH_ONE_FILE:
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+            case MODE_WORK_WITH_ONE_FILE:
+            case MODE_WORK_WITH_FILE_PER_TYPE:
                 shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
-            case FILE_MODE_WORK_WITH_SQLLITE:
-            case FILE_MODE_WORK_WITH_MYSQL:
+            case MODE_WORK_WITH_SQLLITE:
+            case MODE_WORK_WITH_MYSQL:
                 shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
             default:
@@ -104,13 +104,13 @@ public class ConsoleUI extends AbstractUI {
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
         printWriter.println("Type of work with save/read shelf with files: ");
         switch (typeOfWorkWithFiles) {
-            case FILE_MODE_WORK_WITH_ONE_FILE:
+            case MODE_WORK_WITH_ONE_FILE:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
                 break;
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+            case MODE_WORK_WITH_FILE_PER_TYPE:
                 printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
-            case FILE_MODE_WORK_WITH_SQLLITE:
+            case MODE_WORK_WITH_SQLLITE:
                 printWriter.println("FILE_MODE_WORK_WITH_SQLLITE");
                 break;
             default:

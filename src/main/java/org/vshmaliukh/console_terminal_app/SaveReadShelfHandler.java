@@ -7,12 +7,12 @@ import java.util.List;
 
 public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
 
-    public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
-    public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
-    public static final int FILE_MODE_WORK_WITH_SQLLITE = 3;
-    public static final int FILE_MODE_WORK_WITH_MYSQL = 4;
+    public static final int MODE_WORK_WITH_ONE_FILE = 1;
+    public static final int MODE_WORK_WITH_FILE_PER_TYPE = 2;
+    public static final int MODE_WORK_WITH_SQLLITE = 3;
+    public static final int MODE_WORK_WITH_MYSQL = 4;
 
-    public SaveReadShelfHandler(String userName, int typeOfWorkWithFiles) {
+    protected SaveReadShelfHandler(String userName, int typeOfWorkWithFiles) {
         setUpDataSaver(userName, typeOfWorkWithFiles);
     }
 

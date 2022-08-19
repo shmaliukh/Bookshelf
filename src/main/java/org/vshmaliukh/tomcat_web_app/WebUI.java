@@ -18,12 +18,12 @@ public class WebUI extends AbstractUI {
     @Override
     public void configShelfHandler() {
         switch (typeOfWorkWithFiles) {
-            case FILE_MODE_WORK_WITH_ONE_FILE:
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
+            case MODE_WORK_WITH_ONE_FILE:
+            case MODE_WORK_WITH_FILE_PER_TYPE:
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
-            case FILE_MODE_WORK_WITH_SQLLITE:
-            case FILE_MODE_WORK_WITH_MYSQL:
+            case MODE_WORK_WITH_SQLLITE:
+            case MODE_WORK_WITH_MYSQL:
                 shelfHandler = new SqlShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
             default:
