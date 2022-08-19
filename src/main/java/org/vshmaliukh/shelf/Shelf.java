@@ -18,7 +18,7 @@ public class Shelf {
     }
 
     public List<Item> getItemsOfShelf() {
-        return new ArrayList<>(itemsOfShelf);
+        return itemsOfShelf;
     }
 
     public void setItemsOfShelf(List<Item> itemsOfShelf) {
