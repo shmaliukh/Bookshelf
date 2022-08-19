@@ -19,14 +19,14 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     @Override
     public void addItem(Item item) {
         if (item != null) {
-            getShelf().itemsOfShelf.add(item);
+            getShelf().getItemsOfShelf().add(item);
             sqlItemHandler.saveItemToDB(item);
         }
     }
 
     @Override
     public void deleteItemByIndex(int index) {
-        Item item = shelf.itemsOfShelf.remove(index - 1);
+        Item item = shelf.getItemsOfShelf().remove(index - 1);
         sqlItemHandler.deleteItemFromDB(item);
     }
 
@@ -38,12 +38,12 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        sqlItemHandler.saveItemList(getShelf().itemsOfShelf);
+        sqlItemHandler.saveItemList(getShelf().getItemsOfShelf());
     }
 
     @Override
     public void readShelfItems() {
-        getShelf().itemsOfShelf = sqlItemHandler.readItemList();
+        getShelf().setItemsOfShelf(sqlItemHandler.readItemList());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
         }
     }
 
-    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
+    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType) {
         return sqlItemHandler.readItemsByClass(classType);
     }
 }

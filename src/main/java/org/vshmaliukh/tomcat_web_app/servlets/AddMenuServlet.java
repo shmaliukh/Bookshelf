@@ -39,7 +39,12 @@ public class AddMenuServlet extends HttpServlet {
 
         if (menuItemIndex != null && typeOfWorkWithFilesStr != null && !menuItemIndex.equals("") && !typeOfWorkWithFilesStr.equals("")) {
             GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
-            int parseInt = Integer.decode(menuItemIndex);
+            int parseInt;
+            try {
+                parseInt = Integer.decode(menuItemIndex);
+            } catch (NumberFormatException e) {
+                parseInt = 0;
+            }
             if (parseInt > 0 && parseInt <= generatedMenu.generatedMenu.size()) {
                 MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(parseInt - 1);
                 int index = menuItemClassType.getIndex();

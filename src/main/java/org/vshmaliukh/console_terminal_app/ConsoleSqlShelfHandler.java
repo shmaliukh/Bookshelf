@@ -21,19 +21,19 @@ public class ConsoleSqlShelfHandler extends SqlShelfHandler {
     @Override
     public void addItem(Item item) {
         if (item != null) {
-            getShelf().itemsOfShelf.add(item);
+            getShelf().getItemsOfShelf().add(item);
             sqlItemHandler.saveItemToDB(item);
-            shelf.itemsOfShelf = sqlItemHandler.readItemList();
+            shelf.setItemsOfShelf(sqlItemHandler.readItemList());
         }
     }
 
     @Override
     public void deleteItemByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                Item item = shelf.itemsOfShelf.get(index - 1);
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                Item item = shelf.getItemsOfShelf().get(index - 1);
                 sqlItemHandler.deleteItemFromDB(item);
-                shelf.itemsOfShelf = sqlItemHandler.readItemList();
+                shelf.setItemsOfShelf(sqlItemHandler.readItemList());
                 printWriter.println(item + " " + "has deleted from shelf");
             } else {
                 printWriter.println("Wrong index");
@@ -47,7 +47,7 @@ public class ConsoleSqlShelfHandler extends SqlShelfHandler {
             if (index > 0 && index <= literatureList.size()) {
                 Item buffer = literatureList.get(index - 1);
                 sqlItemHandler.changeItemBorrowedStateInDB(buffer);
-                shelf.itemsOfShelf = sqlItemHandler.readItemList();
+                shelf.setItemsOfShelf(sqlItemHandler.readItemList());
 
                 if (buffer.isBorrowed()) {
                     printWriter.println(buffer + " has borrowed from shelf");

@@ -16,14 +16,14 @@ public class AbstractShelfHandler implements ShelfHandlerInterface {
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return getShelf().itemsOfShelf.stream()
+        return getShelf().getItemsOfShelf().stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return getShelf().itemsOfShelf.stream()
+        return getShelf().getItemsOfShelf().stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
@@ -31,15 +31,15 @@ public class AbstractShelfHandler implements ShelfHandlerInterface {
     @Override
     public void addItem(Item item) {
         if (item != null) {
-            shelf.itemsOfShelf.add(item);
+            shelf.getItemsOfShelf().add(item);
         }
     }
 
     @Override
     public void deleteItemByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                shelf.itemsOfShelf.remove(index - 1);
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                shelf.getItemsOfShelf().remove(index - 1);
             }
         }
     }

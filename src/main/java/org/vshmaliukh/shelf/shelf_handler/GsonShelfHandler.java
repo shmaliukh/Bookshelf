@@ -58,7 +58,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     @Override
     public void addItem(Item item) {
         if (item != null) {
-            shelf.itemsOfShelf.add(item);
+            shelf.getItemsOfShelf().add(item);
         } else {
             log.error("The literature item to add is null");
         }
@@ -67,9 +67,9 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void deleteItemByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                shelf.itemsOfShelf.remove(index - 1);
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                shelf.getItemsOfShelf().remove(index - 1);
             }
             saveShelfItems();
         }
@@ -93,7 +93,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void readShelfItems() {
-        shelf.itemsOfShelf = new ArrayList<>();
+        shelf.setItemsOfShelf(new ArrayList<>());
         itemHandler.readItemList().forEach(this::addItem);
     }
 

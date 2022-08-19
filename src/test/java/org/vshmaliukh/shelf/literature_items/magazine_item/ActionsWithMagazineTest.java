@@ -43,7 +43,7 @@ class ActionsWithMagazineTest {
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
         List<Magazine> sortedMagazinesByName =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().itemsOfShelf),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().getItemsOfShelf()),
                         MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());

@@ -96,10 +96,12 @@ public abstract class AbstractSqlItemHandler extends SaveReadUserFilesHandler im
 
 @Data
 class UserContainer {
+
     Integer id = null;
     final String name;
 
     public UserContainer(String name) {
         this.name = name;
     }
+
 }

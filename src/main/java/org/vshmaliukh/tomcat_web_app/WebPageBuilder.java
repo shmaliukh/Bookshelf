@@ -8,7 +8,6 @@ public class WebPageBuilder {
 
     private final StringBuilder bodyStringBuilder = new StringBuilder();
 
-
     public WebPageBuilder(String title) {
         this.title = title;
     }

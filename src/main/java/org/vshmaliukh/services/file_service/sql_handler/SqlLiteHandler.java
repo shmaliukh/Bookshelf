@@ -32,9 +32,9 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public Connection getConnectionToDB() {
-        if(connectionToSqlLiteDB == null){
-            try (Connection connection = DriverManager.getConnection(SQLLITE_FILE_URL)){
-                connectionToSqlLiteDB = connection;
+        if (connectionToSqlLiteDB == null) {
+            try {
+                connectionToSqlLiteDB = DriverManager.getConnection(SQLLITE_FILE_URL);
             } catch (SQLException sqle) {
                 logSqlHandler(sqle);
                 getConnectionToDB();

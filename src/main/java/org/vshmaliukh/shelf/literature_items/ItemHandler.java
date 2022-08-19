@@ -7,7 +7,6 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
-import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
 public abstract class ItemHandler<T extends Item> implements SqlItemBaseStatementInterface<T>, MySqlItemStatementInterface, SqlLiteItemStatementInterface, ItemWebIntegrationInterface<T> {
 

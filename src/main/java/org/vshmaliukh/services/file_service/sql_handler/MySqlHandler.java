@@ -21,8 +21,8 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     public Connection getConnectionToDB() {
         if (connectionToMySqlDB == null) {
-            try (Connection connection = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD)) {
-                connectionToMySqlDB = connection;
+            try {
+                connectionToMySqlDB = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD);
             } catch (SQLException sqle) {
                 logSqlHandler(sqle);
                 getConnectionToDB();
