@@ -14,11 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
-import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class ComicsHandler extends ItemHandler<Comics> {
 
@@ -154,7 +154,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + COMICS_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -165,7 +165,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     @Override
     public String insertItemMySqlStr() {
         return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -182,7 +182,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
                 BORROWED_SQL_PARAMETER + " , " +
                 PUBLISHER_SQL_PARAMETER +
                 " FROM " + COMICS_TABLE_TITLE +
-                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
@@ -198,7 +198,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -217,7 +217,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +

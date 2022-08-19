@@ -14,11 +14,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
 import static org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
 public class BookHandler extends ItemHandler<Book> {
 
@@ -155,7 +155,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -171,7 +171,7 @@ public class BookHandler extends ItemHandler<Book> {
                 "IGNORE" +
                 " INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -190,18 +190,18 @@ public class BookHandler extends ItemHandler<Book> {
                 AUTHOR_SQL_PARAMETER + " , " +
                 DATE_SQL_PARAMETER +
                 " FROM " + BOOK_TABLE_TITLE + " " +
-                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
-    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
-        pstmt.setInt(1, userID);
-        pstmt.setString(2, item.getName());
-        pstmt.setInt(3, item.getPagesNumber());
-        pstmt.setString(4, String.valueOf(item.isBorrowed()));
-        pstmt.setString(5, item.getAuthor());
-        pstmt.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
-        pstmt.executeUpdate();
+    public void insertItemValuesToSqlDB(PreparedStatement preparedStatement, Book item, Integer userID) throws SQLException {
+        preparedStatement.setInt(1, userID);
+        preparedStatement.setString(2, item.getName());
+        preparedStatement.setInt(3, item.getPagesNumber());
+        preparedStatement.setString(4, String.valueOf(item.isBorrowed()));
+        preparedStatement.setString(5, item.getAuthor());
+        preparedStatement.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        preparedStatement.executeUpdate();
     }
 
     @Override
@@ -226,7 +226,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -247,7 +247,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +

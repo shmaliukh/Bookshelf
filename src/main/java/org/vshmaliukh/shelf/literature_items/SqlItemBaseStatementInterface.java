@@ -41,7 +41,7 @@ public interface SqlItemBaseStatementInterface<T> {
                 WHERE + ITEM_ID_SQL_PARAMETER + " = ? ";
     }
 
-    void insertItemValuesToSqlDB(PreparedStatement pstmt, T item, Integer userID) throws SQLException;
+    void insertItemValuesToSqlDB(PreparedStatement preparedStatement, T item, Integer userID) throws SQLException;
 
     T readItemFromSqlDB(ResultSet rs) throws SQLException;
 

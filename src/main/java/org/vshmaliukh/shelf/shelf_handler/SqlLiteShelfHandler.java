@@ -1,14 +1,13 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.SqlLiteHandler;
+import org.vshmaliukh.services.file_service.sql_handler.SqlLiteHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-public class SqlLiteShelfHandler extends SaveReadShelfHandler {
+public class SqlLiteShelfHandler extends AbstractSqlShelfHandler {
 
     protected SqlLiteHandler sqlLiteHandler;
 
@@ -16,7 +15,7 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
         sqlLiteHandler = new SqlLiteHandler(System.getProperty("user.home"), userName);
     }
 
-    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
+    public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType) {
         return sqlLiteHandler.readItemsByClass(classType);
     }
 
@@ -62,10 +61,5 @@ public class SqlLiteShelfHandler extends SaveReadShelfHandler {
     @Override
     public void readShelfItems() {
         getShelf().itemsOfShelf = sqlLiteHandler.readItemList();
-    }
-
-    @Override
-    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
-        gsonItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
     }
 }
