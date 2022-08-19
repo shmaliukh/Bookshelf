@@ -6,7 +6,7 @@ import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.PrintWriter;
 import java.util.Date;
@@ -33,7 +33,7 @@ class shelfHandlerTest {
     @Test
     @DisplayName("Add one Book, Magazine and Gazette (are not borrowed) to empty Shelf")
     void addItemsToShelf_1() {
-        BaseShelfHandler  consoleShelf1 = new BaseShelfHandler();
+        AbstractShelfHandler consoleShelf1 = new AbstractShelfHandler();
 
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addItem(book1);
@@ -46,7 +46,7 @@ class shelfHandlerTest {
     @Test
     @DisplayName("Add one Book (borrowed), one Magazine and Gazette (not borrowed) to empty Shelf")
     void addItemsToShelf_2() {
-        BaseShelfHandler consoleShelf1  = new BaseShelfHandler();
+        AbstractShelfHandler consoleShelf1  = new AbstractShelfHandler();
         Book book1 = new Book("1", 1, true, "NoAuthor1", new Date());
         Magazine magazine1 = new Magazine("4", 4, false);
         consoleShelf1.addItem(book1);
@@ -64,7 +64,7 @@ class shelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        AbstractShelfHandler shelfHandler  = new AbstractShelfHandler();
         shelfHandler.addItem(magazine3);
         shelfHandler.addItem(magazine2);
         shelfHandler.addItem(magazine1);
@@ -86,7 +86,7 @@ class shelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        AbstractShelfHandler shelfHandler  = new AbstractShelfHandler();
         shelfHandler.addItem(magazine3);
         shelfHandler.addItem(magazine2);
         shelfHandler.addItem(magazine1);
@@ -108,7 +108,7 @@ class shelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        AbstractShelfHandler shelfHandler  = new AbstractShelfHandler();
         shelfHandler.addItem(book3);
         shelfHandler.addItem(book2);
         shelfHandler.addItem(book1);
@@ -129,7 +129,7 @@ class shelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        AbstractShelfHandler shelfHandler  = new AbstractShelfHandler();
         shelfHandler.addItem(book3);
         shelfHandler.addItem(book2);
         shelfHandler.addItem(book1);
@@ -151,7 +151,7 @@ class shelfHandlerTest {
         int expectedLastPagesNumber = 2;
         int expectedArraySize = 3;
 
-        BaseShelfHandler shelfHandler  = new BaseShelfHandler();
+        AbstractShelfHandler shelfHandler  = new AbstractShelfHandler();
         shelfHandler.addItem(book3);
         shelfHandler.addItem(book2);
         shelfHandler.addItem(book1);

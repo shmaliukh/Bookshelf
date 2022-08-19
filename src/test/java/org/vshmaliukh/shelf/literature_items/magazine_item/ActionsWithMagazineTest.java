@@ -3,7 +3,7 @@ package org.vshmaliukh.shelf.literature_items.magazine_item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -29,7 +29,7 @@ class ActionsWithMagazineTest {
      */
     int expectedArraySize = 3;
 
-    BaseShelfHandler consoleShelfHandler  = new BaseShelfHandler();
+    AbstractShelfHandler consoleShelfHandler  = new AbstractShelfHandler();
 
     /*
       Adding magazines in revers order

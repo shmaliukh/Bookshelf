@@ -13,8 +13,6 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.shelf.shelf_handler.MySqlShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.io.PrintWriter;
@@ -46,20 +44,18 @@ public class ConsoleUI extends AbstractUI {
         consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
     }
 
-    public void configShelfHandler() { // todo refactor
+    public void configShelfHandler() {
         switch (typeOfWorkWithFiles) {
             case FILE_MODE_WORK_WITH_ONE_FILE:
             case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
                 shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
             case FILE_MODE_WORK_WITH_SQLLITE:
-                shelfHandler = new SqlLiteShelfHandler(user.getName());
-                break;
             case FILE_MODE_WORK_WITH_MYSQL:
-                shelfHandler = new MySqlShelfHandler(user.getName());
+                shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
             default:
-                shelfHandler = new SqlLiteShelfHandler(user.getName());
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
         }
     }

@@ -6,24 +6,24 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BaseShelfHandler implements ShelfHandlerInterface {
+public class AbstractShelfHandler implements ShelfHandlerInterface {
 
     protected Shelf shelf;
 
-    public BaseShelfHandler() {
+    public AbstractShelfHandler() {
         this.shelf = new Shelf();
     }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return shelf.itemsOfShelf.stream()
+        return getShelf().itemsOfShelf.stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return shelf.itemsOfShelf.stream()
+        return getShelf().itemsOfShelf.stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }

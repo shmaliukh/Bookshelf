@@ -1,31 +1,40 @@
 package org.vshmaliukh.console_terminal_app;
 
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.SqlLiteShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
-public class ConsoleSqlLiteShelfHandler extends SqlLiteShelfHandler {
+public class ConsoleSqlShelfHandler extends SqlShelfHandler {
 
     final Scanner scanner;
     final PrintWriter printWriter;
 
-    public ConsoleSqlLiteShelfHandler(Scanner scanner, PrintWriter printWriter, String username) {
-        super(username);
+    public ConsoleSqlShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWorkWithSql) {
+        super(userName, typeOfWorkWithSql);
         this.scanner = scanner;
         this.printWriter = printWriter;
+    }
+
+    @Override
+    public void addItem(Item item) {
+        if (item != null) {
+            getShelf().itemsOfShelf.add(item);
+            sqlItemHandler.saveItemToDB(item);
+            shelf.itemsOfShelf = sqlItemHandler.readItemList();
+        }
     }
 
     @Override
     public void deleteItemByIndex(int index) {
         if (!shelf.itemsOfShelf.isEmpty()) {
             if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                Item item = shelf.itemsOfShelf.remove(index - 1);
+                Item item = shelf.itemsOfShelf.get(index - 1);
+                sqlItemHandler.deleteItemFromDB(item);
+                shelf.itemsOfShelf = sqlItemHandler.readItemList();
                 printWriter.println(item + " " + "has deleted from shelf");
-                sqlLiteHandler.deleteItemFromDB(item);
             } else {
                 printWriter.println("Wrong index");
             }
@@ -37,7 +46,9 @@ public class ConsoleSqlLiteShelfHandler extends SqlLiteShelfHandler {
         if (!literatureList.isEmpty()) {
             if (index > 0 && index <= literatureList.size()) {
                 Item buffer = literatureList.get(index - 1);
-                buffer.setBorrowed(!buffer.isBorrowed());
+                sqlItemHandler.changeItemBorrowedStateInDB(buffer);
+                shelf.itemsOfShelf = sqlItemHandler.readItemList();
+
                 if (buffer.isBorrowed()) {
                     printWriter.println(buffer + " has borrowed from shelf");
                 } else {

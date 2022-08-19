@@ -18,7 +18,7 @@ import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserT
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
-import static org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
 
 public class BookHandler extends ItemHandler<Book> {
 
