@@ -24,19 +24,19 @@ public class PlainTextTableHandler extends AbstractTableHandler {
     public void print() {
         setUpValuesSettings();
 
-        printLine('┌', '┬', '┐');
+        printLine("┌", "─", "┐");
         printLine(titleList);
-        printLine('│', '┼', '│');
+        printLine("├", "┼", "┤");
         tableListOfLists.forEach(this::printLine);
-        printLine('└', '┴', '┘');
+        printLine("└", "─", "┘");
     }
 
-    protected void printLine(char startSymbol, char crossedSymbol, char endSymbol) {
+    protected void printLine(String startSymbol, String crossedSymbol, String endSymbol) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append("─");
+                stringBuilder.append("│");
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);

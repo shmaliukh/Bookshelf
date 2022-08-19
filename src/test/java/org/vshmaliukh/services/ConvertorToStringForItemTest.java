@@ -10,15 +10,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 
     BookHandler bookHandler = new BookHandler();
     MagazineHandler magazineHandler = new MagazineHandler();
     
-    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new SimpleDateFormat(DATE_FORMAT_STR).parse("10-07-2022"));
-    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___", new SimpleDateFormat(DATE_FORMAT_STR).parse("13-07-2022"));
+    Book book1 = new Book("noNameBook1",1,false,"NoAuthor1", new SimpleDateFormat(DATE_FORMAT_STR).parse("2022-07-10"));
+    Book book2 = new Book("noNameBook2___",22,true,"NoAuthor2___", new SimpleDateFormat(DATE_FORMAT_STR).parse("2022-07-13"));
 
     Magazine magazine1 = new Magazine("noNameMagazine1",1,false);
     Magazine magazine2 = new Magazine("noNameMagazine2___",222222222,true);
@@ -40,13 +40,13 @@ class ConvertorToStringForItemTest {
 
     @Test
     void testConvertLiteratureObjectToListOfString_book1() {
-        String expectedStr = "{PAGES=1, DATE=10-07-2022, BORROWED=no, AUTHOR=NoAuthor1, TYPE=Book, NAME=noNameBook1}";
+        String expectedStr = "{PAGES=1, DATE=2022-07-10, BORROWED=no, AUTHOR=NoAuthor1, TYPE=Book, NAME=noNameBook1}";
         assertEquals(expectedStr, bookHandler.convertItemToListOfString(book1).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_book2() {
-        String expectedStr = "{PAGES=22, DATE=13-07-2022, BORROWED=yes, AUTHOR=NoAuthor2___, TYPE=Book, NAME=noNameBook2___}";
+        String expectedStr = "{PAGES=22, DATE=2022-07-13, BORROWED=yes, AUTHOR=NoAuthor2___, TYPE=Book, NAME=noNameBook2___}";
         assertEquals(expectedStr, bookHandler.convertItemToListOfString(book2).toString());
     }
 }

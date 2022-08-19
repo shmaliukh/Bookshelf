@@ -67,10 +67,10 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
             currentRecursionLevel = 0;
             return Integer.parseInt(inputString);
         }
-        if (tryAgain(DEFAULT_INTEGER)) {
+        if (tryAgain(DEFAULT_INT)) {
             return getUserInteger(message, pattern);
         }
-        return DEFAULT_INTEGER;
+        return DEFAULT_INT;
     }
 
     protected Date getUserDate(String message, SimpleDateFormat dateFormat) {

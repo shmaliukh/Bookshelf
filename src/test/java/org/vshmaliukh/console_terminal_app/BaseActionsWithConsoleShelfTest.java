@@ -4,6 +4,7 @@ import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.*;
 import java.util.Date;
@@ -37,13 +38,13 @@ class BaseActionsWithConsoleShelfTest {
     void addLiteratureObject_magazineNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazineNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(magazineNotBorrowed);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
-        assertEquals(expectedNotBorrowedMagazine.getPagesNumber(), consoleShelf.readLiteratureInShelf().get(0).getPagesNumber());
-        assertEquals(expectedNotBorrowedMagazine.getName(), consoleShelf.readLiteratureInShelf().get(0).getName());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
+        assertEquals(expectedNotBorrowedMagazine.getPagesNumber(), shelfHandler.readLiteratureInShelf().get(0).getPagesNumber());
+        assertEquals(expectedNotBorrowedMagazine.getName(), shelfHandler.readLiteratureInShelf().get(0).getName());
     }
 
     @Test
@@ -51,13 +52,13 @@ class BaseActionsWithConsoleShelfTest {
     void addLiteratureObject_magazineIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazineIsBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(magazineIsBorrowed);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
-        assertEquals(expectedBorrowedMagazine.getPagesNumber(), consoleShelf.readLiteratureOutShelf().get(0).getPagesNumber());
-        assertEquals(expectedBorrowedMagazine.getName(), consoleShelf.readLiteratureOutShelf().get(0).getName());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
+        assertEquals(expectedBorrowedMagazine.getPagesNumber(), shelfHandler.readLiteratureOutShelf().get(0).getPagesNumber());
+        assertEquals(expectedBorrowedMagazine.getName(), shelfHandler.readLiteratureOutShelf().get(0).getName());
     }
 
 
@@ -66,13 +67,13 @@ class BaseActionsWithConsoleShelfTest {
     void addLiteratureObject_bookNotBorrowed() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookNotBorrowed);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
-        assertEquals(expectedNotBorrowedBook.getPagesNumber(), consoleShelf.readLiteratureInShelf().get(0).getPagesNumber());
-        assertEquals(expectedNotBorrowedBook.getName(), consoleShelf.readLiteratureInShelf().get(0).getName());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
+        assertEquals(expectedNotBorrowedBook.getPagesNumber(), shelfHandler.readLiteratureInShelf().get(0).getPagesNumber());
+        assertEquals(expectedNotBorrowedBook.getName(), shelfHandler.readLiteratureInShelf().get(0).getName());
     }
 
     @Test
@@ -80,37 +81,37 @@ class BaseActionsWithConsoleShelfTest {
     void addLiteratureObject_bookIsBorrowed() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookIsBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookIsBorrowed);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
-        assertEquals(expectedBorrowedBook.getPagesNumber(), consoleShelf.readLiteratureOutShelf().get(0).getPagesNumber());
-        assertEquals(expectedBorrowedBook.getName(), consoleShelf.readLiteratureOutShelf().get(0).getName());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
+        assertEquals(expectedBorrowedBook.getPagesNumber(), shelfHandler.readLiteratureOutShelf().get(0).getPagesNumber());
+        assertEquals(expectedBorrowedBook.getName(), shelfHandler.readLiteratureOutShelf().get(0).getName());
     }
 
     @Test
     @DisplayName("test to delete book from the shelf")
     void deleteLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookNotBorrowed);
 
-        consoleShelf.deleteLiteratureObjectByIndex(1);
+        shelfHandler.deleteItemByIndex(1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
     }
 
     @Test
     @DisplayName("test to delete magazine from the shelf)")
     void deleteLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazineNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(magazineNotBorrowed);
 
-        consoleShelf.deleteLiteratureObjectByIndex(1);
+        shelfHandler.deleteItemByIndex(1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
     }
 
 
@@ -121,8 +122,8 @@ class BaseActionsWithConsoleShelfTest {
 
         System.setOut(ps);
 
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.deleteLiteratureObjectByIndex(1);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.deleteItemByIndex(1);
 
         System.out.flush();
         System.setOut(old);
@@ -135,17 +136,17 @@ class BaseActionsWithConsoleShelfTest {
     @DisplayName("test to delete literature object by wrong index from the shelf")
     void deleteLiteratureObjectByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookNotBorrowed);
 
         System.setOut(ps);
 
-        consoleShelf.deleteLiteratureObjectByIndex(0);
+        shelfHandler.deleteItemByIndex(0);
 
         System.out.flush();
         System.setOut(old);
 
-        assertFalse(consoleShelf.readLiteratureInShelf().isEmpty());
+        assertFalse(shelfHandler.readLiteratureInShelf().isEmpty());
         //FIXME fix test
         //assertEquals(expectedString, baos.toString().trim());
     }
@@ -155,13 +156,13 @@ class BaseActionsWithConsoleShelfTest {
     void borrowLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazineNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(magazineNotBorrowed);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureInShelf(), 1);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
     }
 
     @Test
@@ -169,29 +170,29 @@ class BaseActionsWithConsoleShelfTest {
     void borrowLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 0;
         int expectedOutShelfSize = 1;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookNotBorrowed);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureInShelf(), 1);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
     }
 
     @Test
     @DisplayName("test to borrow no available literature object from the shelf")
     void borrowLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "No available literature";
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
 
         System.setOut(ps);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureInShelf(), 0);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 0);
 
         System.out.flush();
         System.setOut(old);
 
-        assertTrue(consoleShelf.readLiteratureInShelf().isEmpty());
+        assertTrue(shelfHandler.readLiteratureInShelf().isEmpty());
         //FIXME fix test
         //assertEquals(expectedString, baos.toString().trim());
     }
@@ -200,17 +201,17 @@ class BaseActionsWithConsoleShelfTest {
     @DisplayName("test to borrow literature object by wrong index from the shelf")
     void borrowLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookNotBorrowed);
 
         System.setOut(ps);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureInShelf(), 0);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureInShelf(), 0);
 
         System.out.flush();
         System.setOut(old);
 
-        assertFalse(consoleShelf.readLiteratureInShelf().isEmpty());
+        assertFalse(shelfHandler.readLiteratureInShelf().isEmpty());
         //FIXME fix test
         //assertEquals(expectedString, baos.toString().trim());
     }
@@ -220,13 +221,13 @@ class BaseActionsWithConsoleShelfTest {
     void arriveLiteratureObjectByIndex_book() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookIsBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookIsBorrowed);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureOutShelf(), 1);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(), 1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
     }
 
     @Test
@@ -234,30 +235,30 @@ class BaseActionsWithConsoleShelfTest {
     void arriveLiteratureObjectByIndex_magazine() {
         int expectedInShelfSize = 1;
         int expectedOutShelfSize = 0;
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(magazineIsBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(magazineIsBorrowed);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureOutShelf(),  1);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(),  1);
 
-        assertEquals(expectedInShelfSize, consoleShelf.readLiteratureInShelf().size());
-        assertEquals(expectedOutShelfSize, consoleShelf.readLiteratureOutShelf().size());
+        assertEquals(expectedInShelfSize, shelfHandler.readLiteratureInShelf().size());
+        assertEquals(expectedOutShelfSize, shelfHandler.readLiteratureOutShelf().size());
     }
 
     @Test
     @DisplayName("test to arrive literature object by wrong index back to the shelf")
     void arriveLiteratureObjectFromShelfByIndex_wrongIndex() {
         String expectedString = "Wrong index";
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
-        consoleShelf.addLiteratureObject(bookIsBorrowed);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
+        shelfHandler.addItem(bookIsBorrowed);
 
         System.setOut(ps);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureOutShelf(),  0);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(),  0);
 
         System.out.flush();
         System.setOut(old);
 
-        assertFalse(consoleShelf.readLiteratureOutShelf().isEmpty());
+        assertFalse(shelfHandler.readLiteratureOutShelf().isEmpty());
         //FIXME fix test
         //assertEquals(expectedString, baos.toString().trim());
     }
@@ -266,28 +267,28 @@ class BaseActionsWithConsoleShelfTest {
     @DisplayName("test to arrive literature object back to the shelf when literature is not borrowed")
     void arriveLiteratureObjectFromShelfByIndex_noBorrowed() {
         String expectedString = "Literature is not borrowed";
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
 
         System.setOut(ps);
 
-        consoleShelf.changeBorrowedStateOfItem(consoleShelf.readLiteratureOutShelf(),  1);
+        shelfHandler.changeBorrowedStateOfItem(shelfHandler.readLiteratureOutShelf(),  1);
 
         System.out.flush();
         System.setOut(old);
 
-        assertTrue(consoleShelf.readLiteratureOutShelf().isEmpty());
+        assertTrue(shelfHandler.readLiteratureOutShelf().isEmpty());
         //FIXME fix test
         //assertEquals(expectedString, baos.toString().trim());
     }
 
     @Test
     void saveShelfToFile(){
-        ConsoleShelf consoleShelf = new ConsoleShelf(printWriter);
+        AbstractShelfHandler shelfHandler = new AbstractShelfHandler();
 
-        consoleShelf.addLiteratureObject(bookNotBorrowed);
-        consoleShelf.addLiteratureObject(bookIsBorrowed);
-        consoleShelf.addLiteratureObject(magazineNotBorrowed);
-        consoleShelf.addLiteratureObject(magazineIsBorrowed);
+        shelfHandler.addItem(bookNotBorrowed);
+        shelfHandler.addItem(bookIsBorrowed);
+        shelfHandler.addItem(magazineNotBorrowed);
+        shelfHandler.addItem(magazineIsBorrowed);
 
         //TODO
     }

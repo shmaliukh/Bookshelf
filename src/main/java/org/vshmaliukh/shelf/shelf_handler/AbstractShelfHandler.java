@@ -1,59 +1,60 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
-import org.vshmaliukh.shelf.AbstractShelf;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerTypeUser;
+import org.vshmaliukh.shelf.Shelf;
+import org.vshmaliukh.shelf.literature_items.Item;
 
-import java.util.Random;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public abstract class AbstractShelfHandler {
+public class AbstractShelfHandler implements ShelfHandlerInterface {
 
-    public static final String DATE_FORMAT_STR = "dd-MM-yyyy"; // todo create file with config (?)
+    protected Shelf shelf;
 
-    public static final int FILE_MODE_WORK_WITH_ONE_FILE = 1;
-    public static final int FILE_MODE_WORK_WITH_FILE_PER_TYPE = 2;
-
-    public static final String HOME_PROPERTY = System.getProperty("user.home");
-
-    protected Random random;
-    protected ItemGsonHandlerUser itemGsonHandler;
-
-    protected AbstractShelf shelf;
-    protected User user;
-    protected int typeOfWorkWithFiles;
-
-    protected AbstractShelfHandler() {
+    public AbstractShelfHandler() {
+        this.shelf = new Shelf();
     }
 
-    protected AbstractShelfHandler(String userName, int typeOfWorkWithFiles) {
-        this.user = new User(userName);
-        this.typeOfWorkWithFiles = typeOfWorkWithFiles;
+    @Override
+    public List<Item> readLiteratureInShelf() {
+        return getShelf().getItemsOfShelf().stream()
+                .filter(o -> !o.isBorrowed())
+                .collect(Collectors.toList());
     }
 
-    public void setUpGsonHandler() {
-        switch (typeOfWorkWithFiles) {
-            case FILE_MODE_WORK_WITH_ONE_FILE:
-                itemGsonHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());
-                break;
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                itemGsonHandler = new ItemGsonHandlerPerTypeUser(HOME_PROPERTY, user.getName());
-                break;
-            default:
-                itemGsonHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, user.getName());
-                break;
+    @Override
+    public List<Item> readLiteratureOutShelf() {
+        return getShelf().getItemsOfShelf().stream()
+                .filter(Item::isBorrowed)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void addItem(Item item) {
+        if (item != null) {
+            shelf.getItemsOfShelf().add(item);
         }
     }
 
-    public void saveShelfItemsToJson() {
-        itemGsonHandler.saveItemListToFile(shelf.getAllLiteratureObjects());
+    @Override
+    public void deleteItemByIndex(int index) {
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                shelf.getItemsOfShelf().remove(index - 1);
+            }
+        }
     }
 
-    public void readShelfItemsFromJson() {
-        itemGsonHandler.readItemListFromFile().forEach(shelf::addLiteratureObject);
+    @Override
+    public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
+        if (!literatureList.isEmpty()) {
+            if (index > 0 && index <= literatureList.size()) {
+                Item buffer = literatureList.get(index - 1);
+                buffer.setBorrowed(!buffer.isBorrowed());
+            }
+        }
     }
 
-    public AbstractShelf getShelf() {
+    public Shelf getShelf() {
         return shelf;
     }
 }

@@ -7,5 +7,12 @@ import lombok.Data;
 @AllArgsConstructor
 public
 class User {
-    private String name;
+
+    protected Integer id = null;
+
+    private final String name;
+
+    public User(String name) {
+        this.name = name;
+    }
 }

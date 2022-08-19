@@ -3,7 +3,9 @@ package org.vshmaliukh.tomcat_web_app.servlets;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +15,8 @@ import java.util.Map;
 
 import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.INFORM_MESSAGE;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.MENU_ITEM_INDEX;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.INFORM_MESSAGE;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.MENU_ITEM_INDEX;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
 
 public class SortingTypesMenuServlet extends HttpServlet {
@@ -30,14 +32,14 @@ public class SortingTypesMenuServlet extends HttpServlet {
                 int parseInt = Integer.parseInt(menuItemIndex);
                 String classType = generatedMenu.getMenuItems().get(parseInt - 1).getClassType().getSimpleName();
 
-                WebUtils.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
-                        WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, userAtr)
+                UrlUtil.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
+                        UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, userAtr)
                                 .addParameter(ITEM_CLASS_TYPE, classType));
             } catch (NumberFormatException nfe) {
                 WebUtils.logServletErr(SORTING_TYPES_MENU_TITLE, nfe);
             }
         } else {
-            WebUtils.redirectTo(SORTING_TYPES_MENU_TITLE, response, userAtr);
+            UrlUtil.redirectTo(SORTING_TYPES_MENU_TITLE, response, userAtr);
         }
     }
 
@@ -47,8 +49,8 @@ public class SortingTypesMenuServlet extends HttpServlet {
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
-        webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(userAtr, SORTING_TYPES_MENU_TITLE, new GeneratedMenuForSorting()));
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
+        webPageBuilder.addToBody(HtmlUtil.generateMenuItemsFormHTML(userAtr, SORTING_TYPES_MENU_TITLE, new GeneratedMenuForSorting()));
+        webPageBuilder.addButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
         webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
 
         try {

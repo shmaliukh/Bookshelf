@@ -34,15 +34,15 @@ public final class ItemHandlerProvider {
         uniqueTypeNames = Collections.unmodifiableSet(new HashSet<>(itemHandlerMap.keySet()));
     }
 
-    public static ItemHandler getHandlerByClass(Class<? extends Item> clazz) {
-        return itemHandlerMap.get(clazz);
+    public static ItemHandler getHandlerByClass(Class<? extends Item> classType) {
+        return itemHandlerMap.get(classType);
     }
 
     public static ItemHandler getHandlerByName(String name) {
         return getHandlerByClass(getClassByName(name));
     }
 
-    public static Class<? extends Item> getClassByName(String typeOfClass) {
-        return itemNameClassMap.get(typeOfClass);
+    public static Class<? extends Item> getClassByName(String classTypeStr) {
+        return itemNameClassMap.get(classTypeStr);
     }
 }

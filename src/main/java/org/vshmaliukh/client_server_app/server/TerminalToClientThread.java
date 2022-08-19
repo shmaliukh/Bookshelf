@@ -1,16 +1,17 @@
 package org.vshmaliukh.client_server_app.server;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.console_terminal_app.ConsoleShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleUI;
 
 @Slf4j
 public class TerminalToClientThread extends Thread {
 
     private int userCounter;
 
-    private ConsoleShelfHandler consoleTerminal;
+    private ConsoleUI consoleTerminal;
 
-    public TerminalToClientThread(int userCounter, ConsoleShelfHandler consoleTerminal) {
+    public TerminalToClientThread(int userCounter, ConsoleUI consoleTerminal) {
         this.userCounter = userCounter;
         this.consoleTerminal = consoleTerminal;
     }

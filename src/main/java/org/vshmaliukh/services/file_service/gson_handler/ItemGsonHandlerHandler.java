@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
+public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
 
     public static final int MAX_PROBLEM_FILES = 5;
     public static final String JSON_FILE_TYPE = ".json";
@@ -34,18 +34,16 @@ public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
     String logFileFullName = "log.txt";
     String problemFilesFolderStr = "problem_files";
 
-    ItemGsonHandlerUser(String homeDir, String userName) {
+    ItemGsonHandlerHandler(String homeDir, String userName) {
         super(homeDir, userName);
     }
 
-
-
     public Path generatePathForGsonFile() {
-        return Paths.get(String.valueOf(generatePathForGson()), generateFullFileName());
+        return Paths.get(String.valueOf(generatePathForFileHandler()), generateFullFileName());
     }
 
     Path generatePathForProblemFiles() {
-        Path path = Paths.get(String.valueOf(generatePathForGson()), problemFilesFolderStr);
+        Path path = Paths.get(String.valueOf(generatePathForFileHandler()), problemFilesFolderStr);
         createDirectoryIfNotExists(path);
         return path;
     }
@@ -106,7 +104,7 @@ public abstract class ItemGsonHandlerUser extends SaveReadUserFilesHandler {
     }
 
 
-    public boolean saveListToFile(Path gsonFilePathToSave, List listToSave) {
+    public boolean saveListToFile(Path gsonFilePathToSave, List<? extends Item> listToSave) {
         File gsonFileToSave = gsonFilePathToSave.toFile();
         try (FileWriter fileWriter = new FileWriter(gsonFileToSave)) {
             gson.toJson(getContainerListForObjects(listToSave), fileWriter);

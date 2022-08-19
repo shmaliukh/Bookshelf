@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.DATE;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
@@ -100,7 +100,7 @@ class BookHandlerTest {
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());
         assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-        assertEquals(DEFAULT_INTEGER, itemByUserInput.getPagesNumber());
+        assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
         assertEquals(DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
         assertEquals(DEFAULT_DATE, itemByUserInput.getIssuanceDate());
         assertEquals(DEFAULT_STRING, itemByUserInput.getAuthor());
