@@ -13,11 +13,11 @@ import java.util.*;
 @Slf4j
 public class SqlLiteHandler extends AbstractSqlItemHandler {
 
-    private static Connection connectionToSqlLiteDB = null;
-
     public static final String SQL_FILE_TYPE = ".db";
     public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
     private static final String SQLLITE_FILE_URL = "jdbc:sqlite:" + Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
+
+    private Connection connectionToSqlLiteDB = null;
 
     public SqlLiteHandler(String homeDir, String userName) {
         super(homeDir, userName);
@@ -32,16 +32,23 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public Connection getConnectionToDB() {
+        if(connectionToSqlLiteDB == null){
+            try (Connection connection = DriverManager.getConnection(SQLLITE_FILE_URL)){
+                connectionToSqlLiteDB = connection;
+            } catch (SQLException sqle) {
+                logSqlHandler(sqle);
+                getConnectionToDB();
+            }
+        }
         return connectionToSqlLiteDB;
     }
 
     void createNewDatabaseIfNotExists() {
         try {
-            if (connectionToSqlLiteDB != null) {
-                DatabaseMetaData meta = connectionToSqlLiteDB.getMetaData();
-                log.info("The driver name is " + meta.getDriverName());
-                log.info("A new database '" + SQLLITE_FILE_URL + "' has been created.");
-            }
+            DatabaseMetaData meta = getConnectionToDB().getMetaData();
+            log.info("The driver name is " + meta.getDriverName());
+            log.info("A new database '" + SQLLITE_FILE_URL + "' has been created.");
+
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
         }
@@ -56,13 +63,10 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public void createNewTable(String sql) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            try (Statement stmt = connection.createStatement()) {
-                stmt.execute(sql);
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        try (Statement stmt = getConnectionToDB().createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
@@ -89,29 +93,23 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public void saveItemToDB(Item item) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-            String sqlInsertStr = handlerByClass.insertItemSqlLiteStr();
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sqlInsertStr);
-                handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String sqlInsertStr = handlerByClass.insertItemSqlLiteStr();
+        try {
+            PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
     public void insertUser(String userName) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            String sql = "INSERT OR IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, userName);
-                preparedStatement.executeUpdate();
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        String sql = "INSERT OR IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
+        try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
+            preparedStatement.setString(1, userName);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
@@ -128,20 +126,17 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public void readUserId(UserContainer user) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            String sql = "" +
-                    " SELECT " + USER_ID_SQL_PARAMETER +
-                    " FROM " + USER_TABLE_TITLE +
-                    " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, user.getName());
+        String sql = "" +
+                " SELECT " + USER_ID_SQL_PARAMETER +
+                " FROM " + USER_TABLE_TITLE +
+                " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
+        try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
 
-                ResultSet rs = preparedStatement.executeQuery();
-                user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+            ResultSet rs = preparedStatement.executeQuery();
+            user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 

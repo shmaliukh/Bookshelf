@@ -1,5 +1,7 @@
 package org.vshmaliukh.tomcat_web_app;
 
+import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
+
 public class WebPageBuilder {
 
     private String title;
@@ -16,7 +18,7 @@ public class WebPageBuilder {
     }
 
     public void addButton(String reference, String label) {
-        bodyStringBuilder.append(WebUtils.formHTMLButton(reference, label));
+        bodyStringBuilder.append(HtmlUtil.formHTMLButton(reference, label));
     }
 
     public StringBuilder bodyStartHTML() {

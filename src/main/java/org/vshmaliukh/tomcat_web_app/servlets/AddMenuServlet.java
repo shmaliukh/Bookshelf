@@ -7,7 +7,9 @@ import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,7 @@ import java.util.Map;
 import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.MENU_ITEM_INDEX;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.MENU_ITEM_INDEX;
 
 public class AddMenuServlet extends HttpServlet {
 
@@ -44,7 +46,7 @@ public class AddMenuServlet extends HttpServlet {
                 addItemByType(userAtr, response, menuItemClassType, index);
             }
         } else {
-            WebUtils.redirectTo(ADD_MENU_TITLE, response, userAtr);
+            UrlUtil.redirectTo(ADD_MENU_TITLE, response, userAtr);
         }
     }
 
@@ -55,8 +57,8 @@ public class AddMenuServlet extends HttpServlet {
 
         webPageBuilder.addToBody(MESSAGE_TO_ENTER + " <br>\n");
 
-        webPageBuilder.addToBody(WebUtils.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()));
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
+        webPageBuilder.addToBody(HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()));
+        webPageBuilder.addButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
 
         webPageBuilder.addMessageBlock(generateMessageAboutAddedItem(request));
 
@@ -86,13 +88,13 @@ public class AddMenuServlet extends HttpServlet {
     private void addItemByType(Map<String, String> userAtr, HttpServletResponse response, MenuItemClassType<?> menuItemClassType, int index) {
         String classSimpleName = menuItemClassType.getClassType().getSimpleName();
         if (index % 2 == 0) { //add random item
-            WebUtils.redirectTo(ADD_ITEM_TITLE, response,
-                    WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+            UrlUtil.redirectTo(ADD_ITEM_TITLE, response,
+                    UrlUtil.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
                             .addParameter(ITEM_CLASS_TYPE, classSimpleName)
                             .addParameter(IS_RANDOM, "true"));
         } else {
-            WebUtils.redirectTo(ADD_ITEM_TITLE, response,
-                    WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+            UrlUtil.redirectTo(ADD_ITEM_TITLE, response,
+                    UrlUtil.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
                             .addParameter(ITEM_CLASS_TYPE, classSimpleName));
         }
     }

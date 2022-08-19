@@ -1,7 +1,8 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +44,7 @@ public class MainMenuServlet extends HttpServlet {
     }
 
     private String generateMainMenuItem(String servletTitle, String itemTitle, Map<String, String> userAtr) {
-        return "<a href=\"" + WebUtils.generateBaseURLString(servletTitle, userAtr) + "\">" + itemTitle + "</a>\n" +
+        return "<a href=\"" + UrlUtil.generateBaseURLString(servletTitle, userAtr) + "\">" + itemTitle + "</a>\n" +
                 "   <br>\n ";
     }
 }

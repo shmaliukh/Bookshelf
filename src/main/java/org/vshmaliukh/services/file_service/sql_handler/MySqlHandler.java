@@ -17,13 +17,18 @@ public class MySqlHandler extends AbstractSqlItemHandler {
     private static final String MYSQL_PASSWORD = "test";
     private static final String MYSQL_DB_URL = "jdbc:mysql://127.0.0.1:3307/my_test";
 
+    protected Connection connectionToMySqlDB = null;
+
     public Connection getConnectionToDB() {
-        try {
-            return DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD);
-        } catch (SQLException sqle) {
-            logSqlHandler(sqle);
+        if (connectionToMySqlDB == null) {
+            try (Connection connection = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD)) {
+                connectionToMySqlDB = connection;
+            } catch (SQLException sqle) {
+                logSqlHandler(sqle);
+                getConnectionToDB();
+            }
         }
-        return null;
+        return connectionToMySqlDB;
     }
 
     public void logSqlHandler(Exception e) {
@@ -42,13 +47,10 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     @Override
     public void createNewTable(String sql) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            try (Statement stmt = connection.createStatement()) {
-                stmt.execute(sql);
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        try (Statement stmt = getConnectionToDB().createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
@@ -72,30 +74,24 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     @Override
     public void saveItemToDB(Item item) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-            String sqlInsertStr = handlerByClass.insertItemMySqlStr();
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(sqlInsertStr);
-                handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String sqlInsertStr = handlerByClass.insertItemMySqlStr();
+        try {
+            PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
     @Override
     public void insertUser(String userName) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            String sql = " INSERT IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, userName);
-                preparedStatement.executeUpdate();
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
-            }
+        String sql = " INSERT IGNORE INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) VALUES(?)";
+        try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
+            preparedStatement.setString(1, userName);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 
@@ -114,22 +110,19 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     @Override
     public void readUserId(UserContainer user) {
-        Connection connection = getConnectionToDB();
-        if (connection != null) {
-            String sql = "" +
-                    " SELECT " + USER_ID_SQL_PARAMETER +
-                    " FROM " + USER_TABLE_TITLE +
-                    " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setString(1, user.getName());
+        String sql = "" +
+                " SELECT " + USER_ID_SQL_PARAMETER +
+                " FROM " + USER_TABLE_TITLE +
+                " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
+        try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
+            preparedStatement.setString(1, user.getName());
 
-                ResultSet rs = preparedStatement.executeQuery();
-                if (rs.next()) {
-                    user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
-                }
-            } catch (SQLException sqle) {
-                logSqlHandler(sqle);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                user.setId(rs.getInt(USER_ID_SQL_PARAMETER));
             }
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
         }
     }
 

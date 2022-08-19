@@ -5,7 +5,8 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,15 +18,16 @@ import java.util.Map;
 
 import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.*;
+import static org.vshmaliukh.tomcat_web_app.utils.HtmlUtil.generateMenuItemsFormHTML;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.*;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
 
 public class ItemsSortingMenuServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        WebUtils.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
-                WebUtils.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, WebUtils.readUserAtr(request))
+        UrlUtil.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
+                UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, WebUtils.readUserAtr(request))
                         .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
                         .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)));
     }
@@ -48,7 +50,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
             printSortedTable(userAtr, webPageBuilder, menuIndexStr, classTypeStr, handlerByName);
         }
 
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE);
+        webPageBuilder.addButton(UrlUtil.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE);
 
         webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
 
@@ -60,7 +62,7 @@ public class ItemsSortingMenuServlet extends HttpServlet {
     }
 
     private String initMenu(HttpServletRequest request, ItemHandler<?> handlerByName) {
-        return generateMenuItemsFormHTML(generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
+        return generateMenuItemsFormHTML(UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
                         .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)),
                 handlerByName.getSortingMenuList());
     }

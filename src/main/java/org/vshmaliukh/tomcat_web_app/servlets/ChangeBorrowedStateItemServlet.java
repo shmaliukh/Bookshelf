@@ -2,7 +2,8 @@ package org.vshmaliukh.tomcat_web_app.servlets;
 
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.generateShelfHandler;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.generateShelfHandler;
 import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;
 
 public class ChangeBorrowedStateItemServlet extends HttpServlet {
@@ -26,7 +27,7 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
         } catch (NumberFormatException nfe) {
             WebUtils.logServletErr(CHANGE_ITEM_BORROWED_STATE, nfe);
         } finally {
-            WebUtils.redirectTo(EDIT_ITEMS_TITLE, response, userAtr);
+            UrlUtil.redirectTo(EDIT_ITEMS_TITLE, response, userAtr);
         }
     }
 
