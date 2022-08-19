@@ -2,6 +2,7 @@ package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
 import org.vshmaliukh.shelf.Shelf;
@@ -14,48 +15,50 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GsonShelfHandler extends SaveReadShelfHandler {
 
+    protected SaveReadUserFilesHandler itemHandler;
+
     public GsonShelfHandler(String userName, int typeOfWorkWithFiles) {
-        setUpDataSaver(userName, typeOfWorkWithFiles);
+        super(userName, typeOfWorkWithFiles);
     }
 
     @Override
     public <T extends Item> List<T> getSortedItemsByClass(Class<T> classType){
-        return gsonItemHandler.readItemsByClass(classType);
+        return itemHandler.readItemsByClass(classType);
     }
 
     @Override
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
-        switch (typeOfWorkWithFiles) {// todo
-            case FILE_MODE_WORK_WITH_ONE_FILE:
-                gsonItemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
+        switch (typeOfWorkWithFiles) {
+            case MODE_WORK_WITH_ONE_FILE:
+                itemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
-            case FILE_MODE_WORK_WITH_FILE_PER_TYPE:
-                gsonItemHandler = new ItemGsonHandlerPerType(HOME_PROPERTY, userName);
+            case MODE_WORK_WITH_FILE_PER_TYPE:
+                itemHandler = new ItemGsonHandlerPerType(HOME_PROPERTY, userName);
                 break;
             default:
-                gsonItemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileUser(HOME_PROPERTY, userName);
                 break;
         }
     }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return gsonItemHandler.readItemList().stream()
+        return itemHandler.readItemList().stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return gsonItemHandler.readItemList().stream()
+        return itemHandler.readItemList().stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
-            shelf.itemsOfShelf.add(item);
+            shelf.getItemsOfShelf().add(item);
         } else {
             log.error("The literature item to add is null");
         }
@@ -63,10 +66,10 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                shelf.itemsOfShelf.remove(index - 1);
+    public void deleteItemByIndex(int index) {
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                shelf.getItemsOfShelf().remove(index - 1);
             }
             saveShelfItems();
         }
@@ -85,13 +88,13 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        gsonItemHandler.saveItemList(shelf.getAllLiteratureObjects());
+        itemHandler.saveItemList(shelf.getAllLiteratureObjects());
     }
 
     @Override
     public void readShelfItems() {
-        shelf.itemsOfShelf = new ArrayList<>();
-        gsonItemHandler.readItemList().forEach(this::addLiteratureObject);
+        shelf.setItemsOfShelf(new ArrayList<>());
+        itemHandler.readItemList().forEach(this::addItem);
     }
 
     @Override

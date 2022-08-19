@@ -18,10 +18,10 @@ public class ConsoleGsonShelfHandler extends GsonShelfHandler {
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                printWriter.println(shelf.itemsOfShelf.remove(index - 1) + " " + "has deleted from shelf");
+    public void deleteItemByIndex(int index) {
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                printWriter.println(shelf.getItemsOfShelf().remove(index - 1) + " " + "has deleted from shelf");
             } else {
                 printWriter.println("Wrong index");
             }

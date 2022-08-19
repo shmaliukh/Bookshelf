@@ -7,11 +7,8 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
-import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
-public abstract class ItemHandler<T extends Item> implements SqlBaseStatementInterface<T>, MySqlStatementInterface, SqlLiteStatementInterface {
-
-    protected static List<String> parameterList = Collections.unmodifiableList(Arrays.asList(NAME, PAGES, BORROWED));
+public abstract class ItemHandler<T extends Item> implements SqlItemBaseStatementInterface<T>, MySqlItemStatementInterface, SqlLiteItemStatementInterface, ItemWebIntegrationInterface<T> {
 
     protected ItemHandler() {
     }
@@ -43,13 +40,4 @@ public abstract class ItemHandler<T extends Item> implements SqlBaseStatementInt
     public abstract T getRandomItem(Random random);
 
     public abstract Map<String, String> convertItemToListOfString(T item);
-
-    public abstract String generateHTMLFormBodyToCreateItem();
-
-    public abstract String generateHTMLFormBodyToCreateItem(Random random);
-
-    public abstract boolean isValidHTMLFormData(Map<String, String> mapFieldValue);
-
-    public abstract T generateItemByParameterValueMap(Map<String, String> mapFieldValue);
-
 }

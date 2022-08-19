@@ -1,7 +1,8 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.WebUtils.readUserAtr;
+import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.readUserAtr;
 
 public class EditItemsServlet extends HttpServlet {
 
@@ -25,7 +26,7 @@ public class EditItemsServlet extends HttpServlet {
         String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr);
         webPageBuilder.addToBody(tableForEditingItems);
 
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
+        webPageBuilder.addButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
 
         try {
             response.getWriter().println(webPageBuilder.buildPage());

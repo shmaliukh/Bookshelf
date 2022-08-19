@@ -14,22 +14,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
-import static org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
+import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
 
 public class BookHandler extends ItemHandler<Book> {
 
     public static final String BOOK_TABLE_TITLE = Book.class.getSimpleName() + "s";
-
-    public List<String> parameterList() {
-        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
-        parameterList.add(AUTHOR);
-        parameterList.add(DATE);
-        return Collections.unmodifiableList(parameterList);
-    }
 
     public static final Comparator<Book> BOOK_COMPARATOR_BY_NAME = Comparator.comparing(Book::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Book> BOOK_COMPARATOR_BY_AUTHOR = Comparator.comparing(Book::getAuthor, String.CASE_INSENSITIVE_ORDER);
@@ -96,11 +89,11 @@ public class BookHandler extends ItemHandler<Book> {
                 ItemUtils.generateHTMLFormRadio(BORROWED) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.AUTHOR, "text") +
                 ItemUtils.generateHTMLFormItem(ItemTitles.DATE, "date") +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -112,11 +105,11 @@ public class BookHandler extends ItemHandler<Book> {
                 ItemUtils.generateHTMLFormRadio(BORROWED) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.AUTHOR, "text", getRandomString(random.nextInt(20), random)) +
                 ItemUtils.generateHTMLFormItem(ItemTitles.DATE, "date", defaultDate) +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -155,14 +148,14 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     // -------------------------------------------------------------------
-    // SQLlite methods
+    // SQL methods
     // -------------------------------------------------------------------
 
     @Override
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -178,7 +171,7 @@ public class BookHandler extends ItemHandler<Book> {
                 "IGNORE" +
                 " INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -197,22 +190,22 @@ public class BookHandler extends ItemHandler<Book> {
                 AUTHOR_SQL_PARAMETER + " , " +
                 DATE_SQL_PARAMETER +
                 " FROM " + BOOK_TABLE_TITLE + " " +
-                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Book item, Integer userID) throws SQLException {
-        pstmt.setInt(1, userID);
-        pstmt.setString(2, item.getName());
-        pstmt.setInt(3, item.getPagesNumber());
-        pstmt.setString(4, String.valueOf(item.isBorrowed()));
-        pstmt.setString(5, item.getAuthor());
-        pstmt.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
-        pstmt.executeUpdate();
+    public void insertItemValuesToSqlDB(PreparedStatement preparedStatement, Book item, Integer userID) throws SQLException {
+        preparedStatement.setInt(1, userID);
+        preparedStatement.setString(2, item.getName());
+        preparedStatement.setInt(3, item.getPagesNumber());
+        preparedStatement.setString(4, String.valueOf(item.isBorrowed()));
+        preparedStatement.setString(5, item.getAuthor());
+        preparedStatement.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        preparedStatement.executeUpdate();
     }
 
     @Override
-    public Book readItemFromSql(ResultSet rs) throws SQLException {
+    public Book readItemFromSqlDB(ResultSet rs) throws SQLException {
         Date issuanceDate;
         try {
             issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
@@ -230,48 +223,50 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " ( \n " +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n " +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n " +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                AUTHOR_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                DATE_SQL_PARAMETER + " TEXT NOT NULL, \n " +
-                " UNIQUE ( \n " +
+    public String createTableSqlLiteStr() {
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                AUTHOR_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                DATE_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " , \n " +
                 AUTHOR_SQL_PARAMETER + " , \n " +
                 DATE_SQL_PARAMETER + " \n " +
-                " ) ON CONFLICT IGNORE \n " +
+                " ) \n " +
+                ON_CONFLICT_IGNORE +
                 " ); ";
     }
 
     @Override
-    public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + BOOK_TABLE_TITLE + " (\n " +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n " +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL , \n " +
-                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
-                PAGES_SQL_PARAMETER + " INT NOT NULL , \n " +
-                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL , \n " +
-                AUTHOR_SQL_PARAMETER + " VARCHAR(200) NOT NULL , \n " +
-                DATE_SQL_PARAMETER + " VARCHAR(50) NOT NULL , \n " +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ) , \n " +
-                " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n " +
+    public String createTableMySqlStr() {
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                AUTHOR_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                DATE_SQL_PARAMETER + VARCHAR_25_NOT_NULL + " , \n " +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
+                CONSTRAINT_UC + sqlItemTableTitle() +
+                UNIQUE + " ( \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " , \n " +
                 AUTHOR_SQL_PARAMETER + " , \n " +
-                DATE_SQL_PARAMETER + " ) \n " +
-                " ); ";
+                DATE_SQL_PARAMETER + " \n " +
+                " ) \n " +
+                ");";
     }
 
     @Override
-    public String getSqlTableTitle() {
+    public String sqlItemTableTitle() {
         return BOOK_TABLE_TITLE;
     }
 }

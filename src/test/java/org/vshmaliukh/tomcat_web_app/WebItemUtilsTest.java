@@ -7,6 +7,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -21,7 +24,7 @@ class WebItemUtilsTest {
     @ParameterizedTest
     @MethodSource("provideValueToTestGenerateBaseURLString")
     void testGenerateBaseURLString(String servletTitle, Map<String, String> userAtr, String expectedURLStr) {
-        assertEquals(expectedURLStr, WebUtils.generateBaseURLString(servletTitle, userAtr));
+        assertEquals(expectedURLStr, UrlUtil.generateBaseURLString(servletTitle, userAtr));
     }
 
     private static Stream<Arguments> provideValueToTestGenerateBaseURLString() {
@@ -56,7 +59,7 @@ class WebItemUtilsTest {
     @MethodSource("provideValueToTestGenerateBaseURLBuilder")
     void testGenerateBaseURL(String servletTitle, Map<String, String> userAtr, String expectedURLStr) {
         assertEquals(expectedURLStr,
-                WebUtils.generateBaseURLBuilder(servletTitle, userAtr)
+                UrlUtil.generateBaseURLBuilder(servletTitle, userAtr)
                         .addParameter("parameterV", "V").toString());
     }
 
@@ -92,27 +95,27 @@ class WebItemUtilsTest {
     @Test
     void testFormHTMLButton_null() {
         assertEquals("<button onclick=\"window.location.href='null';\"> null</button> \n",
-                WebUtils.formHTMLButton(null, null));
+                HtmlUtil.formHTMLButton(null, null));
     }
 
     @Test
     void testFormHTMLButton_str() {
         assertEquals("<button onclick=\"window.location.href='log_in';\"> log_in</button> \n",
-                WebUtils.formHTMLButton(LOG_IN_TITLE, LOG_IN_TITLE));
+                HtmlUtil.formHTMLButton(LOG_IN_TITLE, LOG_IN_TITLE));
     }
 
     @Test
     void testFormHTMLButton_baseURLString() {
         assertEquals("<button onclick=\"window.location.href='/log_in?user_name&type_of_work_with_files';\"> log_in</button> \n",
-                WebUtils.formHTMLButton(
-                        WebUtils.generateBaseURLString(LOG_IN_TITLE, Collections.singletonMap("k", "v"))
+                HtmlUtil.formHTMLButton(
+                        UrlUtil.generateBaseURLString(LOG_IN_TITLE, Collections.singletonMap("k", "v"))
                         , LOG_IN_TITLE));
     }
 
     @Test
     void testGenerateFormHTMLStart() {
         assertEquals("<form action = \"/log_in?user_name&type_of_work_with_files\" method = \"POST\">\n",
-                WebUtils.generateFormHTMLStart(Collections.singletonMap("k", "v"), LOG_IN_TITLE));
+                HtmlUtil.generateFormHTMLStart(Collections.singletonMap("k", "v"), LOG_IN_TITLE));
     }
 
     @Test
@@ -152,7 +155,7 @@ class WebItemUtilsTest {
                         "<br>\n" +
                         "<input type = \"submit\" value = \"Submit\" />\n" +
                         "</form>",
-                WebUtils.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForAdding()));
+                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForAdding()));
     }
 
     @Test
@@ -176,7 +179,7 @@ class WebItemUtilsTest {
                         "<br>\n" +
                         "<input type = \"submit\" value = \"Submit\" />\n" +
                         "</form>",
-                WebUtils.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForSorting()));
+                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForSorting()));
     }
 
     @Test

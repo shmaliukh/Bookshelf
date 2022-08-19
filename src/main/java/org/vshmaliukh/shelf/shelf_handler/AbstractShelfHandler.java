@@ -6,40 +6,40 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BaseShelfHandler implements ShelfHandlerInterface {
+public class AbstractShelfHandler implements ShelfHandlerInterface {
 
     protected Shelf shelf;
 
-    public BaseShelfHandler() {
+    public AbstractShelfHandler() {
         this.shelf = new Shelf();
     }
 
     @Override
     public List<Item> readLiteratureInShelf() {
-        return shelf.itemsOfShelf.stream()
+        return getShelf().getItemsOfShelf().stream()
                 .filter(o -> !o.isBorrowed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> readLiteratureOutShelf() {
-        return shelf.itemsOfShelf.stream()
+        return getShelf().getItemsOfShelf().stream()
                 .filter(Item::isBorrowed)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void addLiteratureObject(Item item) {
+    public void addItem(Item item) {
         if (item != null) {
-            shelf.itemsOfShelf.add(item);
+            shelf.getItemsOfShelf().add(item);
         }
     }
 
     @Override
-    public void deleteLiteratureObjectByIndex(int index) {
-        if (!shelf.itemsOfShelf.isEmpty()) {
-            if (index > 0 && index <= shelf.itemsOfShelf.size()) {
-                shelf.itemsOfShelf.remove(index - 1);
+    public void deleteItemByIndex(int index) {
+        if (!shelf.getItemsOfShelf().isEmpty()) {
+            if (index > 0 && index <= shelf.getItemsOfShelf().size()) {
+                shelf.getItemsOfShelf().remove(index - 1);
             }
         }
     }

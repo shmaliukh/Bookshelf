@@ -15,9 +15,9 @@ public interface ShelfHandlerInterface {
 
     List<Item> readLiteratureOutShelf();
 
-    void addLiteratureObject(Item item);
+    void addItem(Item item);
 
-    void deleteLiteratureObjectByIndex(int index);
+    void deleteItemByIndex(int index);
 
     void changeBorrowedStateOfItem(List<Item> literatureList, int index);
 

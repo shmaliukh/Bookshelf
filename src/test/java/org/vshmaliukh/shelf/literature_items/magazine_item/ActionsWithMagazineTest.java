@@ -2,14 +2,12 @@ package org.vshmaliukh.shelf.literature_items.magazine_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
+import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
@@ -31,21 +29,21 @@ class ActionsWithMagazineTest {
      */
     int expectedArraySize = 3;
 
-    BaseShelfHandler consoleShelfHandler  = new BaseShelfHandler();
+    AbstractShelfHandler consoleShelfHandler  = new AbstractShelfHandler();
 
     /*
       Adding magazines in revers order
      */ {
-        consoleShelfHandler.addLiteratureObject(magazine3);
-        consoleShelfHandler.addLiteratureObject(magazine2);
-        consoleShelfHandler.addLiteratureObject(magazine1);
+        consoleShelfHandler.addItem(magazine3);
+        consoleShelfHandler.addItem(magazine2);
+        consoleShelfHandler.addItem(magazine1);
     }
 
     @Test
     @DisplayName("test printable stings of sorted Magazines by Name")
     void printSortedMagazinesByName() {
         List<Magazine> sortedMagazinesByName =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().itemsOfShelf),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Magazine.class, consoleShelfHandler.getShelf().getItemsOfShelf()),
                         MAGAZINE_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedMagazinesByName.size());

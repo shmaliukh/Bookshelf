@@ -2,17 +2,12 @@ package org.vshmaliukh.shelf.literature_items.book_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.shelf.shelf_handler.BaseShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
-import org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface;
+import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
@@ -34,14 +29,14 @@ class ActionsWithBookTest {
      */
     int expectedArraySize = 3;
 
-    BaseShelfHandler consoleShelfHandler = new BaseShelfHandler();
+    AbstractShelfHandler consoleShelfHandler = new AbstractShelfHandler();
 
     /*
       Adding books in revers order
      */ {
-        consoleShelfHandler.addLiteratureObject(book3);
-        consoleShelfHandler.addLiteratureObject(book2);
-        consoleShelfHandler.addLiteratureObject(book1);
+        consoleShelfHandler.addItem(book3);
+        consoleShelfHandler.addItem(book2);
+        consoleShelfHandler.addItem(book1);
     }
 
 
@@ -49,7 +44,7 @@ class ActionsWithBookTest {
     @DisplayName("test printable stings of sorted Books by Name")
     void printSortedBooksByName() {
         List<Book> sortedBooksByName =
-                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, consoleShelfHandler.getShelf().itemsOfShelf),
+                ItemUtils.getSortedLiterature(ItemUtils.getItemsByType(Book.class, consoleShelfHandler.getShelf().getItemsOfShelf()),
                         BOOK_COMPARATOR_BY_NAME);
 
         assertEquals(expectedArraySize, sortedBooksByName.size());

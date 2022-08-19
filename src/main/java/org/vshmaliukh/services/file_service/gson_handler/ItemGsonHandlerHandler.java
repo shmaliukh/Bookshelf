@@ -38,8 +38,6 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         super(homeDir, userName);
     }
 
-
-
     public Path generatePathForGsonFile() {
         return Paths.get(String.valueOf(generatePathForFileHandler()), generateFullFileName());
     }
@@ -106,7 +104,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
     }
 
 
-    public boolean saveListToFile(Path gsonFilePathToSave, List listToSave) {
+    public boolean saveListToFile(Path gsonFilePathToSave, List<? extends Item> listToSave) {
         File gsonFileToSave = gsonFilePathToSave.toFile();
         try (FileWriter fileWriter = new FileWriter(gsonFileToSave)) {
             gson.toJson(getContainerListForObjects(listToSave), fileWriter);

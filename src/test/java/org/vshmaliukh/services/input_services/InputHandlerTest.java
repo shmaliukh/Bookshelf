@@ -153,7 +153,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_INTEGER, userInputHandler.getUserLiteraturePages());
+        assertEquals(DEFAULT_INT, userInputHandler.getUserLiteraturePages());
     }
 
     @Test
@@ -193,6 +193,6 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
-        assertEquals(DEFAULT_INTEGER, userInputHandler.getTypeOfWorkWithFiles());
+        assertEquals(DEFAULT_INT, userInputHandler.getTypeOfWorkWithFiles());
     }
 }

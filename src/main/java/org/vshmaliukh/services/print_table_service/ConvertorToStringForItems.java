@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ConvertorToStringForItems {
+public final class ConvertorToStringForItems {
+
+    private ConvertorToStringForItems(){}
 
     public static <T extends Item> Map<String, String> getConvertedLiterature(T item) {
         return ItemHandlerProvider

@@ -14,21 +14,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
-import static org.vshmaliukh.shelf.shelf_handler.User.USER_ID_SQL_PARAMETER;
 
-public class ComicsHandler extends ItemHandler<Comics>{
+public class ComicsHandler extends ItemHandler<Comics> {
 
-    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName() + "s";
-
-    public List<String> parameterList() {
-        List<String> parameterList = new ArrayList<>(ItemHandler.parameterList);
-        parameterList.add(PUBLISHER);
-        return Collections.unmodifiableList(parameterList);
-    }
+    public static final String COMICS_TABLE_TITLE = Comics.class.getSimpleName();
 
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_NAME = Comparator.comparing(Comics::getName, String.CASE_INSENSITIVE_ORDER);
     public static final Comparator<Comics> COMICS_COMPARATOR_BY_PUBLISHER = Comparator.comparing(Comics::getPublisher, String.CASE_INSENSITIVE_ORDER);
@@ -36,7 +30,7 @@ public class ComicsHandler extends ItemHandler<Comics>{
 
     @Override
     public List<Comics> getSortedItems(int typeOfSorting, List<Comics> inputList) {
-        for (MenuItemForSorting menuItem : getSortingMenuList()) {
+        for (MenuItemForSorting<Comics> menuItem : getSortingMenuList()) {
             if (typeOfSorting == menuItem.getIndex()) {
                 return new ArrayList<>(ItemUtils.getSortedLiterature(inputList, menuItem.getComparator()));
             }
@@ -89,11 +83,11 @@ public class ComicsHandler extends ItemHandler<Comics>{
                 ItemUtils.generateHTMLFormItem(ItemTitles.PAGES, "number") +
                 ItemUtils.generateHTMLFormRadio(ItemTitles.BORROWED) +
                 ItemUtils.generateHTMLFormItem(PUBLISHER, "text") +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -103,11 +97,11 @@ public class ComicsHandler extends ItemHandler<Comics>{
                 ItemUtils.generateHTMLFormItem(ItemTitles.PAGES, "number", String.valueOf(random.nextInt(1000))) +
                 ItemUtils.generateHTMLFormRadio(ItemTitles.BORROWED) +
                 ItemUtils.generateHTMLFormItem(PUBLISHER, "text", getRandomString(random.nextInt(20), random)) +
-                "   <br>\n" +
-                "   <input type = \"submit\" value = \"Submit\" />\n" +
-                "   <br>\n" +
-                "   <br>\n" +
-                "</form>\n";
+                "   <br>\n " +
+                "   <input type = \"submit\" value = \"Submit\" />\n " +
+                "   <br>\n " +
+                "   <br>\n " +
+                "</form>\n ";
     }
 
     @Override
@@ -142,11 +136,11 @@ public class ComicsHandler extends ItemHandler<Comics>{
     }
 
     // -------------------------------------------------------------------
-    // SQLlite methods
+    // SQL methods
     // -------------------------------------------------------------------
 
     @Override
-    public Comics readItemFromSql(ResultSet rs) throws SQLException {
+    public Comics readItemFromSqlDB(ResultSet rs) throws SQLException {
         return new Comics(
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
@@ -160,7 +154,7 @@ public class ComicsHandler extends ItemHandler<Comics>{
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + COMICS_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -170,8 +164,8 @@ public class ComicsHandler extends ItemHandler<Comics>{
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT IGNORE INTO " + getSqlTableTitle() + " ( " +
-                USER_ID_SQL_PARAMETER + " , " +
+        return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -188,11 +182,11 @@ public class ComicsHandler extends ItemHandler<Comics>{
                 BORROWED_SQL_PARAMETER + " , " +
                 PUBLISHER_SQL_PARAMETER +
                 " FROM " + COMICS_TABLE_TITLE +
-                " WHERE " + USER_ID_SQL_PARAMETER + " = ? ";
+                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
-    public void insertItemValues(PreparedStatement pstmt, Comics item, Integer userID) throws SQLException {
+    public void insertItemValuesToSqlDB(PreparedStatement pstmt, Comics item, Integer userID) throws SQLException {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
@@ -201,44 +195,46 @@ public class ComicsHandler extends ItemHandler<Comics>{
         pstmt.executeUpdate();
     }
 
-    public String generateSqlLiteTableStr() {
-        return "CREATE TABLE IF NOT EXISTS " + COMICS_TABLE_TITLE + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INTEGER PRIMARY KEY AUTOINCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INTEGER NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                PUBLISHER_SQL_PARAMETER + " TEXT NOT NULL, \n" +
-                " UNIQUE (" +
-                NAME_SQL_PARAMETER + " , " +
-                PAGES_SQL_PARAMETER + " , " +
-                BORROWED_SQL_PARAMETER + " , " +
-                PUBLISHER_SQL_PARAMETER +
-                " ) ON CONFLICT IGNORE \n" +
+    public String createTableSqlLiteStr() {
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                PUBLISHER_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
+                UNIQUE + " ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                PUBLISHER_SQL_PARAMETER + " \n " +
+                " ) \n " +
+                ON_CONFLICT_IGNORE +
+                " ); ";
+    }
+
+    @Override
+    public String createTableMySqlStr() {
+        return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
+                ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                PUBLISHER_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
+                CONSTRAINT_UC + sqlItemTableTitle() +
+                UNIQUE + " ( \n " +
+                NAME_SQL_PARAMETER + " , \n " +
+                PAGES_SQL_PARAMETER + " , \n " +
+                BORROWED_SQL_PARAMETER + " , \n " +
+                PUBLISHER_SQL_PARAMETER + " \n " +
+                " ) \n " +
                 ");";
     }
 
     @Override
-    public String generateMySqlTableStr() {
-        return " CREATE TABLE IF NOT EXISTS " + getSqlTableTitle() + " (\n" +
-                ITEM_ID_SQL_PARAMETER + " INT AUTO_INCREMENT , \n" +
-                USER_ID_SQL_PARAMETER + " INT NOT NULL, \n" +
-                NAME_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
-                PAGES_SQL_PARAMETER + " INT NOT NULL, \n" +
-                BORROWED_SQL_PARAMETER + " VARCHAR(10) NOT NULL, \n" +
-                PUBLISHER_SQL_PARAMETER + " VARCHAR(200) NOT NULL, \n" +
-                " PRIMARY KEY ( " + ITEM_ID_SQL_PARAMETER + " ), \n" +
-                " CONSTRAINT UC_" + getSqlTableTitle() +
-                " UNIQUE ( \n" +
-                NAME_SQL_PARAMETER + " , \n" +
-                PAGES_SQL_PARAMETER + " , \n" +
-                BORROWED_SQL_PARAMETER + " , \n" +
-                PUBLISHER_SQL_PARAMETER + " )\n" +
-                ");";
-    }
-
-    @Override
-    public String getSqlTableTitle() {
+    public String sqlItemTableTitle() {
         return COMICS_TABLE_TITLE;
     }
 }

@@ -7,13 +7,22 @@ import java.util.List;
 
 public class Shelf {
 
-    public List<Item> itemsOfShelf = new ArrayList<>();
+    protected List<Item> itemsOfShelf;
 
     public Shelf() {
+        itemsOfShelf = new ArrayList<>();
     }
 
     public List<Item> getAllLiteratureObjects() {
         return new ArrayList<>(itemsOfShelf);
+    }
+
+    public List<Item> getItemsOfShelf() {
+        return itemsOfShelf;
+    }
+
+    public void setItemsOfShelf(List<Item> itemsOfShelf) {
+        this.itemsOfShelf = itemsOfShelf;
     }
 
     @Override

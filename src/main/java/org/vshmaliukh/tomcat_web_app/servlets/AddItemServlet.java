@@ -6,7 +6,8 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,18 +29,18 @@ public class AddItemServlet extends HttpServlet {
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(request);
-        if (handlerByName.isValidHTMLFormData(itemFieldValueMap)) {
-            SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
-            webShelfHandler.addLiteratureObject(item);
+            webShelfHandler.addItem(item);
 
-            WebUtils.redirectTo(ADD_MENU_TITLE, response,
-                    WebUtils.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
+            UrlUtil.redirectTo(ADD_MENU_TITLE, response,
+                    UrlUtil.generateBaseURLBuilder(ADD_MENU_TITLE, userAtr)
                             .addParameter(ITEM_GSON_STR, gson.toJson(item))
                             .addParameter(ITEM_CLASS_TYPE, itemClassType)
             );
         } else {
-            WebUtils.redirectTo(ADD_MENU_TITLE, response, userAtr);
+            UrlUtil.redirectTo(ADD_MENU_TITLE, response, userAtr);
         }
     }
 
@@ -55,18 +56,19 @@ public class AddItemServlet extends HttpServlet {
 
             webPageBuilder.addToBody("" +
                     "<form action = \"" +
-                    WebUtils.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+                    UrlUtil.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
                             .addParameter(ITEM_CLASS_TYPE, itemClassType) + "\" " +
                     "method = \"POST\">\n" +
                     "Create " + itemClassType + "\n" +
                     "       <br>\n");
+
             if (isRandom != null) {
                 webPageBuilder.addToBody(handlerByName.generateHTMLFormBodyToCreateItem(WebUtils.RANDOM));
             } else {
                 webPageBuilder.addToBody(handlerByName.generateHTMLFormBodyToCreateItem());
             }
         }
-        webPageBuilder.addButton(WebUtils.generateBaseURLString(ADD_MENU_TITLE, userAtr), ADD_MENU_TITLE);
+        webPageBuilder.addButton(UrlUtil.generateBaseURLString(ADD_MENU_TITLE, userAtr), ADD_MENU_TITLE);
 
         try {
             response.getWriter().println(webPageBuilder.buildPage());

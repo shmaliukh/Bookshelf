@@ -53,12 +53,12 @@ public class PlainTextTableHandler extends AbstractTableHandler {
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("|");
+        stringBuilder.append("│");
         for (String value : stringList) {
             stringBuilder.append(" ");
             stringBuilder.append(value);
             stringBuilder.append(" ");
-            stringBuilder.append("|");
+            stringBuilder.append("│");
         }
         return stringBuilder.toString();
     }

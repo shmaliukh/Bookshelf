@@ -3,19 +3,19 @@ package org.vshmaliukh.shelf.literature_items;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.shelf.literature_items.ItemTitles.PUBLISHER;
-
 public class ItemUtils {
+
+    public static final String FRIENDLY_TRUE_STR_VALUE = "yes";
+    public static final String FRIENDLY_NO_STR_VALUE = "no";
 
     private ItemUtils() {
     }
 
     public static String convertBorrowed(boolean booleanState) {
         if (booleanState) {
-            return "yes";
+            return FRIENDLY_TRUE_STR_VALUE;
         }
-        return "no";
+        return FRIENDLY_NO_STR_VALUE;
     }
 
     public static String getRandomString(int length, Random random) {
@@ -77,28 +77,13 @@ public class ItemUtils {
                 "       id=\"true\"\n" +
                 "       name=\"" + value + "\"" +
                 "       value=\"y\">\n" +
-                "<label for=\"true\"> yes <label/>\n" +
+                "<label for=\"true\"> " + FRIENDLY_TRUE_STR_VALUE + " <label/>\n" +
                 "       <br>\n" +
                 "<input type=\"radio\" " +
                 "       id=\"false\"\n" +
                 "       name=\"" + value + "\"" +
                 "       value=\"n\" checked>\n" +
-                "<label for=\"false\"> no <label/>\n" +
+                "<label for=\"false\"> " + FRIENDLY_NO_STR_VALUE + " <label/>\n" +
                 "       <br>\n";
     }
-
-    public static String generateHTMLFormItems(String... values) {
-        return generateHTMLFormItems(Arrays.asList(values));
-    } // TODO is need
-
-    public static String generateHTMLFormItems(Collection<String> values) {
-        StringBuilder sb = new StringBuilder();
-        for (String value : values) {
-            //sb.append(generateHTMLFormItem(value));
-        }
-        return sb.toString();
-
-    }
-
-
 }
