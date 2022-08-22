@@ -3,7 +3,7 @@ package org.vshmaliukh.shelf.literature_items;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ItemUtils {
+public final class ItemUtils {
 
     public static final String FRIENDLY_TRUE_STR_VALUE = "yes";
     public static final String FRIENDLY_NO_STR_VALUE = "no";

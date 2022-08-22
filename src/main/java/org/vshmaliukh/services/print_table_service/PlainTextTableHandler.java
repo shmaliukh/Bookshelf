@@ -1,6 +1,4 @@
-package org.vshmaliukh.console_terminal_app;
-
-import org.vshmaliukh.services.print_table_service.AbstractTableHandler;
+package org.vshmaliukh.services.print_table_service;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -24,11 +22,11 @@ public class PlainTextTableHandler extends AbstractTableHandler {
     public void print() {
         setUpValuesSettings();
 
-        printLine("┌", "─", "┐");
+        printLine("╔", "╦", "╗");
         printLine(titleList);
-        printLine("├", "┼", "┤");
+        printLine("╠", "╬", "╣");
         tableListOfLists.forEach(this::printLine);
-        printLine("└", "─", "┘");
+        printLine("╚", "╩", "╝");
     }
 
     protected void printLine(String startSymbol, String crossedSymbol, String endSymbol) {
@@ -36,7 +34,7 @@ public class PlainTextTableHandler extends AbstractTableHandler {
         stringBuilder.append(startSymbol);
         for (int i = 0; i < sizeList.size(); i++) {
             for (int j = 0; j < sizeList.get(i) + 2; j++) {
-                stringBuilder.append("│");
+                stringBuilder.append("═");
             }
             if (i < sizeList.size() - 1) {
                 stringBuilder.append(crossedSymbol);
@@ -53,12 +51,12 @@ public class PlainTextTableHandler extends AbstractTableHandler {
 
     public String getLineString(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("│");
+        stringBuilder.append("║");
         for (String value : stringList) {
             stringBuilder.append(" ");
             stringBuilder.append(value);
             stringBuilder.append(" ");
-            stringBuilder.append("│");
+            stringBuilder.append("║");
         }
         return stringBuilder.toString();
     }

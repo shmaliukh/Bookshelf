@@ -2,6 +2,7 @@ package org.vshmaliukh.console_terminal_app;
 
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForUser;
+import org.vshmaliukh.services.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.shelf.AbstractUI;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
