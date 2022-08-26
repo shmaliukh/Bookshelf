@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ShmaliukhVlad</groupId>
-    <artifactId>Bookshelf_project</artifactId>
+    <artifactId>bookshelf_project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
