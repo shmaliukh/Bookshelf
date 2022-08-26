@@ -86,7 +86,7 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     @Override
     public void insertUser(String userName) {
-        if (userExist(userName)) {
+        if (!userExist(userName)) {
             String sql = " INSERT INTO " + USER_TABLE_TITLE + " ( "+ USER_NAME_SQL_PARAMETER +" ) " + " VALUES ( ? ) ";
             try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
                 preparedStatement.setString(1, userName);
@@ -108,13 +108,13 @@ public class MySqlHandler extends AbstractSqlItemHandler {
             if (rs.next()) {
                 int anInt = rs.getInt(1);
                 if(anInt == 0){
-                    return true;
+                    return false;
                 }
             }
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
-        return false;
+        return true;
 
     }
 
