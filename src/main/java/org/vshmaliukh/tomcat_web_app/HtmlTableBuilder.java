@@ -6,8 +6,8 @@ import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 import java.util.List;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.DELETE_ITEM_TITLE;
+import static org.vshmaliukh.ShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
+import static org.vshmaliukh.ShelfWebApp.DELETE_ITEM_TITLE;
 
 public class HtmlTableBuilder extends AbstractTableHandler {
 

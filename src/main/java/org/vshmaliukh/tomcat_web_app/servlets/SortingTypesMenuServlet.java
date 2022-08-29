@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.INFORM_MESSAGE;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.MENU_ITEM_INDEX;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;

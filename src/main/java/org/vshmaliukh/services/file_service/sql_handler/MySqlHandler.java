@@ -19,6 +19,10 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     protected Connection connectionToMySqlDB = null;
 
+    public MySqlHandler(String homeDir, String userName) {
+        super(homeDir, userName);
+    }
+
     public Connection getConnectionToDB() {
         if (connectionToMySqlDB == null) {
             try {
@@ -33,10 +37,6 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     public void logSqlHandler(Exception e) {
         log.error("[MySql_handler] got err. Exception: ", e);
-    }
-
-    public MySqlHandler(String homeDir, String userName) {
-        super(homeDir, userName);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class MySqlHandler extends AbstractSqlItemHandler {
     @Override
     public void insertUser(String userName) {
         if (!userExist(userName)) {
-            String sql = " INSERT INTO " + USER_TABLE_TITLE + " ( "+ USER_NAME_SQL_PARAMETER +" ) " + " VALUES ( ? ) ";
+            String sql = " INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) " + " VALUES ( ? ) ";
             try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
                 preparedStatement.setString(1, userName);
                 preparedStatement.executeUpdate();
@@ -107,7 +107,7 @@ public class MySqlHandler extends AbstractSqlItemHandler {
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 int anInt = rs.getInt(1);
-                if(anInt == 0){
+                if (anInt == 0) {
                     return false;
                 }
             }

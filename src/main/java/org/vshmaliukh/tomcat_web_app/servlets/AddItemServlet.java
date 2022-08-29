@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.*;
 
 public class AddItemServlet extends HttpServlet {

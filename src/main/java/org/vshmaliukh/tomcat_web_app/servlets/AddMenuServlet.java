@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
 import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.MENU_ITEM_INDEX;
 
 public class AddMenuServlet extends HttpServlet {

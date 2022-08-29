@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.USER_PARAMETER_LIST;
+import static org.vshmaliukh.ShelfWebApp.USER_PARAMETER_LIST;
 
 import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;
 import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
@@ -49,12 +49,13 @@ public final class WebUtils {
     }
 
     public static String generateMenuItemRadio(MenuItem menuItem) {
+        int menuItemIndex = menuItem.getIndex();
         return "" +
-                "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
+                "<input type=\"radio\" id=\"" + menuItemIndex + "\" " +
                 "     name=\"" + MENU_ITEM_INDEX + "\" " +
-                "     value=\"" + menuItem.getIndex() + "\">\n" +
-                "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
-                "<br>\n";
+                "     value=\"" + menuItemIndex + "\" > " +
+                "    <label for=\"" + menuItemIndex + "\">" + menuItem.getStr() + "</label>" +
+                "<br>";
     }
 
     public static String generateTableOfShelfItems(List<? extends Item> shelfLiteratureObjects, List<String> titleList, boolean isNeedIndex) {

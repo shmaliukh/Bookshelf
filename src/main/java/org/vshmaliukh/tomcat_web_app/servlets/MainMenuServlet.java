@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.ShelfWebApp.*;
 
 public class MainMenuServlet extends HttpServlet {
 

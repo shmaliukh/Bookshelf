@@ -1,4 +1,4 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh;
 
 import java.io.File;
 import java.util.Arrays;
