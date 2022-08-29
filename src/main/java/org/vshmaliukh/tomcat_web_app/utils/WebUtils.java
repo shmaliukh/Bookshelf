@@ -49,13 +49,12 @@ public final class WebUtils {
     }
 
     public static String generateMenuItemRadio(MenuItem menuItem) {
-        int menuItemIndex = menuItem.getIndex();
         return "" +
-                "<input type=\"radio\" id=\"" + menuItemIndex + "\" " +
+                "<input type=\"radio\" id=\"" + menuItem.getIndex() + "\"\n" +
                 "     name=\"" + MENU_ITEM_INDEX + "\" " +
-                "     value=\"" + menuItemIndex + "\" > " +
-                "    <label for=\"" + menuItemIndex + "\">" + menuItem.getStr() + "</label>" +
-                "<br>";
+                "     value=\"" + menuItem.getIndex() + "\">\n" +
+                "    <label for=\"" + menuItem.getIndex() + "\">" + menuItem.getStr() + "</label>\n" +
+                "<br>\n";
     }
 
     public static String generateTableOfShelfItems(List<? extends Item> shelfLiteratureObjects, List<String> titleList, boolean isNeedIndex) {

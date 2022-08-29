@@ -63,7 +63,7 @@ public class LogInServlet extends HttpServlet {
                 "<input type = \"text\" name=\"" + USER_NAME + "\" value=\"" + userNameStr + "\">\n " +
                 "       <br>\n " +
                 "       <br>\n " +
-                MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES + "\n " +
+                MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES.replaceAll(System.lineSeparator(), System.lineSeparator()+"<br>") + "\n " +
                 "       <br>\n " +
                 "   <input type = \"number\" name=\"" + TYPE_OF_WORK_WITH_FILES + "\"value=\"" + typeOfWorkWithFilesStr + "\">\n " +
                 "       <br>\n " +

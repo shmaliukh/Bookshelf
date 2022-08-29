@@ -13,7 +13,7 @@ public class WebPageBuilder {
     }
 
     public void addToBody(String bodyItem) {
-        bodyStringBuilder.append(bodyItem.replaceAll(System.lineSeparator(), " <br> "));
+        bodyStringBuilder.append(bodyItem);
     }
 
     public void addButton(String reference, String label) {
@@ -37,6 +37,7 @@ public class WebPageBuilder {
 
     public StringBuilder initHeader(String title) {
         return new StringBuilder()
+                .append("<html>")
                 .append("<head>")
                 .append("<meta charset=\" UTF - 8\">")
                 .append("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />")
