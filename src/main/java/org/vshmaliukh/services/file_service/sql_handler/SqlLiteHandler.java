@@ -32,6 +32,11 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
     }
 
     public Connection getConnectionToDB() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         if (connectionToSqlLiteDB == null) {
             try {
                 connectionToSqlLiteDB = DriverManager.getConnection(SQLLITE_FILE_URL);

@@ -24,6 +24,11 @@ public class MySqlHandler extends AbstractSqlItemHandler {
     }
 
     public Connection getConnectionToDB() {
+        //try {
+            //Class.forName("com.mysql.cj.jdbc.Driver");
+        //} catch (ClassNotFoundException e) {
+        //    logSqlHandler(e);
+        //}
         if (connectionToMySqlDB == null) {
             try {
                 connectionToMySqlDB = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD);

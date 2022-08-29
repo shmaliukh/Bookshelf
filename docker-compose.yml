@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+
+  app:
+    container_name: app
+    build: .
+    ports:
+      - "8081:8080"
+    links:
+      - "mysql:database"
+    #environment:
+    #    TYPE_OF_WORK: web_app
+    depends_on:
+      - mysql_docker
+
+  mysql_docker:
+    container_name: mysql_env
+    build: mysql_env_docker/
+    #image: mysql_docker
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    ports:
+      - "3307:3306"
+
+
