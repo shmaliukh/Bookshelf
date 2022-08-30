@@ -10,12 +10,16 @@ services:
       - "db:my_test"
     environment:
       MYSQL_PORT: "db:3306"
+    volumes:
+      - /opt/data:/root/shelf
     depends_on:
       - db
 
   db:
     container_name: db
     build: mysql_env_docker/
+    volumes:
+      - /var/lib/mysql
     ports:
       - "3307:3306"
 
