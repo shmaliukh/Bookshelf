@@ -13,37 +13,37 @@ import java.util.List;
 @Slf4j
 public class MySqlHandler extends AbstractSqlItemHandler {
 
-    private static final String MYSQL_USER_NAME;
-    private static final String MYSQL_PASSWORD;
-    private static final String MYSQL_DB_URL;
-
     public static final String MYSQL_USER_NAME_ENV = "MYSQL_USER_NAME";
     public static final String MYSQL_PASSWORD_ENV = "MYSQL_PASSWORD";
     public static final String MYSQL_PORT_ENV = "MYSQL_PORT";
     public static final String MYSQL_DB_NAME_ENV = "MYSQL_DB_NAME";
 
+    private static final String MYSQL_USER_NAME;
+    private static final String MYSQL_PASSWORD;
+    private static final String MYSQL_DB_URL;
+
     static {
         String mysqlUserName = System.getenv(MYSQL_USER_NAME_ENV);
-        if (mysqlUserName == null) {
+        if (mysqlUserName == null || mysqlUserName.length() == 0) {
             mysqlUserName = "test";
         }
         MYSQL_USER_NAME = mysqlUserName;
 
         String mysqlPassword = System.getenv(MYSQL_PASSWORD_ENV);
-        if (mysqlPassword == null) {
+        if (mysqlPassword == null || mysqlPassword.length() == 0) {
             mysqlPassword = "test";
         }
         MYSQL_PASSWORD = mysqlPassword;
 
         String mysqlPort = System.getenv(MYSQL_PORT_ENV);
-        if (mysqlPort == null) {
-            mysqlPort = "127.0.0.1:3307";
+        if (mysqlPort == null || mysqlPort.length() == 0) {
+            mysqlPort = "localhost:3307";
         }
         String mysqlDbName = System.getenv(MYSQL_DB_NAME_ENV);
-        if (mysqlDbName == null) {
+        if (mysqlDbName == null || mysqlDbName.length() == 0) {
             mysqlDbName = "my_test";
         }
-        MYSQL_DB_URL = "jdbc:mysql://"+mysqlPort+"/"+mysqlDbName;
+        MYSQL_DB_URL = "jdbc:mysql://" + mysqlPort + "/" + mysqlDbName;
     }
 
 

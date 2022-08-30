@@ -7,23 +7,18 @@ services:
     ports:
       - "8081:8080"
     links:
-      - "mysql:database"
-    #environment:
-    #    TYPE_OF_WORK: web_app
+      - "db:my_test"
+    environment:
+      MYSQL_PORT: "db:3306"
     depends_on:
-      - mysql_docker
+      - db
 
-  mysql_docker:
-    container_name: mysql_env
+  db:
+    container_name: db
     build: mysql_env_docker/
-    #image: mysql_docker
-    depends_on:
-      - mysql
-
-  mysql:
-    container_name: mysql
-    image: mysql
     ports:
       - "3307:3306"
+
+
 
 
