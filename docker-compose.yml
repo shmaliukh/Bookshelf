@@ -9,6 +9,7 @@ services:
     links:
       - "db:my_test"
     environment:
+      APP_TYPE_OF_WORK: "server-client"
       MYSQL_PORT: "db:3306"
     volumes:
       - /opt/data:/root/shelf
