@@ -13,9 +13,39 @@ import java.util.List;
 @Slf4j
 public class MySqlHandler extends AbstractSqlItemHandler {
 
-    private static final String MYSQL_USER_NAME = "test";
-    private static final String MYSQL_PASSWORD = "test";
-    private static final String MYSQL_DB_URL = "jdbc:mysql://127.0.0.1:3307/my_test";
+    private static final String MYSQL_USER_NAME;
+    private static final String MYSQL_PASSWORD;
+    private static final String MYSQL_DB_URL;
+
+    public static final String MYSQL_USER_NAME_ENV = "MYSQL_USER_NAME";
+    public static final String MYSQL_PASSWORD_ENV = "MYSQL_PASSWORD";
+    public static final String MYSQL_PORT_ENV = "MYSQL_PORT";
+    public static final String MYSQL_DB_NAME_ENV = "MYSQL_DB_NAME";
+
+    static {
+        String mysqlUserName = System.getenv(MYSQL_USER_NAME_ENV);
+        if (mysqlUserName == null) {
+            mysqlUserName = "test";
+        }
+        MYSQL_USER_NAME = mysqlUserName;
+
+        String mysqlPassword = System.getenv(MYSQL_PASSWORD_ENV);
+        if (mysqlPassword == null) {
+            mysqlPassword = "test";
+        }
+        MYSQL_PASSWORD = mysqlPassword;
+
+        String mysqlPort = System.getenv(MYSQL_PORT_ENV);
+        if (mysqlPort == null) {
+            mysqlPort = "127.0.0.1:3307";
+        }
+        String mysqlDbName = System.getenv(MYSQL_DB_NAME_ENV);
+        if (mysqlDbName == null) {
+            mysqlDbName = "my_test";
+        }
+        MYSQL_DB_URL = "jdbc:mysql://"+mysqlPort+"/"+mysqlDbName;
+    }
+
 
     protected Connection connectionToMySqlDB = null;
 
@@ -24,11 +54,6 @@ public class MySqlHandler extends AbstractSqlItemHandler {
     }
 
     public Connection getConnectionToDB() {
-        //try {
-            //Class.forName("com.mysql.cj.jdbc.Driver");
-        //} catch (ClassNotFoundException e) {
-        //    logSqlHandler(e);
-        //}
         if (connectionToMySqlDB == null) {
             try {
                 connectionToMySqlDB = DriverManager.getConnection(MYSQL_DB_URL, MYSQL_USER_NAME, MYSQL_PASSWORD);
