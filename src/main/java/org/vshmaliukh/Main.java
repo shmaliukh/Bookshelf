@@ -14,7 +14,7 @@ public class Main {
     public static final String APP_TYPE_OF_WORK_ENV = "APP_TYPE_OF_WORK";
 
     public static final String CONSOLE_TYPE = "console";
-    public static final String SERVER_CLIENT_TYPE = "server-client";
+    public static final String CLIENT_SERVER_TYPE = "client-server";
     public static final String WEB_TYPE = "web";
 
     public static void main(String[] args) throws LifecycleException, IOException {
@@ -27,7 +27,7 @@ public class Main {
             case CONSOLE_TYPE:
                 ShelfClientServerApp.main(null);
                 break;
-            case SERVER_CLIENT_TYPE:
+            case CLIENT_SERVER_TYPE:
                 MultithreadedSocketServer.main(null);
                 break;
             case WEB_TYPE:

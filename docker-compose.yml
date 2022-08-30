@@ -1,29 +1,48 @@
 version: "3.5"
-services:
 
+x-global-variables: &global-variables
+  APP_TYPE_OF_WORK: "web"
+  MYSQL_PORT: "db:3306"
+  MYSQL_USER: "test"
+  MYSQL_PASSWORD: "test"
+  MYSQL_ROOT_PASSWORD: "root"
+  MYSQL_DATABASE: "my_test"
+
+services:
   app:
     container_name: app
     build: .
     ports:
       - "8081:8080"
     links:
-      - "db:my_test"
+      - "db"
     environment:
-      APP_TYPE_OF_WORK: "server-client"
-      MYSQL_PORT: "db:3306"
+      *global-variables
     volumes:
       - /opt/data:/root/shelf
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "2000M"
     depends_on:
       - db
 
   db:
     container_name: db
-    build: mysql_env_docker/
+    build: mysql_docker/
+    environment:
+      *global-variables
     volumes:
       - /var/lib/mysql
     ports:
       - "3307:3306"
-
-
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "2000M"
 
 
