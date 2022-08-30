@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.Map;
 
-import static org.vshmaliukh.ShelfWebApp.*;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.generateShelfHandler;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.readUserAtr;
 import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;

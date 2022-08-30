@@ -1,4 +1,4 @@
-package org.vshmaliukh;
+package org.vshmaliukh.tomcat_web_app;
 
 import java.io.File;
 import java.util.Arrays;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
-import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 import org.vshmaliukh.tomcat_web_app.servlets.*;
 
@@ -36,9 +35,7 @@ public class ShelfWebApp {
 
         Tomcat tomcat = new Tomcat();
         tomcat.setBaseDir("web_content");
-//        tomcat.setHost();
         tomcat.setPort(8080);
-//        tomcat.getServer().setAddress("127.1.1.1");
 
         String contextPath = "";
         String docBase = new File(".").getAbsolutePath();

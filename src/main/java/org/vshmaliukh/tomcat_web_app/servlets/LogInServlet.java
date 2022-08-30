@@ -14,7 +14,7 @@ import java.util.Map;
 import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
 import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
-import static org.vshmaliukh.ShelfWebApp.*;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.INFORM_MESSAGE;
 
 public class LogInServlet extends HttpServlet {

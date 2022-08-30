@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
-import static org.vshmaliukh.ShelfWebApp.USER_PARAMETER_LIST;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.USER_PARAMETER_LIST;
 
 import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;
 import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;

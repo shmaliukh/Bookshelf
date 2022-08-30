@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.LifecycleException;
 import org.vshmaliukh.client_server_app.ShelfClientServerApp;
 import org.vshmaliukh.client_server_app.server.MultithreadedSocketServer;
+import org.vshmaliukh.tomcat_web_app.ShelfWebApp;
 
 import java.io.IOException;
 
