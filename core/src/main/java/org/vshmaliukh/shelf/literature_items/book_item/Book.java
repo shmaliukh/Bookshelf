@@ -1,13 +1,12 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
 import lombok.Data;
+import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.shelf_handler.ShelfHandlerInterface;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
 
 /**
  * @author ShmaliukhVlad
@@ -46,7 +45,7 @@ public class Book extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
-                ", issuanceDate=" + new SimpleDateFormat(ShelfHandlerInterface.DATE_FORMAT_STR).format(issuanceDate) +
+                ", issuanceDate=" + new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).format(issuanceDate) +
                 ", isBorrowed=" + isBorrowed +
                 " }";
     }

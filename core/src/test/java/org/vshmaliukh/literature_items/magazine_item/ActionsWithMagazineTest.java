@@ -3,13 +3,14 @@ package org.vshmaliukh.literature_items.magazine_item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
+import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 

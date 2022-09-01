@@ -1,10 +1,15 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
+import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.WebInputHandler;
+import org.vshmaliukh.services.input_services.AbstractInputHandler;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
-import org.vshmaliukh.shelf.literature_items.*;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.tomcat_web_app.WebInputHandler;
+import org.vshmaliukh.shelf.literature_items.ItemHandler;
+import org.vshmaliukh.shelf.literature_items.ItemTitles;
+import org.vshmaliukh.shelf.literature_items.ItemUtils;
 
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -14,11 +19,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.services.input_services.AbstractInputHandler.*;
-import static org.vshmaliukh.shelf.literature_items.ItemUtils.*;
-import static org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.shelf.literature_items.ItemUtils.getRandomString;
 
 public class BookHandler extends ItemHandler<Book> {
 
@@ -77,7 +79,7 @@ public class BookHandler extends ItemHandler<Book> {
         map.put(PAGES, String.valueOf(book.getPagesNumber()));
         map.put(BORROWED, ItemUtils.convertBorrowed(book.isBorrowed()));
         map.put(ItemTitles.AUTHOR, book.getAuthor());
-        map.put(ItemTitles.DATE, new SimpleDateFormat(DATE_FORMAT_STR).format(book.getIssuanceDate()));
+        map.put(ItemTitles.DATE, new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).format(book.getIssuanceDate()));
         return new HashMap<>(map);
     }
 
@@ -98,7 +100,7 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String generateHTMLFormBodyToCreateItem(Random random) {
-        String defaultDate = new SimpleDateFormat(DATE_FORMAT_STR).format(new Date());
+        String defaultDate = new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).format(new Date());
         return "" +
                 ItemUtils.generateHTMLFormItem(NAME, "text", getRandomString(random.nextInt(20), random)) +
                 ItemUtils.generateHTMLFormItem(PAGES, "number", String.valueOf(random.nextInt(1000))) +
@@ -127,7 +129,7 @@ public class BookHandler extends ItemHandler<Book> {
         return AbstractInputHandler.isValidInputString(name, ConstantsForItemInputValidation.PATTERN_FOR_NAME) &&
                 AbstractInputHandler.isValidInputInteger(pages, ConstantsForItemInputValidation.PATTERN_FOR_PAGES) &&
                 AbstractInputHandler.isValidInputString(borrowed, ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED) &&
-                AbstractInputHandler.isValidInputDate(date, new SimpleDateFormat(DATE_FORMAT_STR)) &&
+                AbstractInputHandler.isValidInputDate(date, new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR)) &&
                 AbstractInputHandler.isValidInputString(author, ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
     }
 
@@ -139,7 +141,7 @@ public class BookHandler extends ItemHandler<Book> {
         Integer pages = webInputHandler.getUserInteger(mapFieldValue.get(PAGES), ConstantsForItemInputValidation.PATTERN_FOR_PAGES);
         Boolean isBorrowed = webInputHandler.getUserBoolean(mapFieldValue.get(BORROWED), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED);
         String author = webInputHandler.getUserString(mapFieldValue.get(AUTHOR), ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
-        Date date = webInputHandler.getUserDate(mapFieldValue.get(DATE), new SimpleDateFormat(DATE_FORMAT_STR));
+        Date date = webInputHandler.getUserDate(mapFieldValue.get(DATE), new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR));
 
         if (name != null && pages != null && isBorrowed != null && author != null && date != null) {
             return new Book(name, pages, isBorrowed, author, date);
@@ -200,7 +202,7 @@ public class BookHandler extends ItemHandler<Book> {
         preparedStatement.setInt(3, item.getPagesNumber());
         preparedStatement.setString(4, String.valueOf(item.isBorrowed()));
         preparedStatement.setString(5, item.getAuthor());
-        preparedStatement.setString(6, new SimpleDateFormat(DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        preparedStatement.setString(6, new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).format(item.getIssuanceDate()));
         preparedStatement.executeUpdate();
     }
 
@@ -208,7 +210,7 @@ public class BookHandler extends ItemHandler<Book> {
     public Book readItemFromSqlDB(ResultSet rs) throws SQLException {
         Date issuanceDate;
         try {
-            issuanceDate = new SimpleDateFormat(DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
+            issuanceDate = new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
         } catch (ParseException e) {
             issuanceDate = new Date(); // TODO
         }

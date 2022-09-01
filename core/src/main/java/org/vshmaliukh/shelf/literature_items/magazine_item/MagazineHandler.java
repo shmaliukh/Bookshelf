@@ -1,12 +1,14 @@
 package org.vshmaliukh.shelf.literature_items.magazine_item;
 
+import org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.WebInputHandler;
+import org.vshmaliukh.services.input_services.AbstractInputHandler;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
+import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
-import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.tomcat_web_app.WebInputHandler;
 
 import java.io.PrintWriter;
 import java.sql.PreparedStatement;
@@ -14,10 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import static org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputInteger;
-import static org.vshmaliukh.services.input_services.AbstractInputHandler.isValidInputString;
 
 public class MagazineHandler extends ItemHandler<Magazine> {
 

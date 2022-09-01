@@ -7,10 +7,6 @@ import java.util.List;
 
 public interface ShelfHandlerInterface {
 
-    // todo create file with config (?)
-    String DATE_FORMAT_STR = "yyyy-MM-dd";
-    String HOME_PROPERTY = System.getProperty("user.home");
-
     List<Item> readLiteratureInShelf();
 
     List<Item> readLiteratureOutShelf();

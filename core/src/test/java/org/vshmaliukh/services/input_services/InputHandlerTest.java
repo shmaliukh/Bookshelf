@@ -1,11 +1,13 @@
 package org.vshmaliukh.services.input_services;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForUser;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
+import org.vshmaliukh.services.input_handler.ConstantsForConsoleUserInputHandler;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -15,9 +17,8 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
-import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
 
 class InputHandlerTest {
 
@@ -30,7 +31,7 @@ class InputHandlerTest {
 
     {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < MAX_RECURSION_LEVEL; i++) {
+        for (int i = 0; i < ConstantsForConsoleUserInputHandler.MAX_RECURSION_LEVEL; i++) {
             stringBuilder.append(System.lineSeparator());
         }
         entersForRecursion = stringBuilder.toString();
@@ -56,7 +57,7 @@ class InputHandlerTest {
             "  2022-01/01   |  false" + "\n" +
             "  2022-01_01   |  false")
     void testDateValidation(String input, boolean expectedBoolean) {
-        assertEquals(expectedBoolean, userInputHandler.isValidInputDate(input.trim(), new SimpleDateFormat(DATE_FORMAT_STR)));
+        Assertions.assertEquals(expectedBoolean, userInputHandler.isValidInputDate(input.trim(), new SimpleDateFormat(DATE_FORMAT_STR)));
     }
 
     @DisplayName("test user input for name of Literature object")
@@ -64,7 +65,7 @@ class InputHandlerTest {
     @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     void testNameInput(String input, String expected) {
         userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
-        assertEquals(expected, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(expected, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("test for user input for date of issue")
@@ -96,56 +97,56 @@ class InputHandlerTest {
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     void testAuthorInput(String input) {
         userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
-        assertEquals(input, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(input, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("validate data from user input (name) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputNameForValidation.csv", numLinesToSkip = 1)
     void testIsNameValidate_true(String input) {
-        assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_NAME));
+        Assertions.assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_NAME));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputIsBorrowedValid.csv", numLinesToSkip = 1)
     void testIsBorrowedValidation_true(String input) {
-        assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
+        Assertions.assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object after user Enter")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"\nn", "\nN", "\nY", "\ny", "\n n", "\n\tn", "\n\nn",})
     void testIsBorrowedValidation_trueAfterSomeEnter(String input) {
-        assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
+        Assertions.assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
     }
 
     @DisplayName("validate data from user input (is borrowed) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"", "  ", "c", "1", "0", "\n", "nn", "NN", "n n", "_n", "Nn"})
     void testIsBorrowedValidation_false(String input) {
-        assertFalse(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
+        Assertions.assertFalse(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED));
     }
 
     @DisplayName("validate data from user input (pages number) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"1", " 1", "1 ", " 1 ", "\n1", "2147483647", "1000"})
     void testPagesValidation_true(String input) {
-        assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_PAGES));
+        Assertions.assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_PAGES));
     }
 
     @DisplayName("validate data from user input (pages number) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @ValueSource(strings = {"", "  ", "0", "c", "_1", "o", "\n", "*1", "+1", "-1", "1 000", "0", "1.2", "six", "13/1", "2,147,483,647", "-1321"})
     void testPagesValidation_false(String input) {
-        assertFalse(userInputHandler.isValidInputInteger(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_PAGES));
+        Assertions.assertFalse(userInputHandler.isValidInputInteger(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_PAGES));
     }
 
     @DisplayName("validate data from user input (author) of Literature object")
     @ParameterizedTest(name = "{index} ==> input string ''{0}''")
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     void testAuthorValidation_true(String input) {
-        assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR));
+        Assertions.assertTrue(userInputHandler.isValidInputString(input.trim(), ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR));
     }
 
     @Test
@@ -153,7 +154,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_INT, userInputHandler.getUserLiteraturePages());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_INT, userInputHandler.getUserLiteraturePages());
     }
 
     @Test
@@ -161,7 +162,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_BOOLEAN, userInputHandler.getUserLiteratureIsBorrowed());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_BOOLEAN, userInputHandler.getUserLiteratureIsBorrowed());
     }
 
     @Test
@@ -169,7 +170,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
     }
 
     @Test
@@ -177,7 +178,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_STRING, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, userInputHandler.getUserLiteratureName());
     }
 
     @Test
@@ -185,7 +186,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
-        assertEquals(DEFAULT_STRING, userInputHandler.getUserName());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, userInputHandler.getUserName());
     }
 
     @Test
@@ -193,6 +194,6 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
-        assertEquals(DEFAULT_INT, userInputHandler.getTypeOfWorkWithFiles());
+        Assertions.assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_INT, userInputHandler.getTypeOfWorkWithFiles());
     }
 }

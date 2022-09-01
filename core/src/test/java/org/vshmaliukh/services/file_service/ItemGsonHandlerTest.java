@@ -2,12 +2,12 @@ package org.vshmaliukh.services.file_service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
-import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ItemGsonHandlerTest {
 

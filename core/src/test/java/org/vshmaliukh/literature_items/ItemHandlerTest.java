@@ -3,16 +3,20 @@ package org.vshmaliukh.literature_items;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.ConstantsForConsoleUserInputHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.literature_items.ItemHandler;
+import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
+import org.vshmaliukh.shelf.literature_items.ItemUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleUI.*;
-import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
+import static org.vshmaliukh.shelf.AbstractUI.*;
 
 @Slf4j
 class ItemHandlerTest {
@@ -85,9 +89,9 @@ class ItemHandlerTest {
 
             output = baos.toString().trim();
             assertFalse(output.isEmpty());
-            assertTrue(output.startsWith(ConsoleUI.CHOOSE_TYPE_OF_SORTING));
+            assertTrue(output.startsWith(CHOOSE_TYPE_OF_SORTING));
             assertTrue(output.contains(" - "));
-            assertTrue(output.endsWith(ConsoleUI.ENTER_ANOTHER_VALUE_TO_RETURN));
+            assertTrue(output.endsWith(ENTER_ANOTHER_VALUE_TO_RETURN));
         }
     }
 
@@ -99,7 +103,7 @@ class ItemHandlerTest {
             System.out.println(baos);
 
             String output = baos.toString().trim();
-            Assertions.assertEquals(ConsoleUI.NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING, output);
+            Assertions.assertEquals(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING, output);
             baos.reset();
         }
     }
@@ -124,9 +128,9 @@ class ItemHandlerTest {
                 output = baos.toString().trim();
 
                 assertFalse(output.isEmpty());
-                assertTrue(output.startsWith(ConsoleUI.CHOOSE_TYPE_OF_SORTING));
+                assertTrue(output.startsWith(CHOOSE_TYPE_OF_SORTING));
                 assertTrue(output.contains(" - "));
-                assertTrue(output.endsWith(ConsoleUI.ENTER_ANOTHER_VALUE_TO_RETURN));
+                assertTrue(output.endsWith(ENTER_ANOTHER_VALUE_TO_RETURN));
             }
 
         }

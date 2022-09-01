@@ -5,7 +5,7 @@ import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
-import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.*;
+import static org.vshmaliukh.services.SaveReadShelfHandler.*;
 
 public class WebUI extends AbstractUI {
 

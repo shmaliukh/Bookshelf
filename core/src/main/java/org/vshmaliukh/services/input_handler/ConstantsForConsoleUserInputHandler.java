@@ -1,8 +1,10 @@
-package org.vshmaliukh.console_terminal_app.input_handler;
+package org.vshmaliukh.services.input_handler;
+
+import org.vshmaliukh.ConfigFile;
 
 import java.util.Date;
 
-import static org.vshmaliukh.console_terminal_app.SaveReadShelfHandler.*;
+import static org.vshmaliukh.services.SaveReadShelfHandler.*;
 
 public final class ConstantsForConsoleUserInputHandler {
 
@@ -31,7 +33,7 @@ public final class ConstantsForConsoleUserInputHandler {
     public static final String MESSAGE_WRONG_INPUT_TRY_AGAIN = "Wrong input. Try again.";
     public static final String MESSAGE_DEFAULT_VALUE_SET = "Default set value: ";
 
-    public static final String DATE_FORMAT_FOR_INPUT_HANDLER = DATE_FORMAT_STR;
+    public static final String DATE_FORMAT_FOR_INPUT_HANDLER = ConfigFile.DATE_FORMAT_STR;
 
     public static final int DEFAULT_INT = 1;
     public static final Date DEFAULT_DATE = new Date();

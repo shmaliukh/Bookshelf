@@ -1,8 +1,8 @@
 package org.vshmaliukh.shelf.literature_items;
 
-import org.vshmaliukh.console_terminal_app.ConsoleUI;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
+import org.vshmaliukh.shelf.AbstractUI;
 
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,16 +19,16 @@ public abstract class ItemHandler<T extends Item> implements SqlItemBaseStatemen
     public abstract List<MenuItemForSorting<T>> getSortingMenuList();
 
     public void printSortingMenu(PrintWriter printWriter) {
-        printWriter.println(ConsoleUI.CHOOSE_TYPE_OF_SORTING);
+        printWriter.println(AbstractUI.CHOOSE_TYPE_OF_SORTING);
         for (MenuItemForSorting<T> menuItemForSorting : getSortingMenuList()) {
             printWriter.println(menuItemForSorting);
         }
-        printWriter.println(ConsoleUI.ENTER_ANOTHER_VALUE_TO_RETURN);
+        printWriter.println(AbstractUI.ENTER_ANOTHER_VALUE_TO_RETURN);
     }
 
     public List<T> clarificationForSortingItems(List<T> items, int userChoice, PrintWriter printWriter) {
         if (items.isEmpty()) {
-            printWriter.println(ConsoleUI.NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING);
+            printWriter.println(AbstractUI.NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING);
         } else {
             printSortingMenu(printWriter);
             return getSortedItems(userChoice, items);

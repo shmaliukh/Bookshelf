@@ -1,6 +1,6 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 

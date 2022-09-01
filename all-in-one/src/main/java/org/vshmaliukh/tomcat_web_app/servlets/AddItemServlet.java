@@ -1,7 +1,7 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
 import com.google.gson.Gson;
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;

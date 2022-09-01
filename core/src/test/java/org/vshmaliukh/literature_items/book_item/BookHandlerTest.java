@@ -5,8 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
+import org.vshmaliukh.services.input_handler.ConstantsForConsoleUserInputHandler;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
+import org.vshmaliukh.shelf.literature_items.book_item.BookHandler;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -15,10 +18,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
-import static org.vshmaliukh.shelf.literature_items.ItemTitles.DATE;
-import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 class BookHandlerTest {
 

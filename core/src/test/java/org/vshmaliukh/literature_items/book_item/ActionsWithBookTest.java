@@ -3,15 +3,15 @@ package org.vshmaliukh.literature_items.book_item;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
-import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.BOOK_COMPARATOR_BY_DATE;
 
 class ActionsWithBookTest {
 

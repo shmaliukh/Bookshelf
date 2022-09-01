@@ -2,15 +2,15 @@ package org.vshmaliukh.services;
 
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
-import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.literature_items.book_item.BookHandler;
+import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
 import org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler.DATE_FORMAT_STR;
+import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 

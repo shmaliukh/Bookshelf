@@ -1,6 +1,7 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
-import org.vshmaliukh.console_terminal_app.SaveReadShelfHandler;
+import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.sql_handler.AbstractSqlItemHandler;
 import org.vshmaliukh.services.file_service.sql_handler.MySqlHandler;
 import org.vshmaliukh.services.file_service.sql_handler.SqlLiteHandler;
@@ -50,13 +51,13 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
-                sqlItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
+                sqlItemHandler = new SqlLiteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
-                sqlItemHandler = new MySqlHandler(HOME_PROPERTY, userName);
+                sqlItemHandler = new MySqlHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             default:
-                sqlItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
+                sqlItemHandler = new SqlLiteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
         }
     }

@@ -1,11 +1,11 @@
-package org.vshmaliukh.console_terminal_app.input_handler;
+package org.vshmaliukh.services.input_handler;
 
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
+import static org.vshmaliukh.services.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 public class ConsoleInputHandlerForUser extends AbstractConsoleInputHandler {
 

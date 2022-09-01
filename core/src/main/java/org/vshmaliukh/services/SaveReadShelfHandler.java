@@ -1,4 +1,4 @@
-package org.vshmaliukh.console_terminal_app;
+package org.vshmaliukh.services;
 
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;

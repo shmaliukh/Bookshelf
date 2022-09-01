@@ -1,8 +1,11 @@
 package org.vshmaliukh.literature_items.book_item;
 
 import org.junit.jupiter.api.Test;
+import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookTest {
     /**

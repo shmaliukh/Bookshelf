@@ -1,4 +1,4 @@
-package org.vshmaliukh.console_terminal_app.input_handler;
+package org.vshmaliukh.services.input_handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;
@@ -9,8 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import static org.vshmaliukh.console_terminal_app.input_handler.ConstantsForConsoleUserInputHandler.*;
 
 @Slf4j
 public class AbstractConsoleInputHandler extends AbstractInputHandler {
@@ -28,15 +26,15 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
     }
 
     public <T> boolean tryAgain(T defaultValue) {
-        if (currentRecursionLevel < MAX_RECURSION_LEVEL) {
-            informMessageToUser(MESSAGE_WRONG_INPUT_TRY_AGAIN + " "
-                    + (MAX_RECURSION_LEVEL - currentRecursionLevel)
+        if (currentRecursionLevel < ConstantsForConsoleUserInputHandler.MAX_RECURSION_LEVEL) {
+            informMessageToUser(ConstantsForConsoleUserInputHandler.MESSAGE_WRONG_INPUT_TRY_AGAIN + " "
+                    + (ConstantsForConsoleUserInputHandler.MAX_RECURSION_LEVEL - currentRecursionLevel)
                     + " more attempt(s) left");
             currentRecursionLevel++;
             return true;
         }
         currentRecursionLevel = 0;
-        informMessageToUser(MESSAGE_DEFAULT_VALUE_SET + "'" + defaultValue + "'");
+        informMessageToUser(ConstantsForConsoleUserInputHandler.MESSAGE_DEFAULT_VALUE_SET + "'" + defaultValue + "'");
         return false;
     }
 
@@ -53,10 +51,10 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
             currentRecursionLevel = 0;
             return inputString;
         }
-        if (tryAgain(DEFAULT_STRING)) {
+        if (tryAgain(ConstantsForConsoleUserInputHandler.DEFAULT_STRING)) {
             return getUserString(message, pattern);
         }
-        return DEFAULT_STRING;
+        return ConstantsForConsoleUserInputHandler.DEFAULT_STRING;
     }
 
     protected Integer getUserInteger(String message, Pattern pattern) {
@@ -67,10 +65,10 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
             currentRecursionLevel = 0;
             return Integer.parseInt(inputString);
         }
-        if (tryAgain(DEFAULT_INT)) {
+        if (tryAgain(ConstantsForConsoleUserInputHandler.DEFAULT_INT)) {
             return getUserInteger(message, pattern);
         }
-        return DEFAULT_INT;
+        return ConstantsForConsoleUserInputHandler.DEFAULT_INT;
     }
 
     protected Date getUserDate(String message, SimpleDateFormat dateFormat) {
@@ -84,10 +82,10 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
                 log.error("[InputHandler] Problem to parse user date input. Exception: ", pe);
             }
         }
-        if (tryAgain(new SimpleDateFormat(DATE_FORMAT_FOR_INPUT_HANDLER).format(DEFAULT_DATE))) {
+        if (tryAgain(new SimpleDateFormat(ConstantsForConsoleUserInputHandler.DATE_FORMAT_FOR_INPUT_HANDLER).format(ConstantsForConsoleUserInputHandler.DEFAULT_DATE))) {
             return getUserDate(message, dateFormat);
         }
-        return DEFAULT_DATE;
+        return ConstantsForConsoleUserInputHandler.DEFAULT_DATE;
     }
 
     private void getUserString(String message) {
@@ -102,10 +100,10 @@ public class AbstractConsoleInputHandler extends AbstractInputHandler {
             currentRecursionLevel = 0;
             return inputString.equals("y") || inputString.equals("true");
         }
-        if (tryAgain(DEFAULT_BOOLEAN)) {
+        if (tryAgain(ConstantsForConsoleUserInputHandler.DEFAULT_BOOLEAN)) {
             return getUserBoolean(message, pattern);
         }
-        return DEFAULT_BOOLEAN;
+        return ConstantsForConsoleUserInputHandler.DEFAULT_BOOLEAN;
     }
 
     private void informMessageToUser(String message) {

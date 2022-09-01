@@ -3,9 +3,11 @@ package org.vshmaliukh.services.menus;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
 
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static org.vshmaliukh.console_terminal_app.ConsoleUI.WRONG_INPUT;
+import static org.vshmaliukh.shelf.AbstractUI.WRONG_INPUT;
 
 public enum MainMenu {
 

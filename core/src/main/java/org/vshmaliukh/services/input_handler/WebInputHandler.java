@@ -1,4 +1,4 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh.services.input_handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;
