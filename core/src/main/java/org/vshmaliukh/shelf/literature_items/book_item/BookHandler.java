@@ -124,11 +124,11 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     public boolean isValidUserParametersInput(String name, String pages, String borrowed, String author, String date) {
-        return isValidInputString(name, ConstantsForItemInputValidation.PATTERN_FOR_NAME) &&
-                isValidInputInteger(pages, ConstantsForItemInputValidation.PATTERN_FOR_PAGES) &&
-                isValidInputString(borrowed, ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED) &&
-                isValidInputDate(date, new SimpleDateFormat(DATE_FORMAT_STR)) &&
-                isValidInputString(author, ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
+        return AbstractInputHandler.isValidInputString(name, ConstantsForItemInputValidation.PATTERN_FOR_NAME) &&
+                AbstractInputHandler.isValidInputInteger(pages, ConstantsForItemInputValidation.PATTERN_FOR_PAGES) &&
+                AbstractInputHandler.isValidInputString(borrowed, ConstantsForItemInputValidation.PATTERN_FOR_IS_BORROWED) &&
+                AbstractInputHandler.isValidInputDate(date, new SimpleDateFormat(DATE_FORMAT_STR)) &&
+                AbstractInputHandler.isValidInputString(author, ConstantsForItemInputValidation.PATTERN_FOR_AUTHOR);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -171,7 +171,7 @@ public class BookHandler extends ItemHandler<Book> {
                 "IGNORE" +
                 " INTO " + BOOK_TABLE_TITLE +
                 " ( " +
-                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " , " +
@@ -190,7 +190,7 @@ public class BookHandler extends ItemHandler<Book> {
                 AUTHOR_SQL_PARAMETER + " , " +
                 DATE_SQL_PARAMETER +
                 " FROM " + BOOK_TABLE_TITLE + " " +
-                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
+                " WHERE " + AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
@@ -226,7 +226,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
+                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -247,7 +247,7 @@ public class BookHandler extends ItemHandler<Book> {
     public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
-                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
+                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +

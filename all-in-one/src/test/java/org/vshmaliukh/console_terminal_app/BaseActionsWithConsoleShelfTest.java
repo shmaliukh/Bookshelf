@@ -9,8 +9,6 @@ import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 import java.io.*;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class BaseActionsWithConsoleShelfTest {
     PrintWriter printWriter = new PrintWriter(System.out, true);
 

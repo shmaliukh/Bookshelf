@@ -1,9 +1,7 @@
-package org.vshmaliukh.shelf.literature_items.magazine_item;
+package org.vshmaliukh.literature_items.magazine_item;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MagazineTest {
     /**

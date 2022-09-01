@@ -1,4 +1,4 @@
-package org.vshmaliukh.shelf.literature_items.magazine_item;
+package org.vshmaliukh.literature_items.magazine_item;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -90,9 +90,9 @@ class MagazineHandlerTest {
 
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());
-        assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-        assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
-        assertEquals(DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, itemByUserInput.getName());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_INT, itemByUserInput.getPagesNumber());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
     }
 
     @Test

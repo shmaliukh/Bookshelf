@@ -1,6 +1,7 @@
-package org.vshmaliukh.shelf.literature_items;
+package org.vshmaliukh.literature_items;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.console_terminal_app.input_handler.ConsoleInputHandlerForLiterature;
@@ -66,10 +67,10 @@ class ItemHandlerTest {
                 log.info("uniqueTypeName = '{}' // menuItem = '{}' // sortingMenuList = '{}' ",
                         uniqueTypeName.getSimpleName(), menuItem, sortingMenuList);
 
-                assertEquals(i + 1, menuItem.getIndex());
-                assertFalse(menuItem.getStr().isEmpty());
-                assertFalse(menuItem.getComparator().toString().isEmpty());
-                assertFalse(menuItem.getStr().isEmpty());
+                Assertions.assertEquals(i + 1, menuItem.getIndex());
+                Assertions.assertFalse(menuItem.getStr().isEmpty());
+                Assertions.assertFalse(menuItem.getComparator().toString().isEmpty());
+                Assertions.assertFalse(menuItem.getStr().isEmpty());
             }
         }
     }
@@ -84,9 +85,9 @@ class ItemHandlerTest {
 
             output = baos.toString().trim();
             assertFalse(output.isEmpty());
-            assertTrue(output.startsWith(CHOOSE_TYPE_OF_SORTING));
+            assertTrue(output.startsWith(ConsoleUI.CHOOSE_TYPE_OF_SORTING));
             assertTrue(output.contains(" - "));
-            assertTrue(output.endsWith(ENTER_ANOTHER_VALUE_TO_RETURN));
+            assertTrue(output.endsWith(ConsoleUI.ENTER_ANOTHER_VALUE_TO_RETURN));
         }
     }
 
@@ -98,7 +99,7 @@ class ItemHandlerTest {
             System.out.println(baos);
 
             String output = baos.toString().trim();
-            assertEquals(NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING, output);
+            Assertions.assertEquals(ConsoleUI.NO_AVAILABLE_LITERATURE_ITEM_IN_SHELF_FOR_SORTING, output);
             baos.reset();
         }
     }
@@ -123,9 +124,9 @@ class ItemHandlerTest {
                 output = baos.toString().trim();
 
                 assertFalse(output.isEmpty());
-                assertTrue(output.startsWith(CHOOSE_TYPE_OF_SORTING));
+                assertTrue(output.startsWith(ConsoleUI.CHOOSE_TYPE_OF_SORTING));
                 assertTrue(output.contains(" - "));
-                assertTrue(output.endsWith(ENTER_ANOTHER_VALUE_TO_RETURN));
+                assertTrue(output.endsWith(ConsoleUI.ENTER_ANOTHER_VALUE_TO_RETURN));
             }
 
         }
@@ -141,8 +142,8 @@ class ItemHandlerTest {
 
             assertNotNull(itemByUserInput);
             assertNotNull(itemByUserInput.toString());
-            assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-            assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
+            assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, itemByUserInput.getName());
+            assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_INT, itemByUserInput.getPagesNumber());
         }
     }
 

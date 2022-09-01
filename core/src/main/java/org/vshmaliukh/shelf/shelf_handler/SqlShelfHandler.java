@@ -49,10 +49,10 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     @Override
     public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
-            case MODE_WORK_WITH_SQLLITE:
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
                 sqlItemHandler = new SqlLiteHandler(HOME_PROPERTY, userName);
                 break;
-            case MODE_WORK_WITH_MYSQL:
+            case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 sqlItemHandler = new MySqlHandler(HOME_PROPERTY, userName);
                 break;
             default:

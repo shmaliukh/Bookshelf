@@ -1,4 +1,4 @@
-package org.vshmaliukh.shelf.literature_items.book_item;
+package org.vshmaliukh.literature_items.book_item;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -99,11 +99,11 @@ class BookHandlerTest {
 
         assertNotNull(itemByUserInput);
         assertNotNull(itemByUserInput.toString());
-        assertEquals(DEFAULT_STRING, itemByUserInput.getName());
-        assertEquals(DEFAULT_INT, itemByUserInput.getPagesNumber());
-        assertEquals(DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
-        assertEquals(DEFAULT_DATE, itemByUserInput.getIssuanceDate());
-        assertEquals(DEFAULT_STRING, itemByUserInput.getAuthor());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, itemByUserInput.getName());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_INT, itemByUserInput.getPagesNumber());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_BOOLEAN, itemByUserInput.isBorrowed());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_DATE, itemByUserInput.getIssuanceDate());
+        assertEquals(ConstantsForConsoleUserInputHandler.DEFAULT_STRING, itemByUserInput.getAuthor());
     }
 
     @Test
