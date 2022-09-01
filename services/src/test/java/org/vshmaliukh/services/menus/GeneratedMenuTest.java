@@ -31,10 +31,10 @@ class GeneratedMenuTest {
         menuForSorting.printMenu(printWriter);
         String output = baos.toString().trim();
 
-        assertFalse(output.isEmpty());
-        assertTrue(output.startsWith(MESSAGE_TO_ENTER));
-        assertTrue(output.contains(" - "));
-        assertTrue(output.endsWith(MESSAGE_TO_RETURN));
+        Assertions.assertFalse(output.isEmpty());
+        Assertions.assertTrue(output.startsWith(MESSAGE_TO_ENTER));
+        Assertions.assertTrue(output.contains(" - "));
+        Assertions.assertTrue(output.endsWith(MESSAGE_TO_RETURN));
     }
 
     private static Stream<Arguments> providedArgsForPrintingMenu() {
@@ -53,7 +53,7 @@ class GeneratedMenuTest {
 
         assertFalse(menuForSorting.generatedMenu.isEmpty());
         Set<Class<? extends Item>> uniqueTypeNames = ItemHandlerProvider.uniqueTypeNames;
-        assertEquals(uniqueTypeNames, classSet);
+        Assertions.assertEquals(uniqueTypeNames, classSet);
         assertEquals(uniqueTypeNames.size() * coef, menuForSorting.getMenuItems().size());
     }
 

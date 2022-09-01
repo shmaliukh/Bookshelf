@@ -16,7 +16,7 @@ public enum MainMenu {
     SORT_LITERATURE(new MenuItem(5, "Print list of shelf's type of literature sorted by parameter...")),
     PRINT_SHELF(new MenuItem(9, "Print current state of Shelf")),
     EXIT(new MenuItem(0, "Exit")),
-    UNKNOWN(new MenuItem(WRONG_INPUT, "Wrong input"));
+    UNKNOWN(new MenuItem(AbstractUI.WRONG_INPUT, "Wrong input"));
 
     final MenuItem menuItem;
 

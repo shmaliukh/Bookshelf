@@ -64,7 +64,7 @@ class InputHandlerTest {
     @CsvFileSource(resources = "/inputName.csv", numLinesToSkip = 1)
     void testNameInput(String input, String expected) {
         userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
-        assertEquals(expected, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(expected, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("test for user input for date of issue")
@@ -76,7 +76,7 @@ class InputHandlerTest {
         dateFormat.setLenient(false);
         Date currentDate = userInputHandler.getUserLiteratureDateOfIssue();
         Date expectedDate = dateFormat.parse(expectedOut);
-        assertEquals(expectedDate.getTime(), currentDate.getTime());
+        Assertions.assertEquals(expectedDate.getTime(), currentDate.getTime());
     }
 
     private static Stream<Arguments> providedStringForDateInput() {
@@ -96,7 +96,7 @@ class InputHandlerTest {
     @CsvFileSource(resources = "/inputAuthorsForValidation.csv", numLinesToSkip = 1)
     void testAuthorInput(String input) {
         userInputHandler = new ConsoleInputHandlerForLiterature(new Scanner(input), printWriter);
-        assertEquals(input, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(input, userInputHandler.getUserLiteratureName());
     }
 
     @DisplayName("validate data from user input (name) of Literature object")
@@ -153,7 +153,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_INT, userInputHandler.getUserLiteraturePages());
+        Assertions.assertEquals(DEFAULT_INT, userInputHandler.getUserLiteraturePages());
     }
 
     @Test
@@ -161,7 +161,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_BOOLEAN, userInputHandler.getUserLiteratureIsBorrowed());
+        Assertions.assertEquals(DEFAULT_BOOLEAN, userInputHandler.getUserLiteratureIsBorrowed());
     }
 
     @Test
@@ -169,7 +169,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
+        Assertions.assertEquals(DEFAULT_DATE, userInputHandler.getUserLiteratureDateOfIssue());
     }
 
     @Test
@@ -177,7 +177,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         userInputHandler = new ConsoleInputHandlerForLiterature(scanner, printWriter);
 
-        assertEquals(DEFAULT_STRING, userInputHandler.getUserLiteratureName());
+        Assertions.assertEquals(DEFAULT_STRING, userInputHandler.getUserLiteratureName());
     }
 
     @Test
@@ -185,7 +185,7 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
-        assertEquals(DEFAULT_STRING, userInputHandler.getUserName());
+        Assertions.assertEquals(DEFAULT_STRING, userInputHandler.getUserName());
     }
 
     @Test
@@ -193,6 +193,6 @@ class InputHandlerTest {
         scanner = new Scanner(entersForRecursion);
         ConsoleInputHandlerForUser userInputHandler = new ConsoleInputHandlerForUser(scanner, printWriter);
 
-        assertEquals(DEFAULT_INT, userInputHandler.getTypeOfWorkWithFiles());
+        Assertions.assertEquals(DEFAULT_INT, userInputHandler.getTypeOfWorkWithFiles());
     }
 }

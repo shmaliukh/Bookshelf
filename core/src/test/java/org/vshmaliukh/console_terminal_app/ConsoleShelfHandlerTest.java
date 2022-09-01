@@ -17,7 +17,7 @@ import static org.vshmaliukh.shelf.literature_items.book_item.BookHandler.*;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_NAME;
 import static org.vshmaliukh.shelf.literature_items.magazine_item.MagazineHandler.MAGAZINE_COMPARATOR_BY_PAGES;
 
-class shelfHandlerTest {
+class ShelfHandlerTest {
 
     PrintWriter printWriter = new PrintWriter(System.out, true);
 
