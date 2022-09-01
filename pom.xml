@@ -11,6 +11,10 @@
     <modules>
         <module>all-in-one</module>
         <module>core</module>
+        <module>web-app-module</module>
+        <module>console-app-module</module>
+        <module>client-module</module>
+        <module>server-module</module>
     </modules>
 
     <properties>

@@ -2,8 +2,8 @@ package org.vshmaliukh;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.LifecycleException;
-import org.vshmaliukh.client_server_app.ShelfClientServerApp;
-import org.vshmaliukh.client_server_app.server.MultithreadedSocketServer;
+import org.vshmaliukh.console_terminal_app.ShelfConsoleApp;
+import org.vshmaliukh.server.MultithreadedSocketServer;
 import org.vshmaliukh.tomcat_web_app.ShelfWebApp;
 
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class Main {
     static void runAppByTypeOfWork(String typeOfWork) throws LifecycleException, IOException {
         switch (typeOfWork.toLowerCase()) {
             case CONSOLE_TYPE:
-                ShelfClientServerApp.main(null);
+                ShelfConsoleApp.main(null);
                 break;
             case CLIENT_SERVER_TYPE:
                 MultithreadedSocketServer.main(null);
@@ -34,7 +34,7 @@ public class Main {
                 ShelfWebApp.main(null);
                 break;
             default:
-                ShelfClientServerApp.main(null);
+                MultithreadedSocketServer.main(null);
                 break;
         }
     }
