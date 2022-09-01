@@ -82,8 +82,8 @@ class ItemGsonHandlerTest {
         GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE);
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addItem);
 
-        Assertions.assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
-        Assertions.assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
+        assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler1.getShelf().getAllLiteratureObjects().size());
+        assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
                 .map(Item::toString)
                 .collect(Collectors.toList())
                 .containsAll(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
@@ -106,8 +106,8 @@ class ItemGsonHandlerTest {
 
         itemGsonHandlerPerType.readItemList().forEach(consoleShelfHandler2::addItem);
 
-        Assertions.assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler2.getShelf().getAllLiteratureObjects().size());
-        Assertions.assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
+        assertEquals(consoleShelfHandler1.getShelf().getAllLiteratureObjects().size(), consoleShelfHandler2.getShelf().getAllLiteratureObjects().size());
+        assertTrue(consoleShelfHandler1.getShelf().getAllLiteratureObjects().stream()
                 .map(Item::toString)
                 .collect(Collectors.toList())
                 .containsAll(consoleShelfHandler2.getShelf().getAllLiteratureObjects().stream()

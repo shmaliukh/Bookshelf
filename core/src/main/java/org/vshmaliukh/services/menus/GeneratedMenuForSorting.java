@@ -21,7 +21,7 @@ public class GeneratedMenuForSorting extends GeneratedMenu {
     void initMenuItems() {
         List<MenuItemClassType> sortingMenuItems = new ArrayList<>();
         int index = 1;
-        List<Class<? extends Item>> uniqueTypeNamesList = ItemHandlerProvider.uniqueTypeNames.stream().sorted(Comparator.comparing(Class::getSimpleName)).collect(Collectors.toList());
+        List<Class<? extends Item>> uniqueTypeNamesList = uniqueTypeNames.stream().sorted(Comparator.comparing(Class::getSimpleName)).collect(Collectors.toList());
         for (Class<? extends Item> typeName : uniqueTypeNamesList) {
             sortingMenuItems.add(new MenuItemClassType<>(index++, "Sort " + typeName.getSimpleName() + " items by value...", typeName));
         }

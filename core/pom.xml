@@ -12,7 +12,21 @@
     <groupId>org.vshmaliukh</groupId>
     <artifactId>core</artifactId>
 
-
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <tomcat.version>8.0.48</tomcat.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
+        <sqlite-jdbc.version>3.36.0.3</sqlite-jdbc.version>
+        <jstl.version>1.2</jstl.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <junit-jupiter.version>5.9.0-M1</junit-jupiter.version>
+        <gson.version>2.8.0</gson.version>
+        <slf4j-api.version>1.7.36</slf4j-api.version>
+        <logback-classic.version>1.2.11</logback-classic.version>
+        <lombok.version>1.18.24</lombok.version>
+    </properties>
 
 
     <dependencies>
@@ -48,9 +62,31 @@
         </dependency>
 
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback-classic.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

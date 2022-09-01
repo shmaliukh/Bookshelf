@@ -33,9 +33,9 @@ class FilesHandlerTest {
         //FIXME problem with maven build on git
         //      Error:  Failures:
         //      Error:    FilesHandlerTest.testCreateDirectoriesIfNotExists:33 expected: <true> but was: <false>
-        //      Error:    org.vshmaliukh.file_service.services.FilesHandlerTest.testCreateDirectoriesIfNotExists(boolean, Path)[2]  Time elapsed: 0.002 s  <<< FAILURE!
+        //      Error:    org.vshmaliukh.services.file_service.FilesHandlerTest.testCreateDirectoriesIfNotExists(boolean, Path)[2]  Time elapsed: 0.002 s  <<< FAILURE!
         //      Error:    FilesHandlerTest.testCreateDirectoriesIfNotExists:33 expected: <true> but was: <false>
-        //      Error:    org.vshmaliukh.file_service.services.FilesHandlerTest.testCreateDirectoriesIfNotExists(boolean, Path)[4]  Time elapsed: 0 s  <<< FAILURE!
+        //      Error:    org.vshmaliukh.services.file_service.FilesHandlerTest.testCreateDirectoriesIfNotExists(boolean, Path)[4]  Time elapsed: 0 s  <<< FAILURE!
         //assertEquals(expectedState, userFilesHandler.createDirectoryIfNotExists(path));
     }
 
