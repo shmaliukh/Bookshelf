@@ -1,0 +1,11 @@
+FROM openjdk:11
+
+ENV CLIENT_MODULE_NAME="client-app-module"
+
+WORKDIR /app
+
+ENV APP_VERSION=1.0-SNAPSHOT
+
+COPY /target/${CLIENT_MODULE_NAME}-${APP_VERSION}.jar /app
+
+CMD java -jar /app/${CLIENT_MODULE_NAME}-${APP_VERSION}.jar

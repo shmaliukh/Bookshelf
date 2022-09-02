@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
+public class TelnetClient {
 
     public static final int SOCKET_PORT_NUMBER = 8080;
 
@@ -19,9 +19,9 @@ public class Client {
     private final Thread inThread;
     private final Thread outThread;
 
-    public Client() throws IOException {
+    public TelnetClient() throws IOException {
 
-        socket = new Socket("localhost", SOCKET_PORT_NUMBER);
+        socket = new Socket("localhost", SOCKET_PORT_NUMBER); // TODO use ENV for configuration socket
 
         socketScanner = new Scanner(socket.getInputStream());
         localScanner = new Scanner(System.in);
@@ -38,6 +38,6 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
+        TelnetClient client = new TelnetClient();
     }
 }
