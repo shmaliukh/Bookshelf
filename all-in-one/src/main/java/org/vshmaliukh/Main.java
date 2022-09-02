@@ -23,19 +23,25 @@ public class Main {
     }
 
     static void runAppByTypeOfWork(String typeOfWork) throws LifecycleException, IOException {
-        switch (typeOfWork.toLowerCase()) {
-            case CONSOLE_TYPE:
-                ShelfConsoleApp.main(null);
-                break;
-            case CLIENT_SERVER_TYPE:
-                MultithreadedSocketServer.main(null);
-                break;
-            case WEB_TYPE:
-                ShelfWebApp.main(null);
-                break;
-            default:
-                MultithreadedSocketServer.main(null);
-                break;
+        if (typeOfWork == null || typeOfWork.length() == 0) {
+            ShelfWebApp.main(null);
+
+        }
+        else {
+            switch (typeOfWork.toLowerCase()) {
+                case CONSOLE_TYPE:
+                    ShelfConsoleApp.main(null);
+                    break;
+                case CLIENT_SERVER_TYPE:
+                    MultithreadedSocketServer.main(null);
+                    break;
+                case WEB_TYPE:
+                    ShelfWebApp.main(null);
+                    break;
+                default:
+                    MultithreadedSocketServer.main(null);
+                    break;
+            }
         }
     }
 }
