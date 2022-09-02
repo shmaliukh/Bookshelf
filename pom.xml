@@ -14,7 +14,7 @@
         <module>web-app-module</module>
         <module>console-app-module</module>
         <module>client-module</module>
-        <module>server-module</module>
+        <module>server-app-module</module>
     </modules>
 
     <properties>
