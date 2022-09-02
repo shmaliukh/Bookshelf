@@ -1,4 +1,6 @@
-FROM openjdk:11
+ENV JDK_VERSION="11"
+
+FROM openjdk:${JDK_VERSION}
 
 ENV CLIENT_MODULE_NAME="client-app-module"
 
