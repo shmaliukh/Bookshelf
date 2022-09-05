@@ -21,29 +21,28 @@ public class Main {
 
     public static void main(String[] args) throws LifecycleException, IOException {
         String typeOfWork = System.getenv(APP_TYPE_OF_WORK_ENV);
-        runAppByTypeOfWork(typeOfWork);
+        runAppByTypeOfWork(typeOfWork, args);
     }
 
-    static void runAppByTypeOfWork(String typeOfWork) throws LifecycleException, IOException {
+    static void runAppByTypeOfWork(String typeOfWork, String[] args) throws LifecycleException, IOException {
         if (typeOfWork == null || typeOfWork.length() == 0) {
-            TelnetClient.main(null);
-        }
-        else {
+            ShelfWebApp.main(args);
+        } else {
             switch (typeOfWork.toLowerCase()) {
                 case CONSOLE_TYPE:
-                    ShelfConsoleApp.main(null);
+                    ShelfConsoleApp.main(args);
                     break;
                 case CLIENT_TYPE:
-                    TelnetClient.main(null);
+                    TelnetClient.main(args);
                     break;
                 case SERVER_TYPE:
-                    MultithreadedSocketServer.main(null);
+                    MultithreadedSocketServer.main(args);
                     break;
                 case WEB_TYPE:
-                    ShelfWebApp.main(null);
+                    ShelfWebApp.main(args);
                     break;
                 default:
-                    TelnetClient.main(null);
+                    ShelfWebApp.main(args);
                     break;
             }
         }
