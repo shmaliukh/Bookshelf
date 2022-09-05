@@ -3,76 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>Bookshelf_project</artifactId>
+        <artifactId>build-jar-module</artifactId>
         <groupId>org.ShmaliukhVlad</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../build-jar-module/pom.xml</relativePath>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.vshmaliukh</groupId>
     <artifactId>console-app-module</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <executable-module.directory>${artifactId}</executable-module.directory>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.vshmaliukh</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
-<!--            <scope>compile</scope>-->
         </dependency>
     </dependencies>
-
-    <build>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <transformers>
-                        <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <manifestEntries>
-                                <Main-Class>org.vshmaliukh.console_terminal_app.ShelfConsoleApp</Main-Class>
-                            </manifestEntries>
-                        </transformer>
-                    </transformers>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M7</version>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

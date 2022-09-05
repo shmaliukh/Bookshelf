@@ -8,6 +8,7 @@
     <artifactId>Bookshelf_project</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
     <modules>
         <module>build-jar-module</module>
         <module>all-in-one</module>
@@ -16,6 +17,7 @@
         <module>console-app-module</module>
         <module>client-app-module</module>
         <module>server-app-module</module>
+
     </modules>
 
     <properties>
