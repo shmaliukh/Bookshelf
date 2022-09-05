@@ -13,6 +13,11 @@
     <groupId>org.vshmaliukh</groupId>
     <artifactId>all-in-one</artifactId>
 
+    <properties>
+        <executable-module.directory>all-in-one</executable-module.directory>
+        <maven-shade-plugin.Main-Class>org.vshmaliukh.Main</maven-shade-plugin.Main-Class>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
