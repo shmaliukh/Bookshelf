@@ -26,7 +26,7 @@ public class Main {
 
     static void runAppByTypeOfWork(String typeOfWork) throws LifecycleException, IOException {
         if (typeOfWork == null || typeOfWork.length() == 0) {
-            ShelfWebApp.main(null);
+            TelnetClient.main(null);
         }
         else {
             switch (typeOfWork.toLowerCase()) {
@@ -43,7 +43,7 @@ public class Main {
                     ShelfWebApp.main(null);
                     break;
                 default:
-                    MultithreadedSocketServer.main(null);
+                    TelnetClient.main(null);
                     break;
             }
         }
