@@ -28,7 +28,6 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>org.vshmaliukh</groupId>
             <artifactId>core</artifactId>
@@ -61,11 +60,15 @@
         </dependency>
         <dependency>
             <groupId>org.vshmaliukh</groupId>
-            <artifactId>client-module</artifactId>
+            <artifactId>client-app-module</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
     </dependencies>
 
 
