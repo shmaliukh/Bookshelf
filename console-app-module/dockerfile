@@ -1,4 +1,6 @@
-FROM openjdk:11
+ARG JDK_VERSION
+
+FROM openjdk:${JDK_VERSION}
 
 WORKDIR /app
 

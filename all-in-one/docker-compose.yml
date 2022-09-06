@@ -1,7 +1,8 @@
 version: "3.5"
 
 x-app-args: &app-args
-  START_MODULE_NAME_ARG: "client-app-module"
+  START_MODULE_NAME_ARG: "all-in-one"
+  MODULE_TO_START_IF_ALL_IN_ONE_ARG: "client-app-module"
   APP_VERSION_ARG: "1.0-SNAPSHOT"
   JDK_VERSION: "11"
 
