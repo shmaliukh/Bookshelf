@@ -1,6 +1,11 @@
 version: "3.5"
 
-x-global-variables: &global-variables
+x-app-args: &app-args
+  START_MODULE_NAME_ARG: "all-in-one"
+  MODULE_TO_START_IF_ALL_IN_ONE_ARG: "client-app-module"
+  APP_VERSION_ARG: "1.0-SNAPSHOT"
+
+x-mysql-envs: &mysql-envs
   MYSQL_PORT: "db:3306"
   MYSQL_USER: "test"
   MYSQL_PASSWORD: "test"
@@ -14,11 +19,7 @@ services:
       context: .
       dockerfile: dockerfile
       args:
-        START_MODULE_NAME_ARG: "all-in-one"
-        MODULE_TO_START_IF_ALL_IN_ONE: "web-app-module"
-        APP_VERSION_ARG: "1.0-SNAPSHOT"
-    environment:
-      *global-variables
+        *app-args
     ports:
       - "8081:8080"
     links:
@@ -38,7 +39,7 @@ services:
     container_name: db
     build: mysql_docker/
     environment:
-      *global-variables
+      *mysql-envs
     volumes:
       - /var/lib/mysql
     ports:
@@ -49,5 +50,3 @@ services:
         limits:
           cpus: "0.25"
           memory: "2000M"
-
-
