@@ -28,15 +28,15 @@ class TablePrinterTest {
     @MethodSource("provideItemsForTablePrint")
     void testPrintTable(List<Map<String, String>> providedTable, String expected) throws UnsupportedEncodingException {
         // FIXME fix utf-8 encoding for test run on Windows
-        //new PlainTextTableHandler(printWriter, providedTable, false).print();
-        //assertEquals(expected, baos.toString().trim());
+        new PlainTextTableHandler(printWriter, providedTable, false).print();
+        assertEquals(expected, baos.toString().trim());
     }
 
     @ParameterizedTest
     @MethodSource("provideItemsForTablePrintWithIndex")
     void testPrintTableWithIndex(List<Map<String, String>> providedTable, String expected) throws UnsupportedEncodingException {
-        //new PlainTextTableHandler(printWriter, providedTable, true).print();
-        //assertEquals(expected, baos.toString().trim());
+        new PlainTextTableHandler(printWriter, providedTable, true).print();
+        assertEquals(expected, baos.toString().trim());
     }
 
     private static Stream<Arguments> provideItemsForTablePrint() {
