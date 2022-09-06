@@ -1,7 +1,6 @@
 version: "3.5"
 
 x-global-variables: &global-variables
-  APP_TYPE_OF_WORK: "web"
   MYSQL_PORT: "db:3306"
   MYSQL_USER: "test"
   MYSQL_PASSWORD: "test"
@@ -11,13 +10,19 @@ x-global-variables: &global-variables
 services:
   app:
     container_name: app
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        START_MODULE_NAME_ARG: "all-in-one"
+        MODULE_TO_START_IF_ALL_IN_ONE: "web-app-module"
+        APP_VERSION_ARG: "1.0-SNAPSHOT"
+    environment:
+      *global-variables
     ports:
       - "8081:8080"
     links:
       - "db"
-    environment:
-      *global-variables
     volumes:
       - /opt/data:/root/shelf
     restart: on-failure
