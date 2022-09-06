@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class ShelfConsoleApp {
 
+    public static final String MODULE_NAME = "console-app-module";
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);

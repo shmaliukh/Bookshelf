@@ -12,15 +12,15 @@ import java.io.IOException;
 @Slf4j
 public class Main {
 
-    public static final String APP_TYPE_OF_WORK_ENV = "APP_TYPE_OF_WORK";
+    public static final String MODULE_TO_START_ENV = "MODULE_TO_START";
 
-    public static final String CONSOLE_TYPE = "console";
-    public static final String CLIENT_TYPE = "client";
-    public static final String SERVER_TYPE = "server";
-    public static final String WEB_TYPE = "web";
+    public static final String CONSOLE_MODULE = ShelfConsoleApp.MODULE_NAME;
+    public static final String CLIENT_MODULE = TelnetClient.MODULE_NAME;
+    public static final String SERVER_MODULE = MultithreadedSocketServer.MODULE_NAME;
+    public static final String WEB_MODULE = ShelfWebApp.MODULE_NAME;
 
     public static void main(String[] args) throws LifecycleException, IOException {
-        String typeOfWork = System.getenv(APP_TYPE_OF_WORK_ENV);
+        String typeOfWork = System.getenv(MODULE_TO_START_ENV);
         runAppByTypeOfWork(typeOfWork, args);
     }
 
@@ -28,17 +28,17 @@ public class Main {
         if (typeOfWork == null || typeOfWork.length() == 0) {
             ShelfWebApp.main(args);
         } else {
-            switch (typeOfWork.toLowerCase()) {
-                case CONSOLE_TYPE:
+            switch (typeOfWork) {
+                case CONSOLE_MODULE:
                     ShelfConsoleApp.main(args);
                     break;
-                case CLIENT_TYPE:
+                case CLIENT_MODULE:
                     TelnetClient.main(args);
                     break;
-                case SERVER_TYPE:
+                case SERVER_MODULE:
                     MultithreadedSocketServer.main(args);
                     break;
-                case WEB_TYPE:
+                case WEB_MODULE:
                     ShelfWebApp.main(args);
                     break;
                 default:

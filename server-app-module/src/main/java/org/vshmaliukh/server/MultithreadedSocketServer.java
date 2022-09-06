@@ -9,8 +9,9 @@ import java.net.Socket;
 @Slf4j
 public class MultithreadedSocketServer {
 
-    public static final int SOCKET_PORT_NUMBER = 8080;
+    public static final String MODULE_NAME = "server-app-module";
 
+    public static final int SOCKET_PORT_NUMBER = 8080;
     public static final int MAX_CONNECTION_NUMBER = 10;
 
     private ServerSocket serverSocket;

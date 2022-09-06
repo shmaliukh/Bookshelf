@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class TelnetClient extends AbstractClient {
 
     public static final String SERVICE_NAME = "TelnetClient";
+    public static final String MODULE_NAME = "client-app-module";
 
     public TelnetClient() {
         serviceName = SERVICE_NAME;
