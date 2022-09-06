@@ -1,9 +1,9 @@
 version: "3.5"
 
 x-app-args: &app-args
-  START_MODULE_NAME_ARG: "client-app-module"
+  JDK_VERSION: "8"
+  START_MODULE_NAME_ARG: "web-app-module"
   APP_VERSION_ARG: "1.0-SNAPSHOT"
-  JDK_VERSION: "11"
 
 x-mysql-envs: &mysql-envs
   MYSQL_PORT: "db:3306"
@@ -20,6 +20,8 @@ services:
       dockerfile: dockerfile
       args:
         *app-args
+    environment:
+      *mysql-envs
     ports:
       - "8081:8080"
     links:

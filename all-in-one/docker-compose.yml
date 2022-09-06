@@ -21,6 +21,8 @@ services:
       dockerfile: dockerfile
       args:
         *all-in-one-app-args
+    environment:
+      *mysql-envs
     ports:
       - "8081:8080"
     links:
