@@ -1,8 +1,7 @@
 version: "3.5"
 
-x-all-in-one-app-args: &all-in-one-app-args
-  START_MODULE_NAME_ARG: "all-in-one"
-  MODULE_TO_START_IF_ALL_IN_ONE_ARG: "web-app-module"
+x-web-app-args: &web-app-args
+  START_MODULE_NAME_ARG: "web-app-module"
   APP_VERSION_ARG: "1.0-SNAPSHOT"
   JDK_VERSION: "8"
 
@@ -14,13 +13,13 @@ x-mysql-envs: &mysql-envs
   MYSQL_DATABASE: "my_test"
 
 services:
-  all-in-one-app:
-    container_name: all-in-one-app
+  web-app:
+    container_name: web-app
     build:
       context: .
       dockerfile: dockerfile
       args:
-        *all-in-one-app-args
+        *web-app-args
     environment:
       *mysql-envs
     ports:
