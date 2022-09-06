@@ -48,7 +48,7 @@ public abstract class AbstractClient {
     }
 
     void logError(String errorMessage, Exception e) {
-        log.error("[" + serviceName + "] error: " + errorMessage, e);
+        log.error("[" + serviceName + "] error: " + System.lineSeparator() + errorMessage, e);
     }
 
     void logInfo(String infoMessage) {

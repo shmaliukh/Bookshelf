@@ -39,8 +39,8 @@ public class TelnetClient extends AbstractClient {
     void setUpSocketScanner() {
         try {
             socketScanner = new Scanner(socket.getInputStream());
-        } catch (IOException ioe) {
-            logError("Problem to set up socket scanner", ioe);
+        } catch (Exception e) {
+            logError("Problem to set up socket scanner", e);
         }
     }
 
@@ -48,8 +48,8 @@ public class TelnetClient extends AbstractClient {
     void setUpSocketPrintWriter() {
         try {
             socketPrintWriter = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException ioe) {
-            logError("Problem to set up socket print writer", ioe);
+        } catch (Exception e) {
+            logError("Problem to set up socket print writer", e);
         }
     }
 
@@ -70,13 +70,12 @@ public class TelnetClient extends AbstractClient {
     void setUpHost() {
 
         String hostStrFromEnv = System.getenv(CLIENT_HOST_ENV);
-        logInfo("host = ");
         if (StringUtils.isNotBlank(hostStrFromEnv)) {
             host = hostStrFromEnv;
-            logInfo(host + " // got from system environment variables by '" + CLIENT_HOST_ENV + "' name");
+            logInfo("host = " + host + " // got from system environment variables by '" + CLIENT_HOST_ENV + "' name");
         } else {
             host = DEFAULT_CLIENT_SOCKET_HOST;
-            logInfo(host + " // got from default value");
+            logInfo("host = " + host + " // got from default value");
         }
     }
 
@@ -86,13 +85,13 @@ public class TelnetClient extends AbstractClient {
         if (StringUtils.isNotBlank(portStrFromEnv)) {
             try {
                 port = Integer.parseInt(portStrFromEnv);
-                logInfo(port + " // got from system environment variables by '" + CLIENT_PORT_ENV + "' name");
+                logInfo("port = " + port + " // got from system environment variables by '" + CLIENT_PORT_ENV + "' name");
             } catch (NumberFormatException nfe) {
                 logError("Problem to parse 'port' value got from system environment variables by '" + CLIENT_PORT_ENV + "' name", nfe);
             }
         } else {
             port = DEFAULT_CLIENT_SOCKET_PORT;
-            logInfo(port + " // got from default value");
+            logInfo("port = " + port + " // got from default value");
         }
     }
 
