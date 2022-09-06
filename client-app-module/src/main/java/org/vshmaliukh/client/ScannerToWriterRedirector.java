@@ -16,7 +16,7 @@ public class ScannerToWriterRedirector extends Thread {
     @Override
     public void run() {
         String userInput;
-        while (scanner!=null && scanner.hasNextLine()) {
+        while (scanner != null && scanner.hasNextLine()) {
             userInput = scanner.nextLine();
             if (userInput.equals("_EXIT_")) {
                 break;

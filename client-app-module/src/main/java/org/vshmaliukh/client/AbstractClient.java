@@ -39,11 +39,11 @@ public abstract class AbstractClient {
 
     abstract void setUpSocketPrintWriter();
 
-    void setUpLocalScanner(){
+    void setUpLocalScanner() {
         localScanner = new Scanner(System.in);
     }
 
-    void setUpLocalPrintWriter(){
+    void setUpLocalPrintWriter() {
         localPrintWriter = new PrintWriter(System.out, true);
     }
 
