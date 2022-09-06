@@ -9,86 +9,94 @@ import java.net.Socket;
 import java.util.Scanner;
 
 @Slf4j
-public class TelnetClient {
+public class TelnetClient extends AbstractClient {
 
-    public static final String CLIENT_HOST_ENV = "CLIENT_HOST";
-    public static final String CLIENT_PORT_ENV = "CLIENT_PORT";
+    public static final String SERVICE_NAME = "TelnetClient";
 
-    private static final String DEFAULT_CLIENT_SOCKET_HOST = "localhost";
-    private static final int DEFAULT_CLIENT_SOCKET_PORT = 8080;
-
-    private Socket socket;
-
-    private Scanner socketScanner;
-    private Scanner localScanner;
-    private PrintWriter socketPrintWriter;
-    private PrintWriter localPrintWriter;
-
-    private Thread inThread;
-    private Thread outThread;
-
-    public TelnetClient() throws IOException {
+    public TelnetClient() {
+        serviceName = SERVICE_NAME;
 
         setUpSocket();
 
-        socketScanner = new Scanner(socket.getInputStream());
-        localScanner = new Scanner(System.in);
-        socketPrintWriter = new PrintWriter(socket.getOutputStream(), true);
-        localPrintWriter = new PrintWriter(System.out, true);
+        setUpSocketScanner();
+        setUpSocketPrintWriter();
 
-        localPrintWriter.println("Client start");
+        setUpLocalScanner();
+        setUpLocalPrintWriter();
+    }
 
-        inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
-        outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
+    void startWork() {
+        localPrintWriter.println(serviceName + " start");
+
+        Thread inThread = new ScannerToWriterRedirector(socketScanner, localPrintWriter);
+        Thread outThread = new ScannerToWriterRedirector(localScanner, socketPrintWriter);
 
         inThread.start();
         outThread.start();
     }
 
+    @Override
+    void setUpSocketScanner() {
+        try {
+            socketScanner = new Scanner(socket.getInputStream());
+        } catch (IOException ioe) {
+            logError("Problem to set up socket scanner", ioe);
+        }
+    }
+
+    @Override
+    void setUpSocketPrintWriter() {
+        try {
+            socketPrintWriter = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ioe) {
+            logError("Problem to set up socket print writer", ioe);
+        }
+    }
+
+    @Override
     void setUpSocket() {
-        String host = setUpHost();
-        int port = setUpPort();
+        setUpHost();
+        setUpPort();
         try {
             socket = new Socket(host, port);
         } catch (IOException ioe) {
-            log.error("[Client] Problem to set up socket: " + System.lineSeparator() +
+            logError("Problem to set up socket: " + System.lineSeparator() +
                     "   host = " + host + System.lineSeparator() +
                     "   port = " + port + System.lineSeparator(), ioe);
         }
     }
 
-    private static String setUpHost() {
-        String host;
+    @Override
+    void setUpHost() {
+
         String hostStrFromEnv = System.getenv(CLIENT_HOST_ENV);
-        log.info("[Client] host = ");
+        logInfo("host = ");
         if (StringUtils.isNotBlank(hostStrFromEnv)) {
             host = hostStrFromEnv;
-            log.info(host + " // got from system environment variables by '" + CLIENT_HOST_ENV + "' name");
+            logInfo(host + " // got from system environment variables by '" + CLIENT_HOST_ENV + "' name");
         } else {
             host = DEFAULT_CLIENT_SOCKET_HOST;
-            log.info(host + " // got from default value");
+            logInfo(host + " // got from default value");
         }
-        return host;
     }
 
-    private static int setUpPort() {
-        int port = 0;
+    @Override
+    void setUpPort() {
         String portStrFromEnv = System.getenv(CLIENT_PORT_ENV);
         if (StringUtils.isNotBlank(portStrFromEnv)) {
             try {
                 port = Integer.parseInt(portStrFromEnv);
-                log.info(port + " // got from system environment variables by '" + CLIENT_PORT_ENV + "' name");
+                logInfo(port + " // got from system environment variables by '" + CLIENT_PORT_ENV + "' name");
             } catch (NumberFormatException nfe) {
-                log.error("problem to parse 'port' value got from system environment variables by '" + CLIENT_PORT_ENV + "' name", nfe);
+                logError("Problem to parse 'port' value got from system environment variables by '" + CLIENT_PORT_ENV + "' name", nfe);
             }
         } else {
             port = DEFAULT_CLIENT_SOCKET_PORT;
-            log.info(port + " // got from default value");
+            logInfo(port + " // got from default value");
         }
-        return port;
     }
 
-    public static void main(String[] args) throws IOException {
-        TelnetClient client = new TelnetClient();
+    public static void main(String[] args) {
+        new TelnetClient().startWork();
     }
 }
