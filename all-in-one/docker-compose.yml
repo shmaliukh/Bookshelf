@@ -1,30 +1,30 @@
 version: "3.5"
 
-x-app-args: &app-args
+x-all-in-one-app-args: &all-in-one-app-args
   START_MODULE_NAME_ARG: "all-in-one"
-  MODULE_TO_START_IF_ALL_IN_ONE_ARG: "client-app-module"
+  MODULE_TO_START_IF_ALL_IN_ONE_ARG: "web-app-module"
   APP_VERSION_ARG: "1.0-SNAPSHOT"
   JDK_VERSION: "11"
 
 x-mysql-envs: &mysql-envs
-  MYSQL_PORT: "db:3306"
+  MYSQL_PORT: "mysql:3306"
   MYSQL_USER: "test"
   MYSQL_PASSWORD: "test"
   MYSQL_ROOT_PASSWORD: "root"
   MYSQL_DATABASE: "my_test"
 
 services:
-  app:
-    container_name: app
+  all-in-one-app:
+    container_name: all-in-one-app
     build:
       context: .
       dockerfile: dockerfile
       args:
-        *app-args
+        *all-in-one-app-args
     ports:
       - "8081:8080"
     links:
-      - "db"
+      - "mysql"
     volumes:
       - /opt/data:/root/shelf
     restart: on-failure
@@ -34,11 +34,13 @@ services:
           cpus: "0.50"
           memory: "2000M"
     depends_on:
-      - db
+      - mysql
 
-  db:
-    container_name: db
-    build: mysql_docker/
+  mysql:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: mysql_dockerfile
     environment:
       *mysql-envs
     volumes:
