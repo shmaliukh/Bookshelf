@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.print_table_service;
+package org.vshmaliukh.services;
 
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;

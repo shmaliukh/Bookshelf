@@ -17,6 +17,7 @@
         <module>console-app-module</module>
         <module>client-app-module</module>
         <module>server-app-module</module>
+        <module>print-table-service</module>
 
     </modules>
 

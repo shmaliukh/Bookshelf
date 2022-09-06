@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.print_table_service;
+package org.vshmaliukh.print_table_service;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TablePrinterTest {
 

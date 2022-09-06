@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.print_table_service;
+package org.vshmaliukh.print_table_service;
 
 import java.util.*;
 

@@ -1,5 +1,7 @@
 package org.vshmaliukh.console_terminal_app;
 
+import org.vshmaliukh.services.ConvertorToStringForItems;
+import org.vshmaliukh.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
@@ -8,8 +10,6 @@ import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.services.menus.MainMenu;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
-import org.vshmaliukh.services.print_table_service.ConvertorToStringForItems;
-import org.vshmaliukh.services.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.shelf.AbstractUI;
 import org.vshmaliukh.shelf.literature_items.*;
 import org.vshmaliukh.shelf.shelf_handler.User;

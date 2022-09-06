@@ -1,9 +1,9 @@
 package org.vshmaliukh.tomcat_web_app.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
-import org.vshmaliukh.services.print_table_service.ConvertorToStringForItems;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.tomcat_web_app.HtmlTableBuilder;

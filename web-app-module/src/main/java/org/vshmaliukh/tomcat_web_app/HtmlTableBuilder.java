@@ -1,6 +1,6 @@
 package org.vshmaliukh.tomcat_web_app;
 
-import org.vshmaliukh.services.print_table_service.AbstractTableHandler;
+import org.vshmaliukh.print_table_service.AbstractTableHandler;
 import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 
 import java.util.List;
