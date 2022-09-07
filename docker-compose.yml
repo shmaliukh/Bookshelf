@@ -11,7 +11,7 @@ services:
     environment:
       MYSQL_PORT: db:3306
     env_file:
-      - mysql-env-file.env
+      - ${DB_ENV_FILE}
     ports:
       - "8081:8080"
     links:
@@ -28,9 +28,9 @@ services:
       - db
 
   db:
-    image: mysql
+    image: ${DB_IMAGE}
     env_file:
-      - mysql-env-file.env
+      - ${DB_ENV_FILE}
     volumes:
       - /var/lib/mysql
     ports:
