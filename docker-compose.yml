@@ -1,31 +1,21 @@
 version: "3.5"
 
-x-app-args: &app-args
-  JDK_VERSION: "8"
-  START_MODULE_NAME_ARG: "web-app-module"
-  APP_VERSION_ARG: "1.0-SNAPSHOT"
-
-x-mysql-envs: &mysql-envs
-  MYSQL_PORT: "db:3306"
-  MYSQL_USER: "test"
-  MYSQL_PASSWORD: "test"
-  MYSQL_ROOT_PASSWORD: "root"
-  MYSQL_DATABASE: "my_test"
-
 services:
   app:
-    container_name: app
     build:
       context: .
-      dockerfile: dockerfile
       args:
-        *app-args
+        JDK_VERSION: ${JDK_VERSION}
+        APP_MODULE_NAME: ${APP_MODULE_NAME}
+        APP_VERSION: ${APP_VERSION}
     environment:
-      *mysql-envs
+      MYSQL_PORT: db:3306
+    env_file:
+      - mysql-env-file.env
     ports:
       - "8081:8080"
     links:
-      - "db"
+      - db
     volumes:
       - /opt/data:/root/shelf
     restart: on-failure
@@ -38,10 +28,9 @@ services:
       - db
 
   db:
-    container_name: db
-    build: mysql_docker/
-    environment:
-      *mysql-envs
+    image: mysql
+    env_file:
+      - mysql-env-file.env
     volumes:
       - /var/lib/mysql
     ports:
