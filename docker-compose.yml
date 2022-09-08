@@ -17,7 +17,7 @@ services:
     links:
       - db
     volumes:
-      - /opt/data:/root/shelf
+      - "./shelf-data/shelf/${APP_MODULE_NAME}:/root/shelf/"
     restart: on-failure
     deploy:
       resources:
@@ -32,7 +32,10 @@ services:
     env_file:
       - ${DB_ENV_FILE}
     volumes:
-      - /var/lib/mysql
+#      - type: bind
+#        source: ./shelf-data/shelf/${APP_MODULE_NAME}/mysql-data
+#        target: /var/lib/mysql
+      - "/shelf-data/shelf/${APP_MODULE_NAME}/mysql-data:/var/lib/mysql"
     ports:
       - "3307:3306"
     restart: on-failure
