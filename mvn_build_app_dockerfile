@@ -1,0 +1,7 @@
+FROM mvn
+
+WORKDIR /src
+
+COPY . /src
+
+CMD mvn clean package
