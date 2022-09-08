@@ -1,25 +1,23 @@
 version: "3.5"
 
-x-global-variables: &global-variables
-  APP_TYPE_OF_WORK: "web"
-  MYSQL_PORT: "db:3306"
-  MYSQL_USER: "test"
-  MYSQL_PASSWORD: "test"
-  MYSQL_ROOT_PASSWORD: "root"
-  MYSQL_DATABASE: "my_test"
-
 services:
   app:
-    container_name: app
-    build: .
+    build:
+      context: .
+      args:
+        JDK_VERSION: ${JDK_VERSION}
+        APP_MODULE_NAME: ${APP_MODULE_NAME}
+        APP_VERSION: ${APP_VERSION}
+    environment:
+      MYSQL_PORT: db:3306
+    env_file:
+      - ${DB_ENV_FILE}
     ports:
       - "8081:8080"
     links:
-      - "db"
-    environment:
-      *global-variables
+      - db
     volumes:
-      - /opt/data:/root/shelf
+      - "/data/shelf-data/shelf/${APP_MODULE_NAME}:/root/shelf/"
     restart: on-failure
     deploy:
       resources:
@@ -30,12 +28,11 @@ services:
       - db
 
   db:
-    container_name: db
-    build: mysql_docker/
-    environment:
-      *global-variables
+    image: ${DB_IMAGE}
+    env_file:
+      - ${DB_ENV_FILE}
     volumes:
-      - /var/lib/mysql
+      - "/data/shelf-data/shelf/${APP_MODULE_NAME}/mysql-data:/var/lib/mysql"
     ports:
       - "3307:3306"
     restart: on-failure
@@ -44,5 +41,3 @@ services:
         limits:
           cpus: "0.25"
           memory: "2000M"
-
-

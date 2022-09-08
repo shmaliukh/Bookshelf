@@ -1,9 +1,14 @@
-FROM openjdk:11
+ARG JDK_VERSION
+FROM openjdk:${JDK_VERSION}
 
 WORKDIR /app
 
-ENV APP_VERSION=1.0-SNAPSHOT
-COPY target/Bookshelf_project-${APP_VERSION}.jar /app
-#COPY no_user.json /root/shelf/no_user/gson_handler_one_file/
+ARG APP_MODULE_NAME
+ENV APP_MODULE_NAME=$APP_MODULE_NAME
 
-CMD java -jar /app/Bookshelf_project-${APP_VERSION}.jar
+ARG APP_VERSION
+ENV APP_VERSION=$APP_VERSION
+
+COPY $APP_MODULE_NAME/target/$APP_MODULE_NAME-$APP_VERSION.jar /app
+
+CMD java -jar /app/$APP_MODULE_NAME-$APP_VERSION.jar
