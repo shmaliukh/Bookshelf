@@ -3,13 +3,24 @@
 <head>
     <title>Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:insert="blocks/bootstrap-css-style.html :: style"><link/>
+    <link th:insert="blocks/bootstrap-css-style.html :: style">
+    <link/>
 </head>
 <body>
 <header th:insert="blocks/header.html :: header"></header>
 
+<div class="container mt-5 mb-5">
+    <h1>Log in page text</h1>
+    <br>
+    <form action="/login" method="post">
+        <input type="text" name="Name" placeholder="Enter user name" class="form-control">
+        <br>
+        <input type="number" name="Type of work with files" placeholder="Enter type of work with files" class="form-control">
+        <br>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
 
-<p th:text="'Hello, ' + ${title} + '!'"/>
 
 <footer th:insert="blocks/footer.html :: footer"></footer>
 </body>
