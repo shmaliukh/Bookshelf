@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:insert="blocks/bootstrap-css-style.html :: style">
+    <link/>
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h1 th:text="'Welcome, ' + ${userName}"></h1>
+    <h3 th:text="'Type of work with files: ' + ${typeOfWorkFriendlyString}"></h3>
+    <br>
+    <div th:utext="${generatedMenu}"></div>
+<!--    <form action="/login" method="post">-->
+<!--        <input type="text" name="userName" placeholder="Enter user name" class="form-control">-->
+<!--        <br>-->
+<!--        <input type="number" name="typeOfWork" placeholder="Enter type of work" class="form-control">-->
+<!--        <br>-->
+<!--        <button type="submit" class="btn btn-success">Submit</button>-->
+<!--    </form>-->
+</div>
+
+
+<footer th:insert="blocks/footer.html :: footer"></footer>
+</body>
+</html>
