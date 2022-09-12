@@ -7,10 +7,31 @@ import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import java.util.List;
 import java.util.Map;
 
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.LOG_IN_TITLE;
+
 public final class HtmlUtil {
 
     private HtmlUtil(){
 
+    }
+
+    public static String initMainMenu(Map<String, String> userAtr) {
+        return "" +
+                "MENU:" +
+                "   <br>\n " +
+                generateMainMenuItem(ADD_MENU_TITLE, "ADD item", userAtr) +
+                generateMainMenuItem(EDIT_ITEMS_TITLE, "EDIT items", userAtr) +
+                generateMainMenuItem(SORTING_TYPES_MENU_TITLE, "SORT items", userAtr) +
+                generateMainMenuItem(LOG_IN_TITLE, "EXIT", userAtr) +
+                "   <br>\n " +
+                "Current state of shelf:\n " +
+                "   <br>\n";
+    }
+
+    public static String generateMainMenuItem(String servletTitle, String itemTitle, Map<String, String> userAtr) {
+        return "<a href=\"" + UrlUtil.generateBaseURLString(servletTitle, userAtr) + "\">" + itemTitle + "</a>\n" +
+                "   <br>\n ";
     }
 
     public static String formHTMLButton(String referenceStr, String label) {
