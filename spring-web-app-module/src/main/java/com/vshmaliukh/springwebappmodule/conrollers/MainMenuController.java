@@ -9,32 +9,29 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
 import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.conrollers.LogInController.TYPE_OF_WORK;
-import static com.vshmaliukh.springwebappmodule.conrollers.LogInController.USER_NAME;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.MAIN_MENU_TITLE;
+import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 @Controller
 public class MainMenuController {
 
-    @GetMapping("/main-menu")
+    @GetMapping("/" + MAIN_MENU_TITLE)
     public ModelAndView home(@RequestParam String userName,
                              @RequestParam int typeOfWork,
-                             ModelMap model){
+                             ModelMap model) {
         model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK, typeOfWork);
-        model.addAttribute("typeOfWorkFriendlyString", typeOfWorkMap.get(model.getAttribute(TYPE_OF_WORK)));
+        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
+        model.addAttribute("typeOfWorkFriendlyString", typeOfWorkMap.get(model.getAttribute(TYPE_OF_WORK_WITH_FILES)));
 
-        Map<String, String> userAtrMap = new HashMap<>();
-        userAtrMap.put(USER_NAME, userName);
-        userAtrMap.put(TYPE_OF_WORK, String.valueOf(typeOfWork));
-
-        String generatedMenuHtml = HtmlUtil.initMainMenu(userAtrMap) + WebUtils.generateCurrentStateOfShelf(userAtrMap, ItemTitles.TITLE_LIST);
+        String generatedMenuHtml = HtmlUtil.initMainMenu(userAtr) + WebUtils.generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST);
         model.addAttribute("generatedMenu", generatedMenuHtml);
-
-        return new ModelAndView("main-menu", model);
+        return new ModelAndView(MAIN_MENU_TITLE, model);
     }
+
 
 }

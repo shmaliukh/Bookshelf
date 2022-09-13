@@ -19,8 +19,8 @@ import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.INFORM_MESSAGE;
 
 public class LogInServlet extends HttpServlet {
 
-    public static final String USER_NAME = "user_name";
-    public static final String TYPE_OF_WORK_WITH_FILES = "type_of_work_with_files";
+    public static final String USER_NAME = "userName";
+    public static final String TYPE_OF_WORK_WITH_FILES = "typeOfWork";
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
