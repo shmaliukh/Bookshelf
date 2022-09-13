@@ -1,34 +1,32 @@
 package org.vshmaliukh.tomcat_web_app.servlets;
 
 import com.google.gson.Gson;
-import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.WebPageBuilder;
 import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
+import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.vshmaliukh.services.menus.GeneratedMenu.MESSAGE_TO_ENTER;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
+import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.MENU_ITEM_INDEX;
 
 public class AddMenuServlet extends HttpServlet {
 
-    public static final String ITEM_CLASS_TYPE = "item_class_type";
-    public static final String ITEM_GSON_STR = "item_gson_str";
-    public static final String IS_RANDOM = "is_random";
+    public static final String ITEM_CLASS_TYPE = "itemClassType";
+    public static final String ITEM_GSON_STR = "itemGsonStr";
+    public static final String IS_RANDOM = "isRandom";
     static Gson gson = new Gson();
 
     @Override
@@ -74,7 +72,7 @@ public class AddMenuServlet extends HttpServlet {
         }
     }
 
-    private String generateMessageAboutAddedItem(HttpServletRequest request) { // todo create test
+    public static String generateMessageAboutAddedItem(HttpServletRequest request) { // todo create test
         String typeOfClass = request.getParameter(ITEM_CLASS_TYPE);
         String itemStr = request.getParameter(ITEM_GSON_STR);
         if (itemStr != null && typeOfClass != null) {
