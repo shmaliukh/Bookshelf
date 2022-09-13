@@ -68,55 +68,6 @@ public class AddMenuController {
         return "";
     }
 
-//    @GetMapping("/" + ADD_MENU_TITLE)
-//    ModelAndView doGet(@RequestParam String userName,
-//                       @RequestParam int typeOfWork,
-//                       ModelMap model) {
-//        model.addAttribute(USER_NAME, userName);
-//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-//        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
-//
-//        String generatedHtmlStr = GeneratedMenu.MESSAGE_TO_ENTER + " <br>" +
-//                HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_ITEM_TITLE, new GeneratedMenuForAdding()) +
-//                HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE);
-//        //webPageBuilder.addMessageBlock(generateMessageAboutAddedItem(request));
-//
-//        model.addAttribute("generatedHtmlStr", generatedHtmlStr);
-//        return new ModelAndView(ADD_MENU_TITLE, model);
-//    }
-
-
-//    @PostMapping("/" + ADD_MENU_TITLE)
-//    ModelAndView doPost(@RequestParam String userName,
-//                        @RequestParam int typeOfWork,
-//                        @RequestParam int menuItemIndex,
-//                        ModelMap model) {
-//        model.addAttribute(USER_NAME, userName);
-//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-//        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
-
-//        String typeOfWork = request.getParameter(TYPE_OF_WORK_WITH_FILES);
-//        String menuItemIndex = request.getParameter(MENU_ITEM_INDEX);
-
-//        if (menuItemIndex != null && typeOfWork != null && !menuItemIndex.equals("") && !typeOfWork.equals("")) {
-//            GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
-//            int parseInt;
-//            try {
-//                parseInt = Integer.decode(menuItemIndex);
-//            } catch (NumberFormatException e) {
-//                parseInt = 0;
-//            }
-//            if (parseInt > 0 && parseInt <= generatedMenu.generatedMenu.size()) {
-//                MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(parseInt - 1);
-//                int index = menuItemClassType.getIndex();
-//                addItemByType(userAtr, response, menuItemClassType, index);
-//            }
-//        } else {
-//            return new ModelAndView(ADD_MENU_TITLE, model);
-////            UrlUtil.redirectTo(ADD_MENU_TITLE, response, userAtr);
-//        }
-//    }
-
     @PostMapping("/" + ADD_MENU_TITLE)
     ModelAndView doPost(@RequestParam String userName,
                         @RequestParam int typeOfWork,
@@ -133,9 +84,11 @@ public class AddMenuController {
 
             String classSimpleName = menuItemClassType.getClassType().getSimpleName();
             model.addAttribute(ITEM_CLASS_TYPE, classSimpleName);
+            String randValue = "false";
             if (index % 2 == 0) { //add random item
-                model.addAttribute(IS_RANDOM, "true");
+                randValue = "true";
             }
+            model.addAttribute(IS_RANDOM, randValue);
             return new ModelAndView("redirect:/" + ADD_ITEM_TITLE, model);
         }
         return new ModelAndView(ADD_MENU_TITLE, model);

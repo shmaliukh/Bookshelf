@@ -2,7 +2,6 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,19 +31,21 @@ public class AddItemController extends HttpServlet {
     static Gson gson = new Gson();
 
     @PostMapping("/" + ADD_ITEM_TITLE)
-    ModelAndView doPost(@RequestParam String userName,
-                        @RequestParam int typeOfWork,
-                        @RequestParam(required = false) String itemClassType,
-                        Model modelMap) {
+    ModelAndView doPost(@RequestParam Map<String, String> allParams,
+//                        @RequestParam String userName,
+//                        @RequestParam int typeOfWork,
+//                        @RequestParam(required = false) String itemClassType,
+                        ModelMap modelMap) {
+        String userName = allParams.remove(USER_NAME);
+        String typeOfWork = allParams.remove(TYPE_OF_WORK_WITH_FILES);
+        String itemClassType = allParams.remove(ITEM_CLASS_TYPE);
+
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
+        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, Integer.parseInt(typeOfWork));
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-
-        Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(modelMap.asMap());
-
+        Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(allParams);
         SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
@@ -53,15 +54,29 @@ public class AddItemController extends HttpServlet {
             modelMap.addAttribute(ITEM_GSON_STR, gson.toJson(item));
             modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         }
-        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, new ModelMap().addAllAttributes(modelMap.asMap()));
+        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
+
+//        ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
+//
+//        Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(modelMap.asMap());
+//
+//        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+//        if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
+//            Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
+//            webShelfHandler.addItem(item);
+//
+//            modelMap.addAttribute(ITEM_GSON_STR, gson.toJson(item));
+//            modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
+//        }
+//        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, new ModelMap().addAllAttributes(modelMap.asMap()));
         //return new ModelAndView("add_item", modelMap);
     }
 
     @GetMapping("/" + ADD_ITEM_TITLE)
     ModelAndView doGet(@RequestParam String userName,
                        @RequestParam int typeOfWork,
-                       @RequestParam(defaultValue = "") String itemClassType,
-                       @RequestParam(defaultValue = "") String isRandom,
+                       @RequestParam String itemClassType,
+                       @RequestParam String isRandom,
                        ModelMap modelMap) {
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
@@ -84,7 +99,7 @@ public class AddItemController extends HttpServlet {
                     "Create " + itemClassType + "\n" +
                     "       <br>\n");
 
-            if (isRandom != null) {
+            if (isRandom.equals("true")) {
                 stringBuilder.append(handlerByName.generateHTMLFormBodyToCreateItem(WebUtils.RANDOM));
             } else {
                 stringBuilder.append(handlerByName.generateHTMLFormBodyToCreateItem());
