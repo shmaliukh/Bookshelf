@@ -21,9 +21,10 @@ public class CookieController {
     ModelAndView doGet(@RequestParam Map<String, String> paramMap,
                        HttpServletResponse response, ModelMap model) {
 
+        String pageToRedirect = paramMap.getOrDefault(PAGE_TO_REDIRECT, "");
+        paramMap.remove(PAGE_TO_REDIRECT, pageToRedirect);
         paramMap.forEach((k, v) -> addCookie(k,v, response)); // TODO create another implementation
 
-        String pageToRedirect = paramMap.getOrDefault(PAGE_TO_REDIRECT, "");
         return new ModelAndView("redirect:/" + pageToRedirect, model);
     }
 

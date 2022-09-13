@@ -2,6 +2,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +22,6 @@ import java.util.Map;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.ITEMS_SORTING_MENU_TITLE;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.SORTING_TYPES_MENU_TITLE;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 import static org.vshmaliukh.tomcat_web_app.utils.HtmlUtil.generateMenuItemsFormHTML;
 import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.*;
 
@@ -30,13 +29,13 @@ import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.*;
 public class ItemsSortingMenuController {
 
     @PostMapping("/" + ITEMS_SORTING_MENU_TITLE)
-    ModelAndView doPost(@RequestParam String userName,
-                        @RequestParam int typeOfWork,
+    ModelAndView doPost(@CookieValue String userName,
+                        @CookieValue int typeOfWork,
                         @RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
                         ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+//        model.addAttribute(USER_NAME, userName);
+//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
 //        UrlUtil.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
 //                UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
 //                        .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
@@ -47,13 +46,13 @@ public class ItemsSortingMenuController {
     }
 
     @GetMapping("/" + ITEMS_SORTING_MENU_TITLE)
-    ModelAndView doGet(@RequestParam String userName,
-                       @RequestParam int typeOfWork,
+    ModelAndView doGet(@CookieValue String userName,
+                       @CookieValue int typeOfWork,
                        @RequestParam(defaultValue = "") String menuItemIndex,
                        @RequestParam(defaultValue = "") String itemClassType,
                        ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+//        model.addAttribute(USER_NAME, userName);
+//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         model.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);

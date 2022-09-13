@@ -3,6 +3,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,6 @@ import java.util.Map;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.IS_RANDOM;
 import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 @Controller
 public class AddMenuController {
@@ -31,13 +30,11 @@ public class AddMenuController {
     static Gson gson = new Gson();
 
     @GetMapping("/" + ADD_MENU_TITLE)
-    ModelAndView doGet(@RequestParam String userName,
-                       @RequestParam int typeOfWork,
+    ModelAndView doGet(@CookieValue String userName,
+                       @CookieValue int typeOfWork,
                        @RequestParam(required = false) String itemClassType,
                        @RequestParam(required = false) String itemGsonStr,
                        ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -69,13 +66,10 @@ public class AddMenuController {
     }
 
     @PostMapping("/" + ADD_MENU_TITLE)
-    ModelAndView doPost(@RequestParam String userName,
-                        @RequestParam int typeOfWork,
+    ModelAndView doPost(@CookieValue String userName,
+                        @CookieValue int typeOfWork,
                         @RequestParam(defaultValue = "0") int menuItemIndex,
                         ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
 
         if (menuItemIndex > 0 && menuItemIndex <= generatedMenu.generatedMenu.size()) {

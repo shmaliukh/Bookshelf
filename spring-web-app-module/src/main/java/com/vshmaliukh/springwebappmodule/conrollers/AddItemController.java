@@ -3,6 +3,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,18 +32,20 @@ public class AddItemController extends HttpServlet {
     static Gson gson = new Gson();
 
     @PostMapping("/" + ADD_ITEM_TITLE)
-    ModelAndView doPost(@RequestParam Map<String, String> allParams,
+    ModelAndView doPost(@CookieValue String userName,
+                        @CookieValue int typeOfWork,
+                        @RequestParam Map<String, String> allParams,
 //                        @RequestParam String userName,
 //                        @RequestParam int typeOfWork,
 //                        @RequestParam(required = false) String itemClassType,
                         ModelMap modelMap) {
-        String userName = allParams.remove(USER_NAME);
-        String typeOfWork = allParams.remove(TYPE_OF_WORK_WITH_FILES);
+        modelMap.addAttribute(USER_NAME, userName);
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         String itemClassType = allParams.remove(ITEM_CLASS_TYPE);
 
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, Integer.parseInt(typeOfWork));
+        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(allParams);
@@ -73,13 +76,13 @@ public class AddItemController extends HttpServlet {
     }
 
     @GetMapping("/" + ADD_ITEM_TITLE)
-    ModelAndView doGet(@RequestParam String userName,
-                       @RequestParam int typeOfWork,
+    ModelAndView doGet(@CookieValue String userName,
+                       @CookieValue int typeOfWork,
                        @RequestParam String itemClassType,
                        @RequestParam String isRandom,
                        ModelMap modelMap) {
-        modelMap.addAttribute(USER_NAME, userName);
-        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+//        modelMap.addAttribute(USER_NAME, userName);
+//        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
 
 

@@ -2,6 +2,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,12 +26,11 @@ public class LogInController {
     }
 
     @GetMapping("/" + LOG_IN_TITLE)
-    ModelAndView logInAuthorization_get(@RequestParam String userName,
-                                        @RequestParam int typeOfWork,
+    ModelAndView logInAuthorization_get(@CookieValue String userName,
+                                        @CookieValue int typeOfWork,
                                         ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-
 
         return new ModelAndView(LOG_IN_TITLE, model);
     }

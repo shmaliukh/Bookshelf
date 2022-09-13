@@ -20,8 +20,8 @@ import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 public class MainMenuController {
 
     @GetMapping("/" + MAIN_MENU_TITLE)
-    public ModelAndView doGet(@CookieValue String userName,
-                              @CookieValue int typeOfWork,
+    public ModelAndView doGet(@CookieValue(value = USER_NAME) String userName,
+                              @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
                               ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
@@ -33,6 +33,5 @@ public class MainMenuController {
 
         return new ModelAndView(MAIN_MENU_TITLE, model);
     }
-
 
 }
