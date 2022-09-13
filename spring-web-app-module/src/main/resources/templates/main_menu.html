@@ -12,10 +12,21 @@
 <div class="container mt-5 mb-5">
     <h1 th:text="'Welcome, ' + ${userName}"></h1>
     <h3 th:text="'Type of work with files: ' + ${typeOfWorkFriendlyString}"></h3>
-    <br>
-    <div th:utext="${generatedMenu}"></div>
 </div>
 
+<div class="container mt-5 mb-5">
+    <button type="button" onclick="location.href='/add_menu'" class="w-100 btn btn-lg btn-outline-primary">Add item</button>
+    <br>
+    <button type="button" onclick="location.href='/edit_items'" class="w-100 btn btn-lg btn-outline-primary">Edit items</button>
+    <br>
+    <button type="button" onclick="location.href='/sorting_types_menu'" class="w-100 btn btn-lg btn-outline-primary">Sort items</button>
+    <br>
+    <button type="button" onclick="location.href='/log_in'" class="w-100 btn btn-lg btn-outline-primary">Exit</button>
+</div>
+
+<div class="container mt-5 mb-5">
+    <div th:utext="${generatedMenu}"></div>
+</div>
 
 <footer th:insert="blocks/footer.html :: footer"></footer>
 </body>

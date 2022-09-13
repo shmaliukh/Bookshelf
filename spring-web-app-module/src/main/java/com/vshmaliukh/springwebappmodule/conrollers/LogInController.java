@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.LOG_IN_TITLE;
@@ -38,7 +36,7 @@ public class LogInController {
     @PostMapping("/" + LOG_IN_TITLE)
     ModelAndView logInAuthorization_post(@RequestParam String userName,
                                          @RequestParam int typeOfWork,
-                                         ModelMap model, HttpServletResponse response) {
+                                         ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         model.addAttribute(PAGE_TO_REDIRECT, MAIN_MENU_TITLE);
