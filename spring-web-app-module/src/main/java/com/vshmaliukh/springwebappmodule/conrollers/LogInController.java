@@ -1,36 +1,50 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.LOG_IN_TITLE;
+import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.MAIN_MENU_TITLE;
+import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 @Controller
 public class LogInController {
 
-    public static final String USER_NAME = "userName";
-
-    @GetMapping("/login")
-    String logIn_post(Model model){
-        return "login";
+    @GetMapping("/")
+    String logInAuthorization(ModelMap model) {
+        return LOG_IN_TITLE;
     }
 
-    @PostMapping("/login")
-    String logInAuthorization(@RequestParam String userName, Model model){
-        return "redirect:/login/" + userName;
+    @GetMapping("/" + LOG_IN_TITLE)
+    ModelAndView logInAuthorization_get(@RequestParam String userName,
+                                        @RequestParam int typeOfWork,
+                                        ModelMap model) {
+        model.addAttribute(USER_NAME, userName);
+        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+        return new ModelAndView(LOG_IN_TITLE, model);
     }
 
-    @PostMapping("/login/{userNameParam}")
-    String logIn(@PathVariable(value = "userNameParam") String userNameParam, Model model){
-        model.addAttribute(USER_NAME, userNameParam);
-        return "login";
+    @PostMapping("/" + LOG_IN_TITLE)
+    ModelAndView logInAuthorization_post(@RequestParam String userName,
+                                         @RequestParam int typeOfWork,
+                                         ModelMap model, HttpServletResponse response) {
+        model.addAttribute(USER_NAME, userName);
+        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/" + MAIN_MENU_TITLE, model);
+        System.out.println(response.getContentType());
+        response.addCookie(new Cookie("userName", userName));
+        response.addCookie(new Cookie("typeOfWork", String.valueOf(typeOfWork)));
+        return modelAndView;
     }
 
-    @GetMapping("/login/{userNameParam}")
-    String logIn_get(@PathVariable(value = "userNameParam") String userNameParam, Model model){
-        model.addAttribute(USER_NAME, userNameParam);
-        return "login";
-    }
+
 }
