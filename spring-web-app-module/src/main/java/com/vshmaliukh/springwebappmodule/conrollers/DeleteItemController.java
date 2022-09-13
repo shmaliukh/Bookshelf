@@ -26,8 +26,6 @@ public class DeleteItemController {
                        ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-
-//        String indexOfItem = request.getParameter(INDEX_OF_ITEM);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
         try {

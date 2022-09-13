@@ -16,8 +16,6 @@ import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 public class ShelfWebApp {
 
-    public static final String MODULE_NAME = "web-app-module";
-
     public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));
 
     public static final String SERVLET_NAME_POSTFIX = "_servlet";

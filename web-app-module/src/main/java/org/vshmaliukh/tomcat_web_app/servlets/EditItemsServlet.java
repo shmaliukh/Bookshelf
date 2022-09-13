@@ -16,7 +16,7 @@ import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.readUserAtr;
 
 public class EditItemsServlet extends HttpServlet {
 
-    public static final String INDEX_OF_ITEM = "index_of_item";
+    public static final String INDEX_OF_ITEM = "indexOfItem";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) {

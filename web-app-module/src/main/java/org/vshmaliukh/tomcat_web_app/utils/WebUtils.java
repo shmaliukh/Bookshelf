@@ -10,10 +10,7 @@ import org.vshmaliukh.tomcat_web_app.HtmlTableBuilder;
 import org.vshmaliukh.tomcat_web_app.WebUI;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.USER_PARAMETER_LIST;
@@ -105,6 +102,12 @@ public final class WebUtils {
         Map<String, String> mapOfItemFields = Collections.list(request.getParameterNames())
                 .stream()
                 .collect(Collectors.toMap(parameterName -> parameterName, request::getParameter));
+        USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
+        return mapOfItemFields;
+    }
+
+    public static Map<String, String> readMapOfItemFields(Map map) {
+        Map<String, String> mapOfItemFields = new HashMap<>(map);
         USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
         return mapOfItemFields;
     }
