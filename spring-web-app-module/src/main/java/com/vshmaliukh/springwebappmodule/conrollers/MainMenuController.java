@@ -2,8 +2,8 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
@@ -20,9 +20,9 @@ import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 public class MainMenuController {
 
     @GetMapping("/" + MAIN_MENU_TITLE)
-    public ModelAndView home(@RequestParam String userName,
-                             @RequestParam int typeOfWork,
-                             ModelMap model) {
+    public ModelAndView doGet(@CookieValue String userName,
+                              @CookieValue int typeOfWork,
+                              ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
@@ -30,6 +30,7 @@ public class MainMenuController {
 
         String generatedMenuHtml = HtmlUtil.initMainMenu(userAtr) + WebUtils.generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST);
         model.addAttribute("generatedMenu", generatedMenuHtml);
+
         return new ModelAndView(MAIN_MENU_TITLE, model);
     }
 

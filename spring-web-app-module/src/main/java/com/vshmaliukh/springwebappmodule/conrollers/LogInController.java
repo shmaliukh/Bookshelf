@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
+import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.LOG_IN_TITLE;
 import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.MAIN_MENU_TITLE;
 import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
@@ -29,6 +30,8 @@ public class LogInController {
                                         ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+
+
         return new ModelAndView(LOG_IN_TITLE, model);
     }
 
@@ -38,12 +41,9 @@ public class LogInController {
                                          ModelMap model, HttpServletResponse response) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
+        model.addAttribute(PAGE_TO_REDIRECT, MAIN_MENU_TITLE);
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/" + MAIN_MENU_TITLE, model);
-        System.out.println(response.getContentType());
-        response.addCookie(new Cookie("userName", userName));
-        response.addCookie(new Cookie("typeOfWork", String.valueOf(typeOfWork)));
-        return modelAndView;
+        return new ModelAndView("redirect:/" + COOKIE_TITLE, model);
     }
 
 
