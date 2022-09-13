@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -37,26 +38,19 @@ public class AddMenuController {
                        ModelMap model) {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
-        StringBuilder stringBuilder = new StringBuilder();
-
-
-        stringBuilder.append(GeneratedMenu.MESSAGE_TO_ENTER + " <br>\n");
-
-        stringBuilder.append(HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()));
-        stringBuilder.append(HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE));
-
-        stringBuilder.append(generateMessageAboutAddedItem(itemClassType, itemGsonStr));
-
-        model.addAttribute("generatedHtmlStr", stringBuilder.toString());
+        model.addAttribute("generatedHtmlStr",
+                GeneratedMenu.MESSAGE_TO_ENTER + " <br>\n" +
+                        HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()) +
+                        HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE) +
+                        generateMessageAboutAddedItem(itemClassType, itemGsonStr));
 
         return new ModelAndView(ADD_MENU_TITLE, model);
     }
 
     private String generateMessageAboutAddedItem(String itemClassType, String itemGsonStr) {
-        if (itemGsonStr != null && itemClassType != null) {
+        if (StringUtils.isNotBlank(itemGsonStr) && StringUtils.isNotBlank(itemClassType)) {
             Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(itemClassType);
             Item item = gson.fromJson(itemGsonStr, classByName);
-
             return "Added new item:" +
                     " <br>\n " +
                     " <br>\n " +
@@ -66,9 +60,7 @@ public class AddMenuController {
     }
 
     @PostMapping("/" + ADD_MENU_TITLE)
-    ModelAndView doPost(@CookieValue String userName,
-                        @CookieValue int typeOfWork,
-                        @RequestParam(defaultValue = "0") int menuItemIndex,
+    ModelAndView doPost(@RequestParam(defaultValue = "0") int menuItemIndex,
                         ModelMap model) {
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
 

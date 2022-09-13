@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -35,9 +36,6 @@ public class AddItemController extends HttpServlet {
     ModelAndView doPost(@CookieValue String userName,
                         @CookieValue int typeOfWork,
                         @RequestParam Map<String, String> allParams,
-//                        @RequestParam String userName,
-//                        @RequestParam int typeOfWork,
-//                        @RequestParam(required = false) String itemClassType,
                         ModelMap modelMap) {
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
@@ -58,21 +56,6 @@ public class AddItemController extends HttpServlet {
             modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         }
         return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
-
-//        ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-//
-//        Map<String, String> itemFieldValueMap = WebUtils.readMapOfItemFields(modelMap.asMap());
-//
-//        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
-//        if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
-//            Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
-//            webShelfHandler.addItem(item);
-//
-//            modelMap.addAttribute(ITEM_GSON_STR, gson.toJson(item));
-//            modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
-//        }
-//        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, new ModelMap().addAllAttributes(modelMap.asMap()));
-        //return new ModelAndView("add_item", modelMap);
     }
 
     @GetMapping("/" + ADD_ITEM_TITLE)
@@ -81,17 +64,12 @@ public class AddItemController extends HttpServlet {
                        @RequestParam String itemClassType,
                        @RequestParam String isRandom,
                        ModelMap modelMap) {
-//        modelMap.addAttribute(USER_NAME, userName);
-//        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
 
-
         StringBuilder stringBuilder = new StringBuilder();
-//        String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
-//        String isRandom = request.getParameter(IS_RANDOM);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
-        if (itemClassType != null && !itemClassType.equals("")) {
+        if (StringUtils.isNotBlank(itemClassType)) {
             ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
 
             stringBuilder.append("" +

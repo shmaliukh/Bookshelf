@@ -29,17 +29,9 @@ import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.*;
 public class ItemsSortingMenuController {
 
     @PostMapping("/" + ITEMS_SORTING_MENU_TITLE)
-    ModelAndView doPost(@CookieValue String userName,
-                        @CookieValue int typeOfWork,
-                        @RequestParam String menuItemIndex,
+    ModelAndView doPost(@RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
                         ModelMap model) {
-//        model.addAttribute(USER_NAME, userName);
-//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-//        UrlUtil.redirectTo(ITEMS_SORTING_MENU_TITLE, response,
-//                UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, readUserAtr(request))
-//                        .addParameter(MENU_ITEM_INDEX, request.getParameter(MENU_ITEM_INDEX))
-//                        .addParameter(ITEM_CLASS_TYPE, request.getParameter(ITEM_CLASS_TYPE)));
         model.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE, model);
@@ -51,34 +43,22 @@ public class ItemsSortingMenuController {
                        @RequestParam(defaultValue = "") String menuItemIndex,
                        @RequestParam(defaultValue = "") String itemClassType,
                        ModelMap model) {
-//        model.addAttribute(USER_NAME, userName);
-//        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         model.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
-//        WebPageBuilder webPageBuilder = new WebPageBuilder(ITEMS_SORTING_MENU_TITLE);
-//        Map<String, String> userAtr = readUserAtr(request);
 
-//        String menuItemIndex = request.getParameter(MENU_ITEM_INDEX);
-//        String itemClassType = request.getParameter(ITEM_CLASS_TYPE);
         StringBuilder stringBuilder = new StringBuilder();
-
         if (itemClassType != null && !itemClassType.equals("")) {
-
             ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-
             stringBuilder.append(GeneratedMenu.MESSAGE_TO_ENTER + " <br>\n");
             stringBuilder.append(initMenu(userAtr, itemClassType, handlerByName)); // TODO
-
-            printSortedTable(userAtr, stringBuilder, menuItemIndex, itemClassType, handlerByName);
+            generateItemsTableStr(userAtr, stringBuilder, menuItemIndex, itemClassType, handlerByName);
         }
 
         stringBuilder.append(HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE));
 
-//        webPageBuilder.addMessageBlock(request.getParameter(INFORM_MESSAGE));
-
-        String generatedHtmlStr = stringBuilder.toString();
-        model.addAttribute("generatedHtmlStr", generatedHtmlStr);
+//        stringBuilder.append(request.getParameter(INFORM_MESSAGE));
+        model.addAttribute("generatedHtmlStr", stringBuilder.toString());
         return new ModelAndView(ITEMS_SORTING_MENU_TITLE, model);
     }
 
@@ -88,7 +68,7 @@ public class ItemsSortingMenuController {
                 handlerByName.getSortingMenuList());
     }
 
-    private <T extends Item> void printSortedTable(Map<String, String> userAtr, StringBuilder stringBuilder, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
+    private <T extends Item> void generateItemsTableStr(Map<String, String> userAtr, StringBuilder stringBuilder, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
         Class classType = ItemHandlerProvider.getClassByName(classTypeStr);
         SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
         List<T> sortedItemsByClass = new ArrayList<>();
