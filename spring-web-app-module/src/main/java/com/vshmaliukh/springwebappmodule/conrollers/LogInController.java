@@ -17,7 +17,7 @@ import static org.vshmaliukh.Constants.*;
 public class LogInController {
 
     @GetMapping(value = {"/", "/" + Constants.LOG_IN_TITLE})
-    ModelAndView logInAuthorization_get(@CookieValue(defaultValue = "") String userName,
+    ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
                                         @CookieValue(defaultValue = "") String typeOfWork,
                                         ModelMap model) {
         model.addAttribute(USER_NAME, userName);
@@ -42,7 +42,7 @@ public class LogInController {
     }
 
     @PostMapping("/" + Constants.LOG_IN_TITLE)
-    ModelAndView logInAuthorization_post(@RequestParam String userName,
+    ModelAndView doPost(@RequestParam String userName,
                                          @RequestParam int typeOfWork,
                                          ModelMap model) {
         model.addAttribute(USER_NAME, userName);
@@ -51,6 +51,5 @@ public class LogInController {
 
         return new ModelAndView("redirect:/" + COOKIE_TITLE, model);
     }
-
 
 }
