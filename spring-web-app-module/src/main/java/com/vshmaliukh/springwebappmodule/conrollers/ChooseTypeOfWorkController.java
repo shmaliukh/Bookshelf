@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.ConfigFile;
 
 import java.util.Map;
 
@@ -21,7 +20,7 @@ import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
 @Controller
 public class ChooseTypeOfWorkController {
 
-    public static final String DESCRIPTION = "Choose type of work to save/read information about bookshelf items";
+    public static final String TYPE_OF_WORK_DESCRIPTION = "Choose type of work to save/read information about bookshelf items";
 
     @GetMapping("/" + CHOOSE_TYPE_OF_WORK_TITLE)
     ModelAndView doGet(@CookieValue(value = TYPE_OF_WORK_WITH_FILES, defaultValue = "") String typeOfWork,
@@ -29,31 +28,14 @@ public class ChooseTypeOfWorkController {
         // TODO add implementation code
 
         StringBuilder sb = new StringBuilder();
-        sb.append(description(DESCRIPTION));
+        sb.append(description(TYPE_OF_WORK_DESCRIPTION));
         sb.append(split());
         sb.append(divContainer(
-                form(CHOOSE_TYPE_OF_WORK_TITLE, "post", generateRadioButtons(typeOfWork), formSubmitButton())
+                form(CHOOSE_TYPE_OF_WORK_TITLE, "post", ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork), formSubmitButton())
         ));
 
         modelMap.addAttribute(GENERATED_HTML_STR, sb.toString());
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
-    }
-
-    String generateRadioButtons(String currentTypeOfWork) {
-        StringBuilder sb = new StringBuilder();
-        Map<Object, String> typeOfWorkMap = ConfigFile.typeOfWorkMap;
-        for (Map.Entry<Object, String> entry : typeOfWorkMap.entrySet()) {
-            String integerTypeOfWork = entry.getKey().toString();
-            String friendlyStrTypeOfWork = entry.getValue();
-            if(currentTypeOfWork.equals(integerTypeOfWork)){
-                sb.append(radioButton(friendlyStrTypeOfWork, integerTypeOfWork, TYPE_OF_WORK_WITH_FILES, true));
-            }
-            else {
-                sb.append(radioButton(friendlyStrTypeOfWork, integerTypeOfWork, TYPE_OF_WORK_WITH_FILES, false));
-            }
-
-        }
-        return sb.toString();
     }
 
     @PostMapping("/" + CHOOSE_TYPE_OF_WORK_TITLE)

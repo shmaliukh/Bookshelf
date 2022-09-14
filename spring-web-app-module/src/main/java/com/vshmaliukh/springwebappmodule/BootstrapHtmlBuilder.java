@@ -61,4 +61,16 @@ public final class BootstrapHtmlBuilder {
     public static String breaker() {
         return "<br>";
     }
+
+    public static String htext(String text, String level) {
+        return "<h" + level + ">" + text + "</h" + level + ">";
+    }
+
+    public static String input(String type, String name, String placeholder, String value) {
+        return "<input type=\"" + type + "\" " +
+                "name=\"" + name + "\" " +
+                "placeholder=\"" + placeholder + "\" " +
+                "class=\"form-control\"" +
+                "value=\"" + value + "\">";
+    }
 }
