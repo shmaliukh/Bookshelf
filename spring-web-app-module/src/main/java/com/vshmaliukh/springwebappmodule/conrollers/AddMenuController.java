@@ -15,22 +15,22 @@ import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.Constants;
+import org.vshmaliukh.utils.HtmlUtil;
+import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Collections;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.IS_RANDOM;
-import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
+import static org.vshmaliukh.Constants.IS_RANDOM;
+import static org.vshmaliukh.Constants.ITEM_CLASS_TYPE;
 
 @Controller
 public class AddMenuController {
 
     static Gson gson = new Gson();
 
-    @GetMapping("/" + ADD_MENU_TITLE)
+    @GetMapping("/" + Constants.ADD_MENU_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam(required = false) String itemClassType,
@@ -40,11 +40,11 @@ public class AddMenuController {
 
         model.addAttribute("generatedHtmlStr",
                 GeneratedMenu.MESSAGE_TO_ENTER + " <br>\n" +
-                        HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()) +
-                        HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(MAIN_MENU_TITLE), MAIN_MENU_TITLE) +
+                        HtmlUtil.generateMenuItemsFormHTML(userAtr, Constants.ADD_MENU_TITLE, new GeneratedMenuForAdding()) +
+                        HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(Constants.MAIN_MENU_TITLE), Constants.MAIN_MENU_TITLE) +
                         generateMessageAboutAddedItem(itemClassType, itemGsonStr));
 
-        return new ModelAndView(ADD_MENU_TITLE, model);
+        return new ModelAndView(Constants.ADD_MENU_TITLE, model);
     }
 
     private String generateMessageAboutAddedItem(String itemClassType, String itemGsonStr) {
@@ -59,7 +59,7 @@ public class AddMenuController {
         return "";
     }
 
-    @PostMapping("/" + ADD_MENU_TITLE)
+    @PostMapping("/" + Constants.ADD_MENU_TITLE)
     ModelAndView doPost(@RequestParam(defaultValue = "0") int menuItemIndex,
                         ModelMap model) {
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
@@ -75,8 +75,8 @@ public class AddMenuController {
                 randValue = "true";
             }
             model.addAttribute(IS_RANDOM, randValue);
-            return new ModelAndView("redirect:/" + ADD_ITEM_TITLE, model);
+            return new ModelAndView("redirect:/" + Constants.ADD_ITEM_TITLE, model);
         }
-        return new ModelAndView(ADD_MENU_TITLE, model);
+        return new ModelAndView(Constants.ADD_MENU_TITLE, model);
     }
 }

@@ -1,29 +1,24 @@
-package org.vshmaliukh.tomcat_web_app.utils;
+package org.vshmaliukh.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.HtmlTableBuilder;
+import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
-import org.vshmaliukh.tomcat_web_app.HtmlTableBuilder;
-import org.vshmaliukh.tomcat_web_app.WebUI;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.USER_PARAMETER_LIST;
-import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
+import static org.vshmaliukh.Constants.*;
 
 @Slf4j
 public final class WebUtils {
 
     public static final Random RANDOM = new Random();
-    public static final String MENU_ITEM_INDEX = "menuItemIndex";
-    public static final String INFORM_MESSAGE = "inform_message";
 
     private WebUtils() {
     }

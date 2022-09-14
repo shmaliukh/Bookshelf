@@ -3,8 +3,8 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.USER_NAME;
 
 public class ControllerUtils {
 

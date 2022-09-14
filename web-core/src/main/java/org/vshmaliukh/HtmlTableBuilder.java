@@ -1,13 +1,10 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh;
 
 import org.vshmaliukh.print_table_service.AbstractTableHandler;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.utils.WebUtils;
 
 import java.util.List;
 import java.util.Map;
-
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.CHANGE_ITEM_BORROWED_STATE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.DELETE_ITEM_TITLE;
 
 public class HtmlTableBuilder extends AbstractTableHandler {
 
@@ -64,8 +61,8 @@ public class HtmlTableBuilder extends AbstractTableHandler {
             stringBuilder.append("</td>");
         }
         if (isForEditing) {
-            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(CHANGE_ITEM_BORROWED_STATE, stringList.get(0), userAtr));
-            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(DELETE_ITEM_TITLE, stringList.get(0), userAtr));
+            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(Constants.CHANGE_ITEM_BORROWED_STATE, stringList.get(0), userAtr));
+            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(Constants.DELETE_ITEM_TITLE, stringList.get(0), userAtr));
         }
         stringBuilder.append("</tr>");
         return stringBuilder.toString();

@@ -10,30 +10,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.utils.HtmlUtil;
+import org.vshmaliukh.utils.UrlUtil;
+import org.vshmaliukh.utils.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.ADD_ITEM_TITLE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.ADD_MENU_TITLE;
-import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
-import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_GSON_STR;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
+import static org.vshmaliukh.Constants.*;
 
 @Controller
 public class AddItemController extends HttpServlet {
 
     static Gson gson = new Gson();
 
-    @PostMapping("/" + ADD_ITEM_TITLE)
+    @PostMapping("/" + Constants.ADD_ITEM_TITLE)
     ModelAndView doPost(@CookieValue String userName,
                         @CookieValue int typeOfWork,
                         @RequestParam Map<String, String> allParams,
@@ -54,10 +50,10 @@ public class AddItemController extends HttpServlet {
             modelMap.addAttribute(ITEM_GSON_STR, gson.toJson(item));
             modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         }
-        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
+        return new ModelAndView("redirect:/" + Constants.ADD_MENU_TITLE, modelMap);
     }
 
-    @GetMapping("/" + ADD_ITEM_TITLE)
+    @GetMapping("/" + Constants.ADD_ITEM_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam String itemClassType,
@@ -73,7 +69,7 @@ public class AddItemController extends HttpServlet {
 
             stringBuilder.append("" +
                     "<form action = \"" +
-                    UrlUtil.generateBaseURLBuilder(ADD_ITEM_TITLE, userAtr)
+                    UrlUtil.generateBaseURLBuilder(Constants.ADD_ITEM_TITLE, userAtr)
                             .addParameter(ITEM_CLASS_TYPE, itemClassType) + "\" " +
                     "method = \"POST\">\n" +
                     "Create " + itemClassType + "\n" +
@@ -85,10 +81,10 @@ public class AddItemController extends HttpServlet {
                 stringBuilder.append(handlerByName.generateHTMLFormBodyToCreateItem());
             }
         }
-        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(ADD_MENU_TITLE), "Back"));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(Constants.ADD_MENU_TITLE), "Back"));
 
         String generatedHtmlStr = stringBuilder.toString();
         modelMap.addAttribute("generatedHtmlStr", generatedHtmlStr);
-        return new ModelAndView(ADD_ITEM_TITLE, modelMap);
+        return new ModelAndView(Constants.ADD_ITEM_TITLE, modelMap);
     }
 }

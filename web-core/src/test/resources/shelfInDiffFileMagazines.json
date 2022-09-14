@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "noNameMagazine1",
+    "Number of pages": 1,
+    "Borrowed": false
+  },
+  {
+    "Name": "noNameMagazine2",
+    "Number of pages": 2,
+    "Borrowed": true
+  }
+]

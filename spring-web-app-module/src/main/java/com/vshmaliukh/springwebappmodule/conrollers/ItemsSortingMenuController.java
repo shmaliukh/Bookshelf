@@ -8,43 +8,43 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
+import org.vshmaliukh.utils.HtmlUtil;
+import org.vshmaliukh.utils.UrlUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.ITEMS_SORTING_MENU_TITLE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.SORTING_TYPES_MENU_TITLE;
-import static org.vshmaliukh.tomcat_web_app.servlets.AddMenuServlet.ITEM_CLASS_TYPE;
-import static org.vshmaliukh.tomcat_web_app.utils.HtmlUtil.generateMenuItemsFormHTML;
-import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.*;
+import static org.vshmaliukh.Constants.ITEM_CLASS_TYPE;
+import static org.vshmaliukh.utils.HtmlUtil.generateMenuItemsFormHTML;
+import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
+import static org.vshmaliukh.utils.WebUtils.generateTableOfShelfItems;
 
 @Controller
 public class ItemsSortingMenuController {
 
-    @PostMapping("/" + ITEMS_SORTING_MENU_TITLE)
+    @PostMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
     ModelAndView doPost(@RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
                         ModelMap model) {
-        model.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
+        model.addAttribute(Constants.MENU_ITEM_INDEX, menuItemIndex);
         model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
-        return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE, model);
+        return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, model);
     }
 
-    @GetMapping("/" + ITEMS_SORTING_MENU_TITLE)
+    @GetMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam(defaultValue = "") String menuItemIndex,
                        @RequestParam(defaultValue = "") String itemClassType,
                        ModelMap model) {
-        model.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
+        model.addAttribute(Constants.MENU_ITEM_INDEX, menuItemIndex);
         model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
@@ -56,15 +56,15 @@ public class ItemsSortingMenuController {
             generateItemsTableStr(userAtr, stringBuilder, menuItemIndex, itemClassType, handlerByName);
         }
 
-        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(SORTING_TYPES_MENU_TITLE), SORTING_TYPES_MENU_TITLE));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(Constants.SORTING_TYPES_MENU_TITLE), Constants.SORTING_TYPES_MENU_TITLE));
 
 //        stringBuilder.append(request.getParameter(INFORM_MESSAGE));
         model.addAttribute("generatedHtmlStr", stringBuilder.toString());
-        return new ModelAndView(ITEMS_SORTING_MENU_TITLE, model);
+        return new ModelAndView(Constants.ITEMS_SORTING_MENU_TITLE, model);
     }
 
     private String initMenu(Map userAtr, String itemClassType, ItemHandler<?> handlerByName) {
-        return generateMenuItemsFormHTML(UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE, userAtr)
+        return generateMenuItemsFormHTML(UrlUtil.generateBaseURLBuilder(Constants.ITEMS_SORTING_MENU_TITLE, userAtr)
                         .addParameter(ITEM_CLASS_TYPE, itemClassType),
                 handlerByName.getSortingMenuList());
     }

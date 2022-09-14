@@ -6,19 +6,17 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
+import org.vshmaliukh.Constants;
+import org.vshmaliukh.utils.HtmlUtil;
+import org.vshmaliukh.utils.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.EDIT_ITEMS_TITLE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.MAIN_MENU_TITLE;
-
 @Controller
 public class EditItemsController extends HttpServlet {
 
-    @GetMapping("/" + EDIT_ITEMS_TITLE)
+    @GetMapping("/" + Constants.EDIT_ITEMS_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        ModelMap model) {
@@ -27,10 +25,10 @@ public class EditItemsController extends HttpServlet {
 
         String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr);
         stringBuilder.append(tableForEditingItems);
-        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(MAIN_MENU_TITLE), MAIN_MENU_TITLE));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(Constants.MAIN_MENU_TITLE), Constants.MAIN_MENU_TITLE));
 
         model.addAttribute("generatedHtmlStr", stringBuilder.toString());
 
-        return new ModelAndView(EDIT_ITEMS_TITLE, model);
+        return new ModelAndView(Constants.EDIT_ITEMS_TITLE, model);
     }
 }

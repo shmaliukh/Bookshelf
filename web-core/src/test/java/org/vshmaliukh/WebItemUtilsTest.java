@@ -1,4 +1,4 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -7,17 +7,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
+import org.vshmaliukh.utils.HtmlUtil;
+import org.vshmaliukh.utils.UrlUtil;
+import org.vshmaliukh.utils.WebUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.USER_NAME;
 
 class WebItemUtilsTest {
 
@@ -33,17 +35,17 @@ class WebItemUtilsTest {
         map1.put(TYPE_OF_WORK_WITH_FILES, "1");
         return Stream.of(
                 Arguments.of(
-                        DELETE_ITEM_TITLE,
+                        Constants.DELETE_ITEM_TITLE,
                         map1,
                         "/delete_item?user_name=USER_NAME&type_of_work_with_files=1"
                 ),
                 Arguments.of(
-                        MAIN_MENU_TITLE,
+                        Constants.MAIN_MENU_TITLE,
                         map1,
                         "/main_menu?user_name=USER_NAME&type_of_work_with_files=1"
                 ),
                 Arguments.of(
-                        LOG_IN_TITLE,
+                        Constants.LOG_IN_TITLE,
                         map1,
                         "/log_in?user_name=USER_NAME&type_of_work_with_files=1"
                 ),
@@ -67,20 +69,20 @@ class WebItemUtilsTest {
         Map<String, String> map1 = new HashMap<>();
         map1.put(USER_NAME, "USER_NAME");
         map1.put(TYPE_OF_WORK_WITH_FILES, "1");
-        map1.put(ITEMS_SORTING_MENU_TITLE, "1");
+        map1.put(Constants.ITEMS_SORTING_MENU_TITLE, "1");
         return Stream.of(
                 Arguments.of(
-                        DELETE_ITEM_TITLE,
+                        Constants.DELETE_ITEM_TITLE,
                         map1,
                         "/delete_item?user_name=USER_NAME&type_of_work_with_files=1&parameterV=V"
                 ),
                 Arguments.of(
-                        MAIN_MENU_TITLE,
+                        Constants.MAIN_MENU_TITLE,
                         map1,
                         "/main_menu?user_name=USER_NAME&type_of_work_with_files=1&parameterV=V"
                 ),
                 Arguments.of(
-                        LOG_IN_TITLE,
+                        Constants.LOG_IN_TITLE,
                         map1,
                         "/log_in?user_name=USER_NAME&type_of_work_with_files=1&parameterV=V"
                 ),
@@ -101,21 +103,21 @@ class WebItemUtilsTest {
     @Test
     void testFormHTMLButton_str() {
         assertEquals("<button onclick=\"window.location.href='log_in';\"> log_in</button> \n",
-                HtmlUtil.formHTMLButton(LOG_IN_TITLE, LOG_IN_TITLE));
+                HtmlUtil.formHTMLButton(Constants.LOG_IN_TITLE, Constants.LOG_IN_TITLE));
     }
 
     @Test
     void testFormHTMLButton_baseURLString() {
         assertEquals("<button onclick=\"window.location.href='/log_in?user_name&type_of_work_with_files';\"> log_in</button> \n",
                 HtmlUtil.formHTMLButton(
-                        UrlUtil.generateBaseURLString(LOG_IN_TITLE, Collections.singletonMap("k", "v"))
-                        , LOG_IN_TITLE));
+                        UrlUtil.generateBaseURLString(Constants.LOG_IN_TITLE, Collections.singletonMap("k", "v"))
+                        , Constants.LOG_IN_TITLE));
     }
 
     @Test
     void testGenerateFormHTMLStart() {
         assertEquals("<form action = \"/log_in?user_name&type_of_work_with_files\" method = \"POST\">\n",
-                HtmlUtil.generateFormHTMLStart(Collections.singletonMap("k", "v"), LOG_IN_TITLE));
+                HtmlUtil.generateFormHTMLStart(Collections.singletonMap("k", "v"), Constants.LOG_IN_TITLE));
     }
 
     @Test
@@ -155,7 +157,7 @@ class WebItemUtilsTest {
                         "<br>\n" +
                         "<input type = \"submit\" value = \"Submit\" />\n" +
                         "</form>",
-                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForAdding()));
+                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), Constants.LOG_IN_TITLE, new GeneratedMenuForAdding()));
     }
 
     @Test
@@ -179,7 +181,7 @@ class WebItemUtilsTest {
                         "<br>\n" +
                         "<input type = \"submit\" value = \"Submit\" />\n" +
                         "</form>",
-                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), LOG_IN_TITLE, new GeneratedMenuForSorting()));
+                HtmlUtil.generateMenuItemsFormHTML(Collections.singletonMap("k", "v"), Constants.LOG_IN_TITLE, new GeneratedMenuForSorting()));
     }
 
     @Test

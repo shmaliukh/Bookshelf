@@ -1,4 +1,4 @@
-package org.vshmaliukh.tomcat_web_app;
+package org.vshmaliukh;
 
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.AbstractUI;

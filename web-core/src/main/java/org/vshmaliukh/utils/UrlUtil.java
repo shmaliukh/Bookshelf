@@ -1,4 +1,4 @@
-package org.vshmaliukh.tomcat_web_app.utils;
+package org.vshmaliukh.utils;
 
 import org.apache.http.client.utils.URIBuilder;
 
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.USER_PARAMETER_LIST;
+import static org.vshmaliukh.Constants.USER_PARAMETER_LIST;
 
 public final class UrlUtil {
 

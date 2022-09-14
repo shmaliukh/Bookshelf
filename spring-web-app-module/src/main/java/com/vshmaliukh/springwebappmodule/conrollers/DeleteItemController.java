@@ -6,18 +6,17 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.DELETE_ITEM_TITLE;
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.EDIT_ITEMS_TITLE;
-import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.generateShelfHandler;
+import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
 
 @Controller
 public class DeleteItemController {
 
-    @GetMapping("/" + DELETE_ITEM_TITLE)
+    @GetMapping("/" + Constants.DELETE_ITEM_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam int indexOfItem,
@@ -28,7 +27,7 @@ public class DeleteItemController {
             webShelfHandler.deleteItemByIndex(indexOfItem);
         }
 
-        return new ModelAndView("redirect:/" + EDIT_ITEMS_TITLE, model);
+        return new ModelAndView("redirect:/" + Constants.EDIT_ITEMS_TITLE, model);
     }
 
 }
