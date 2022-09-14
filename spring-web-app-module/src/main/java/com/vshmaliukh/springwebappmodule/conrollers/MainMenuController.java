@@ -46,11 +46,11 @@ public class MainMenuController {
         ));
         sb.append(split());
         sb.append(divContainer(
-                buttonWithRef("Add item", "/" + ADD_MENU_TITLE) +
-                        buttonWithRef("Edit items", "/" + EDIT_ITEMS_TITLE) +
-                        buttonWithRef("Sort items", "/" + SORTING_TYPES_MENU_TITLE) +
-                        buttonWithRef("Change type of work", "/" + CHOOSE_TYPE_OF_WORK_TITLE) +
-                        buttonWithRef("Exit", "/")
+                buttonWithRef("Add item", ADD_MENU_TITLE) +
+                        buttonWithRef("Edit items", EDIT_ITEMS_TITLE) +
+                        buttonWithRef("Sort items", SORTING_TYPES_MENU_TITLE) +
+                        buttonWithRef("Change type of work", CHOOSE_TYPE_OF_WORK_TITLE) +
+                        buttonWithRef("Exit", LOG_IN_TITLE)
         ));
         sb.append(split());
         sb.append(divContainer(

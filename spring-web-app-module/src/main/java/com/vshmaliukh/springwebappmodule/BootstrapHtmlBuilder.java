@@ -29,6 +29,25 @@ public final class BootstrapHtmlBuilder {
         return sb.toString();
     }
 
+    public static String radioButton(String label, String id, String name, boolean checked, String value) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<div class=\"form-check\">\n")
+                .append("<input id=\"").append(id).append("\"")
+                .append("name=\"").append(name).append("\"")
+                .append("type=\"radio\" class=\"form-check-input\" value=\"" + id + "\"")
+                .append("value=\"").append(value).append("\"");
+        if (checked) {
+            sb.append(" checked=\"\" ");
+        }
+        sb.append("required=\"true\">\n")
+                .append("<label class=\"form-check-label\" ")
+                .append("for=\"").append(id).append("\">")
+                .append(label)
+                .append("</label>\n")
+                .append("</div>");
+        return sb.toString();
+    }
+
 //    public static String checkBox(){
 //        return "<div class=\"form-check\">\n" +
 //                "        <input type=\"checkbox\" class=\"form-check-input\" id=\"same-address\">\n" +
@@ -75,7 +94,7 @@ public final class BootstrapHtmlBuilder {
     }
 
     public static String buttonWithRef(String label, String ref) {
-        return "<button type=\"button\" onclick=\"location.href='" + ref + "'\" " +
+        return "<button type=\"button\" onclick=\"location.href='/" + ref + "'\" " +
                 "class=\"w-100 btn btn-lg btn-outline-primary\">" + label + "</button>\n" +
                 "<br>";
     }
