@@ -24,9 +24,7 @@ import static org.vshmaliukh.Constants.USER_NAME;
 public class SortingTypesMenuController {
 
     @PostMapping("/" + Constants.SORTING_TYPES_MENU_TITLE)
-    public ModelAndView doPost(@RequestParam String userName,
-                               @RequestParam int typeOfWork,
-                               @RequestParam String menuItemIndex,
+    public ModelAndView doPost(@RequestParam String menuItemIndex,
                                ModelMap model) {
         if (menuItemIndex != null && !menuItemIndex.equals("")) {
             GeneratedMenu generatedMenu = new GeneratedMenuForSorting();
