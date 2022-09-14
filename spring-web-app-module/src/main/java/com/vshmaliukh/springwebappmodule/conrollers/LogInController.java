@@ -33,7 +33,7 @@ public class LogInController {
                 htext("Please, log in", "1") + split() +
                         form(LOG_IN_TITLE, "post",
                                 description("User name") +
-                                        input("text", "userName", "Enter user name", userName) +
+                                        logInInputUserName(USER_NAME, userName) +
                                         split() +
                                         description(ChooseTypeOfWorkController.TYPE_OF_WORK_DESCRIPTION) +
                                         ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork),

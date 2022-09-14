@@ -74,4 +74,20 @@ public final class BootstrapHtmlBuilder {
                 "value=\"" + value + "\"" +
                 "required>";
     }
+
+    public static String logInInputUserName(String name, String value) {
+        return  "<div class=\"input-group has-validation\">\n" +
+                "                    <span class=\"input-group-text\">@</span>\n" +
+                "                    <input type=\"text\" " +
+                "                       name=\"" + name + "\" " +
+                "                       class=\"form-control\" " +
+                "                       id=\"userName\" " +
+                "                       placeholder=\"Username\" " +
+                "                       value=\"" + value + "\" " +
+                "                       required=\"\">\n" +
+//                "                    <div class=\"invalid-feedback\">\n" +
+//                "                        Your username is required.\n" +
+//                "                    </div>\n" +
+                "                </div>";
+    }
 }
