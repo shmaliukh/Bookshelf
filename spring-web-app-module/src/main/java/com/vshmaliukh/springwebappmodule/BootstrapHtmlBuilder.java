@@ -66,6 +66,20 @@ public final class BootstrapHtmlBuilder {
         return "<h" + level + ">" + text + "</h" + level + ">";
     }
 
+    public static String div(String text) {
+        return "<div>" + text + "</div>";
+    }
+
+    public static String div(String divCustomization, String text) {
+        return "<div " + divCustomization + ">" + text + "</div>";
+    }
+
+    public static String buttonWithRef(String label, String ref) {
+        return "<button type=\"button\" onclick=\"location.href='" + ref + "'\" " +
+                "class=\"w-100 btn btn-lg btn-outline-primary\">" + label + "</button>\n" +
+                "<br>";
+    }
+
     public static String input(String type, String name, String placeholder, String value) {
         return "<input type=\"" + type + "\" " +
                 "name=\"" + name + "\" " +
@@ -76,7 +90,7 @@ public final class BootstrapHtmlBuilder {
     }
 
     public static String logInInputUserName(String name, String value) {
-        return  "<div class=\"input-group has-validation\">\n" +
+        return "<div class=\"input-group has-validation\">\n" +
                 "                    <span class=\"input-group-text\">@</span>\n" +
                 "                    <input type=\"text\" " +
                 "                       name=\"" + name + "\" " +

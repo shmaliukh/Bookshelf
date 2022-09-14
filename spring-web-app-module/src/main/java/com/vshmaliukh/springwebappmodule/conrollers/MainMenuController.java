@@ -11,9 +11,10 @@ import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Map;
 
+import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.*;
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.Constants.USER_NAME;
+import static org.vshmaliukh.Constants.*;
 
 @Controller
 public class MainMenuController {
@@ -24,15 +25,39 @@ public class MainMenuController {
                               ModelMap model) {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
-        model.addAttribute("typeOfWorkFriendlyString", typeOfWorkMap.get(model.getAttribute(TYPE_OF_WORK_WITH_FILES)));
+        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
 
-        String generatedMenuHtml =
-//                HtmlUtil.initMainMenu(userAtr) +
-                WebUtils.generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST);
-        model.addAttribute("generatedMenu", generatedMenuHtml);
+        String friendlyTypeOfWorkStr = typeOfWorkMap.get(model.getAttribute(TYPE_OF_WORK_WITH_FILES));
+        model.addAttribute(GENERATED_HTML_STR, generateMainMenuHtmlText(userAtr, friendlyTypeOfWorkStr));
 
-        return new ModelAndView(Constants.MAIN_MENU_TITLE, model);
+        model.addAttribute(GENERATED_TITTLE, "Home");
+        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
+    }
+
+    private static String generateMainMenuHtmlText(Map<String, String> userAtr, String friendlyTypeOfWorkStr) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(divContainer(
+                div("class=\"row g-4  row-cols-1 row-cols-lg-2\"",
+                        htext("Welcome, " + userAtr.get(USER_NAME), "1") +
+                                div(htext("Type of work with files: ", "3") +
+                                        htext(friendlyTypeOfWorkStr, "3")
+                                )
+                )
+        ));
+        sb.append(split());
+        sb.append(divContainer(
+                buttonWithRef("Add item", "/" + ADD_MENU_TITLE) +
+                        buttonWithRef("Edit items", "/" + EDIT_ITEMS_TITLE) +
+                        buttonWithRef("Sort items", "/" + SORTING_TYPES_MENU_TITLE) +
+                        buttonWithRef("Change type of work", "/" + CHOOSE_TYPE_OF_WORK_TITLE) +
+                        buttonWithRef("Exit", "/")
+        ));
+        sb.append(split());
+        sb.append(divContainer(
+                htext("Current state of bookshelf:", "4") +
+                        WebUtils.generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST)
+        ));
+        return sb.toString();
     }
 
 }
