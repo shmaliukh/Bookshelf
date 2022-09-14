@@ -71,6 +71,7 @@ public final class BootstrapHtmlBuilder {
                 "name=\"" + name + "\" " +
                 "placeholder=\"" + placeholder + "\" " +
                 "class=\"form-control\"" +
-                "value=\"" + value + "\">";
+                "value=\"" + value + "\"" +
+                "required>";
     }
 }
