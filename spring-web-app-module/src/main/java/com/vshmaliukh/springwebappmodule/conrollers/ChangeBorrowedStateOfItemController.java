@@ -22,7 +22,7 @@ public class ChangeBorrowedStateOfItemController {
     @GetMapping("/" + CHANGE_ITEM_BORROWED_STATE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
-                       @RequestParam int indexOfItem, // TODO use int value
+                       @RequestParam int indexOfItem,
                        ModelMap model) {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
         SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);

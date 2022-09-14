@@ -1,12 +1,12 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
+import com.vshmaliukh.springwebappmodule.SpringAppUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 
 import javax.servlet.http.HttpServlet;
@@ -27,7 +27,7 @@ public class EditItemsController extends HttpServlet {
 
         String tableForEditingItems = WebUtils.generateTableForEditingItems(userAtr);
         stringBuilder.append(tableForEditingItems);
-        stringBuilder.append(HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(MAIN_MENU_TITLE), MAIN_MENU_TITLE));
 
         model.addAttribute("generatedHtmlStr", stringBuilder.toString());
 

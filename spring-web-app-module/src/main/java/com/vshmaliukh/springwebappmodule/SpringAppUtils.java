@@ -6,7 +6,7 @@ public final class SpringAppUtils {
 
     private SpringAppUtils(){}
 
-    public static String generateUrlPath(String pageTitle){
+    public static String generateUrlString(String pageTitle){
         return new URIBuilder().setPath(pageTitle).toString();
     }
 

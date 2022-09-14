@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import com.vshmaliukh.springwebappmodule.SpringAppUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,8 +38,6 @@ public class AddItemController extends HttpServlet {
                         @CookieValue int typeOfWork,
                         @RequestParam Map<String, String> allParams,
                         ModelMap modelMap) {
-        modelMap.addAttribute(USER_NAME, userName);
-        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         String itemClassType = allParams.remove(ITEM_CLASS_TYPE);
 
         modelMap.addAttribute(USER_NAME, userName);
@@ -86,7 +85,7 @@ public class AddItemController extends HttpServlet {
                 stringBuilder.append(handlerByName.generateHTMLFormBodyToCreateItem());
             }
         }
-        stringBuilder.append(HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(ADD_MENU_TITLE, userAtr), "Back"));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(ADD_MENU_TITLE), "Back"));
 
         String generatedHtmlStr = stringBuilder.toString();
         modelMap.addAttribute("generatedHtmlStr", generatedHtmlStr);

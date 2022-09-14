@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import com.vshmaliukh.springwebappmodule.SpringAppUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,7 +16,6 @@ import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
 import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
 
 import java.util.Collections;
@@ -41,7 +41,7 @@ public class AddMenuController {
         model.addAttribute("generatedHtmlStr",
                 GeneratedMenu.MESSAGE_TO_ENTER + " <br>\n" +
                         HtmlUtil.generateMenuItemsFormHTML(userAtr, ADD_MENU_TITLE, new GeneratedMenuForAdding()) +
-                        HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(MAIN_MENU_TITLE, userAtr), MAIN_MENU_TITLE) +
+                        HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(MAIN_MENU_TITLE), MAIN_MENU_TITLE) +
                         generateMessageAboutAddedItem(itemClassType, itemGsonStr));
 
         return new ModelAndView(ADD_MENU_TITLE, model);

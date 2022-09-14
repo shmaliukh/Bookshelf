@@ -1,5 +1,6 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
+import com.vshmaliukh.springwebappmodule.SpringAppUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -55,7 +56,7 @@ public class ItemsSortingMenuController {
             generateItemsTableStr(userAtr, stringBuilder, menuItemIndex, itemClassType, handlerByName);
         }
 
-        stringBuilder.append(HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLString(SORTING_TYPES_MENU_TITLE, userAtr), SORTING_TYPES_MENU_TITLE));
+        stringBuilder.append(HtmlUtil.formHTMLButton(SpringAppUtils.generateUrlString(SORTING_TYPES_MENU_TITLE), SORTING_TYPES_MENU_TITLE));
 
 //        stringBuilder.append(request.getParameter(INFORM_MESSAGE));
         model.addAttribute("generatedHtmlStr", stringBuilder.toString());
