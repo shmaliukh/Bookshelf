@@ -35,6 +35,7 @@ public class ChooseTypeOfWorkController {
         ));
 
         modelMap.addAttribute(GENERATED_HTML_STR, sb.toString());
+        modelMap.addAttribute(GENERATED_TITTLE , "Choose type of work");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
 

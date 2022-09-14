@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringWebAppModuleApplication {
 
+    public static final String GENERATED_TITTLE = "title";
+
     public static final String BASE_PAGE_WITH_PLACEHOLDER = "base_page_with_placeholder";
     public static final String GENERATED_HTML_STR = "generatedHtmlStr";
 
