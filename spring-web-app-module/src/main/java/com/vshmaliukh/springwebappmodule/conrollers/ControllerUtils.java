@@ -1,14 +1,16 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.services.menus.menu_items.MenuItem;
+import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.BootstrapHtmlBuilder.radioButton;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.Constants.USER_NAME;
+import static org.vshmaliukh.Constants.*;
 
 public class ControllerUtils {
 
@@ -42,5 +44,13 @@ public class ControllerUtils {
     public static String getFriendlyTypeOfWorkStr(int currentTypeOfWork) {
         Integer currentTypeOfWorkInteger = currentTypeOfWork;
         return typeOfWorkMap.get(currentTypeOfWorkInteger);
+    }
+
+    public static String generateRadioButtonsMenuHtmlStr(List<MenuItemClassType> generatedMenu) {
+        StringBuilder generatedMenuBuilder = new StringBuilder();
+        for (MenuItem menuItem : generatedMenu) {
+            generatedMenuBuilder.append(radioButton(menuItem.getStr(), String.valueOf(menuItem.getIndex()), MENU_ITEM_INDEX, false, String.valueOf(menuItem.getIndex())));
+        }
+        return generatedMenuBuilder.toString();
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
-import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -19,9 +18,9 @@ import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Collections;
 
-import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
@@ -46,7 +45,7 @@ public class AddMenuController {
 
     private static String generatePageHtmlText() {
         StringBuilder sb = new StringBuilder();
-        String generatedMenu = generateAddingMenuHtmlStr();
+        String generatedMenu = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForAdding().generatedMenu);
         sb.append(
                 divContainer(
                         description("Choose type of item to add") + split() +
@@ -58,14 +57,6 @@ public class AddMenuController {
                 )
         );
         return sb.toString();
-    }
-
-    private static String generateAddingMenuHtmlStr() {
-        StringBuilder generatedMenuBuilder = new StringBuilder();
-        for (MenuItem menuItem : new GeneratedMenuForAdding().generatedMenu) {
-            generatedMenuBuilder.append(radioButton(menuItem.getStr(), String.valueOf(menuItem.getIndex()), MENU_ITEM_INDEX, false, String.valueOf(menuItem.getIndex())));
-        }
-        return generatedMenuBuilder.toString();
     }
 
     private static String generateMessageAboutAddedItem(String itemClassType, String itemGsonStr) {
