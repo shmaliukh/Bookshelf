@@ -1,8 +1,8 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +12,8 @@ import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.utils.WebUtils;
 
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
 import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
@@ -20,31 +22,26 @@ public class SortingTypesMenuController {
 
     @PostMapping("/" + Constants.SORTING_TYPES_MENU_TITLE)
     public ModelAndView doPost(@RequestParam String menuItemIndex,
-                               ModelMap model) {
-        if (menuItemIndex != null && !menuItemIndex.equals("")) {
+                               ModelMap modelMap) {
+        if (StringUtils.isNotBlank(menuItemIndex)) {
             GeneratedMenu generatedMenu = new GeneratedMenuForSorting();
             try {
                 int parseInt = Integer.parseInt(menuItemIndex);
                 String classType = generatedMenu.getMenuItems().get(parseInt - 1).getClassType().getSimpleName();
 
-                model.addAttribute(ITEM_CLASS_TYPE, classType);
-                return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, model);
+                modelMap.addAttribute(ITEM_CLASS_TYPE, classType);
+                return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, modelMap);
             } catch (NumberFormatException nfe) {
                 WebUtils.logServletErr(Constants.SORTING_TYPES_MENU_TITLE, nfe);
             }
         }
-        return new ModelAndView(Constants.SORTING_TYPES_MENU_TITLE, model);
+        return new ModelAndView(Constants.SORTING_TYPES_MENU_TITLE, modelMap);
     }
 
     @GetMapping("/" + Constants.SORTING_TYPES_MENU_TITLE)
-    public ModelAndView doGet(@CookieValue String userName,
-                              @CookieValue int typeOfWork,
-                              ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-
-        model.addAttribute("generatedHtmlStr", generatePageHtmlText());
-        return new ModelAndView(Constants.SORTING_TYPES_MENU_TITLE, model);
+    public ModelAndView doGet(ModelMap modelMap) {
+        modelMap.addAttribute(GENERATED_HTML_STR, generatePageHtmlText());
+        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
 
     private static String generatePageHtmlText() {
