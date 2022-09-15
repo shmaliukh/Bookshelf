@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.vshmaliukh.BootstrapHtmlBuilder.radioButton;
+import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.Constants.USER_NAME;
 
@@ -32,5 +33,14 @@ public class ControllerUtils {
             }
         }
         return sb.toString();
+    }
+
+    public static String getFriendlyTypeOfWorkStr(String currentTypeOfWork) {
+        return typeOfWorkMap.get(currentTypeOfWork);
+    }
+
+    public static String getFriendlyTypeOfWorkStr(int currentTypeOfWork) {
+        Integer currentTypeOfWorkInteger = currentTypeOfWork;
+        return typeOfWorkMap.get(currentTypeOfWorkInteger);
     }
 }

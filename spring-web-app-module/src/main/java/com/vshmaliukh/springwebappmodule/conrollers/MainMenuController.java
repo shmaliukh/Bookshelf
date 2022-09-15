@@ -10,9 +10,9 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 
 import java.util.Map;
 
-import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
-import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
+import static com.vshmaliukh.springwebappmodule.conrollers.ControllerUtils.getFriendlyTypeOfWorkStr;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 import static org.vshmaliukh.utils.WebUtils.generateCurrentStateOfShelf;
 
@@ -27,12 +27,13 @@ public class MainMenuController {
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
 
-        String friendlyTypeOfWorkStr = typeOfWorkMap.get(model.getAttribute(TYPE_OF_WORK_WITH_FILES));
-        model.addAttribute(GENERATED_HTML_STR, generateMainMenuHtmlText(userAtr, friendlyTypeOfWorkStr));
+        model.addAttribute(GENERATED_HTML_STR, generateMainMenuHtmlText(userAtr, getFriendlyTypeOfWorkStr(typeOfWork)));
 
         model.addAttribute(GENERATED_TITTLE, "Home");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
     }
+
+
 
     private static String generateMainMenuHtmlText(Map<String, String> userAtr, String friendlyTypeOfWorkStr) {
         StringBuilder sb = new StringBuilder();
