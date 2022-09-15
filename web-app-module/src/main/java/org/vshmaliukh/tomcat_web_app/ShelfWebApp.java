@@ -31,7 +31,7 @@ public class ShelfWebApp {
         addServletToTomcat(new ItemsSortingMenuServlet(), Constants.ITEMS_SORTING_MENU_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new EditItemsServlet(), Constants.EDIT_ITEMS_TITLE, tomcat, contextPath, context);
         addServletToTomcat(new DeleteItemServlet(), Constants.DELETE_ITEM_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new ChangeBorrowedStateItemServlet(), Constants.CHANGE_ITEM_BORROWED_STATE, tomcat, contextPath, context);
+        addServletToTomcat(new ChangeBorrowedStateItemServlet(), Constants.CHANGE_ITEM_BORROWED_STATE_TITLE, tomcat, contextPath, context);
 
         tomcat.start();
         tomcat.getServer().await();

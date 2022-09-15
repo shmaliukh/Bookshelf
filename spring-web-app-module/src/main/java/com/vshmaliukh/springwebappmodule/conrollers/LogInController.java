@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.*;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;

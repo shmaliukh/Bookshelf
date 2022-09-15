@@ -17,7 +17,7 @@ public class Constants {
     public static final String ADD_ITEM_TITLE = "add_item";
     public static final String DELETE_ITEM_TITLE = "delete_item";
     public static final String EDIT_ITEMS_TITLE = "edit_items";
-    public static final String CHANGE_ITEM_BORROWED_STATE = "change_item_borrowed_state";
+    public static final String CHANGE_ITEM_BORROWED_STATE_TITLE = "change_item_borrowed_state";
     public static final String INDEX_OF_ITEM = "indexOfItem";
     public static final String ITEM_CLASS_TYPE = "itemClassType";
     public static final String ITEM_GSON_STR = "itemGsonStr";

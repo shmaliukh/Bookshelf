@@ -1,6 +1,7 @@
 package org.vshmaliukh.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.BootstrapHtmlTableBuilder;
 import org.vshmaliukh.HtmlTableBuilder;
 import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.ConvertorToStringForItems;
@@ -55,7 +56,7 @@ public final class WebUtils {
         if (shelfLiteratureObjects.isEmpty()) {
             return "No available literature of Shelf to print <br>\n";
         } else {
-            HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(titleList, ConvertorToStringForItems.getTable(shelfLiteratureObjects), isNeedIndex);
+            HtmlTableBuilder htmlTableBuilder = new BootstrapHtmlTableBuilder(titleList, ConvertorToStringForItems.getTable(shelfLiteratureObjects), isNeedIndex);
             return htmlTableBuilder.generateHTMLTableStr();
         }
     }
@@ -64,7 +65,7 @@ public final class WebUtils {
         if (shelfLiteratureObjects.isEmpty()) {
             return "No available literature of Shelf to print <br>\n";
         } else {
-            HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(shelfLiteratureObjects), isNeedIndex);
+            HtmlTableBuilder htmlTableBuilder = new BootstrapHtmlTableBuilder(ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(shelfLiteratureObjects), isNeedIndex);
             return htmlTableBuilder.generateHTMLTableStr();
         }
     }
@@ -82,7 +83,7 @@ public final class WebUtils {
         if (webShelfHandler != null) {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             if (!allLiteratureObjects.isEmpty()) {
-                HtmlTableBuilder htmlTableBuilder = new HtmlTableBuilder(ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(allLiteratureObjects), userAtr);
+                HtmlTableBuilder htmlTableBuilder = new BootstrapHtmlTableBuilder(ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(allLiteratureObjects), userAtr);
                 return htmlTableBuilder.generateHTMLTableStr();
             }
         }

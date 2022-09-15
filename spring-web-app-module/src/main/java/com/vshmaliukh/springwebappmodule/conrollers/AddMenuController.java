@@ -19,7 +19,7 @@ import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Collections;
 
-import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.*;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
 import static org.vshmaliukh.Constants.*;

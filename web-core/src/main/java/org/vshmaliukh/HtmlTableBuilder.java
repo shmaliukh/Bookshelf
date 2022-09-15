@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class HtmlTableBuilder extends AbstractTableHandler {
 
-    private final StringBuilder tableStringBuilder = new StringBuilder();
-    private final boolean isForEditing;
-    private final Map<String, String> userAtr;
+    protected final StringBuilder tableStringBuilder = new StringBuilder();
+    protected final boolean isForEditing;
+    protected final Map<String, String> userAtr;
 
     public HtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, boolean isNeedIndex) {
         super(tableList, isNeedIndex);
@@ -61,7 +61,7 @@ public class HtmlTableBuilder extends AbstractTableHandler {
             stringBuilder.append("</td>");
         }
         if (isForEditing) {
-            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(Constants.CHANGE_ITEM_BORROWED_STATE, stringList.get(0), userAtr));
+            stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(Constants.CHANGE_ITEM_BORROWED_STATE_TITLE, stringList.get(0), userAtr));
             stringBuilder.append(WebUtils.generateButtonWithIndexOfItem(Constants.DELETE_ITEM_TITLE, stringList.get(0), userAtr));
         }
         stringBuilder.append("</tr>");

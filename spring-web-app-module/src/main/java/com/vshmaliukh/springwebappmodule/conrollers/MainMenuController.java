@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
-import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.*;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
+import static org.vshmaliukh.utils.WebUtils.generateCurrentStateOfShelf;
 
 @Controller
 public class MainMenuController {
@@ -54,10 +54,9 @@ public class MainMenuController {
         ));
         sb.append(split());
         sb.append(divContainer(
-                htext("Current state of bookshelf:", "4") +
-                        WebUtils.generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST)
+                description("Current state of bookshelf") +
+                        generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST)
         ));
         return sb.toString();
     }
-
 }

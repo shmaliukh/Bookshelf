@@ -5,7 +5,7 @@ import org.vshmaliukh.ConfigFile;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.radioButton;
+import static org.vshmaliukh.BootstrapHtmlBuilder.radioButton;
 import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
 import static org.vshmaliukh.Constants.USER_NAME;
 

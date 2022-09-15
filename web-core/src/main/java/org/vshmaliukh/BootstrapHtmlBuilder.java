@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule;
+package org.vshmaliukh;
 
 public final class BootstrapHtmlBuilder {
 

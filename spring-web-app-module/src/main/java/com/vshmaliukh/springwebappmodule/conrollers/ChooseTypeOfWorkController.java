@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.BootstrapHtmlBuilder.*;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;

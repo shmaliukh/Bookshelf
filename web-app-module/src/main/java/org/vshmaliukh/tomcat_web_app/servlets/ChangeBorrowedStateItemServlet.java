@@ -25,7 +25,7 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
         try {
             changeItemBorrowedState(indexOfItem, userAtr);
         } catch (NumberFormatException nfe) {
-            WebUtils.logServletErr(Constants.CHANGE_ITEM_BORROWED_STATE, nfe);
+            WebUtils.logServletErr(Constants.CHANGE_ITEM_BORROWED_STATE_TITLE, nfe);
         } finally {
             UrlUtil.redirectTo(Constants.EDIT_ITEMS_TITLE, response, userAtr);
         }

@@ -18,7 +18,7 @@ import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
 @Controller
 public class ChangeBorrowedStateOfItemController {
 
-    @GetMapping("/" + Constants.CHANGE_ITEM_BORROWED_STATE)
+    @GetMapping("/" + Constants.CHANGE_ITEM_BORROWED_STATE_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam int indexOfItem,
