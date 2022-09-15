@@ -12,8 +12,7 @@ import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.utils.WebUtils;
 
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
@@ -41,6 +40,7 @@ public class SortingTypesMenuController {
     @GetMapping("/" + Constants.SORTING_TYPES_MENU_TITLE)
     public ModelAndView doGet(ModelMap modelMap) {
         modelMap.addAttribute(GENERATED_HTML_STR, generatePageHtmlText());
+        modelMap.addAttribute(GENERATED_TITTLE, "Sort by type");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
 
