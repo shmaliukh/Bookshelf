@@ -1,5 +1,7 @@
 package org.vshmaliukh;
 
+import org.apache.http.client.utils.URIBuilder;
+
 public final class BootstrapHtmlBuilder {
 
     public static final String SUBMIT_BUTTON_DEFAULT_TEXT = "Submit";
@@ -68,6 +70,13 @@ public final class BootstrapHtmlBuilder {
 
     public static String form(String pageToSend, String method, String formItems, String submitButton) {
         return "<form action=\"/" + pageToSend + "\" method=\"" + method + "\">\n" +
+                formItems +
+                submitButton +
+                "</form>";
+    }
+
+    public static String form(URIBuilder uriBuilder, String method, String formItems, String submitButton) {
+        return "<form action=\"" + uriBuilder.toString() + "\" method=\"" + method + "\">\n" +
                 formItems +
                 submitButton +
                 "</form>";
