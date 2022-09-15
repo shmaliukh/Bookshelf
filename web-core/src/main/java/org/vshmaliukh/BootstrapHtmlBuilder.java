@@ -30,6 +30,7 @@ public final class BootstrapHtmlBuilder {
                 .append("</div>");
         return sb.toString();
     }
+   //https://getbootstrap.com/docs/5.2/examples/list-groups/# TODO use better style for radio buttons
 
     public static String radioButton(String label, String id, String name, boolean checked, String value) {
         StringBuilder sb = new StringBuilder();

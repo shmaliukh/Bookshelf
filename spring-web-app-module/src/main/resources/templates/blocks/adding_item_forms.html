@@ -7,8 +7,8 @@
             <form action="/add_item?itemClassType=Magazine" method="post">
                 <div class="row gy-6">
                     <div class="col-md-6">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" name="NAME" class="form-control" id="name"
+                        <label for="nameMagazineEmpty" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameMagazineEmpty"
                                placeholder="Enter literature item name"
                                required="">
                         <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
@@ -18,8 +18,8 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="pages" class="form-label">Pages</label>
-                        <input type="number" name="PAGES" class="form-control" id="pages"
+                        <label for="pagesMagazineEmpty" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesMagazineEmpty"
                                placeholder="Enter literature item pages number" required="">
                         <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
                         <div class="invalid-feedback">
@@ -28,16 +28,443 @@
                     </div>
 
                     <div class="my-3">
-                        <label for="borrowed" class="form-label">Is item borrowed?</label>
+                        <label for="borrowedMagazineEmpty" class="form-label">Is item borrowed?</label>
                         <div class="form-check">
-                            <input name="BORROWED" value="y" id="borrowed" type="radio" class="form-check-input"
+                            <input name="BORROWED" value="y" id="borrowedMagazineEmpty" type="radio"
+                                   class="form-check-input"
                                    checked="" required="">
-                            <label class="form-check-label" for="borrowed">yes</label>
+                            <label class="form-check-label" for="borrowedMagazineEmpty">yes</label>
                         </div>
                         <div class="form-check">
-                            <input name="BORROWED" value="n" id="not_borrowed" type="radio" class="form-check-input"
+                            <input name="BORROWED" value="n" id="not_borrowedMagazineEmpty" type="radio"
+                                   class="form-check-input"
                                    required="">
-                            <label class="form-check-label" for="not_borrowed">no</label>
+                            <label class="form-check-label" for="not_borrowedMagazineEmpty">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="MagazineRand">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Magazine</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Magazine" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameMagazineRand" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameMagazineRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesMagazineRand" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesMagazineRand"
+                               th:value="${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*1000),1,0)}"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedMagazineRand" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedMagazineRand" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedMagazineRand">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedMagazineRand" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedMagazineRand">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="Newspaper">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Newspaper</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Newspaper" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameNewspaperEmpty" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameNewspaperEmpty"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesNewspaperEmpty" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesNewspaperEmpty"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedNewspaperEmpty" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedNewspaperEmpty" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedNewspaperEmpty">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedNewspaperEmpty" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedNewspaperEmpty">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="NewspaperRand">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Newspaper</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Newspaper" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameNewspaperRand" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameNewspaperRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesNewspaperRand" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesNewspaperRand"
+                               th:value="${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*1000),1,0)}"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedNewspaperRand" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedNewspaperRand" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedNewspaperRand">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedNewspaperRand" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedNewspaperRand">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="Comics">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Comics</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Comics" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameComicsEmpty" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameComicsEmpty"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesComicsEmpty" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesComicsEmpty"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="publisherComicsEmpty" class="form-label">Publisher</label>
+                        <input type="text" name="PUBLISHER" class="form-control" id="publisherComicsEmpty"
+                               placeholder="Enter literature item publisher"
+                               required="">
+                        <div class="invalid-feedback">
+                            Literature item publisher is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedComicsEmpty" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedComicsEmpty" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedComicsEmpty">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedComicsEmpty" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedComicsEmpty">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="ComicsRand">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Comics</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Comics" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameComicsRand" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameComicsRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesComicsRand" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesComicsRand"
+                               th:value="${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*1000),1,0)}"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="publisherComicsRand" class="form-label">Publisher</label>
+                        <input type="text" name="PUBLISHER" class="form-control" id="publisherComicsRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item publisher"
+
+                               required="">
+                        <div class="invalid-feedback">
+                            Literature item publisher is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedComicsRand" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedComicsRand" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedComicsRand">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedComicsRand" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedComicsRand">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="Book">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Book</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Book" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameBookEmpty" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameBookEmpty"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesBookEmpty" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesBookEmpty"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="authorBookEmpty" class="form-label">Author</label>
+                        <input type="text" name="AUTHOR" class="form-control" id="authorBookEmpty"
+                               placeholder="Enter literature item author"
+                               required="">
+                        <div class="invalid-feedback">
+                            Literature item author is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 justify-content-center">
+                        <label for="dateBookEmpty" class="form-label">Date of issue</label>
+                        <input type="date" name="DATE" class="form-control" id="dateBookEmpty" required="">
+                        <div class="invalid-feedback">
+                            Literature item date is required
+                        </div>
+                    </div>
+
+                    <div class="my-3">
+                        <label for="borrowedBookEmpty" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedBookEmpty" type="radio"
+                                   class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedBookEmpty">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedBookEmpty" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedBookEmpty">no</label>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">Add item</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="BookRand">
+    <div class="card mb-4 rounded-3 shadow-sm border-primary">
+        <div class="card-header py-3 text-bg-primary border-primary">
+            <h4 class="my-0 fw-normal">Add Book</h4>
+        </div>
+        <div class="card-body">
+            <form action="/add_item?itemClassType=Book" method="post">
+                <div class="row gy-6">
+                    <div class="col-md-6">
+                        <label for="nameBookRand" class="form-label">Name</label>
+                        <input type="text" name="NAME" class="form-control" id="nameBookRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item name"
+                               required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item name is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="pagesBookRand" class="form-label">Pages</label>
+                        <input type="number" name="PAGES" class="form-control" id="pagesBookRand"
+                               th:value="${#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*1000),1,0)}"
+                               placeholder="Enter literature item pages number" required="">
+                        <!--                                        <small class="text-muted">Full name as displayed on card</small>-->
+                        <div class="invalid-feedback">
+                            Literature item pages is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="authorBookRand" class="form-label">Author</label>
+                        <input type="text" name="AUTHOR" class="form-control" id="authorBookRand"
+                               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+                               placeholder="Enter literature item author"
+                               required="">
+                        <div class="invalid-feedback">
+                            Literature item author is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="dateBookRand" class="form-label">Date of issue</label>
+                        <input type="date" name="DATE" class="form-control" id="dateBookRand" required=""
+                               data-date-format="yyyy-mm-dd">
+
+                        <div class="invalid-feedback">
+                            Literature item date is required
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="borrowedBookRand" class="form-label">Is item borrowed?</label>
+                        <div class="form-check">
+                            <input name="BORROWED" value="y" id="borrowedBookRand" type="radio" class="form-check-input"
+                                   checked="" required="">
+                            <label class="form-check-label" for="borrowedBookRand">yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input name="BORROWED" value="n" id="not_borrowedBookRand" type="radio"
+                                   class="form-check-input"
+                                   required="">
+                            <label class="form-check-label" for="not_borrowedBookRand">no</label>
                         </div>
                     </div>
                 </div>

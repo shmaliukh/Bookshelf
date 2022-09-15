@@ -26,6 +26,8 @@ import static org.vshmaliukh.Constants.*;
 @Controller
 public class AddItemController extends HttpServlet {
 
+    public static final String ADD_ITEM_FORM = "addItemForm";
+
     static Gson gson = new Gson();
 
     @PostMapping("/" + Constants.ADD_ITEM_TITLE)
@@ -53,39 +55,25 @@ public class AddItemController extends HttpServlet {
     }
 
     @GetMapping("/" + Constants.ADD_ITEM_TITLE)
-    ModelAndView doGet(@CookieValue String userName,
-                       @CookieValue int typeOfWork,
-                       @RequestParam String itemClassType,
+    ModelAndView doGet(@RequestParam String itemClassType,
                        @RequestParam String isRandom,
                        ModelMap modelMap) {
+        modelMap.addAttribute(ADD_ITEM_FORM , addingFormConfigStr(itemClassType, isRandom));
         modelMap.addAttribute(Constants.ITEM_CLASS_TYPE, itemClassType);
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
 
-        modelMap.addAttribute(GENERATED_HTML_STR, getStringBuilder(itemClassType, isRandom, userAtr).toString());
+        modelMap.addAttribute(GENERATED_HTML_STR, getStringBuilder());
         return new ModelAndView(ADD_ITEM_TITLE, modelMap);
     }
 
-    private static StringBuilder getStringBuilder(String itemClassType, String isRandom, Map<String, String> userAtr) {
+    private static String addingFormConfigStr(String itemClassType, String isRandom) {
+        if(isRandom.equals("true")){
+            return itemClassType + "Rand";
+        }
+        return itemClassType;
+    }
+
+    private static StringBuilder getStringBuilder() {
         StringBuilder sb = new StringBuilder();
-//        if (StringUtils.isNotBlank(itemClassType)) {
-//            ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-//
-//            sb.append(
-//                    "<form action = \"" +
-//                            UrlUtil.generateBaseURLBuilder(Constants.ADD_ITEM_TITLE, userAtr)
-//                                    .addParameter(ITEM_CLASS_TYPE, itemClassType) + "\" " +
-//                            "method = \"POST\">\n" +
-//                            "Create " + itemClassType + "\n" +
-//                            "       <br>\n");
-//
-//            if (isRandom.equals("true")) {
-//                sb.append(handlerByName.generateHTMLFormBodyToCreateItem(WebUtils.RANDOM));
-//            } else {
-//                sb.append(handlerByName.generateHTMLFormBodyToCreateItem());
-//            }
-//
-//            sb = new StringBuilder().append(cardBlue("Add " + itemClassType, sb.toString()));
-//        }
         sb.append(split());
         sb.append(BootstrapHtmlBuilder.buttonWithRef("Back", ADD_MENU_TITLE));
         return sb;

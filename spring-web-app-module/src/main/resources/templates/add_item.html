@@ -10,7 +10,7 @@
 <header th:insert="blocks/header.html :: header"></header>
 
 <div class="container mt-5 mb-5">
-    <div th:insert="blocks/adding_item_forms.html :: ${itemClassType}"></div>
+    <div th:insert="blocks/adding_item_forms.html :: ${addItemForm}"></div>
     <div th:utext="${generatedHtmlStr}"></div>
 </div>
 
