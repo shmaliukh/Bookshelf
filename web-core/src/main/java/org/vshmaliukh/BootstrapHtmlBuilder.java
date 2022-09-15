@@ -138,4 +138,22 @@ public final class BootstrapHtmlBuilder {
 //                "                    </div>\n" +
                 "                </div>";
     }
+
+    public static String cardBlue(String label, String cardContentStr) {
+        return "<div class=\"card mb-4 rounded-3 shadow-sm border-primary\">" +
+                "   <div class=\"card-header py-3 text-bg-primary border-primary\">\n" +
+                "       <h4 class=\"my-0 fw-normal\">" + label + "</h4>\n" +
+                "   </div>" +
+                "   <div class=\"card-body\">" + cardContentStr + "</div>" +
+                "</div>";
+    }
+
+    public static String cardWhite(String label, String cardContentStr) {
+        return "<div class=\"card mb-4 rounded-3 shadow-sm\">" +
+                "   <div class=\"card-header py-3\">\n" +
+                "       <h4 class=\"my-0 fw-normal\">" + label + "</h4>\n" +
+                "   </div>" +
+                "   <div class=\"card-body\">" + cardContentStr + "</div>" +
+                "</div>";
+    }
 }

@@ -28,7 +28,6 @@ public class MainMenuController {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
 
         model.addAttribute(GENERATED_HTML_STR, generateMainMenuHtmlText(userAtr, getFriendlyTypeOfWorkStr(typeOfWork)));
-
         model.addAttribute(GENERATED_TITTLE, "Home");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
     }

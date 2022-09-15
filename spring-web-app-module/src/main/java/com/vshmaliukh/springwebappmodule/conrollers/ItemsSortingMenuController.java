@@ -14,8 +14,7 @@ import org.vshmaliukh.utils.UrlUtil;
 
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_TITTLE;
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
@@ -40,7 +39,7 @@ public class ItemsSortingMenuController {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
         String generateItemsTableStr = ControllerUtils.generateItemsTableStr(userAtr, menuItemIndex, itemClassType, ItemHandlerProvider.getHandlerByName(itemClassType));
 
-        model.addAttribute("generatedHtmlStr", generatePageHtmlText(itemClassType, generateItemsTableStr));
+        model.addAttribute(GENERATED_HTML_STR, generatePageHtmlText(itemClassType, generateItemsTableStr));
         model.addAttribute(GENERATED_TITTLE, itemClassType + " sorting");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
     }
