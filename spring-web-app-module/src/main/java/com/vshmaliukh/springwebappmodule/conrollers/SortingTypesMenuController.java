@@ -52,7 +52,7 @@ public class SortingTypesMenuController {
         String generatedMenu = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForSorting().generatedMenu);
         sb.append(
                 divContainer(
-                        description("Choose type of items to sort") + split() +
+                        htext("Choose type of items to sort", "2") + split() +
                                 form(SORTING_TYPES_MENU_TITLE, "post",
                                         div(generatedMenu),
                                         formSubmitButton()

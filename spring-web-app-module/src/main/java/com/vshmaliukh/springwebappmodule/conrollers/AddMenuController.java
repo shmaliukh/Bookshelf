@@ -48,7 +48,7 @@ public class AddMenuController {
         String generatedMenu = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForAdding().generatedMenu);
         sb.append(
                 divContainer(
-                        description("Choose type of item to add") + split() +
+                        htext("Choose type of item to add", "2") + split() +
                                 form(Constants.ADD_MENU_TITLE, "post",
                                         div(generatedMenu),
                                         formSubmitButton()
