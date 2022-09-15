@@ -8,20 +8,26 @@ import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.utils.WebUtils;
 
-import javax.servlet.http.HttpServlet;
 import java.util.Map;
 
+import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.*;
 import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 
 @Controller
-public class EditItemsController extends HttpServlet {
+public class EditItemsController {
 
     @GetMapping("/" + Constants.EDIT_ITEMS_TITLE)
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
-                       ModelMap model) {
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
+                       ModelMap modelMap) {
+        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
 
+        modelMap.addAttribute(GENERATED_HTML_STR, generatePageHtmlText(typeOfWork, userAtr));
+        modelMap.addAttribute(GENERATED_TITTLE, "Edit items");
+        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
+    }
+
+    private static String generatePageHtmlText(int typeOfWork, Map<String, String> userAtr) {
         StringBuilder sb = new StringBuilder();
         sb.append(div("class=\"row g-4  row-cols-1 row-cols-lg-2\"",
                 htext("You are able to edit items", "2") +
@@ -33,9 +39,6 @@ public class EditItemsController extends HttpServlet {
         sb.append(WebUtils.generateTableForEditingItems(userAtr));
         sb.append(split());
         sb.append(buttonWithRef("Back", Constants.MAIN_MENU_TITLE));
-
-        model.addAttribute("generatedHtmlStr", sb.toString());
-
-        return new ModelAndView(Constants.EDIT_ITEMS_TITLE, model);
+        return sb.toString();
     }
 }

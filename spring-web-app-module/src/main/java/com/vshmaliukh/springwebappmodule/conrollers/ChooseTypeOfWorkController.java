@@ -25,16 +25,7 @@ public class ChooseTypeOfWorkController {
     @GetMapping("/" + CHOOSE_TYPE_OF_WORK_TITLE)
     ModelAndView doGet(@CookieValue(value = TYPE_OF_WORK_WITH_FILES, defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
-        // TODO add implementation code
-
-        StringBuilder sb = new StringBuilder();
-        sb.append(description(TYPE_OF_WORK_DESCRIPTION));
-        sb.append(split());
-        sb.append(divContainer(
-                form(CHOOSE_TYPE_OF_WORK_TITLE, "post", ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork), formSubmitButton())
-        ));
-
-        modelMap.addAttribute(GENERATED_HTML_STR, sb.toString());
+        modelMap.addAttribute(GENERATED_HTML_STR, generatePageHtmlText(typeOfWork));
         modelMap.addAttribute(GENERATED_TITTLE , "Choose type of work");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
@@ -42,9 +33,18 @@ public class ChooseTypeOfWorkController {
     @PostMapping("/" + CHOOSE_TYPE_OF_WORK_TITLE)
     ModelAndView doPost(@RequestParam Map<String, String> allParams,
                         ModelMap modelMap) {
-
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, allParams.get(TYPE_OF_WORK_WITH_FILES));
         modelMap.addAttribute(PAGE_TO_REDIRECT, MAIN_MENU_TITLE);
         return new ModelAndView("redirect:/" + COOKIE_TITLE, modelMap);
+    }
+
+    private static String generatePageHtmlText(String typeOfWork) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(description(TYPE_OF_WORK_DESCRIPTION));
+        sb.append(split());
+        sb.append(divContainer(
+                form(CHOOSE_TYPE_OF_WORK_TITLE, "post", ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork), formSubmitButton())
+        ));
+        return sb.toString();
     }
 }

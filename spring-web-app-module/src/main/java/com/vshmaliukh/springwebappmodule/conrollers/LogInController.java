@@ -49,7 +49,6 @@ public class LogInController {
         model.addAttribute(USER_NAME, userName);
         model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
         model.addAttribute(PAGE_TO_REDIRECT, MAIN_MENU_TITLE);
-
         return new ModelAndView("redirect:/" + COOKIE_TITLE, model);
     }
 

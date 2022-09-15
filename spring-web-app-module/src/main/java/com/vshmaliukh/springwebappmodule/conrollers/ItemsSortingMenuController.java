@@ -24,10 +24,10 @@ public class ItemsSortingMenuController {
     @PostMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
     ModelAndView doPost(@RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
-                        ModelMap model) {
-        model.addAttribute(Constants.MENU_ITEM_INDEX, menuItemIndex);
-        model.addAttribute(ITEM_CLASS_TYPE, itemClassType);
-        return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, model);
+                        ModelMap modelMap) {
+        modelMap.addAttribute(Constants.MENU_ITEM_INDEX, menuItemIndex);
+        modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
+        return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, modelMap);
     }
 
     @GetMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
@@ -35,13 +35,13 @@ public class ItemsSortingMenuController {
                        @CookieValue int typeOfWork,
                        @RequestParam(defaultValue = "") String menuItemIndex,
                        @RequestParam(defaultValue = "") String itemClassType,
-                       ModelMap model) {
+                       ModelMap modelMap) {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
         String generateItemsTableStr = ControllerUtils.generateItemsTableStr(userAtr, menuItemIndex, itemClassType, ItemHandlerProvider.getHandlerByName(itemClassType));
 
-        model.addAttribute(GENERATED_HTML_STR, generatePageHtmlText(itemClassType, generateItemsTableStr));
-        model.addAttribute(GENERATED_TITTLE, itemClassType + " sorting");
-        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
+        modelMap.addAttribute(GENERATED_HTML_STR, generatePageHtmlText(itemClassType, generateItemsTableStr));
+        modelMap.addAttribute(GENERATED_TITTLE, itemClassType + " sorting");
+        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
 
 
