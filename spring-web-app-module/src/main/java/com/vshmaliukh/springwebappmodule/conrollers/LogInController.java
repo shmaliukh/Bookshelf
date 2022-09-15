@@ -30,15 +30,17 @@ public class LogInController {
 
     private static String generateLogInPageText(String userName, String typeOfWork) {
         return divContainer(
-                htext("Please, log in", "1") + split() +
+                cardWhite("Please, log in", "1",
                         form(LOG_IN_TITLE, "post",
                                 description("User name") +
                                         logInInputUserName(USER_NAME, userName) +
                                         split() +
                                         description(ChooseTypeOfWorkController.TYPE_OF_WORK_DESCRIPTION) +
-                                        ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork),
-                                formSubmitButton()
+                                        ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork) +
+                                        split(),
+                                formSubmitButton("Sign in")
                         )
+                )
         );
     }
 

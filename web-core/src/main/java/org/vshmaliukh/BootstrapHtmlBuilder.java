@@ -30,7 +30,7 @@ public final class BootstrapHtmlBuilder {
                 .append("</div>");
         return sb.toString();
     }
-   //https://getbootstrap.com/docs/5.2/examples/list-groups/# TODO use better style for radio buttons
+    //https://getbootstrap.com/docs/5.2/examples/list-groups/# TODO use better style for radio buttons
 
     public static String radioButton(String label, String id, String name, boolean checked, String value) {
         StringBuilder sb = new StringBuilder();
@@ -62,6 +62,13 @@ public final class BootstrapHtmlBuilder {
         return breaker() +
                 "<button class=\"w-100 btn btn-primary btn-lg\" type=\"submit\">" +
                 SUBMIT_BUTTON_DEFAULT_TEXT +
+                "</button>";
+    }
+
+    public static String formSubmitButton(String label) {
+        return breaker() +
+                "<button class=\"w-100 btn btn-primary btn-lg\" type=\"submit\">" +
+                label +
                 "</button>";
     }
 
@@ -153,6 +160,15 @@ public final class BootstrapHtmlBuilder {
         return "<div class=\"card mb-4 rounded-3 shadow-sm\">" +
                 "   <div class=\"card-header py-3\">\n" +
                 "       <h4 class=\"my-0 fw-normal\">" + label + "</h4>\n" +
+                "   </div>" +
+                "   <div class=\"card-body\">" + cardContentStr + "</div>" +
+                "</div>";
+    }
+
+    public static String cardWhite(String htext, String hlevel, String cardContentStr) {
+        return "<div class=\"card mb-4 rounded-3 shadow-sm\">" +
+                "   <div class=\"card-header py-3\">\n" +
+                "       <h" + hlevel + " class=\"my-0 fw-normal\">" + htext + "</h" + hlevel + ">\n" +
                 "   </div>" +
                 "   <div class=\"card-body\">" + cardContentStr + "</div>" +
                 "</div>";
