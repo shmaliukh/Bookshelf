@@ -99,6 +99,12 @@ public final class BootstrapHtmlBuilder {
                 "<br>";
     }
 
+    public static String buttonWithRefAndCustomClassStyle(String label, String ref, String style) {
+        return "<button type=\"button\" onclick=\"location.href='/" + ref + "'\" " +
+                "class=\"" + style + "\">" + label + "</button>\n" +
+                "<br>";
+    }
+
     public static String input(String type, String name, String placeholder, String value) {
         return "<input type=\"" + type + "\" " +
                 "name=\"" + name + "\" " +

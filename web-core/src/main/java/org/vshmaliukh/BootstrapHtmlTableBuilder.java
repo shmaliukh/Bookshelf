@@ -1,5 +1,6 @@
 package org.vshmaliukh;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import static org.vshmaliukh.Constants.*;
 
+@Slf4j
 public class BootstrapHtmlTableBuilder extends HtmlTableBuilder {
 
     public BootstrapHtmlTableBuilder(List<String> titleList, List<Map<String, String>> tableList, boolean isNeedIndex) {
@@ -18,17 +20,19 @@ public class BootstrapHtmlTableBuilder extends HtmlTableBuilder {
         super(titleList, tableList, userAtr);
     }
 
+    @Override
     public void buildFormattedHTMLTable() {
         setUpValuesSettings();
 
         tableStringBuilder.append("<table class=\"table table-striped table-sm\">");
-        tableStringBuilder.append("<thead>" + buildHTMLRowString(titleList, false) + "</thead><tbody>");
+        tableStringBuilder.append("<thead>").append(buildHTMLRowString(titleList, false)).append("</thead><tbody>");
         for (List<String> stringList : tableListOfLists) {
             tableStringBuilder.append(buildHTMLRowString(stringList, isForEditing));
         }
         tableStringBuilder.append("</tbody></table>");
     }
 
+    @Override
     public String buildHTMLRowString(List<String> stringList, boolean isForEditing) {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -39,21 +43,21 @@ public class BootstrapHtmlTableBuilder extends HtmlTableBuilder {
             stringBuilder.append("</td>");
         }
         if (isForEditing) {
-            stringBuilder.append(generateButtonWithIndexOfItem("Change borrowed state", stringList.get(0), CHANGE_ITEM_BORROWED_STATE_TITLE));
-            stringBuilder.append(generateButtonWithIndexOfItem("Delete item", stringList.get(0), DELETE_ITEM_TITLE));
+            stringBuilder.append(generateSellButtonWithIndexOfItem("Change borrowed state", stringList.get(0), CHANGE_ITEM_BORROWED_STATE_TITLE));
+            stringBuilder.append(generateSellButtonWithIndexOfItem("Delete item", stringList.get(0), DELETE_ITEM_TITLE));
         }
         stringBuilder.append("</tr>");
         return stringBuilder.toString();
     }
 
-    public static String generateButtonWithIndexOfItem(String label, String itemIndex, String pageToRedirect) {
+    static String generateSellButtonWithIndexOfItem(String label, String itemIndex, String pageToRedirect) {
         try {
             return "<td>" +
-                    BootstrapHtmlBuilder.buttonWithRef(label, new URIBuilder(pageToRedirect)
-                            .addParameter(INDEX_OF_ITEM, itemIndex).toString()) +
+                    BootstrapHtmlBuilder.buttonWithRefAndCustomClassStyle(label, new URIBuilder(pageToRedirect)
+                            .addParameter(INDEX_OF_ITEM, itemIndex).toString(), "w-100 btn btn-lg btn-outline-primary") +
                     "</td>";
-        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
+        } catch (URISyntaxException urie) {
+            log.error("[BootstrapHtmlTableBuilder] error: URISyntaxException", urie);
         }
         return "";
     }
