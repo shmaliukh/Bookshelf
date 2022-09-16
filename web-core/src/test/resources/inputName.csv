@@ -1,0 +1,18 @@
+input,expected
+someName,someName
+test,test
+tEst,tEst
+Test,Test
+1,1
+_1,_1
+ a, a
+ b ,b
+ c ,c
+@,@
+№1,№1
+!,!
+^^^,^^^
+?,?
+{},{}
+a1 _$"',a1 _$"'
+1234567890-=qweruioasdasmf'\[]\'/.ASDMKPA_+-=`~/?|}{"><",1234567890-=qweruioasdasmf'\[]\'/.ASDMKPA_+-=`~/?|}{"><"

@@ -1,6 +1,6 @@
 package org.vshmaliukh.tomcat_web_app;
 
-import org.vshmaliukh.tomcat_web_app.utils.HtmlUtil;
+import org.vshmaliukh.utils.HtmlUtil;
 
 public class WebPageBuilder {
 
