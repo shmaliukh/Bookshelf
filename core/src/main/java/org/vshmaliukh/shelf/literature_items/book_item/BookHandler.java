@@ -44,10 +44,10 @@ public class BookHandler extends ItemHandler<Book> {
     @Override
     public List<MenuItemForSorting<Book>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting<Book>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
-                new MenuItemForSorting<Book>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
-                new MenuItemForSorting<Book>(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting<Book>(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
+                new MenuItemForSorting<>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
+                new MenuItemForSorting<>(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<>(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
         ));
     }
 

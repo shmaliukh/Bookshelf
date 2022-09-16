@@ -2,8 +2,9 @@ package org.vshmaliukh.tomcat_web_app.servlets;
 
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.tomcat_web_app.utils.WebUtils;
-import org.vshmaliukh.tomcat_web_app.utils.UrlUtil;
+import org.vshmaliukh.Constants;
+import org.vshmaliukh.utils.WebUtils;
+import org.vshmaliukh.utils.UrlUtil;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
-import static org.vshmaliukh.tomcat_web_app.ShelfWebApp.*;
-import static org.vshmaliukh.tomcat_web_app.utils.WebUtils.generateShelfHandler;
-import static org.vshmaliukh.tomcat_web_app.servlets.EditItemsServlet.INDEX_OF_ITEM;
+import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
+import static org.vshmaliukh.Constants.INDEX_OF_ITEM;
 
 public class ChangeBorrowedStateItemServlet extends HttpServlet {
 
@@ -25,9 +25,9 @@ public class ChangeBorrowedStateItemServlet extends HttpServlet {
         try {
             changeItemBorrowedState(indexOfItem, userAtr);
         } catch (NumberFormatException nfe) {
-            WebUtils.logServletErr(CHANGE_ITEM_BORROWED_STATE, nfe);
+            WebUtils.logServletErr(Constants.CHANGE_ITEM_BORROWED_STATE_TITLE, nfe);
         } finally {
-            UrlUtil.redirectTo(EDIT_ITEMS_TITLE, response, userAtr);
+            UrlUtil.redirectTo(Constants.EDIT_ITEMS_TITLE, response, userAtr);
         }
     }
 

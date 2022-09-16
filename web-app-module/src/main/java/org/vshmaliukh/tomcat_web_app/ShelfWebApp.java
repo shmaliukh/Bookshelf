@@ -3,34 +3,15 @@ package org.vshmaliukh.tomcat_web_app;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
+import org.vshmaliukh.Constants;
 import org.vshmaliukh.tomcat_web_app.servlets.*;
 
 import javax.servlet.Servlet;
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.TYPE_OF_WORK_WITH_FILES;
-import static org.vshmaliukh.tomcat_web_app.servlets.LogInServlet.USER_NAME;
 
 public class ShelfWebApp {
 
-    public static final String MODULE_NAME = "web-app-module";
-
-    public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));
-
     public static final String SERVLET_NAME_POSTFIX = "_servlet";
-
-    public static final String LOG_IN_TITLE = "log_in";
-    public static final String MAIN_MENU_TITLE = "main_menu";
-    public static final String ADD_MENU_TITLE = "add_menu";
-    public static final String SORTING_TYPES_MENU_TITLE = "sorting_types_menu";
-    public static final String ITEMS_SORTING_MENU_TITLE = "items_sorting_menu";
-    public static final String ADD_ITEM_TITLE = "add_item";
-    public static final String DELETE_ITEM_TITLE = "delete_item";
-    public static final String EDIT_ITEMS_TITLE = "edit_items";
-    public static final String CHANGE_ITEM_BORROWED_STATE = "change_item_borrowed_state";
 
     public static void main(String[] args) throws LifecycleException {
 
@@ -42,15 +23,15 @@ public class ShelfWebApp {
         String docBase = new File(".").getAbsolutePath();
         Context context = tomcat.addContext(contextPath, docBase);
 
-        addServletToTomcat(new LogInServlet(), LOG_IN_TITLE, "/*", tomcat, contextPath, context);
-        addServletToTomcat(new MainMenuServlet(), MAIN_MENU_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new AddMenuServlet(), ADD_MENU_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new AddItemServlet(), ADD_ITEM_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new SortingTypesMenuServlet(), SORTING_TYPES_MENU_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new ItemsSortingMenuServlet(), ITEMS_SORTING_MENU_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new EditItemsServlet(), EDIT_ITEMS_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new DeleteItemServlet(), DELETE_ITEM_TITLE, tomcat, contextPath, context);
-        addServletToTomcat(new ChangeBorrowedStateItemServlet(), CHANGE_ITEM_BORROWED_STATE, tomcat, contextPath, context);
+        addServletToTomcat(new LogInServlet(), Constants.LOG_IN_TITLE, "/*", tomcat, contextPath, context);
+        addServletToTomcat(new MainMenuServlet(), Constants.MAIN_MENU_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new AddMenuServlet(), Constants.ADD_MENU_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new AddItemServlet(), Constants.ADD_ITEM_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new SortingTypesMenuServlet(), Constants.SORTING_TYPES_MENU_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new ItemsSortingMenuServlet(), Constants.ITEMS_SORTING_MENU_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new EditItemsServlet(), Constants.EDIT_ITEMS_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new DeleteItemServlet(), Constants.DELETE_ITEM_TITLE, tomcat, contextPath, context);
+        addServletToTomcat(new ChangeBorrowedStateItemServlet(), Constants.CHANGE_ITEM_BORROWED_STATE_TITLE, tomcat, contextPath, context);
 
         tomcat.start();
         tomcat.getServer().await();

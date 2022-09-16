@@ -31,6 +31,7 @@ public abstract class AbstractInputHandler {
         try {
             dateFormat.setLenient(false);
             dateFormat.parse(inputStr);
+            dateFormat.parse(inputStr);
             return true;
         } catch (ParseException e) {
             return false;
