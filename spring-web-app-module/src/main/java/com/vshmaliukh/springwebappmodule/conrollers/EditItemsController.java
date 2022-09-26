@@ -28,17 +28,14 @@ public class EditItemsController {
     }
 
     private static String generatePageHtmlText(int typeOfWork, Map<String, String> userAtr) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(div("class=\"row g-4  row-cols-1 row-cols-lg-2\"",
+        return div("class=\"row g-4  row-cols-1 row-cols-lg-2\"",
                 htext("You are able to edit items", "2") +
                         div(htext("Type of work with files: ", "3") +
                                 htext(ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork), "3")
-                        )
-        ));
-        sb.append(split());
-        sb.append(WebUtils.generateTableForEditingItems(userAtr));
-        sb.append(split());
-        sb.append(buttonWithRef("Back", Constants.MAIN_MENU_TITLE));
-        return sb.toString();
+                        )) +
+                split() +
+                WebUtils.generateTableForEditingItems(userAtr) +
+                split() +
+                buttonWithRef("Back", Constants.MAIN_MENU_TITLE);
     }
 }

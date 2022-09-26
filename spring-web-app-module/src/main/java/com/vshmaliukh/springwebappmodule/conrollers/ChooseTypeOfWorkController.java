@@ -39,13 +39,11 @@ public class ChooseTypeOfWorkController {
     }
 
     private static String generatePageHtmlText(String typeOfWork) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(htext(TYPE_OF_WORK_DESCRIPTION, "2"));
-        sb.append(split());
-        sb.append(form(CHOOSE_TYPE_OF_WORK_TITLE, "post",
-                ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork), formSubmitButton()));
-        sb.append(split());
-        sb.append(buttonWithRef("Back", MAIN_MENU_TITLE));
-        return sb.toString();
+        return htext(TYPE_OF_WORK_DESCRIPTION, "2") +
+                split() +
+                form(CHOOSE_TYPE_OF_WORK_TITLE, "post",
+                        ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork), formSubmitButton()) +
+                split() +
+                buttonWithRef("Back", MAIN_MENU_TITLE);
     }
 }
