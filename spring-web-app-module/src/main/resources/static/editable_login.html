@@ -52,37 +52,26 @@
     </div>
 </div>
 
+<!--<output id="output"></output>-->
+
 <script>
     formElem.onsubmit = async (e) => {
         e.preventDefault();
+        let form = document.getElementById('formElem');
+        let formData = new FormData(form);
+        let formValue = Object.fromEntries(formData);
+        let jsonBody = JSON.stringify(formValue);
 
-        // var object = {};
-        // formData.forEach((value, key) => object[key] = value);
-        // var json = JSON.stringify(object);
-        //
-        // let response = await fetch('/log_in', {
-        //     method: 'POST',
-        //     body: json
-        // });
+        // const output = document.getElementById('output');
+        // output.textContent += jsonBody;
 
-        let formData = new FormData();
-        formData.append("key", "val")
-
-        let value = Object.fromEntries(formData);
-        let jsonBody = JSON.stringify(value);
-        fetch("/log_in",
-            {
-                body: jsonBody,
-                method: "post",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            });
-
-
-        // let result = await response.json();
-        // alert(result.message);
+        fetch("/log_in", {
+            method: "POST",
+            body: jsonBody,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
     };
 </script>
 
