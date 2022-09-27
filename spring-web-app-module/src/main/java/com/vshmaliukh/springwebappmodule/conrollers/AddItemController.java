@@ -58,7 +58,7 @@ public class AddItemController extends HttpServlet {
         modelMap.addAttribute(ADD_ITEM_FORM , addingFormConfigStr(itemClassType, isRandom));
         modelMap.addAttribute(Constants.ITEM_CLASS_TYPE, itemClassType);
 
-        modelMap.addAttribute(GENERATED_HTML_STR, getStringBuilder());
+        modelMap.addAttribute(GENERATED_HTML_STR, getGeneratedHtml());
         return new ModelAndView(ADD_ITEM_TITLE, modelMap);
     }
 
@@ -69,11 +69,8 @@ public class AddItemController extends HttpServlet {
         return itemClassType;
     }
 
-    private static StringBuilder getStringBuilder() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(split());
-        sb.append(BootstrapHtmlBuilder.buttonWithRef("Back", ADD_MENU_TITLE));
-        return sb;
+    private static String getGeneratedHtml() {
+        return split() + BootstrapHtmlBuilder.buttonWithRef("Back", ADD_MENU_TITLE);
     }
 
 }

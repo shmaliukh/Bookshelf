@@ -9,6 +9,8 @@ public final class CookieUtil {
 
     private CookieUtil(){}
 
+    //todo add method to refresh maxAge
+
     public static void addCookie(String name, String value, HttpServletResponse response) {
         if(StringUtils.isNotBlank(name) && StringUtils.isNotBlank(value)){
             Cookie cookie = new Cookie(name, value);
