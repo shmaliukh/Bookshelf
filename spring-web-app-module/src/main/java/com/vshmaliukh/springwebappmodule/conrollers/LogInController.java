@@ -1,19 +1,21 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
+import com.vshmaliukh.springwebappmodule.CookieUtil;
+import com.vshmaliukh.springwebappmodule.UserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.JavaScriptBuilder;
+
+import javax.servlet.http.HttpServletResponse;
 
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
-import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
-import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;
 import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
+import static org.vshmaliukh.JavaScriptBuilder.*;
 
 @Controller
 public class LogInController {
@@ -43,32 +45,15 @@ public class LogInController {
                                 formSubmitButton("Sign in")
                         )
                 )
-        ) + JavaScriptBuilder.script("" +
-                        "formElem.onsubmit = async (e) => {\n" +
-                        "        e.preventDefault();\n" +
-                        "        let form = document.getElementById('formElem');\n" +
-                        "        let formData = new FormData(form);\n" +
-                        "        let formValue = Object.fromEntries(formData);\n" +
-                        "        let jsonBody = JSON.stringify(formValue);\n" +
-                        "        fetch(\"/log_in\", {\n" +
-                        "            method: \"POST\",\n" +
-                        "            body: jsonBody,\n" +
-                        "            headers: {\n" +
-                        "                \"Content-Type\": \"application/json\"\n" +
-                        "            }\n" +
-                        "        });\n" +
-                        "    };"
-        );
+        ) + script(formOnSubmit(FORM_ID, sendFormDataAsJson(FORM_ID, LOG_IN_TITLE, "post", MAIN_MENU_TITLE)));
     }
 
     @PostMapping("/" + LOG_IN_TITLE)
-    ModelAndView doPost(@RequestParam String userName,
-                        @RequestParam int typeOfWork,
-                        ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-        model.addAttribute(PAGE_TO_REDIRECT, MAIN_MENU_TITLE);
-        return new ModelAndView("redirect:/" + COOKIE_TITLE, model);
+    String doPost(@RequestBody UserModel userModel,
+                  HttpServletResponse response) {
+        CookieUtil.addCookie(USER_NAME, userModel.getUserName(), response);
+        CookieUtil.addCookie(TYPE_OF_WORK_WITH_FILES, userModel.getTypeOfWorkAsStr(), response);
+        return "redirect:/" + MAIN_MENU_TITLE;
     }
 
 }
