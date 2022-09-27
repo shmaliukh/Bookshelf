@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.JavaScriptBuilder;
 
-import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.COOKIE_TITLE;
 import static com.vshmaliukh.springwebappmodule.conrollers.CookieController.PAGE_TO_REDIRECT;
+import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
 public class LogInController {
+
+    public static final String FORM_ID = "formElem";
 
     @GetMapping(value = {"/", "/" + LOG_IN_TITLE})
     ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
@@ -31,7 +34,7 @@ public class LogInController {
     private static String generateLogInPageText(String userName, String typeOfWork) {
         return divContainer(
                 cardWhite("Please, log in",
-                        form(LOG_IN_TITLE, "post",
+                        form(FORM_ID,
                                 description("User name") +
                                         logInInputUserName(USER_NAME, userName) +
                                         split() +
@@ -40,6 +43,21 @@ public class LogInController {
                                 formSubmitButton("Sign in")
                         )
                 )
+        ) + JavaScriptBuilder.script("" +
+                        "formElem.onsubmit = async (e) => {\n" +
+                        "        e.preventDefault();\n" +
+                        "        let form = document.getElementById('formElem');\n" +
+                        "        let formData = new FormData(form);\n" +
+                        "        let formValue = Object.fromEntries(formData);\n" +
+                        "        let jsonBody = JSON.stringify(formValue);\n" +
+                        "        fetch(\"/log_in\", {\n" +
+                        "            method: \"POST\",\n" +
+                        "            body: jsonBody,\n" +
+                        "            headers: {\n" +
+                        "                \"Content-Type\": \"application/json\"\n" +
+                        "            }\n" +
+                        "        });\n" +
+                        "    };"
         );
     }
 

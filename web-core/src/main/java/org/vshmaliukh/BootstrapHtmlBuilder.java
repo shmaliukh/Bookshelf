@@ -83,6 +83,13 @@ public final class BootstrapHtmlBuilder {
                 "</form>";
     }
 
+    public static String form(String id, String formItems, String submitButton) {
+        return "<form id=\"" + id + "\">\n" +
+                formItems +
+                submitButton +
+                "</form>";
+    }
+
     public static String form(URIBuilder uriBuilder, String method, String formItems, String submitButton) {
         return "<form action=\"" + uriBuilder.toString() + "\" method=\"" + method + "\">\n" +
                 formItems +
