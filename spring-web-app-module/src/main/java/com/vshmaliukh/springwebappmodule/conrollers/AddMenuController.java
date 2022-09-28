@@ -1,11 +1,8 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.google.gson.Gson;
 import com.vshmaliukh.springwebappmodule.CookieUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,63 +11,20 @@ import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForAdding;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
-import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.utils.WebUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.BASE_PAGE_WITH_PLACEHOLDER;
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_HTML_STR;
-import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
 public class AddMenuController {
 
-    static Gson gson = new Gson();
+    public static final String GENERATED_MENU = "generatedMenu";
 
     @GetMapping("/" + Constants.ADD_MENU_TITLE)
-    ModelAndView doGet(@CookieValue(defaultValue = "") String itemClassType,
-                       @RequestParam(defaultValue = "") String itemGsonStr,
-                       ModelMap model) {
-        String generated;
-        if (StringUtils.isNotBlank(itemClassType) && StringUtils.isNotBlank(itemGsonStr)) {
-            generated = generatePageHtmlText() + split() + generateMessageAboutAddedItem(itemClassType, itemGsonStr);
-        } else {
-            generated = generatePageHtmlText();
-        }
-
-        model.addAttribute(GENERATED_HTML_STR, generated);
-        return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, model);
-    }
-
-    private static String generatePageHtmlText() {
-        StringBuilder sb = new StringBuilder();
-        String generatedMenu = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForAdding().generatedMenu);
-        sb.append(
-                divContainer(
-                        htext("Choose type of item to add", "2") + split() +
-                                form(Constants.ADD_MENU_TITLE, "post",
-                                        div(generatedMenu),
-                                        formSubmitButton()
-                                ) + split() +
-                                buttonWithRef("Back", MAIN_MENU_TITLE)
-                )
-        );
-        return sb.toString();
-    }
-
-    private static String generateMessageAboutAddedItem(String itemClassType, String itemGsonStr) {
-        if (StringUtils.isNotBlank(itemGsonStr) && StringUtils.isNotBlank(itemClassType)) {
-            Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(itemClassType);
-            Item item = gson.fromJson(itemGsonStr, classByName);
-            return divContainer(
-                    description("Added new item") +
-                            WebUtils.generateTableOfShelfItems(Collections.singletonList(item), false));
-        }
-        return "";
+    ModelAndView doGet(ModelMap model) {
+        model.addAttribute(GENERATED_MENU, ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForAdding().generatedMenu));
+        return new ModelAndView(ADD_MENU_TITLE, model);
     }
 
     @PostMapping("/" + Constants.ADD_MENU_TITLE)

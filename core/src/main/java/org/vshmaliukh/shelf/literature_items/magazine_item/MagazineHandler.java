@@ -38,8 +38,8 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     @Override
     public List<MenuItemForSorting<Magazine>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting<Magazine>(1, "Sort by 'name' value", MAGAZINE_COMPARATOR_BY_NAME),
-                new MenuItemForSorting<Magazine>(2, "Sort by 'pages' value", MAGAZINE_COMPARATOR_BY_PAGES)
+                new MenuItemForSorting<Magazine>(1, "Sort by 'name'", MAGAZINE_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Magazine>(2, "Sort by 'pages'", MAGAZINE_COMPARATOR_BY_PAGES)
         ));
     }
 
