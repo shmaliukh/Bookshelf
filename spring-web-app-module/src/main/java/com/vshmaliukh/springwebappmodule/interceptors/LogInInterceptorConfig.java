@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
 @Component
-public class LogInInterceptorConfig extends WebMvcConfigurerAdapter {
+public class LogInInterceptorConfig extends WebMvcConfigurerAdapter { //fixme find not deprecated solution
     @Autowired
     LogInInterceptor logInInterceptor;
 

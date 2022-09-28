@@ -23,15 +23,15 @@ public class LogInInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Object userNameAtr = session.getAttribute(USER_NAME);
         Object typeOfWorkAtr = session.getAttribute(TYPE_OF_WORK_WITH_FILES);
-        boolean isValidate = !session.isNew() && userNameAtr != null && typeOfWorkAtr != null;
-        if(!isValidate){
+        boolean isValid = userNameAtr != null && typeOfWorkAtr != null;
+        if(!isValid){
             try {
                 response.sendRedirect(LOG_IN_TITLE);
             } catch (IOException ioe) {
                 log.error("[Interceptor] Error: " + ioe.getMessage(), ioe);
             }
         }
-        return isValidate;
+        return true;
     }
 
     @Override

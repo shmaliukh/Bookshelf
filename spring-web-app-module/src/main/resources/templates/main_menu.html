@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:insert="blocks/bootstrap-css-style.html :: style">
+    <link/>
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <div>
+        <div class="container mt-5 mb-5">
+            <div class="row g-4  row-cols-1 row-cols-lg-2"><h1>Welcome, Vlad</h1>
+                <div><h3>Type of work with files: </h3>
+                    <h3>work with one file</h3></div>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="container mt-5 mb-5">
+            <button type="button" onclick="location.href='/add_menu'" class="w-100 btn btn-lg btn-outline-primary">
+                Add item
+            </button>
+            <br>
+            <button type="button" onclick="location.href='/edit_items'" class="w-100 btn btn-lg btn-outline-primary">
+                Edit items
+            </button>
+            <br>
+            <button type="button" onclick="location.href='/sorting_types_menu'"
+                    class="w-100 btn btn-lg btn-outline-primary">
+                Sort items
+            </button>
+            <br>
+            <button type="button" onclick="location.href='/choose_type_of_work'"
+                    class="w-100 btn btn-lg btn-outline-primary">
+                Change type of work
+            </button>
+            <br>
+            <button type="button" onclick="location.href='/log_in'" class="w-100 btn btn-lg btn-outline-primary">
+                Exit
+            </button>
+            <br></div>
+        <hr class="my-4">
+        <div class="container mt-5 mb-5">
+            <p class="lead">Current state of bookshelf</p>
+            <table class="table table-striped table-sm" th:utext="${generatedTableHtmlStr}">
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:insert="blocks/footer.html :: footer"></footer>
+</body>
+</html>
