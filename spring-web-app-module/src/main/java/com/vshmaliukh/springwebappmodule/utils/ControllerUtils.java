@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule.conrollers;
+package com.vshmaliukh.springwebappmodule.utils;
 
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;

@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.vshmaliukh.springwebappmodule.CookieUtil;
+import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
+import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
 import com.vshmaliukh.springwebappmodule.UserModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

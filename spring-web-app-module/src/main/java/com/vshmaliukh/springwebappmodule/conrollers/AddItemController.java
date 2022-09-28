@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -40,9 +41,6 @@ public class AddItemController extends HttpServlet {
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             webShelfHandler.addItem(item);
-
-//            modelMap.addAttribute(ITEM_GSON_STR, gson.toJson(item));
-//            modelMap.addAttribute(Constants.ITEM_CLASS_TYPE, itemClassType);
         }
         return new ModelAndView("redirect:/" + Constants.ADD_MENU_TITLE, modelMap);
     }
