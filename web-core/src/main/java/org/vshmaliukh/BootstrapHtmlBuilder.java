@@ -16,7 +16,7 @@ public final class BootstrapHtmlBuilder {
     public static String radioButton(String label, String id, String name, boolean checked) {
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"form-check\">\n")
-                .append("<input id=\"").append(id)
+                .append("<input id=\"typeOfWorkRadioButtonId-").append(id)
                 .append("\" name=\"").append(name)
                 .append("\" type=\"radio\" class=\"form-check-input\" value=\"" + id + "\"");
         if (checked) {
@@ -24,7 +24,7 @@ public final class BootstrapHtmlBuilder {
         }
         sb.append("required=\"\">\n")
                 .append("<label class=\"form-check-label\" ")
-                .append("for=\"").append(id).append("\">")
+                .append("for=\"typeOfWorkRadioButtonId-").append(id).append("\">")
                 .append(label)
                 .append("</label>\n")
                 .append("</div>");
@@ -35,7 +35,7 @@ public final class BootstrapHtmlBuilder {
     public static String radioButton(String label, String id, String name, boolean checked, String value) {
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"form-check\">\n")
-                .append("<input id=\"").append(id).append("\"")
+                .append("<input id=\"typeOfWorkRadioButtonId-").append(id).append("\"")
                 .append("name=\"").append(name).append("\"")
                 .append("type=\"radio\" class=\"form-check-input\" value=\"" + id + "\"")
                 .append("value=\"").append(value).append("\"");
@@ -44,7 +44,7 @@ public final class BootstrapHtmlBuilder {
         }
         sb.append("required=\"true\">\n")
                 .append("<label class=\"form-check-label\" ")
-                .append("for=\"").append(id).append("\">")
+                .append("for=\"typeOfWorkRadioButtonId-").append(id).append("\">")
                 .append(label)
                 .append("</label>\n")
                 .append("</div>");

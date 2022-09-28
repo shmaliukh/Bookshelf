@@ -1,14 +1,50 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Log in</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
     <link th:insert="blocks/bootstrap-css-style.html :: style">
-    <link/>
+    <script src="utils.js"></script>
 </head>
+
 <body>
 
-<div th:utext="${generatedHtmlStr}"></div>
+<div>
+    <div class="container mt-5 mb-5">
+        <div class="card mb-4 rounded-3 shadow-sm">
+            <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Please, log in</h4>
+            </div>
+            <div class="card-body">
+                <form id="formElem">
+
+                    <p class="lead">User name</p>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text">@</span>
+                        <input type="text" name="userName" class="form-control" id="userNameId" placeholder="username"
+                               th:value="${userName}" required="">
+                    </div>
+
+                    <hr class="my-4">
+
+                    <p class="lead">Choose type of work to save/read information about bookshelf items</p>
+                    <div th:utext="${generatedTypeOfWorkRadioButtons}"></div>
+
+                    <br>
+
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        formElem.onsubmit = async (e) => {
+            e.preventDefault();
+            fetchFormWithJsonBody("formElem", "/log_in", "post", "/main_menu");
+        };
+    </script>
+</div>
 
 </body>
 </html>
