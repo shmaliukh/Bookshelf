@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 
@@ -16,11 +17,12 @@ import static org.vshmaliukh.Constants.*;
 import static org.vshmaliukh.utils.WebUtils.generateCurrentStateOfShelf;
 
 @Controller
+@RequestMapping("/" + MAIN_MENU_TITLE)
 public class MainMenuController {
 
     public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
 
-    @GetMapping("/" + MAIN_MENU_TITLE)
+    @GetMapping()
     public ModelAndView doGet(@CookieValue(value = USER_NAME) String userName,
                               @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
                               ModelMap modelMap) {

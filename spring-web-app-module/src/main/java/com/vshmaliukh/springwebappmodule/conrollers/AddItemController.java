@@ -4,12 +4,8 @@ import com.google.gson.Gson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -22,13 +18,14 @@ import java.util.Map;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
+@RequestMapping("/" + ADD_ITEM_TITLE)
 public class AddItemController extends HttpServlet {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
 
     static Gson gson = new Gson();
 
-    @PostMapping("/" + Constants.ADD_ITEM_TITLE)
+    @PostMapping()
     ModelAndView doPost(@CookieValue String userName,
                         @CookieValue int typeOfWork,
                         @CookieValue String itemClassType,
@@ -42,10 +39,10 @@ public class AddItemController extends HttpServlet {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             webShelfHandler.addItem(item);
         }
-        return new ModelAndView("redirect:/" + Constants.ADD_MENU_TITLE, modelMap);
+        return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
     }
 
-    @GetMapping("/" + Constants.ADD_ITEM_TITLE)
+    @GetMapping()
     ModelAndView doGet(@CookieValue(defaultValue = "") String itemClassType,
                        @CookieValue String isRandom,
                        ModelMap modelMap) {

@@ -4,9 +4,7 @@ import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
@@ -15,9 +13,10 @@ import org.vshmaliukh.utils.WebUtils;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
+@RequestMapping(path = "/" + SORTING_TYPES_MENU_TITLE)
 public class SortingTypesMenuController {
 
-    @PostMapping("/" + SORTING_TYPES_MENU_TITLE)
+    @PostMapping()
     public ModelAndView doPost(@RequestParam String menuItemIndex,
                                ModelMap modelMap) {
         if (StringUtils.isNotBlank(menuItemIndex)) {
@@ -35,7 +34,7 @@ public class SortingTypesMenuController {
         return new ModelAndView(SORTING_TYPES_MENU_TITLE, modelMap);
     }
 
-    @GetMapping("/" + SORTING_TYPES_MENU_TITLE)
+    @GetMapping()
     public ModelAndView doGet(ModelMap modelMap) {
         String generateRadioButtonsMenuHtmlStr = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForSorting().generatedMenu);
         modelMap.addAttribute(GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS, generateRadioButtonsMenuHtmlStr);

@@ -4,10 +4,7 @@ import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -20,9 +17,10 @@ import static org.vshmaliukh.BootstrapHtmlBuilder.*;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
+@RequestMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
 public class ItemsSortingMenuController {
 
-    @PostMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
+    @PostMapping()
     ModelAndView doPost(@RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
                         ModelMap modelMap) {
@@ -31,7 +29,7 @@ public class ItemsSortingMenuController {
         return new ModelAndView("redirect:/" + Constants.ITEMS_SORTING_MENU_TITLE, modelMap);
     }
 
-    @GetMapping("/" + Constants.ITEMS_SORTING_MENU_TITLE)
+    @GetMapping()
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam(defaultValue = "") String menuItemIndex,
@@ -44,7 +42,6 @@ public class ItemsSortingMenuController {
         modelMap.addAttribute(GENERATED_TITTLE, itemClassType + " sorting");
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
-
 
     private static String generatePageHtmlText(String itemClassType, String generateItemsTableStr) {
         StringBuilder sb = new StringBuilder();
