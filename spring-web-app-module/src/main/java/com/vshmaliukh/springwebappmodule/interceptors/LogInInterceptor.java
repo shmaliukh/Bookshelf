@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import java.io.IOException;
 
 import static org.vshmaliukh.Constants.*;
 
@@ -18,17 +17,18 @@ import static org.vshmaliukh.Constants.*;
 public class LogInInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(
-            HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         HttpSession session = request.getSession();
         Object userNameAtr = session.getAttribute(USER_NAME);
         Object typeOfWorkAtr = session.getAttribute(TYPE_OF_WORK_WITH_FILES);
         boolean isValid = userNameAtr != null && typeOfWorkAtr != null;
-        if(!isValid){
+        if (!isValid) {
             try {
+                response.addCookie(new Cookie(USER_NAME, ""));
+                response.addCookie(new Cookie(TYPE_OF_WORK_WITH_FILES, ""));
                 response.sendRedirect(LOG_IN_TITLE);
-            } catch (IOException ioe) {
-                log.error("[Interceptor] Error: " + ioe.getMessage(), ioe);
+            } catch (Exception e) {
+                log.error("[Interceptor] Error: " + e.getMessage(), e);
             }
         }
         return true;
@@ -44,5 +44,6 @@ public class LogInInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
                                 Object handler, Exception exception) {
     }
+
 }
 

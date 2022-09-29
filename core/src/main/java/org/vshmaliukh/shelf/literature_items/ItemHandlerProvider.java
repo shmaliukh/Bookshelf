@@ -43,6 +43,6 @@ public final class ItemHandlerProvider {
     }
 
     public static Class<? extends Item> getClassByName(String classTypeStr) {
-        return itemNameClassMap.get(classTypeStr);
+        return itemNameClassMap.getOrDefault(classTypeStr, null);
     }
 }

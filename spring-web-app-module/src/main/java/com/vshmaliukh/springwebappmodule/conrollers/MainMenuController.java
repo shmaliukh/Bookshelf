@@ -11,6 +11,7 @@ import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import java.util.Map;
 
 import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.GENERATED_TITTLE;
+import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
 import static org.vshmaliukh.utils.WebUtils.generateCurrentStateOfShelf;
 
@@ -24,6 +25,8 @@ public class MainMenuController {
                               @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
                               ModelMap model) {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
+        model.addAttribute(USER_NAME, userName);
+        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWorkMap.get(typeOfWork));
         model.addAttribute(GENERATED_TABLE_HTML_STR, generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST));
         model.addAttribute(GENERATED_TITTLE, "Home");
         return new ModelAndView(MAIN_MENU_TITLE, model);

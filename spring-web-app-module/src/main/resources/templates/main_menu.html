@@ -12,9 +12,12 @@
 <div class="container mt-5 mb-5">
     <div>
         <div class="container mt-5 mb-5">
-            <div class="row g-4  row-cols-1 row-cols-lg-2"><h1>Welcome, Vlad</h1>
-                <div><h3>Type of work with files: </h3>
-                    <h3>work with one file</h3></div>
+            <div class="row g-4  row-cols-1 row-cols-lg-2">
+                <h1 th:text="'Welcome, ' + ${userName}"></h1>
+                <div>
+                    <h3>Type of work with files: </h3>
+                    <h3 th:text="${typeOfWork}"></h3>
+                </div>
             </div>
         </div>
         <hr class="my-4">
