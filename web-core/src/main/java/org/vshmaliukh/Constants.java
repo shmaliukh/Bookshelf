@@ -28,4 +28,6 @@ public final class Constants {
     public static final String IS_RANDOM = "isRandom";
     public static final String MENU_ITEM_INDEX = "menuItemIndex";
     public static final String INFORM_MESSAGE = "inform_message";
+
+    public static final String GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS = "generatedSortingByTypeRadioButtons";
 }
