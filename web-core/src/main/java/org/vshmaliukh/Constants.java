@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Constants {
+public final class Constants {
+
+    private Constants() {
+    }
+
     public static final String TYPE_OF_WORK_WITH_FILES = "typeOfWork";
     public static final String USER_NAME = "userName";
     public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));

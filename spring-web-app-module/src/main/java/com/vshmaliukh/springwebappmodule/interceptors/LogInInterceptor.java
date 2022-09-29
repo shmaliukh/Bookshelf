@@ -1,14 +1,14 @@
 package com.vshmaliukh.springwebappmodule.interceptors;
 
+import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import static org.vshmaliukh.Constants.*;
 
@@ -17,32 +17,44 @@ import static org.vshmaliukh.Constants.*;
 public class LogInInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        HttpSession session = request.getSession();
-        Object userNameAtr = session.getAttribute(USER_NAME);
-        Object typeOfWorkAtr = session.getAttribute(TYPE_OF_WORK_WITH_FILES);
-        boolean isValid = userNameAtr != null && typeOfWorkAtr != null;
+    public boolean preHandle(@NotNull HttpServletRequest request,
+                             @NotNull HttpServletResponse response,
+                             @NotNull Object handler) {
+        boolean isValid = checkIfUserIsLoggedIn(request);
         if (!isValid) {
             try {
-                response.addCookie(new Cookie(USER_NAME, ""));
-                response.addCookie(new Cookie(TYPE_OF_WORK_WITH_FILES, ""));
                 response.sendRedirect(LOG_IN_TITLE);
             } catch (Exception e) {
                 log.error("[Interceptor] Error: " + e.getMessage(), e);
             }
         }
-        return true;
+        return isValid;
     }
 
-    @Override
-    public void postHandle(
-            HttpServletRequest request, HttpServletResponse response, Object handler,
-            ModelAndView modelAndView) {
+    String readCookieValueAndRefresh(Cookie cookie, String nameToCheck) {
+        String cookieName = cookie.getName();
+        if (cookieName.equals(nameToCheck)) {
+            cookie.setMaxAge(CookieUtil.MAX_AGE);
+            return cookie.getValue();
+        }
+        return null;
     }
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                                Object handler, Exception exception) {
+    boolean checkIfUserIsLoggedIn(HttpServletRequest request) {
+        String userName = null;
+        String typeOfWork = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (userName == null) {
+                    userName = readCookieValueAndRefresh(cookie, USER_NAME);
+                }
+                if (typeOfWork == null) {
+                    typeOfWork = readCookieValueAndRefresh(cookie, TYPE_OF_WORK_WITH_FILES);
+                }
+            }
+        }
+        return userName != null && typeOfWork != null;
     }
 
 }
