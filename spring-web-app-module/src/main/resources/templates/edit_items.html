@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit items</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:insert="blocks/bootstrap-css-style.html :: style">
+    <link/>
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <div class="row g-4  row-cols-1 row-cols-lg-2"><h2>You are able to edit items</h2>
+        <div>
+            <h3>Type of work with files: </h3>
+            <h3 th:text="${typeOfWork}"></h3>
+        </div>
+    </div>
+    <hr class="my-4">
+    <h4>Current state of bookshelf</h4>
+    <table class="table table-striped table-sm" th:utext="${generatedTableHtmlStr}"></table>
+    <hr class="my-4">
+    <button type="button" onclick="location.href='/main_menu'" class="w-100 btn btn-lg btn-outline-primary">Back
+    </button>
+</div>
+
+<footer th:insert="blocks/footer.html :: footer"></footer>
+</body>
+</html>

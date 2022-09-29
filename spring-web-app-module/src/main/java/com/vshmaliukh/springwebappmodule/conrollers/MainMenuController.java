@@ -23,13 +23,13 @@ public class MainMenuController {
     @GetMapping("/" + MAIN_MENU_TITLE)
     public ModelAndView doGet(@CookieValue(value = USER_NAME) String userName,
                               @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
-                              ModelMap model) {
+                              ModelMap modelMap) {
         Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWorkMap.get(typeOfWork));
-        model.addAttribute(GENERATED_TABLE_HTML_STR, generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST));
-        model.addAttribute(GENERATED_TITTLE, "Home");
-        return new ModelAndView(MAIN_MENU_TITLE, model);
+        modelMap.addAttribute(USER_NAME, userName);
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWorkMap.get(typeOfWork));
+        modelMap.addAttribute(GENERATED_TABLE_HTML_STR, generateCurrentStateOfShelf(userAtr, ItemTitles.TITLE_LIST));
+        modelMap.addAttribute(GENERATED_TITTLE, "Home");
+        return new ModelAndView(MAIN_MENU_TITLE, modelMap);
     }
 
 }
