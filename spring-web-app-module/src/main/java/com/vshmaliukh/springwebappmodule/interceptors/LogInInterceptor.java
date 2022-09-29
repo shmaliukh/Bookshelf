@@ -23,6 +23,7 @@ public class LogInInterceptor implements HandlerInterceptor {
         boolean isValid = checkIfUserIsLoggedIn(request);
         if (!isValid) {
             try {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.sendRedirect(LOG_IN_TITLE);
             } catch (Exception e) {
                 log.error("[Interceptor] Error: " + e.getMessage(), e);

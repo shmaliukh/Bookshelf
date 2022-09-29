@@ -1,6 +1,6 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.vshmaliukh.springwebappmodule.UserModel;
+import com.vshmaliukh.springwebappmodule.UserDataModelForJson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class LogInController {
     }
 
     @PostMapping("/" + LOG_IN_TITLE)
-    String doPost(@RequestBody UserModel userModel,
+    String doPost(@RequestBody UserDataModelForJson userModel,
                   HttpServletResponse response) {
         String userName = userModel.getUserName();
         String typeOfWork = userModel.getTypeOfWorkAsStr();

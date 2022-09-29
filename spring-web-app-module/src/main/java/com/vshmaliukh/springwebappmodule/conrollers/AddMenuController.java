@@ -28,7 +28,7 @@ public class AddMenuController {
         return new ModelAndView(ADD_MENU_TITLE, model);
     }
 
-    @PostMapping("/" + Constants.ADD_MENU_TITLE)
+    @PostMapping("/" + ADD_MENU_TITLE)
     ModelAndView doPost(@RequestParam(defaultValue = "0") int menuItemIndex,
                         HttpServletResponse response, ModelMap modelMap) {
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
@@ -45,8 +45,8 @@ public class AddMenuController {
             }
             CookieUtil.addCookie(IS_RANDOM, randValue, response);
 
-            return new ModelAndView("redirect:/" + Constants.ADD_ITEM_TITLE, modelMap);
+            return new ModelAndView("redirect:/" + ADD_ITEM_TITLE, modelMap);
         }
-        return new ModelAndView(Constants.ADD_MENU_TITLE, modelMap);
+        return new ModelAndView(ADD_MENU_TITLE, modelMap);
     }
 }
