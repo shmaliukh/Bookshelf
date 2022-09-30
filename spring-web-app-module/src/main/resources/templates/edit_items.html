@@ -19,40 +19,15 @@
     <hr class="my-4">
     <h4>Current state of bookshelf</h4>
 
-    <th:block th:if="${titles.size() > 0}">
+    <th:block th:if="${items.size() > 0}">
         <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th:block th:each="title: ${titles}">
-                    <th th:text="${title}"></th>
-                </th:block>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="itemList, itemIndex: ${items}">
-                <th:block th:each="itemField: ${itemList}">
-                    <td th:text="${itemField}"></td>
-                </th:block>
-                <td>
-                    <button type="button" class="w-100 btn btn-lg btn-outline-primary"
-                            th:onclick="'location.href=\'/change_item_borrowed_state?indexOfItem='+ ${itemIndex.index + 1} + '\''">
-                        Change borrowed state
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="w-100 btn btn-lg btn-outline-primary"
-                            th:onclick="'location.href=\'/delete_item?indexOfItem=' + ${itemIndex.index + 1} + '\'' ">
-                        Delete
-                    </button>
-                </td>
-            </tr>
-            </tbody>
+            <thead th:insert="blocks/tableForItems.html :: theadTitlesBlock"></thead>
+            <tbody th:insert="blocks/tableForItems.html :: tbodyToEditItemTableBlock"></tbody>
         </table>
     </th:block>
 
-    <th:block th:if="${titles.size() == 0}">
-        <td colspan="2"> No literature item available</td>
-    </th:block>
+    <th:block th:insert="blocks/tableForItems.html :: ifItemsIsEmptyInfoBlock"></th:block>
+
     <hr class="my-4">
     <button type="button" onclick="location.href='/main_menu'" class="w-100 btn btn-lg btn-outline-primary">Back
     </button>

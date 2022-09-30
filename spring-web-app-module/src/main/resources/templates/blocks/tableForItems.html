@@ -1,0 +1,47 @@
+<th:block th:fragment="theadTitlesBlock">
+    <tr>
+        <th:block th:each="title: ${titles}">
+            <th th:text="${title}"></th>
+        </th:block>
+    </tr>
+</th:block>
+
+<th:block th:fragment="ifItemsIsEmptyInfoBlock">
+    <th:block th:if="${items.size() == 0}">
+        <td colspan="2"> No literature item available</td>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="fillAllColumnsValueBlock">
+    <th:block th:each="itemField: ${itemList}">
+        <td th:text="${itemField}"></td>
+    </th:block>
+</th:block>
+
+<th:block th:fragment="tbodySimpleItemTableBlock">
+    <tbody>
+    <tr th:each="itemList, itemIndex: ${items}">
+        <th:block th:insert="blocks/tableForItems.html :: fillAllColumnsValueBlock"></th:block>
+    </tr>
+    </tbody>
+</th:block>
+
+<th:block th:fragment="tbodyToEditItemTableBlock">
+    <tbody>
+    <tr th:each="itemList, itemIndex: ${items}">
+        <th:block th:insert="blocks/tableForItems.html :: fillAllColumnsValueBlock"></th:block>
+        <td>
+            <button type="button" class="w-100 btn btn-lg btn-outline-primary"
+                    th:onclick="'location.href=\'/change_item_borrowed_state?indexOfItem='+ ${itemIndex.index + 1} + '\''">
+                Change borrowed state
+            </button>
+        </td>
+        <td>
+            <button type="button" class="w-100 btn btn-lg btn-outline-primary"
+                    th:onclick="'location.href=\'/delete_item?indexOfItem=' + ${itemIndex.index + 1} + '\'' ">
+                Delete
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</th:block>
