@@ -18,7 +18,41 @@
     </div>
     <hr class="my-4">
     <h4>Current state of bookshelf</h4>
-    <table class="table table-striped table-sm" th:utext="${generatedTableHtmlStr}"></table>
+
+    <th:block th:if="${titles.size() > 0}">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th:block th:each="title: ${titles}">
+                    <th th:text="${title}"></th>
+                </th:block>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="itemList, itemIndex: ${items}">
+                <th:block th:each="itemField: ${itemList}">
+                    <td th:text="${itemField}"></td>
+                </th:block>
+                <td>
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary"
+                            th:onclick="'location.href=\'/change_item_borrowed_state?indexOfItem='+ ${itemIndex.index + 1} + '\''">
+                        Change borrowed state
+                    </button>
+                </td>
+                <td>
+                    <button type="button" class="w-100 btn btn-lg btn-outline-primary"
+                            th:onclick="'location.href=\'/delete_item?indexOfItem=' + ${itemIndex.index + 1} + '\'' ">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </th:block>
+
+    <th:block th:if="${titles.size() == 0}">
+        <td colspan="2"> No literature item available</td>
+    </th:block>
     <hr class="my-4">
     <button type="button" onclick="location.href='/main_menu'" class="w-100 btn btn-lg btn-outline-primary">Back
     </button>
