@@ -43,7 +43,7 @@ public class ItemsSortingMenuController {
         return new ModelAndView(BASE_PAGE_WITH_PLACEHOLDER, modelMap);
     }
 
-    private static String generatePageHtmlText(String itemClassType, String generateItemsTableStr) {
+    private static String generatePageHtmlText(String itemClassType, String generateItemsTableStr) { // FIXME create template
         StringBuilder sb = new StringBuilder();
         String generatedMenu = ControllerUtils.generateRadioButtonsMenuHtmlStr(ItemHandlerProvider.getHandlerByName(itemClassType).getSortingMenuList());
         URIBuilder uriBuilder = UrlUtil.generateBaseURLBuilder(ITEMS_SORTING_MENU_TITLE).addParameter(ITEM_CLASS_TYPE, itemClassType);

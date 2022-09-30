@@ -6,6 +6,8 @@ import java.util.List;
 
 public final class Constants {
 
+    public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
+
     private Constants() {
     }
 

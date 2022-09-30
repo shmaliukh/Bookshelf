@@ -83,17 +83,18 @@ public class ControllerUtils {
     }
 
     public static void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
-        Map<String, String> userAtr = adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
-        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-        Shelf shelf = webShelfHandler.getShelf();
+        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userName, typeOfWork);
         List<String> titles = new ArrayList<>();
         List<List<String>> tableValues = new ArrayList<>();
-        if (shelf != null) {
-            List<Item> allItems = shelf.getAllLiteratureObjects();
-            List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
-            TableGenerator tableGenerator = new TableGenerator(table, ItemTitles.TITLE_LIST, true);
-            titles.addAll(tableGenerator.getGeneratedTitleList());
-            tableValues.addAll(tableGenerator.getGeneratedTableList());
+        if(webShelfHandler != null){
+            Shelf shelf = webShelfHandler.getShelf();
+            if (shelf != null) {
+                List<Item> allItems = shelf.getAllLiteratureObjects();
+                List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
+                TableGenerator tableGenerator = new TableGenerator(table, ItemTitles.TITLE_LIST, true);
+                titles.addAll(tableGenerator.getGeneratedTitleList());
+                tableValues.addAll(tableGenerator.getGeneratedTableList());
+            }
         }
         modelMap.addAttribute(TITLES, titles);
         modelMap.addAttribute(ITEMS, tableValues);

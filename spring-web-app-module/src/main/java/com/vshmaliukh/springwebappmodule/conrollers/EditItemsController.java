@@ -11,7 +11,7 @@ import org.vshmaliukh.utils.WebUtils;
 
 import java.util.Map;
 
-import static com.vshmaliukh.springwebappmodule.conrollers.MainMenuController.GENERATED_TABLE_HTML_STR;
+import static org.vshmaliukh.Constants.GENERATED_TABLE_HTML_STR;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.EDIT_ITEMS_TITLE;
 import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;

@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
 @RequestMapping("/" + MAIN_MENU_TITLE)
 public class MainMenuController {
-
-    public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
 
     @GetMapping()
     public ModelAndView doGet(@CookieValue(value = USER_NAME) String userName,
@@ -24,7 +21,7 @@ public class MainMenuController {
         ControllerUtils.formCurrentStateTable(userName, typeOfWork, modelMap);
 
         modelMap.addAttribute(USER_NAME, userName);
-        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWorkMap.get(typeOfWork));
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(MAIN_MENU_TITLE, modelMap);
     }
 
