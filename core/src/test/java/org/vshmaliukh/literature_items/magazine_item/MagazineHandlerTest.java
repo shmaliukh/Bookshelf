@@ -32,7 +32,7 @@ class MagazineHandlerTest {
 
     @Test
     void testGetConvertorToString() {
-        Map<String, String> convertObjectToMapOfString = new MagazineHandler().convertItemToListOfString(magazine1);
+        Map<String, String> convertObjectToMapOfString = new MagazineHandler().convertItemToMapOfString(magazine1);
 
         Map<String, String> map = new HashMap<>();
         map.put(TYPE, magazine1.getClass().getSimpleName());

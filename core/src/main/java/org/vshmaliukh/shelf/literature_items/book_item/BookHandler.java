@@ -72,7 +72,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Book book) {
+    public Map<String, String> convertItemToMapOfString(Book book) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, book.getClass().getSimpleName());
         map.put(NAME, book.getName());

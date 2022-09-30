@@ -14,7 +14,7 @@ public final class ConvertorToStringForItems {
     public static <T extends Item> Map<String, String> getConvertedLiterature(T item) {
         return ItemHandlerProvider
                 .getHandlerByName(item.getClass().getSimpleName())
-                .convertItemToListOfString(item);
+                .convertItemToMapOfString(item);
     }
 
     public static <T extends Item> List<Map<String, String>> getTable(List<T> literatureList) {

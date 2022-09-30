@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${title}"></title>
+    <title>Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link th:insert="blocks/bootstrap-css-style.html :: style">
     <link/>
@@ -45,10 +45,32 @@
             </button>
             <br></div>
         <hr class="my-4">
+
         <div class="container mt-5 mb-5">
             <p class="lead">Current state of bookshelf</p>
-            <table class="table table-striped table-sm" th:utext="${generatedTableHtmlStr}">
-            </table>
+            <th:block th:if="${titles.size() > 0}">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th:block th:each="title: ${titles}">
+                            <th th:text="${title}"></th>
+                        </th:block>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="itemList: ${items}">
+                        <th:block th:each="itemField: ${itemList}">
+                            <td th:text="${itemField}"></td>
+                        </th:block>
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
+
+            <th:block th:if="${titles.size() == 0}">
+                <td colspan="2"> No literature item available</td>
+            </th:block>
+
         </div>
     </div>
 </div>

@@ -65,7 +65,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Comics comics) {
+    public Map<String, String> convertItemToMapOfString(Comics comics) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, comics.getClass().getSimpleName());
         map.put(ItemTitles.NAME, comics.getName());

@@ -60,7 +60,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Magazine magazine) {
+    public Map<String, String> convertItemToMapOfString(Magazine magazine) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, magazine.getClass().getSimpleName());
         map.put(ItemTitles.NAME, magazine.getName());

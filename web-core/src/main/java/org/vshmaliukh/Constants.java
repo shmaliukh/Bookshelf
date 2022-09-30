@@ -30,4 +30,8 @@ public final class Constants {
     public static final String INFORM_MESSAGE = "inform_message";
 
     public static final String GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS = "generatedSortingByTypeRadioButtons";
+
+    public static final String TITLES = "titles";
+    public static final String ITEMS = "items";
+
 }

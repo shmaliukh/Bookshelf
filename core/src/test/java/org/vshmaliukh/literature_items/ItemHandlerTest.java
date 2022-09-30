@@ -171,7 +171,7 @@ class ItemHandlerTest {
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(uniqueTypeName);
             List<? extends Item> itemsByType = ItemUtils.getItemsByType(uniqueTypeName, generatedListWithAllTypeItems);
             for (Item item : itemsByType) {
-                Map map = handlerByClass.convertItemToListOfString(item);
+                Map map = handlerByClass.convertItemToMapOfString(item);
                 assertFalse(map.isEmpty());
                 assertFalse(map.values().isEmpty());
                 assertFalse(map.keySet().isEmpty());

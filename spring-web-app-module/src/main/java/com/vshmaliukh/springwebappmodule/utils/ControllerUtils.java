@@ -1,12 +1,17 @@
 package com.vshmaliukh.springwebappmodule.utils;
 
+import org.springframework.ui.ModelMap;
 import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.print_table_service.TableGenerator;
+import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
+import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
+import org.vshmaliukh.shelf.literature_items.ItemTitles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,5 +80,22 @@ public class ControllerUtils {
         } else {
             return generateTableOfShelfItems(sortedItemsByClass, true);
         }
+    }
+
+    public static void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
+        Map<String, String> userAtr = adaptUserAtrToWebAppStandard(userName, typeOfWork); // TODO refactor
+        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+        Shelf shelf = webShelfHandler.getShelf();
+        List<String> titles = new ArrayList<>();
+        List<List<String>> tableValues = new ArrayList<>();
+        if (shelf != null) {
+            List<Item> allItems = shelf.getAllLiteratureObjects();
+            List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
+            TableGenerator tableGenerator = new TableGenerator(table, ItemTitles.TITLE_LIST, true);
+            titles.addAll(tableGenerator.getGeneratedTitleList());
+            tableValues.addAll(tableGenerator.getGeneratedTableList());
+        }
+        modelMap.addAttribute(TITLES, titles);
+        modelMap.addAttribute(ITEMS, tableValues);
     }
 }

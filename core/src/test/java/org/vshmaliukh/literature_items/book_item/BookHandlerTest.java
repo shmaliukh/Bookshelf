@@ -34,7 +34,7 @@ class BookHandlerTest {
 
     @Test
     void testGetConvertorToString() {
-        Map<String, String> convertObjectToMapOfString = new BookHandler().convertItemToListOfString(book1);
+        Map<String, String> convertObjectToMapOfString = new BookHandler().convertItemToMapOfString(book1);
 
         Map<String, String> map = new HashMap<>();
         map.put(TYPE, book1.getClass().getSimpleName());
