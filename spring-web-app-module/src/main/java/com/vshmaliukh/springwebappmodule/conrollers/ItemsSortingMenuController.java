@@ -16,8 +16,8 @@ public class ItemsSortingMenuController {
     ModelAndView doPost(@RequestParam String menuItemIndex,
                         @RequestParam String itemClassType,
                         ModelMap modelMap) {
-        modelMap.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
+        modelMap.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE, modelMap);
     }
 
@@ -30,6 +30,7 @@ public class ItemsSortingMenuController {
         ControllerUtils.formItemTableByClass(userName, typeOfWork, itemClassType, menuItemIndex, modelMap);
         ControllerUtils.formRadioButtonsMapForSortingByClassType(itemClassType, modelMap);
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
+        modelMap.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         return new ModelAndView(ITEMS_SORTING_MENU_TITLE, modelMap);
     }
 

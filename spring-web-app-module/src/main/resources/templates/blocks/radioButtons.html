@@ -21,3 +21,15 @@
         </div>
     </th:block>
 </th:block>
+
+<th:block th:fragment="generateRadioButtonsCheckedByMenuItemIndex">
+    <th:block th:each="radioButton : ${radioButtons}">
+        <div class="form-check">
+            <input th:id="'radioButtonId-'+${radioButton.getKey()}" name="menuItemIndex" type="radio"
+                   class="form-check-input" th:value="${radioButton.getKey()}" required=""
+                   th:checked="(${radioButton.getKey()} == ${menuItemIndex})">
+            <label class="form-check-label" th:text="${radioButton.getValue()}"
+                   th:for="'radioButtonId-'+${radioButton.getKey()}"></label>
+        </div>
+    </th:block>
+</th:block>
