@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 
-import static com.vshmaliukh.springwebappmodule.SpringWebAppModuleApplication.CHOOSE_TYPE_OF_WORK_TITLE;
+import static org.vshmaliukh.Constants.CHOOSE_TYPE_OF_WORK_TITLE;
 import static org.vshmaliukh.Constants.MAIN_MENU_TITLE;
 import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
 

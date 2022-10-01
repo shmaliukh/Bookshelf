@@ -8,6 +8,7 @@ public final class Constants {
 
     public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
     public static final String RADIO_BUTTONS = "radioButtons";
+    public static final String CHOOSE_TYPE_OF_WORK_TITLE = "choose_type_of_work";
 
     private Constants() {
     }

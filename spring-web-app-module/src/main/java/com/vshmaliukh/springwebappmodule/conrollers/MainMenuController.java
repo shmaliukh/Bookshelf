@@ -19,7 +19,6 @@ public class MainMenuController {
                               @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
                               ModelMap modelMap) {
         ControllerUtils.formCurrentStateTable(userName, typeOfWork, modelMap);
-
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(MAIN_MENU_TITLE, modelMap);

@@ -31,9 +31,8 @@ public class AddItemController extends HttpServlet {
                         @CookieValue String itemClassType,
                         @RequestBody String jsonBody,
                         ModelMap modelMap) {
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userName, typeOfWork);
         Map<String, String> itemFieldValueMap = gson.fromJson(jsonBody, Map.class); // todo refactor validation to serve JsonStr, not Map
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
@@ -46,16 +45,9 @@ public class AddItemController extends HttpServlet {
     ModelAndView doGet(@CookieValue(defaultValue = "") String itemClassType,
                        @CookieValue String isRandom,
                        ModelMap modelMap) {
-        modelMap.addAttribute(ADD_ITEM_FORM, addingFormConfigStr(itemClassType, isRandom));
+        modelMap.addAttribute(ADD_ITEM_FORM, ControllerUtils.addFormIsRandomConfigStr(itemClassType, isRandom));
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         return new ModelAndView(ADD_ITEM_TITLE, modelMap);
-    }
-
-    String addingFormConfigStr(String itemClassType, String isRandom) {
-        if (isRandom.equals("true")) {
-            return itemClassType + "Rand";
-        }
-        return itemClassType;
     }
 
 }
