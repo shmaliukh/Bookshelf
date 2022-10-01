@@ -1,10 +1,6 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.services.menus.menu_items.MenuItem;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.services.SaveReadShelfHandler.*;
@@ -13,7 +9,6 @@ public final class ConfigFile {
 
     private ConfigFile(){}
 
-    // todo create file with config (?)
     public static final String DATE_FORMAT_STR = "yyyy-MM-dd";
     public static final String HOME_PROPERTY = System.getProperty("user.home");
 

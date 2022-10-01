@@ -2,7 +2,7 @@ package org.vshmaliukh.print_table_service;
 
 import java.util.*;
 
-public class BaseTableHandler extends TableGenerator{
+public class BaseTableHandler extends TableHandler {
     protected List<Integer> sizeList = new ArrayList<>();
 
     public BaseTableHandler(List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {

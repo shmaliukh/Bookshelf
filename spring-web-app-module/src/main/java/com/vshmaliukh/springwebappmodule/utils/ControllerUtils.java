@@ -2,7 +2,7 @@ package com.vshmaliukh.springwebappmodule.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ui.ModelMap;
-import org.vshmaliukh.print_table_service.TableGenerator;
+import org.vshmaliukh.print_table_service.TableHandler;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
@@ -37,7 +37,7 @@ public final class ControllerUtils {
             if (shelf != null) {
                 List<Item> allItems = shelf.getAllLiteratureObjects();
                 List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
-                TableGenerator tableGenerator = new TableGenerator(table, ItemTitles.TITLE_LIST, true);
+                TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
                 titles.addAll(tableGenerator.getGeneratedTitleList());
                 tableValues.addAll(tableGenerator.getGeneratedTableList());
             }
@@ -62,7 +62,7 @@ public final class ControllerUtils {
                     itemsByClass = handlerByClass.getSortedItems(typeOfSorting, itemsByClass);
                 }
                 List<Map<String, String>> table = ConvertorToStringForItems.getTable(itemsByClass);
-                TableGenerator tableGenerator = new TableGenerator(table, ItemTitles.TITLE_LIST, true);
+                TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
                 titles.addAll(tableGenerator.getGeneratedTitleList());
                 tableValues.addAll(tableGenerator.getGeneratedTableList());
             }

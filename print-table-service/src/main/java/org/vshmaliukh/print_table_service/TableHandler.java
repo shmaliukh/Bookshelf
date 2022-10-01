@@ -2,8 +2,7 @@ package org.vshmaliukh.print_table_service;
 
 import java.util.*;
 
-public class TableGenerator {
-    // TODO rename class
+public class TableHandler {
 
     protected final boolean isNeedIndex;
 
@@ -11,14 +10,13 @@ public class TableGenerator {
     protected List<List<String>> tableListOfLists;
     protected List<Map<String, String>> bufferTableListOfMaps;
 
-    public TableGenerator(List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {
+    public TableHandler(List<Map<String, String>> bufferTableListOfMaps, Boolean isNeedIndex) {
 
         this.isNeedIndex = isNeedIndex;
         this.bufferTableListOfMaps = bufferTableListOfMaps;
     }
 
-    public TableGenerator(List<Map<String, String>> bufferTableListOfMaps, List<String> titleList,  Boolean isNeedIndex) {
-        // TODO rename class
+    public TableHandler(List<Map<String, String>> bufferTableListOfMaps, List<String> titleList, Boolean isNeedIndex) {
         this.titleList = titleList;
         this.isNeedIndex = isNeedIndex;
         this.bufferTableListOfMaps = bufferTableListOfMaps;
