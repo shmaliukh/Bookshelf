@@ -23,8 +23,6 @@ import static org.vshmaliukh.Constants.*;
 @RequestMapping("/" + ADD_MENU_TITLE)
 public class AddMenuController {
 
-    public static final String GENERATED_MENU = "generatedMenu";
-
     @GetMapping()
     ModelAndView doGet(ModelMap modelMap) {
         List<MenuItemClassType> menuItems = new GeneratedMenuForAdding().getMenuItems();

@@ -14,10 +14,7 @@ import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.vshmaliukh.BootstrapHtmlBuilder.radioButton;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
@@ -38,8 +35,8 @@ public final class ControllerUtils {
 
     public static String generateTypeOfWorkRadioButtons(String currentTypeOfWork) {
         StringBuilder sb = new StringBuilder();
-        Map<Object, String> typeOfWorkMap = ConfigFile.typeOfWorkMap;
-        for (Map.Entry<Object, String> entry : typeOfWorkMap.entrySet()) {
+        Map<Integer, String> typeOfWorkMap = ConfigFile.typeOfWorkMap;
+        for (Map.Entry<Integer, String> entry : typeOfWorkMap.entrySet()) {
             String integerTypeOfWork = entry.getKey().toString();
             String friendlyStrTypeOfWork = entry.getValue();
             if (currentTypeOfWork.equals(integerTypeOfWork)) {
@@ -123,5 +120,17 @@ public final class ControllerUtils {
             radioButtonsMap.put(String.valueOf(menuItem.getIndex()), menuItem.getStr());
         }
         modelMap.addAttribute(RADIO_BUTTONS, radioButtonsMap);
+    }
+
+    public static List<MenuItem> generateTypeOfWorkMenu(){
+        ArrayList<MenuItem> menuList = new ArrayList<>();
+        typeOfWorkMap.forEach((k,v) -> menuList.add(new MenuItem(k,v)));
+        return Collections.unmodifiableList(menuList);
+    }
+
+    public static void formRadioButtonsToChooseTypeOfWork(String typeOfWork, ModelMap modelMap) {
+        List<MenuItem> menuItems = generateTypeOfWorkMenu();
+        formRadioButtons(menuItems, modelMap);
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
     }
 }

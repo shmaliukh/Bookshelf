@@ -18,16 +18,13 @@ import static org.vshmaliukh.Constants.*;
 @Controller
 public class LogInController {
 
-    public static final String GENERATED_TYPE_OF_WORK_RADIO_BUTTONS = "generatedTypeOfWorkRadioButtons";
-
     @GetMapping(value = {"/", "/" + LOG_IN_TITLE})
     ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
                        @CookieValue(defaultValue = "") String typeOfWork,
-                       ModelMap model) {
-        model.addAttribute(USER_NAME, userName);
-        model.addAttribute(TYPE_OF_WORK_WITH_FILES, typeOfWork);
-        model.addAttribute(GENERATED_TYPE_OF_WORK_RADIO_BUTTONS, ControllerUtils.generateTypeOfWorkRadioButtons(typeOfWork));
-        return new ModelAndView(LOG_IN_TITLE, model);
+                       ModelMap modelMap) {
+        modelMap.addAttribute(USER_NAME, userName);
+        ControllerUtils.formRadioButtonsToChooseTypeOfWork(typeOfWork, modelMap);
+        return new ModelAndView(LOG_IN_TITLE, modelMap);
     }
 
     @PostMapping("/" + LOG_IN_TITLE)

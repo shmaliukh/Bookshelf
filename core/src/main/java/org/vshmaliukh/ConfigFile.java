@@ -1,10 +1,13 @@
 package org.vshmaliukh;
 
+import org.vshmaliukh.services.menus.menu_items.MenuItem;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.services.SaveReadShelfHandler.*;
-import static org.vshmaliukh.services.SaveReadShelfHandler.MODE_WORK_WITH_MYSQL;
 
 public final class ConfigFile {
 
@@ -14,7 +17,7 @@ public final class ConfigFile {
     public static final String DATE_FORMAT_STR = "yyyy-MM-dd";
     public static final String HOME_PROPERTY = System.getProperty("user.home");
 
-    public static final Map<Object, String> typeOfWorkMap = new HashMap<>();
+    public static final Map<Integer, String> typeOfWorkMap = new HashMap<>();
 
     static {
         typeOfWorkMap.put(MODE_WORK_WITH_ONE_FILE, "work with one file");
@@ -22,4 +25,6 @@ public final class ConfigFile {
         typeOfWorkMap.put(MODE_WORK_WITH_SQLLITE, "work with SqlLite database");
         typeOfWorkMap.put(MODE_WORK_WITH_MYSQL, "work with MySql database");
     }
+
+
 }

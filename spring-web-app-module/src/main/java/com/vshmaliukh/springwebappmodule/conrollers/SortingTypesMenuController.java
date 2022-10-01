@@ -37,7 +37,7 @@ public class SortingTypesMenuController {
     @GetMapping()
     public ModelAndView doGet(ModelMap modelMap) {
         String generateRadioButtonsMenuHtmlStr = ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForSorting().getMenuItems());
-        modelMap.addAttribute(GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS, generateRadioButtonsMenuHtmlStr);
+        modelMap.addAttribute(GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS, generateRadioButtonsMenuHtmlStr); // FIXME
         return new ModelAndView(SORTING_TYPES_MENU_TITLE, modelMap);
     }
 

@@ -20,7 +20,6 @@ public class EditItemsController {
                        @CookieValue int typeOfWork,
                        ModelMap modelMap) {
         ControllerUtils.formCurrentStateTable(userName, typeOfWork, modelMap);
-
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(EDIT_ITEMS_TITLE, modelMap);
     }

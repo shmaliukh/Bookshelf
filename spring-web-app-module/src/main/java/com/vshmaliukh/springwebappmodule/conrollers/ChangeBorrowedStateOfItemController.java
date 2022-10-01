@@ -1,6 +1,5 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -13,7 +12,6 @@ import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.vshmaliukh.Constants.CHANGE_ITEM_BORROWED_STATE_TITLE;
 import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
@@ -27,8 +25,7 @@ public class ChangeBorrowedStateOfItemController {
                        @CookieValue int typeOfWork,
                        @RequestParam int indexOfItem,
                        ModelMap model) {
-        Map<String, String> userAtr = ControllerUtils.adaptUserAtrToWebAppStandard(userName, typeOfWork);
-        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
+        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userName, typeOfWork);
         if (webShelfHandler != null) {
             webShelfHandler.readShelfItems();
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Choose type of work</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:insert="blocks/bootstrap-css-style.html :: style">
+    <link/>
+</head>
+<body>
+<header th:insert="blocks/header.html :: header"></header>
+
+<div class="container mt-5 mb-5">
+    <h2>Choose type of work to save/read information about bookshelf items</h2>
+    <hr class="my-4">
+    <form action="/choose_type_of_work" method="post">
+        <th:block th:insert="blocks/radioButtons :: generateRadioButtonsCheckedByTypeOfWork"></th:block>
+        <br>
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+    </form>
+    <hr class="my-4">
+    <button type="button" onclick="location.href='/main_menu'" class="w-100 btn btn-lg btn-outline-primary">Back
+    </button>
+    <br></div>
+
+<footer th:insert="blocks/footer.html :: footer"></footer>
+</body>
+</html>

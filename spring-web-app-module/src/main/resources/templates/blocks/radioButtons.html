@@ -1,8 +1,23 @@
 <th:block th:fragment="generateRadioButtons">
     <th:block th:each="radioButton : ${radioButtons}">
         <div class="form-check">
-            <input th:id="'radioButtonId-'+${radioButton.getKey()}" name="menuItemIndex" type="radio" class="form-check-input" th:value="${radioButton.getKey()}" required="">
-            <label class="form-check-label" th:text="${radioButton.getValue()}" th:for="'radioButtonId-'+${radioButton.getKey()}"></label>
+            <input th:id="'radioButtonId-'+${radioButton.getKey()}" name="menuItemIndex" type="radio"
+                   class="form-check-input" th:value="${radioButton.getKey()}" required="">
+            <label class="form-check-label" th:text="${radioButton.getValue()}"
+                   th:for="'radioButtonId-'+${radioButton.getKey()}"></label>
+        </div>
+    </th:block>
+</th:block>
+
+
+<th:block th:fragment="generateRadioButtonsCheckedByTypeOfWork">
+    <th:block th:each="radioButton : ${radioButtons}">
+        <div class="form-check">
+            <input th:id="'radioButtonId-'+${radioButton.getKey()}" name="typeOfWork" type="radio"
+                   class="form-check-input" th:value="${radioButton.getKey()}" required=""
+                   th:checked="(${radioButton.getKey()} == ${typeOfWork})">
+            <label class="form-check-label" th:text="${radioButton.getValue()}"
+                   th:for="'radioButtonId-'+${radioButton.getKey()}"></label>
         </div>
     </th:block>
 </th:block>
