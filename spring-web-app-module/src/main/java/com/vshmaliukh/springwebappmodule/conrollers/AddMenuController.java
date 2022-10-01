@@ -15,6 +15,8 @@ import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
+
 import static org.vshmaliukh.Constants.*;
 
 @Controller
@@ -24,9 +26,10 @@ public class AddMenuController {
     public static final String GENERATED_MENU = "generatedMenu";
 
     @GetMapping()
-    ModelAndView doGet(ModelMap model) {
-        model.addAttribute(GENERATED_MENU, ControllerUtils.generateRadioButtonsMenuHtmlStr(new GeneratedMenuForAdding().generatedMenu));
-        return new ModelAndView(ADD_MENU_TITLE, model);
+    ModelAndView doGet(ModelMap modelMap) {
+        List<MenuItemClassType> menuItems = new GeneratedMenuForAdding().getMenuItems();
+        ControllerUtils.formRadioButtons(menuItems, modelMap);
+        return new ModelAndView(ADD_MENU_TITLE, modelMap);
     }
 
     @PostMapping()
@@ -34,7 +37,7 @@ public class AddMenuController {
                         HttpServletResponse response, ModelMap modelMap) {
         GeneratedMenu generatedMenu = new GeneratedMenuForAdding();
 
-        if (menuItemIndex > 0 && menuItemIndex <= generatedMenu.generatedMenu.size()) {
+        if (menuItemIndex > 0 && menuItemIndex <= generatedMenu.getMenuItems().size()) {
             MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(menuItemIndex - 1);
             int index = menuItemClassType.getIndex();
 

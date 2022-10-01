@@ -10,21 +10,12 @@
 <header th:insert="blocks/header.html :: header"></header>
 
 <div class="container mt-5 mb-5">
-
-<!--    <div th:utext="${generatedHtmlStr}"></div>-->
     <div>
         <div class="container mt-5 mb-5">
             <h2 th:text=" 'Choose \''+ ${itemClassType} + '\' items type of sorting'"></h2>
             <hr class="my-4">
             <form th:action="'/items_sorting_menu?itemClassType=' + ${itemClassType}" method="post">
-                <th:block th:each="radioButton : ${radioButtons}">
-                    <div class="form-check">
-                        <input th:id="'typeOfWorkRadioButtonId-'+${radioButton.getKey()}" name="menuItemIndex" type="radio" class="form-check-input" th:value="${radioButton.getKey()}" required="true">
-                        <label class="form-check-label" th:text="${radioButton.getValue()}" th:for="'typeOfWorkRadioButtonId-'+${radioButton.getKey()}"></label>
-                    </div>
-                </th:block>
-
-
+                <th:block th:insert="blocks/radioButtons :: generateRadioButtons"></th:block>
                 <br>
                 <button class="w-100 btn btn-primary btn-lg" type="submit">Sort</button>
             </form>

@@ -40,7 +40,7 @@ public class AddMenuServlet extends HttpServlet {
             } catch (NumberFormatException e) {
                 parseInt = 0;
             }
-            if (parseInt > 0 && parseInt <= generatedMenu.generatedMenu.size()) {
+            if (parseInt > 0 && parseInt <= generatedMenu.getMenuItems().size()) {
                 MenuItemClassType<?> menuItemClassType = generatedMenu.getMenuItems().get(parseInt - 1);
                 int index = menuItemClassType.getIndex();
                 addItemByType(userAtr, response, menuItemClassType, index);

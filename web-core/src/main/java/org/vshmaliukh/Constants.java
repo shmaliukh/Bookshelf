@@ -7,6 +7,7 @@ import java.util.List;
 public final class Constants {
 
     public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
+    public static final String RADIO_BUTTONS = "radioButtons";
 
     private Constants() {
     }

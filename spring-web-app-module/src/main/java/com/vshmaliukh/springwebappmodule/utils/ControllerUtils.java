@@ -8,22 +8,26 @@ import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
-import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.vshmaliukh.BootstrapHtmlBuilder.radioButton;
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
 import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
-import static org.vshmaliukh.utils.WebUtils.generateTableOfShelfItems;
 
-public class ControllerUtils {
+public final class ControllerUtils {
+
+    private ControllerUtils() {
+    }
 
     public static Map<String, String> adaptUserAtrToWebAppStandard(String userName, int typeOfWork) {
         Map<String, String> userAtrMap = new HashMap<>();
@@ -62,22 +66,6 @@ public class ControllerUtils {
             generatedMenuBuilder.append(radioButton(menuItem.getStr(), String.valueOf(menuItem.getIndex()), MENU_ITEM_INDEX, false, String.valueOf(menuItem.getIndex())));
         }
         return generatedMenuBuilder.toString();
-    }
-
-    public static <T extends Item> String generateItemsTableStr(Map<String, String> userAtr, String menuIndexStr, String classTypeStr, ItemHandler<T> handlerByName) {
-        Class classType = ItemHandlerProvider.getClassByName(classTypeStr);
-        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userAtr);
-        List<T> sortedItemsByClass = new ArrayList<>();
-        if (webShelfHandler != null) {
-            sortedItemsByClass = webShelfHandler.getSortedItemsByClass(classType);
-        }
-        if (menuIndexStr != null && !menuIndexStr.equals("")) {
-            int typeOfSorting = Integer.parseInt(menuIndexStr);
-            List<T> sortedList = handlerByName.getSortedItems(typeOfSorting, sortedItemsByClass);
-            return generateTableOfShelfItems(sortedList, true);
-        } else {
-            return generateTableOfShelfItems(sortedItemsByClass, true);
-        }
     }
 
     public static void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
@@ -119,18 +107,21 @@ public class ControllerUtils {
                 tableValues.addAll(tableGenerator.getGeneratedTableList());
             }
         }
-        System.out.println(titles);
         modelMap.addAttribute(TITLES, titles);
         modelMap.addAttribute(ITEMS, tableValues);
     }
 
-    public static void formRadioButtonsToSortItemsByValue(String itemClassType, ModelMap modelMap) {
-        Map<String, String> radioButtonsMap = new HashMap<>();
+    public static void formRadioButtonsMapForSortingByClassType(String itemClassType, ModelMap modelMap) {
         ItemHandler handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        List<MenuItemForSorting> sortingMenuList = handlerByName.getSortingMenuList();
-        for (MenuItemForSorting menuItemForSorting : sortingMenuList) {
-            radioButtonsMap.put(String.valueOf(menuItemForSorting.getIndex()), menuItemForSorting.getStr());
+        List<MenuItem> sortingMenuList = handlerByName.getSortingMenuList();
+        formRadioButtons(sortingMenuList, modelMap);
+    }
+
+    public static void formRadioButtons(List<? extends MenuItem> menuList, ModelMap modelMap) {
+        Map<String, String> radioButtonsMap = new HashMap<>();
+        for (MenuItem menuItem : menuList) {
+            radioButtonsMap.put(String.valueOf(menuItem.getIndex()), menuItem.getStr());
         }
-        modelMap.addAttribute("radioButtons", radioButtonsMap);
+        modelMap.addAttribute(RADIO_BUTTONS, radioButtonsMap);
     }
 }

@@ -1,0 +1,8 @@
+<th:block th:fragment="generateRadioButtons">
+    <th:block th:each="radioButton : ${radioButtons}">
+        <div class="form-check">
+            <input th:id="'radioButtonId-'+${radioButton.getKey()}" name="menuItemIndex" type="radio" class="form-check-input" th:value="${radioButton.getKey()}" required="">
+            <label class="form-check-label" th:text="${radioButton.getValue()}" th:for="'radioButtonId-'+${radioButton.getKey()}"></label>
+        </div>
+    </th:block>
+</th:block>
