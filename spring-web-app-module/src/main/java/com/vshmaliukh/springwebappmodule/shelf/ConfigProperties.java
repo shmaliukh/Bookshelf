@@ -1,6 +1,6 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
-import com.vshmaliukh.springwebappmodule.shelf.pojo.BookEntity;
+import com.vshmaliukh.springwebappmodule.shelf.entities.BookEntity;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
