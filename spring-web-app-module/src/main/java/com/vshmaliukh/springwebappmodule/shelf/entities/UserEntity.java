@@ -13,12 +13,13 @@ import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 @Entity
 @Table(name = USER_TABLE)
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = ConstantsForDataBase.ID_COLUMN, nullable = false)
     private Long id;
 
-    @Column(name = USER_NAME_COLUMN, nullable = false)
+    @Column(name = USER_NAME_COLUMN, nullable = false, unique = true)
     private String userName;
 
 }
