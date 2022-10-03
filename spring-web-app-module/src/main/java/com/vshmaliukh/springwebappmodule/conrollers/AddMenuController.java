@@ -41,7 +41,7 @@ public class AddMenuController {
 
             String classSimpleName = menuItemClassType.getClassType().getSimpleName();
             CookieUtil.addCookie(ITEM_CLASS_TYPE, classSimpleName, response);
-            String randValue = "false";
+            String randValue = "false"; // todo is need to
             if (index % 2 == 0) { //add random item
                 randValue = "true";
             }
