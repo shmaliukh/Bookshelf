@@ -10,7 +10,6 @@ import java.sql.Types;
 
 // tutorial to use sqlite db via spring: https://fullstackdeveloper.guru/2020/05/01/how-to-integrate-sqlite-database-with-spring-boot/
 
-
 public class SQLDialect extends Dialect {
 
     public SQLDialect() {
