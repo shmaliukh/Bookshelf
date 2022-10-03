@@ -14,7 +14,7 @@
         <div class="container mt-5 mb-5">
             <h2 th:text=" 'Choose \''+ ${itemClassType} + '\' items type of sorting'"></h2>
             <hr class="my-4">
-            <form th:action="'/items_sorting_menu?itemClassType=' + ${itemClassType}" method="post">
+            <form th:action="'/items_sorting_menu/' + ${itemClassType}" method="post">
                 <th:block th:insert="blocks/radioButtons :: generateRadioButtonsCheckedByMenuItemIndex"></th:block>
                 <br>
                 <button class="w-100 btn btn-primary btn-lg" type="submit">Sort</button>

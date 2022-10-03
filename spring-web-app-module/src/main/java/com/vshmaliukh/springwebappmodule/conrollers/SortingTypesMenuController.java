@@ -24,15 +24,13 @@ public class SortingTypesMenuController {
 
     @PostMapping()
     public ModelAndView doPost(@RequestParam String menuItemIndex,
-                               ModelMap modelMap) {
+                              ModelMap modelMap) {
         if (StringUtils.isNotBlank(menuItemIndex)) {
             GeneratedMenu generatedMenu = new GeneratedMenuForSorting();
             try {
                 int parseInt = Integer.parseInt(menuItemIndex);
                 String classType = generatedMenu.getMenuItems().get(parseInt - 1).getClassType().getSimpleName();
-
-                modelMap.addAttribute(ITEM_CLASS_TYPE, classType);
-                return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE, modelMap);
+                return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE+ "/" + classType, modelMap);
             } catch (NumberFormatException nfe) {
                 WebUtils.logServletErr(SORTING_TYPES_MENU_TITLE, nfe);
             }
