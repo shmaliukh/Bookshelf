@@ -3,8 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### databese ###
-.db
+### database ###
+*.db
 
 ### IntelliJ IDEA ###
 .idea
