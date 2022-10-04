@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    driver-class-name:
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: sqlite

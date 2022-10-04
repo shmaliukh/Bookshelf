@@ -10,7 +10,7 @@ import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 @Getter
 @Setter
 @Entity
-@Table(name= MAGAZINE_TABLE)
+@Table(name= NEWSPAPER_TABLE)
 public class NewspaperEntity {
 
     @Id

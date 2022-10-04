@@ -3,6 +3,9 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 import com.vshmaliukh.springwebappmodule.UserDataModelForJson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -18,10 +21,15 @@ import static org.vshmaliukh.Constants.*;
 @Controller
 public class LogInController {
 
+    @Autowired
+    @Qualifier("sqliteJdbcTemplate")
+    private JdbcTemplate sqliteTemplate;
+
     @GetMapping(value = {"/", "/" + LOG_IN_TITLE})
     ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
                        @CookieValue(defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
+        System.out.println(sqliteTemplate.isIgnoreWarnings());
         modelMap.addAttribute(USER_NAME, userName);
         ControllerUtils.formRadioButtonsToChooseTypeOfWork(typeOfWork, modelMap);
         return new ModelAndView(LOG_IN_TITLE, modelMap);
