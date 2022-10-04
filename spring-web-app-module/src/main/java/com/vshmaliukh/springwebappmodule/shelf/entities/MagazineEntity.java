@@ -1,14 +1,12 @@
 package com.vshmaliukh.springwebappmodule.shelf.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name= MAGAZINE_TABLE)
 public class MagazineEntity {

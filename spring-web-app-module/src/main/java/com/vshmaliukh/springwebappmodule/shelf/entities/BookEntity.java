@@ -1,15 +1,12 @@
 package com.vshmaliukh.springwebappmodule.shelf.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
-import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.DATE_COLUMN;
 
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name= BOOK_TABLE)
 public class BookEntity {
