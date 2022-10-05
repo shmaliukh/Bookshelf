@@ -1,13 +1,11 @@
-spring:
-  config:
-    activate:
-      on-profile: mysql
-  datasource:
-    driver-class-name:
+db-config:
+  sqlite:
+    driverClassName: "org.sqlite.JDBC"
+    hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
+  mysql:
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
+    url: "jdbc:mysql://localhost:3307/my_test"
+    userName: "test"
+    password: "test"
 
----
-
-spring:
-  config:
-    activate:
-      on-profile: sqlite
