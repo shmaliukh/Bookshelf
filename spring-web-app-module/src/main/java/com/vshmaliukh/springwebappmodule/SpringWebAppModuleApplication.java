@@ -7,9 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringWebAppModuleApplication {
 
     public static void main(String[] args) {
-        if(System.getenv("type") == "mysql"){
-            System.setProperty("spring.active.profile","sqlite");
-        }
         SpringApplication.run(SpringWebAppModuleApplication.class, args);
     }
 
