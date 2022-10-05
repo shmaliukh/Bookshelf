@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.shelf.sqlite;
 
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -28,9 +29,9 @@ public class SqliteHandlerConfigurator {
     public static final String SQLITE_FILE_NAME = "shelf_sqlite_db.db";
     public static final String SQLITE_DB_URL = "jdbc:sqlite://" + SQLITE_HOME + "/" + SQLITE_FILE_NAME; // todo refactor
 
-    private final SqliteYAMLConfig config;
+    private final SqliteConfig config;
 
-    public SqliteHandlerConfigurator(SqliteYAMLConfig config) {
+    public SqliteHandlerConfigurator(SqliteConfig config) {
         this.config = config;
     }
 
@@ -43,9 +44,9 @@ public class SqliteHandlerConfigurator {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean sqliteEntityManager() {
+    public LocalContainerEntityManagerFactoryBean sqliteEntityManager(@Qualifier("sqliteDataSource") DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(sqliteDataSource());
+        em.setDataSource(dataSource);
         em.setPackagesToScan("com.vshmaliukh.springwebappmodule.shelf.entities");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());

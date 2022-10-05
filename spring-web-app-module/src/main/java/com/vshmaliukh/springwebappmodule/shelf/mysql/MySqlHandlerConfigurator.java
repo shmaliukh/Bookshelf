@@ -21,9 +21,9 @@ import java.util.Properties;
         transactionManagerRef = "mySqlTransactionManager")
 public class MySqlHandlerConfigurator {
 
-    private final MysqlYAMLConfig config;
+    private final MysqlConfig config;
 
-    public MySqlHandlerConfigurator(MysqlYAMLConfig config) {
+    public MySqlHandlerConfigurator(MysqlConfig config) {
         this.config = config;
     }
 
