@@ -40,5 +40,5 @@ public abstract class ItemHandler<T extends Item> implements SqlItemBaseStatemen
 
     public abstract T getRandomItem(Random random);
 
-    public abstract Map<String, String> convertItemToListOfString(T item);
+    public abstract Map<String, String> convertItemToMapOfString(T item);
 }

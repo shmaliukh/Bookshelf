@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.*;
 
 @Slf4j
-public class SqlLiteHandler extends AbstractSqlItemHandler {
+public class SqliteHandler extends AbstractSqlItemHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
     public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
@@ -19,7 +19,7 @@ public class SqlLiteHandler extends AbstractSqlItemHandler {
 
     private Connection connectionToSqlLiteDB = null;
 
-    public SqlLiteHandler(String homeDir, String userName) {
+    public SqliteHandler(String homeDir, String userName) {
         super(homeDir, userName);
     }
 

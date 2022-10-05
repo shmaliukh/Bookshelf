@@ -165,19 +165,19 @@ class WebItemUtilsTest {
         assertEquals("<form action = \"/log_in?user_name&type_of_work_with_files\" method = \"POST\">\n" +
                         "<input type=\"radio\" id=\"1\"\n" +
                         "     name=\"menu_item_index\"      value=\"1\">\n" +
-                        "    <label for=\"1\">Sort Book items by value...</label>\n" +
+                        "    <label for=\"1\">Sort Book items...</label>\n" +
                         "<br>\n" +
                         "<input type=\"radio\" id=\"2\"\n" +
                         "     name=\"menu_item_index\"      value=\"2\">\n" +
-                        "    <label for=\"2\">Sort Comics items by value...</label>\n" +
+                        "    <label for=\"2\">Sort Comics items...</label>\n" +
                         "<br>\n" +
                         "<input type=\"radio\" id=\"3\"\n" +
                         "     name=\"menu_item_index\"      value=\"3\">\n" +
-                        "    <label for=\"3\">Sort Magazine items by value...</label>\n" +
+                        "    <label for=\"3\">Sort Magazine items...</label>\n" +
                         "<br>\n" +
                         "<input type=\"radio\" id=\"4\"\n" +
                         "     name=\"menu_item_index\"      value=\"4\">\n" +
-                        "    <label for=\"4\">Sort Newspaper items by value...</label>\n" +
+                        "    <label for=\"4\">Sort Newspaper items...</label>\n" +
                         "<br>\n" +
                         "<input type = \"submit\" value = \"Submit\" />\n" +
                         "</form>",

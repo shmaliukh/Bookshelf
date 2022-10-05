@@ -40,9 +40,9 @@ public class ComicsHandler extends ItemHandler<Comics> {
     @Override
     public List<MenuItemForSorting<Comics>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting<Comics>(1, "Sort by 'name' value", COMICS_COMPARATOR_BY_NAME),
-                new MenuItemForSorting<Comics>(2, "Sort by 'page number' value", COMICS_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting<Comics>(3, "Sort by 'publisher' value", COMICS_COMPARATOR_BY_PUBLISHER)
+                new MenuItemForSorting<Comics>(1, "Sort by 'name'", COMICS_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Comics>(2, "Sort by 'page number'", COMICS_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<Comics>(3, "Sort by 'publisher'", COMICS_COMPARATOR_BY_PUBLISHER)
         ));
     }
 
@@ -65,7 +65,7 @@ public class ComicsHandler extends ItemHandler<Comics> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Comics comics) {
+    public Map<String, String> convertItemToMapOfString(Comics comics) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, comics.getClass().getSimpleName());
         map.put(ItemTitles.NAME, comics.getName());

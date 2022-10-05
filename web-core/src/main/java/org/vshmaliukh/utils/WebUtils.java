@@ -1,6 +1,7 @@
 package org.vshmaliukh.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.vshmaliukh.BootstrapHtmlTableBuilder;
 import org.vshmaliukh.HtmlTableBuilder;
 import org.vshmaliukh.WebUI;
@@ -36,6 +37,16 @@ public final class WebUtils {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
             WebUI webUI = new WebUI(userName, typeOfWorkWithFiles);
 
+            SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
+            shelfHandler.readShelfItems();
+            return shelfHandler;
+        }
+        return null;
+    }
+
+    public static SaveReadShelfHandler generateShelfHandler(String userName, int typeOfWorkWithFiles) {
+        if(StringUtils.isNotBlank(userName)){
+            WebUI webUI = new WebUI(userName, typeOfWorkWithFiles);
             SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
             shelfHandler.readShelfItems();
             return shelfHandler;

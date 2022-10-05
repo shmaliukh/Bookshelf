@@ -44,10 +44,10 @@ public class BookHandler extends ItemHandler<Book> {
     @Override
     public List<MenuItemForSorting<Book>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting<>(1, "Sort by 'name' value", BOOK_COMPARATOR_BY_NAME),
-                new MenuItemForSorting<>(2, "Sort by 'author' value", BOOK_COMPARATOR_BY_AUTHOR),
-                new MenuItemForSorting<>(3, "Sort by 'page number' value", BOOK_COMPARATOR_BY_PAGES),
-                new MenuItemForSorting<>(4, "Sort by 'date' value", BOOK_COMPARATOR_BY_DATE)
+                new MenuItemForSorting<>(1, "Sort by 'name'", BOOK_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<>(2, "Sort by 'author'", BOOK_COMPARATOR_BY_AUTHOR),
+                new MenuItemForSorting<>(3, "Sort by 'page number'", BOOK_COMPARATOR_BY_PAGES),
+                new MenuItemForSorting<>(4, "Sort by 'date'", BOOK_COMPARATOR_BY_DATE)
         ));
     }
 
@@ -72,7 +72,7 @@ public class BookHandler extends ItemHandler<Book> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Book book) {
+    public Map<String, String> convertItemToMapOfString(Book book) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, book.getClass().getSimpleName());
         map.put(NAME, book.getName());

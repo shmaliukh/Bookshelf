@@ -38,8 +38,8 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     @Override
     public List<MenuItemForSorting<Newspaper>> getSortingMenuList() {
         return Collections.unmodifiableList(Arrays.asList(
-                new MenuItemForSorting<Newspaper>(1, "Sort by 'name' value", NEWSPAPER_COMPARATOR_BY_NAME),
-                new MenuItemForSorting<Newspaper>(2, "Sort by 'pages' value", NEWSPAPER_COMPARATOR_BY_PAGES)
+                new MenuItemForSorting<Newspaper>(1, "Sort by 'name'", NEWSPAPER_COMPARATOR_BY_NAME),
+                new MenuItemForSorting<Newspaper>(2, "Sort by 'pages'", NEWSPAPER_COMPARATOR_BY_PAGES)
         ));
     }
 
@@ -60,7 +60,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     }
 
     @Override
-    public Map<String, String> convertItemToListOfString(Newspaper newspaper) {
+    public Map<String, String> convertItemToMapOfString(Newspaper newspaper) {
         Map<String, String> map = new HashMap<>();
         map.put(ItemTitles.TYPE, newspaper.getClass().getSimpleName());
         map.put(ItemTitles.NAME, newspaper.getName());

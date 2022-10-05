@@ -1,12 +1,12 @@
 package org.vshmaliukh;
 
-import org.vshmaliukh.print_table_service.AbstractTableHandler;
+import org.vshmaliukh.print_table_service.BaseTableHandler;
 import org.vshmaliukh.utils.WebUtils;
 
 import java.util.List;
 import java.util.Map;
 
-public class HtmlTableBuilder extends AbstractTableHandler {
+public class HtmlTableBuilder extends BaseTableHandler {
 
     protected final StringBuilder tableStringBuilder = new StringBuilder();
     protected final boolean isForEditing;
@@ -33,8 +33,8 @@ public class HtmlTableBuilder extends AbstractTableHandler {
 
     @Override
     protected void setUpValuesSettings() {
-        initTitles(bufferTableListOfMaps);
-        initTable(bufferTableListOfMaps);
+        initTitles();
+        initTable();
         if (isNeedIndex) {
             addIndexBeforeLines();
         }
