@@ -1,45 +1,31 @@
 package com.vshmaliukh.springwebappmodule.shelf.sqlite;
 
-
+import com.vshmaliukh.springwebappmodule.shelf.DbConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
-
-import static org.vshmaliukh.services.file_service.UserFilesHandler.PROGRAM_DIR_NAME;
 
 @Configuration
+@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "db-config.sqlite")
 @EnableJpaRepositories(
         basePackages = "com.vshmaliukh.springwebappmodule.shelf.sqlite.repositories",
-        entityManagerFactoryRef = "sqliteEntityManager",
-        transactionManagerRef = "sqliteTransactionManager")
-public class SqliteHandlerConfigurator {
-
-    public static final Path SQLITE_HOME = Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME);
-    public static final String SQLITE_FILE_NAME = "shelf_sqlite_db.db";
-    public static final String SQLITE_DB_URL = "jdbc:sqlite://" + SQLITE_HOME + "/" + SQLITE_FILE_NAME; // todo refactor
-
-    private final SqliteConfig config;
-
-    public SqliteHandlerConfigurator(SqliteConfig config) {
-        this.config = config;
-    }
+        entityManagerFactoryRef = "sqliteEntityManager")
+public class SqliteHandlerConfigurator extends DbConfig{
 
     @Bean
     public DataSource sqliteDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(config.getDriverClassName());
-        dataSource.setUrl(SQLITE_DB_URL);
+        dataSource.setDriverClassName(getDriverClassName());
+        dataSource.setUrl(getUrl());
         return dataSource;
     }
 
@@ -51,19 +37,6 @@ public class SqliteHandlerConfigurator {
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;
-    }
-
-    @Bean
-    public JpaTransactionManager sqliteTransactionManager(final EntityManagerFactory entityManagerFactory) {
-        final JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
-        return transactionManager;
-    }
-
-    final Properties additionalProperties() {
-        final Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", config.getHibernateDialect());
-        return hibernateProperties;
     }
 
 }

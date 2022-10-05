@@ -1,7 +1,11 @@
 # shelf config
-shelf.port: 8082
-shelf.home: ${user.home}/shelf
-shelf.sqliteDbFile: shelf_sqllite_db_3.db
+shelf:
+  port: 8082
+  home: ${user.home}/shelf
+  sqliteDbFile: shelf_sqlite_db.db
+  sqliteDbPath: ${shelf.home}/${shelf.sqliteDbFile}
+  sqliteDbUrlStart: "jdbc:sqlite://"
+  sqliteDbUrl: ${shelf.sqliteDbUrlStart}${shelf.sqliteDbPath}
 
 # app port to start
 server.port: ${shelf.port}
@@ -22,6 +26,7 @@ db-config:
   sqlite:
     driverClassName: "org.sqlite.JDBC"
     hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
+    url: ${shelf.sqliteDbUrl}
   mysql:
     driverClassName: "com.mysql.cj.jdbc.Driver"
     hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
