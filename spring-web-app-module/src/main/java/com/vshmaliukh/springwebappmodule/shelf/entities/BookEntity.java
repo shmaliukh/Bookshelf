@@ -12,7 +12,7 @@ import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 public class BookEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ID_COLUMN, nullable = false)
     private Long id;
 

@@ -14,7 +14,7 @@ import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.USER_
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ConstantsForDataBase.ID_COLUMN, nullable = false)
     private Long id;
 
