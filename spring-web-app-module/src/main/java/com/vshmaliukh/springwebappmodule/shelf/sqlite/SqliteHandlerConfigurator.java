@@ -26,7 +26,7 @@ public class SqliteHandlerConfigurator {
 
     public static final Path SQLITE_HOME = Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME);
     public static final String SQLITE_FILE_NAME = "shelf_sqlite_db.db";
-    public static final String SQLITE_DB_URL = "jdbc:sqlite://" + SQLITE_HOME + "/" + SQLITE_FILE_NAME;
+    public static final String SQLITE_DB_URL = "jdbc:sqlite://" + SQLITE_HOME + "/" + SQLITE_FILE_NAME; // todo refactor
 
     private final SqliteYAMLConfig config;
 
