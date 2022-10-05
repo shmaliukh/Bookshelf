@@ -1,3 +1,7 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
 db-config:
   sqlite:
     driverClassName: "org.sqlite.JDBC"
