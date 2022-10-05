@@ -59,10 +59,8 @@ public class MySqlHandlerConfigurator {
 
     final Properties additionalProperties() {
         final Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", config.getHibernateDialect());//"org.sqlite.hibernate.dialect.SQLiteDialect"
-//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", config.getHibernateHbm2ddlAuto()); //true
-//        hibernateProperties.setProperty("hibernate.show_sql", config.getHibernateShowSql());//"true"
-//        hibernateProperties.setProperty("hibernate.globally_quoted_identifiers", config.getHibernateGloballyQuotedIdentifiers());//"true"
+        hibernateProperties.setProperty("hibernate.dialect", config.getHibernateDialect());
         return hibernateProperties;
     }
+
 }
