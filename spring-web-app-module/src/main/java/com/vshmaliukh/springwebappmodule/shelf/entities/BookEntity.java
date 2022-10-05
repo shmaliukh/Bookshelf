@@ -14,10 +14,10 @@ public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ID_COLUMN, nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = USER_ID_COLUMN, nullable = false)
-    private Long userId;
+    private Integer userId;
 
     @Column(name = NAME_COLUMN, nullable = false)
     String name;
