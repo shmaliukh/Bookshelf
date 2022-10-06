@@ -1,14 +1,18 @@
 package com.vshmaliukh.springwebappmodule.shelf.entities;
 
 import com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.USER_NAME_COLUMN;
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.USER_TABLE;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = USER_TABLE)
 public class UserEntity {

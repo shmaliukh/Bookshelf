@@ -1,14 +1,18 @@
 package com.vshmaliukh.springwebappmodule.shelf.entities;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
-@Table(name= BOOK_TABLE)
+@Table(name = BOOK_TABLE)
 public class BookEntity {
 
     @Id
