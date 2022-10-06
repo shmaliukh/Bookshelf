@@ -1,19 +1,19 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
-import com.vshmaliukh.springwebappmodule.shelf.itemEntityConvertors.BookEntityConvertor;
-import com.vshmaliukh.springwebappmodule.shelf.itemEntityConvertors.ItemEntityConvertor;
+import com.vshmaliukh.springwebappmodule.shelf.convertors.BookEntityConvertor;
+import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class ItemEntityProvider {
+public final class ItemEntityConvertorsProvider {
 
-    private ItemEntityProvider() {
+    private ItemEntityConvertorsProvider() {
     }
 
-//    private static final Map<Class<? extends Item>, Class> itemClassEntityMap = new ConcurrentHashMap<>();
+    //    private static final Map<Class<? extends Item>, Class> itemClassEntityMap = new ConcurrentHashMap<>();
     private static final Map<Class<? extends Item>, ItemEntityConvertor<? extends Item, ?>> itemEntityConvertorMap = new ConcurrentHashMap<>();
 
 
@@ -27,7 +27,7 @@ public final class ItemEntityProvider {
 //        return itemClassEntityMap.get(itemClassType);
 //    }
 
-    public static ItemEntityConvertor<? extends Item, ?> getConvertorByItemClass(Class<? extends Item> itemClassType){
+    public static ItemEntityConvertor<? extends Item, ?> getConvertorByItemClass(Class<? extends Item> itemClassType) {
         return itemEntityConvertorMap.getOrDefault(itemClassType, null);
     }
 }

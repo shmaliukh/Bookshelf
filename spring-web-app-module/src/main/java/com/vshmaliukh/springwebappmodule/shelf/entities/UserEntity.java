@@ -20,7 +20,7 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ConstantsForDataBase.ID_COLUMN, nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = USER_NAME_COLUMN, nullable = false, unique = true)
     private String userName;

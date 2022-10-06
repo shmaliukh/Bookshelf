@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "db-config.mysql")
 @EnableJpaRepositories(
-        basePackages = "com.vshmaliukh.springwebappmodule.shelf.mysql.repositories",
+        basePackages = "com.vshmaliukh.springwebappmodule.shelf.repositories",
         entityManagerFactoryRef = "mySqlEntityManager")
 public class MySqlHandlerConfigurator extends DbConfig {
 

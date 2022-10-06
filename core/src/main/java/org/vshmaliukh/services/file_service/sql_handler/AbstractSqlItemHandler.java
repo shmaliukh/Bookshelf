@@ -1,6 +1,5 @@
 package org.vshmaliukh.services.file_service.sql_handler;
 
-import lombok.Data;
 import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -94,14 +93,3 @@ public abstract class AbstractSqlItemHandler extends SaveReadUserFilesHandler im
     }
 }
 
-@Data
-class UserContainer {
-
-    Integer id = null;
-    final String name;
-
-    public UserContainer(String name) {
-        this.name = name;
-    }
-
-}
