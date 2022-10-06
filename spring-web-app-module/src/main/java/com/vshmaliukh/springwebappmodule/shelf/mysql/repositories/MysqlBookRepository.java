@@ -17,7 +17,7 @@ public interface MysqlBookRepository extends JpaRepository<BookEntity, Integer> 
 
     List<BookEntity> findByName(@Param(NAME_COLUMN) String name);
 
-    @Query("select max(s.id) from BookEntity s")
+    @Query("select max(b.id) from BookEntity b")
     Integer findMaxId();
 
 }

@@ -1,16 +1,21 @@
 package com.vshmaliukh.springwebappmodule.shelf.mysql.services;
 
+import com.vshmaliukh.springwebappmodule.shelf.ActionsWithItemEntities;
+import com.vshmaliukh.springwebappmodule.shelf.DbEntityService;
 import com.vshmaliukh.springwebappmodule.shelf.entities.BookEntity;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlBookRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vshmaliukh.shelf.shelf_handler.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Slf4j
 @Service
-public class MysqlBookService {
+public class MysqlBookService extends DbEntityService implements ActionsWithItemEntities<BookEntity> {
+
+    static String serviceName = "MysqlBookEntityService";
 
     private final MysqlBookRepository bookRepository;
 
@@ -24,12 +29,12 @@ public class MysqlBookService {
             if (!bookRepository.existsByName(book.getName())) {
                 book.setId(bookRepository.findMaxId() == null ? 1 : bookRepository.findMaxId() + 1);
                 bookRepository.save(book);
-                logInfo(book, "book record created successfully");
+                logInfo(book, serviceName, "book record created successfully");
             } else {
-                logInfo(book, "book already exists in the database");
+                logInfo(book, serviceName, "book already exists in the database");
             }
         } catch (Exception e) {
-            logError(e);
+            logError(serviceName, e);
         }
     }
 
@@ -48,12 +53,12 @@ public class MysqlBookService {
                     bookToUpdate.setName(book.getName());
                     bookRepository.save(bookToUpdate);
                 }
-                logInfo(book, "book record updated");
+                logInfo(book, serviceName, "book record updated");
             } catch (Exception e) {
-                logError(e);
+                logError(serviceName, e);
             }
         } else {
-            logInfo(book, "book does not exists in the database");
+            logInfo(book, serviceName, "book does not exists in the database");
         }
     }
 
@@ -63,25 +68,43 @@ public class MysqlBookService {
             try {
                 List<BookEntity> books = bookRepository.findByName(book.getName());
                 bookRepository.deleteAll(books);
-                logInfo(book, "book record deleted successfully");
+                logInfo(book, serviceName, "book record deleted successfully");
             } catch (Exception e) {
-                logError(e);
+                logError(serviceName, e);
             }
-
         } else {
-            logInfo(book, "book does not exist");
+            logInfo(book, serviceName, "book does not exist");
         }
     }
 
-    private static void logInfo(String message) {
-        log.info("[MysqlBookService] info: " + message);
+
+    @Override
+    public void saveItemList(List<BookEntity> listToSave) {
+
     }
 
-    private static void logInfo(BookEntity bookEntity, String message) {
-        logInfo("'" + bookEntity + "' " + message);
+    @Override
+    public void saveItemToDB(BookEntity item) {
+
     }
 
-    private static void logError(Exception e) {
-        log.error("[MysqlBookService] error: " + e.getMessage(), e);
+    @Override
+    public void insertUser(String userName) {
+
+    }
+
+    @Override
+    public boolean isUserExist(String userName) {
+        return false;
+    }
+
+    @Override
+    public void createUser() {
+
+    }
+
+    @Override
+    public void readUserId(User user) {
+
     }
 }

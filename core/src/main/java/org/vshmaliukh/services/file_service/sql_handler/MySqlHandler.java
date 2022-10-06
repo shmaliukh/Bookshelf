@@ -116,7 +116,7 @@ public class MySqlHandler extends AbstractSqlItemHandler {
 
     @Override
     public void insertUser(String userName) {
-        if (!userExist(userName)) {
+        if (!isUserExist(userName)) {
             String sql = " INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) " + " VALUES ( ? ) ";
             try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sql)) {
                 preparedStatement.setString(1, userName);
@@ -127,7 +127,7 @@ public class MySqlHandler extends AbstractSqlItemHandler {
         }
     }
 
-    private boolean userExist(String userName) {
+    private boolean isUserExist(String userName) {
         String sql = " SELECT COUNT(" + USER_NAME_SQL_PARAMETER + ")" +
                 " FROM " + USER_TABLE_TITLE +
                 " WHERE " + USER_NAME_SQL_PARAMETER + " = ? ";
