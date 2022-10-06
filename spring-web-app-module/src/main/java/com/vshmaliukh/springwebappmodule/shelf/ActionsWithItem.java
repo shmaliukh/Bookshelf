@@ -4,9 +4,11 @@ import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.util.List;
 
-public interface ActionsWithItemEntities<T> {
+public interface ActionsWithItem<T> {
 
-    void saveItemList(List<T> listToSave);
+    default void saveItemList(List<T> listToSave){
+        listToSave.forEach(this::saveItemToDB);
+    }
 
     void saveItemToDB(T item);
 
@@ -19,22 +21,6 @@ public interface ActionsWithItemEntities<T> {
     void readUserId(User user);
 
 
-    //    @Override
-    //    public void saveItemList(List<T> listToSave) {
-    ////        listToSave.forEach(this::saveItemToDB);
-    //    }
-    //
-    //    @Override
-    //    public void saveItemToDB(T item) {
-    ////        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-    ////        String sqlInsertStr = handlerByClass.insertItemMySqlStr();
-    ////        try {
-    ////            PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
-    ////            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
-    ////        } catch (SQLException sqle) {
-    ////            logSqlHandler(sqle);
-    ////        }
-    //    }
     //
     //    @Override
     //    public void insertUser(String userName) {

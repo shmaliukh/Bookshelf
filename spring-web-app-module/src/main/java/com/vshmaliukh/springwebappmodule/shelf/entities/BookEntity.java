@@ -6,6 +6,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.util.Date;
+
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 
 @Getter
@@ -36,6 +38,6 @@ public class BookEntity {
     String author;
 
     @Column(name = DATE_COLUMN, nullable = false)
-    String dateOfIssue;
+    Date dateOfIssue;
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.NAME_COLUMN;
 
 @Repository
-public interface MysqlBookRepository extends JpaRepository<BookEntity, Integer> {
+public interface MysqlBookRepository extends JpaRepository<BookEntity, Integer>  {
 
     boolean existsByName(@Param(NAME_COLUMN) String name);
 
