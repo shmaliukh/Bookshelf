@@ -28,7 +28,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+    public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
                 itemHandler = new ItemGsonHandlerOneFileUser(ConfigFile.HOME_PROPERTY, userName);

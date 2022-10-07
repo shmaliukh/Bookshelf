@@ -13,14 +13,14 @@ public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
     public static final int MODE_WORK_WITH_MYSQL = 4;
 
     protected SaveReadShelfHandler(String userName, int typeOfWorkWithFiles) {
-        setUpDataSaver(userName, typeOfWorkWithFiles);
+        setUpDataService(userName, typeOfWorkWithFiles);
     }
 
     public abstract void saveShelfItems();
 
     public abstract void readShelfItems();
 
-    public abstract void setUpDataSaver(String userName, int typeOfWorkWithFiles);
+    public abstract void setUpDataService(String userName, int typeOfWorkWithFiles);
 
     public abstract <T extends Item> List<T> getSortedItemsByClass(Class<T> classType);
 }

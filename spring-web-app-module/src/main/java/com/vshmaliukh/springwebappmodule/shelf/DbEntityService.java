@@ -38,7 +38,7 @@ public abstract class DbEntityService {
 
 
     protected static void logInfo(String serviceName, String message) {
-        log.info("[" + serviceName + "Service] info: " + message);
+        log.info("[" + serviceName + "] info: " + message);
     }
 
     protected static <T> void logInfo(T entity, String serviceName, String message) {

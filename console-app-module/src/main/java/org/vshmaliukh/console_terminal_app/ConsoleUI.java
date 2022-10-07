@@ -59,7 +59,7 @@ public class ConsoleUI extends AbstractUI {
     public void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
         configShelfHandler();
-        shelfHandler.setUpDataSaver(user.getName(), typeOfWorkWithFiles);
+        shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
     }
 
     public void startWork(boolean userMode) {

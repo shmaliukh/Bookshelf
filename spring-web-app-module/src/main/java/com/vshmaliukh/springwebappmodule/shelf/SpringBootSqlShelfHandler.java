@@ -13,7 +13,7 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
     }
 
     @Override
-    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+    public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         //TODO
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
