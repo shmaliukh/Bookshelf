@@ -1,13 +1,16 @@
-package com.vshmaliukh.springwebappmodule.shelf.repositories;
+package com.vshmaliukh.springwebappmodule.shelf.mysql.repositories;
 
 import com.vshmaliukh.springwebappmodule.shelf.entities.BookEntity;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithDatabaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookRepository extends JpaRepository<BookEntity, Integer>, ActionsWithDatabaseEntity<BookEntity> {
+public interface MysqlBookRepository extends JpaRepository<BookEntity, Integer>, ActionsWithDatabaseEntity<BookEntity> {
 
     @Query("select max(entity.id) from BookEntity entity")
     Integer findMaxId();
+
+//    void d
 }
