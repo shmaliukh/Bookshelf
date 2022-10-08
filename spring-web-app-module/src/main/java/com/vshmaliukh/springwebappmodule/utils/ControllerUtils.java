@@ -1,7 +1,9 @@
 package com.vshmaliukh.springwebappmodule.utils;
 
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootUI;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ui.ModelMap;
+import org.vshmaliukh.WebUI;
 import org.vshmaliukh.print_table_service.TableHandler;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -16,7 +18,6 @@ import java.util.*;
 
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
-import static org.vshmaliukh.utils.WebUtils.generateShelfHandler;
 
 public final class ControllerUtils {
 
@@ -28,26 +29,46 @@ public final class ControllerUtils {
         return typeOfWorkMap.get(currentTypeOfWorkInteger);
     }
 
+
+    public static SaveReadShelfHandler generateShelfHandler(String userName, int typeOfWorkWithFiles) {
+        if (StringUtils.isNotBlank(userName)) {
+            WebUI webUI = new SpringBootUI(userName, typeOfWorkWithFiles);
+            SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
+            shelfHandler.readShelfItems();
+            return shelfHandler;
+        }
+        return null;
+    }
+
+    public static SaveReadShelfHandler generateSpringBootShelfHandler(String userName, int typeOfWorkWithFiles) {
+        if(StringUtils.isNotBlank(userName)){
+            SpringBootUI springBootUI = new SpringBootUI(userName, typeOfWorkWithFiles);
+            SaveReadShelfHandler shelfHandler = springBootUI.getShelfHandler();
+            shelfHandler.readShelfItems();
+            return shelfHandler;
+        }
+        return null;
+    }
+
+
     public static void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
-        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userName, typeOfWork);
+        SaveReadShelfHandler shelfHandler = generateSpringBootShelfHandler(userName, typeOfWork);
         List<String> titles = new ArrayList<>();
         List<List<String>> tableValues = new ArrayList<>();
-        if (webShelfHandler != null) {
-            Shelf shelf = webShelfHandler.getShelf();
-            if (shelf != null) {
-                List<Item> allItems = shelf.getAllLiteratureObjects();
-                List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
-                TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
-                titles.addAll(tableGenerator.getGeneratedTitleList());
-                tableValues.addAll(tableGenerator.getGeneratedTableList());
-            }
+        Shelf shelf = shelfHandler.getShelf();
+        if (shelf != null) {
+            List<Item> allItems = shelf.getAllLiteratureObjects();
+            List<Map<String, String>> table = ConvertorToStringForItems.getTable(allItems);
+            TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
+            titles.addAll(tableGenerator.getGeneratedTitleList());
+            tableValues.addAll(tableGenerator.getGeneratedTableList());
         }
         modelMap.addAttribute(TITLES, titles);
         modelMap.addAttribute(ITEMS, tableValues);
     }
 
     public static void formItemTableByClass(String userName, int typeOfWork, String itemClassType, String menuItemIndex, ModelMap modelMap) {
-        SaveReadShelfHandler webShelfHandler = generateShelfHandler(userName, typeOfWork);
+        SaveReadShelfHandler webShelfHandler = generateSpringBootShelfHandler(userName, typeOfWork);
         List<String> titles = new ArrayList<>();
         List<List<String>> tableValues = new ArrayList<>();
         if (webShelfHandler != null) {
@@ -85,9 +106,9 @@ public final class ControllerUtils {
         modelMap.addAttribute(RADIO_BUTTONS, radioButtonsMap);
     }
 
-    public static List<MenuItem> generateTypeOfWorkMenu(){
+    public static List<MenuItem> generateTypeOfWorkMenu() {
         ArrayList<MenuItem> menuList = new ArrayList<>();
-        typeOfWorkMap.forEach((k,v) -> menuList.add(new MenuItem(k,v)));
+        typeOfWorkMap.forEach((k, v) -> menuList.add(new MenuItem(k, v)));
         return Collections.unmodifiableList(menuList);
     }
 

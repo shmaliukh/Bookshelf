@@ -21,7 +21,7 @@ public class WebUI extends AbstractUI {
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
-            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 shelfHandler = new SqlShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;

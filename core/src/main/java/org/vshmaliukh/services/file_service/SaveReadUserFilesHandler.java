@@ -11,9 +11,9 @@ public abstract class SaveReadUserFilesHandler extends UserFilesHandler {
         super(homeDir, userName);
     }
 
-    protected abstract String generateFullFileName();
+    protected String generateFullFileName(){return "";}
 
-    protected abstract Path generatePathForFileHandler();
+    protected Path generatePathForFileHandler(){return null;}
 
     public abstract void saveItemList(List<Item> listToSave);
 

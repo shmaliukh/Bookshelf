@@ -9,7 +9,7 @@ public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
 
     public static final int MODE_WORK_WITH_ONE_FILE = 1;
     public static final int MODE_WORK_WITH_FILE_PER_TYPE = 2;
-    public static final int MODE_WORK_WITH_SQLLITE = 3;
+    public static final int MODE_WORK_WITH_SQLITE = 3;
     public static final int MODE_WORK_WITH_MYSQL = 4;
 
     protected SaveReadShelfHandler(String userName, int typeOfWorkWithFiles) {

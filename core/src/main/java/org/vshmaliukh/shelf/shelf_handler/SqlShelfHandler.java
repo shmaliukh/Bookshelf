@@ -50,7 +50,7 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     @Override
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
-            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
                 sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
