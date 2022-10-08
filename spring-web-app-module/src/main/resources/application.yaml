@@ -12,9 +12,13 @@ server.port: ${shelf.port}
 
 # app config
 spring.profiles.active: dev
+#spring.jpa.hibernate.ddl-auto: update
+#spring.jpa.generate-ddl: true
+#spring.jpa.show-sql: true
 
 spring.web.resources.static-locations: file:./spring-web-app-module/src/main/resources/static
 server.tomcat.keep-alive-timeout: 1000
+
 
 ---
 
