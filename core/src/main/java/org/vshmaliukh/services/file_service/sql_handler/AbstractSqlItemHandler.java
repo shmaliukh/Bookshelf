@@ -1,6 +1,8 @@
 package org.vshmaliukh.services.file_service.sql_handler;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -16,7 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class AbstractSqlItemHandler extends SaveReadUserFilesHandler implements AbleToHandleUserTableSql {
 
-    protected UserContainer user; // TODO is necessary to keep reference to the user
+    @Getter
+    @Setter
+    protected UserContainer user;
 
     protected AbstractSqlItemHandler(String homeDir, String userName) {
         super(homeDir, userName);

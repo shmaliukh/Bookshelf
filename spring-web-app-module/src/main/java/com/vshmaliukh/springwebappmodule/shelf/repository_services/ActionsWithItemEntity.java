@@ -19,7 +19,8 @@ public interface ActionsWithItemEntity<T extends ItemEntity> {
 
     Integer findMaxId();
 
-    void save(ItemEntity itemEntity);
+    void save(T itemEntity);
 
-    void deleteById(Integer userId);
+    void deleteById(Integer itemId);
+
 }

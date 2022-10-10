@@ -1,11 +1,14 @@
 package org.vshmaliukh.shelf;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.util.Random;
 
-
+@NoArgsConstructor
+@Data
 public abstract class AbstractUI {
 
 
