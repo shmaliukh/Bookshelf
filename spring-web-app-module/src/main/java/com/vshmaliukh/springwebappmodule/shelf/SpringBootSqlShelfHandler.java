@@ -15,6 +15,11 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
 
     MysqlSpringBootHandler mysqlSpringBootHandler;
 
+    @Autowired
+    public void setMysqlSpringBootHandler(MysqlSpringBootHandler mysqlSpringBootHandler) {
+        this.mysqlSpringBootHandler = mysqlSpringBootHandler;
+    }
+
     public SpringBootSqlShelfHandler(String userName, int typeOfWorkWithFiles) {
         super(userName, typeOfWorkWithFiles);
     }
@@ -27,6 +32,9 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
                 sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
+//                MysqlSpringBootHandler mysqlSpringBootHandler = new MysqlSpringBootHandler();
+                mysqlSpringBootHandler.setUserName(userName);
+                mysqlSpringBootHandler.setUpSettings();
                 sqlItemHandler = mysqlSpringBootHandler;
                 break;
             default:
@@ -35,9 +43,14 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
         }
     }
 
-    @Autowired
-    public void setMysqlSpringBootHandler(MysqlSpringBootHandler mysqlSpringBootHandler) {
-        this.mysqlSpringBootHandler = mysqlSpringBootHandler;
-    }
+//    @Override
+//    public void readShelfItems() {
+////        getShelf().setItemsOfShelf(sqlItemHandler.readItemList());
+//    }
+
+//    @Autowired
+//    public void setMysqlSpringBootHandler(@Qualifier("mysqlSpringBootHandler") MysqlSpringBootHandler mysqlSpringBootHandler) {
+//        this.mysqlSpringBootHandler = mysqlSpringBootHandler;
+//    }
 
 }

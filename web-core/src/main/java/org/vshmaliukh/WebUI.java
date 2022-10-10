@@ -1,11 +1,13 @@
 package org.vshmaliukh;
 
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.AbstractUI;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
+@NoArgsConstructor
 public class WebUI extends AbstractUI {
 
     public WebUI(String userName, int typeOfWorkWithFiles) {

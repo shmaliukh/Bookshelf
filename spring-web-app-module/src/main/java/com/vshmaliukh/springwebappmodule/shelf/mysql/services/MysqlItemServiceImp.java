@@ -1,10 +1,13 @@
 package com.vshmaliukh.springwebappmodule.shelf.mysql.services;
 
-import com.vshmaliukh.springwebappmodule.shelf.ItemEntityServiceProvider;
+import com.vshmaliukh.springwebappmodule.shelf.ItemEntityRepositoryProvider;
 import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
+import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertorProvider;
 import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
-import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithDatabaseEntity;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ItemService;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -13,57 +16,62 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@NoArgsConstructor
 public class MysqlItemServiceImp implements ItemService {
 
-    final
-    ItemEntityServiceProvider itemEntityServiceProvider;
+    ItemEntityRepositoryProvider itemEntityRepositoryProvider;
 
-    public MysqlItemServiceImp(ItemEntityServiceProvider itemEntityServiceProvider) {
-        this.itemEntityServiceProvider = itemEntityServiceProvider;
+    @Autowired
+    public void setItemEntityRepositoryProvider(ItemEntityRepositoryProvider itemEntityRepositoryProvider) {
+        this.itemEntityRepositoryProvider = itemEntityRepositoryProvider;
+    }
+
+
+    @Override
+    public void insertItemByUserId(Item item, Integer userId) {
+        ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(item.getClass());
+        ItemEntity itemEntity = convertorByItemClass.getConvertedEntityFromItem(item, userId);
+        itemEntity.setUserId(userId);
+        ActionsWithItemEntity repository = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(item.getClass());
+        repository.save(itemEntity);
     }
 
     @Override
-    public void addItem(Item item, Integer userId) {
-        ItemEntityConvertor convertorByItemClass = ItemEntityServiceProvider.getConvertorByItemClass(item.getClass());
-        ItemEntity entity = convertorByItemClass.getConvertedEntityFromItem(item, userId);
-
-        // todo
-        ActionsWithDatabaseEntity repository = itemEntityServiceProvider.getMysqlRepositoryByClassType(item.getClass());
-//        repository
-        repository.save(entity);
+    public List<Item> readAllItemListByUserId(Integer userId) {
+        List<ItemEntity> entityList = new ArrayList<>();
+        for (ActionsWithItemEntity mysqlItemRepository : itemEntityRepositoryProvider.getMysqlRepositoryList()) {
+            List<ItemEntity> allPerTypeByUserId = mysqlItemRepository.findAllByUserId(userId);
+            entityList.addAll(allPerTypeByUserId);
+        }
+        return entityList.stream()
+                .map(o -> ItemEntityConvertorProvider.getConvertorByEntityClassType(o.getClass()).getConvertedItemFromEntity(o))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Item readItem() {
-        return null;
+    public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        List<T> itemListByClassType =  repositoryByClassType.findAllByUserId(userId);
+        return itemListByClassType;
     }
 
     @Override
     public void deleteItemByUserId(Item item, Integer userId) {
-        ActionsWithDatabaseEntity repository = itemEntityServiceProvider.getMysqlRepositoryByClassType(item.getClass());
-        repository.deleteById(userId); // todo
-    }
-
-
-    @Override
-    public void changeBorrowedState(Item item, Integer userId) {
-        ItemEntityConvertor convertorByItemClass = ItemEntityServiceProvider.getConvertorByItemClass(item.getClass());
-        ItemEntity convertedEntityFromItem = convertorByItemClass.getConvertedEntityFromItem(item, userId);
-        convertedEntityFromItem.setBorrowed(!convertedEntityFromItem.isBorrowed());
-        ActionsWithDatabaseEntity repository = itemEntityServiceProvider.getMysqlRepositoryByClassType(item.getClass());
-        repository.save(convertedEntityFromItem);// fixme
+        Class<? extends Item> itemClassType = item.getClass();
+        ItemEntityConvertor convertorByItemClassType = ItemEntityConvertorProvider.getConvertorByItemClassType(itemClassType);
+        ItemEntity entityFromItem = convertorByItemClassType.getConvertedEntityFromItem(item, userId);
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        repositoryByClassType.deleteById(entityFromItem.getId());
     }
 
     @Override
-    public List<Item> readAllItemsByUserId(Integer userId) {
-        List<ItemEntity> entityList = new ArrayList<>();
-        for (ActionsWithDatabaseEntity actionsWithDatabase : itemEntityServiceProvider.getMysqlRepositoryList()) {
-            List<ItemEntity> allByUserId = actionsWithDatabase.findAllByUserId(userId);
-            entityList.addAll(allByUserId);
-        }
-
-        return entityList.stream()
-                .map(o -> ItemEntityServiceProvider.getConvertorByItemClass(o.getClass()).getConvertedItemFromEntity(o))
-                .collect(Collectors.toList());
+    public void changeItemBorrowedStateByUserId(Item item, Integer userId) {
+        Class<? extends Item> itemClassType = item.getClass();
+        ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(itemClassType);
+        ItemEntity entityFromItem = convertorByItemClass.getConvertedEntityFromItem(item, userId);
+        entityFromItem.setBorrowed(!entityFromItem.isBorrowed());
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        repositoryByClassType.save(entityFromItem);// fixme
     }
+
 }

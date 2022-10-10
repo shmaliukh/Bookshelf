@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    void addItemByUserId(Item item, Integer userId);
+    void insertItemByUserId(Item item, Integer userId);
 
     List<Item> readAllItemListByUserId(Integer userId);
 

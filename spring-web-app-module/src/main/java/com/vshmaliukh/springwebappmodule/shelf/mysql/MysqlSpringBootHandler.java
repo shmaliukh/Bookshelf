@@ -13,20 +13,19 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import java.nio.file.Path;
 import java.util.List;
 
-@NoArgsConstructor
 @Service
+@NoArgsConstructor
 public class MysqlSpringBootHandler extends MySqlHandler {
 
     MysqlItemServiceImp mysqlItemServiceImp;
     MysqlUserServiceImp mysqlUserServiceImp;
 
-    public MysqlSpringBootHandler(String userName) {
-        super("", userName);
-    }
-
     @Override
     public void setUpSettings() {
+        this.user = new UserContainer(userName);
+        System.out.println(user);
         readUserId(user);
+        System.out.println(user);
         if(user.getId() == null){ // todo
             insertUser(userName);
             readUserId(user);
@@ -35,7 +34,7 @@ public class MysqlSpringBootHandler extends MySqlHandler {
 
     @Override
     public void readUserId(UserContainer user) {
-        Integer userIdByName = mysqlUserServiceImp.readUserIdByName(userName);
+        Integer userIdByName = mysqlUserServiceImp.readUserIdByName(user.getName());
         user.setId(userIdByName);
     }
 
@@ -66,7 +65,7 @@ public class MysqlSpringBootHandler extends MySqlHandler {
 
     @Override
     public void saveItemToDB(Item item) {
-        mysqlItemServiceImp.addItemByUserId(item, user.getId());
+        mysqlItemServiceImp.insertItemByUserId(item, user.getId());
     }
 
     @Override

@@ -1,13 +1,25 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
+@NoArgsConstructor
+@Service
 public class SpringBootUI extends WebUI {
 
-    public SpringBootUI(String userName, int typeOfWorkWithFiles) {
-        super(userName, typeOfWorkWithFiles);
+    SpringBootSqlShelfHandler springBootSqlShelfHandler;
+
+    @Autowired
+    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
+        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
+    }
+
+    public SaveReadShelfHandler getShelfHandler() {
+        return shelfHandler;
     }
 
     @Override
@@ -19,11 +31,18 @@ public class SpringBootUI extends WebUI {
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
-                shelfHandler = new SpringBootSqlShelfHandler(user.getName(), typeOfWorkWithFiles);
+                shelfHandler = springBootSqlShelfHandler;
+//                        = new SpringBootSqlShelfHandler() ;
+                shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
                 break;
             default:
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
         }
     }
+
+//    @Autowired
+//    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
+//        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
+//    }
 }

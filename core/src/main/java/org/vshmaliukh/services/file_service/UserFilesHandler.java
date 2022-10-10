@@ -1,6 +1,8 @@
 package org.vshmaliukh.services.file_service;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -14,6 +16,8 @@ public abstract class UserFilesHandler {
 
     public static final String PROGRAM_DIR_NAME = "shelf";
 
+    @Setter
+    @Getter
     protected String userName;
     protected String homeDirectoryStr;
     protected String programDirectoryStr;

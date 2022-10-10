@@ -1,9 +1,11 @@
 package com.vshmaliukh.springwebappmodule.utils;
 
 import com.vshmaliukh.springwebappmodule.shelf.SpringBootUI;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
-import org.vshmaliukh.WebUI;
 import org.vshmaliukh.print_table_service.TableHandler;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -13,26 +15,37 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
+import org.vshmaliukh.shelf.shelf_handler.User;
 
 import java.util.*;
 
 import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
 import static org.vshmaliukh.Constants.*;
 
+@Service
+@NoArgsConstructor
 public final class ControllerUtils {
 
-    private ControllerUtils() {
+    SpringBootUI springBootUI;
+
+    @Autowired
+    public void setSpringBootUI(SpringBootUI springBootUI) {
+        this.springBootUI = springBootUI;
     }
+
 
     public static String getFriendlyTypeOfWorkStr(int currentTypeOfWork) {
         Integer currentTypeOfWorkInteger = currentTypeOfWork;
         return typeOfWorkMap.get(currentTypeOfWorkInteger);
     }
 
-
-    public static SaveReadShelfHandler generateShelfHandler(String userName, int typeOfWorkWithFiles) {
+    public SaveReadShelfHandler generateSpringBootShelfHandler(String userName, int typeOfWorkWithFiles) {
         if (StringUtils.isNotBlank(userName)) {
-            WebUI webUI = new SpringBootUI(userName, typeOfWorkWithFiles);
+            SpringBootUI webUI = springBootUI;
+            webUI.setUser(new User(userName));
+            webUI.setTypeOfWorkWithFiles(typeOfWorkWithFiles);
+            webUI.configShelfHandler();
+
             SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
             shelfHandler.readShelfItems();
             return shelfHandler;
@@ -40,18 +53,8 @@ public final class ControllerUtils {
         return null;
     }
 
-    public static SaveReadShelfHandler generateSpringBootShelfHandler(String userName, int typeOfWorkWithFiles) {
-        if(StringUtils.isNotBlank(userName)){
-            SpringBootUI springBootUI = new SpringBootUI(userName, typeOfWorkWithFiles);
-            SaveReadShelfHandler shelfHandler = springBootUI.getShelfHandler();
-            shelfHandler.readShelfItems();
-            return shelfHandler;
-        }
-        return null;
-    }
 
-
-    public static void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
+    public void formCurrentStateTable(String userName, int typeOfWork, ModelMap modelMap) {
         SaveReadShelfHandler shelfHandler = generateSpringBootShelfHandler(userName, typeOfWork);
         List<String> titles = new ArrayList<>();
         List<List<String>> tableValues = new ArrayList<>();
@@ -67,7 +70,7 @@ public final class ControllerUtils {
         modelMap.addAttribute(ITEMS, tableValues);
     }
 
-    public static void formItemTableByClass(String userName, int typeOfWork, String itemClassType, String menuItemIndex, ModelMap modelMap) {
+    public void formItemTableByClass(String userName, int typeOfWork, String itemClassType, String menuItemIndex, ModelMap modelMap) {
         SaveReadShelfHandler webShelfHandler = generateSpringBootShelfHandler(userName, typeOfWork);
         List<String> titles = new ArrayList<>();
         List<List<String>> tableValues = new ArrayList<>();

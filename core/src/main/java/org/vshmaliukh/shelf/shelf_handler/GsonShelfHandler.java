@@ -6,7 +6,6 @@ import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
 import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
-import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
@@ -98,8 +97,4 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
         itemHandler.readItemList().forEach(this::addItem);
     }
 
-    @Override
-    public Shelf getShelf() {
-        return shelf;
-    }
 }
