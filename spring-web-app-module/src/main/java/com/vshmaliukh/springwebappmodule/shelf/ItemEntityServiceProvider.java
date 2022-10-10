@@ -1,7 +1,5 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
-import com.vshmaliukh.springwebappmodule.shelf.convertors.BookEntityConvertor;
-import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.*;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlItemServiceImp;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
@@ -22,10 +20,11 @@ public final class ItemEntityServiceProvider {
     public static Set<ItemService> itemEntityServiceSet;
     private static final Map<Class, ItemService> itemClassServiceMap = new ConcurrentHashMap<>();
     private static final Map<Class, ActionsWithItemEntity> mysqlItemRepositoryMap = new ConcurrentHashMap<>();
-    private static final Map<Class<? extends Item>, ItemEntityConvertor<? extends Item, ?>> itemEntityConvertorMap = new ConcurrentHashMap<>();
+//    private static final Map<Class<? extends Item>, ItemEntityConvertor<? extends Item, ?>> itemEntityConvertorMap = new ConcurrentHashMap<>();
+
+
 
     static {
-        itemEntityConvertorMap.put(Book.class, new BookEntityConvertor());
         itemClassServiceMap.put(Book.class, new MysqlItemServiceImp(null));
 
         itemEntityServiceSet = Collections.unmodifiableSet(new HashSet<>(itemClassServiceMap.values()));
@@ -51,12 +50,13 @@ public final class ItemEntityServiceProvider {
         initClassTypeRepositoryMap(mysqlBookRepository, mysqlMagazineRepository, mysqlNewspaperRepository, mysqlComicsRepository);
     }
 
-    private static void initClassTypeRepositoryMap(MysqlBookRepository mysqlBookRepository, MysqlMagazineRepository mysqlMagazineRepository, MysqlNewspaperRepository mysqlNewspaperRepository, MysqlComicsRepository mysqlComicsRepository) {
+    private void initClassTypeRepositoryMap(MysqlBookRepository mysqlBookRepository, MysqlMagazineRepository mysqlMagazineRepository, MysqlNewspaperRepository mysqlNewspaperRepository, MysqlComicsRepository mysqlComicsRepository) {
         mysqlItemRepositoryMap.put(Book.class, mysqlBookRepository);
         mysqlItemRepositoryMap.put(Magazine.class, mysqlMagazineRepository);
         mysqlItemRepositoryMap.put(Comics.class, mysqlComicsRepository);
         mysqlItemRepositoryMap.put(Newspaper.class, mysqlNewspaperRepository);
     }
+
 
     public ActionsWithItemEntity getMysqlRepositoryByClassType(Class itemClassType) {
         return mysqlItemRepositoryMap.getOrDefault(itemClassType, null);
@@ -66,9 +66,6 @@ public final class ItemEntityServiceProvider {
         return new ArrayList<>(mysqlItemRepositoryMap.values());
     }
 
-
-
-
     public static Set<ItemService> getItemEntityServiceSet() {
         return itemEntityServiceSet;
     }
@@ -77,7 +74,4 @@ public final class ItemEntityServiceProvider {
         return itemClassServiceMap.get(itemClassType);
     }
 
-    public static ItemEntityConvertor getConvertorByItemClass(Class itemClassType) {
-        return itemEntityConvertorMap.getOrDefault(itemClassType, null);
-    }
 }

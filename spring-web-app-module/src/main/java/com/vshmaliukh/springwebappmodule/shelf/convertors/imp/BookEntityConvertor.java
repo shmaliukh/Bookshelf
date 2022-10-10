@@ -1,5 +1,6 @@
-package com.vshmaliukh.springwebappmodule.shelf.convertors;
+package com.vshmaliukh.springwebappmodule.shelf.convertors.imp;
 
+import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.entities.BookEntity;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
