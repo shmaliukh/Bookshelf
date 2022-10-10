@@ -42,7 +42,7 @@ public class ConsoleUI extends AbstractUI {
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
                 shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
-            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
@@ -102,7 +102,7 @@ public class ConsoleUI extends AbstractUI {
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
                 printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
-            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
                 printWriter.println("FILE_MODE_WORK_WITH_SQLLITE");
                 break;
             default:

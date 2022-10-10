@@ -26,7 +26,7 @@ public final class ConstantsForConsoleUserInputHandler {
     public static final String MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = "Enter type number of work with files: (program ignores all not number symbols)" + System.lineSeparator() +
             MODE_WORK_WITH_ONE_FILE + " - work with one file" + System.lineSeparator() +
             MODE_WORK_WITH_FILE_PER_TYPE + " - work with file per type files" + System.lineSeparator() +
-            MODE_WORK_WITH_SQLLITE + " - work with SqlLite db" + System.lineSeparator() +
+            MODE_WORK_WITH_SQLITE + " - work with SqlLite db" + System.lineSeparator() +
             MODE_WORK_WITH_MYSQL + " - work with MySql db";
 
 

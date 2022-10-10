@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule.shelf.repositories;
+package com.vshmaliukh.springwebappmodule.shelf.repository_services;
 
 import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
 import org.springframework.data.repository.query.Param;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 
-public interface ActionsWithDatabaseEntity<T extends ItemEntity> {
+public interface ActionsWithItemEntity<T extends ItemEntity> {
 
     boolean existsByName(@Param(NAME_COLUMN) String name);
 
@@ -19,4 +19,7 @@ public interface ActionsWithDatabaseEntity<T extends ItemEntity> {
 
     Integer findMaxId();
 
+    void save(ItemEntity itemEntity);
+
+    void deleteById(Integer userId);
 }
