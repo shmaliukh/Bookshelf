@@ -7,6 +7,7 @@ import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ItemService;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -26,13 +27,12 @@ public class MysqlItemServiceImp implements ItemService {
         this.itemEntityRepositoryProvider = itemEntityRepositoryProvider;
     }
 
-
     @Override
     public void insertItemByUserId(Item item, Integer userId) {
+        ActionsWithItemEntity repository = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(item.getClass());
         ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(item.getClass());
         ItemEntity itemEntity = convertorByItemClass.getConvertedEntityFromItem(item, userId);
         itemEntity.setUserId(userId);
-        ActionsWithItemEntity repository = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(item.getClass());
         repository.save(itemEntity);
     }
 
@@ -43,6 +43,11 @@ public class MysqlItemServiceImp implements ItemService {
             List<ItemEntity> allPerTypeByUserId = mysqlItemRepository.findAllByUserId(userId);
             entityList.addAll(allPerTypeByUserId);
         }
+        return convertListOfEntities(entityList);
+    }
+
+    @NotNull
+    private static List<Item> convertListOfEntities(List<ItemEntity> entityList) {// todo refactor
         return entityList.stream()
                 .map(o -> ItemEntityConvertorProvider.getConvertorByEntityClassType(o.getClass()).getConvertedItemFromEntity(o))
                 .collect(Collectors.toList());
@@ -51,8 +56,9 @@ public class MysqlItemServiceImp implements ItemService {
     @Override
     public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
-        List<T> itemListByClassType =  repositoryByClassType.findAllByUserId(userId);
-        return itemListByClassType;
+        List entityListByClassType = repositoryByClassType.findAllByUserId(userId);
+        List<T> itemList = convertListOfEntities(entityListByClassType);
+        return itemList;
     }
 
     @Override

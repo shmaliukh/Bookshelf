@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,7 @@ import static org.vshmaliukh.Constants.*;
 @RequestMapping("/" + ITEMS_SORTING_MENU_TITLE + "/{" + ITEM_CLASS_TYPE + "}")
 public class ItemsSortingMenuController {
 
-    final
     ControllerUtils controllerUtils;
-
-    public ItemsSortingMenuController(ControllerUtils controllerUtils) {
-        this.controllerUtils = controllerUtils;
-    }
 
     @PostMapping()
     ModelAndView doPost(@RequestParam String menuItemIndex,
@@ -37,6 +33,11 @@ public class ItemsSortingMenuController {
         ControllerUtils.formRadioButtonsMapForSortingByClassType(itemClassType, modelMap);
         modelMap.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         return new ModelAndView(ITEMS_SORTING_MENU_TITLE, modelMap);
+    }
+
+    @Autowired
+    public void setControllerUtils(ControllerUtils controllerUtils) {
+        this.controllerUtils = controllerUtils;
     }
 
 }

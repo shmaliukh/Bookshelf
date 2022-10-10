@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -14,7 +15,6 @@ import static org.vshmaliukh.Constants.*;
 @RequestMapping("/" + MAIN_MENU_TITLE)
 public class MainMenuController {
 
-    final
     ControllerUtils controllerUtils;
 
     public MainMenuController(ControllerUtils controllerUtils) {
@@ -29,6 +29,11 @@ public class MainMenuController {
         modelMap.addAttribute(USER_NAME, userName);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(MAIN_MENU_TITLE, modelMap);
+    }
+
+    @Autowired
+    public void setControllerUtils(ControllerUtils controllerUtils) {
+        this.controllerUtils = controllerUtils;
     }
 
 }

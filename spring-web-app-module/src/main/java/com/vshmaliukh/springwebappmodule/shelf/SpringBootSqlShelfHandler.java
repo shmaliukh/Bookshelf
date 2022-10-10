@@ -20,10 +20,6 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
         this.mysqlSpringBootHandler = mysqlSpringBootHandler;
     }
 
-    public SpringBootSqlShelfHandler(String userName, int typeOfWorkWithFiles) {
-        super(userName, typeOfWorkWithFiles);
-    }
-
     @Override
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
@@ -32,7 +28,6 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
                 sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
-//                MysqlSpringBootHandler mysqlSpringBootHandler = new MysqlSpringBootHandler();
                 mysqlSpringBootHandler.setUserName(userName);
                 mysqlSpringBootHandler.setUpSettings();
                 sqlItemHandler = mysqlSpringBootHandler;
@@ -42,15 +37,5 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
                 break;
         }
     }
-
-//    @Override
-//    public void readShelfItems() {
-////        getShelf().setItemsOfShelf(sqlItemHandler.readItemList());
-//    }
-
-//    @Autowired
-//    public void setMysqlSpringBootHandler(@Qualifier("mysqlSpringBootHandler") MysqlSpringBootHandler mysqlSpringBootHandler) {
-//        this.mysqlSpringBootHandler = mysqlSpringBootHandler;
-//    }
 
 }

@@ -7,20 +7,12 @@ import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
-@NoArgsConstructor
+
 @Service
+@NoArgsConstructor
 public class SpringBootUI extends WebUI {
 
     SpringBootSqlShelfHandler springBootSqlShelfHandler;
-
-    @Autowired
-    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
-        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
-    }
-
-    public SaveReadShelfHandler getShelfHandler() {
-        return shelfHandler;
-    }
 
     @Override
     public void configShelfHandler() {
@@ -32,7 +24,6 @@ public class SpringBootUI extends WebUI {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 shelfHandler = springBootSqlShelfHandler;
-//                        = new SpringBootSqlShelfHandler() ;
                 shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
                 break;
             default:
@@ -41,8 +32,9 @@ public class SpringBootUI extends WebUI {
         }
     }
 
-//    @Autowired
-//    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
-//        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
-//    }
+    @Autowired
+    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
+        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
+    }
+
 }

@@ -4,7 +4,6 @@ import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlItemServiceIm
 import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlUserServiceImp;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.services.file_service.sql_handler.MySqlHandler;
 import org.vshmaliukh.services.file_service.sql_handler.UserContainer;
@@ -23,9 +22,11 @@ public class MysqlSpringBootHandler extends MySqlHandler {
     @Override
     public void setUpSettings() {
         this.user = new UserContainer(userName);
-        System.out.println(user);
         readUserId(user);
-        System.out.println(user);
+        initUserIfNotExist();
+    }
+
+    private void initUserIfNotExist() {
         if(user.getId() == null){ // todo
             insertUser(userName);
             readUserId(user);
@@ -84,12 +85,12 @@ public class MysqlSpringBootHandler extends MySqlHandler {
     } // todo (is necessary to implement ???)
 
     @Autowired
-    public void setMysqlItemServiceImp(@Qualifier("mysqlItemServiceImp") MysqlItemServiceImp mysqlItemServiceImp) {
+    public void setMysqlItemServiceImp(MysqlItemServiceImp mysqlItemServiceImp) {
         this.mysqlItemServiceImp = mysqlItemServiceImp;
     }
 
     @Autowired
-    public void setMysqlUserServiceImp(@Qualifier("mysqlUserServiceImp") MysqlUserServiceImp mysqlUserServiceImp) {
+    public void setMysqlUserServiceImp(MysqlUserServiceImp mysqlUserServiceImp) {
         this.mysqlUserServiceImp = mysqlUserServiceImp;
     }
 

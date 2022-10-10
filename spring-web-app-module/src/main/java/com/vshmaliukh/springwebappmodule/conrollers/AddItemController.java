@@ -2,6 +2,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,6 @@ import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.utils.WebUtils;
 
 import javax.servlet.http.HttpServlet;
 import java.util.Map;
@@ -23,6 +23,8 @@ public class AddItemController extends HttpServlet {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
 
+    ControllerUtils controllerUtils;
+
     static Gson gson = new Gson();
 
     @PostMapping()
@@ -32,7 +34,7 @@ public class AddItemController extends HttpServlet {
                         @RequestBody String jsonBody,
                         ModelMap modelMap) {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        SaveReadShelfHandler webShelfHandler = WebUtils.generateShelfHandler(userName, typeOfWork);
+        SaveReadShelfHandler webShelfHandler = controllerUtils.generateSpringBootShelfHandler(userName, typeOfWork);
         Map<String, String> itemFieldValueMap = gson.fromJson(jsonBody, Map.class); // todo refactor validation to serve JsonStr, not Map
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
@@ -48,6 +50,11 @@ public class AddItemController extends HttpServlet {
         modelMap.addAttribute(ADD_ITEM_FORM, ControllerUtils.addFormIsRandomConfigStr(itemClassType, isRandom));
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         return new ModelAndView(ADD_ITEM_TITLE, modelMap);
+    }
+
+    @Autowired
+    public void setControllerUtils(ControllerUtils controllerUtils) {
+        this.controllerUtils = controllerUtils;
     }
 
 }
