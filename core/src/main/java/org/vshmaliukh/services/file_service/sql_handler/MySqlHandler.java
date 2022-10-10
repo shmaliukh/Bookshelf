@@ -1,5 +1,6 @@
 package org.vshmaliukh.services.file_service.sql_handler;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -11,6 +12,7 @@ import java.sql.*;
 import java.util.List;
 
 @Slf4j
+@NoArgsConstructor
 public class MySqlHandler extends AbstractSqlItemHandler {
 
     public static final String MYSQL_USER_NAME_ENV = "MYSQL_USER_NAME";
