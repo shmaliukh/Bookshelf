@@ -1,5 +1,6 @@
 package org.vshmaliukh.services.file_service;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Slf4j
+@NoArgsConstructor
 public abstract class UserFilesHandler {
 
     public static final String PROGRAM_DIR_NAME = "shelf";

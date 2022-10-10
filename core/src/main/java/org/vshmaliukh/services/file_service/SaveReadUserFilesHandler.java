@@ -1,10 +1,12 @@
 package org.vshmaliukh.services.file_service;
 
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.nio.file.Path;
 import java.util.List;
 
+@NoArgsConstructor
 public abstract class SaveReadUserFilesHandler extends UserFilesHandler {
 
     protected SaveReadUserFilesHandler(String homeDir, String userName) {

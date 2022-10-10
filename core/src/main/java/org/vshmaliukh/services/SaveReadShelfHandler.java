@@ -1,10 +1,12 @@
 package org.vshmaliukh.services;
 
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.shelf_handler.AbstractShelfHandler;
 
 import java.util.List;
 
+@NoArgsConstructor
 public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
 
     public static final int MODE_WORK_WITH_ONE_FILE = 1;
