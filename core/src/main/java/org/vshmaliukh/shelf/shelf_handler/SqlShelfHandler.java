@@ -1,5 +1,6 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.file_service.sql_handler.AbstractSqlItemHandler;
@@ -9,6 +10,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
+@NoArgsConstructor
 public class SqlShelfHandler extends SaveReadShelfHandler {
 
     protected AbstractSqlItemHandler sqlItemHandler;

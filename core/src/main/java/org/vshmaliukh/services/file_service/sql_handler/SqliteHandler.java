@@ -1,5 +1,6 @@
 package org.vshmaliukh.services.file_service.sql_handler;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -11,6 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 @Slf4j
+@NoArgsConstructor
 public class SqliteHandler extends AbstractSqlItemHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
