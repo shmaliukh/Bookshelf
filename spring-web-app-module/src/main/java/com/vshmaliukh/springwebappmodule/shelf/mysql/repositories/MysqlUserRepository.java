@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface MysqlUserRepository extends JpaRepository<UserEntity, Integer>, ActionsWithUserEntity {
+public interface MysqlUserRepository extends JpaRepository<UserEntity, Integer>, ActionsWithUserEntity<UserEntity> {
+
+    UserEntity save(UserEntity userEntity);
 
 }

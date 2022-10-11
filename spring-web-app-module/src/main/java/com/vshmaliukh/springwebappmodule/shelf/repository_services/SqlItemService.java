@@ -4,7 +4,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
-public interface ItemService {
+public interface SqlItemService {
 
     void insertItemByUserId(Item item, Integer userId);
 

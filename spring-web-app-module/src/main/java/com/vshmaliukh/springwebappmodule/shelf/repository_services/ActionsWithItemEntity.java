@@ -9,17 +9,11 @@ import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.*;
 
 public interface ActionsWithItemEntity<T extends ItemEntity> {
 
-    boolean existsByName(@Param(NAME_COLUMN) String name);
-
-    List<T> findByName(@Param(NAME_COLUMN) String name);
-
     List<T> findAllByUserId(@Param(USER_ID_COLUMN) Integer userId);
 
-    void removeAllById(@Param(ID_COLUMN) Integer id);
+//    void save(T itemEntity);
 
-    Integer findMaxId();
-
-    void save(T itemEntity);
+    T save(T itemEntity);
 
     void deleteById(Integer itemId);
 

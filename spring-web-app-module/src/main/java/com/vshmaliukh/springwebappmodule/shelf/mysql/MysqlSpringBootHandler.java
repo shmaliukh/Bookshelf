@@ -1,9 +1,7 @@
 package com.vshmaliukh.springwebappmodule.shelf.mysql;
 
-import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlItemServiceImp;
-import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlUserServiceImp;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlSqlItemServiceImp;
+import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlSqlUserServiceImp;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.services.file_service.sql_handler.MySqlHandler;
 import org.vshmaliukh.services.file_service.sql_handler.UserContainer;
@@ -13,11 +11,15 @@ import java.nio.file.Path;
 import java.util.List;
 
 @Service
-@NoArgsConstructor
 public class MysqlSpringBootHandler extends MySqlHandler {
 
-    MysqlItemServiceImp mysqlItemServiceImp;
-    MysqlUserServiceImp mysqlUserServiceImp;
+    final MysqlSqlItemServiceImp mysqlItemServiceImp;
+    final MysqlSqlUserServiceImp mysqlUserServiceImp;
+
+    public MysqlSpringBootHandler(MysqlSqlItemServiceImp mysqlItemServiceImp, MysqlSqlUserServiceImp mysqlUserServiceImp) {
+        this.mysqlItemServiceImp = mysqlItemServiceImp;
+        this.mysqlUserServiceImp = mysqlUserServiceImp;
+    }
 
     @Override
     public void setUpSettings() {
@@ -83,15 +85,5 @@ public class MysqlSpringBootHandler extends MySqlHandler {
     public Path generatePathForFileHandler() {
         return null;
     } // todo (is necessary to implement ???)
-
-    @Autowired
-    public void setMysqlItemServiceImp(MysqlItemServiceImp mysqlItemServiceImp) {
-        this.mysqlItemServiceImp = mysqlItemServiceImp;
-    }
-
-    @Autowired
-    public void setMysqlUserServiceImp(MysqlUserServiceImp mysqlUserServiceImp) {
-        this.mysqlUserServiceImp = mysqlUserServiceImp;
-    }
 
 }

@@ -2,19 +2,15 @@ package com.vshmaliukh.springwebappmodule.shelf.mysql.services;
 
 import com.vshmaliukh.springwebappmodule.shelf.entities.UserEntity;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlUserRepository;
-import com.vshmaliukh.springwebappmodule.shelf.repository_services.UserService;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlUserService;
 import org.springframework.stereotype.Service;
 
 @Service
-@NoArgsConstructor
-public class MysqlUserServiceImp implements UserService {
+public class MysqlSqlUserServiceImp implements SqlUserService {
 
-    MysqlUserRepository mysqlUserRepository;
+    final MysqlUserRepository mysqlUserRepository;
 
-    @Autowired
-    public void setMysqlUserRepository(MysqlUserRepository mysqlUserRepository) {
+    public MysqlSqlUserServiceImp(MysqlUserRepository mysqlUserRepository) {
         this.mysqlUserRepository = mysqlUserRepository;
     }
 
@@ -27,7 +23,6 @@ public class MysqlUserServiceImp implements UserService {
 
     @Override
     public Integer readUserIdByName(String userName) {
-        System.out.println(mysqlUserRepository);
         UserEntity userEntity = mysqlUserRepository.findByUserName(userName);
         if(userEntity != null) {
             Integer id = userEntity.getId();

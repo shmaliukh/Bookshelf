@@ -5,10 +5,8 @@ import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertorProvider;
 import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
-import com.vshmaliukh.springwebappmodule.shelf.repository_services.ItemService;
-import lombok.NoArgsConstructor;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlItemService;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -17,13 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@NoArgsConstructor
-public class MysqlItemServiceImp implements ItemService {
+public class MysqlSqlItemServiceImp implements SqlItemService {
 
-    ItemEntityRepositoryProvider itemEntityRepositoryProvider;
+    final ItemEntityRepositoryProvider itemEntityRepositoryProvider;
 
-    @Autowired
-    public void setItemEntityRepositoryProvider(ItemEntityRepositoryProvider itemEntityRepositoryProvider) {
+    public MysqlSqlItemServiceImp(ItemEntityRepositoryProvider itemEntityRepositoryProvider) {
         this.itemEntityRepositoryProvider = itemEntityRepositoryProvider;
     }
 
@@ -77,7 +73,7 @@ public class MysqlItemServiceImp implements ItemService {
         ItemEntity entityFromItem = convertorByItemClass.getConvertedEntityFromItem(item, userId);
         entityFromItem.setBorrowed(!entityFromItem.isBorrowed());
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
-        repositoryByClassType.save(entityFromItem);// fixme
+        repositoryByClassType.save(entityFromItem);// fixme use update function
     }
 
 }

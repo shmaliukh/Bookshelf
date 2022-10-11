@@ -1,7 +1,5 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -9,10 +7,13 @@ import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
 
 @Service
-@NoArgsConstructor
 public class SpringBootUI extends WebUI {
 
-    SpringBootSqlShelfHandler springBootSqlShelfHandler;
+    final SpringBootSqlShelfHandler springBootSqlShelfHandler;
+
+    public SpringBootUI(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
+        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
+    }
 
     @Override
     public void configShelfHandler() {
@@ -30,11 +31,6 @@ public class SpringBootUI extends WebUI {
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
         }
-    }
-
-    @Autowired
-    public void setSpringBootSqlShelfHandler(SpringBootSqlShelfHandler springBootSqlShelfHandler) {
-        this.springBootSqlShelfHandler = springBootSqlShelfHandler;
     }
 
 }
