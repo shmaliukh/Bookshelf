@@ -5,9 +5,9 @@ import com.vshmaliukh.springwebappmodule.shelf.mysql.MysqlItemEntityRepositoryPr
 import org.springframework.stereotype.Service;
 
 @Service
-public class MysqlSqlItemServiceImp extends SqlItemService {
+public class MysqlItemServiceImp extends SqlItemService {
 
-    public MysqlSqlItemServiceImp(MysqlItemEntityRepositoryProvider itemEntityRepositoryProvider) {
+    public MysqlItemServiceImp(MysqlItemEntityRepositoryProvider itemEntityRepositoryProvider) {
         this.itemEntityRepositoryProvider = itemEntityRepositoryProvider;
     }
 

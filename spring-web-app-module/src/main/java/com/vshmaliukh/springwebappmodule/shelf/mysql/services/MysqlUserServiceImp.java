@@ -5,9 +5,9 @@ import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlUserRepos
 import org.springframework.stereotype.Service;
 
 @Service
-public class MysqlSqlUserServiceImp extends SqlUserService {
+public class MysqlUserServiceImp extends SqlUserService {
 
-    public MysqlSqlUserServiceImp(MysqlUserRepository mysqlUserRepository) {
+    public MysqlUserServiceImp(MysqlUserRepository mysqlUserRepository) {
         this.userRepository = mysqlUserRepository;
     }
 
