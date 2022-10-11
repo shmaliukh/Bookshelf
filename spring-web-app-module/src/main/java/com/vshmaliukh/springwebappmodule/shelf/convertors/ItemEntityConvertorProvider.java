@@ -1,9 +1,6 @@
 package com.vshmaliukh.springwebappmodule.shelf.convertors;
 
-import com.vshmaliukh.springwebappmodule.shelf.convertors.imp.BookEntityConvertor;
-import com.vshmaliukh.springwebappmodule.shelf.convertors.imp.ComicsEntityConvertor;
-import com.vshmaliukh.springwebappmodule.shelf.convertors.imp.MagazineEntityConvertor;
-import com.vshmaliukh.springwebappmodule.shelf.convertors.imp.NewspaperEntityConvertor;
+import com.vshmaliukh.springwebappmodule.shelf.convertors.imp.*;
 import com.vshmaliukh.springwebappmodule.shelf.entities.*;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
@@ -22,6 +19,8 @@ public final class ItemEntityConvertorProvider {
     private static final Map<Class<? extends ItemEntity>, ItemEntityConvertor<? extends Item, ? extends ItemEntity>> entityClassTypeConvertorMap = new ConcurrentHashMap<>();
 
     static {// todo refactor
+        entityClassTypeConvertorMap.put(SqliteBookEntity.class, new SqliteBookEntityConvertor());
+
         entityClassTypeConvertorMap.put(BookEntity.class, new BookEntityConvertor());
         entityClassTypeConvertorMap.put(MagazineEntity.class, new MagazineEntityConvertor());
         entityClassTypeConvertorMap.put(NewspaperEntity.class, new NewspaperEntityConvertor());
