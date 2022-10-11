@@ -1,11 +1,12 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
 import com.vshmaliukh.springwebappmodule.shelf.entities.UserEntity;
-import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlUserRepository;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithUserEntity;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlUserService;
 
-public abstract class SqlUserService implements com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlUserService {
+public abstract class SqlUserServiceImp implements SqlUserService {
 
-    protected MysqlUserRepository userRepository;
+    protected ActionsWithUserEntity<UserEntity> userRepository;
 
     @Override
     public void insertUser(String userName) {

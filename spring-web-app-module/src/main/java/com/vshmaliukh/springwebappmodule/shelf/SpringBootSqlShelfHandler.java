@@ -1,6 +1,7 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
 import com.vshmaliukh.springwebappmodule.shelf.mysql.MysqlSpringBootHandler;
+import com.vshmaliukh.springwebappmodule.shelf.sqlite.SqliteSpringBootHandler;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -11,17 +12,21 @@ import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 public class SpringBootSqlShelfHandler extends SqlShelfHandler {
 
     final MysqlSpringBootHandler mysqlSpringBootHandler;
+    final SqliteSpringBootHandler sqliteSpringBootHandler;
 
-    public SpringBootSqlShelfHandler(MysqlSpringBootHandler mysqlSpringBootHandler) {
+    public SpringBootSqlShelfHandler(MysqlSpringBootHandler mysqlSpringBootHandler,
+                                     SqliteSpringBootHandler sqliteSpringBootHandler) {
         this.mysqlSpringBootHandler = mysqlSpringBootHandler;
+        this.sqliteSpringBootHandler = sqliteSpringBootHandler;
     }
 
     @Override
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
-                //TODO
-                sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqliteSpringBootHandler.setUserName(userName);
+                sqliteSpringBootHandler.setUpSettings();
+                sqlItemHandler = sqliteSpringBootHandler;
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 mysqlSpringBootHandler.setUserName(userName);

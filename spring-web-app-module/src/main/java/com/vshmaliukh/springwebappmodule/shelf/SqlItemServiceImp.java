@@ -4,6 +4,7 @@ import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertorProvider;
 import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlItemService;
 import org.jetbrains.annotations.NotNull;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class SqlItemService implements com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlItemService {
+public abstract class SqlItemServiceImp implements SqlItemService {
 
     protected ItemEntityRepositoryProvider itemEntityRepositoryProvider;
 
@@ -36,13 +37,13 @@ public abstract class SqlItemService implements com.vshmaliukh.springwebappmodul
             List<ItemEntity> allPerTypeByUserId = mysqlItemRepository.findAllByUserId(userId);
             entityList.addAll(allPerTypeByUserId);
         }
-        return SqlItemService.convertListOfEntities(entityList);
+        return SqlItemServiceImp.convertListOfEntities(entityList);
     }
 
     public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
         List entityListByClassType = repositoryByClassType.findAllByUserId(userId);
-        List<T> itemList = SqlItemService.convertListOfEntities(entityListByClassType);
+        List<T> itemList = SqlItemServiceImp.convertListOfEntities(entityListByClassType);
         return itemList;
     }
 
