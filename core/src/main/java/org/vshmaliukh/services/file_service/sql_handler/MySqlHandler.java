@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @NoArgsConstructor
-public class MySqlHandler extends AbstractSqlItemHandler {
+public class MySqlHandler extends AbstractSqlHandler {
 
     public static final String MYSQL_USER_NAME_ENV = "MYSQL_USER_NAME";
     public static final String MYSQL_PASSWORD_ENV = "MYSQL_PASSWORD";

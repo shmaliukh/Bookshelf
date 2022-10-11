@@ -1,6 +1,6 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
-import com.vshmaliukh.springwebappmodule.shelf.mysql.MysqlSpringBootHandler;
+import com.vshmaliukh.springwebappmodule.shelf.mysql.MysqlSqlSpringBootHandler;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -10,9 +10,9 @@ import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 @Component
 public class SpringBootSqlShelfHandler extends SqlShelfHandler {
 
-    final MysqlSpringBootHandler mysqlSpringBootHandler;
+    final MysqlSqlSpringBootHandler mysqlSpringBootHandler;
 
-    public SpringBootSqlShelfHandler(MysqlSpringBootHandler mysqlSpringBootHandler) {
+    public SpringBootSqlShelfHandler(MysqlSqlSpringBootHandler mysqlSpringBootHandler) {
         this.mysqlSpringBootHandler = mysqlSpringBootHandler;
     }
 

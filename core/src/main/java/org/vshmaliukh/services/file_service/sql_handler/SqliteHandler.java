@@ -13,7 +13,7 @@ import java.util.*;
 
 @Slf4j
 @NoArgsConstructor
-public class SqliteHandler extends AbstractSqlItemHandler {
+public class SqliteHandler extends AbstractSqlHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
     public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;

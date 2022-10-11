@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
-public abstract class AbstractSqlItemHandler extends SaveReadUserFilesHandler implements AbleToHandleUserTableSql {
+public abstract class AbstractSqlHandler extends SaveReadUserFilesHandler implements AbleToHandleUserTableSql {
 
     @Getter
     @Setter
     protected UserContainer user;
 
-    protected AbstractSqlItemHandler(String homeDir, String userName) {
+    protected AbstractSqlHandler(String homeDir, String userName) {
         super(homeDir, userName);
         this.user = new UserContainer(userName);
         setUpSettings();
