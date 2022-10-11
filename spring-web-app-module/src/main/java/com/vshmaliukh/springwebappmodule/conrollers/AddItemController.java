@@ -2,7 +2,7 @@ package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +22,13 @@ import static org.vshmaliukh.Constants.*;
 public class AddItemController extends HttpServlet {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
-
-    ControllerUtils controllerUtils;
-
     static Gson gson = new Gson();
+
+    final SpringBootWebUtil springBootWebUtil;
+
+    public AddItemController(SpringBootWebUtil springBootWebUtil) {
+        this.springBootWebUtil = springBootWebUtil;
+    }
 
     @PostMapping()
     ModelAndView doPost(@CookieValue String userName,
@@ -34,7 +37,7 @@ public class AddItemController extends HttpServlet {
                         @RequestBody String jsonBody,
                         ModelMap modelMap) {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
-        SaveReadShelfHandler webShelfHandler = controllerUtils.generateSpringBootShelfHandler(userName, typeOfWork);
+        SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         Map<String, String> itemFieldValueMap = gson.fromJson(jsonBody, Map.class); // todo refactor validation to serve JsonStr, not Map
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
@@ -50,11 +53,6 @@ public class AddItemController extends HttpServlet {
         modelMap.addAttribute(ADD_ITEM_FORM, ControllerUtils.addFormIsRandomConfigStr(itemClassType, isRandom));
         modelMap.addAttribute(ITEM_CLASS_TYPE, itemClassType);
         return new ModelAndView(ADD_ITEM_TITLE, modelMap);
-    }
-
-    @Autowired
-    public void setControllerUtils(ControllerUtils controllerUtils) {
-        this.controllerUtils = controllerUtils;
     }
 
 }

@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories(
         basePackages = "com.vshmaliukh.springwebappmodule.shelf.sqlite.repositories",
         entityManagerFactoryRef = "sqliteEntityManager")
-public class SqliteHandlerConfigurator extends DbConfig{
+public class SqliteHandlerConfigurator extends DbConfig {
 
     @Bean
     public DataSource sqliteDataSource() {

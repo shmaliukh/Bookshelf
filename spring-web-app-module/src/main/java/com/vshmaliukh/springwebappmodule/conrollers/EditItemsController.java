@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -16,20 +16,19 @@ import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
 @RequestMapping("/" + EDIT_ITEMS_TITLE)
 public class EditItemsController {
 
-    ControllerUtils controllerUtils;
+    final SpringBootWebUtil springBootWebUtil;
+
+    public EditItemsController(SpringBootWebUtil springBootWebUtil) {
+        this.springBootWebUtil = springBootWebUtil;
+    }
 
     @GetMapping()
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        ModelMap modelMap) {
-        controllerUtils.formCurrentStateTable(userName, typeOfWork, modelMap);
+        springBootWebUtil.formCurrentStateTable(userName, typeOfWork, modelMap);
         modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(EDIT_ITEMS_TITLE, modelMap);
-    }
-
-    @Autowired
-    public void setControllerUtils(ControllerUtils controllerUtils) {
-        this.controllerUtils = controllerUtils;
     }
 
 }

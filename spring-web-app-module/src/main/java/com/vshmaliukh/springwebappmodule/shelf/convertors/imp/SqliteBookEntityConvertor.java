@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.shelf.convertors.imp;
 
-import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.entities.SqliteBookEntity;
+import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 

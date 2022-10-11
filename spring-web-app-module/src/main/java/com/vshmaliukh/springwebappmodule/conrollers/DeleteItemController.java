@@ -1,7 +1,6 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -16,23 +15,22 @@ import org.vshmaliukh.services.SaveReadShelfHandler;
 @RequestMapping("/" + Constants.DELETE_ITEM_TITLE)
 public class DeleteItemController {
 
-    ControllerUtils controllerUtils;
+    final SpringBootWebUtil springBootWebUtil;
+
+    public DeleteItemController(SpringBootWebUtil springBootWebUtil) {
+        this.springBootWebUtil = springBootWebUtil;
+    }
 
     @GetMapping()
     ModelAndView doGet(@CookieValue String userName,
                        @CookieValue int typeOfWork,
                        @RequestParam int indexOfItem,
                        ModelMap model) {
-        SaveReadShelfHandler webShelfHandler = controllerUtils.generateSpringBootShelfHandler(userName, typeOfWork);
+        SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         if (webShelfHandler != null) {
             webShelfHandler.deleteItemByIndex(indexOfItem);
         }
         return new ModelAndView("redirect:/" + Constants.EDIT_ITEMS_TITLE, model);
-    }
-
-    @Autowired
-    public void setControllerUtils(ControllerUtils controllerUtils) {
-        this.controllerUtils = controllerUtils;
     }
 
 }

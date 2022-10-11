@@ -7,14 +7,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.USER_NAME_COLUMN;
-import static com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase.USER_TABLE;
-
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = USER_TABLE)
+@Table(name = ConstantsForDataBase.USER_TABLE)
 public class UserEntity {
 
     @Id
@@ -22,7 +19,7 @@ public class UserEntity {
     @Column(name = ConstantsForDataBase.ID_COLUMN, nullable = false)
     private Integer id;
 
-    @Column(name = USER_NAME_COLUMN, nullable = false, unique = true)
+    @Column(name = ConstantsForDataBase.USER_NAME_COLUMN, nullable = false, unique = true)
     private String userName;
 
 }

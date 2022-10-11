@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,11 @@ import static org.vshmaliukh.Constants.*;
 @RequestMapping("/" + ITEMS_SORTING_MENU_TITLE + "/{" + ITEM_CLASS_TYPE + "}")
 public class ItemsSortingMenuController {
 
-    ControllerUtils controllerUtils;
+    final SpringBootWebUtil springBootWebUtil;
+
+    public ItemsSortingMenuController(SpringBootWebUtil springBootWebUtil) {
+        this.springBootWebUtil = springBootWebUtil;
+    }
 
     @PostMapping()
     ModelAndView doPost(@RequestParam String menuItemIndex,
@@ -29,15 +33,10 @@ public class ItemsSortingMenuController {
                        @RequestParam(defaultValue = "") String menuItemIndex,
                        @PathVariable(name = ITEM_CLASS_TYPE) String itemClassType,
                        ModelMap modelMap) {
-        controllerUtils.formItemTableByClass(userName, typeOfWork, itemClassType, menuItemIndex, modelMap);
+        springBootWebUtil.formItemTableByClass(userName, typeOfWork, itemClassType, menuItemIndex, modelMap);
         ControllerUtils.formRadioButtonsMapForSortingByClassType(itemClassType, modelMap);
         modelMap.addAttribute(MENU_ITEM_INDEX, menuItemIndex);
         return new ModelAndView(ITEMS_SORTING_MENU_TITLE, modelMap);
-    }
-
-    @Autowired
-    public void setControllerUtils(ControllerUtils controllerUtils) {
-        this.controllerUtils = controllerUtils;
     }
 
 }

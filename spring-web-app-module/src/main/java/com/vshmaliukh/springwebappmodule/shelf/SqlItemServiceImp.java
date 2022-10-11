@@ -1,10 +1,10 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
+import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
+import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlItemService;
 import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertorProvider;
-import com.vshmaliukh.springwebappmodule.shelf.entities.ItemEntity;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
-import com.vshmaliukh.springwebappmodule.shelf.repository_services.SqlItemService;
 import org.jetbrains.annotations.NotNull;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -63,4 +63,5 @@ public abstract class SqlItemServiceImp implements SqlItemService {
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
         repositoryByClassType.save(entityFromItem);// fixme use update function
     }
+
 }

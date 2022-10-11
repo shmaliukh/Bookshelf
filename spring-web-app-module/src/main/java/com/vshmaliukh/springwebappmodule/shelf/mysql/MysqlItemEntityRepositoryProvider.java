@@ -1,10 +1,10 @@
 package com.vshmaliukh.springwebappmodule.shelf.mysql;
 
-import com.vshmaliukh.springwebappmodule.shelf.ItemEntityRepositoryProvider;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlBookRepository;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlComicsRepository;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlMagazineRepository;
 import com.vshmaliukh.springwebappmodule.shelf.mysql.repositories.MysqlNewspaperRepository;
+import com.vshmaliukh.springwebappmodule.shelf.ItemEntityRepositoryProvider;
 import org.springframework.stereotype.Service;
 
 @Service
