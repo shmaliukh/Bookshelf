@@ -6,9 +6,9 @@ import com.vshmaliukh.springwebappmodule.shelf.mysql.services.MysqlSqlUserServic
 import org.springframework.stereotype.Service;
 
 @Service
-public class MysqlSqlSpringBootHandler extends SqlSpringBootHandler {
+public class MysqlSpringBootHandler extends SqlSpringBootHandler {
 
-    public MysqlSqlSpringBootHandler(MysqlSqlItemServiceImp mysqlItemServiceImp, MysqlSqlUserServiceImp mysqlUserServiceImp) {
+    public MysqlSpringBootHandler(MysqlSqlItemServiceImp mysqlItemServiceImp, MysqlSqlUserServiceImp mysqlUserServiceImp) {
         this.itemServiceImp = mysqlItemServiceImp;
         this.userServiceImp = mysqlUserServiceImp;
     }
