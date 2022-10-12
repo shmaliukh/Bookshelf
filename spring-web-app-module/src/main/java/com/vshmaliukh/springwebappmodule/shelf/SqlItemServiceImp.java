@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public abstract class SqlItemServiceImp implements SqlItemService {
 
-    protected ItemEntityRepositoryProvider itemEntityRepositoryProvider;
+    protected ItemEntityRepositoryActionsProvider itemEntityRepositoryActionsProvider;
 
     @NotNull
     private static List<Item> convertListOfEntities(List<ItemEntity> entityList) {// todo refactor
@@ -24,7 +24,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
     }
 
     public void insertItemByUserId(Item item, Integer userId) {
-        ActionsWithItemEntity repository = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(item.getClass());
+        ActionsWithItemEntity repository = itemEntityRepositoryActionsProvider.getMysqlRepositoryActionByClassType(item.getClass());
         ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(item.getClass());
         ItemEntity itemEntity = convertorByItemClass.getConvertedEntityFromItem(item, userId);
         itemEntity.setUserId(userId);
@@ -33,7 +33,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
 
     public List<Item> readAllItemListByUserId(Integer userId) {
         List<ItemEntity> entityList = new ArrayList<>();
-        for (ActionsWithItemEntity mysqlItemRepository : itemEntityRepositoryProvider.getMysqlRepositoryList()) {
+        for (ActionsWithItemEntity mysqlItemRepository : itemEntityRepositoryActionsProvider.getMysqlRepositoryActionList()) {
             List<ItemEntity> allPerTypeByUserId = mysqlItemRepository.findAllByUserId(userId);
             entityList.addAll(allPerTypeByUserId);
         }
@@ -41,7 +41,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
     }
 
     public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
-        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getMysqlRepositoryActionByClassType(itemClassType);
         List entityListByClassType = repositoryByClassType.findAllByUserId(userId);
         List<T> itemList = SqlItemServiceImp.convertListOfEntities(entityListByClassType);
         return itemList;
@@ -51,7 +51,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
         Class<? extends Item> itemClassType = item.getClass();
         ItemEntityConvertor convertorByItemClassType = ItemEntityConvertorProvider.getConvertorByItemClassType(itemClassType);
         ItemEntity entityFromItem = convertorByItemClassType.getConvertedEntityFromItem(item, userId);
-        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getMysqlRepositoryActionByClassType(itemClassType);
         repositoryByClassType.deleteById(entityFromItem.getId());
     }
 
@@ -60,7 +60,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
         ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(itemClassType);
         ItemEntity entityFromItem = convertorByItemClass.getConvertedEntityFromItem(item, userId);
         entityFromItem.setBorrowed(!entityFromItem.isBorrowed());
-        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryProvider.getMysqlRepositoryByClassType(itemClassType);
+        ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getMysqlRepositoryActionByClassType(itemClassType);
         repositoryByClassType.save(entityFromItem);// fixme use update function
     }
 

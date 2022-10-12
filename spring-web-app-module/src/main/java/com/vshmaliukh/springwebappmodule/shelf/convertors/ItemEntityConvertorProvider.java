@@ -19,8 +19,6 @@ public final class ItemEntityConvertorProvider {
     private static final Map<Class<? extends ItemEntity>, ItemEntityConvertor<? extends Item, ? extends ItemEntity>> entityClassTypeConvertorMap = new ConcurrentHashMap<>();
 
     static {// todo refactor
-        entityClassTypeConvertorMap.put(SqliteBookEntity.class, new SqliteBookEntityConvertor());
-
         entityClassTypeConvertorMap.put(BookEntity.class, new BookEntityConvertor());
         entityClassTypeConvertorMap.put(MagazineEntity.class, new MagazineEntityConvertor());
         entityClassTypeConvertorMap.put(NewspaperEntity.class, new NewspaperEntityConvertor());
