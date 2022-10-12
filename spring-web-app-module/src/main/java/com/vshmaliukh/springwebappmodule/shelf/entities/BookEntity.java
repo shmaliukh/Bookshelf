@@ -3,8 +3,9 @@ package com.vshmaliukh.springwebappmodule.shelf.entities;
 import com.vshmaliukh.springwebappmodule.shelf.ConstantsForDataBase;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class BookEntity extends ItemEntity {
     String author;
 
     @Column(name = ConstantsForDataBase.DATE_COLUMN, nullable = false)
-    Date dateOfIssue;
+    Long dateOfIssue;
 
 }

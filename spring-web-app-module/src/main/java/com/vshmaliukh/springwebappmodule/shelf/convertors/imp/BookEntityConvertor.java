@@ -4,6 +4,8 @@ import com.vshmaliukh.springwebappmodule.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springwebappmodule.shelf.entities.BookEntity;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 
+import java.util.Date;
+
 public class BookEntityConvertor implements ItemEntityConvertor<Book, BookEntity> {
 
     @Override
@@ -13,7 +15,8 @@ public class BookEntityConvertor implements ItemEntityConvertor<Book, BookEntity
                 entityToConvert.getPages(),
                 entityToConvert.isBorrowed(),
                 entityToConvert.getAuthor(),
-                entityToConvert.getDateOfIssue());
+                new Date(entityToConvert.getDateOfIssue())
+        );
     }
 
     @Override
@@ -25,7 +28,7 @@ public class BookEntityConvertor implements ItemEntityConvertor<Book, BookEntity
         bookEntity.setPages(itemToConvert.getPagesNumber());
         bookEntity.setBorrowed(itemToConvert.isBorrowed());
         bookEntity.setAuthor(itemToConvert.getAuthor());
-        bookEntity.setDateOfIssue(itemToConvert.getIssuanceDate());
+        bookEntity.setDateOfIssue(itemToConvert.getIssuanceDate().getTime());
         return bookEntity;
     }
 }

@@ -13,7 +13,10 @@ import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.shelf.shelf_handler.User;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -82,6 +85,18 @@ public class SpringBootWebUtil {
         }
         modelMap.addAttribute(TITLES, titles);
         modelMap.addAttribute(ITEMS, tableValues);
+    }
+
+    public static LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public static Date convertToDateViaInstant(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
     }
 
 }
