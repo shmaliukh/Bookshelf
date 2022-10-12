@@ -12,13 +12,9 @@ server.port: ${shelf.port}
 
 # app config
 spring.profiles.active: dev
-#spring.jpa.hibernate.ddl-auto: update
-#spring.jpa.generate-ddl: true
-#spring.jpa.show-sql: true
 
 spring.web.resources.static-locations: file:./spring-web-app-module/src/main/resources/static
 server.tomcat.keep-alive-timeout: 1000
-
 
 ---
 
@@ -31,9 +27,15 @@ db-config:
     driverClassName: "org.sqlite.JDBC"
     hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
     url: ${shelf.sqliteDbUrl}
+    hibernateHbm2ddlAuto: "update"
   mysql:
     driverClassName: "com.mysql.cj.jdbc.Driver"
     hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
     url: "jdbc:mysql://localhost:3307/my_test"
     userName: "test"
     password: "test"
+    hibernateHbm2ddlAuto: "update"
+
+#logging:
+#  level:
+#    root: debug

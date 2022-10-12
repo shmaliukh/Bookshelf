@@ -1,6 +1,5 @@
 package com.vshmaliukh.springwebappmodule.shelf.mysql;
 
-
 import com.vshmaliukh.springwebappmodule.shelf.DbConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
@@ -20,11 +21,12 @@ import javax.sql.DataSource;
 @ConfigurationProperties(prefix = "db-config.mysql")
 @EnableJpaRepositories(
         basePackages = "com.vshmaliukh.springwebappmodule.shelf.mysql.repositories",
-        entityManagerFactoryRef = "mySqlEntityManager")
+        entityManagerFactoryRef = "mySqlEntityManager",
+        transactionManagerRef = "mysqlTransactionManager"
+)
 public class MySqlHandlerConfigurator extends DbConfig {
 
     @Bean
-    @Primary
     public DataSource mySqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(getDriverClassName());
@@ -43,6 +45,11 @@ public class MySqlHandlerConfigurator extends DbConfig {
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;
+    }
+
+    @Bean
+    public JpaTransactionManager mysqlTransactionManager(@Qualifier("mySqlEntityManager") EntityManagerFactory entityManagerFactory) {
+       return super.transactionManager(entityManagerFactory);
     }
 
 }
