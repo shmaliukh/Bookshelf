@@ -20,6 +20,6 @@ public class BookEntity extends ItemEntity {
     String author;
 
     @Column(name = ConstantsForDataBase.DATE_COLUMN, nullable = false)
-    Long dateOfIssue;
+    java.sql.Date dateOfIssue;
 
 }

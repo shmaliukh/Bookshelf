@@ -12,5 +12,4 @@ public class MysqlSpringBootHandler extends SqlSpringBootHandler {
         this.itemServiceImp = mysqlItemServiceImp;
         this.userServiceImp = mysqlUserServiceImp;
     }
-
 }

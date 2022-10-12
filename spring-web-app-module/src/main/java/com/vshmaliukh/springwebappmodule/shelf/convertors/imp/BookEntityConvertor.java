@@ -15,7 +15,7 @@ public class BookEntityConvertor implements ItemEntityConvertor<Book, BookEntity
                 entityToConvert.getPages(),
                 entityToConvert.isBorrowed(),
                 entityToConvert.getAuthor(),
-                new Date(entityToConvert.getDateOfIssue())
+                new Date(entityToConvert.getDateOfIssue().getTime())
         );
     }
 
@@ -28,7 +28,8 @@ public class BookEntityConvertor implements ItemEntityConvertor<Book, BookEntity
         bookEntity.setPages(itemToConvert.getPagesNumber());
         bookEntity.setBorrowed(itemToConvert.isBorrowed());
         bookEntity.setAuthor(itemToConvert.getAuthor());
-        bookEntity.setDateOfIssue(itemToConvert.getIssuanceDate().getTime());
+        bookEntity.setDateOfIssue(new java.sql.Date(itemToConvert.getIssuanceDate().getTime()));
         return bookEntity;
     }
+
 }
