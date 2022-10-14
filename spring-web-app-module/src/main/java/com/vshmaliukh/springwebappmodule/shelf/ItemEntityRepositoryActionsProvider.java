@@ -1,6 +1,8 @@
 package com.vshmaliukh.springwebappmodule.shelf;
 
+import com.vshmaliukh.springwebappmodule.shelf.entities.*;
 import com.vshmaliukh.springwebappmodule.shelf.repository_services.ActionsWithItemEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
@@ -12,12 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public abstract class ItemEntityRepositoryActionsProvider {
 
-    protected ActionsWithItemEntity bookRepositoryActions;
-    protected ActionsWithItemEntity magazineRepositoryActions;
-    protected ActionsWithItemEntity newspaperRepositoryActions;
-    protected ActionsWithItemEntity comicsRepositoryActions;
+    protected ActionsWithItemEntity<BookEntity> bookRepositoryActions;
+    protected ActionsWithItemEntity<MagazineEntity> magazineRepositoryActions;
+    protected ActionsWithItemEntity<NewspaperEntity> newspaperRepositoryActions;
+    protected ActionsWithItemEntity<ComicsEntity> comicsRepositoryActions;
 
     protected Map<Class, ActionsWithItemEntity> mysqlItemRepositoryActionMap = new ConcurrentHashMap<>();
 
@@ -29,11 +32,16 @@ public abstract class ItemEntityRepositoryActionsProvider {
         mysqlItemRepositoryActionMap.put(Newspaper.class, newspaperRepositoryActions);
     }
 
-    public ActionsWithItemEntity getMysqlRepositoryActionByClassType(Class itemClassType) {
-        return mysqlItemRepositoryActionMap.getOrDefault(itemClassType, null);
+    public ActionsWithItemEntity<? extends ItemEntity> getRepositoryActionByClassType(Class itemClassType) {
+        ActionsWithItemEntity repositoryAction = mysqlItemRepositoryActionMap.getOrDefault(itemClassType, null);
+        if (repositoryAction == null) {
+            log.error("[ItemEntityRepositoryActionsProvider] err: " +
+                    "problem to get repositoryAction by '" + itemClassType + "' item class type");
+        }
+        return repositoryAction;
     }
 
-    public List<ActionsWithItemEntity> getMysqlRepositoryActionList() {
+    public List<ActionsWithItemEntity> getRepositoryActionList() {
         return new ArrayList<>(mysqlItemRepositoryActionMap.values());
     }
 }

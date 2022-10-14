@@ -19,8 +19,7 @@ public abstract class SqlUserServiceImp implements SqlUserService {
     public Integer readUserIdByName(String userName) {
         UserEntity userEntity = userRepository.findByUserName(userName);
         if (userEntity != null) {
-            Integer id = userEntity.getId();
-            return id;
+            return userEntity.getId();
         }
         return null;
     }
