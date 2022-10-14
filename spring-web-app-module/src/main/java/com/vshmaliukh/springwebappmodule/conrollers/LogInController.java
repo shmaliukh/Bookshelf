@@ -22,6 +22,7 @@ public class LogInController {
     ModelAndView doGet(@CookieValue(defaultValue = "") String userName,// Todo save userModel to cookie
                        @CookieValue(defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
+        modelMap.addAttribute(USER_NAME, userName);
         ControllerUtils.formRadioButtonsToChooseTypeOfWork(typeOfWork, modelMap);
         return new ModelAndView(LOG_IN_TITLE, modelMap);
     }
