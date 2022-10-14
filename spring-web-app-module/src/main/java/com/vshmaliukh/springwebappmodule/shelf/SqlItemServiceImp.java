@@ -40,7 +40,6 @@ public abstract class SqlItemServiceImp implements SqlItemService {
             log.error("[" + itemEntityRepositoryActionsProvider.getClass().getSimpleName() + "] err: " +
                     "problem to exist insertItemByUserId(item: " + item + " , userId: " + userId + ") // repositoryActions == null");
         }
-
     }
 
     public List<Item> readAllItemListByUserId(Integer userId) {

@@ -46,7 +46,7 @@ function fetchAddingItemFormWithJsonBody(formElemId, pageToSend, method, pageToR
             try {
                 if (res.ok) {
                     let prettyItemJsonStr = JSON.stringify(getJsonObj(formElemId), null, 2);
-                    alert('Item added: \n' + prettyItemJsonStr)
+                    alert('Item to add: \n' + prettyItemJsonStr)
                     window.location.href = pageToRedirect;
                 } else {
                     alert('Item NOT added');

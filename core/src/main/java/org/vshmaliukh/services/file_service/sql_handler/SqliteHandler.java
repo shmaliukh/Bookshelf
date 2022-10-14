@@ -16,8 +16,8 @@ import java.util.*;
 public class SqliteHandler extends AbstractSqlHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
-    public static final String SQLLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
-    private static final String SQLLITE_FILE_URL = "jdbc:sqlite:" + Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLLITE_FILE_NAME); // todo
+    public static final String SQLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
+    private static final String SQLITE_FILE_URL = "jdbc:sqlite:" + Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLITE_FILE_NAME); // todo
 
     private Connection connectionToSqlLiteDB = null;
 
@@ -41,7 +41,7 @@ public class SqliteHandler extends AbstractSqlHandler {
         }
         if (connectionToSqlLiteDB == null) {
             try {
-                connectionToSqlLiteDB = DriverManager.getConnection(SQLLITE_FILE_URL);
+                connectionToSqlLiteDB = DriverManager.getConnection(SQLITE_FILE_URL);
             } catch (SQLException sqle) {
                 logSqlHandler(sqle);
                 getConnectionToDB();
@@ -54,7 +54,7 @@ public class SqliteHandler extends AbstractSqlHandler {
         try {
             DatabaseMetaData meta = getConnectionToDB().getMetaData();
             log.info("The driver name is " + meta.getDriverName());
-            log.info("A new database '" + SQLLITE_FILE_URL + "' has been created.");
+            log.info("A new database '" + SQLITE_FILE_URL + "' has been created.");
 
         } catch (SQLException sqle) {
             log.error(sqle.getMessage());
@@ -63,7 +63,7 @@ public class SqliteHandler extends AbstractSqlHandler {
 
     void connectToDB() {
         try {
-            connectionToSqlLiteDB = DriverManager.getConnection(SQLLITE_FILE_URL);
+            connectionToSqlLiteDB = DriverManager.getConnection(SQLITE_FILE_URL);
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -83,7 +83,7 @@ public class SqliteHandler extends AbstractSqlHandler {
 
     @Override
     public String generateFullFileName() {
-        return SQLLITE_FILE_NAME;
+        return SQLITE_FILE_NAME;
     }
 
     @Override

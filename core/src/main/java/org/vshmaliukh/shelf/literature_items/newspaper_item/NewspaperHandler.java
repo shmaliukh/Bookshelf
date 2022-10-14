@@ -201,9 +201,9 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
                 AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
-                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_255_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
-                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + BIT_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +

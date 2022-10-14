@@ -36,7 +36,7 @@ public abstract class ItemEntityRepositoryActionsProvider {
         ActionsWithItemEntity repositoryAction = mysqlItemRepositoryActionMap.getOrDefault(itemClassType, null);
         if (repositoryAction == null) {
             log.error("[ItemEntityRepositoryActionsProvider] err: " +
-                    "problem to get repositoryAction by '" + itemClassType + "' item class type");
+                    "problem to get repositoryAction by '{}' item class type", itemClassType);
         }
         return repositoryAction;
     }

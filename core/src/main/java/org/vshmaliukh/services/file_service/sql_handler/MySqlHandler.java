@@ -45,7 +45,8 @@ public class MySqlHandler extends AbstractSqlHandler {
         if (mysqlDbName == null || mysqlDbName.length() == 0) {
             mysqlDbName = "my_test";
         }
-        MYSQL_DB_URL = "jdbc:mysql://" + mysqlPort + "/" + mysqlDbName;
+        MYSQL_DB_URL = "jdbc:mysql://" + "127.0.0.1:3307/my_test";
+//                + mysqlPort + "/" + mysqlDbName;
     }
 
 
@@ -147,7 +148,6 @@ public class MySqlHandler extends AbstractSqlHandler {
             logSqlHandler(sqle);
         }
         return true;
-
     }
 
     @Override
