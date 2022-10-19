@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
-import com.vshmaliukh.springwebappmodule.spring_sql_handlers.SpringBootWebUtil;
+import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -12,14 +12,13 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
-import javax.servlet.http.HttpServlet;
 import java.util.Map;
 
 import static org.vshmaliukh.Constants.*;
 
 @Controller
 @RequestMapping("/" + ADD_ITEM_TITLE)
-public class AddItemController extends HttpServlet {
+public class AddItemController {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
     static Gson gson = new Gson();
