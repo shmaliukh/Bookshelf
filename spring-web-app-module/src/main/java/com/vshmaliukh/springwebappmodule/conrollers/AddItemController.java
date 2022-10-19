@@ -1,8 +1,8 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
+import com.vshmaliukh.springwebappmodule.spring_sql_handlers.SpringBootWebUtil;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +35,7 @@ public class AddItemController extends HttpServlet {
                         @CookieValue int typeOfWork,
                         @CookieValue String itemClassType,
                         @RequestBody String jsonBody,
+//                        HttpServletResponse response,
                         ModelMap modelMap) {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
@@ -43,6 +44,8 @@ public class AddItemController extends HttpServlet {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             webShelfHandler.addItem(item);
         }
+        //TODO set status according to adding item state
+//        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
     }
 

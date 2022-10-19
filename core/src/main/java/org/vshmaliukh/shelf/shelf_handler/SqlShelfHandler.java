@@ -3,9 +3,9 @@ package org.vshmaliukh.shelf.shelf_handler;
 import lombok.NoArgsConstructor;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.sql_handler.AbstractSqlHandler;
-import org.vshmaliukh.services.file_service.sql_handler.MySqlHandler;
-import org.vshmaliukh.services.file_service.sql_handler.SqliteHandler;
+import org.vshmaliukh.services.data_service.sql_handler.AbstractSqlHandler;
+import org.vshmaliukh.services.data_service.sql_handler.MySqlHandler;
+import org.vshmaliukh.services.data_service.sql_handler.SqliteHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;

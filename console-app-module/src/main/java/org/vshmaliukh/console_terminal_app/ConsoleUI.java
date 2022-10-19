@@ -1,5 +1,6 @@
 package org.vshmaliukh.console_terminal_app;
 
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.print_table_service.PlainTextTableHandler;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -20,17 +21,22 @@ import java.util.Scanner;
 
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.TITLE_LIST;
 
+@NoArgsConstructor
 public class ConsoleUI extends AbstractUI {
 
     boolean isActiveTerminal = true;
 
-    final Scanner scanner;
-    final PrintWriter printWriter;
+    protected Scanner scanner;
+    protected PrintWriter printWriter;
 
-    final ConsoleInputHandlerForUser consoleInputHandlerForUser;
-    ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
+    protected ConsoleInputHandlerForUser consoleInputHandlerForUser;
+    protected ConsoleInputHandlerForLiterature consoleInputHandlerForLiterature;
 
     public ConsoleUI(Scanner scanner, PrintWriter printWriter) {
+        setUpConsoleUI(scanner, printWriter);
+    }
+
+    protected void setUpConsoleUI(Scanner scanner, PrintWriter printWriter) {
         this.scanner = scanner;
         this.printWriter = printWriter;
         consoleInputHandlerForUser = new ConsoleInputHandlerForUser(scanner, printWriter);
@@ -292,6 +298,7 @@ public class ConsoleUI extends AbstractUI {
         this.isActiveTerminal = activeTerminal;
     }
 
+    @Override
     public User getUser() {
         return user;
     }

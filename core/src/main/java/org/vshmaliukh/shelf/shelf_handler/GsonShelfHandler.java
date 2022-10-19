@@ -3,9 +3,9 @@ package org.vshmaliukh.shelf.shelf_handler;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
+import org.vshmaliukh.services.data_service.SaveReadUserFilesHandler;
+import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerOneFileUser;
+import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerPerType;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
