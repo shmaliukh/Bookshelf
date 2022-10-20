@@ -1,4 +1,4 @@
-package com.vshmaliukh.consoleapp.consoleapp;
+package com.vshmaliukh.consoleapp;
 
 import com.vshmaliukh.springbootshelfcore.shelf.SpringBootSqlShelfHandler;
 import org.springframework.context.annotation.ComponentScan;
