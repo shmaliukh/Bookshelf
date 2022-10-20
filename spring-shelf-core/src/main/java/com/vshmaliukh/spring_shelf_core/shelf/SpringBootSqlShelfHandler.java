@@ -5,7 +5,7 @@ import com.vshmaliukh.spring_shelf_core.shelf.sqlite.SqliteSpringBootHandler;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.data_service.sql_handler.SqliteHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.SqliteHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 
 @Component

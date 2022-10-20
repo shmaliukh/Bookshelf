@@ -5,8 +5,8 @@ import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.services.data_service.sql_handler.AbstractSqlHandler;
-import org.vshmaliukh.services.data_service.sql_handler.UserContainer;
+import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.sql.Connection;

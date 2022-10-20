@@ -1,8 +1,8 @@
-package org.vshmaliukh.services.data_service.gson_handler;
+package org.vshmaliukh.services.save_read_services.gson_handler;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.services.data_service.SaveReadUserFilesHandler;
+import org.vshmaliukh.services.save_read_services.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 

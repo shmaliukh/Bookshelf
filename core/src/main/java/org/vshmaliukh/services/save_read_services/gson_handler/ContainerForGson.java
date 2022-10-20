@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.data_service.gson_handler;
+package org.vshmaliukh.services.save_read_services.gson_handler;
 
 public class ContainerForGson {
 

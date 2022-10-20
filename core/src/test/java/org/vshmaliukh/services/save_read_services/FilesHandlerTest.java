@@ -1,18 +1,18 @@
-package org.vshmaliukh.services.data_service;
+package org.vshmaliukh.services.save_read_services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerOneFileUser;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerOneFileUser;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.services.data_service.UserFilesHandler.PROGRAM_DIR_NAME;
+import static org.vshmaliukh.services.save_read_services.UserFilesHandler.PROGRAM_DIR_NAME;
 
 class FilesHandlerTest {
 

@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.data_service;
+package org.vshmaliukh.services.save_read_services;
 
 import lombok.NoArgsConstructor;
 import org.vshmaliukh.shelf.literature_items.Item;

@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 })
 public class SpringWebAppModuleApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(SpringWebAppModuleApplication.class, args);
     }

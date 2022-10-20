@@ -1,7 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
 import org.vshmaliukh.BaseAppConfig;
-import org.vshmaliukh.services.data_service.sql_handler.AbleToHandleUserTableSql;
+import org.vshmaliukh.services.save_read_services.sql_handler.AbleToHandleUserTableSql;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.services.input_handler.WebInputHandler;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;

@@ -1,11 +1,11 @@
-package org.vshmaliukh.services.data_service;
+package org.vshmaliukh.services.save_read_services;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerHandler;
-import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerPerType;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerHandler;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerOneFileUser;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerPerType;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;

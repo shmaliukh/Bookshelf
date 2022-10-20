@@ -1,4 +1,4 @@
-package org.vshmaliukh.services.data_service.sql_handler;
+package org.vshmaliukh.services.save_read_services.sql_handler;
 
 import org.vshmaliukh.shelf.shelf_handler.User;
 
