@@ -70,8 +70,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         } else {
             Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(classOfItem);
             if(classByName != null){
-                Item fromJson = gson.fromJson(jsonObject, classByName);
-                return fromJson;
+                return gson.fromJson(jsonObject, classByName);
             }
             else {
                 return null;

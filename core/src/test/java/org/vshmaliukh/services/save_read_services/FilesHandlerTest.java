@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.services.save_read_services.UserFilesHandler.PROGRAM_DIR_NAME;
+import static org.vshmaliukh.services.save_read_services.SaveReadUserFilesHandler.PROGRAM_DIR_NAME;
 
 class FilesHandlerTest {
 
@@ -23,7 +23,7 @@ class FilesHandlerTest {
         tempDirStr = String.valueOf(tempDir);
     }
 
-    UserFilesHandler userFilesHandler = new ItemGsonHandlerOneFileForUser(tempDirStr, "filesHandler");
+    SaveReadUserFilesHandler userFilesHandler = new ItemGsonHandlerOneFileForUser(tempDirStr, "filesHandler");
 
     @ParameterizedTest
     @MethodSource("provideArgsForCreateDirectoriesIfNotExists")

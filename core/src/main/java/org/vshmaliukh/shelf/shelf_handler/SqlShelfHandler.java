@@ -3,7 +3,7 @@ package org.vshmaliukh.shelf.shelf_handler;
 import lombok.NoArgsConstructor;
 import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandlerImp;
 import org.vshmaliukh.services.save_read_services.sql_handler.MySqlHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.SqliteHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SqlShelfHandler extends SaveReadShelfHandler {
 
-    protected AbstractSqlHandler sqlItemHandler;
+    protected AbstractSqlHandlerImp sqlItemHandler;
 
     public SqlShelfHandler(String userName, int typeOfWorkWithFiles) {
         super(userName, typeOfWorkWithFiles);

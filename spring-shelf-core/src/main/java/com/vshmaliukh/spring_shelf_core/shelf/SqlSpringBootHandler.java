@@ -5,7 +5,7 @@ import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandlerImp;
 import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @NoArgsConstructor
-public abstract class SqlSpringBootHandler extends AbstractSqlHandler {
+public abstract class SqlSpringBootHandler extends AbstractSqlHandlerImp {
 
     boolean isNeedLog = true;
 
@@ -92,7 +92,7 @@ public abstract class SqlSpringBootHandler extends AbstractSqlHandler {
     }
 
     @Override
-    protected void logSqlHandler(Exception e) {
+    public void logSqlHandler(Exception e) {
     }
 
     @Override
