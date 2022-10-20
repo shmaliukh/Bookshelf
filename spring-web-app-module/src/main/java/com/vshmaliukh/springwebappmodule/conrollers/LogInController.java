@@ -1,6 +1,6 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
-import com.vshmaliukh.springwebappmodule.UserDataModelForJson;
+import com.vshmaliukh.springbootshelfcore.shelf.UserDataModelForJson;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
 import org.springframework.stereotype.Controller;

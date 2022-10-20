@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
+import com.vshmaliukh.springbootshelfcore.shelf.SpringBootWebUtil;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import com.vshmaliukh.springwebappmodule.shelf.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;

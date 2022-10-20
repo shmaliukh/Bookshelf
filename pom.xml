@@ -17,9 +17,11 @@
         <module>client-app-module</module>
         <module>server-app-module</module>
         <module>print-table-service</module>
-        <module>spring-web-app-module</module>
-        <module>spring-console-app-module</module>
         <module>web-core</module>
+
+        <module>spring-boot-shelf-core</module>
+        <module>spring-console-app-module</module>
+        <module>spring-web-app-module</module>
     </modules>
 
     <properties>
