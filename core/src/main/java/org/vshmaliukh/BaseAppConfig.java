@@ -5,9 +5,9 @@ import java.util.Map;
 
 import static org.vshmaliukh.services.SaveReadShelfHandler.*;
 
-public final class ConfigFile {
+public final class BaseAppConfig {
 
-    private ConfigFile(){}
+    private BaseAppConfig(){}
 
     public static final String DATE_FORMAT_STR = "yyyy-MM-dd";
     public static final String HOME_PROPERTY = System.getProperty("user.home");
@@ -22,6 +22,5 @@ public final class ConfigFile {
         TYPE_OF_WORK_MAP.put(OLD_MODE_WORK_WITH_SQLITE, "work with old imp Sqlite database");
         TYPE_OF_WORK_MAP.put(OLD_MODE_WORK_WITH_MYSQL, "work with old imp MySql database");
     }
-
 
 }

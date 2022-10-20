@@ -1,7 +1,7 @@
 package com.vshmaliukh.spring_web_app_module.utils;
 
 import org.springframework.ui.ModelMap;
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.menus.menu_items.MenuItem;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -13,7 +13,7 @@ public final class ControllerUtils {
 
     public static String getFriendlyTypeOfWorkStr(int currentTypeOfWork) {
         Integer currentTypeOfWorkInteger = currentTypeOfWork;
-        return ConfigFile.TYPE_OF_WORK_MAP.get(currentTypeOfWorkInteger);
+        return BaseAppConfig.TYPE_OF_WORK_MAP.get(currentTypeOfWorkInteger);
     }
 
     public static void formRadioButtonsMapForSortingByClassType(String itemClassType, ModelMap modelMap) {
@@ -32,7 +32,7 @@ public final class ControllerUtils {
 
     public static List<MenuItem> generateTypeOfWorkMenu() {
         ArrayList<MenuItem> menuList = new ArrayList<>();
-        ConfigFile.TYPE_OF_WORK_MAP.forEach((k, v) -> menuList.add(new MenuItem(k, v)));
+        BaseAppConfig.TYPE_OF_WORK_MAP.forEach((k, v) -> menuList.add(new MenuItem(k, v)));
         return Collections.unmodifiableList(menuList);
     }
 

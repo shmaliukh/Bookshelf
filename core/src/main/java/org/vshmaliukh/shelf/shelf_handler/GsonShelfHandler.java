@@ -1,7 +1,7 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.data_service.SaveReadUserFilesHandler;
 import org.vshmaliukh.services.data_service.gson_handler.ItemGsonHandlerOneFileUser;
@@ -30,13 +30,13 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
-                itemHandler = new ItemGsonHandlerOneFileUser(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileUser(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
-                itemHandler = new ItemGsonHandlerPerType(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerPerType(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             default:
-                itemHandler = new ItemGsonHandlerOneFileUser(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileUser(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
         }
     }

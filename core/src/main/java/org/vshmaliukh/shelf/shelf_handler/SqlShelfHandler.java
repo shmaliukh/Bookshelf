@@ -1,7 +1,7 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.NoArgsConstructor;
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.data_service.sql_handler.AbstractSqlHandler;
 import org.vshmaliukh.services.data_service.sql_handler.MySqlHandler;
@@ -54,14 +54,14 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
-                sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqlItemHandler = new SqliteHandler(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
-                sqlItemHandler = new MySqlHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqlItemHandler = new MySqlHandler(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             default:
-                sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqlItemHandler = new SqliteHandler(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
         }
     }

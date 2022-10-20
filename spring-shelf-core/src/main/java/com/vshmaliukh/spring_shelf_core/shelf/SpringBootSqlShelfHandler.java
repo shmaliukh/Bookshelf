@@ -3,7 +3,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 import com.vshmaliukh.spring_shelf_core.shelf.mysql.MysqlSpringBootHandler;
 import com.vshmaliukh.spring_shelf_core.shelf.sqlite.SqliteSpringBootHandler;
 import org.springframework.stereotype.Component;
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.data_service.sql_handler.SqliteHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
@@ -34,7 +34,7 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
                 sqlItemHandler = mysqlSpringBootHandler;
                 break;
             default:
-                sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqlItemHandler = new SqliteHandler(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
         }
     }
