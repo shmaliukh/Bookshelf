@@ -1,4 +1,4 @@
-package com.vshmaliukh.consoleapp;
+package com.vshmaliukh.console_app;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
