@@ -40,12 +40,12 @@ class ItemGsonHandlerTest {
     Magazine magazine2 = new Magazine("noNameMagazine2", 2, true);
 
 
-    ItemGsonHandlerOneFileForUser testGsonHandlerOneFile = new ItemGsonHandlerOneFileForUser(tempDirStr, "testGsonItemHandler");
+    ItemGsonHandlerOneFileForUser testGsonHandlerOneFile = new ItemGsonHandlerOneFileForUser("testGsonItemHandler");
 
 
     @Test
     void testGeneratePathForGson() {
-        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser(tempDirStr, "testGeneratePathForGson");
+        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser("testGeneratePathForGson");
         assertEquals(Paths.get(tempDirStr, "shelf", "testGeneratePathForGson", gsonHandlerOneFile.gsonHandlerFolderStr), gsonHandlerOneFile.generatePathForFileHandler());
     }
 
@@ -61,7 +61,7 @@ class ItemGsonHandlerTest {
 
     @Test
     void testReadItemListFromGsonFile() {
-        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser(tempDirStr, "testReadItemListFromGsonFile");
+        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser("testReadItemListFromGsonFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
         assertTrue(gsonHandlerOneFile.saveListToFile(gsonFile.toPath(), new ArrayList<>()));
         assertTrue(gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).isEmpty());
@@ -76,7 +76,7 @@ class ItemGsonHandlerTest {
         consoleShelfHandler.addItem(magazine1);
         consoleShelfHandler.addItem(magazine2);
 
-        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser(tempDirStr, "testReadSaveGsonHandlerOneFile");
+        ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser("testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
         gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
@@ -102,7 +102,7 @@ class ItemGsonHandlerTest {
         consoleShelfHandler1 .addItem(magazine1);
         consoleShelfHandler1 .addItem(magazine2);
 
-        ItemGsonHandlerPerTypeForUser itemGsonHandlerPerTypeForUser = new ItemGsonHandlerPerTypeForUser(tempDirStr, "testGsonHandlerPerType");
+        ItemGsonHandlerPerTypeForUser itemGsonHandlerPerTypeForUser = new ItemGsonHandlerPerTypeForUser("testGsonHandlerPerType");
         itemGsonHandlerPerTypeForUser.saveItemList(consoleShelfHandler1.getShelf().getAllLiteratureObjects());
 
         itemGsonHandlerPerTypeForUser.readItemList().forEach(consoleShelfHandler2::addItem);

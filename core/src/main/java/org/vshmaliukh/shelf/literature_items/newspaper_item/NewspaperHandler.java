@@ -1,11 +1,11 @@
 package org.vshmaliukh.shelf.literature_items.newspaper_item;
 
-import org.vshmaliukh.services.save_read_services.sql_handler.AbleToHandleUserTableSql;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.services.input_handler.WebInputHandler;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
+import org.vshmaliukh.services.save_read_services.sql_handler.SqlHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
@@ -142,7 +142,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + NEWSPAPER_TABLE_TITLE +
                 " ( " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " ) " +
@@ -152,7 +152,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     @Override
     public String insertItemMySqlStr() {
         return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " ) " +
@@ -167,7 +167,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER +
                 " FROM " + NEWSPAPER_TABLE_TITLE +
-                " WHERE " + AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
+                " WHERE " + SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
@@ -182,7 +182,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
@@ -200,7 +200,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
     public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + VARCHAR_255_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + BIT_NOT_NULL + " , \n " +

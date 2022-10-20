@@ -2,6 +2,7 @@ package org.vshmaliukh.services.save_read_services.gson_handler;
 
 import com.google.gson.*;
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.services.save_read_services.AbstractSaveReadService;
 import org.vshmaliukh.services.save_read_services.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -22,20 +23,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
+public abstract class ItemGsonHandlerHandler extends AbstractSaveReadService implements SaveReadUserFilesHandler {
 
     public static final int MAX_PROBLEM_FILES = 5;
     public static final String JSON_FILE_TYPE = ".json";
 
-    Gson gson = new GsonBuilder()
+    protected Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
 
-    String logFileFullName = "log.txt";
-    String problemFilesFolderStr = "problem_files";
+    protected String logFileFullName = "log.txt";
+    protected String problemFilesFolderStr = "problem_files";
 
-    ItemGsonHandlerHandler(String homeDir, String userName) {
-        super(homeDir, userName);
+    protected ItemGsonHandlerHandler(String userName) {
+        super(userName);
     }
 
     public Path generatePathForGsonFile() {
@@ -44,7 +45,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
 
     Path generatePathForProblemFiles() {
         Path path = Paths.get(String.valueOf(generatePathForFileHandler()), problemFilesFolderStr);
-        createDirectoryIfNotExists(path);
+        createDirectoryIfNotExists(path, this.userName);
         return path;
     }
 
@@ -62,7 +63,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         return itemListFromFile;
     }
 
-    Item getItemFromJsonElement(JsonElement jsonElement) {
+    protected Item getItemFromJsonElement(JsonElement jsonElement) {
         String classOfItem = getClassTypeFromJsonElement(jsonElement);
         JsonObject jsonObject = getJsonObjectFromJsonElement(jsonElement);
         if (classOfItem == null || jsonObject == null) {
@@ -78,14 +79,14 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         }
     }
 
-    JsonObject getJsonObjectFromJsonElement(JsonElement element) {
+    protected JsonObject getJsonObjectFromJsonElement(JsonElement element) {
         return Optional.ofNullable(element)
                 .map(JsonElement::getAsJsonObject)
                 .map(o -> o.getAsJsonObject("item"))
                 .orElse(null);
     }
 
-    String getClassTypeFromJsonElement(JsonElement element) {
+    protected String getClassTypeFromJsonElement(JsonElement element) {
         return Optional.ofNullable(element)
                 .map(JsonElement::getAsJsonObject)
                 .map(o -> o.get("classOfLiterature"))
@@ -93,7 +94,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
                 .orElse(null);
     }
 
-    JsonArray getJsonArrayFromFile(Path gsonFilePath) {
+    protected JsonArray getJsonArrayFromFile(Path gsonFilePath) {
         File gsonFile = gsonFilePath.toFile();
         try (FileReader fileReader = new FileReader(gsonFile)) {
             return gson.fromJson(fileReader, JsonArray.class);
@@ -109,19 +110,19 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         try (FileWriter fileWriter = new FileWriter(gsonFileToSave)) {
             gson.toJson(getContainerListForObjects(listToSave), fileWriter);
         } catch (IOException ioe) {
-            informAboutErr("Problem to save list of containers to file " + gsonFileToSave.getAbsolutePath() + "'.", ioe);
+            informAboutErr(this.userName, "Problem to save list of containers to file " + gsonFileToSave.getAbsolutePath() + "'.", ioe);
             return false;
         }
         return true;
     }
 
-    List<ContainerForGson> getContainerListForObjects(List<?> listToSave) {
+    protected List<ContainerForGson> getContainerListForObjects(List<?> listToSave) {
         return listToSave.stream()
                 .map(ContainerForGson::new)
                 .collect(Collectors.toList());
     }
 
-    void saveProblemFile(Path gsonFilePath, String problemMessage, Exception exception) {
+    protected void saveProblemFile(Path gsonFilePath, String problemMessage, Exception exception) {
         Path oldestProblemFilePath = getOldestProblemFile(gsonFilePath);
         File oldestProblemFile = oldestProblemFilePath.toFile();
         try {
@@ -131,12 +132,12 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
             saveErrorToLogFile(problemMessage, exception, Paths.get(generatePathForProblemFiles().toString(), logFileFullName));
             log.info("[GsonHandler]: save problem file as '" + oldestProblemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(oldestProblemFile.lastModified()));
         } catch (IOException ioe) {
-            informAboutErr("Problem to save copy of problem file'" + oldestProblemFile.getAbsolutePath() + "'", ioe);
+            informAboutErr(this.userName, "Problem to save copy of problem file'" + oldestProblemFile.getAbsolutePath() + "'", ioe);
         }
     }
 
-    void saveErrorToLogFile(String problemMessage, Exception exception, Path logFilePath) {
-        informAboutErr(problemMessage, exception);
+    protected void saveErrorToLogFile(String problemMessage, Exception exception, Path logFilePath) {
+        informAboutErr(this.userName, problemMessage, exception);
         File logFile = logFilePath.toFile();
         try (FileWriter fileWriter = new FileWriter(logFile, true)) {
             fileWriter.append("\t")
@@ -148,11 +149,11 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
                     .append(System.lineSeparator());
             fileWriter.flush();
         } catch (IOException ioe) {
-            informAboutErr("Problem to add message to log file '" + logFile.getAbsolutePath() + "'.", ioe);
+            informAboutErr(this.userName, "Problem to add message to log file '" + logFile.getAbsolutePath() + "'.", ioe);
         }
     }
 
-    Path getOldestProblemFile(Path gsonFilePath) {
+    protected Path getOldestProblemFile(Path gsonFilePath) {
         List<File> filesList = new ArrayList<>();
         for (int i = 0; i < MAX_PROBLEM_FILES; i++) {
             File problemGsonFile = gsonFilePath.toFile();
@@ -165,7 +166,7 @@ public abstract class ItemGsonHandlerHandler extends SaveReadUserFilesHandler {
         return getTheOldestFile(filesList).toPath();
     }
 
-    File getTheOldestFile(List<File> filesList) {
+    protected File getTheOldestFile(List<File> filesList) {
         long oldestTime = new Date().getTime();
         File oldestFile = null;
         for (File file : filesList) {

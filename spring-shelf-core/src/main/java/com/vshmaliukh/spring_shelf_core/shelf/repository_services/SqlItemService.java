@@ -15,4 +15,5 @@ public interface SqlItemService {
     void deleteItemByUserId(Item item, Integer userId);
 
     void changeItemBorrowedStateByUserId(Item item, Integer userId);
+
 }

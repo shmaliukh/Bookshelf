@@ -23,12 +23,12 @@ class FilesHandlerTest {
         tempDirStr = String.valueOf(tempDir);
     }
 
-    SaveReadUserFilesHandler userFilesHandler = new ItemGsonHandlerOneFileForUser(tempDirStr, "filesHandler");
+    SaveReadUserFilesHandler userFilesHandler = new ItemGsonHandlerOneFileForUser("filesHandler");
 
     @ParameterizedTest
     @MethodSource("provideArgsForCreateDirectoriesIfNotExists")
     void testCreateDirectoriesIfNotExists(boolean expectedState, Path path) {
-        assertEquals(expectedState, userFilesHandler.createDirectoryIfNotExists(path));
+        assertEquals(expectedState, userFilesHandler.createDirectoryIfNotExists(path, "test"));
     }
 
     private static Stream<Arguments> provideArgsForCreateDirectoriesIfNotExists() {
@@ -42,6 +42,6 @@ class FilesHandlerTest {
     @Test
     void testGeneratePathForUser() {
         Path expectedPath = Paths.get(tempDirStr,PROGRAM_DIR_NAME, "filesHandler");
-        assertEquals(expectedPath, userFilesHandler.generatePathForUser());
+        assertEquals(expectedPath, userFilesHandler.generatePathForUser(tempDirStr, "test"));
     }
 }

@@ -1,34 +1,19 @@
 package org.vshmaliukh.services.save_read_services;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-@Slf4j
-@NoArgsConstructor
-public abstract class SaveReadUserFilesHandler implements SaveReadItems {
+public interface SaveReadUserFilesHandler {
 
-    public static final String PROGRAM_DIR_NAME = "shelf";
+    String PROGRAM_DIR_NAME = "shelf";
 
-    @Setter
-    @Getter
-    protected String userName;
-    protected String homeDirectoryStr;
-    protected String programDirectoryStr;
+    String generateFullFileName();
 
-    protected SaveReadUserFilesHandler(String homeDir, String userName) {
-        this.userName = userName;
-        homeDirectoryStr = homeDir;
-        programDirectoryStr = String.valueOf(Paths.get(homeDirectoryStr, PROGRAM_DIR_NAME));
-    }
+    Path generatePathForFileHandler();
 
-    public boolean createDirectoryIfNotExists(Path dir) {
+    default boolean createDirectoryIfNotExists(Path dir, String userName) {
         if (dir == null || dir.toString().equals("")) {
             return false;
         }
@@ -38,26 +23,17 @@ public abstract class SaveReadUserFilesHandler implements SaveReadItems {
         try {
             Files.createDirectories(dir);
         } catch (IOException ioe) {
-            informAboutErr("Problem to create directory '" + dir + "'", ioe);
+            AbstractSaveReadService.informAboutErr(userName, "Problem to create directory '" + dir + "'", ioe);
             return false;
         }
         return false;
     }
 
-    public Path generatePathForUser() {
+    default Path generatePathForUser(String homeProperty, String userName) {
+        String programDirectoryStr = String.valueOf(Paths.get(homeProperty, PROGRAM_DIR_NAME));
         Path path = Paths.get(programDirectoryStr, userName);
-        createDirectoryIfNotExists(path);
+        createDirectoryIfNotExists(path, userName);
         return path;
     }
-
-    protected void informAboutErr(String problemMessage, Exception exception) {
-        log.error("[User]: name: '" + userName + "'"
-                + " // [FilesHandler]: " + problemMessage
-                + " // [Exception]: " + exception.getMessage());
-    }
-
-    protected String generateFullFileName(){return "";}
-
-    protected Path generatePathForFileHandler(){return null;}
 
 }

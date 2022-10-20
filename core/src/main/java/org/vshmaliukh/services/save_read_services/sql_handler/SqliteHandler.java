@@ -2,6 +2,7 @@ package org.vshmaliukh.services.save_read_services.sql_handler;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.services.save_read_services.SaveReadUserFilesHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
@@ -13,20 +14,20 @@ import java.util.*;
 
 @Slf4j
 @NoArgsConstructor
-public class SqliteHandler extends AbstractSqlHandlerImp {
+public class SqliteHandler extends AbstractSqlHandler implements SaveReadUserFilesHandler {
 
     public static final String SQL_FILE_TYPE = ".db";
     public static final String SQLITE_FILE_NAME = "shelf_sqllite_db" + SQL_FILE_TYPE;
-    private static final String SQLITE_FILE_URL = "jdbc:sqlite:" + Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLITE_FILE_NAME); // todo
+    private static final String SQLITE_FILE_URL = "jdbc:sqlite:" + Paths.get(System.getProperty("user.home"), PROGRAM_DIR_NAME, SQLITE_FILE_NAME);
 
     private Connection connectionToSqlLiteDB = null;
 
-    public SqliteHandler(String homeDir, String userName) {
-        super(homeDir, userName);
+    public SqliteHandler(String userName) {
+        super(userName);
     }
 
     @Override
-    protected void setUpSettings() {
+    public void setUpSettings() {
         createNewDatabaseIfNotExists();
         connectToDB();
         createUser();
@@ -89,8 +90,8 @@ public class SqliteHandler extends AbstractSqlHandlerImp {
     @Override
     public Path generatePathForFileHandler() {
         String sqlLiteHandlerFolderStr = "sqlLite_handler";
-        Path path = Paths.get(String.valueOf(generatePathForUser()), sqlLiteHandlerFolderStr);
-        createDirectoryIfNotExists(path);
+        Path path = Paths.get(String.valueOf(generatePathForUser(System.getProperty("user_home"), this.userName)), sqlLiteHandlerFolderStr);
+        createDirectoryIfNotExists(path, this.userName);
         return path;
     }
 
@@ -104,7 +105,7 @@ public class SqliteHandler extends AbstractSqlHandlerImp {
         String sqlInsertStr = handlerByClass.insertItemSqlLiteStr();
         try {
             PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, userContainer.getId());
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
@@ -128,8 +129,8 @@ public class SqliteHandler extends AbstractSqlHandlerImp {
                 "UNIQUE (" + USER_NAME_SQL_PARAMETER + ") ON CONFLICT IGNORE \n" +
                 ");";
         createNewTable(sql);
-        insertUser(user.getName());
-        readUserId(user);
+        insertUser(userContainer.getName());
+        readUserId(userContainer);
     }
 
     public void readUserId(UserContainer user) {
