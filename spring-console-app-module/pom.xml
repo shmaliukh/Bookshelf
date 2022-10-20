@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.vshmaliukh</groupId>
-            <artifactId>spring-boot-shelf-core</artifactId>
+            <artifactId>spring-shelf-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

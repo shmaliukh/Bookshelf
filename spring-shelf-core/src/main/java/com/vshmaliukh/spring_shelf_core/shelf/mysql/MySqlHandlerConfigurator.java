@@ -41,7 +41,7 @@ public class MySqlHandlerConfigurator extends DbConfig {
     public LocalContainerEntityManagerFactoryBean mySqlEntityManager(@Qualifier("mySqlDataSource") DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.vshmaliukh.springbootshelfcore.shelf.entities");
+        em.setPackagesToScan("com.vshmaliukh.spring_shelf_core.shelf.entities");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;

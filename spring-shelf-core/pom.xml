@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>com.vshmaliukh</groupId>
-    <artifactId>spring-boot-shelf-core</artifactId>
+    <artifactId>spring-shelf-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-shelf-core</name>
-    <description>spring-boot-shelf-core</description>
+    <name>spring-shelf-core</name>
+    <description>spring-shelf-core</description>
 
     <properties>
         <sqlite-dialect.version>0.1.2</sqlite-dialect.version>
