@@ -19,6 +19,8 @@ public final class ConfigFile {
         typeOfWorkMap.put(MODE_WORK_WITH_FILE_PER_TYPE, "work with file per type files");
         typeOfWorkMap.put(MODE_WORK_WITH_SQLITE, "work with SqlLite database");
         typeOfWorkMap.put(MODE_WORK_WITH_MYSQL, "work with MySql database");
+        typeOfWorkMap.put(OLD_MODE_WORK_WITH_SQLITE, "work with old imp Sqlite database");
+        typeOfWorkMap.put(OLD_MODE_WORK_WITH_MYSQL, "work with old imp MySql database");
     }
 
 

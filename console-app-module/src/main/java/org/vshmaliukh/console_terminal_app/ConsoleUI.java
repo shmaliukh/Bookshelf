@@ -56,6 +56,7 @@ public class ConsoleUI extends AbstractUI {
                 shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
                 break;
         }
+        shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
     }
 
     public void startWithUserConfig(boolean userMode) {
@@ -65,7 +66,6 @@ public class ConsoleUI extends AbstractUI {
     public void setUpTypeOfWorkWithFiles() {
         typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
         configShelfHandler();
-        shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
     }
 
     public void startWork(boolean userMode) {
@@ -109,7 +109,10 @@ public class ConsoleUI extends AbstractUI {
                 printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
-                printWriter.println("FILE_MODE_WORK_WITH_SQLLITE");
+                printWriter.println("MODE_WORK_WITH_SQLITE");
+                break;
+            case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
+                printWriter.println("MODE_WORK_WITH_MYSQL");
                 break;
             default:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");

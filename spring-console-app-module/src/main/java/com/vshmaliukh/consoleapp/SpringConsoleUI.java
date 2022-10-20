@@ -4,6 +4,7 @@ import com.vshmaliukh.springbootshelfcore.shelf.SpringBootSqlShelfHandler;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
+import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 import org.vshmaliukh.console_terminal_app.ConsoleUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
@@ -42,9 +43,42 @@ public class SpringConsoleUI extends ConsoleUI {
                 shelfHandler = springBootSqlShelfHandler;
                 shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
                 break;
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
+                shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                break;
             default:
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
         }
     }
+
+    @Override
+    public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
+        printWriter.println("Type of work with save/read shelf with files: ");
+        switch (typeOfWorkWithFiles) {
+            case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                break;
+            case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
+                printWriter.println("FILE_MODE_WORK_WITH_FILE_PER_TYPE");
+                break;
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
+                printWriter.println("MODE_WORK_WITH_SQLITE");
+                break;
+            case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
+                printWriter.println("MODE_WORK_WITH_MYSQL");
+                break;
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
+                printWriter.println("OLD_MODE_WORK_WITH_SQLITE");
+                break;
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
+                printWriter.println("OLD_MODE_WORK_WITH_MYSQL");
+                break;
+            default:
+                printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");
+                break;
+        }
+    }
+
 }

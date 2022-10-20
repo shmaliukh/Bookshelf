@@ -53,9 +53,11 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
                 sqlItemHandler = new SqliteHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
                 sqlItemHandler = new MySqlHandler(ConfigFile.HOME_PROPERTY, userName);
                 break;
             default:
