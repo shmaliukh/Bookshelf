@@ -1,5 +1,6 @@
-package com.vshmaliukh.springbootshelfcore.shelf;
+package com.vshmaliukh.springwebappmodule;
 
+import com.vshmaliukh.springbootshelfcore.shelf.SpringBootUI;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;

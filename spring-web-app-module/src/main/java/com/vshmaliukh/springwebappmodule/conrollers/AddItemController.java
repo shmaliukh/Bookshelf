@@ -1,7 +1,7 @@
 package com.vshmaliukh.springwebappmodule.conrollers;
 
 import com.google.gson.Gson;
-import com.vshmaliukh.springbootshelfcore.shelf.SpringBootWebUtil;
+import com.vshmaliukh.springwebappmodule.SpringBootWebUtil;
 import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
