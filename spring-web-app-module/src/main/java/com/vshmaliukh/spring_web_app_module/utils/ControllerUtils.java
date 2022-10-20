@@ -13,7 +13,7 @@ public final class ControllerUtils {
 
     public static String getFriendlyTypeOfWorkStr(int currentTypeOfWork) {
         Integer currentTypeOfWorkInteger = currentTypeOfWork;
-        return ConfigFile.typeOfWorkMap.get(currentTypeOfWorkInteger);
+        return ConfigFile.TYPE_OF_WORK_MAP.get(currentTypeOfWorkInteger);
     }
 
     public static void formRadioButtonsMapForSortingByClassType(String itemClassType, ModelMap modelMap) {
@@ -32,7 +32,7 @@ public final class ControllerUtils {
 
     public static List<MenuItem> generateTypeOfWorkMenu() {
         ArrayList<MenuItem> menuList = new ArrayList<>();
-        ConfigFile.typeOfWorkMap.forEach((k, v) -> menuList.add(new MenuItem(k, v)));
+        ConfigFile.TYPE_OF_WORK_MAP.forEach((k, v) -> menuList.add(new MenuItem(k, v)));
         return Collections.unmodifiableList(menuList);
     }
 

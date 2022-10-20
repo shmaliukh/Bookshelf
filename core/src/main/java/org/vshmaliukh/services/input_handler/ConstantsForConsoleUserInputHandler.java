@@ -4,7 +4,7 @@ import org.vshmaliukh.ConfigFile;
 
 import java.util.Date;
 
-import static org.vshmaliukh.ConfigFile.typeOfWorkMap;
+import static org.vshmaliukh.ConfigFile.TYPE_OF_WORK_MAP;
 
 public final class ConstantsForConsoleUserInputHandler {
 
@@ -26,7 +26,7 @@ public final class ConstantsForConsoleUserInputHandler {
     public static String MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = "Enter type number of work with files: (program ignores all not number symbols)" + System.lineSeparator();
 
     static { // todo refactor
-        typeOfWorkMap.forEach((k, v) -> MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES += (k + " - " + v + System.lineSeparator()));
+        TYPE_OF_WORK_MAP.forEach((k, v) -> MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES += (k + " - " + v + System.lineSeparator()));
         MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES = MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES.trim();
     }
 
