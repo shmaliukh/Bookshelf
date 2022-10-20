@@ -1,6 +1,6 @@
 package com.vshmaliukh.console_app;
 
-import com.vshmaliukh.springbootshelfcore.shelf.SpringBootSqlShelfHandler;
+import com.vshmaliukh.spring_shelf_core.shelf.SpringBootSqlShelfHandler;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.console_terminal_app.ConsoleGsonShelfHandler;
@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 @Component
-@ComponentScan(basePackages = {"com.vshmaliukh.springbootshelfcore.shelf"})
+@ComponentScan(basePackages = {"com.vshmaliukh.spring_shelf_core.shelf"})
 public class SpringConsoleUI extends ConsoleUI {
 
     final SpringBootSqlShelfHandler springBootSqlShelfHandler;
