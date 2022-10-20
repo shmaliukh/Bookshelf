@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.save_read_services.SaveReadUserFilesHandler;
-import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerPerType;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerOneFileForUser;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerPerTypeForUser;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
@@ -30,13 +30,13 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
-                itemHandler = new ItemGsonHandlerOneFileUser(BaseAppConfig.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileForUser(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
-                itemHandler = new ItemGsonHandlerPerType(BaseAppConfig.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerPerTypeForUser(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
             default:
-                itemHandler = new ItemGsonHandlerOneFileUser(BaseAppConfig.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileForUser(BaseAppConfig.HOME_PROPERTY, userName);
                 break;
         }
     }

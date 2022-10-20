@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ItemGsonHandlerOneFileUser extends ItemGsonHandlerHandler {
+public class ItemGsonHandlerOneFileForUser extends ItemGsonHandlerHandler {
 
     public String gsonHandlerFolderStr = "gson_handler_one_file";
 
-    public ItemGsonHandlerOneFileUser(String homeDir, String userName) {
+    public ItemGsonHandlerOneFileForUser(String homeDir, String userName) {
         super(homeDir, userName);
     }
 

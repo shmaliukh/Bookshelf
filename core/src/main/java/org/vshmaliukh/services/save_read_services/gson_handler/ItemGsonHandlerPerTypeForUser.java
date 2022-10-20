@@ -12,12 +12,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class ItemGsonHandlerPerType extends ItemGsonHandlerHandler {
+public class ItemGsonHandlerPerTypeForUser extends ItemGsonHandlerHandler {
 
     String gsonHandlerFolderStr = "gson_handler_per_type";
     String typeStr;
 
-    public ItemGsonHandlerPerType(String homeDir, String userName) {
+    public ItemGsonHandlerPerTypeForUser(String homeDir, String userName) {
         super(homeDir, userName);
     }
 
