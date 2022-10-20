@@ -27,4 +27,5 @@ public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
     public abstract void setUpDataService(String userName, int typeOfWorkWithFiles);
 
     public abstract <T extends Item> List<T> getSortedItemsByClass(Class<T> classType);
+
 }

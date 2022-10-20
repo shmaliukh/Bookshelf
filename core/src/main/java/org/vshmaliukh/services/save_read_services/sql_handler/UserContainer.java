@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class UserContainer {
 
-    Integer id = null;
-    final String name;
+    private Integer id = null;
+    private final String name;
 
     public UserContainer(String name) {
         this.name = name;

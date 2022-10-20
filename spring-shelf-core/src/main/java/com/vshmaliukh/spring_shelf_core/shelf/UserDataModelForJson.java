@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDataModelForJson {
 
-    String userName;
-    int typeOfWork;
+    private String userName;
+    private int typeOfWork;
 
     public String getTypeOfWorkAsStr(){
         return String.valueOf(getTypeOfWork());

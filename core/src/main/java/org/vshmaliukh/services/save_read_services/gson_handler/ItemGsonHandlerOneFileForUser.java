@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ItemGsonHandlerOneFileForUser extends ItemGsonHandlerHandler {
 
-    public String gsonHandlerFolderStr = "gson_handler_one_file";
+    public static final String GSON_HANDLER_ONE_FILE = "gson_handler_one_file";
 
-    public ItemGsonHandlerOneFileForUser(String homeDir, String userName) {
-        super(homeDir, userName);
+    public ItemGsonHandlerOneFileForUser(String userName) {
+        super(userName);
     }
 
     @Override
     public Path generatePathForFileHandler() {
-        Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
-        createDirectoryIfNotExists(path);
+        Path path = Paths.get(String.valueOf(generatePathForUser(System.getProperty("user_home"), this.userName)), GSON_HANDLER_ONE_FILE);
+        createDirectoryIfNotExists(path, this.userName);
         return path;
     }
 

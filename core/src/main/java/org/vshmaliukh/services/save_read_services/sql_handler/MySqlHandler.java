@@ -1,19 +1,16 @@
 package org.vshmaliukh.services.save_read_services.sql_handler;
 
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.List;
 
 @Slf4j
-@NoArgsConstructor
-public class MySqlHandler extends AbstractSqlHandlerImp {
+public class MySqlHandler extends AbstractSqlHandler {
 
     public static final String MYSQL_USER_NAME_ENV = "MYSQL_USER_NAME";
     public static final String MYSQL_PASSWORD_ENV = "MYSQL_PASSWORD";
@@ -26,35 +23,36 @@ public class MySqlHandler extends AbstractSqlHandlerImp {
 
     static {
         String mysqlUserName = System.getenv(MYSQL_USER_NAME_ENV);
-        if (mysqlUserName == null || mysqlUserName.length() == 0) {
+        if (StringUtils.isNotBlank(mysqlUserName)) {
             mysqlUserName = "test";
         }
         MYSQL_USER_NAME = mysqlUserName;
 
         String mysqlPassword = System.getenv(MYSQL_PASSWORD_ENV);
-        if (mysqlPassword == null || mysqlPassword.length() == 0) {
+        if (StringUtils.isNotBlank(mysqlPassword)) {
             mysqlPassword = "test";
         }
         MYSQL_PASSWORD = mysqlPassword;
 
         String mysqlPort = System.getenv(MYSQL_PORT_ENV);
-        if (mysqlPort == null || mysqlPort.length() == 0) {
+
+        if (StringUtils.isNotBlank(mysqlPort)) {
             mysqlPort = "localhost:3307";
         }
         String mysqlDbName = System.getenv(MYSQL_DB_NAME_ENV);
-        if (mysqlDbName == null || mysqlDbName.length() == 0) {
+        if (StringUtils.isNotBlank(mysqlDbName)) {
             mysqlDbName = "my_test";
         }
-        MYSQL_DB_URL = "jdbc:mysql://localhost:3307/my_test";
-//                + mysqlPort + "/" + mysqlDbName;
+        MYSQL_DB_URL = "jdbc:mysql://localhost:" + mysqlPort + "/" + mysqlDbName;
     }
 
     protected Connection connectionToMySqlDB = null;
 
-    public MySqlHandler(String homeDir, String userName) {
-        super(homeDir, userName);
+    public MySqlHandler(String userName) {
+        super(userName);
     }
 
+    @Override
     public Connection getConnectionToDB() {
         if (connectionToMySqlDB == null) {
             try {
@@ -67,12 +65,13 @@ public class MySqlHandler extends AbstractSqlHandlerImp {
         return connectionToMySqlDB;
     }
 
+    @Override
     public void logSqlHandler(Exception e) {
         log.error("[MySql_handler] got err. Exception: ", e);
     }
 
     @Override
-    protected void setUpSettings() {
+    public void setUpSettings() {
         createUser();
         generateTablesIfNotExists();
     }
@@ -87,19 +86,6 @@ public class MySqlHandler extends AbstractSqlHandlerImp {
     }
 
     @Override
-    public String generateFullFileName() {
-        return "";
-    }
-
-    @Override
-    public Path generatePathForFileHandler() { // todo destruct
-        String sqlLiteHandlerFolderStr = "sqlLite_handler";
-        Path path = Paths.get(String.valueOf(generatePathForUser()), sqlLiteHandlerFolderStr);
-        createDirectoryIfNotExists(path);
-        return path;
-    }
-
-    @Override
     public void saveItemList(List<Item> listToSave) {
         listToSave.forEach(this::saveItemToDB);
     }
@@ -110,13 +96,12 @@ public class MySqlHandler extends AbstractSqlHandlerImp {
         String sqlInsertStr = handlerByClass.insertItemMySqlStr();
         try {
             PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, user.getId());
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, userContainer.getId());
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }
     }
 
-    @Override
     public void insertUser(String userName) {
         if (!isUserExist(userName)) {
             String sql = " INSERT INTO " + USER_TABLE_TITLE + " ( " + USER_NAME_SQL_PARAMETER + " ) " + " VALUES ( ? ) ";
@@ -158,8 +143,8 @@ public class MySqlHandler extends AbstractSqlHandlerImp {
                 USER_NAME_SQL_PARAMETER + " )\n" +
                 ");";
         createNewTable(sql);
-        insertUser(user.getName());
-        readUserId(user);
+        insertUser(userContainer.getName());
+        readUserId(userContainer);
     }
 
     @Override

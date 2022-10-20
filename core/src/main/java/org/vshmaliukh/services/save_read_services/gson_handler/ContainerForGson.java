@@ -9,4 +9,5 @@ public class ContainerForGson {
         this.classOfLiterature = item.getClass().getSimpleName();
         this.item = item;
     }
+
 }

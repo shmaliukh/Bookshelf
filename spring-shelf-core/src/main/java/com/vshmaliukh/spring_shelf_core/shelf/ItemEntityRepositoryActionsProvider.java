@@ -33,7 +33,7 @@ public abstract class ItemEntityRepositoryActionsProvider {
         mysqlItemRepositoryActionMap.put(Newspaper.class, newspaperRepositoryActions);
     }
 
-    public ActionsWithItemEntity<? extends ItemEntity> getRepositoryActionByClassType(Class itemClassType) {
+    public ActionsWithItemEntity getRepositoryActionByClassType(Class itemClassType) {
         ActionsWithItemEntity repositoryAction = mysqlItemRepositoryActionMap.getOrDefault(itemClassType, null);
         if (repositoryAction == null) {
             log.error("[ItemEntityRepositoryActionsProvider] err: " +

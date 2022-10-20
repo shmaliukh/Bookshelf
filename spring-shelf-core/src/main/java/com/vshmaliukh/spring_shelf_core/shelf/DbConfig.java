@@ -15,9 +15,6 @@ public class DbConfig extends DataSourceProperties {
     private String hibernateDialect;
     private String hibernateHbm2ddlAuto;
 
-    //private String hibernateShowSql;
-    //private String hibernateGloballyQuotedIdentifiers;
-
     public JpaTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);

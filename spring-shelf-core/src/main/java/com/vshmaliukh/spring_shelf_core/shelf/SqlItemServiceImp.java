@@ -54,8 +54,7 @@ public abstract class SqlItemServiceImp implements SqlItemService {
     public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getRepositoryActionByClassType(itemClassType);
         List entityListByClassType = repositoryByClassType.findAllByUserId(userId);
-        List<T> itemList = SqlItemServiceImp.convertListOfEntities(entityListByClassType);
-        return itemList;
+        return SqlItemServiceImp.convertListOfEntities(entityListByClassType);
     }
 
     public void deleteItemByUserId(Item item, Integer userId) {

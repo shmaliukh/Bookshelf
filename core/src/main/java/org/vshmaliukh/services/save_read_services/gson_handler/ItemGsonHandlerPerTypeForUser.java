@@ -14,17 +14,18 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ItemGsonHandlerPerTypeForUser extends ItemGsonHandlerHandler {
 
-    String gsonHandlerFolderStr = "gson_handler_per_type";
-    String typeStr;
+    public static final String GSON_HANDLER_PER_TYPE = "gson_handler_per_type";
 
-    public ItemGsonHandlerPerTypeForUser(String homeDir, String userName) {
-        super(homeDir, userName);
+    protected String typeStr;
+
+    public ItemGsonHandlerPerTypeForUser(String userName) {
+        super(userName);
     }
 
     @Override
     public Path generatePathForFileHandler() {
-        Path path = Paths.get(String.valueOf(generatePathForUser()), gsonHandlerFolderStr);
-        createDirectoryIfNotExists(path);
+        Path path = Paths.get(String.valueOf(generatePathForUser(System.getProperty("user_home"), this.userName)), GSON_HANDLER_PER_TYPE);
+        createDirectoryIfNotExists(path, this.userName);
         return path;
     }
 
