@@ -1,11 +1,11 @@
-package com.vshmaliukh.springwebappmodule;
+package com.vshmaliukh.spring_web_app_module;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
         "com.vshmaliukh.springbootshelfcore",
-        "com.vshmaliukh.springwebappmodule",
+        "com.vshmaliukh.spring_web_app_module",
 })
 public class SpringWebAppModuleApplication {
 

@@ -1,6 +1,6 @@
-package com.vshmaliukh.springwebappmodule.interceptors;
+package com.vshmaliukh.spring_web_app_module.interceptors;
 
-import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
+import com.vshmaliukh.spring_web_app_module.utils.CookieUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;

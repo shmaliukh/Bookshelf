@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule.utils;
+package com.vshmaliukh.spring_web_app_module.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

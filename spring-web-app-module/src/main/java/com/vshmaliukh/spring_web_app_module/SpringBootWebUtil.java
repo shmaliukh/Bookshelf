@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule;
+package com.vshmaliukh.spring_web_app_module;
 
 import com.vshmaliukh.springbootshelfcore.shelf.SpringBootUI;
 import org.apache.commons.lang3.StringUtils;

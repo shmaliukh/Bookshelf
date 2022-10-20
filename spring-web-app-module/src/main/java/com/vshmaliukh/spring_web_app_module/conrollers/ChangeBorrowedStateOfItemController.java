@@ -1,6 +1,6 @@
-package com.vshmaliukh.springwebappmodule.conrollers;
+package com.vshmaliukh.spring_web_app_module.conrollers;
 
-import com.vshmaliukh.springwebappmodule.SpringBootWebUtil;
+import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -10,14 +10,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.vshmaliukh.Constants;
 import org.vshmaliukh.services.SaveReadShelfHandler;
+import org.vshmaliukh.shelf.literature_items.Item;
+
+import java.util.List;
+
+import static org.vshmaliukh.Constants.CHANGE_ITEM_BORROWED_STATE_TITLE;
 
 @Controller
-@RequestMapping("/" + Constants.DELETE_ITEM_TITLE)
-public class DeleteItemController {
+@RequestMapping("/" + CHANGE_ITEM_BORROWED_STATE_TITLE)
+public class ChangeBorrowedStateOfItemController {
 
     final SpringBootWebUtil springBootWebUtil;
 
-    public DeleteItemController(SpringBootWebUtil springBootWebUtil) {
+    public ChangeBorrowedStateOfItemController(SpringBootWebUtil springBootWebUtil) {
         this.springBootWebUtil = springBootWebUtil;
     }
 
@@ -28,7 +33,9 @@ public class DeleteItemController {
                        ModelMap model) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         if (webShelfHandler != null) {
-            webShelfHandler.deleteItemByIndex(indexOfItem);
+            webShelfHandler.readShelfItems();
+            List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
+            webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, indexOfItem);
         }
         return new ModelAndView("redirect:/" + Constants.EDIT_ITEMS_TITLE, model);
     }

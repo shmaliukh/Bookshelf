@@ -1,8 +1,8 @@
-package com.vshmaliukh.springwebappmodule.conrollers;
+package com.vshmaliukh.spring_web_app_module.conrollers;
 
 import com.google.gson.Gson;
-import com.vshmaliukh.springwebappmodule.SpringBootWebUtil;
-import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
+import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
+import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;

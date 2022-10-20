@@ -1,8 +1,8 @@
-package com.vshmaliukh.springwebappmodule.conrollers;
+package com.vshmaliukh.spring_web_app_module.conrollers;
 
 import com.vshmaliukh.springbootshelfcore.shelf.UserDataModelForJson;
-import com.vshmaliukh.springwebappmodule.utils.ControllerUtils;
-import com.vshmaliukh.springwebappmodule.utils.CookieUtil;
+import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
+import com.vshmaliukh.spring_web_app_module.utils.CookieUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CookieValue;

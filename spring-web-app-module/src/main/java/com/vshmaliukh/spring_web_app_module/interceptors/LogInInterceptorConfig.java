@@ -1,4 +1,4 @@
-package com.vshmaliukh.springwebappmodule.interceptors;
+package com.vshmaliukh.spring_web_app_module.interceptors;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
