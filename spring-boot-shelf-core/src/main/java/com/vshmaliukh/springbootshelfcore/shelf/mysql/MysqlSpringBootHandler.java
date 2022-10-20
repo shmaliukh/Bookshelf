@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MysqlSpringBootHandler extends SqlSpringBootHandler {
 
-    public MysqlSpringBootHandler(MysqlItemServiceImp mysqlItemServiceImp, MysqlUserServiceImp mysqlUserServiceImp) {
+    public MysqlSpringBootHandler(MysqlItemServiceImp mysqlItemServiceImp,
+                                  MysqlUserServiceImp mysqlUserServiceImp) {
         this.itemServiceImp = mysqlItemServiceImp;
         this.userServiceImp = mysqlUserServiceImp;
     }

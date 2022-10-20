@@ -5,7 +5,6 @@ import org.vshmaliukh.WebUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
-
 @Service
 public class SpringBootUI extends WebUI {
 

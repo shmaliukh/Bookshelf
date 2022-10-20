@@ -17,15 +17,16 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public abstract class ItemEntityRepositoryActionsProvider {
 
+    protected Map<Class, ActionsWithItemEntity> mysqlItemRepositoryActionMap;
+
     protected ActionsWithItemEntity<BookEntity> bookRepositoryActions;
     protected ActionsWithItemEntity<MagazineEntity> magazineRepositoryActions;
     protected ActionsWithItemEntity<NewspaperEntity> newspaperRepositoryActions;
     protected ActionsWithItemEntity<ComicsEntity> comicsRepositoryActions;
 
-    protected Map<Class, ActionsWithItemEntity> mysqlItemRepositoryActionMap = new ConcurrentHashMap<>();
-
     @PostConstruct
     protected void initClassTypeRepositoryActionMap() {
+        mysqlItemRepositoryActionMap = new ConcurrentHashMap<>();
         mysqlItemRepositoryActionMap.put(Book.class, bookRepositoryActions);
         mysqlItemRepositoryActionMap.put(Magazine.class, magazineRepositoryActions);
         mysqlItemRepositoryActionMap.put(Comics.class, comicsRepositoryActions);

@@ -1,8 +1,8 @@
 package com.vshmaliukh.springbootshelfcore.shelf;
 
+import com.vshmaliukh.springbootshelfcore.shelf.entities.UserEntity;
 import com.vshmaliukh.springbootshelfcore.shelf.repository_services.ActionsWithUserEntity;
 import com.vshmaliukh.springbootshelfcore.shelf.repository_services.SqlUserService;
-import com.vshmaliukh.springbootshelfcore.shelf.entities.UserEntity;
 
 public abstract class SqlUserServiceImp implements SqlUserService {
 

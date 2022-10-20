@@ -11,8 +11,8 @@ import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 @Component
 public class SpringBootSqlShelfHandler extends SqlShelfHandler {
 
-    final MysqlSpringBootHandler mysqlSpringBootHandler;
-    final SqliteSpringBootHandler sqliteSpringBootHandler;
+    MysqlSpringBootHandler mysqlSpringBootHandler;
+    SqliteSpringBootHandler sqliteSpringBootHandler;
 
     public SpringBootSqlShelfHandler(MysqlSpringBootHandler mysqlSpringBootHandler,
                                      SqliteSpringBootHandler sqliteSpringBootHandler) {

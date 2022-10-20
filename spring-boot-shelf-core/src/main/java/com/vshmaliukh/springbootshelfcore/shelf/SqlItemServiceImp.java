@@ -1,10 +1,10 @@
 package com.vshmaliukh.springbootshelfcore.shelf;
 
+import com.vshmaliukh.springbootshelfcore.shelf.entities.ItemEntity;
+import com.vshmaliukh.springbootshelfcore.shelf.repository_services.SqlItemService;
 import com.vshmaliukh.springbootshelfcore.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.springbootshelfcore.shelf.convertors.ItemEntityConvertorProvider;
-import com.vshmaliukh.springbootshelfcore.shelf.entities.ItemEntity;
 import com.vshmaliukh.springbootshelfcore.shelf.repository_services.ActionsWithItemEntity;
-import com.vshmaliukh.springbootshelfcore.shelf.repository_services.SqlItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.vshmaliukh.shelf.literature_items.Item;

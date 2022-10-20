@@ -36,7 +36,7 @@ public class SqliteHandlerConfigurator extends DbConfig {
     public LocalContainerEntityManagerFactoryBean sqliteEntityManager(@Qualifier("sqliteDataSource") DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
-        em.setPackagesToScan("com.vshmaliukh.springwebappmodule.shelf.entities");
+        em.setPackagesToScan("com.vshmaliukh.springbootshelfcore.shelf.entities");
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(additionalProperties());
         return em;

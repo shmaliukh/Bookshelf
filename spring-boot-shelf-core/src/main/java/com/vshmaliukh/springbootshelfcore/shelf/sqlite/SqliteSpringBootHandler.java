@@ -1,8 +1,8 @@
 package com.vshmaliukh.springbootshelfcore.shelf.sqlite;
 
+import com.vshmaliukh.springbootshelfcore.shelf.SqlSpringBootHandler;
 import com.vshmaliukh.springbootshelfcore.shelf.sqlite.services.SqliteItemServiceImp;
 import com.vshmaliukh.springbootshelfcore.shelf.sqlite.services.SqliteUserServiceImp;
-import com.vshmaliukh.springbootshelfcore.shelf.SqlSpringBootHandler;
 import org.springframework.stereotype.Service;
 
 @Service
