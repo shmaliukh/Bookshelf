@@ -45,3 +45,4 @@ dependency-reduced-pom.xml
 null/
 out/
 /data/
+.mvn
