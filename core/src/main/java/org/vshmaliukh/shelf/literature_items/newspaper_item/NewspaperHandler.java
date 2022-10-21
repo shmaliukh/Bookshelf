@@ -134,7 +134,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
                 rs.getInt(PAGES_SQL_PARAMETER),
-                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER))
+                rs.getBoolean(BORROWED_SQL_PARAMETER)
         );
     }
 
@@ -175,7 +175,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
-        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.setBoolean(4, item.isBorrowed());
         pstmt.executeUpdate();
     }
 
@@ -187,6 +187,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " \n " +
@@ -207,6 +208,7 @@ public class NewspaperHandler extends ItemHandler<Newspaper> {
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " \n " +

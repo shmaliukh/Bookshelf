@@ -79,7 +79,7 @@ class ItemGsonHandlerTest {
         ItemGsonHandlerOneFileForUser gsonHandlerOneFile = new ItemGsonHandlerOneFileForUser("testReadSaveGsonHandlerOneFile");
         File gsonFile = gsonHandlerOneFile.generatePathForGsonFile().toFile();
 
-        gsonHandlerOneFile.saveItemList(consoleShelfHandler.getShelf().getAllLiteratureObjects());
+        gsonHandlerOneFile.saveItemListToDB(consoleShelfHandler.getShelf().getAllLiteratureObjects());
         GsonShelfHandler consoleShelfHandler1 = new GsonShelfHandler("test_one_file2", SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE);
         gsonHandlerOneFile.readItemListFromGsonFile(gsonFile.toPath()).forEach(consoleShelfHandler1::addItem);
 
@@ -103,7 +103,7 @@ class ItemGsonHandlerTest {
         consoleShelfHandler1 .addItem(magazine2);
 
         ItemGsonHandlerPerTypeForUser itemGsonHandlerPerTypeForUser = new ItemGsonHandlerPerTypeForUser("testGsonHandlerPerType");
-        itemGsonHandlerPerTypeForUser.saveItemList(consoleShelfHandler1.getShelf().getAllLiteratureObjects());
+        itemGsonHandlerPerTypeForUser.saveItemListToDB(consoleShelfHandler1.getShelf().getAllLiteratureObjects());
 
         itemGsonHandlerPerTypeForUser.readItemList().forEach(consoleShelfHandler2::addItem);
 
