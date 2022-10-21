@@ -84,5 +84,21 @@ public abstract class AbstractSqlHandler extends AbstractSaveReadService impleme
         }
         return itemByClassList;
     }
+
+    @Override
+    public void saveItemToDB(Item item) {
+        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
+        String sqlInsertStr = handlerByClass.insertItemMySqlStr();
+        try (PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr)) {
+            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, userContainer.getId());
+        } catch (SQLException sqle) {
+            logSqlHandler(sqle);
+        }
+    }
+
+    @Override
+    public void saveItemListToDB(List<Item> listToSave) {
+        listToSave.forEach(this::saveItemToDB);
+    }
 }
 

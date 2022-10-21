@@ -1,7 +1,6 @@
 package com.vshmaliukh.spring_shelf_core.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 
 @Slf4j
 public final class MyLogUtil {
@@ -29,7 +28,6 @@ public final class MyLogUtil {
         log.info(formBaseInfoMessage(serviceName, infoMessage) + " // " + additionInfo);
     }
 
-    @NotNull
     private static String formBaseInfoMessage(String serviceName, String infoMessage) {
         return "[" + serviceName + "] info: " + infoMessage;
     }

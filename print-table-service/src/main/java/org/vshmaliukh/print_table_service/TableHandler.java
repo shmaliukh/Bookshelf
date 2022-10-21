@@ -48,10 +48,11 @@ public class TableHandler {
     }
 
     protected void initTable() {
-        List<Map<String, String>> buffTable = new ArrayList<>();
-        for (Map<String, String> stringMap : bufferTableListOfMaps) {
-            buffTable.add(new HashMap<>(stringMap));
-        }
+        //fixme is useless ????????
+//        List<Map<String, String>> buffTable = new ArrayList<>();
+//        for (Map<String, String> stringMap : bufferTableListOfMaps) {
+//            buffTable.add(new HashMap<>(stringMap));
+//        }
         fillTableByTitles();
     }
 

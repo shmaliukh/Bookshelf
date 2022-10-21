@@ -7,7 +7,6 @@ import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
 import java.sql.*;
-import java.util.List;
 
 @Slf4j
 public class MySqlHandler extends AbstractSqlHandler {
@@ -80,23 +79,6 @@ public class MySqlHandler extends AbstractSqlHandler {
     public void createNewTable(String sql) {
         try (Statement stmt = getConnectionToDB().createStatement()) {
             stmt.execute(sql);
-        } catch (SQLException sqle) {
-            logSqlHandler(sqle);
-        }
-    }
-
-    @Override
-    public void saveItemListToDB(List<Item> listToSave) {
-        listToSave.forEach(this::saveItemToDB);
-    }
-
-    @Override
-    public void saveItemToDB(Item item) {
-        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String sqlInsertStr = handlerByClass.insertItemMySqlStr();
-        try {
-            PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, userContainer.getId());
         } catch (SQLException sqle) {
             logSqlHandler(sqle);
         }

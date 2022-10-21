@@ -68,7 +68,7 @@ public class BookHandler extends ItemHandler<Book> {
                 random.nextInt(1000),
                 false,
                 getRandomString(random.nextInt(20), random),
-                new Date(random.nextInt(2500)));
+                new Date(random.nextLong()));
     }
 
     @Override

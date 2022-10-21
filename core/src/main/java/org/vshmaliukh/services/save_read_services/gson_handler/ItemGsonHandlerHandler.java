@@ -128,16 +128,20 @@ public abstract class ItemGsonHandlerHandler extends AbstractSaveReadService imp
         try {
             Files.copy(gsonFilePath, oldestProblemFilePath, StandardCopyOption.REPLACE_EXISTING);
             long time = new Date().getTime();
-            oldestProblemFile.setLastModified(time);
+            boolean isLastModified = oldestProblemFile.setLastModified(time);
             saveErrorToLogFile(problemMessage, exception, Paths.get(generatePathForProblemFiles().toString(), logFileFullName));
-            log.info("[GsonHandler]: save problem file as '" + oldestProblemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(oldestProblemFile.lastModified()));
+            if(isLastModified){
+                log.info("[GsonHandler]: save problem file as '" + oldestProblemFile.getAbsolutePath() + "' last mod time: " + new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(oldestProblemFile.lastModified()));
+            }
         } catch (IOException ioe) {
             informAboutErr(this.userName, "Problem to save copy of problem file'" + oldestProblemFile.getAbsolutePath() + "'", ioe);
         }
     }
 
     protected void saveErrorToLogFile(String problemMessage, Exception exception, Path logFilePath) {
-        informAboutErr(this.userName, problemMessage, exception);
+        log.warn("[User]: name: '" + userName + "'"
+                + " // [FilesHandler]: " + problemMessage
+                + " // [Exception]: " + exception.getMessage());
         File logFile = logFilePath.toFile();
         try (FileWriter fileWriter = new FileWriter(logFile, true)) {
             fileWriter.append("\t")

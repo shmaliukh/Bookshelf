@@ -1,12 +1,11 @@
 package com.vshmaliukh.spring_shelf_core.shelf;
 
-import com.vshmaliukh.spring_shelf_core.shelf.entities.ItemEntity;
-import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.ItemEntityConvertor;
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.ItemEntityConvertorProvider;
+import com.vshmaliukh.spring_shelf_core.shelf.entities.ItemEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
+import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public abstract class SqlItemServiceImp implements SqlItemService {
 
     protected ItemEntityRepositoryActionsProvider itemEntityRepositoryActionsProvider;
 
-    @NotNull
     private static List<Item> convertListOfEntities(List<ItemEntity> entityList) {
         List<Item> itemList = new ArrayList<>();
         ItemEntityConvertor convertorByEntityClassType;

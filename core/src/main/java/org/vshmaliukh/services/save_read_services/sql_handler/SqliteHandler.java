@@ -10,7 +10,6 @@ import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
-import java.util.*;
 
 import static org.vshmaliukh.BaseAppConfig.HOME_PROPERTY;
 
@@ -74,15 +73,6 @@ public class SqliteHandler extends AbstractSqlHandler implements SaveReadUserFil
     }
 
     @Override
-    public void createNewTable(String sql) {
-        try (Statement stmt = getConnectionToDB().createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException sqle) {
-            logSqlHandler(sqle);
-        }
-    }
-
-    @Override
     public void logSqlHandler(Exception e) {
         log.error("[SqlLite_handler] got err. Exception: ", e);
     }
@@ -98,23 +88,6 @@ public class SqliteHandler extends AbstractSqlHandler implements SaveReadUserFil
         Path path = Paths.get(String.valueOf(generatePathForUser(HOME_PROPERTY, this.userName)), sqlLiteHandlerFolderStr);
         createDirectoryIfNotExists(path, this.userName);
         return path;
-    }
-
-    @Override
-    public void saveItemListToDB(List<Item> listToSave) {
-        listToSave.forEach(this::saveItemToDB);
-    }
-
-    @Override
-    public void saveItemToDB(Item item) {
-        ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
-        String sqlInsertStr = handlerByClass.insertItemSqlLiteStr();
-        try {
-            PreparedStatement preparedStatement = getConnectionToDB().prepareStatement(sqlInsertStr);
-            handlerByClass.insertItemValuesToSqlDB(preparedStatement, item, userContainer.getId());
-        } catch (SQLException sqle) {
-            logSqlHandler(sqle);
-        }
     }
 
     public void insertUser(String userName) {
