@@ -23,27 +23,27 @@ public class MySqlHandler extends AbstractSqlHandler {
 
     static {
         String mysqlUserName = System.getenv(MYSQL_USER_NAME_ENV);
-        if (StringUtils.isNotBlank(mysqlUserName)) {
+        if (StringUtils.isBlank(mysqlUserName)) {
             mysqlUserName = "test";
         }
         MYSQL_USER_NAME = mysqlUserName;
 
         String mysqlPassword = System.getenv(MYSQL_PASSWORD_ENV);
-        if (StringUtils.isNotBlank(mysqlPassword)) {
+        if (StringUtils.isBlank(mysqlPassword)) {
             mysqlPassword = "test";
         }
         MYSQL_PASSWORD = mysqlPassword;
 
         String mysqlPort = System.getenv(MYSQL_PORT_ENV);
 
-        if (StringUtils.isNotBlank(mysqlPort)) {
+        if (StringUtils.isBlank(mysqlPort)) {
             mysqlPort = "localhost:3307";
         }
         String mysqlDbName = System.getenv(MYSQL_DB_NAME_ENV);
-        if (StringUtils.isNotBlank(mysqlDbName)) {
+        if (StringUtils.isBlank(mysqlDbName)) {
             mysqlDbName = "my_test";
         }
-        MYSQL_DB_URL = "jdbc:mysql://localhost:" + mysqlPort + "/" + mysqlDbName;
+        MYSQL_DB_URL = "jdbc:mysql://" + mysqlPort + "/" + mysqlDbName;
     }
 
     protected Connection connectionToMySqlDB = null;
