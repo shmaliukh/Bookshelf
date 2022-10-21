@@ -1,40 +1,17 @@
+# import spring shelf core properties
+spring.config.import: file:spring-shelf-core/src/main/resources/spring-shelf-core-config.yaml
+
 # shelf config
 shelf:
   port: 8082
-  home: ${user.home}/shelf
-  sqliteDbFile: shelf_sqlite_db.db
-  sqliteDbPath: ${shelf.home}/${shelf.sqliteDbFile}
-  sqliteDbUrlStart: "jdbc:sqlite://"
-  sqliteDbUrl: ${shelf.sqliteDbUrlStart}${shelf.sqliteDbPath}
 
-# app port to start
+# web app server config
 server.port: ${shelf.port}
+server.tomcat.keep-alive-timeout: 1000
+spring.web.resources.static-locations: file:./spring-web-app-module/src/main/resources/static
 
 # app config
 spring.profiles.active: dev
-
-spring.web.resources.static-locations: file:./spring-web-app-module/src/main/resources/static
-server.tomcat.keep-alive-timeout: 1000
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: dev
-db-config:
-  sqlite:
-    driverClassName: "org.sqlite.JDBC"
-    hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
-    url: ${shelf.sqliteDbUrl}
-    hibernateHbm2ddlAuto: "update"
-  mysql:
-    driverClassName: "com.mysql.cj.jdbc.Driver"
-    hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
-    url: "jdbc:mysql://localhost:3307/my_test"
-    userName: "test"
-    password: "test"
-    hibernateHbm2ddlAuto: "update"
 
 #logging:
 #  level:
