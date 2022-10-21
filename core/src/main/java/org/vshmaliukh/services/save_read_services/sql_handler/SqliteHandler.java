@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.*;
 
+import static org.vshmaliukh.BaseAppConfig.HOME_PROPERTY;
+
 @Slf4j
 @NoArgsConstructor
 public class SqliteHandler extends AbstractSqlHandler implements SaveReadUserFilesHandler {
@@ -93,7 +95,7 @@ public class SqliteHandler extends AbstractSqlHandler implements SaveReadUserFil
     @Override
     public Path generatePathForFileHandler() {
         String sqlLiteHandlerFolderStr = "sqlLite_handler";
-        Path path = Paths.get(String.valueOf(generatePathForUser(System.getProperty("user_home"), this.userName)), sqlLiteHandlerFolderStr);
+        Path path = Paths.get(String.valueOf(generatePathForUser(HOME_PROPERTY, this.userName)), sqlLiteHandlerFolderStr);
         createDirectoryIfNotExists(path, this.userName);
         return path;
     }

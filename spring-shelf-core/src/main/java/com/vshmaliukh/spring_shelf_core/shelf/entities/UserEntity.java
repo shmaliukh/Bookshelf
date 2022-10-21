@@ -12,7 +12,8 @@ import static com.vshmaliukh.spring_shelf_core.shelf.ConstantsForDataBase.*;
 @Setter
 @ToString
 @Entity
-@Table(name = USER_TABLE)
+@Table(name = USER_TABLE,
+        uniqueConstraints = {@UniqueConstraint(columnNames = {USER_NAME_COLUMN})})
 public class UserEntity {
 
     @Id
@@ -20,7 +21,7 @@ public class UserEntity {
     @Column(name = ID_COLUMN, nullable = false)
     private Integer id;
 
-    @Column(name = USER_NAME_COLUMN, nullable = false, unique = true)
+    @Column(name = USER_NAME_COLUMN, nullable = false)
     private String userName;
 
 }

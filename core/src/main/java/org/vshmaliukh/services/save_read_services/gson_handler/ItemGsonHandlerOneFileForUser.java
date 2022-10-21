@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.vshmaliukh.BaseAppConfig.HOME_PROPERTY;
+
 @Slf4j
 public class ItemGsonHandlerOneFileForUser extends ItemGsonHandlerHandler {
 
@@ -20,7 +22,7 @@ public class ItemGsonHandlerOneFileForUser extends ItemGsonHandlerHandler {
 
     @Override
     public Path generatePathForFileHandler() {
-        Path path = Paths.get(String.valueOf(generatePathForUser(System.getProperty("user_home"), this.userName)), GSON_HANDLER_ONE_FILE);
+        Path path = Paths.get(String.valueOf(generatePathForUser(HOME_PROPERTY, this.userName)), GSON_HANDLER_ONE_FILE);
         createDirectoryIfNotExists(path, this.userName);
         return path;
     }
