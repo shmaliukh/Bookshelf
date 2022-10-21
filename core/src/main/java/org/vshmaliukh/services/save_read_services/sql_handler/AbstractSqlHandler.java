@@ -55,7 +55,7 @@ public abstract class AbstractSqlHandler extends AbstractSaveReadService impleme
             ItemHandler handlerByClass = ItemHandlerProvider.getHandlerByClass(item.getClass());
             String changeItemBorrowedStateInDB = handlerByClass.changeItemBorrowedStateSqlStr();
             try (PreparedStatement preparedStatement = connection.prepareStatement(changeItemBorrowedStateInDB)) {
-                preparedStatement.setString(1, String.valueOf(!item.isBorrowed()));
+                preparedStatement.setBoolean(1,!item.isBorrowed());
                 preparedStatement.setInt(2, item.getId());
                 preparedStatement.execute();
             } catch (SQLException sqle) {

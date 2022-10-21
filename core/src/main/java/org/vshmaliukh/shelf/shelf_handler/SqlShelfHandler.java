@@ -40,7 +40,7 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        sqlItemHandler.saveItemList(getShelf().getItemsOfShelf());
+        sqlItemHandler.saveItemListToDB(getShelf().getItemsOfShelf());
     }
 
     @Override

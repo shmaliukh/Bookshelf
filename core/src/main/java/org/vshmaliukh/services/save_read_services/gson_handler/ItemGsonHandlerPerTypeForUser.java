@@ -37,7 +37,7 @@ public class ItemGsonHandlerPerTypeForUser extends ItemGsonHandlerHandler {
     }
 
     @Override
-    public void saveItemList(List<Item> listToSave) {
+    public void saveItemListToDB(List<Item> listToSave) {
         for (Class<? extends Item> classType : getClassTypes()) {
             typeStr = classType.getSimpleName();
             List<? extends Item> listPerType = listToSave.stream()

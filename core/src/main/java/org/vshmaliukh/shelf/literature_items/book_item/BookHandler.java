@@ -6,6 +6,7 @@ import org.vshmaliukh.services.input_handler.WebInputHandler;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
+import org.vshmaliukh.services.save_read_services.sql_handler.SqlHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
@@ -14,7 +15,6 @@ import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -168,10 +168,7 @@ public class BookHandler extends ItemHandler<Book> {
 
     @Override
     public String insertItemMySqlStr() {
-        return " INSERT " +
-                //"OR
-                "IGNORE" +
-                " INTO " + BOOK_TABLE_TITLE +
+        return " INSERT IGNORE INTO " + BOOK_TABLE_TITLE +
                 " ( " +
                 USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
@@ -200,27 +197,21 @@ public class BookHandler extends ItemHandler<Book> {
         preparedStatement.setInt(1, userID);
         preparedStatement.setString(2, item.getName());
         preparedStatement.setInt(3, item.getPagesNumber());
-        preparedStatement.setString(4, String.valueOf(item.isBorrowed()));
+        preparedStatement.setBoolean(4, item.isBorrowed());
         preparedStatement.setString(5, item.getAuthor());
-        preparedStatement.setString(6, new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR).format(item.getIssuanceDate()));
+        preparedStatement.setDate(6, new java.sql.Date(item.getIssuanceDate().getTime())); // todo
         preparedStatement.executeUpdate();
     }
 
     @Override
     public Book readItemFromSqlDB(ResultSet rs) throws SQLException {
-        Date issuanceDate;
-        try {
-            issuanceDate = new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR).parse(rs.getString(DATE_SQL_PARAMETER));
-        } catch (ParseException e) {
-            issuanceDate = new Date(); // TODO
-        }
         return new Book(
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
                 rs.getInt(PAGES_SQL_PARAMETER),
-                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER)),
+                rs.getBoolean(BORROWED_SQL_PARAMETER),
                 rs.getString(AUTHOR_SQL_PARAMETER),
-                issuanceDate
+                rs.getDate(DATE_SQL_PARAMETER)
         );
     }
 
@@ -235,6 +226,7 @@ public class BookHandler extends ItemHandler<Book> {
                 AUTHOR_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 DATE_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " , \n " +
@@ -258,6 +250,7 @@ public class BookHandler extends ItemHandler<Book> {
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " , \n " +

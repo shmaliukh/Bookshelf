@@ -33,7 +33,7 @@ public class ItemGsonHandlerOneFileForUser extends ItemGsonHandlerHandler {
     }
 
     @Override
-    public void saveItemList(List<Item> listToSave) {
+    public void saveItemListToDB(List<Item> listToSave) {
         saveListToFile(generatePathForGsonFile(), listToSave);
     }
 

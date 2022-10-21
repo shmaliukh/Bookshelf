@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SaveReadItems {
 
-    void saveItemList(List<Item> listToSave);
+    void saveItemListToDB(List<Item> listToSave);
 
     List<Item> readItemList();
 

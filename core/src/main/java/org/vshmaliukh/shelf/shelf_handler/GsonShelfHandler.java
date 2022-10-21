@@ -87,7 +87,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        itemHandler.saveItemList(shelf.getAllLiteratureObjects());
+        itemHandler.saveItemListToDB(shelf.getAllLiteratureObjects());
     }
 
     @Override

@@ -86,7 +86,7 @@ public class MySqlHandler extends AbstractSqlHandler {
     }
 
     @Override
-    public void saveItemList(List<Item> listToSave) {
+    public void saveItemListToDB(List<Item> listToSave) {
         listToSave.forEach(this::saveItemToDB);
     }
 
