@@ -17,17 +17,10 @@
 
     <properties>
         <sqlite-dialect.version>0.1.2</sqlite-dialect.version>
-        <spring-boot-starter.version>2.7.3</spring-boot-starter.version>
+        <spring-boot-starter.version>2.7.4</spring-boot-starter.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <version>2.4.0</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -38,7 +31,6 @@
             <artifactId>spring-boot-starter-data-rest</artifactId>
             <version>${spring-boot-starter.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.github.gwenn</groupId>
             <artifactId>sqlite-dialect</artifactId>
@@ -54,12 +46,13 @@
             <groupId>org.vshmaliukh</groupId>
             <artifactId>web-app-module</artifactId>
             <version>1.0-SNAPSHOT</version>
+<!--            ???-->
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
-            <scope>compile</scope>
+            <!--todo set version-->
         </dependency>
     </dependencies>
 
