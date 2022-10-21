@@ -6,12 +6,12 @@ import java.util.List;
 
 public final class Constants {
 
-    public static final String GENERATED_TABLE_HTML_STR = "generatedTableHtmlStr";
-    public static final String RADIO_BUTTONS = "radioButtons";
-    public static final String CHOOSE_TYPE_OF_WORK_TITLE = "choose_type_of_work";
-
     private Constants() {
     }
+
+
+    public static final String RADIO_BUTTONS = "radioButtons";
+    public static final String CHOOSE_TYPE_OF_WORK_TITLE = "choose_type_of_work";
 
     public static final String TYPE_OF_WORK_WITH_FILES = "typeOfWork";
     public static final String USER_NAME = "userName";
@@ -32,8 +32,6 @@ public final class Constants {
     public static final String IS_RANDOM = "isRandom";
     public static final String MENU_ITEM_INDEX = "menuItemIndex";
     public static final String INFORM_MESSAGE = "inform_message";
-
-    public static final String GENERATED_SORTING_BY_TYPE_RADIO_BUTTONS = "generatedSortingByTypeRadioButtons";
 
     public static final String TITLES = "titles";
     public static final String ITEMS = "items";

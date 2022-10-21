@@ -113,12 +113,6 @@ public final class WebUtils {
         return mapOfItemFields;
     }
 
-    public static Map<String, String> readMapOfItemFields(Map map) {
-        Map<String, String> mapOfItemFields = new HashMap<>(map);
-        USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
-        return mapOfItemFields;
-    }
-
     public static String generateButtonWithIndexOfItem(String servletTitle, String itemIndex, Map<String, String> userAtr) {
         return "<td style = \"border:1px solid black\">" +
                 HtmlUtil.formHTMLButton(UrlUtil.generateBaseURLBuilder(servletTitle, userAtr)
