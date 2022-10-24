@@ -5,6 +5,7 @@ import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.ComicsEntityConvert
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.MagazineEntityConvertor;
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.NewspaperEntityConvertor;
 import com.vshmaliukh.spring_shelf_core.shelf.entities.*;
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
@@ -16,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class ItemEntityConvertorProvider {
 
+    public static final ItemEntityConvertor<? extends Item, ? extends ItemEntity> DEFAULT_ITEM_ENTITY_CONVERTOR_VALUE = null;
+
     private ItemEntityConvertorProvider(){}
 
     private static final Map<Class<? extends Item>, ItemEntityConvertor<? extends Item, ? extends ItemEntity>> itemClassTypeConvertorMap = new ConcurrentHashMap<>();
@@ -26,19 +29,31 @@ public final class ItemEntityConvertorProvider {
         entityClassTypeConvertorMap.put(MagazineEntity.class, new MagazineEntityConvertor());
         entityClassTypeConvertorMap.put(NewspaperEntity.class, new NewspaperEntityConvertor());
         entityClassTypeConvertorMap.put(ComicsEntity.class, new ComicsEntityConvertor());
+        MyLogUtil.logDebug(ItemEntityConvertorProvider.class, "entity class type - convertor map : '{}'", entityClassTypeConvertorMap);
 
         itemClassTypeConvertorMap.put(Book.class, new BookEntityConvertor());
         itemClassTypeConvertorMap.put(Magazine.class, new MagazineEntityConvertor());
         itemClassTypeConvertorMap.put(Newspaper.class, new NewspaperEntityConvertor());
         itemClassTypeConvertorMap.put(Comics.class, new ComicsEntityConvertor());
+        MyLogUtil.logDebug(ItemEntityConvertorProvider.class, "item class type - convertor map : '{}'", itemClassTypeConvertorMap);
     }
 
     public static <I extends Item> ItemEntityConvertor getConvertorByItemClassType(Class<I> itemClassType){
-        return itemClassTypeConvertorMap.getOrDefault(itemClassType, null);
+        ItemEntityConvertor<? extends Item, ? extends ItemEntity> convertor = itemClassTypeConvertorMap.getOrDefault(itemClassType, DEFAULT_ITEM_ENTITY_CONVERTOR_VALUE);
+        if(convertor == null){
+            MyLogUtil.logWarn(ItemEntityConvertorProvider.class, "not found itemClassTypeConvertor // getConvertorByItemClassType(itemClassType: '{}') " +
+                    "// return default value: '{}'", itemClassType, DEFAULT_ITEM_ENTITY_CONVERTOR_VALUE);
+        }
+        return convertor;
     }
 
     public static <E extends ItemEntity> ItemEntityConvertor getConvertorByEntityClassType(Class<E> entityClassType){
-        return entityClassTypeConvertorMap.getOrDefault(entityClassType, null);
+        ItemEntityConvertor<? extends Item, ? extends ItemEntity> convertor = entityClassTypeConvertorMap.getOrDefault(entityClassType, DEFAULT_ITEM_ENTITY_CONVERTOR_VALUE);
+        if(convertor == null){
+            MyLogUtil.logWarn(ItemEntityConvertorProvider.class, "not found itemClassTypeConvertor // getConvertorByEntityClassType(entityClassType: '{}') " +
+                    "// return default value: '{}'", entityClassType, DEFAULT_ITEM_ENTITY_CONVERTOR_VALUE);
+        }
+        return convertor;
     }
 
 }

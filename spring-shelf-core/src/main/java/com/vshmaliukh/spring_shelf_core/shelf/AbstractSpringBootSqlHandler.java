@@ -15,8 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
 
-    boolean isNeedLog = true;
-
     protected SqlItemService itemServiceImp;
     protected SqlUserService userServiceImp;
 
@@ -31,9 +29,8 @@ public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
         if (userContainer.getId() == null) {
             userServiceImp.insertUser(userName);
             readUserId(userContainer);
-            if (isNeedLog) {
-                MyLogUtil.logInfo(userServiceImp, " registered " + userContainer);
-            }
+            MyLogUtil.logDebug(this, "userName: '{}' // initUserIfNotExist() // user not exists in db " +
+                    "// registered user: '{}'", userName, userContainer);
         }
     }
 
@@ -41,6 +38,7 @@ public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
     public void readUserId(UserContainer user) {
         Integer userIdByName = userServiceImp.readUserIdByName(user.getName());
         user.setId(userIdByName);
+        MyLogUtil.logDebug(this, "readUserId(user: '{}') // userIdByName: '{}'", user, userIdByName);
     }
 
     @Override
@@ -51,22 +49,21 @@ public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
     @Override
     public void deleteItemFromDB(Item item) {
         itemServiceImp.deleteItemByUserId(item, userContainer.getId());
-        if (isNeedLog) {
-            MyLogUtil.logInfo(itemServiceImp, "deleted item" + item, "user: " + userContainer);
-        }
+        MyLogUtil.logDebug(this, "user: '{}' // deleteItemFromDB(item: '{}')", userContainer, item);
     }
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
         itemServiceImp.changeItemBorrowedStateByUserId(item, userContainer.getId());
-        if (isNeedLog) {
-            MyLogUtil.logInfo(itemServiceImp, "changed item " + item + " borrowed state", "user: " + userContainer);
-        }
+        MyLogUtil.logDebug(this, "user: '{}' // changeItemBorrowedStateInDB(item: '{}')", userContainer, item);
     }
 
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
-        return itemServiceImp.readItemListByClassAndUserId(classType, userContainer.getId());
+        List<T> itemListByClassAndUserId = itemServiceImp.readItemListByClassAndUserId(classType, userContainer.getId());
+        MyLogUtil.logDebug(this, "user: '{}' // readItemsByClass(item: '{}') // item list from db: '{}'",
+                userContainer, classType, itemListByClassAndUserId);
+        return itemListByClassAndUserId;
     }
 
     @Override
@@ -77,7 +74,7 @@ public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
     @Override
     public void saveItemToDB(Item item) {
         itemServiceImp.insertItemByUserId(item, userContainer.getId());
-        MyLogUtil.logInfo(itemServiceImp, "save item " + item + " to database ", "user: " + userContainer);
+        MyLogUtil.logDebug(this, "user: '{}' // saveItemToDB(item: '{}')", userContainer, item);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.vshmaliukh.spring_shelf_core.shelf.mysql;
 
 import com.vshmaliukh.spring_shelf_core.shelf.DataBaseConfig;
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,6 +34,7 @@ public class MySqlHandlerConfigurator extends DataBaseConfig {
         dataSource.setUrl(getUrl());
         dataSource.setUsername(getUsername());
         dataSource.setPassword(getPassword());
+        MyLogUtil.logDebug(this, "Mysql datasource: '{}'", dataSource);
         return dataSource;
     }
 
