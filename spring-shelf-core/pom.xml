@@ -18,6 +18,7 @@
     <properties>
         <sqlite-dialect.version>0.1.2</sqlite-dialect.version>
         <spring-boot-starter.version>2.7.4</spring-boot-starter.version>
+        <annotations.version>23.0.0</annotations.version>
     </properties>
 
     <dependencies>
@@ -51,8 +52,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <!--todo set version-->
+            <version>${annotations.version}</version>
         </dependency>
     </dependencies>
 

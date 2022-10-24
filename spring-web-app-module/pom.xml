@@ -9,14 +9,13 @@
         <relativePath>../base-shelf-spring-boot-module/pom.xml</relativePath>
     </parent>
 
-    <groupId>com.vshmaliukh</groupId>
     <artifactId>spring-web-app-module</artifactId>
     <version>0.0.1</version>
     <name>spring-web-app-module</name>
     <description>spring-web-app-module</description>
 
     <dependencies>
-            <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>${spring-boot-starter.version}</version>
