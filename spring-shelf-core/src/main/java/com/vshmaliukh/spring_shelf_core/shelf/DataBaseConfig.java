@@ -10,7 +10,7 @@ import java.util.Properties;
 
 @Getter
 @Setter
-public class DbConfig extends DataSourceProperties {
+public class DataBaseConfig extends DataSourceProperties {
 
     private String hibernateDialect;
     private String hibernateHbm2ddlAuto;

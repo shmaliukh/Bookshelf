@@ -1,6 +1,6 @@
 package com.vshmaliukh.spring_shelf_core.shelf.sqlite;
 
-import com.vshmaliukh.spring_shelf_core.shelf.DbConfig;
+import com.vshmaliukh.spring_shelf_core.shelf.DataBaseConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,7 +22,7 @@ import javax.sql.DataSource;
         basePackages = "com.vshmaliukh.spring_shelf_core.shelf.sqlite.repositories",
         entityManagerFactoryRef = "sqliteEntityManager",
         transactionManagerRef = "sqliteTransactionManager")
-public class SqliteHandlerConfigurator extends DbConfig {
+public class SqliteHandlerConfigurator extends DataBaseConfig {
 
     @Bean
     public DataSource sqliteDataSource() {

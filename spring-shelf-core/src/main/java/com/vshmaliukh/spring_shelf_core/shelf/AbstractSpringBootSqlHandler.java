@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @NoArgsConstructor
-public abstract class AbstractSqlSpringBootHandler extends AbstractSqlHandler {
+public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
 
     boolean isNeedLog = true;
 

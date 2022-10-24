@@ -1,6 +1,6 @@
 package com.vshmaliukh.spring_shelf_core.shelf.mysql;
 
-import com.vshmaliukh.spring_shelf_core.shelf.DbConfig;
+import com.vshmaliukh.spring_shelf_core.shelf.DataBaseConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -23,7 +23,7 @@ import javax.sql.DataSource;
         basePackages = "com.vshmaliukh.spring_shelf_core.shelf.mysql.repositories",
         entityManagerFactoryRef = "mySqlEntityManager",
         transactionManagerRef = "mysqlTransactionManager")
-public class MySqlHandlerConfigurator extends DbConfig {
+public class MySqlHandlerConfigurator extends DataBaseConfig {
 
     @Bean
     @Primary
