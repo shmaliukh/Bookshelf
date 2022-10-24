@@ -27,13 +27,13 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
                 sqliteSpringBootHandler.setUserName(userName);
                 sqliteSpringBootHandler.setUpSettings();
-                MyLogUtil.logInfo(this, "userName: '{}' // use spring Sqlite handler imp: '{}'", sqliteSpringBootHandler);
+                MyLogUtil.logDebug(this, "userName: '{}' // use spring Sqlite handler imp: '{}'", userName, sqliteSpringBootHandler);
                 sqlItemHandler = sqliteSpringBootHandler;
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 mysqlSpringBootHandler.setUserName(userName);
                 mysqlSpringBootHandler.setUpSettings();
-                MyLogUtil.logInfo(this, "userName: '{}' // use spring MySql handler imp: '{}'", mysqlSpringBootHandler);
+                MyLogUtil.logDebug(this, "userName: '{}' // use spring MySql handler imp: '{}'", userName, mysqlSpringBootHandler);
                 sqlItemHandler = mysqlSpringBootHandler;
                 break;
             default:
