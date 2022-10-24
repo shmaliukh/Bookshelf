@@ -16,15 +16,15 @@ public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
     public static final int OLD_MODE_WORK_WITH_SQLITE = 5;
     public static final int OLD_MODE_WORK_WITH_MYSQL = 6;
 
-    protected SaveReadShelfHandler(String userName, int typeOfWorkWithFiles) {
-        setUpDataService(userName, typeOfWorkWithFiles);
+    protected SaveReadShelfHandler(String userName, int saveReadServiceType) {
+        setUpDataService(userName, saveReadServiceType);
     }
 
     public abstract void saveShelfItems();
 
     public abstract void readShelfItems();
 
-    public abstract void setUpDataService(String userName, int typeOfWorkWithFiles);
+    public abstract void setUpDataService(String userName, int saveReadServiceType);
 
     public abstract <T extends Item> List<T> getSortedItemsByClass(Class<T> classType);
 

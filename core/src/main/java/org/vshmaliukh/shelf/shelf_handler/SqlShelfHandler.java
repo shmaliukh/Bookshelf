@@ -14,8 +14,8 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
 
     protected AbstractSqlHandler sqlItemHandler;
 
-    public SqlShelfHandler(String userName, int typeOfWorkWithFiles) {
-        super(userName, typeOfWorkWithFiles);
+    public SqlShelfHandler(String userName, int saveReadServiceType) {
+        super(userName, saveReadServiceType);
     }
 
     @Override

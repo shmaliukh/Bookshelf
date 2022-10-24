@@ -21,26 +21,26 @@ public class SpringBootUI extends AbstractUI {
 
     @Override
     public void configShelfHandler() {
-        switch (typeOfWorkWithFiles) {
+        switch (saveReadServiceType) {
             case MODE_WORK_WITH_ONE_FILE:
             case MODE_WORK_WITH_FILE_PER_TYPE:
-                shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
                 break;
             case MODE_WORK_WITH_SQLITE:
             case MODE_WORK_WITH_MYSQL:
                 shelfHandler = springBootSqlShelfHandler;
-                shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
+                shelfHandler.setUpDataService(user.getName(), saveReadServiceType);
                 break;
             case OLD_MODE_WORK_WITH_SQLITE:
             case OLD_MODE_WORK_WITH_MYSQL:
-                shelfHandler = new SqlShelfHandler(user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new SqlShelfHandler(user.getName(), saveReadServiceType);
                 break;
             default:
-                shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
                 break;
         }
         MyLogUtil.logInfo(this, "user: '{}' // type of save/read service: '{}' // shelfHandler type: '{}'",
-                user.getName(), typeOfWorkWithFiles, shelfHandler.getClass().getSimpleName());
+                user.getName(), saveReadServiceType, shelfHandler.getClass().getSimpleName());
     }
 
 }

@@ -43,20 +43,20 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void configShelfHandler() {
-        switch (typeOfWorkWithFiles) {
+        switch (saveReadServiceType) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
-                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
-                shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
             default:
-                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), typeOfWorkWithFiles);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
         }
-        shelfHandler.setUpDataService(user.getName(), typeOfWorkWithFiles);
+        shelfHandler.setUpDataService(user.getName(), saveReadServiceType);
     }
 
     public void startWithUserConfig(boolean userMode) {
@@ -64,7 +64,7 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void setUpTypeOfWorkWithFiles() {
-        typeOfWorkWithFiles = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
+        saveReadServiceType = consoleInputHandlerForUser.getTypeOfWorkWithFiles();
         configShelfHandler();
     }
 
@@ -74,7 +74,7 @@ public class ConsoleUI extends AbstractUI {
         startWithUserConfig(userMode);
         setUpTypeOfWorkWithFiles();
         initServicesForTerminal();
-        informAboutFileTypeWork(typeOfWorkWithFiles);
+        informAboutFileTypeWork(saveReadServiceType);
 
         shelfHandler.readShelfItems();
         while (isActiveTerminal()) {
@@ -100,7 +100,7 @@ public class ConsoleUI extends AbstractUI {
     }
 
     public void informAboutFileTypeWork(int typeOfWorkWithFiles) {
-        printWriter.println("Type of work with save/read shelf with files: ");
+        printWriter.println("Save/read service type: ");
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");

@@ -2,6 +2,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.mysql.MysqlSpringBootHandler;
 import com.vshmaliukh.spring_shelf_core.shelf.sqlite.SqliteSpringBootHandler;
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.SqliteHandler;
@@ -20,20 +21,25 @@ public class SpringBootSqlShelfHandler extends SqlShelfHandler {
     }
 
     @Override
-    public void setUpDataService(String userName, int typeOfWorkWithFiles) {
-        switch (typeOfWorkWithFiles) {
+    public void setUpDataService(String userName, int saveReadServiceType) {
+        MyLogUtil.logInfo(this, "userName: '{}' // type of work with save/read service: '{}'", userName, saveReadServiceType);
+        switch (saveReadServiceType) {
             case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
                 sqliteSpringBootHandler.setUserName(userName);
                 sqliteSpringBootHandler.setUpSettings();
+                MyLogUtil.logInfo(this, "userName: '{}' // use spring Sqlite handler imp: '{}'", sqliteSpringBootHandler);
                 sqlItemHandler = sqliteSpringBootHandler;
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
                 mysqlSpringBootHandler.setUserName(userName);
                 mysqlSpringBootHandler.setUpSettings();
+                MyLogUtil.logInfo(this, "userName: '{}' // use spring MySql handler imp: '{}'", mysqlSpringBootHandler);
                 sqlItemHandler = mysqlSpringBootHandler;
                 break;
             default:
-                sqlItemHandler = new SqliteHandler(userName);
+                SqliteHandler sqliteHandler = new SqliteHandler(userName);
+                MyLogUtil.logWarn(this, "userName: '{}' // use default Sqlite handler imp: '{}'", userName, sqliteHandler);
+                sqlItemHandler = sqliteHandler;
                 break;
         }
     }

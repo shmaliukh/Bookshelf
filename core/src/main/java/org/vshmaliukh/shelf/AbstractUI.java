@@ -21,7 +21,7 @@ public abstract class AbstractUI {
     protected Random random = new Random();
 
     protected User user;
-    protected int typeOfWorkWithFiles;
+    protected int saveReadServiceType;
     protected SaveReadShelfHandler shelfHandler;
 
     public abstract void configShelfHandler();

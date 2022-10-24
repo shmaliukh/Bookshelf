@@ -32,7 +32,7 @@ public class SpringBootWebUtil {
         if (StringUtils.isNotBlank(userName)) {
             SpringBootUI webUI = springBootUI;
             webUI.setUser(new User(userName));
-            webUI.setTypeOfWorkWithFiles(typeOfWorkWithFiles);
+            webUI.setSaveReadServiceType(typeOfWorkWithFiles);
             webUI.configShelfHandler();
 
             SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
