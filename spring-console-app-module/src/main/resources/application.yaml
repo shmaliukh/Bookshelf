@@ -8,6 +8,7 @@ spring:
   profiles:
     active: dev
 
-#logging:
-#  level:
-#    root: debug
+# logging config
+logging:
+  level:
+    root: WARN

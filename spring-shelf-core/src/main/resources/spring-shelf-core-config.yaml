@@ -6,9 +6,8 @@ shelf:
   sqliteDbUrlStart: "jdbc:sqlite://"
   sqliteDbUrl: ${shelf.sqliteDbUrlStart}${shelf.sqliteDbPath}
 
-logging:
-  level:
-    root: INFO
+#  logging levels and its order from minimum << maximum
+#  OFF << FATAL << ERROR << WARN << INFO << DEBUG << TRACE << ALL
 
 ---
 

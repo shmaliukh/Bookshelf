@@ -13,6 +13,7 @@ spring.web.resources.static-locations: file:./spring-web-app-module/src/main/res
 # app config
 spring.profiles.active: dev
 
-#logging:
-#  level:
-#    root: debug
+# logging config
+logging:
+  level:
+    root: INFO

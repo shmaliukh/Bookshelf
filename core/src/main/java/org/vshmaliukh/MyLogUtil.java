@@ -25,11 +25,19 @@ public final class MyLogUtil {
     }
 
     public static void logWarn(Class serviceClassType, String message, Object... values) {
-        logDebug(serviceClassType.getSimpleName(), message, values);
+        logWarn(serviceClassType.getSimpleName(), message, values);
     }
 
     public static void logWarn(Object serviceInstance, String message, Object... values) {
-        logDebug(serviceInstance.getClass(), message, values);
+        logWarn(serviceInstance.getClass(), message, values);
+    }
+
+    public static void logErr(String serviceName, Exception exception) {
+        log.error("[" + serviceName + "] error: " + exception.getMessage(), exception);
+    }
+
+    public static void logErr(Object serviceInstance, Exception exception) {
+        logErr(serviceInstance.getClass().getSimpleName(), exception);
     }
 
     public static void logErr(String serviceName, String message, Object... values) {
@@ -37,11 +45,11 @@ public final class MyLogUtil {
     }
 
     public static void logErr(Class serviceClassType, String message, Object... values) {
-        logDebug(serviceClassType.getSimpleName(), message, values);
+        logErr(serviceClassType.getSimpleName(), message, values);
     }
 
     public static void logErr(Object serviceInstance, String message, Object... values) {
-        logDebug(serviceInstance.getClass(), message, values);
+        logErr(serviceInstance.getClass(), message, values);
     }
 
     public static void logInfo(String serviceName, String message, Object... values) {
