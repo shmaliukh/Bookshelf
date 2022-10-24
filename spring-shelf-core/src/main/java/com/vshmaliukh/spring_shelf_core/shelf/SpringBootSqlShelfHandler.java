@@ -2,7 +2,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.mysql.MysqlSpringBootHandler;
 import com.vshmaliukh.spring_shelf_core.shelf.sqlite.SqliteSpringBootHandler;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.SqliteHandler;

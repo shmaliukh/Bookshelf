@@ -5,7 +5,7 @@ import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.ComicsEntityConvert
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.MagazineEntityConvertor;
 import com.vshmaliukh.spring_shelf_core.shelf.convertors.imp.NewspaperEntityConvertor;
 import com.vshmaliukh.spring_shelf_core.shelf.entities.*;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;

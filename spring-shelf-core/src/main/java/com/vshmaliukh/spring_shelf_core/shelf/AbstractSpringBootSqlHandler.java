@@ -2,7 +2,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlUserService;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;

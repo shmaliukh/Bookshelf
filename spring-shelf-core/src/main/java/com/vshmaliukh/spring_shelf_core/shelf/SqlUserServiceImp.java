@@ -3,7 +3,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 import com.vshmaliukh.spring_shelf_core.shelf.entities.UserEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithUserEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlUserService;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 
 public abstract class SqlUserServiceImp implements SqlUserService {
 

@@ -2,7 +2,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.entities.*;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;

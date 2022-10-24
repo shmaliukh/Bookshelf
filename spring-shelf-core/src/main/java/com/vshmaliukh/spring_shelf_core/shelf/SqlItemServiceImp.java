@@ -5,7 +5,7 @@ import com.vshmaliukh.spring_shelf_core.shelf.convertors.ItemEntityConvertorProv
 import com.vshmaliukh.spring_shelf_core.shelf.entities.ItemEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;

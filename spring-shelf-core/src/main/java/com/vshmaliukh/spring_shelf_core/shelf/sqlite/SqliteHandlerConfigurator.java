@@ -1,7 +1,7 @@
 package com.vshmaliukh.spring_shelf_core.shelf.sqlite;
 
 import com.vshmaliukh.spring_shelf_core.shelf.DataBaseConfig;
-import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
+import org.vshmaliukh.MyLogUtil;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
