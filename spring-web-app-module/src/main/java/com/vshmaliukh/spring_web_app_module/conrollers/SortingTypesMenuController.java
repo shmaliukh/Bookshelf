@@ -9,14 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.menus.GeneratedMenu;
 import org.vshmaliukh.services.menus.GeneratedMenuForSorting;
 import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
-import org.vshmaliukh.utils.WebUtils;
 
 import java.util.List;
 
-import static org.vshmaliukh.Constants.*;
+import static org.vshmaliukh.Constants.ITEMS_SORTING_MENU_TITLE;
+import static org.vshmaliukh.Constants.SORTING_TYPES_MENU_TITLE;
 
 @Controller
 @RequestMapping(path = "/" + SORTING_TYPES_MENU_TITLE)
@@ -24,16 +25,20 @@ public class SortingTypesMenuController {
 
     @PostMapping()
     public ModelAndView doPost(@RequestParam String menuItemIndex,
-                              ModelMap modelMap) {
+                               ModelMap modelMap) {
+        String pageToRedirect = ITEMS_SORTING_MENU_TITLE;
         if (StringUtils.isNotBlank(menuItemIndex)) {
             GeneratedMenu generatedMenu = new GeneratedMenuForSorting();
             try {
                 int parseInt = Integer.parseInt(menuItemIndex);
                 String classType = generatedMenu.getMenuItems().get(parseInt - 1).getClassType().getSimpleName();
-                return new ModelAndView("redirect:/" + ITEMS_SORTING_MENU_TITLE+ "/" + classType, modelMap);
+                return new ModelAndView("redirect:/" + pageToRedirect + "/" + classType, modelMap);
             } catch (NumberFormatException nfe) {
-                WebUtils.logServletErr(SORTING_TYPES_MENU_TITLE, nfe);
+                MyLogUtil.logErr(this, nfe);
             }
+        } else {
+            MyLogUtil.logWarn(this, "problem to redirect to '{}' page: menuItemIndex is blank", pageToRedirect);
+            MyLogUtil.logDebug(this, "doPost(menuItemIndex: '{}', modelMap: '{}') ", menuItemIndex, modelMap, modelMap);
         }
         return new ModelAndView(SORTING_TYPES_MENU_TITLE, modelMap);
     }

@@ -11,23 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.vshmaliukh.Constants.CHOOSE_TYPE_OF_WORK_TITLE;
 import static org.vshmaliukh.Constants.MAIN_MENU_TITLE;
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE;
 
 @Controller
 @RequestMapping("/" + CHOOSE_TYPE_OF_WORK_TITLE)
 public class ChooseTypeOfWorkController {
 
     @GetMapping()
-    ModelAndView doGet(@CookieValue(value = TYPE_OF_WORK_WITH_FILES, defaultValue = "") String typeOfWork,
+    ModelAndView doGet(@CookieValue(value = TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
         ControllerUtils.formRadioButtonsToChooseTypeOfWork(typeOfWork, modelMap);
         return new ModelAndView(CHOOSE_TYPE_OF_WORK_TITLE, modelMap);
     }
 
     @PostMapping()
-    String doPost(@RequestParam(value = TYPE_OF_WORK_WITH_FILES) String typeOfWork,
+    String doPost(@RequestParam(value = TYPE_OF_WORK_WITH_SAVE_READ_SERVICE) String typeOfWork,
                         HttpServletResponse response) {
-        CookieUtil.addCookie(TYPE_OF_WORK_WITH_FILES, typeOfWork, response);
+        CookieUtil.addCookie(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, typeOfWork, response);
         return "redirect:/" + MAIN_MENU_TITLE;
     }
 

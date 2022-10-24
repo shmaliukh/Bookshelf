@@ -31,7 +31,7 @@ public final class WebUtils {
 
     public static SaveReadShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
-        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
+        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE);
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);

@@ -23,11 +23,11 @@ public class MainMenuController {
 
     @GetMapping()
     public ModelAndView doGet(@CookieValue(value = USER_NAME) String userName,
-                              @CookieValue(value = TYPE_OF_WORK_WITH_FILES) int typeOfWork,
+                              @CookieValue(value = TYPE_OF_WORK_WITH_SAVE_READ_SERVICE) int typeOfWork,
                               ModelMap modelMap) {
         springBootWebUtil.formCurrentStateTable(userName, typeOfWork, modelMap);
         modelMap.addAttribute(USER_NAME, userName);
-        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(MAIN_MENU_TITLE, modelMap);
     }
 

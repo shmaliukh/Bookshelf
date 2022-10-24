@@ -13,9 +13,9 @@ public final class Constants {
     public static final String RADIO_BUTTONS = "radioButtons";
     public static final String CHOOSE_TYPE_OF_WORK_TITLE = "choose_type_of_work";
 
-    public static final String TYPE_OF_WORK_WITH_FILES = "typeOfWork";
+    public static final String TYPE_OF_WORK_WITH_SAVE_READ_SERVICE = "typeOfWork";
     public static final String USER_NAME = "userName";
-    public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_FILES));
+    public static final List<String> USER_PARAMETER_LIST = Collections.unmodifiableList(Arrays.asList(USER_NAME, TYPE_OF_WORK_WITH_SAVE_READ_SERVICE));
 
     public static final String LOG_IN_TITLE = "log_in";
     public static final String MAIN_MENU_TITLE = "main_menu";

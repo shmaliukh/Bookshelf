@@ -21,7 +21,7 @@ public class LogInServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         String userInputName = request.getParameter(Constants.USER_NAME);
-        String userInputNumberStr = request.getParameter(Constants.TYPE_OF_WORK_WITH_FILES);
+        String userInputNumberStr = request.getParameter(Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE);
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
         if (AbstractInputHandler.isValidInputString(userInputName, ConstantsForItemInputValidation.PATTERN_FOR_USER_NAME) && AbstractInputHandler.isValidInputInteger(userInputNumberStr, ConstantsForItemInputValidation.PATTERN_FOR_TYPE_OF_WORK_WITH_FILES)) {
@@ -38,7 +38,7 @@ public class LogInServlet extends HttpServlet {
         WebPageBuilder webPageBuilder = new WebPageBuilder(Constants.LOG_IN_TITLE);
 
         String userNameStr = request.getParameter(Constants.USER_NAME) != null ? request.getParameter(Constants.USER_NAME) : "";
-        String typeOfWorkWithFilesStr = request.getParameter(Constants.TYPE_OF_WORK_WITH_FILES) != null ? request.getParameter(Constants.TYPE_OF_WORK_WITH_FILES) : "";
+        String typeOfWorkWithFilesStr = request.getParameter(Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE) != null ? request.getParameter(Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE) : "";
 
         webPageBuilder.addToBody(logInFormStr(userNameStr, typeOfWorkWithFilesStr));
 
@@ -61,7 +61,7 @@ public class LogInServlet extends HttpServlet {
                 "       <br>\n " +
                 ConstantsForConsoleUserInputHandler.MESSAGE_ENTER_TYPE_OF_WORK_WITH_FILES.replaceAll(System.lineSeparator(), System.lineSeparator()+"<br>") + "\n " +
                 "       <br>\n " +
-                "   <input type = \"number\" name=\"" + Constants.TYPE_OF_WORK_WITH_FILES + "\"value=\"" + typeOfWorkWithFilesStr + "\">\n " +
+                "   <input type = \"number\" name=\"" + Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE + "\"value=\"" + typeOfWorkWithFilesStr + "\">\n " +
                 "       <br>\n " +
                 "       <br>\n " +
                 "   <input type = \"submit\" value = \"Submit\" />\n " +

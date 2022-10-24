@@ -39,7 +39,7 @@ public final class ControllerUtils {
     public static void formRadioButtonsToChooseTypeOfWork(String typeOfWork, ModelMap modelMap) {
         List<MenuItem> menuItems = generateTypeOfWorkMenu();
         formRadioButtons(menuItems, modelMap);
-        modelMap.addAttribute(Constants.TYPE_OF_WORK_WITH_FILES, typeOfWork);
+        modelMap.addAttribute(Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, typeOfWork);
     }
 
     public static String addFormIsRandomConfigStr(String itemClassType, String isRandom) {

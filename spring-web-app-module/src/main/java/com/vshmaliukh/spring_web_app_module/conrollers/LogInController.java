@@ -34,7 +34,7 @@ public class LogInController {
         String typeOfWork = userModel.getTypeOfWorkAsStr();
 
         CookieUtil.addCookie(USER_NAME, userName, response);
-        CookieUtil.addCookie(TYPE_OF_WORK_WITH_FILES, typeOfWork, response);
+        CookieUtil.addCookie(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, typeOfWork, response);
         return "redirect:/" + MAIN_MENU_TITLE;
     }
 

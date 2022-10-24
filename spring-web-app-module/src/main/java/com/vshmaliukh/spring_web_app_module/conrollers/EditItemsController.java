@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.vshmaliukh.Constants.EDIT_ITEMS_TITLE;
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE;
 
 @Controller
 @RequestMapping("/" + EDIT_ITEMS_TITLE)
@@ -27,7 +27,7 @@ public class EditItemsController {
                        @CookieValue int typeOfWork,
                        ModelMap modelMap) {
         springBootWebUtil.formCurrentStateTable(userName, typeOfWork, modelMap);
-        modelMap.addAttribute(TYPE_OF_WORK_WITH_FILES, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
+        modelMap.addAttribute(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, ControllerUtils.getFriendlyTypeOfWorkStr(typeOfWork));
         return new ModelAndView(EDIT_ITEMS_TITLE, modelMap);
     }
 

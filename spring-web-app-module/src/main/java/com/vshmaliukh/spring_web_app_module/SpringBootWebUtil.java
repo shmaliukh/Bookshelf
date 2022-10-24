@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 import org.vshmaliukh.Constants;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.print_table_service.TableHandler;
 import org.vshmaliukh.services.ConvertorToStringForItems;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -28,16 +29,20 @@ public class SpringBootWebUtil {
         this.springBootUI = springBootUI;
     }
 
-    public SaveReadShelfHandler generateSpringBootShelfHandler(String userName, int typeOfWorkWithFiles) {
+    public SaveReadShelfHandler generateSpringBootShelfHandler(String userName, int saveReadServiceType) {
         if (StringUtils.isNotBlank(userName)) {
             SpringBootUI webUI = springBootUI;
             webUI.setUser(new User(userName));
-            webUI.setSaveReadServiceType(typeOfWorkWithFiles);
+            webUI.setSaveReadServiceType(saveReadServiceType);
             webUI.configShelfHandler();
 
             SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
             shelfHandler.readShelfItems();
             return shelfHandler;
+        } else {
+            MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' " +
+                    "// problem to generate SpringBootShelfHandler: userName is blank ", userName, saveReadServiceType);
+            MyLogUtil.logDebug(this, "generateSpringBootShelfHandler(userName: '{}', saveReadServiceType: '{}') ", userName, saveReadServiceType);
         }
         return null;
     }
@@ -53,6 +58,10 @@ public class SpringBootWebUtil {
             TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
             titles.addAll(tableGenerator.getGeneratedTitleList());
             tableValues.addAll(tableGenerator.getGeneratedTableList());
+        } else {
+            MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to form current state table: shelf == null ", userName, typeOfWork);
+            MyLogUtil.logDebug(this, "formCurrentStateTable(userName: '{}', typeOfWork: '{}', modelMap: '{}') " +
+                    "// shelfHandler: '{}'", userName, typeOfWork, modelMap, shelfHandler);
         }
         modelMap.addAttribute(Constants.TITLES, titles);
         modelMap.addAttribute(Constants.ITEMS, tableValues);
@@ -77,7 +86,15 @@ public class SpringBootWebUtil {
                 TableHandler tableGenerator = new TableHandler(table, ItemTitles.TITLE_LIST, true);
                 titles.addAll(tableGenerator.getGeneratedTitleList());
                 tableValues.addAll(tableGenerator.getGeneratedTableList());
+            } else {
+                MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to form item table by class: shelf == null ", userName, typeOfWork);
+                MyLogUtil.logDebug(this, "formItemTableByClass(userName: '{}', typeOfWork: '{}', itemClassType: '{}', menuItemIndex: '{}', modelMap: '{}') " +
+                        "// webShelfHandler: '{}'", userName, typeOfWork, itemClassType, menuItemIndex, modelMap, webShelfHandler);
             }
+        } else {
+            MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to form item table by class: webShelfHandler == null ", userName, typeOfWork);
+            MyLogUtil.logDebug(this, "formItemTableByClass(userName: '{}', typeOfWork: '{}', itemClassType: '{}', menuItemIndex: '{}', modelMap: '{}') ",
+                    userName, typeOfWork, itemClassType, menuItemIndex, modelMap);
         }
         modelMap.addAttribute(Constants.TITLES, titles);
         modelMap.addAttribute(Constants.ITEMS, tableValues);

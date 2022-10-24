@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -42,6 +43,12 @@ public class AddItemController {
         if (handlerByName.isValidHTMLFormData(itemFieldValueMap) && webShelfHandler != null) {
             Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
             webShelfHandler.addItem(item);
+        } else {
+            MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to add item with fields '{}' index: " +
+                    "item fields are not valid or webShelfHandler == null", userName, typeOfWork, jsonBody);
+            MyLogUtil.logDebug(this, "doGet(userName: '{}', typeOfWork: '{}', itemClassType: '{}', jsonBody: '{}', modelMap: '{}') " +
+                            "// handlerByName: '{}' // springBootWebUtil: '{}' // webShelfHandler: '{}' // itemFieldValueMap: '{}' ",
+                    userName, typeOfWork, itemClassType, jsonBody, modelMap, handlerByName,springBootWebUtil, webShelfHandler, itemFieldValueMap);
         }
         //TODO set status according to adding item state
 //        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

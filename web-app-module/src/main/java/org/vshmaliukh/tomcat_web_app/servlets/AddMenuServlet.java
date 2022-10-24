@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE;
 import static org.vshmaliukh.Constants.MENU_ITEM_INDEX;
 
 public class AddMenuServlet extends HttpServlet {
@@ -28,7 +28,7 @@ public class AddMenuServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_FILES);
+        String typeOfWorkWithFilesStr = request.getParameter(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE);
         String menuItemIndex = request.getParameter(MENU_ITEM_INDEX);
         Map<String, String> userAtr = WebUtils.readUserAtr(request);
 
