@@ -2,6 +2,7 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.entities.*;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
@@ -31,13 +32,14 @@ public abstract class ItemEntityRepositoryActionsProvider {
         mysqlItemRepositoryActionMap.put(Magazine.class, magazineRepositoryActions);
         mysqlItemRepositoryActionMap.put(Comics.class, comicsRepositoryActions);
         mysqlItemRepositoryActionMap.put(Newspaper.class, newspaperRepositoryActions);
+        MyLogUtil.logDebug(this, "class type - action with item entity map : '{}'", mysqlItemRepositoryActionMap);
     }
 
     public ActionsWithItemEntity getRepositoryActionByClassType(Class itemClassType) {
         ActionsWithItemEntity repositoryAction = mysqlItemRepositoryActionMap.getOrDefault(itemClassType, null);
         if (repositoryAction == null) {
-            log.error("[ItemEntityRepositoryActionsProvider] err: " +
-                    "problem to get repositoryAction by '{}' item class type", itemClassType);
+            MyLogUtil.logWarn(this, "problem to get repositoryAction by '{}' item class type " +
+                    "// repositoryAction == null", itemClassType);
         }
         return repositoryAction;
     }
