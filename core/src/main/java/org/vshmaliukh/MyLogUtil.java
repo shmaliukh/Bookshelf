@@ -9,7 +9,7 @@ public final class MyLogUtil {
     }
 
     public static void logDebug(String serviceName, String message, Object... values) {
-        log.debug("[" + serviceName + "] debug:" + message, values);
+        log.debug("[" + serviceName + "] debug: " + message, values);
     }
 
     public static void logDebug(Class serviceClassType, String message, Object... values) {
@@ -21,7 +21,7 @@ public final class MyLogUtil {
     }
 
     public static void logWarn(String serviceName, String message, Object... values) {
-        log.warn("[" + serviceName + "] warn:" + message, values);
+        log.warn("[" + serviceName + "] warn: " + message, values);
     }
 
     public static void logWarn(Class serviceClassType, String message, Object... values) {
@@ -33,7 +33,7 @@ public final class MyLogUtil {
     }
 
     public static void logErr(String serviceName, String message, Object... values) {
-        log.error("[" + serviceName + "] error:" + message, values);
+        log.error("[" + serviceName + "] error: " + message, values);
     }
 
     public static void logErr(Class serviceClassType, String message, Object... values) {
@@ -45,7 +45,7 @@ public final class MyLogUtil {
     }
 
     public static void logInfo(String serviceName, String message, Object... values) {
-        log.info("[" + serviceName + "] info:" + message, values);
+        log.info("[" + serviceName + "] info: " + message, values);
     }
 
     public static void logInfo(Class serviceClassType, String message, Object... values) {
@@ -56,8 +56,16 @@ public final class MyLogUtil {
         logInfo(serviceInstance.getClass(), message, values);
     }
 
+    public static void logTrace(String serviceName, String message, Object... values) {
+        log.trace("[" + serviceName + "] trace: " + message, values);
+    }
+
+    public static void logTrace(Class serviceClassType, String message, Object... values) {
+        logTrace(serviceClassType.getSimpleName(), message, values);
+    }
+
     public static void logTrace(Object serviceInstance, String message, Object... values) {
-        log.trace("[" + serviceInstance.getClass().getSimpleName() + "] trace:" + message, values);
+        logTrace(serviceInstance.getClass(), message, values);
     }
 
 }

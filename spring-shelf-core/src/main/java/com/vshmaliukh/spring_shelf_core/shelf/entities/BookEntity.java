@@ -2,7 +2,6 @@ package com.vshmaliukh.spring_shelf_core.shelf.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import static com.vshmaliukh.spring_shelf_core.shelf.ConstantsForDataBase.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = BOOK_TABLE,
         uniqueConstraints = {@UniqueConstraint(columnNames = {
@@ -27,4 +25,14 @@ public class BookEntity extends ItemEntity {
     @Column(name = DATE_COLUMN, nullable = false)
     Date dateOfIssue;
 
+    @Override
+    public String toString() {
+        return "BookEntity{" +
+                "name='" + name + '\'' +
+                ", pages=" + pages +
+                ", isBorrowed=" + isBorrowed +
+                ", author='" + author + '\'' +
+                ", dateOfIssue=" + dateOfIssue +
+                '}';
+    }
 }

@@ -2,7 +2,6 @@ package com.vshmaliukh.spring_shelf_core.shelf.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import static com.vshmaliukh.spring_shelf_core.shelf.ConstantsForDataBase.*;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name= COMICS_TABLE,
         uniqueConstraints = {@UniqueConstraint(columnNames = {
@@ -23,4 +21,13 @@ public class ComicsEntity extends ItemEntity{
     @Column(name = PUBLISHER_COLUMN, nullable = false)
     String publisher;
 
+    @Override
+    public String toString() {
+        return "ComicsEntity{" +
+                "name='" + name + '\'' +
+                ", pages=" + pages +
+                ", isBorrowed=" + isBorrowed +
+                ", publisher='" + publisher + '\'' +
+                '}';
+    }
 }
