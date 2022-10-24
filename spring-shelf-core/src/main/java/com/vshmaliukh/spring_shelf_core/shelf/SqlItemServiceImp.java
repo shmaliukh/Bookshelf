@@ -5,13 +5,12 @@ import com.vshmaliukh.spring_shelf_core.shelf.convertors.ItemEntityConvertorProv
 import com.vshmaliukh.spring_shelf_core.shelf.entities.ItemEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
-import lombok.extern.slf4j.Slf4j;
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public abstract class SqlItemServiceImp implements SqlItemService {
 
     protected ItemEntityRepositoryActionsProvider itemEntityRepositoryActionsProvider;
@@ -24,6 +23,8 @@ public abstract class SqlItemServiceImp implements SqlItemService {
             Item item = convertorByEntityClassType.getConvertedItemFromEntity(entity);
             itemList.add(item);
         }
+        MyLogUtil.logDebug(SqlItemServiceImp.class, "convertListOfEntities(entityList: '{}') " +
+                "// converted item list: '{}'", entityList, itemList);
         return itemList;
     }
 
@@ -33,10 +34,12 @@ public abstract class SqlItemServiceImp implements SqlItemService {
             ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(item.getClass());
             ItemEntity itemEntity = convertorByItemClass.getConvertedEntityFromItem(item, userId);
             itemEntity.setUserId(userId);
-            repositoryActions.save(itemEntity);
+            ItemEntity savedItemEntity = repositoryActions.save(itemEntity);
+            MyLogUtil.logInfo(this, "user id: '{}' // item to insert: '{}' " +
+                    "// saved item entity: '{}'", userId, item, savedItemEntity);
         } else {
-            log.error("[" + itemEntityRepositoryActionsProvider.getClass().getSimpleName() + "] err: " +
-                    "problem to exist insertItemByUserId(item: " + item + " , userId: " + userId + ") // repositoryActions == null");
+            MyLogUtil.logWarn(itemEntityRepositoryActionsProvider, "problem to exist insertItemByUserId(item: '{}', userId: '{}') " +
+                    "// repositoryActions == NULL", item, userId);
         }
     }
 
@@ -46,13 +49,23 @@ public abstract class SqlItemServiceImp implements SqlItemService {
             List<ItemEntity> allPerTypeByUserId = mysqlItemRepository.findAllByUserId(userId);
             entityList.addAll(allPerTypeByUserId);
         }
-        return SqlItemServiceImp.convertListOfEntities(entityList);
+        MyLogUtil.logDebug(this, "user id: '{}' // readAllItemListByUserId(userId: '{}') " +
+                "// entity list from db: {}", userId, userId, entityList);
+        List<Item> itemList = SqlItemServiceImp.convertListOfEntities(entityList);
+        MyLogUtil.logDebug(this, "user id: '{}' // readAllItemListByUserId(userId: '{}') " +
+                "// converted item list from db: {}", userId, userId, itemList);
+        return itemList;
     }
 
     public <T extends Item> List<T> readItemListByClassAndUserId(Class<T> itemClassType, Integer userId) {
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getRepositoryActionByClassType(itemClassType);
         List entityListByClassType = repositoryByClassType.findAllByUserId(userId);
-        return SqlItemServiceImp.convertListOfEntities(entityListByClassType);
+        MyLogUtil.logDebug(this, "user id: '{}' // readItemListByClassAndUserId(itemClassType: '{}', userId: '{}') " +
+                "// entity list from db by class type: {}", userId, itemClassType, userId, entityListByClassType);
+        List<T> itemList = SqlItemServiceImp.convertListOfEntities(entityListByClassType);
+        MyLogUtil.logDebug(this, "user id: '{}' // readItemListByClassAndUserId(itemClassType: '{}', userId: '{}') " +
+                "// converted item list by class type: {}", userId, itemClassType, userId, itemList);
+        return itemList;
     }
 
     public void deleteItemByUserId(Item item, Integer userId) {
@@ -61,15 +74,20 @@ public abstract class SqlItemServiceImp implements SqlItemService {
         ItemEntity entityFromItem = convertorByItemClassType.getConvertedEntityFromItem(item, userId);
         ActionsWithItemEntity repositoryActionsByClassType = itemEntityRepositoryActionsProvider.getRepositoryActionByClassType(itemClassType);
         repositoryActionsByClassType.deleteById(entityFromItem.getId());
+        MyLogUtil.logInfo(this, "user id: '{}' // try to delete item: '{}' " +
+                "// entity from item: '{}' ", userId, item, entityFromItem);
     }
 
     public void changeItemBorrowedStateByUserId(Item item, Integer userId) {
         Class<? extends Item> itemClassType = item.getClass();
         ItemEntityConvertor convertorByItemClass = ItemEntityConvertorProvider.getConvertorByItemClassType(itemClassType);
         ItemEntity entityFromItem = convertorByItemClass.getConvertedEntityFromItem(item, userId);
-        entityFromItem.setBorrowed(!entityFromItem.isBorrowed());
+        boolean currentBorrowedState = entityFromItem.isBorrowed();
+        entityFromItem.setBorrowed(!currentBorrowedState);
         ActionsWithItemEntity repositoryByClassType = itemEntityRepositoryActionsProvider.getRepositoryActionByClassType(itemClassType);
-        repositoryByClassType.save(entityFromItem);
+        ItemEntity itemEntity = repositoryByClassType.save(entityFromItem);
+        MyLogUtil.logInfo(this, "user id: '{}' // item to change borrowed state: '{}' " +
+                "// updated item entity: '{}'", userId, item, itemEntity);
     }
 
 }

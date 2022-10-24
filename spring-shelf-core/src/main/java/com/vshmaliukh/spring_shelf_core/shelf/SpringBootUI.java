@@ -1,5 +1,6 @@
 package com.vshmaliukh.spring_shelf_core.shelf;
 
+import com.vshmaliukh.spring_shelf_core.utils.MyLogUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.shelf.AbstractUI;
@@ -38,7 +39,8 @@ public class SpringBootUI extends AbstractUI {
                 shelfHandler = new GsonShelfHandler(user.getName(), typeOfWorkWithFiles);
                 break;
         }
-        log.debug("[" + this.getClass().getSimpleName() + "] info: user: '{}' // shelfHandler type: '{}'", user.getName(), shelfHandler.getClass().getSimpleName());
+        MyLogUtil.logInfo(this, "user: '{}' // type of save/read service: '{}' // shelfHandler type: '{}'",
+                user.getName(), typeOfWorkWithFiles, shelfHandler.getClass().getSimpleName());
     }
 
 }

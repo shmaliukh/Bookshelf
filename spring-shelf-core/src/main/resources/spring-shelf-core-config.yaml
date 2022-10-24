@@ -6,6 +6,10 @@ shelf:
   sqliteDbUrlStart: "jdbc:sqlite://"
   sqliteDbUrl: ${shelf.sqliteDbUrlStart}${shelf.sqliteDbPath}
 
+logging:
+  level:
+    root: INFO
+
 ---
 
 # dev config
