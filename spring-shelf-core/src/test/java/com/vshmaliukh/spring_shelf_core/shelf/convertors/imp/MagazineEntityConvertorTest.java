@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MagazineEntityConvertorTest {
 
-    static Magazine magazine1 = new Magazine("noNameBook1", 1, false);
-    static Magazine magazine2 = new Magazine("noNameBook2", 2, true);
+    static Magazine magazine1 = new Magazine("someName1", 1, false);
+    static Magazine magazine2 = new Magazine("someName2", 2, true);
     static MagazineEntity magazineEntity1 = new MagazineEntity();
     static MagazineEntity magazineEntity2 = new MagazineEntity();
 

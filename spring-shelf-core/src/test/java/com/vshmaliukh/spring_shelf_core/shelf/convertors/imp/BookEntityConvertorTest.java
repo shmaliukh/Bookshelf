@@ -16,8 +16,8 @@ class BookEntityConvertorTest {
     public static final Date ISSUANCE_DATE_1 = new Date(System.currentTimeMillis() - 60 * 60 * 64 * 1000);
     public static final Date ISSUANCE_DATE_2 = new Date();
 
-    static Book book1 = new Book("noNameBook1", 1, false, "NoAuthor1", ISSUANCE_DATE_1);
-    static Book book2 = new Book("noNameBook2", 2, true, "NoAuthor2", ISSUANCE_DATE_2);
+    static Book book1 = new Book("someName1", 1, false, "someAuthor1", ISSUANCE_DATE_1);
+    static Book book2 = new Book("someName2", 2, true, "someAuthor2", ISSUANCE_DATE_2);
     static BookEntity bookEntity1 = new BookEntity();
     static BookEntity bookEntity2 = new BookEntity();
 
