@@ -42,7 +42,7 @@ public class LogInInterceptor implements HandlerInterceptor {
             CookieUtil.refreshCookie(cookie, CookieUtil.MAX_AGE);
             return cookie.getValue();
         }
-        MyLogUtil.logWarn(this, "problem to read cookie value by name: '{}' ", nameToCheck);
+        MyLogUtil.logDebug(this, "problem to read cookie value by name: '{}' ", nameToCheck);
         MyLogUtil.logDebug(this, "readCookieValueAndRefresh(cookie: '{}', nameToCheck: '{}') will return NULL", cookie, nameToCheck);
         return null;
     }

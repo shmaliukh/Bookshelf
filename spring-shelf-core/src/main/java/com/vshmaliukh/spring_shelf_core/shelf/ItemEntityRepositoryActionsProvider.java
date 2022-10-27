@@ -1,9 +1,11 @@
 package com.vshmaliukh.spring_shelf_core.shelf;
 
-import com.vshmaliukh.spring_shelf_core.shelf.entities.*;
+import com.vshmaliukh.spring_shelf_core.shelf.entities.BookEntity;
+import com.vshmaliukh.spring_shelf_core.shelf.entities.ComicsEntity;
+import com.vshmaliukh.spring_shelf_core.shelf.entities.MagazineEntity;
+import com.vshmaliukh.spring_shelf_core.shelf.entities.NewspaperEntity;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.ActionsWithItemEntity;
 import org.vshmaliukh.MyLogUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.literature_items.book_item.Book;
 import org.vshmaliukh.shelf.literature_items.comics_item.Comics;
 import org.vshmaliukh.shelf.literature_items.magazine_item.Magazine;
@@ -15,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Slf4j
 public abstract class ItemEntityRepositoryActionsProvider {
 
     protected Map<Class, ActionsWithItemEntity> mysqlItemRepositoryActionMap;

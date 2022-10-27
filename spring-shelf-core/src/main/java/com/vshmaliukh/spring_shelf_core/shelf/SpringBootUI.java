@@ -1,15 +1,13 @@
 package com.vshmaliukh.spring_shelf_core.shelf;
 
-import org.vshmaliukh.MyLogUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.shelf.AbstractUI;
 import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 
 import static org.vshmaliukh.services.SaveReadShelfHandler.*;
 
-@Slf4j
 @Service
 public class SpringBootUI extends AbstractUI {
 
@@ -39,7 +37,7 @@ public class SpringBootUI extends AbstractUI {
                 shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
                 break;
         }
-        MyLogUtil.logInfo(this, "user: '{}' // type of save/read service: '{}' // shelfHandler type: '{}'",
+        MyLogUtil.logDebug(this, "user: '{}' // type of save/read service: '{}' // shelfHandler type: '{}'",
                 user.getName(), saveReadServiceType, shelfHandler.getClass().getSimpleName());
     }
 

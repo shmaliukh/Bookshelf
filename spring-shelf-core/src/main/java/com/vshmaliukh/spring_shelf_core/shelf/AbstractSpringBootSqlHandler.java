@@ -2,16 +2,14 @@ package com.vshmaliukh.spring_shelf_core.shelf;
 
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlItemService;
 import com.vshmaliukh.spring_shelf_core.shelf.repository_services.SqlUserService;
-import org.vshmaliukh.MyLogUtil;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
-@Slf4j
 @NoArgsConstructor
 public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
 

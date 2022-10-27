@@ -12,7 +12,7 @@ public final class MyLogUtil {
         log.debug("[" + serviceName + "] debug: " + message, values);
     }
 
-    public static void logDebug(Class serviceClassType, String message, Object... values) {
+    public static void logDebug(Class<?> serviceClassType, String message, Object... values) {
         logDebug(serviceClassType.getSimpleName(), message, values);
     }
 
@@ -24,7 +24,7 @@ public final class MyLogUtil {
         log.warn("[" + serviceName + "] warn: " + message, values);
     }
 
-    public static void logWarn(Class serviceClassType, String message, Object... values) {
+    public static void logWarn(Class<?> serviceClassType, String message, Object... values) {
         logWarn(serviceClassType.getSimpleName(), message, values);
     }
 
@@ -44,7 +44,7 @@ public final class MyLogUtil {
         log.error("[" + serviceName + "] error: " + message, values);
     }
 
-    public static void logErr(Class serviceClassType, String message, Object... values) {
+    public static void logErr(Class<?> serviceClassType, String message, Object... values) {
         logErr(serviceClassType.getSimpleName(), message, values);
     }
 
@@ -56,7 +56,7 @@ public final class MyLogUtil {
         log.info("[" + serviceName + "] info: " + message, values);
     }
 
-    public static void logInfo(Class serviceClassType, String message, Object... values) {
+    public static void logInfo(Class<?> serviceClassType, String message, Object... values) {
         logInfo(serviceClassType.getSimpleName(), message, values);
     }
 
@@ -68,7 +68,7 @@ public final class MyLogUtil {
         log.trace("[" + serviceName + "] trace: " + message, values);
     }
 
-    public static void logTrace(Class serviceClassType, String message, Object... values) {
+    public static void logTrace(Class<?> serviceClassType, String message, Object... values) {
         logTrace(serviceClassType.getSimpleName(), message, values);
     }
 
