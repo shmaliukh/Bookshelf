@@ -31,7 +31,7 @@ public final class WebUtils {
 
     public static SaveReadShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
-        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
+        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE);
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
@@ -109,12 +109,6 @@ public final class WebUtils {
         Map<String, String> mapOfItemFields = Collections.list(request.getParameterNames())
                 .stream()
                 .collect(Collectors.toMap(parameterName -> parameterName, request::getParameter));
-        USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
-        return mapOfItemFields;
-    }
-
-    public static Map<String, String> readMapOfItemFields(Map map) {
-        Map<String, String> mapOfItemFields = new HashMap<>(map);
         USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
         return mapOfItemFields;
     }

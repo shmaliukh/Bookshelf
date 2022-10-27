@@ -1,11 +1,11 @@
 package org.vshmaliukh.shelf.literature_items.magazine_item;
 
-import org.vshmaliukh.services.file_service.sql_handler.AbleToHandleUserTableSql;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForLiterature;
 import org.vshmaliukh.services.input_handler.WebInputHandler;
 import org.vshmaliukh.services.input_services.AbstractInputHandler;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 import org.vshmaliukh.services.menus.menu_items.MenuItemForSorting;
+import org.vshmaliukh.services.save_read_services.sql_handler.SqlHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemTitles;
 import org.vshmaliukh.shelf.literature_items.ItemUtils;
@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import static org.vshmaliukh.services.save_read_services.sql_handler.SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
 public class MagazineHandler extends ItemHandler<Magazine> {
@@ -134,7 +135,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
                 rs.getInt(ITEM_ID_SQL_PARAMETER),
                 rs.getString(NAME_SQL_PARAMETER),
                 rs.getInt(PAGES_SQL_PARAMETER),
-                Boolean.parseBoolean(rs.getString(BORROWED_SQL_PARAMETER))
+                rs.getBoolean(BORROWED_SQL_PARAMETER)
         );
     }
 
@@ -142,7 +143,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     public String insertItemSqlLiteStr() {
         return " INSERT OR IGNORE INTO " + MAGAZINE_TABLE_TITLE +
                 " ( " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " ) " +
@@ -152,7 +153,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     @Override
     public String insertItemMySqlStr() {
         return " INSERT IGNORE INTO " + sqlItemTableTitle() + " ( " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , " +
                 NAME_SQL_PARAMETER + " , " +
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER + " ) " +
@@ -167,7 +168,7 @@ public class MagazineHandler extends ItemHandler<Magazine> {
                 PAGES_SQL_PARAMETER + " , " +
                 BORROWED_SQL_PARAMETER +
                 " FROM " + MAGAZINE_TABLE_TITLE +
-                " WHERE " + AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
+                " WHERE " + USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " = ? ";
     }
 
     @Override
@@ -175,18 +176,19 @@ public class MagazineHandler extends ItemHandler<Magazine> {
         pstmt.setInt(1, userID);
         pstmt.setString(2, item.getName());
         pstmt.setInt(3, item.getPagesNumber());
-        pstmt.setString(4, String.valueOf(item.isBorrowed()));
+        pstmt.setBoolean(4, item.isBorrowed());
         pstmt.executeUpdate();
     }
 
     public String createTableSqlLiteStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INTEGER_PRIMARY_KEY_AUTOINCREMENT + " , \n " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INTEGER_NOT_NULL + " , \n " +
                 NAME_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INTEGER_NOT_NULL + " , \n " +
                 BORROWED_SQL_PARAMETER + TEXT_NOT_NULL + " , \n " +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " \n " +
@@ -199,13 +201,14 @@ public class MagazineHandler extends ItemHandler<Magazine> {
     public String createTableMySqlStr() {
         return CREATE_TABLE_IF_NOT_EXISTS + sqlItemTableTitle() + " ( \n " +
                 ITEM_ID_SQL_PARAMETER + INT_AUTO_INCREMENT + " , \n " +
-                AbleToHandleUserTableSql.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
-                NAME_SQL_PARAMETER + VARCHAR_200_NOT_NULL + " , \n " +
+                USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + INT_NOT_NULL + " , \n " +
+                NAME_SQL_PARAMETER + VARCHAR_255_NOT_NULL + " , \n " +
                 PAGES_SQL_PARAMETER + INT_NOT_NULL + " , \n " +
-                BORROWED_SQL_PARAMETER + VARCHAR_10_NOT_NULL + " , \n " +
+                BORROWED_SQL_PARAMETER + BIT_NOT_NULL + " , \n " +
                 PRIMARY_KEY + ITEM_ID_SQL_PARAMETER + " ), \n " +
                 CONSTRAINT_UC + sqlItemTableTitle() +
                 UNIQUE + " ( \n " +
+                SqlHandler.USER_ID_SQL_PARAMETER_FOR_ANOTHER_TABLES + " , \n " +
                 NAME_SQL_PARAMETER + " , \n " +
                 PAGES_SQL_PARAMETER + " , \n " +
                 BORROWED_SQL_PARAMETER + " \n " +

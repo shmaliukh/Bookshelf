@@ -1,6 +1,6 @@
 package org.vshmaliukh.services.input_handler;
 
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.services.input_services.ConstantsForItemInputValidation;
 
 import java.io.PrintWriter;
@@ -47,6 +47,6 @@ public class ConsoleInputHandlerForLiterature extends AbstractConsoleInputHandle
     public Date getUserLiteratureDateOfIssue() {
         return getUserDate(
                 ConstantsForConsoleUserInputHandler.MESSAGE_ENTER_LITERATURE_DATE,
-                new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR));
+                new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR));
     }
 }

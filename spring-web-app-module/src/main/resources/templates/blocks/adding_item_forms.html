@@ -39,7 +39,7 @@
     <div class="col-md-6">
         <label for="nameMagazineRand" class="form-label">Name</label>
         <input type="text" name="NAME" class="form-control" id="nameMagazineRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item name"
                required="">
         <div class="invalid-feedback">
@@ -117,7 +117,7 @@
     <div class="col-md-6">
         <label for="nameNewspaperRand" class="form-label">Name</label>
         <input type="text" name="NAME" class="form-control" id="nameNewspaperRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item name"
                required="">
         <div class="invalid-feedback">
@@ -203,7 +203,7 @@
     <div class="col-md-6">
         <label for="nameComicsRand" class="form-label">Name</label>
         <input type="text" name="NAME" class="form-control" id="nameComicsRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item name"
                required="">
         <div class="invalid-feedback">
@@ -224,7 +224,7 @@
     <div class="col-md-6">
         <label for="publisherComicsRand" class="form-label">Publisher</label>
         <input type="text" name="PUBLISHER" class="form-control" id="publisherComicsRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item publisher"
 
                required="">
@@ -309,7 +309,7 @@
     <div class="col-md-6">
         <label for="nameBookRand" class="form-label">Name</label>
         <input type="text" name="NAME" class="form-control" id="nameBookRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item name"
                required="">
         <div class="invalid-feedback">
@@ -330,7 +330,7 @@
     <div class="col-md-6">
         <label for="authorBookRand" class="form-label">Author</label>
         <input type="text" name="AUTHOR" class="form-control" id="authorBookRand"
-               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20),1,0))}"
+               th:value="${#strings.randomAlphanumeric(#numbers.formatDecimal(T(java.lang.Math).floor(T(java.lang.Math).random()*20+1),1,0))}"
                placeholder="Enter literature item author"
                required="">
         <div class="invalid-feedback">

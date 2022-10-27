@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_FILES;
+import static org.vshmaliukh.Constants.TYPE_OF_WORK_WITH_SAVE_READ_SERVICE;
 import static org.vshmaliukh.Constants.USER_NAME;
 
 class WebItemUtilsTest {
@@ -32,7 +32,7 @@ class WebItemUtilsTest {
     private static Stream<Arguments> provideValueToTestGenerateBaseURLString() {
         Map<String, String> map1 = new HashMap<>();
         map1.put(USER_NAME, "USER_NAME");
-        map1.put(TYPE_OF_WORK_WITH_FILES, "1");
+        map1.put(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, "1");
         return Stream.of(
                 Arguments.of(
                         Constants.DELETE_ITEM_TITLE,
@@ -68,7 +68,7 @@ class WebItemUtilsTest {
     private static Stream<Arguments> provideValueToTestGenerateBaseURLBuilder() {
         Map<String, String> map1 = new HashMap<>();
         map1.put(USER_NAME, "USER_NAME");
-        map1.put(TYPE_OF_WORK_WITH_FILES, "1");
+        map1.put(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, "1");
         map1.put(Constants.ITEMS_SORTING_MENU_TITLE, "1");
         return Stream.of(
                 Arguments.of(

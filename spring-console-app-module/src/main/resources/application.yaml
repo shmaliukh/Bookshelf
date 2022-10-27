@@ -1,0 +1,14 @@
+# import base spring shelf core properties
+spring.config.import: file:spring-shelf-core/src/main/resources/spring-shelf-core-config.yaml
+
+# app config
+spring:
+  main:
+    web-application-type: none
+  profiles:
+    active: dev
+
+# logging config
+logging:
+  level:
+    root: WARN

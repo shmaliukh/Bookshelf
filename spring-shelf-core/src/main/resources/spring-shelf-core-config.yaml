@@ -1,0 +1,53 @@
+# base shelf config
+shelf:
+  home: ${user.home}/shelf
+  sqliteDbFile: shelf_sqlite_db.db
+  sqliteDbPath: ${shelf.home}/${shelf.sqliteDbFile}
+  sqliteDbUrlStart: "jdbc:sqlite://"
+  sqliteDbUrl: ${shelf.sqliteDbUrlStart}${shelf.sqliteDbPath}
+
+#  logging levels and its order from minimum << maximum
+#  OFF << FATAL << ERROR << WARN << INFO << DEBUG << TRACE << ALL
+
+---
+
+# dev config
+spring:
+  config:
+    activate:
+      on-profile: dev
+db-config:
+  sqlite:
+    driverClassName: "org.sqlite.JDBC"
+    hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
+    url: ${shelf.sqliteDbUrl}
+    hibernateHbm2ddlAuto: "update"
+  mysql:
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
+    url: "jdbc:mysql://localhost:3307/my_test"
+    userName: "test"
+    password: "test"
+    hibernateHbm2ddlAuto: "update"
+
+---
+
+# test config
+# todo
+spring:
+  config:
+    activate:
+      on-profile: test
+db-config:
+  sqlite:
+    driverClassName: "org.sqlite.JDBC"
+    hibernateDialect: "org.sqlite.hibernate.dialect.SQLiteDialect"
+    url: ${shelf.sqliteDbUrl}
+    hibernateHbm2ddlAuto: "update"
+  mysql:
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    hibernateDialect: "org.hibernate.dialect.MySQL8Dialect"
+    url: "jdbc:mysql://localhost:3307/my_test"
+    userName: "test"
+    password: "test"
+    hibernateHbm2ddlAuto: "update"
