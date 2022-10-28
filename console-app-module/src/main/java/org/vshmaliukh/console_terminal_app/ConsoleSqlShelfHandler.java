@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class ConsoleSqlShelfHandler extends SqlShelfHandler {
 
-    final Scanner scanner;
-    final PrintWriter printWriter;
+    protected final Scanner scanner;
+    protected final PrintWriter printWriter;
 
     public ConsoleSqlShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWorkWithSql) {
         super(userName, typeOfWorkWithSql);

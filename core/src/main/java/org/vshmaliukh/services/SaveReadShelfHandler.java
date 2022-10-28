@@ -15,6 +15,7 @@ public abstract class SaveReadShelfHandler extends AbstractShelfHandler {
     public static final int MODE_WORK_WITH_MYSQL = 4;
     public static final int OLD_MODE_WORK_WITH_SQLITE = 5;
     public static final int OLD_MODE_WORK_WITH_MYSQL = 6;
+    public static final int APACHE_HTTP_MODE_WORK = 7;
 
     protected SaveReadShelfHandler(String userName, int saveReadServiceType) {
         setUpDataService(userName, saveReadServiceType);

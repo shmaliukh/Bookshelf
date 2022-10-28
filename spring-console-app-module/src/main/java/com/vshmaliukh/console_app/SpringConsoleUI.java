@@ -1,5 +1,6 @@
 package com.vshmaliukh.console_app;
 
+import com.vshmaliukh.ConsoleApacheHttpShelfHandler;
 import com.vshmaliukh.spring_shelf_core.shelf.SpringBootSqlShelfHandler;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -46,6 +47,9 @@ public class SpringConsoleUI extends ConsoleUI {
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
                 shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
+                break;
+            case SaveReadShelfHandler.APACHE_HTTP_MODE_WORK:
+                shelfHandler = new ConsoleApacheHttpShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
             default:
                 shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
