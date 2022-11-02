@@ -1,45 +1,45 @@
 package com.vshmaliukh;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.http.client.utils.URIBuilder;
 import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
+import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ApacheHttpShelfService extends AbstractSqlHandler {
 
-    Gson gson = new Gson();
+    int typeOfWork;
+
+    static Gson gson = new Gson();
     CloseableHttpClient client = HttpClientBuilder.create().build();
 
-    protected ApacheHttpShelfService(String userName) {
+    protected ApacheHttpShelfService(String userName, int typeOfWork) {
         super(userName);
+        this.typeOfWork = typeOfWork;
     }
 
     @Override
     public List<Item> readItemList() {
-
-        HttpGet httpGet = new HttpGet("http://localhost:8080/add_menu?userName=Vlad1&typeOfWork=1&itemGsonStr=%7B%22name%22%3A%22r4sS_wF6V+5Z5LJcm%22%2C%22pagesNumber%22%3A761%2C%22isBorrowed%22%3Afalse%7D&itemClassType=Newspaper");
-        try {
-            CloseableHttpResponse response = client.execute(httpGet);
-            HttpEntity responseEntity = response.getEntity();
-            String responseEntityStr = EntityUtils.toString(responseEntity);
-            System.out.println("getHeaders: " + Arrays.toString(response.getHeaders()));
-            System.out.println("getEntity: " + responseEntity);
-            System.out.println("responseEntityStr: " + responseEntityStr);
-        } catch (Exception e) {
-            MyLogUtil.logErr(this, e);
+        List<Item> itemList = new ArrayList<>();
+        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
+            itemList.addAll(readItemsByClass(uniqueTypeName));
         }
-        return Collections.emptyList();
+        return itemList;
     }
 
     @Override
@@ -49,16 +49,44 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
+
     }
 
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
-        return Collections.emptyList();
+        HttpGet httpGet = new HttpGet("http://localhost:8082/readItemsByType");
+        httpGet.setHeader("Content-Type", "application/json");
+        String classTypeStr = classType.getSimpleName();
+        try {
+            URI uri = new URIBuilder(httpGet.getUri())
+                    .addParameter("userName", userName)
+                    .addParameter("typeOfWork", String.valueOf(typeOfWork))
+                    .addParameter("classType", classTypeStr)
+                    .build();
+            httpGet.setUri(uri);
+        } catch (URISyntaxException urise) {
+            MyLogUtil.logErr(this, urise);
+        }
+        return readItemListByClassType(httpGet, classTypeStr);
+    }
+
+    private <T extends Item> ArrayList<T> readItemListByClassType(HttpGet httpGet, String classTypeStr) {
+        try (CloseableHttpResponse closeableHttpResponse = client.execute(httpGet)) {
+            Type listType = new TypeToken<ArrayList<T>>() {}.getType();
+            HttpEntity entity = closeableHttpResponse.getEntity();
+            String result = EntityUtils.toString(entity);
+            String itemsByClassTypeStr = result;
+            System.out.println(itemsByClassTypeStr);
+            return gson.fromJson(itemsByClassTypeStr, listType);
+        } catch (Exception e) {
+            MyLogUtil.logErr(this, e);
+        }
+        return new ArrayList<>();
     }
 
     @Override
     public void saveItemToDB(Item item) {
-        String jsonStr = gson.toJson(item);
+
 
     }
 
@@ -71,4 +99,5 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
     public void readUserId(UserContainer user) {
 
     }
+
 }
