@@ -32,10 +32,10 @@ public class ApacheController {
     }
 
     @GetMapping(READ_ITEMS_BY_TYPE)
-    void doGet(@RequestParam String userName,
-               @RequestParam int typeOfWork,
-               @RequestParam String classType,
-               HttpServletResponse response) {
+    void readItemLisByClassTypeAsGsonStr(@CookieValue String userName,
+                                         @CookieValue int typeOfWork,
+                                         @CookieValue String classType,
+                                         HttpServletResponse response) {
         SaveReadShelfHandler shelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         List<? extends Item> sortedItemsByClass = shelfHandler.getSortedItemsByClass(ItemHandlerProvider.getClassByName(classType));
         response.setContentType("application/json");
