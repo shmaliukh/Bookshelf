@@ -7,13 +7,13 @@ import java.util.Scanner;
 
 public class ConsoleApacheHttpShelfHandler extends ConsoleSqlShelfHandler {
 
-    public ConsoleApacheHttpShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWorkWithSql) {
-        super(scanner, printWriter, userName, typeOfWorkWithSql);
-        initApacheHttpService(userName);
+    public ConsoleApacheHttpShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWork) {
+        super(scanner, printWriter, userName, typeOfWork);
     }
 
-    protected void initApacheHttpService(String userName){
-        sqlItemHandler = new ApacheHttpShelfService(userName, 4);
+    @Override
+    public void setUpDataService(String userName, int typeOfWork) {
+        this.sqlItemHandler = new ApacheHttpShelfService(userName, 4);
     }
 
 }

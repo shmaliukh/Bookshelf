@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
         "com.vshmaliukh.spring_shelf_core",
-        "com.vshmaliukh.console_app"
+        "com.vshmaliukh.console_app",
 })
 public class ConsoleAppApplication {
 

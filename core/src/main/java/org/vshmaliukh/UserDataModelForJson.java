@@ -1,4 +1,4 @@
-package com.vshmaliukh.spring_shelf_core.shelf;
+package org.vshmaliukh;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
