@@ -13,7 +13,7 @@ public class ConsoleApacheHttpShelfHandler extends ConsoleSqlShelfHandler {
     }
 
     protected void initApacheHttpService(String userName){
-        sqlItemHandler = new ApacheHttpShelfService(userName);
+        sqlItemHandler = new ApacheHttpShelfService(userName, 4);
     }
 
 }
