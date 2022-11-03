@@ -76,8 +76,8 @@ public class ConsoleUI extends AbstractUI {
         initServicesForTerminal();
         informAboutFileTypeWork(saveReadServiceType);
 
-        shelfHandler.readShelfItems();
         while (isActiveTerminal()) {
+            shelfHandler.readShelfItems();
             generateUserInterface();
             shelfHandler.saveShelfItems();
         }
@@ -227,11 +227,12 @@ public class ConsoleUI extends AbstractUI {
      * Method print menu with necessary information when user needs to delete some Literature object in Shelf
      */
     private void menuForDeletingLiterature() {
-        if (shelfHandler.readLiteratureInShelf().isEmpty()) {
+        List<Item> itemsOfShelf = shelfHandler.getShelf().getItemsOfShelf();
+        if (itemsOfShelf.isEmpty()) {
             printWriter.println("No available literature IN shelf to delete");
         } else {
             printWriter.println("Enter INDEX of Literature object to delete one:");
-            new PlainTextTableHandler(printWriter, ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(shelfHandler.readLiteratureInShelf()), true).print();
+            new PlainTextTableHandler(printWriter, ItemTitles.TITLE_LIST, ConvertorToStringForItems.getTable(itemsOfShelf), true).print();
             printWriter.println(AbstractUI.ENTER_ANOTHER_VALUE_TO_RETURN);
             shelfHandler.deleteItemByIndex(getUserChoice());
         }

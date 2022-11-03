@@ -40,11 +40,6 @@ public abstract class AbstractSpringBootSqlHandler extends AbstractSqlHandler {
     }
 
     @Override
-    public List<Item> readItemList() {
-        return itemServiceImp.readAllItemListByUserId(userContainer.getId());
-    }
-
-    @Override
     public void deleteItemFromDB(Item item) {
         itemServiceImp.deleteItemByUserId(item, userContainer.getId());
         MyLogUtil.logDebug(this, "user: '{}' // deleteItemFromDB(item: '{}')", userContainer, item);

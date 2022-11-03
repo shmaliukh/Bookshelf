@@ -20,7 +20,6 @@ import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
 import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
-import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -77,27 +76,19 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
     }
 
     @Override
-    public List<Item> readItemList() {
-        List<Item> itemList = new ArrayList<>();
-        for (Class<? extends Item> uniqueTypeName : ItemHandlerProvider.uniqueTypeNames) {
-            itemList.addAll(readItemsByClass(uniqueTypeName));
-        }
-        return itemList;
-    }
-
-    @Override
     public void deleteItemFromDB(Item item) {
         HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + "delete_item");
         cookieValueList.forEach(o -> httpGet.addHeader(COOKIE_HEADER, o));
         try {
-            int index = readItemList().indexOf(item) + 1;
+            List<Item> itemList =  readItemList();
+            int index = itemList.indexOf(item) + 1;
+            System.out.println(itemList);
             System.out.println("item to delete: " + item + " // index: " + index);
             URI uri = new URIBuilder(httpGet.getUri())
                     .addParameter(INDEX_OF_ITEM, String.valueOf(index))
                     .build();
             httpGet.setUri(uri);
-            CloseableHttpResponse httpResponse = client.execute(httpGet);
-            System.out.println(httpResponse);
+            client.execute(httpGet);
         } catch (Exception e) {
             MyLogUtil.logErr(this, e);
         }
@@ -108,7 +99,8 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
         HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + "change_item_borrowed_state");
         cookieValueList.forEach(o -> httpGet.addHeader(COOKIE_HEADER, o));
         try {
-            int index = readItemList().indexOf(item) + 1;
+            List<Item> itemList = readItemList();
+            int index = itemList.indexOf(item) + 1;
             URI uri = new URIBuilder(httpGet.getUri())
                     .addParameter(INDEX_OF_ITEM, String.valueOf(index))
                     .build();
