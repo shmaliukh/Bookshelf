@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.vshmaliukh.BaseAppConfig.HOME_PROPERTY;
@@ -58,7 +57,7 @@ public class ItemGsonHandlerPerTypeForUser extends ItemGsonHandlerHandler {
         return resultList;
     }
 
-    private Set<Class<? extends Item>> getClassTypes() {
+    private List<Class<? extends Item>> getClassTypes() {
         return ItemHandlerProvider.uniqueTypeNames;
     }
 
