@@ -10,7 +10,6 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.client5.http.protocol.HttpClientContext;
-import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
@@ -61,10 +60,7 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
             httpPost.setEntity(stringEntity);
             httpPost.addHeader("Accept", APPLICATION_JSON);
             httpPost.addHeader("Content-type", APPLICATION_JSON);
-            CloseableHttpResponse response = client.execute(httpPost, context);
-            for (Header header : response.getHeaders()) {
-                System.out.println(header.getName() + " = " + header.getValue());
-            }
+            client.execute(httpPost, context);
             CookieStore cookieStore = context.getCookieStore();
             for (Cookie cookie : cookieStore.getCookies()) {
                 cookieValueList.add(MyApacheUtils.generateCookieValue(cookie.getName(), cookie.getValue()));
@@ -105,8 +101,7 @@ public class ApacheHttpShelfService extends AbstractSqlHandler {
                     .addParameter(INDEX_OF_ITEM, String.valueOf(index))
                     .build();
             httpGet.setUri(uri);
-            CloseableHttpResponse httpResponse = client.execute(httpGet);
-            System.out.println(httpResponse);
+            client.execute(httpGet);
         } catch (Exception e) {
             MyLogUtil.logErr(this, e);
         }

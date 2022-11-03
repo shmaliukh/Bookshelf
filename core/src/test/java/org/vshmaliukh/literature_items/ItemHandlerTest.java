@@ -26,7 +26,7 @@ class ItemHandlerTest {
 
     Random random = new Random();
 
-    Set<Class<? extends Item>> uniqueTypeNames = ItemHandlerProvider.uniqueTypeNames;
+    List<Class<? extends Item>> uniqueTypeNames = ItemHandlerProvider.uniqueTypeNames;
 
     @Test
     void testGetSortedItems() {
