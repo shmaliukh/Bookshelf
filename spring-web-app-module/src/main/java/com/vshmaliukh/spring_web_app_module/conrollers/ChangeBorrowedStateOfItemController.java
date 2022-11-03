@@ -38,7 +38,7 @@ public class ChangeBorrowedStateOfItemController {
             List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
             webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, indexOfItem);
         } else {
-            MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to change borrowed state of item by '{}' index: " +
+            MyLogUtil.logWarn(this, "userName: '{}', type of work: '{}' // problem to change borrowed state of item by '{}' index: " +
                     "webShelfHandler == null", userName, typeOfWork, indexOfItem);
             MyLogUtil.logDebug(this, "doGet(userName: '{}', typeOfWork: '{}',indexOfItem: '{}', modelMap: '{}') // springBootWebUtil: '{}'",
                     userName, typeOfWork, indexOfItem, modelMap, springBootWebUtil);

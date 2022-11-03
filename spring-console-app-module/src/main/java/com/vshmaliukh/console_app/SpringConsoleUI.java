@@ -1,5 +1,6 @@
 package com.vshmaliukh.console_app;
 
+import com.vshmaliukh.ConsoleApacheHttpShelfHandler;
 import com.vshmaliukh.spring_shelf_core.shelf.SpringBootSqlShelfHandler;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -8,7 +9,6 @@ import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 import org.vshmaliukh.console_terminal_app.ConsoleUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
-import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
 import javax.annotation.PostConstruct;
 import java.io.PrintWriter;
@@ -47,8 +47,11 @@ public class SpringConsoleUI extends ConsoleUI {
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
                 shelfHandler = new ConsoleSqlShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
+            case SaveReadShelfHandler.APACHE_HTTP_MODE_WORK:
+                shelfHandler = new ConsoleApacheHttpShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
+                break;
             default:
-                shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
         }
     }
@@ -74,6 +77,9 @@ public class SpringConsoleUI extends ConsoleUI {
                 break;
             case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
                 printWriter.println("OLD_MODE_WORK_WITH_MYSQL");
+                break;
+            case SaveReadShelfHandler.APACHE_HTTP_MODE_WORK:
+                printWriter.println("APACHE_HTTP_MODE_WORK");
                 break;
             default:
                 printWriter.println("FILE_MODE_WORK_WITH_ONE_FILE");

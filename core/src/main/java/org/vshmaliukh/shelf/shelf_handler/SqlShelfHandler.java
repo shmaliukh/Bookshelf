@@ -28,13 +28,13 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void deleteItemByIndex(int index) {
-        Item item = shelf.getItemsOfShelf().remove(index - 1);
+        Item item = sqlItemHandler.readItemList().remove(index - 1);
         sqlItemHandler.deleteItemFromDB(item);
     }
 
     @Override
     public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
-        Item item = literatureList.get(index - 1);
+        Item item = sqlItemHandler.readItemList().get(index - 1);
         sqlItemHandler.changeItemBorrowedStateInDB(item);
     }
 
