@@ -9,7 +9,6 @@ import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 import org.vshmaliukh.console_terminal_app.ConsoleUI;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
-import org.vshmaliukh.shelf.shelf_handler.GsonShelfHandler;
 
 import javax.annotation.PostConstruct;
 import java.io.PrintWriter;
@@ -52,7 +51,7 @@ public class SpringConsoleUI extends ConsoleUI {
                 shelfHandler = new ConsoleApacheHttpShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
             default:
-                shelfHandler = new GsonShelfHandler(user.getName(), saveReadServiceType);
+                shelfHandler = new ConsoleGsonShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
         }
     }
