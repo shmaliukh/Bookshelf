@@ -1,20 +1,21 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
-import org.vshmaliukh.ConfigFile;
+import lombok.NoArgsConstructor;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.sql_handler.AbstractSqlItemHandler;
-import org.vshmaliukh.services.file_service.sql_handler.MySqlHandler;
-import org.vshmaliukh.services.file_service.sql_handler.SqlLiteHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.MySqlHandler;
+import org.vshmaliukh.services.save_read_services.sql_handler.SqliteHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
+@NoArgsConstructor
 public class SqlShelfHandler extends SaveReadShelfHandler {
 
-    protected AbstractSqlItemHandler sqlItemHandler;
+    protected AbstractSqlHandler sqlItemHandler;
 
-    public SqlShelfHandler(String userName, int typeOfWorkWithFiles) {
-        super(userName, typeOfWorkWithFiles);
+    public SqlShelfHandler(String userName, int saveReadServiceType) {
+        super(userName, saveReadServiceType);
     }
 
     @Override
@@ -27,19 +28,19 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void deleteItemByIndex(int index) {
-        Item item = shelf.getItemsOfShelf().remove(index - 1);
+        Item item = sqlItemHandler.readItemList().remove(index - 1);
         sqlItemHandler.deleteItemFromDB(item);
     }
 
     @Override
     public void changeBorrowedStateOfItem(List<Item> literatureList, int index) {
-        Item item = literatureList.get(index - 1);
+        Item item = sqlItemHandler.readItemList().get(index - 1);
         sqlItemHandler.changeItemBorrowedStateInDB(item);
     }
 
     @Override
     public void saveShelfItems() {
-        sqlItemHandler.saveItemList(getShelf().getItemsOfShelf());
+        sqlItemHandler.saveItemListToDB(getShelf().getItemsOfShelf());
     }
 
     @Override
@@ -48,16 +49,18 @@ public class SqlShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+    public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
-            case SaveReadShelfHandler.MODE_WORK_WITH_SQLLITE:
-                sqlItemHandler = new SqlLiteHandler(ConfigFile.HOME_PROPERTY, userName);
+            case SaveReadShelfHandler.MODE_WORK_WITH_SQLITE:
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_SQLITE:
+                sqlItemHandler = new SqliteHandler(userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_MYSQL:
-                sqlItemHandler = new MySqlHandler(ConfigFile.HOME_PROPERTY, userName);
+            case SaveReadShelfHandler.OLD_MODE_WORK_WITH_MYSQL:
+                sqlItemHandler = new MySqlHandler(userName);
                 break;
             default:
-                sqlItemHandler = new SqlLiteHandler(ConfigFile.HOME_PROPERTY, userName);
+                sqlItemHandler = new SqliteHandler(userName);
                 break;
         }
     }

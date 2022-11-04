@@ -10,7 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
+import static org.vshmaliukh.BaseAppConfig.DATE_FORMAT_STR;
 
 class ConvertorToStringForItemTest {
 
@@ -30,23 +30,23 @@ class ConvertorToStringForItemTest {
     @Test
     void testConvertLiteratureObjectToListOfString_magazine1() {
         String expectedStr = "{PAGES=1, BORROWED=no, TYPE=Magazine, NAME=noNameMagazine1}";
-        assertEquals(expectedStr, magazineHandler.convertItemToListOfString(magazine1).toString());
+        assertEquals(expectedStr, magazineHandler.convertItemToMapOfString(magazine1).toString());
     }
     @Test
     void testConvertLiteratureObjectToListOfString_magazine2() {
         String expectedStr = "{PAGES=222222222, BORROWED=yes, TYPE=Magazine, NAME=noNameMagazine2___}";
-        assertEquals(expectedStr, magazineHandler.convertItemToListOfString(magazine2).toString());
+        assertEquals(expectedStr, magazineHandler.convertItemToMapOfString(magazine2).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_book1() {
         String expectedStr = "{PAGES=1, DATE=2022-07-10, BORROWED=no, AUTHOR=NoAuthor1, TYPE=Book, NAME=noNameBook1}";
-        assertEquals(expectedStr, bookHandler.convertItemToListOfString(book1).toString());
+        assertEquals(expectedStr, bookHandler.convertItemToMapOfString(book1).toString());
     }
 
     @Test
     void testConvertLiteratureObjectToListOfString_book2() {
         String expectedStr = "{PAGES=22, DATE=2022-07-13, BORROWED=yes, AUTHOR=NoAuthor2___, TYPE=Book, NAME=noNameBook2___}";
-        assertEquals(expectedStr, bookHandler.convertItemToListOfString(book2).toString());
+        assertEquals(expectedStr, bookHandler.convertItemToMapOfString(book2).toString());
     }
 }

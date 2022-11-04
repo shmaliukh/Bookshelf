@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
+import static org.vshmaliukh.BaseAppConfig.DATE_FORMAT_STR;
 import static org.vshmaliukh.shelf.literature_items.ItemTitles.*;
 
 class BookHandlerTest {
@@ -34,7 +34,7 @@ class BookHandlerTest {
 
     @Test
     void testGetConvertorToString() {
-        Map<String, String> convertObjectToMapOfString = new BookHandler().convertItemToListOfString(book1);
+        Map<String, String> convertObjectToMapOfString = new BookHandler().convertItemToMapOfString(book1);
 
         Map<String, String> map = new HashMap<>();
         map.put(TYPE, book1.getClass().getSimpleName());

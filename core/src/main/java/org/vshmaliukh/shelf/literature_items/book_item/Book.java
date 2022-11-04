@@ -1,7 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
 import lombok.Data;
-import org.vshmaliukh.ConfigFile;
+import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +45,7 @@ public class Book extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
-                ", issuanceDate=" + new SimpleDateFormat(ConfigFile.DATE_FORMAT_STR).format(issuanceDate) +
+                ", issuanceDate=" + new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR).format(issuanceDate) +
                 ", isBorrowed=" + isBorrowed +
                 " }";
     }

@@ -1,12 +1,10 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.extern.slf4j.Slf4j;
-import org.vshmaliukh.ConfigFile;
 import org.vshmaliukh.services.SaveReadShelfHandler;
-import org.vshmaliukh.services.file_service.SaveReadUserFilesHandler;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerOneFileUser;
-import org.vshmaliukh.services.file_service.gson_handler.ItemGsonHandlerPerType;
-import org.vshmaliukh.shelf.Shelf;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerHandler;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerOneFileForUser;
+import org.vshmaliukh.services.save_read_services.gson_handler.ItemGsonHandlerPerTypeForUser;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.ArrayList;
@@ -16,7 +14,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GsonShelfHandler extends SaveReadShelfHandler {
 
-    protected SaveReadUserFilesHandler itemHandler;
+    protected ItemGsonHandlerHandler itemHandler;
 
     public GsonShelfHandler(String userName, int typeOfWorkWithFiles) {
         super(userName, typeOfWorkWithFiles);
@@ -28,16 +26,16 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
     }
 
     @Override
-    public void setUpDataSaver(String userName, int typeOfWorkWithFiles) {
+    public void setUpDataService(String userName, int typeOfWorkWithFiles) {
         switch (typeOfWorkWithFiles) {
             case SaveReadShelfHandler.MODE_WORK_WITH_ONE_FILE:
-                itemHandler = new ItemGsonHandlerOneFileUser(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileForUser(userName);
                 break;
             case SaveReadShelfHandler.MODE_WORK_WITH_FILE_PER_TYPE:
-                itemHandler = new ItemGsonHandlerPerType(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerPerTypeForUser(userName);
                 break;
             default:
-                itemHandler = new ItemGsonHandlerOneFileUser(ConfigFile.HOME_PROPERTY, userName);
+                itemHandler = new ItemGsonHandlerOneFileForUser(userName);
                 break;
         }
     }
@@ -89,7 +87,7 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
 
     @Override
     public void saveShelfItems() {
-        itemHandler.saveItemList(shelf.getAllLiteratureObjects());
+        itemHandler.saveItemListToDB(shelf.getAllLiteratureObjects());
     }
 
     @Override
@@ -98,8 +96,4 @@ public class GsonShelfHandler extends SaveReadShelfHandler {
         itemHandler.readItemList().forEach(this::addItem);
     }
 
-    @Override
-    public Shelf getShelf() {
-        return shelf;
-    }
 }

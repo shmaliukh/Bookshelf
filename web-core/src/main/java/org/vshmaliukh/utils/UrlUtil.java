@@ -28,10 +28,6 @@ public final class UrlUtil {
         }
     }
 
-    public static URIBuilder generateBaseURLBuilder(String pageToRedirect) {
-        return new URIBuilder().setPath(pageToRedirect);
-    }
-
     public static String generateBaseURLString(String servletTitle, Map<String, String> userAtr) {
         return generateBaseURLBuilder(servletTitle, userAtr).toString();
     }

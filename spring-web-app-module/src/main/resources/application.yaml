@@ -1,0 +1,19 @@
+# import spring shelf core properties
+spring.config.import: file:spring-shelf-core/src/main/resources/spring-shelf-core-config.yaml
+
+# shelf config
+shelf:
+  port: 8082
+
+# web app server config
+server.port: ${shelf.port}
+server.tomcat.keep-alive-timeout: 1000
+spring.web.resources.static-locations: file:./spring-web-app-module/src/main/resources/static
+
+# app config
+spring.profiles.active: dev
+
+# logging config
+logging:
+  level:
+    root: INFO

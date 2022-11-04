@@ -3,12 +3,13 @@ package org.vshmaliukh.services.menus;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
-import org.vshmaliukh.services.menus.menu_items.MenuItemClassType;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,7 +50,7 @@ class GeneratedMenuTest {
                 .collect(Collectors.toSet());
 
         assertFalse(menuForSorting.generatedMenu.isEmpty());
-        Set<Class<? extends Item>> uniqueTypeNames = ItemHandlerProvider.uniqueTypeNames;
+        List<Class<? extends Item>> uniqueTypeNames = ItemHandlerProvider.uniqueTypeNames;
         assertEquals(uniqueTypeNames, classSet);
         assertEquals(uniqueTypeNames.size() * coef, menuForSorting.getMenuItems().size());
     }

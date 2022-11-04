@@ -1,8 +1,10 @@
 package org.vshmaliukh.services.menus.menu_items;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class MenuItem {
 
     final int index;
@@ -17,4 +19,5 @@ public class MenuItem {
     public String toString() {
         return index + " - " + str;
     }
+
 }

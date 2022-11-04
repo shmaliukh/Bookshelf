@@ -18,7 +18,7 @@ import java.util.Scanner;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.vshmaliukh.ConfigFile.DATE_FORMAT_STR;
+import static org.vshmaliukh.BaseAppConfig.DATE_FORMAT_STR;
 
 class InputHandlerTest {
 

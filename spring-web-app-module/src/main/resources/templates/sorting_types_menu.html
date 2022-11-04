@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Sorting items</title>
+    <title>Sort by type</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link th:insert="blocks/bootstrap-css-style.html :: style">
     <link/>
@@ -10,7 +10,17 @@
 <header th:insert="blocks/header.html :: header"></header>
 
 <div class="container mt-5 mb-5">
-    <div th:utext="${generatedHtmlStr}"></div>
+    <div class="container mt-5 mb-5"><h2>Choose type of items to sort</h2>
+        <hr class="my-4">
+        <form action="/sorting_types_menu" method="post">
+            <th:block th:insert="blocks/radioButtons :: generateRadioButtons"></th:block>
+            <br>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Submit</button>
+        </form>
+        <hr class="my-4">
+        <button type="button" onclick="location.href='/main_menu'" class="w-100 btn btn-lg btn-outline-primary">Back
+        </button>
+    </div>
 </div>
 
 <footer th:insert="blocks/footer.html :: footer"></footer>

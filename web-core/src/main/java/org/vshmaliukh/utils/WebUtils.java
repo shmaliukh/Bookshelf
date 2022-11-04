@@ -1,6 +1,7 @@
 package org.vshmaliukh.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.vshmaliukh.BootstrapHtmlTableBuilder;
 import org.vshmaliukh.HtmlTableBuilder;
 import org.vshmaliukh.WebUI;
@@ -30,12 +31,22 @@ public final class WebUtils {
 
     public static SaveReadShelfHandler generateShelfHandler(Map<String, String> userAtr) {
         String userName = userAtr.get(USER_NAME);
-        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_FILES);
+        String typeOfWorkWithFilesStr = userAtr.get(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE);
 
         if (typeOfWorkWithFilesStr != null && !typeOfWorkWithFilesStr.equals("")) {
             int typeOfWorkWithFiles = Integer.parseInt(typeOfWorkWithFilesStr);
             WebUI webUI = new WebUI(userName, typeOfWorkWithFiles);
 
+            SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
+            shelfHandler.readShelfItems();
+            return shelfHandler;
+        }
+        return null;
+    }
+
+    public static SaveReadShelfHandler generateShelfHandler(String userName, int typeOfWorkWithFiles) {
+        if(StringUtils.isNotBlank(userName)){
+            WebUI webUI = new WebUI(userName, typeOfWorkWithFiles);
             SaveReadShelfHandler shelfHandler = webUI.getShelfHandler();
             shelfHandler.readShelfItems();
             return shelfHandler;
@@ -98,12 +109,6 @@ public final class WebUtils {
         Map<String, String> mapOfItemFields = Collections.list(request.getParameterNames())
                 .stream()
                 .collect(Collectors.toMap(parameterName -> parameterName, request::getParameter));
-        USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
-        return mapOfItemFields;
-    }
-
-    public static Map<String, String> readMapOfItemFields(Map map) {
-        Map<String, String> mapOfItemFields = new HashMap<>(map);
         USER_PARAMETER_LIST.forEach(mapOfItemFields::remove);
         return mapOfItemFields;
     }

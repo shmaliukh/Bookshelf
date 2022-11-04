@@ -1,5 +1,7 @@
 package org.vshmaliukh.shelf.shelf_handler;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -8,6 +10,8 @@ import java.util.stream.Collectors;
 
 public class AbstractShelfHandler implements ShelfHandlerInterface {
 
+    @Getter
+    @Setter
     protected Shelf shelf;
 
     public AbstractShelfHandler() {

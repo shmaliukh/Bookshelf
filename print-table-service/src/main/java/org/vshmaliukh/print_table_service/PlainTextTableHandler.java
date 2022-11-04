@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-public class PlainTextTableHandler extends AbstractTableHandler {
+public class PlainTextTableHandler extends BaseTableHandler {
 
     protected final PrintWriter printWriter;
 
