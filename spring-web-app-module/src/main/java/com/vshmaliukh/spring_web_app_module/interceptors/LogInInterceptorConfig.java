@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.vshmaliukh.MyLogUtil;
 
-import static com.vshmaliukh.spring_web_app_module.conrollers.only_http.ApacheController.*;
+import static com.vshmaliukh.spring_web_app_module.conrollers.http.ApacheController.*;
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
 @Component
@@ -22,7 +22,7 @@ public class LogInInterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(logInInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/", "/" + LOG_IN_TITLE, "/utils.js", "/test",
-                        READ_ITEMS, READ_ITEMS_BY_TYPE, ADD_ITEM_VIA_APACHE_HTTP_CLIENT);
+                        READ_ITEMS, READ_ITEMS_BY_TYPE, DEV_PAGE);
         MyLogUtil.logDebug(this, "interceptor '{}' registered ", logInInterceptor);
     }
 

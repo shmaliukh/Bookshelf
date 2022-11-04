@@ -23,7 +23,6 @@ public final class BaseAppConfig {
         tempMap.put(MODE_WORK_WITH_MYSQL, "work with MySql database");
         tempMap.put(OLD_MODE_WORK_WITH_SQLITE, "work with old imp Sqlite database");
         tempMap.put(OLD_MODE_WORK_WITH_MYSQL, "work with old imp MySql database");
-        tempMap.put(APACHE_HTTP_MODE_WORK, "work with apache http");
         TYPE_OF_WORK_MAP = Collections.unmodifiableMap(tempMap);
     }
 
