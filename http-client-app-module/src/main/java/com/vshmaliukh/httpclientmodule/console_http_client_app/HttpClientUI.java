@@ -1,6 +1,6 @@
 package com.vshmaliukh.httpclientmodule.console_http_client_app;
 
-import com.vshmaliukh.ConsoleApacheHttpShelfHandler;
+import com.vshmaliukh.httpclientmodule.apache_http_client.ConsoleApacheHttpShelfHandler;
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.console_terminal_app.ConsoleUI;

@@ -1,4 +1,4 @@
-package com.vshmaliukh;
+package com.vshmaliukh.httpclientmodule.apache_http_client;
 
 import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 
@@ -13,7 +13,7 @@ public class ConsoleApacheHttpShelfHandler extends ConsoleSqlShelfHandler {
 
     @Override
     public void setUpDataService(String userName, int typeOfWork) {
-        this.sqlItemHandler = new ApacheHttpShelfService(userName, typeOfWork);
+        this.sqlItemHandler = new ApacheHttpShelfServiceImp(userName, typeOfWork);
     }
 
     @Override

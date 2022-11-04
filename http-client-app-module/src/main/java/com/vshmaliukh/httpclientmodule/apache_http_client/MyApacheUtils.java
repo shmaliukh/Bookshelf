@@ -1,4 +1,4 @@
-package com.vshmaliukh;
+package com.vshmaliukh.httpclientmodule.apache_http_client;
 
 public final class MyApacheUtils {
 
