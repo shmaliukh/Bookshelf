@@ -15,7 +15,7 @@ public class ConsoleApacheHttpShelfHandler extends ConsoleSqlShelfHandler {
 
     @Override
     public void setUpDataService(String userName, int typeOfWork) {
-        this.sqlItemHandler = new ApacheHttpShelfService(userName, 4);
+        this.sqlItemHandler = new ApacheHttpShelfService(userName, typeOfWork); // FIXME
     }
 
     @Override

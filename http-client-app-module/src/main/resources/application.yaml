@@ -1,0 +1,14 @@
+# spring app config
+spring:
+  main:
+    web-application-type: none
+  autoconfigure:
+    # turn of work with databases
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+# logging config
+logging:
+  level:
+    root: INFO

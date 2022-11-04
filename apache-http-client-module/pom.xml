@@ -29,12 +29,6 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpcore</artifactId>
-            <version>4.4.13</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.vshmaliukh</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>

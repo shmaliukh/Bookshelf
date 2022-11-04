@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.vshmaliukh</groupId>
+        <artifactId>base-shelf-spring-boot-module</artifactId>
+        <version>0.0.1</version>
+        <relativePath>../base-shelf-spring-boot-module/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>http-client-app-module</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>http-client-app-module</name>
+    <description>http-client-app-module</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.vshmaliukh</groupId>
+            <artifactId>console-app-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vshmaliukh</groupId>
+            <artifactId>apache-http-client-module</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>
