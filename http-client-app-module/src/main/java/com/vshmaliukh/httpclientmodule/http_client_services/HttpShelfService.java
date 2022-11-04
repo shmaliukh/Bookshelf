@@ -1,4 +1,4 @@
-package com.vshmaliukh.httpclientmodule.apache_http_client;
+package com.vshmaliukh.httpclientmodule.http_client_services;
 
 import org.vshmaliukh.services.save_read_services.SaveReadItems;
 import org.vshmaliukh.services.save_read_services.sql_handler.SqlHandler;
@@ -7,7 +7,9 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
-public interface ApacheHttpShelfService extends SaveReadItems, SqlHandler {
+public interface HttpShelfService extends SaveReadItems, SqlHandler {
+
+    void init();
 
     @Override
     void deleteItemFromDB(Item item);
@@ -26,5 +28,7 @@ public interface ApacheHttpShelfService extends SaveReadItems, SqlHandler {
 
     @Override
     void readUserId(UserContainer user);
+
+    void logIn(String userName, int typeOfWork);
 
 }

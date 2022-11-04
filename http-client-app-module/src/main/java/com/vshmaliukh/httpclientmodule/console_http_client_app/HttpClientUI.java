@@ -1,7 +1,8 @@
 package com.vshmaliukh.httpclientmodule.console_http_client_app;
 
-import com.vshmaliukh.httpclientmodule.apache_http_client.ConsoleApacheHttpShelfHandler;
+import com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service.ConsoleApacheHttpShelfHandler;
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
+import com.vshmaliukh.httpclientmodule.http_client_services.rest_template_client_service.ConsoleRestTemplateShelfHandler;
 import org.springframework.stereotype.Component;
 import org.vshmaliukh.console_terminal_app.ConsoleUI;
 import org.vshmaliukh.services.input_handler.ConsoleInputHandlerForUser;
@@ -36,6 +37,13 @@ public class HttpClientUI extends ConsoleUI {
         switch (httpClientType) {
             case HttpClientAppConfig.APACHE_HTTP_MODE_WORK:
                 shelfHandler = new ConsoleApacheHttpShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
+                break;
+            case HttpClientAppConfig.REST_TEMPLATE_MODE_WORK:
+                shelfHandler = new ConsoleRestTemplateShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
+                break;
+            case HttpClientAppConfig.FEIGN_MODE_WORK:
+                // TODO implement feign shelf handler service
+                shelfHandler = new ConsoleRestTemplateShelfHandler(scanner, printWriter, user.getName(), saveReadServiceType);
                 break;
             default:
                 httpClientType = HttpClientAppConfig.APACHE_HTTP_MODE_WORK;

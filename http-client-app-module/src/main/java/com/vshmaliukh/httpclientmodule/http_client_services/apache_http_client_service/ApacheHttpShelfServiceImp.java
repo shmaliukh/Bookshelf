@@ -1,8 +1,9 @@
-package com.vshmaliukh.httpclientmodule.apache_http_client;
+package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
+import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.cookie.Cookie;
@@ -17,76 +18,70 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.net.URIBuilder;
 import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.UserDataModelForJson;
-import org.vshmaliukh.services.save_read_services.sql_handler.AbstractSqlHandler;
-import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import static com.vshmaliukh.httpclientmodule.apache_http_client.MyApacheUtils.COOKIE_HEADER;
+import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
 
-public class ApacheHttpShelfServiceImp extends AbstractSqlHandler implements ApacheHttpShelfService {
+@Slf4j
+public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
 
-    protected int typeOfWork;
-    protected List<String> cookieValueList = new ArrayList<>();
-    protected Gson gson = new Gson();
-
-    protected CloseableHttpClient client = HttpClientBuilder.create().build();
+    protected List<String> cookieValueList;
+    protected CloseableHttpClient client;
 
     protected ApacheHttpShelfServiceImp(String userName, int typeOfWork) {
-        super(userName);
-        this.typeOfWork = typeOfWork;
-        logIn(userName, typeOfWork);
+        super(userName, typeOfWork);
     }
 
-    private void logIn(String userName, int typeOfWork) {
-        HttpPost httpPost = new HttpPost(HttpClientAppConfig.HTTP_LOCALHOST_8082 + HttpClientAppConfig.LOG_IN_PAGE);
+    public void logIn(String userName, int typeOfWork) {
+        HttpPost httpPost = new HttpPost(HTTP_LOCALHOST_8082 + HttpClientAppConfig.LOG_IN_PAGE);
         HttpClientContext context = HttpClientContext.create();
         try {
             UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
             String userGsonStr = gson.toJson(userDataModelForJson);
             StringEntity stringEntity = new StringEntity(userGsonStr);
             httpPost.setEntity(stringEntity);
-            httpPost.addHeader("Accept", HttpClientAppConfig.APPLICATION_JSON);
-            httpPost.addHeader("Content-type", HttpClientAppConfig.APPLICATION_JSON);
+            httpPost.addHeader("Accept", APPLICATION_JSON);
+            httpPost.addHeader("Content-type", APPLICATION_JSON);
             client.execute(httpPost, context);
             CookieStore cookieStore = context.getCookieStore();
             for (Cookie cookie : cookieStore.getCookies()) {
                 cookieValueList.add(MyApacheUtils.generateCookieValue(cookie.getName(), cookie.getValue()));
             }
-            MyLogUtil.logDebug(this, "userNamed: '{}', typeOfWork: '{}' // cookies: '{}'", userName, typeOfWork, cookieStore.getCookies());
-        } catch (IOException e) {
-            MyLogUtil.logErr(this, e);
+            MyLogUtil.logDebug(this, "userNamed: '{}', typeOfWork: '{}' // cookies: '{}'",
+                    userName, typeOfWork, cookieStore.getCookies());
+        } catch (IOException ioe) {
+            log.error(ioe.getMessage(), ioe);
         }
+    }
+
+    @Override
+    public void init() {
+        cookieValueList = new ArrayList<>();
+        client = HttpClientBuilder.create().build();
     }
 
     @Override
     public void deleteItemFromDB(Item item) {
-        HttpGet httpGet = new HttpGet(HttpClientAppConfig.HTTP_LOCALHOST_8082 + HttpClientAppConfig.DELETE_ITEM_PAGE);
-        cookieValueList.forEach(o -> httpGet.addHeader(COOKIE_HEADER, o));
-        try {
-            List<Item> itemList =  readItemList();
-            int index = itemList.indexOf(item) + 1;
-            System.out.println(itemList);
-            System.out.println("item to delete: " + item + " // index: " + index);
-            URI uri = new URIBuilder(httpGet.getUri())
-                    .addParameter(HttpClientAppConfig.INDEX_OF_ITEM, String.valueOf(index))
-                    .build();
-            httpGet.setUri(uri);
-            client.execute(httpGet);
-        } catch (Exception e) {
-            MyLogUtil.logErr(this, e);
-        }
+        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + DELETE_ITEM_PAGE);
+        actionWithItemByIndex(item, httpGet);
     }
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
-        HttpGet httpGet = new HttpGet(HttpClientAppConfig.HTTP_LOCALHOST_8082 + HttpClientAppConfig.CHANGE_ITEM_BORROWED_STATE_PAGE);
-        cookieValueList.forEach(o -> httpGet.addHeader(COOKIE_HEADER, o));
+        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + CHANGE_ITEM_BORROWED_STATE_PAGE);
+        actionWithItemByIndex(item, httpGet);
+    }
+
+    private void actionWithItemByIndex(Item item, HttpGet httpGet) {
+        cookieValueList.forEach(o -> httpGet.addHeader(MyApacheUtils.COOKIE_HEADER, o));
         try {
             List<Item> itemList = readItemList();
             int index = itemList.indexOf(item) + 1;
@@ -96,18 +91,27 @@ public class ApacheHttpShelfServiceImp extends AbstractSqlHandler implements Apa
             httpGet.setUri(uri);
             client.execute(httpGet);
         } catch (Exception e) {
-            MyLogUtil.logErr(this, e);
+            log.error(e.getMessage(),e);
         }
     }
 
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
-        String classTypeStr = classType.getSimpleName();
-        HttpGet httpGet = new HttpGet(HttpClientAppConfig.HTTP_LOCALHOST_8082 + HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE);
-        httpGet.addHeader("Content-Type", HttpClientAppConfig.APPLICATION_JSON);
-        cookieValueList.forEach(o -> httpGet.addHeader(COOKIE_HEADER, o));
-        httpGet.addHeader(COOKIE_HEADER, HttpClientAppConfig.CLASS_TYPE + "=" + classTypeStr);
-        return readItemListByClassFromResponse(httpGet, classType);
+        String classTypeSimpleName = classType.getSimpleName();
+        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE);
+        cookieValueList.forEach(o -> httpGet.addHeader(MyApacheUtils.COOKIE_HEADER, o));
+        httpGet.addHeader("Accept", APPLICATION_JSON);
+        httpGet.addHeader("Content-type", APPLICATION_JSON);
+        try {
+            URI uri = new URIBuilder(httpGet.getUri())
+                    .addParameter(HttpClientAppConfig.ITEM_CLASS_TYPE, classTypeSimpleName)
+                    .build();
+            httpGet.setUri(uri);
+            return readItemListByClassFromResponse(httpGet, classType);
+        } catch (URISyntaxException urise) {
+            log.error(urise.getMessage(), urise);
+        }
+        return Collections.emptyList();
     }
 
     private <T extends Item> ArrayList<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
@@ -117,7 +121,7 @@ public class ApacheHttpShelfServiceImp extends AbstractSqlHandler implements Apa
             String result = EntityUtils.toString(entity);
             return gson.fromJson(result, listType);
         } catch (Exception e) {
-            MyLogUtil.logErr(this, e);
+            log.error(e.getMessage(), e);
         }
         return new ArrayList<>();
     }
@@ -125,27 +129,17 @@ public class ApacheHttpShelfServiceImp extends AbstractSqlHandler implements Apa
     @Override
     public void saveItemToDB(Item item) {
         String itemClassTypeStr = item.getClass().getSimpleName();
-        HttpPost httpPost = new HttpPost(HttpClientAppConfig.HTTP_LOCALHOST_8082 + HttpClientAppConfig.ADD_ITEM_PAGE);
-        cookieValueList.forEach(o -> httpPost.addHeader(COOKIE_HEADER, o));
-        httpPost.addHeader(COOKIE_HEADER, MyApacheUtils.generateCookieValue(HttpClientAppConfig.ITEM_CLASS_TYPE, itemClassTypeStr));
+        HttpPost httpPost = new HttpPost(HTTP_LOCALHOST_8082 + HttpClientAppConfig.ADD_ITEM_PAGE);
+        cookieValueList.forEach(o -> httpPost.addHeader(MyApacheUtils.COOKIE_HEADER, o));
+        httpPost.addHeader(MyApacheUtils.COOKIE_HEADER, MyApacheUtils.generateCookieValue(HttpClientAppConfig.ITEM_CLASS_TYPE, itemClassTypeStr));
         String userGsonStr = gson.toJson(item);
         StringEntity stringEntity = new StringEntity(userGsonStr);
         httpPost.setEntity(stringEntity);
         try {
             client.execute(httpPost);
         } catch (Exception e) {
-            MyLogUtil.logErr(this, e);
+            log.error(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public void setUpSettings() {
-
-    }
-
-    @Override
-    public void readUserId(UserContainer user) {
-
     }
 
 }

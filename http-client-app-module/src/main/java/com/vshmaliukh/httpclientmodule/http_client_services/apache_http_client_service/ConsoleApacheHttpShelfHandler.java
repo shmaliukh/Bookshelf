@@ -1,4 +1,4 @@
-package com.vshmaliukh.httpclientmodule.apache_http_client;
+package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
 
 import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 
