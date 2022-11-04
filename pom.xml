@@ -23,6 +23,8 @@
         <module>spring-shelf-core</module>
         <module>spring-console-app-module</module>
         <module>spring-web-app-module</module>
+        <!-- Http client imp -->
+        <module>http-client-app-module</module>
         <!-- Services -->
         <module>client-app-module</module>
         <module>print-table-service</module>
