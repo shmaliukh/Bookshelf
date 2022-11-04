@@ -28,7 +28,7 @@
         <!-- Services -->
         <module>client-app-module</module>
         <module>print-table-service</module>
-        <module>apache-http-client-module</module>
+        <module>http-client-app-module/apache-http-client-service</module>
     </modules>
 
     <properties>
