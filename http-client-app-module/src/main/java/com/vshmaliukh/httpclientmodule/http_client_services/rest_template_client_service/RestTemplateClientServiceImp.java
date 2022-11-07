@@ -1,7 +1,11 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.rest_template_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
-import org.springframework.http.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.services.save_read_services.sql_handler.UserContainer;
@@ -9,12 +13,13 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
-import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.HTTP_LOCALHOST_8082;
-import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.LOG_IN_PAGE;
+import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
 
+@Slf4j
 public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
-    RestTemplate restTemplate;
+    protected RestTemplate restTemplate;
+    protected HttpHeaders headers;
 
     protected RestTemplateClientServiceImp(String userName, int typeOfWork) {
         super(userName, typeOfWork);
@@ -22,19 +27,28 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void logIn(String userName, int typeOfWork) {
+        headers.add("Accept", APPLICATION_JSON);
+        headers.add("Content-type", APPLICATION_JSON);
         String logInPageUrlStr = HTTP_LOCALHOST_8082 + LOG_IN_PAGE;
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
         String userGsonStr = gson.toJson(userDataModelForJson);
-        HttpEntity<String> request = new HttpEntity<String>(userGsonStr, headers);
-        ResponseEntity<String> exchange = restTemplate.exchange(logInPageUrlStr, HttpMethod.GET, new HttpEntity<>(headers), String.class);
-        System.out.println(exchange);
+        HttpEntity<String> entity = new HttpEntity<>(userGsonStr, headers);
+        ResponseEntity<String> response = restTemplate.exchange(logInPageUrlStr, HttpMethod.POST, entity, String.class);
+        HttpHeaders responseHeaders = response.getHeaders();
+        List<String> cookieStrList = responseHeaders.get("Set-Cookie");
+        if (cookieStrList != null) {
+            cookieStrList.forEach(o -> headers.add("Cookie", o));
+        }
+        else {
+            log.warn("problem to set up Cookie values // Set-Cookie list == null");
+        }
 
     }
 
     public void init() {
         restTemplate = new RestTemplate();
+        headers = new HttpHeaders();
+
     }
 
     @Override
