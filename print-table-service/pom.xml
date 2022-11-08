@@ -11,13 +11,18 @@
 
     <groupId>org.vshmaliukh</groupId>
     <artifactId>print-table-service</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
     <dependencies>
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <version>${spotbugs-annotations.version}</version>
         </dependency>
     </dependencies>
+
+    <properties>
+        <spotbugs-annotations.version>4.7.3</spotbugs-annotations.version>
+    </properties>
 
 </project>
