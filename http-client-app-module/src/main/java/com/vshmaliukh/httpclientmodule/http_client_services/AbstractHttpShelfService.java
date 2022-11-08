@@ -41,7 +41,6 @@ public abstract class AbstractHttpShelfService extends AbstractSqlHandler implem
                 .build();
     }
 
-
     @Override
     public void setUpSettings() {
 

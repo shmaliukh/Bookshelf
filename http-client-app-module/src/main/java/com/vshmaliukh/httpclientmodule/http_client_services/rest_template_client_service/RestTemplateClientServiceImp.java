@@ -62,7 +62,8 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
     private void actionWithItemByIndex(String uriStr, Item item) {
         try {
             URI uriWithItemIndex = formUriWithItemIndex(item, URI.create(uriStr));
-            HttpHeaders httpHeaders = baseHeaders;
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.addAll(baseHeaders);
             HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
             restTemplate.exchange(uriWithItemIndex, HttpMethod.GET, requestEntity, Void.class);
         } catch (URISyntaxException urise) {
@@ -78,7 +79,8 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
                     .addParameter(ITEM_CLASS_TYPE, itemClassTypeStr)
                     .build();
 
-            HttpHeaders httpHeaders = baseHeaders;
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.addAll(baseHeaders);
             httpHeaders.add("Accept", APPLICATION_JSON);
             httpHeaders.add("Content-type", APPLICATION_JSON);
             HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
@@ -99,17 +101,18 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
     @Override
     public void saveItemToDB(Item item) {
         String itemClassTypeStr = item.getClass().getSimpleName();
-        HttpHeaders httpHeaders = baseHeaders;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.addAll(baseHeaders);
         httpHeaders.add(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
-
-        HttpEntity<Item> itemHttpEntity = new HttpEntity<>(item, httpHeaders);
-        ResponseEntity<Void> exchange = restTemplate.exchange(
+        HttpEntity<Item> httpEntity = new HttpEntity<>(item, httpHeaders);
+//        ResponseEntity<Void> exchange =
+        restTemplate.exchange(
                 ADD_ITEM_URI_STR,
                 HttpMethod.POST,
-                itemHttpEntity,
+                httpEntity,
                 Void.class);
-        HttpStatus statusCode = exchange.getStatusCode();
-        System.out.println(statusCode.is2xxSuccessful());
+//        HttpStatus statusCode = exchange.getStatusCode();
+//        System.out.println(statusCode.is2xxSuccessful());
     }
 
 }
