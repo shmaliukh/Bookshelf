@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FeignClientServiceImp extends AbstractHttpShelfService {
 
-    protected FeignClientServiceImp(String userName, int typeOfWork) {
+    public FeignClientServiceImp(String userName, int typeOfWork) {
         super(userName, typeOfWork);
     }
 
