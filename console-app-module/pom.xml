@@ -14,7 +14,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
-        <executable-module.directory>${artifactId}</executable-module.directory>
+        <executable-module.directory>${project.artifactId}</executable-module.directory>
     </properties>
 
     <dependencies>
