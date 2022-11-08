@@ -39,7 +39,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
     }
 
     public void logIn(String userName, int typeOfWork) {
-        HttpPost httpPost = new HttpPost(HTTP_LOCALHOST_8082 + HttpClientAppConfig.LOG_IN_PAGE);
+        HttpPost httpPost = new HttpPost(LOG_IN_PAGE_URL_STR);
         HttpClientContext context = HttpClientContext.create();
         try {
             UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
@@ -68,35 +68,31 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void deleteItemFromDB(Item item) {
-        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + DELETE_ITEM_PAGE);
+        HttpGet httpGet = new HttpGet(DELETE_ITEM_BY_INDEX_URL_STR);
         actionWithItemByIndex(item, httpGet);
     }
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
-        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + CHANGE_ITEM_BORROWED_STATE_PAGE);
+        HttpGet httpGet = new HttpGet(CHANGE_ITEM_BORROWED_STATE_BY_INDEX_URL_STR);
         actionWithItemByIndex(item, httpGet);
     }
 
     private void actionWithItemByIndex(Item item, HttpGet httpGet) {
         cookieValueList.forEach(o -> httpGet.addHeader(MyApacheUtils.COOKIE_HEADER, o));
         try {
-            List<Item> itemList = readItemList();
-            int index = itemList.indexOf(item) + 1;
-            URI uri = new URIBuilder(httpGet.getUri())
-                    .addParameter(HttpClientAppConfig.INDEX_OF_ITEM, String.valueOf(index))
-                    .build();
+            URI uri = formUriWithItemIndex(item, httpGet.getUri());
             httpGet.setUri(uri);
             client.execute(httpGet);
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         }
     }
 
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
         String classTypeSimpleName = classType.getSimpleName();
-        HttpGet httpGet = new HttpGet(HTTP_LOCALHOST_8082 + HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE);
+        HttpGet httpGet = new HttpGet(READ_ITEMS_BY_TYPE_URL_STR);
         cookieValueList.forEach(o -> httpGet.addHeader(MyApacheUtils.COOKIE_HEADER, o));
         httpGet.addHeader("Accept", APPLICATION_JSON);
         httpGet.addHeader("Content-type", APPLICATION_JSON);
@@ -123,11 +119,10 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
         return new ArrayList<>();
     }
 
-
     @Override
     public void saveItemToDB(Item item) {
         String itemClassTypeStr = item.getClass().getSimpleName();
-        HttpPost httpPost = new HttpPost(HTTP_LOCALHOST_8082 + HttpClientAppConfig.ADD_ITEM_PAGE);
+        HttpPost httpPost = new HttpPost(ADD_ITEM_URI_STR);
         cookieValueList.forEach(o -> httpPost.addHeader(MyApacheUtils.COOKIE_HEADER, o));
         httpPost.addHeader(MyApacheUtils.COOKIE_HEADER, MyApacheUtils.generateCookieValue(HttpClientAppConfig.ITEM_CLASS_TYPE, itemClassTypeStr));
         String userGsonStr = gson.toJson(item);

@@ -1,12 +1,10 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.rest_template_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
+import com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service.MyApacheUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hc.core5.net.URIBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.apache.http.client.utils.URIBuilder;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -32,11 +30,10 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
     public void logIn(String userName, int typeOfWork) {
         baseHeaders.add("Accept", APPLICATION_JSON);
         baseHeaders.add("Content-type", APPLICATION_JSON);
-        String logInPageUrlStr = HTTP_LOCALHOST_8082 + LOG_IN_PAGE;
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
         String userGsonStr = gson.toJson(userDataModelForJson);
         HttpEntity<String> entity = new HttpEntity<>(userGsonStr, baseHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(logInPageUrlStr, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(LOG_IN_PAGE_URL_STR, HttpMethod.POST, entity, String.class);
         HttpHeaders responseHeaders = response.getHeaders();
         List<String> cookieStrList = responseHeaders.get("Set-Cookie");
         if (cookieStrList != null) {
@@ -54,28 +51,43 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void deleteItemFromDB(Item item) {
-        super.deleteItemFromDB(item);
+        actionWithItemByIndex(DELETE_ITEM_BY_INDEX_URL_STR, item);
     }
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
-        super.changeItemBorrowedStateInDB(item);
+        actionWithItemByIndex(CHANGE_ITEM_BORROWED_STATE_BY_INDEX_URL_STR, item);
+    }
+
+    private void actionWithItemByIndex(String uriStr, Item item) {
+        try {
+            URI uriWithItemIndex = formUriWithItemIndex(item, URI.create(uriStr));
+            HttpHeaders httpHeaders = baseHeaders;
+            HttpEntity<String> requestEntity = new HttpEntity<>(httpHeaders);
+            restTemplate.exchange(uriWithItemIndex, HttpMethod.GET, requestEntity, Void.class);
+        } catch (URISyntaxException urise) {
+            log.error(urise.getMessage(), urise);
+        }
     }
 
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> itemClassType) {
-        String urlStr = HTTP_LOCALHOST_8082 + READ_ITEMS_BY_TYPE_PAGE;
         try {
-            String classTypeSimpleName = itemClassType.getSimpleName();
-            URI uri = new URIBuilder(urlStr)
-                    .addParameter("itemClassType", classTypeSimpleName)
+            String itemClassTypeStr = itemClassType.getSimpleName();
+            URI uri = new URIBuilder(READ_ITEMS_BY_TYPE_URL_STR)
+                    .addParameter(ITEM_CLASS_TYPE, itemClassTypeStr)
                     .build();
+
             HttpHeaders httpHeaders = baseHeaders;
             httpHeaders.add("Accept", APPLICATION_JSON);
             httpHeaders.add("Content-type", APPLICATION_JSON);
+            HttpEntity<String> entity = new HttpEntity<>(httpHeaders);
 
-            HttpEntity<String> entity = new HttpEntity<>(baseHeaders);
-            ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(
+                    uri,
+                    HttpMethod.GET,
+                    entity,
+                    String.class);
             String responseJsonBodyStr = response.getBody();
             return formItemListByTypeFromJsonStr(itemClassType, responseJsonBodyStr);
         } catch (URISyntaxException urise) {
@@ -86,12 +98,18 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void saveItemToDB(Item item) {
-        super.saveItemToDB(item);
-    }
+        String itemClassTypeStr = item.getClass().getSimpleName();
+        HttpHeaders httpHeaders = baseHeaders;
+        httpHeaders.add("Cookie", MyApacheUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
 
-    @Override
-    public void saveItemListToDB(List<Item> listToSave) {
-        super.saveItemListToDB(listToSave);
+        HttpEntity<Item> itemHttpEntity = new HttpEntity<>(item, httpHeaders);
+        ResponseEntity<Void> exchange = restTemplate.exchange(
+                ADD_ITEM_URI_STR,
+                HttpMethod.POST,
+                itemHttpEntity,
+                Void.class);
+        HttpStatus statusCode = exchange.getStatusCode();
+        System.out.println(statusCode.is2xxSuccessful());
     }
 
 }
