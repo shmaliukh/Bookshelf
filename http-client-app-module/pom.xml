@@ -14,17 +14,27 @@
     <name>http-client-app-module</name>
     <description>http-client-app-module</description>
 
+    <properties>
+        <httpclient5.version>5.1.3</httpclient5.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.vshmaliukh</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.vshmaliukh</groupId>
             <artifactId>console-app-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>com.vshmaliukh</groupId>
-            <artifactId>apache-http-client-module</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${httpclient5.version}</version>
         </dependency>
     </dependencies>
 
