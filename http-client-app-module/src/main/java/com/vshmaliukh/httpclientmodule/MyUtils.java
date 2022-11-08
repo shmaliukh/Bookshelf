@@ -1,6 +1,6 @@
-package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
+package com.vshmaliukh.httpclientmodule;
 
-public final class MyApacheUtils {
+public final class MyUtils {
 
     public static final String COOKIE_HEADER = "Cookie";
 

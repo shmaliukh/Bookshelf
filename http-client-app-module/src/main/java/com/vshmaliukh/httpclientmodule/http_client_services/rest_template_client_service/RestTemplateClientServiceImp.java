@@ -1,7 +1,7 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.rest_template_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
-import com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service.MyApacheUtils;
+import com.vshmaliukh.httpclientmodule.MyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.*;
@@ -38,7 +38,7 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
         List<String> cookieStrList = responseHeaders.get("Set-Cookie");
         if (cookieStrList != null) {
             baseHeaders = new HttpHeaders();
-            cookieStrList.forEach(o -> baseHeaders.add("Cookie", o));
+            cookieStrList.forEach(o -> baseHeaders.add(MyUtils.COOKIE_HEADER, o));
         } else {
             log.warn("problem to set up Cookie values // Set-Cookie list == null");
         }
@@ -100,7 +100,7 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
     public void saveItemToDB(Item item) {
         String itemClassTypeStr = item.getClass().getSimpleName();
         HttpHeaders httpHeaders = baseHeaders;
-        httpHeaders.add("Cookie", MyApacheUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
+        httpHeaders.add(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
 
         HttpEntity<Item> itemHttpEntity = new HttpEntity<>(item, httpHeaders);
         ResponseEntity<Void> exchange = restTemplate.exchange(
