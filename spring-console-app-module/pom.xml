@@ -11,7 +11,7 @@
 
     <groupId>com.vshmaliukh</groupId>
     <artifactId>spring-console-app-module</artifactId>
-    <version>0.0.1</version>
+    <version>1.0-SNAPSHOT</version>
     <name>spring-console-app-module</name>
     <description>spring-console-app-module</description>
 
@@ -23,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.vshmaliukh</groupId>
-            <artifactId>apache-http-client-module</artifactId>
+            <artifactId>http-client-app-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
