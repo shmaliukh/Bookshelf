@@ -1,6 +1,5 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
 
-import com.google.gson.reflect.TypeToken;
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,6 @@ import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -116,15 +114,15 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
 
     private <T extends Item> ArrayList<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
         try (CloseableHttpResponse closeableHttpResponse = client.execute(httpGet)) {
-            Type listType = TypeToken.getParameterized(ArrayList.class, classType).getType();
             HttpEntity entity = closeableHttpResponse.getEntity();
             String result = EntityUtils.toString(entity);
-            return gson.fromJson(result, listType);
+            return formItemListByTypeFromJsonStr(classType, result);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
         return new ArrayList<>();
     }
+
 
     @Override
     public void saveItemToDB(Item item) {
