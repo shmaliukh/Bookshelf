@@ -6,16 +6,16 @@ import java.util.stream.Collectors;
 public final class ItemUtils {
 
     public static final String FRIENDLY_TRUE_STR_VALUE = "yes";
-    public static final String FRIENDLY_NO_STR_VALUE = "no";
+    public static final String FRIENDLY_FALSE_STR_VALUE = "no";
 
     private ItemUtils() {
     }
 
-    public static String convertBorrowed(boolean booleanState) {
-        if (booleanState) {
+    public static String convertBorrowed(boolean isBorrowed) {
+        if (isBorrowed) {
             return FRIENDLY_TRUE_STR_VALUE;
         }
-        return FRIENDLY_NO_STR_VALUE;
+        return FRIENDLY_FALSE_STR_VALUE;
     }
 
     public static String getRandomString(int length, Random random) {
@@ -83,7 +83,7 @@ public final class ItemUtils {
                 "       id=\"false\"\n" +
                 "       name=\"" + value + "\"" +
                 "       value=\"n\" checked>\n" +
-                "<label for=\"false\"> " + FRIENDLY_NO_STR_VALUE + " <label/>\n" +
+                "<label for=\"false\"> " + FRIENDLY_FALSE_STR_VALUE + " <label/>\n" +
                 "       <br>\n";
     }
 }
