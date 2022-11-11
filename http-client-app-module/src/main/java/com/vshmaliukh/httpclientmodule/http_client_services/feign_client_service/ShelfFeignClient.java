@@ -14,7 +14,7 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
 @FeignClient(name = "${feign.name}", url = "${feign.url}")
-public interface ServiceFeignClient {
+public interface ShelfFeignClient {
 
     @RequestMapping(value = "/" + READ_ITEMS_BY_TYPE_PAGE, method = RequestMethod.GET)
     @Headers({ // todo remove
