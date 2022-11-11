@@ -33,7 +33,11 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
         String userGsonStr = gson.toJson(userDataModelForJson);
         HttpEntity<String> entity = new HttpEntity<>(userGsonStr, baseHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(LOG_IN_PAGE_URL_STR, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(
+                LOG_IN_PAGE_URL_STR,
+                HttpMethod.POST,
+                entity,
+                String.class);
         HttpHeaders responseHeaders = response.getHeaders();
         List<String> cookieStrList = responseHeaders.get("Set-Cookie");
         if (cookieStrList != null) {

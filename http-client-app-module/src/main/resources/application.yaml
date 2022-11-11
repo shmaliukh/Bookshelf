@@ -1,12 +1,24 @@
 # spring app config
 spring:
+  application:
+    name: http-client-service-app
   main:
+    # turn of 'web app' mode
     web-application-type: none
   autoconfigure:
     # turn of work with databases
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+feign:
+  name: 'feign-client-test'
+  url: 'http://localhost:8082'
+#  client:
+#    config:
+#      default:
+#        requestInterceptors:
+#          com.vshmaliukh.httpclientmodule.http_client_services.feign_client_service
 
 # logging config
 logging:
