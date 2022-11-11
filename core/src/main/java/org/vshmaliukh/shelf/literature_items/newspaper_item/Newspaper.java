@@ -19,7 +19,7 @@ public class Newspaper extends Item {
         return "Newspaper {" +
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

@@ -16,24 +16,24 @@ public abstract class Item implements Serializable {
 
     protected String name;
     protected int pagesNumber;
-    protected boolean isBorrowed;
+    protected boolean borrowed;
 
     private Item(){}
 
-    protected Item(Integer id, String name, int pagesNumber, boolean isBorrowed) {
+    protected Item(Integer id, String name, int pagesNumber, boolean borrowed) {
         this.id = id;
         this.name = name;
         setPagesNumber(pagesNumber);
-        this.isBorrowed = isBorrowed;
+        this.borrowed = borrowed;
     }
 
     /**
      * Base Constructor for creating Book and Magazine object
      */
-    protected Item(String name, int pagesNumber, boolean isBorrowed) {
+    protected Item(String name, int pagesNumber, boolean borrowed) {
         this.name = name;
         setPagesNumber(pagesNumber);
-        this.isBorrowed = isBorrowed;
+        this.borrowed = borrowed;
     }
 
     /**

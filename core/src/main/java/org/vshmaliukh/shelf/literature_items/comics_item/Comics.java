@@ -24,7 +24,7 @@ public class Comics extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", publisher='" + publisher + '\'' +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

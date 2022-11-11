@@ -46,7 +46,7 @@ public class Book extends Item {
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
                 ", issuanceDate=" + new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR).format(issuanceDate) +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

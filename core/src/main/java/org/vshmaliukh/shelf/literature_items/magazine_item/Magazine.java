@@ -32,7 +32,7 @@ public class Magazine extends Item {
         return "Magazine {" +
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

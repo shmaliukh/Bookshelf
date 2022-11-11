@@ -28,7 +28,7 @@ public abstract class AbstractHttpShelfService extends AbstractSqlHandler implem
     }
 
     @Nullable
-    public  <T extends Item> ArrayList<T> formItemListByTypeFromJsonStr(Class<T> classType, String responseJsonStr) {
+    public <T extends Item> ArrayList<T> formItemListByTypeFromJsonStr(Class<T> classType, String responseJsonStr) {
         Type listType = TypeToken.getParameterized(ArrayList.class, classType).getType();
         return gson.fromJson(responseJsonStr, listType);
     }
