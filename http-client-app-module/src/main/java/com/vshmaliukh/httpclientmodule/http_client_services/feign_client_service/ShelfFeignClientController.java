@@ -14,7 +14,7 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
 @RestController
-public final class ShelfFeignClientController {
+public final class ShelfFeignClientController implements ShelfFeignClient{
 
     final ShelfFeignClient feignClientImp;
 
@@ -23,16 +23,22 @@ public final class ShelfFeignClientController {
     }
 
     @RequestMapping(value = "/" + READ_ITEMS_BY_TYPE_PAGE, method = RequestMethod.GET)
-    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(String userName, int typeOfWork, String itemClassType) {
+    public ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(String userName, int typeOfWork, String itemClassType) {
         return feignClientImp.readItemLisByClassTypeAsGsonStr(userName, typeOfWork, itemClassType);
     }
 
+    @Override
     @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)
-    String logIn(String userName, int typeOfWork, HttpServletResponse response) {
-        UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
-//        response.getHeaders()
-        return feignClientImp.doPost(userDataModelForJson, response);
+    public String doPost(UserDataModelForJson userModel, HttpServletResponse response) {
+        return feignClientImp.doPost(userModel, response);
     }
 
+//    @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)
+//    String doPost(String userName, int typeOfWork, HttpServletResponse response) {
+//        UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
+//        return
+////                "";
+//                feignClientImp.doPost(userDataModelForJson, response);
+//    }
 
 }
