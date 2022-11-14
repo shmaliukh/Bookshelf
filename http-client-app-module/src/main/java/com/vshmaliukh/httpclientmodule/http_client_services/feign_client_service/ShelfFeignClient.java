@@ -5,8 +5,8 @@ import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -18,20 +18,14 @@ import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 @FeignClient(name = "${feign.name}", url = "${feign.url}")
 public interface ShelfFeignClient {
 
-    @RequestMapping(value = "/" + READ_ITEMS_BY_TYPE_PAGE, method = RequestMethod.GET)
-    @Headers({ // todo remove
-            "Content-Type: application/json",
-            "Cookie: userName=Vlad",
-            "Cookie: typeOfWork=4",
-    })
-    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(@CookieValue("userName") String userName,
-                                                                         @CookieValue("typeOfWork") int typeOfWork,
-                                                                         @Param("itemClassType") String itemClassType);
+    @GetMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
+    @Headers({"Content-Type: application/json",})
+    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(@CookieValue(value = "userName") String userName,
+                                                                         @CookieValue(value = "typeOfWork") int typeOfWork,
+                                                                         @Param(value = "itemClassType") String itemClassType);
 
-    @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)
-    String doPost(@Param("userModel") UserDataModelForJson userModel
-//            , HttpServletResponse response
-    );
-
+    @PostMapping("/ping/" + LOG_IN_TITLE)
+    @Headers({"Content-Type: application/json",})
+    ResponseEntity logIn(@Param(value = "userModel") UserDataModelForJson userModel);
 
 }
