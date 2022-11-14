@@ -1,11 +1,9 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
-import feign.RequestInterceptor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,20 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 public class FeignClientServiceImp extends AbstractHttpShelfService {
 
-    HttpHeaders cookieHeaders = new HttpHeaders();
+    static HttpHeaders cookieHeaders = new HttpHeaders();
     ShelfFeignClientController shelfFeignClientController;
 
     @Autowired
     public FeignClientServiceImp(ShelfFeignClientController shelfFeignClientController) {
         this.shelfFeignClientController = shelfFeignClientController;
-    }
-
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return requestTemplate -> {
-            List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
-            requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
-        };
     }
 
     @Override
@@ -80,4 +70,14 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         super.saveItemToDB(item);
     }
 
+//    @Configuration
+//    public static class MyFeignClientConfig { // todo refactor
+//        @Bean
+//        public RequestInterceptor requestInterceptor() {
+//            return requestTemplate -> {
+//                List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
+//                requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
+//            };
+//        }
+//    }
 }

@@ -14,6 +14,7 @@ spring:
 feign:
   name: 'feign-client-test'
   url: 'http://localhost:8082'
+
 #  client:
 #    config:
 #      default:
