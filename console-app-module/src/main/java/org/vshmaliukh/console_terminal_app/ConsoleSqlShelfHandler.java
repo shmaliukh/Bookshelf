@@ -1,5 +1,8 @@
 package org.vshmaliukh.console_terminal_app;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.shelf_handler.SqlShelfHandler;
 
@@ -7,10 +10,13 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+@Setter
+@Getter
+@NoArgsConstructor
 public class ConsoleSqlShelfHandler extends SqlShelfHandler {
 
-    protected final Scanner scanner;
-    protected final PrintWriter printWriter;
+    protected Scanner scanner;
+    protected PrintWriter printWriter;
 
     public ConsoleSqlShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWorkWithSql) {
         super(userName, typeOfWorkWithSql);

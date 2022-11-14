@@ -1,4 +1,4 @@
-package com.vshmaliukh.httpclientmodule;
+package org.vshmaliukh;
 
 public final class MyUtils {
 

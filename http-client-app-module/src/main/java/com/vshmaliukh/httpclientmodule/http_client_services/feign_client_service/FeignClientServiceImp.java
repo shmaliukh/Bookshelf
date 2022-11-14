@@ -2,18 +2,22 @@ package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_servic
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Slf4j
 @Service
 @NoArgsConstructor
 public class FeignClientServiceImp extends AbstractHttpShelfService {
 
+    HttpHeaders cookieHeaders = new HttpHeaders();
     ShelfFeignClientController shelfFeignClientController;
 
     @Autowired
@@ -21,27 +25,12 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         this.shelfFeignClientController = shelfFeignClientController;
     }
 
-    @PostConstruct
-    void postConstructInit() {
-        this.userName = "Vlad";
-        this.typeOfWork = 4;
-        logIn(userName, typeOfWork);
-
-    }
-
-//    public FeignClientServiceImp(ShelfFeignClientController shelfFeignClientController) {
-
-    //    @Bean
+//    @Bean
 //    public RequestInterceptor requestInterceptor() {
 //        return requestTemplate -> {
-//            requestTemplate.header(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(USER_NAME, userName));
-//            requestTemplate.header(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, String.valueOf(typeOfWork)));
+//            List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
+//            requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
 //        };
-//    }
-
-//    public FeignClientServiceImp(String userName, int typeOfWork) {
-//        super(userName, typeOfWork);
-//        controller = null;
 //    }
 
     @Override
@@ -51,7 +40,21 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void logIn(String userName, int typeOfWork) {
-//        String logIn = shelfFeignClientController.doPost(userName, typeOfWork, null);
+        this.userName = userName;
+        this.typeOfWork = typeOfWork;
+
+        UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
+
+        ResponseEntity responseEntity =
+//                ResponseEntity.ok().build();
+                shelfFeignClientController.logIn(userDataModelForJson);
+        HttpHeaders responseHeaders = responseEntity.getHeaders();
+        List<String> cookieStrList = responseHeaders.get(HttpHeaders.SET_COOKIE);
+        if (cookieStrList != null) {
+            cookieHeaders.addAll(HttpHeaders.COOKIE, cookieStrList);
+        } else {
+            log.warn("problem to set up 'log_in' Cookie values // Set-Cookie list == null");
+        }
     }
 
     @Override

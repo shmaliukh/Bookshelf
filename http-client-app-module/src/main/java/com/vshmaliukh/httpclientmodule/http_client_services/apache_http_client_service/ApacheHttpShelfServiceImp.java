@@ -1,7 +1,7 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
 
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
-import com.vshmaliukh.httpclientmodule.MyUtils;
+import org.vshmaliukh.MyUtils;
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;

@@ -25,8 +25,6 @@ public abstract class AbstractHttpShelfService extends AbstractSqlHandler implem
     protected AbstractHttpShelfService(String userName, int typeOfWork) {
         super(userName);
         this.typeOfWork = typeOfWork;
-//        init();
-//        logIn(userName, typeOfWork);
     }
 
     @Nullable
