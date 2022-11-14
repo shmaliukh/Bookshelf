@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE;
@@ -29,8 +28,12 @@ public final class ShelfFeignClientController implements ShelfFeignClient{
 
     @Override
     @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)
-    public String doPost(UserDataModelForJson userModel, HttpServletResponse response) {
-        return feignClientImp.doPost(userModel, response);
+    public String doPost(UserDataModelForJson userModel
+//            , HttpServletResponse response
+    ) {
+        return feignClientImp.doPost(userModel
+//                , response
+        );
     }
 
 //    @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)

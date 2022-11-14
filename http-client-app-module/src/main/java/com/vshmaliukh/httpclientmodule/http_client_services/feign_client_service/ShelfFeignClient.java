@@ -1,13 +1,15 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_service;
 
 import feign.Headers;
+import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE;
@@ -22,13 +24,14 @@ public interface ShelfFeignClient {
             "Cookie: userName=Vlad",
             "Cookie: typeOfWork=4",
     })
-    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(@CookieValue String userName,
-                                                                         @CookieValue int typeOfWork,
-                                                                         @RequestParam String itemClassType);
+    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(@CookieValue("userName") String userName,
+                                                                         @CookieValue("typeOfWork") int typeOfWork,
+                                                                         @Param("itemClassType") String itemClassType);
 
     @RequestMapping(value = "/" + LOG_IN_TITLE, method = RequestMethod.POST)
-    String doPost(@RequestBody UserDataModelForJson userModel, // todo rename
-                  HttpServletResponse response);
+    String doPost(@Param("userModel") UserDataModelForJson userModel
+//            , HttpServletResponse response
+    );
 
 
 }

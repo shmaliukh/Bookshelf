@@ -37,6 +37,8 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
 
     protected ApacheHttpShelfServiceImp(String userName, int typeOfWork) {
         super(userName, typeOfWork);
+        init();
+        logIn(userName, typeOfWork);
     }
 
     public void logIn(String userName, int typeOfWork) {

@@ -24,6 +24,8 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
     protected RestTemplateClientServiceImp(String userName, int typeOfWork) {
         super(userName, typeOfWork);
+        init();
+        logIn(userName, typeOfWork);
     }
 
     @Override
