@@ -26,6 +26,6 @@ public interface ShelfFeignClient {
 
     @PostMapping("/ping/" + LOG_IN_TITLE)
     @Headers({"Content-Type: application/json",})
-    ResponseEntity logIn(@Param(value = "userModel") UserDataModelForJson userModel);
+    ResponseEntity logIn(@Param("userModel") UserDataModelForJson userModel);
 
 }

@@ -1,9 +1,11 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
+import feign.RequestInterceptor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,13 +27,13 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         this.shelfFeignClientController = shelfFeignClientController;
     }
 
-//    @Bean
-//    public RequestInterceptor requestInterceptor() {
-//        return requestTemplate -> {
-//            List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
-//            requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
-//        };
-//    }
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return requestTemplate -> {
+            List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
+            requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
+        };
+    }
 
     @Override
     public void init() {
@@ -45,9 +47,7 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
 
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
 
-        ResponseEntity responseEntity =
-//                ResponseEntity.ok().build();
-                shelfFeignClientController.logIn(userDataModelForJson);
+        ResponseEntity responseEntity = shelfFeignClientController.logIn(userDataModelForJson);
         HttpHeaders responseHeaders = responseEntity.getHeaders();
         List<String> cookieStrList = responseHeaders.get(HttpHeaders.SET_COOKIE);
         if (cookieStrList != null) {

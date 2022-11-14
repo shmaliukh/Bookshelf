@@ -16,23 +16,23 @@ import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 @RestController
 public final class ShelfFeignClientController implements ShelfFeignClient {
 
-    final ShelfFeignClient feignClientImp;
+    final ShelfFeignClient shelfFeignClient;
 
     @Autowired
-    public ShelfFeignClientController(ShelfFeignClient feignClientImp) {
-        this.feignClientImp = feignClientImp;
+    public ShelfFeignClientController(ShelfFeignClient shelfFeignClient) {
+        this.shelfFeignClient = shelfFeignClient;
     }
 
     @Override
     @GetMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
     public ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(String userName, int typeOfWork, String itemClassType) {
-        return feignClientImp.readItemLisByClassTypeAsGsonStr(userName, typeOfWork, itemClassType);
+        return shelfFeignClient.readItemLisByClassTypeAsGsonStr(userName, typeOfWork, itemClassType);
     }
 
     @Override
     @PostMapping("/ping/" + LOG_IN_TITLE)
     public ResponseEntity logIn(UserDataModelForJson userModel) {
-        return feignClientImp.logIn(userModel);
+        return shelfFeignClient.logIn(userModel);
     }
 
 }

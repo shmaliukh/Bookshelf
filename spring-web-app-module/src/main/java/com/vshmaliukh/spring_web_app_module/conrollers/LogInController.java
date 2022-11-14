@@ -39,13 +39,14 @@ public class LogInController {
     }
 
     @PostMapping("/ping/" + LOG_IN_TITLE)
-    public ResponseEntity logIn(@RequestParam(name = "userModel", value = "userModel") UserDataModelForJson userModel) {
-        return ResponseEntity
+    public ResponseEntity logIn(@RequestBody UserDataModelForJson userModel) {
+        ResponseEntity<Object> build = ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE,
                         MyUtils.generateCookieValue(USER_NAME, userModel.getUserName()),
                         MyUtils.generateCookieValue(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, userModel.getTypeOfWorkAsStr()))
                 .build();
+        return build;
     }
 
 }
