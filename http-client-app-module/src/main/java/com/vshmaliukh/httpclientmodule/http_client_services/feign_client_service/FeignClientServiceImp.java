@@ -61,7 +61,9 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
         String classTypeSimpleName = classType.getSimpleName();
-        return (List<T>) shelfFeignClientController.readItemLisByClassType(userName, typeOfWork, classTypeSimpleName); // todo
+        ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemLisByClassType(userName, typeOfWork, classTypeSimpleName);
+        List<? extends Item> itemListFromResponse = responseEntity.getBody();
+        return (List<T>) itemListFromResponse; // FIXME
     }
 
     @Override
