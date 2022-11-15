@@ -43,7 +43,7 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         if (cookieStrList != null) {
             cookieHeaders.addAll(HttpHeaders.COOKIE, cookieStrList);
         } else {
-            log.warn("problem to set up 'log_in' Cookie values // Set-Cookie list == null");
+            log.warn("problem to set up 'log_in' cookie values // Set-Cookie list == null");
         }
     }
 
@@ -57,12 +57,13 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         super.changeItemBorrowedStateInDB(item);
     }
 
+
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
         String classTypeSimpleName = classType.getSimpleName();
-        ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemLisByClassTypeAsGsonStr(userName, typeOfWork, classTypeSimpleName);
+        ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemLisByClassType(userName, typeOfWork, classTypeSimpleName);
         List<? extends Item> itemListFromResponse = responseEntity.getBody();
-        return (List<T>) itemListFromResponse;
+        return (List<T>) itemListFromResponse; // FIXME
     }
 
     @Override

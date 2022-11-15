@@ -23,15 +23,15 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
     }
 
     @Override
-    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
-    public ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(String userName, int typeOfWork, String itemClassType) {
-        return shelfFeignClient.readItemLisByClassTypeAsGsonStr(userName, typeOfWork, itemClassType);
-    }
-
-    @Override
     @PostMapping("/ping/" + LOG_IN_TITLE)
     public ResponseEntity logIn(UserDataModelForJson userModel) {
         return shelfFeignClient.logIn(userModel);
     }
+
+    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
+    public ResponseEntity<List<? extends Item>> readItemLisByClassType(String userName, int typeOfWork, String itemClassType) {
+        return shelfFeignClient.readItemLisByClassType(userName, typeOfWork, itemClassType);
+    }
+
 
 }

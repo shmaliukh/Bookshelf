@@ -21,15 +21,13 @@ import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 )
 public interface ShelfFeignClient {
 
-    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
-    @Headers({"Content-Type: application/json",
-    })
-    ResponseEntity<List<? extends Item>> readItemLisByClassTypeAsGsonStr(@CookieValue("userName") String userName,
-                                                                         @CookieValue("typeOfWork") int typeOfWork,
-                                                                         @Param("itemClassType") String itemClassType);
-
     @PostMapping("/ping/" + LOG_IN_TITLE)
     @Headers({"Content-Type: application/json",})
     ResponseEntity logIn(@Param("userModel") UserDataModelForJson userModel);
 
+    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
+    @Headers({"Content-Type: application/json",})
+    ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue("userName") String userName,
+                                                                @CookieValue("typeOfWork") int typeOfWork,
+                                                                @Param("itemClassType") String itemClassType);
 }
