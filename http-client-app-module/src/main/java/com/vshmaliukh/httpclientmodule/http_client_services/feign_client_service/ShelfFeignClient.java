@@ -14,8 +14,10 @@ import java.util.List;
 import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE;
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
-@FeignClient(name = "${feign.name}", url = "${feign.url}"
-//        , configuration = FeignClientServiceImp.MyFeignClientConfig.class
+@FeignClient(
+        name = "${feign.name}",
+        url = "${feign.url}",
+        configuration = MyFeignClientConfig.class
 )
 public interface ShelfFeignClient {
 
