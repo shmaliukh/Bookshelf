@@ -29,27 +29,6 @@ public final class MyFeignClientConfig {
 //        return null;
 //    }
 
-
-//    @Bean
-//    public RequestInterceptor requestInterceptor() {
-//        return requestTemplate -> {
-//            requestTemplate.header("Content-Type", "application/json");
-//            requestTemplate.header("Accept", "application/json");
-//            requestTemplate.header("header_1", "value_1");
-//        };
-//    }
-
-//    @Bean
-//    public Contract feignContract() {
-//        return new feign.Contract.Default();
-//    }
-
-//    @Bean
-//    public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
-//        return new BasicAuthRequestInterceptor("user", "password");
-//    }
-
-
     //todo
 //    Use OkHttpClient instead of the default one to support HTTP/2
 //    <dependency>
