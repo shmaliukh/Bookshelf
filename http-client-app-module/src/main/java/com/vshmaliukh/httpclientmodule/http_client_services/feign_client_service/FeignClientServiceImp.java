@@ -17,11 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 public class FeignClientServiceImp extends AbstractHttpShelfService {
 
-    static HttpHeaders cookieHeaders = new HttpHeaders();
-    ShelfFeignClientController shelfFeignClientController;
+    static HttpHeaders cookieHeaders = new HttpHeaders(); // todo fix
+    ShelfFeignClientImp shelfFeignClientController;
 
     @Autowired
-    public FeignClientServiceImp(ShelfFeignClientController shelfFeignClientController) {
+    public FeignClientServiceImp(ShelfFeignClientImp shelfFeignClientController) {
         this.shelfFeignClientController = shelfFeignClientController;
     }
 
@@ -70,14 +70,4 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         super.saveItemToDB(item);
     }
 
-//    @Configuration
-//    public static class MyFeignClientConfig { // todo refactor
-//        @Bean
-//        public RequestInterceptor requestInterceptor() {
-//            return requestTemplate -> {
-//                List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
-//                requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
-//            };
-//        }
-//    }
 }

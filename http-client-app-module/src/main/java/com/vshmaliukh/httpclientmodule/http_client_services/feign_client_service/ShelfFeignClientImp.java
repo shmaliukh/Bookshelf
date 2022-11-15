@@ -13,12 +13,12 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_
 import static org.vshmaliukh.Constants.LOG_IN_TITLE;
 
 @Component
-public final class ShelfFeignClientController implements ShelfFeignClient {
+public final class ShelfFeignClientImp implements ShelfFeignClient {
 
     final ShelfFeignClient shelfFeignClient;
 
     @Autowired
-    public ShelfFeignClientController(ShelfFeignClient shelfFeignClient) {
+    public ShelfFeignClientImp(ShelfFeignClient shelfFeignClient) {
         this.shelfFeignClient = shelfFeignClient;
     }
 

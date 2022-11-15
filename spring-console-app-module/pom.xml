@@ -9,7 +9,6 @@
         <relativePath>../base-shelf-spring-boot-module/pom.xml</relativePath>
     </parent>
 
-    <groupId>com.vshmaliukh</groupId>
     <artifactId>spring-console-app-module</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>spring-console-app-module</name>
