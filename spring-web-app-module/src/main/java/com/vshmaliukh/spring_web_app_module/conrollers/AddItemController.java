@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
 import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static org.vshmaliukh.Constants.*;
 
+@Slf4j
 @Controller
 public class AddItemController {
 
@@ -37,7 +38,12 @@ public class AddItemController {
                                                   @RequestBody T item) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         webShelfHandler.addItem(item);
-        return ResponseEntity.ok().build();
+        webShelfHandler.readShelfItems();
+        if (webShelfHandler.getShelf().getItemsOfShelf().contains(item)) {
+            return ResponseEntity.ok().build();
+        }
+        log.warn("userName: '{}' // type of work: '{}' // item '{}' not added to shelf", userName, typeOfWork, item);
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/" + ADD_ITEM_TITLE)
@@ -58,9 +64,9 @@ public class AddItemController {
                 Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
                 webShelfHandler.addItem(item);
             } else {
-                MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to add item with fields '{}' index: " +
+                log.warn("userName: '{}' // type of work: '{}' // problem to add item with fields '{}' index: " +
                         "item fields are not valid or webShelfHandler == null", userName, typeOfWork, jsonBody);
-                MyLogUtil.logDebug(this, "doGet(userName: '{}', typeOfWork: '{}', itemClassType: '{}', jsonBody: '{}', modelMap: '{}') " +
+                log.debug("doGet(userName: '{}', typeOfWork: '{}', itemClassType: '{}', jsonBody: '{}', modelMap: '{}') " +
                                 "// handlerByName: '{}' // springBootWebUtil: '{}' // webShelfHandler: '{}' // itemFieldValueMap: '{}' ",
                         userName, typeOfWork, itemClassType, jsonBody, modelMap, handlerByName, springBootWebUtil, webShelfHandler, itemFieldValueMap);
             }
