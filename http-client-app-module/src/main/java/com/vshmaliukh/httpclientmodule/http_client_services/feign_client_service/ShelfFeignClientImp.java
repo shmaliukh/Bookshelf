@@ -3,6 +3,7 @@ package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_servic
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -28,10 +29,9 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
         return shelfFeignClient.logIn(userModel);
     }
 
-    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
+    @GetMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
     public ResponseEntity<List<? extends Item>> readItemLisByClassType(String userName, int typeOfWork, String itemClassType) {
         return shelfFeignClient.readItemLisByClassType(userName, typeOfWork, itemClassType);
     }
-
 
 }

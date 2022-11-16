@@ -5,6 +5,7 @@ import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -25,7 +26,7 @@ public interface ShelfFeignClient {
     @Headers({"Content-Type: application/json",})
     ResponseEntity logIn(@Param("userModel") UserDataModelForJson userModel);
 
-    @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
+    @GetMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
     @Headers({"Content-Type: application/json",})
     ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue("userName") String userName,
                                                                 @CookieValue("typeOfWork") int typeOfWork,
