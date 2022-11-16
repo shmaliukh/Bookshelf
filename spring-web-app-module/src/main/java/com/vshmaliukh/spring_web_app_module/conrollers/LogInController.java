@@ -1,5 +1,6 @@
 package com.vshmaliukh.spring_web_app_module.conrollers;
 
+import com.vshmaliukh.spring_web_app_module.SpringWebApplication;
 import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
 import com.vshmaliukh.spring_web_app_module.utils.CookieUtil;
 import org.springframework.http.HttpHeaders;
@@ -38,15 +39,14 @@ public class LogInController {
         return "redirect:/" + MAIN_MENU_TITLE;
     }
 
-    @PostMapping("/ping/" + LOG_IN_TITLE)
-    public ResponseEntity logIn(@RequestBody UserDataModelForJson userModel) {
-        ResponseEntity<Object> build = ResponseEntity
+    @PostMapping("/" + SpringWebApplication.LOG_IN_VIA_USER_MODEL)
+    public ResponseEntity<Void> logIn(@RequestBody UserDataModelForJson userModel) {
+        return ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE,
                         MyUtils.generateCookieValue(USER_NAME, userModel.getUserName()),
                         MyUtils.generateCookieValue(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, userModel.getTypeOfWorkAsStr()))
                 .build();
-        return build;
     }
 
 }

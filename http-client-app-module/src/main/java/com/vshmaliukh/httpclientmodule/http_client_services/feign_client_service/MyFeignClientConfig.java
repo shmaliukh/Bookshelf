@@ -15,6 +15,7 @@ public final class MyFeignClientConfig {
         return requestTemplate -> {
             List<String> cookieHeadersValuesAsList = cookieHeaders.getValuesAsList(HttpHeaders.COOKIE);
             requestTemplate.header(HttpHeaders.COOKIE, cookieHeadersValuesAsList);
+            requestTemplate.header(HttpHeaders.CONTENT_TYPE, "application/json");
         };
     }
 

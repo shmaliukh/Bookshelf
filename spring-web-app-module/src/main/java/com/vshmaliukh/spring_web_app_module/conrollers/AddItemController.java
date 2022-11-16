@@ -31,7 +31,7 @@ public class AddItemController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @PutMapping("/ping/" + ADD_ITEM_TITLE)
+    @PutMapping("/put_item_to_db")
     <T extends Item> ResponseEntity<Void> addItem(@CookieValue(name = "userName") String userName,
                                                   @CookieValue(name = "typeOfWork") int typeOfWork,
                                                   @RequestBody T item) {
