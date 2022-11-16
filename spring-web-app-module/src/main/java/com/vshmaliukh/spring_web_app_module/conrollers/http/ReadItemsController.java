@@ -22,10 +22,10 @@ public class ReadItemsController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @GetMapping(READ_ITEMS_BY_TYPE)
-    ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue String userName,
-                                                                @CookieValue int typeOfWork,
-                                                                @RequestParam String itemClassType) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, path = READ_ITEMS_BY_TYPE)
+    ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue(name = "userName") String userName,
+                                                                @CookieValue(name = "typeOfWork") int typeOfWork,
+                                                                @RequestBody String itemClassType) {
         SaveReadShelfHandler shelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(itemClassType);
         if (classByName != null) {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
 import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,6 @@ import java.util.Map;
 import static org.vshmaliukh.Constants.*;
 
 @Controller
-@RequestMapping("/" + ADD_ITEM_TITLE)
 public class AddItemController {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
@@ -31,12 +31,20 @@ public class AddItemController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @PostMapping()
+    @PutMapping("/ping/" + ADD_ITEM_TITLE)
+    <T extends Item> ResponseEntity<Void> addItem(@CookieValue(name = "userName") String userName,
+                                                  @CookieValue(name = "typeOfWork") int typeOfWork,
+                                                  @RequestBody T item) {
+        SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
+        webShelfHandler.addItem(item);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/" + ADD_ITEM_TITLE)
     ModelAndView doPost(@CookieValue String userName,
                         @CookieValue int typeOfWork,
                         @CookieValue String itemClassType,
                         @RequestBody String jsonBody,
-//                        HttpServletResponse response,
                         ModelMap modelMap) {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
@@ -57,12 +65,12 @@ public class AddItemController {
                         userName, typeOfWork, itemClassType, jsonBody, modelMap, handlerByName, springBootWebUtil, webShelfHandler, itemFieldValueMap);
             }
         }
-        //TODO set status according to adding item state
+        //TODO set status according to added item state
 //        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
     }
 
-    @GetMapping()
+    @GetMapping("/" + ADD_ITEM_TITLE)
     ModelAndView doGet(@CookieValue(defaultValue = "") String itemClassType,
                        @CookieValue String isRandom,
                        ModelMap modelMap) {

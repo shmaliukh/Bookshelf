@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.UserDataModelForJson;
@@ -61,14 +62,22 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
     @Override
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
         String classTypeSimpleName = classType.getSimpleName();
-        ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemLisByClassType(userName, typeOfWork, classTypeSimpleName);
+        ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemListByClassType(userName, typeOfWork, classTypeSimpleName);
         List<? extends Item> itemListFromResponse = responseEntity.getBody();
         return (List<T>) itemListFromResponse; // FIXME
     }
 
     @Override
     public void saveItemToDB(Item item) {
-        super.saveItemToDB(item);
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.saveItem(userName, typeOfWork, item);
+        HttpStatus statusCode = responseEntity.getStatusCode();
+        if (statusCode.is2xxSuccessful()) {
+            log.info("userName: '{}' // typeOfWork: '{}' // successful added '{}' item",
+                    userName, typeOfWork, item);
+        } else {
+            log.warn("userName: '{}' // typeOfWork: '{}' // problem to add '{}' item to db // response status code: '{}'",
+                    userName, typeOfWork, item, statusCode);
+        }
     }
 
 }
