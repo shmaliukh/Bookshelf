@@ -2,12 +2,14 @@ package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class AbstractShelfHandler implements ShelfHandlerInterface {
 
     @Getter
@@ -55,6 +57,17 @@ public class AbstractShelfHandler implements ShelfHandlerInterface {
                 Item buffer = literatureList.get(index - 1);
                 buffer.setBorrowed(!buffer.isBorrowed());
             }
+        }
+    }
+
+    public void changeBorrowedStateOfItem(Item item) {
+        List<Item> allLiteratureObjects = this.shelf.getAllLiteratureObjects();
+        if (allLiteratureObjects.contains(item)) {
+            allLiteratureObjects.remove(item);
+            item.setBorrowed(!item.isBorrowed());
+            allLiteratureObjects.add(item);
+        } else {
+            log.warn("problem to change borrowed state for item '{}' // shelf does not contain '{}' item", item, item);
         }
     }
 
