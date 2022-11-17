@@ -20,7 +20,7 @@ public final class HttpClientAppConfig {
     public static final String CHANGE_ITEM_BORROWED_STATE_PAGE = "change_item_borrowed_state";
     public static final String READ_ITEMS_BY_TYPE_PAGE = "read_items_by_type";
     public static final String ADD_ITEM_PAGE = "add_item";
-    public static final String PUT_ITEM_TO_DB_PAGE = "put_item_to_db";
+    public static final String PUT_ITEM_TO_DB_PAGE = "add_item_to_db";
     public static final String LOG_IN_VIA_USER_MODEL_PAGE = "log_in_via_user_model";
     public static final String ADD_ITEM_URI_STR = HTTP_LOCALHOST_8082 + HttpClientAppConfig.ADD_ITEM_PAGE;
 

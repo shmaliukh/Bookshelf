@@ -1,5 +1,6 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.feign_client_service;
 
+import com.vshmaliukh.httpclientmodule.http_client_services.BaseShelfHttpClient;
 import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
         url = "${feign.url}",
         configuration = MyFeignClientConfig.class
 )
-public interface ShelfFeignClient {
+public interface ShelfFeignClient extends BaseShelfHttpClient {
 
     @PostMapping("/" + LOG_IN_VIA_USER_MODEL_PAGE)
     ResponseEntity<Void> logIn(@Param("userModel") UserDataModelForJson userModel);
@@ -42,4 +43,5 @@ public interface ShelfFeignClient {
     ResponseEntity<Void> deleteItemAndGetResponse(@CookieValue("userName") String userName,
                                                   @CookieValue("typeOfWork") int typeOfWork,
                                                   @Param("indexOfItem") int indexOfItem);
+
 }
