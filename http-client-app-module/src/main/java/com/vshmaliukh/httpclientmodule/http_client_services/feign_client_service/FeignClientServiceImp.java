@@ -18,8 +18,15 @@ import java.util.List;
 @NoArgsConstructor
 public class FeignClientServiceImp extends AbstractHttpShelfService {
 
+    public static final String SUCCESSFUL_DELETED_ITEM_MESSAGE_STR = "successful deleted '{}' item";
+    public static final String PROBLEM_TO_DELETE_ITEM_MESSAGE_STR = "problem to delete '{}' item";
+    public static final String SUCCESSFUL_CHANGED_BORROWED_STATE_FOR_ITEM_MESSAGE_STR = "successful changed borrowed state for '{}' item";
+    public static final String PROBLEM_TO_CHANGE_BORROWED_STATE_FOR_ITEM_MESSAGE_STR = "problem to change borrowed state for '{}' item";
+    public static final String SUCCESSFUL_ADDED_ITEM_MESSAGE_STR = "successful added '{}' item";
+    public static final String PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR = "problem to add '{}' item to db";
+
     static HttpHeaders cookieHeaders = new HttpHeaders(); // todo fix
-    ShelfFeignClientImp shelfFeignClientController;
+    protected ShelfFeignClientImp shelfFeignClientController;
 
     @Autowired
     public FeignClientServiceImp(ShelfFeignClientImp shelfFeignClientController) {
@@ -38,7 +45,7 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
 
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
 
-        ResponseEntity responseEntity = shelfFeignClientController.logIn(userDataModelForJson);
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.logIn(userDataModelForJson);
         HttpHeaders responseHeaders = responseEntity.getHeaders();
         List<String> cookieStrList = responseHeaders.get(HttpHeaders.SET_COOKIE);
         if (cookieStrList != null) {
@@ -50,21 +57,26 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void deleteItemFromDB(Item item) {
-        super.deleteItemFromDB(item);
+        int itemIndex = readItemList().indexOf(item) + 1;
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.deleteItemAndGetResponse(userName, typeOfWork, itemIndex);
+        informAboutResponseStatus(
+                responseEntity,
+                SUCCESSFUL_DELETED_ITEM_MESSAGE_STR,
+                PROBLEM_TO_DELETE_ITEM_MESSAGE_STR,
+                item);
     }
+
+
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
         int itemIndex = readItemList().indexOf(item) + 1;
-        ResponseEntity<Void> responseEntity = shelfFeignClientController.changeBorrowedStateAndGetResponse(userName, typeOfWork, itemIndex);
-        HttpStatus statusCode = responseEntity.getStatusCode();
-        if (statusCode.is2xxSuccessful()) {
-            log.info("userName: '{}' // typeOfWork: '{}' // successful changed borrowed state for '{}' item",
-                    userName, typeOfWork, item);
-        } else {
-            log.warn("userName: '{}' // typeOfWork: '{}' // problem change borrowed state for '{}' item // response status code: '{}'",
-                    userName, typeOfWork, item, statusCode);
-        }
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.changeItemBorrowedStateAndGetResponse(userName, typeOfWork, itemIndex);
+        informAboutResponseStatus(
+                responseEntity,
+                SUCCESSFUL_CHANGED_BORROWED_STATE_FOR_ITEM_MESSAGE_STR,
+                PROBLEM_TO_CHANGE_BORROWED_STATE_FOR_ITEM_MESSAGE_STR,
+                item);
     }
 
 
@@ -73,19 +85,30 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
         String classTypeSimpleName = classType.getSimpleName();
         ResponseEntity<List<? extends Item>> responseEntity = shelfFeignClientController.readItemListByClassType(userName, typeOfWork, classTypeSimpleName);
         List<? extends Item> itemListFromResponse = responseEntity.getBody();
-        return (List<T>) itemListFromResponse; // FIXME
+        return (List<T>) itemListFromResponse;
     }
 
     @Override
     public void saveItemToDB(Item item) {
-        ResponseEntity<Void> responseEntity = shelfFeignClientController.saveItem(userName, typeOfWork, item);
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.saveItemAndGetResponse(userName, typeOfWork, item);
+        informAboutResponseStatus(
+                responseEntity,
+                SUCCESSFUL_ADDED_ITEM_MESSAGE_STR,
+                PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR,
+                item);
+    }
+
+    private void informAboutResponseStatus(ResponseEntity<Void> responseEntity,
+                                           String messageIfSuccessStr,
+                                           String messageIfProblemStr,
+                                           Object... values) {
         HttpStatus statusCode = responseEntity.getStatusCode();
         if (statusCode.is2xxSuccessful()) {
-            log.info("userName: '{}' // typeOfWork: '{}' // successful added '{}' item",
-                    userName, typeOfWork, item);
+            log.info("userName: '{}' // typeOfWork: '{}' // " + messageIfSuccessStr,
+                    userName, typeOfWork, values);
         } else {
-            log.warn("userName: '{}' // typeOfWork: '{}' // problem to add '{}' item to db // response status code: '{}'",
-                    userName, typeOfWork, item, statusCode);
+            log.warn("userName: '{}' // typeOfWork: '{}' // " + messageIfProblemStr + " // response status code: '{}'",
+                    userName, typeOfWork, values, statusCode);
         }
     }
 

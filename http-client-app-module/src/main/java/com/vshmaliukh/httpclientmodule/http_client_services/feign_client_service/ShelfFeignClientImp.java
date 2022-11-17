@@ -11,8 +11,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
-import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.CHANGE_ITEM_BORROWED_STATE_PAGE;
-import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE;
+import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
 
 @Component
 public final class ShelfFeignClientImp implements ShelfFeignClient {
@@ -38,13 +37,18 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
 
     @Override
     @PutMapping("/" + HttpClientAppConfig.PUT_ITEM_TO_DB_PAGE)
-    public <T extends Item> ResponseEntity<Void> saveItem(String userName, int typeOfWork, T item) {
-        return shelfFeignClient.saveItem(userName, typeOfWork, item);
+    public <T extends Item> ResponseEntity<Void> saveItemAndGetResponse(String userName, int typeOfWork, T item) {
+        return shelfFeignClient.saveItemAndGetResponse(userName, typeOfWork, item);
     }
 
     @PostMapping("/" + CHANGE_ITEM_BORROWED_STATE_PAGE)
-    public ResponseEntity<Void> changeBorrowedStateAndGetResponse(String userName, int typeOfWork, int itemIndex) {
-        return shelfFeignClient.changeBorrowedStateAndGetResponse(userName, typeOfWork, itemIndex);
+    public ResponseEntity<Void> changeItemBorrowedStateAndGetResponse(String userName, int typeOfWork, int indexOfItem) {
+        return shelfFeignClient.changeItemBorrowedStateAndGetResponse(userName, typeOfWork, indexOfItem);
+    }
+
+    @PostMapping("/" + DELETE_ITEM_PAGE)
+    public ResponseEntity<Void> deleteItemAndGetResponse(String userName, int typeOfWork, int indexOfItem) {
+        return shelfFeignClient.deleteItemAndGetResponse(userName, typeOfWork, indexOfItem);
     }
 
 }

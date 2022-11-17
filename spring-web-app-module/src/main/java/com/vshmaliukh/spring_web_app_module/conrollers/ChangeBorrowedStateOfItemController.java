@@ -44,8 +44,10 @@ public class ChangeBorrowedStateOfItemController {
             webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, indexOfItem);
             log.info("successful changed item borrowed state // item index: '{}'", indexOfItem);
         } else {
-            log.warn("userName: '{}', type of work: '{}' // problem to change borrowed state of item by '{}' index: " +
-                    "webShelfHandler == null", userName, typeOfWork, indexOfItem);
+            log.warn("userName: '{}' " +
+                            "// type of work: '{}' " +
+                            "// problem to change borrowed state of item by '{}' index: webShelfHandler == null",
+                    userName, typeOfWork, indexOfItem);
         }
     }
 
@@ -54,16 +56,20 @@ public class ChangeBorrowedStateOfItemController {
                                                            @CookieValue int typeOfWork,
                                                            @RequestBody int indexOfItem) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
-        Item itemToCheck = webShelfHandler.getShelf().getAllLiteratureObjects().get(indexOfItem);
+        Item itemToCheck = webShelfHandler.getShelf().getAllLiteratureObjects().get(indexOfItem - 1);
         itemToCheck.setBorrowed(!itemToCheck.isBorrowed());
 
         changeBorrowedState(userName, typeOfWork, indexOfItem);
 
         webShelfHandler.readShelfItems();
-        if (webShelfHandler.getShelf().getAllLiteratureObjects().contains(itemToCheck)) {
+        List<Item> itemListAfterAction = webShelfHandler.getShelf().getAllLiteratureObjects();
+        if (itemListAfterAction.contains(itemToCheck)) {
             return ResponseEntity.ok().build();
         } else {
-            log.warn("userName: '{}', type of work: '{}' // problem to change '{}' item borrowed state", userName, typeOfWork, itemToCheck);
+            log.warn("userName: '{}' " +
+                            "// type of work: '{}' " +
+                            "// problem to change '{}' item borrowed state",
+                    userName, typeOfWork, itemToCheck);
             return ResponseEntity.badRequest().build();
         }
     }

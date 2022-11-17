@@ -29,12 +29,17 @@ public interface ShelfFeignClient {
                                                                  @Param("itemClassType") String itemClassType);
 
     @PutMapping("/" + PUT_ITEM_TO_DB_PAGE)
-    <T extends Item> ResponseEntity<Void> saveItem(@CookieValue("userName") String userName,
-                                                   @CookieValue("typeOfWork") int typeOfWork,
-                                                   @Param("item") T item);
+    <T extends Item> ResponseEntity<Void> saveItemAndGetResponse(@CookieValue("userName") String userName,
+                                                                 @CookieValue("typeOfWork") int typeOfWork,
+                                                                 @Param("item") T item);
 
     @PostMapping("/" + CHANGE_ITEM_BORROWED_STATE_PAGE)
-    ResponseEntity<Void> changeBorrowedStateAndGetResponse(@CookieValue("userName") String userName,
-                                                           @CookieValue("typeOfWork") int typeOfWork,
-                                                           @Param("itemIndex") int itemIndex);
+    ResponseEntity<Void> changeItemBorrowedStateAndGetResponse(@CookieValue("userName") String userName,
+                                                               @CookieValue("typeOfWork") int typeOfWork,
+                                                               @Param("itemIndex") int itemIndex);
+
+    @PostMapping("/" + DELETE_ITEM_PAGE)
+    ResponseEntity<Void> deleteItemAndGetResponse(@CookieValue("userName") String userName,
+                                                  @CookieValue("typeOfWork") int typeOfWork,
+                                                  @Param("indexOfItem") int indexOfItem);
 }
