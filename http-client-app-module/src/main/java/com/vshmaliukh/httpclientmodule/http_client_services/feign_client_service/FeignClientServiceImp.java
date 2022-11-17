@@ -5,13 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
+
+import static com.vshmaliukh.httpclientmodule.http_client_services.MyHttpClientUtils.informAboutResponseStatus;
 
 @Slf4j
 @Service
@@ -63,9 +64,8 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
                 responseEntity,
                 SUCCESSFUL_DELETED_ITEM_MESSAGE_STR,
                 PROBLEM_TO_DELETE_ITEM_MESSAGE_STR,
-                item);
+                userName, typeOfWork, item);
     }
-
 
 
     @Override
@@ -76,7 +76,7 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
                 responseEntity,
                 SUCCESSFUL_CHANGED_BORROWED_STATE_FOR_ITEM_MESSAGE_STR,
                 PROBLEM_TO_CHANGE_BORROWED_STATE_FOR_ITEM_MESSAGE_STR,
-                item);
+                userName, typeOfWork, item);
     }
 
 
@@ -95,21 +95,7 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
                 responseEntity,
                 SUCCESSFUL_ADDED_ITEM_MESSAGE_STR,
                 PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR,
-                item);
-    }
-
-    private void informAboutResponseStatus(ResponseEntity<Void> responseEntity,
-                                           String messageIfSuccessStr,
-                                           String messageIfProblemStr,
-                                           Object... values) {
-        HttpStatus statusCode = responseEntity.getStatusCode();
-        if (statusCode.is2xxSuccessful()) {
-            log.info("userName: '{}' // typeOfWork: '{}' // " + messageIfSuccessStr,
-                    userName, typeOfWork, values);
-        } else {
-            log.warn("userName: '{}' // typeOfWork: '{}' // " + messageIfProblemStr + " // response status code: '{}'",
-                    userName, typeOfWork, values, statusCode);
-        }
+                userName, typeOfWork, item);
     }
 
 }
