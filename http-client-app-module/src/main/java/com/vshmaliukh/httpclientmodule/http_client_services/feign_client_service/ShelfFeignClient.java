@@ -5,6 +5,7 @@ import feign.Param;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.vshmaliukh.UserDataModelForJson;
@@ -39,7 +40,7 @@ public interface ShelfFeignClient extends BaseShelfHttpClient {
                                                                @CookieValue("typeOfWork") int typeOfWork,
                                                                @Param("itemIndex") int itemIndex);
 
-    @PostMapping("/" + DELETE_ITEM_PAGE)
+    @DeleteMapping("/" + DELETE_ITEM_PAGE)
     ResponseEntity<Void> deleteItemAndGetResponse(@CookieValue("userName") String userName,
                                                   @CookieValue("typeOfWork") int typeOfWork,
                                                   @Param("indexOfItem") int indexOfItem);
