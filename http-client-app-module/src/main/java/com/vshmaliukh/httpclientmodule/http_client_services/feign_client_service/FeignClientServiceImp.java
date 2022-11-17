@@ -55,7 +55,16 @@ public class FeignClientServiceImp extends AbstractHttpShelfService {
 
     @Override
     public void changeItemBorrowedStateInDB(Item item) {
-        super.changeItemBorrowedStateInDB(item);
+        int itemIndex = readItemList().indexOf(item) + 1;
+        ResponseEntity<Void> responseEntity = shelfFeignClientController.changeBorrowedStateAndGetResponse(userName, typeOfWork, itemIndex);
+        HttpStatus statusCode = responseEntity.getStatusCode();
+        if (statusCode.is2xxSuccessful()) {
+            log.info("userName: '{}' // typeOfWork: '{}' // successful changed borrowed state for '{}' item",
+                    userName, typeOfWork, item);
+        } else {
+            log.warn("userName: '{}' // typeOfWork: '{}' // problem change borrowed state for '{}' item // response status code: '{}'",
+                    userName, typeOfWork, item, statusCode);
+        }
     }
 
 

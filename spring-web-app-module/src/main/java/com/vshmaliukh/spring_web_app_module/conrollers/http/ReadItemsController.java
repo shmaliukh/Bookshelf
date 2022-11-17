@@ -2,6 +2,7 @@ package com.vshmaliukh.spring_web_app_module.conrollers.http;
 
 import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.vshmaliukh.services.SaveReadShelfHandler;
@@ -22,10 +23,23 @@ public class ReadItemsController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, path = READ_ITEMS_BY_TYPE)
+    @GetMapping(READ_ITEMS_BY_TYPE)
+//    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, path = READ_ITEMS_BY_TYPE)
     ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue(name = "userName") String userName,
                                                                 @CookieValue(name = "typeOfWork") int typeOfWork,
+                                                                @RequestParam String itemClassType) {
+        return getResponse(userName, typeOfWork, itemClassType);
+    }
+
+    @PostMapping(READ_ITEMS_BY_TYPE)
+    ResponseEntity<List<? extends Item>> readItemLisByClassType_post(@CookieValue(name = "userName") String userName,
+                                                                @CookieValue(name = "typeOfWork") int typeOfWork,
                                                                 @RequestBody String itemClassType) {
+        return getResponse(userName, typeOfWork, itemClassType);
+    }
+
+    @NotNull
+    private ResponseEntity<List<? extends Item>> getResponse(String userName, int typeOfWork, String itemClassType) {
         SaveReadShelfHandler shelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         Class<? extends Item> classByName = ItemHandlerProvider.getClassByName(itemClassType);
         if (classByName != null) {

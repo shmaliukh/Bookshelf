@@ -21,7 +21,7 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
 public interface ShelfFeignClient {
 
     @PostMapping("/" + LOG_IN_VIA_USER_MODEL_PAGE)
-    ResponseEntity logIn(@Param("userModel") UserDataModelForJson userModel);
+    ResponseEntity<Void> logIn(@Param("userModel") UserDataModelForJson userModel);
 
     @PostMapping("/" + READ_ITEMS_BY_TYPE_PAGE)
     ResponseEntity<List<? extends Item>> readItemListByClassType(@CookieValue("userName") String userName,
@@ -32,4 +32,9 @@ public interface ShelfFeignClient {
     <T extends Item> ResponseEntity<Void> saveItem(@CookieValue("userName") String userName,
                                                    @CookieValue("typeOfWork") int typeOfWork,
                                                    @Param("item") T item);
+
+    @PostMapping("/" + CHANGE_ITEM_BORROWED_STATE_PAGE)
+    ResponseEntity<Void> changeBorrowedStateAndGetResponse(@CookieValue("userName") String userName,
+                                                           @CookieValue("typeOfWork") int typeOfWork,
+                                                           @Param("itemIndex") int itemIndex);
 }

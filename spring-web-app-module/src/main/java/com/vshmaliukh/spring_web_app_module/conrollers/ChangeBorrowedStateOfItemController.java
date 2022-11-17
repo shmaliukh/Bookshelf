@@ -31,39 +31,39 @@ public class ChangeBorrowedStateOfItemController {
                                      @CookieValue int typeOfWork,
                                      @RequestParam int indexOfItem,
                                      ModelMap modelMap) {
+        changeBorrowedState(userName, typeOfWork, indexOfItem);
+        return new ModelAndView("redirect:/" + Constants.EDIT_ITEMS_TITLE, modelMap);
+
+    }
+
+    private void changeBorrowedState(String userName, int typeOfWork, int indexOfItem) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         if (webShelfHandler != null) {
-            changeBorrowedState(indexOfItem, webShelfHandler);
+            webShelfHandler.readShelfItems();
+            List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
+            webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, indexOfItem);
+            log.info("successful changed item borrowed state // item index: '{}'", indexOfItem);
         } else {
             log.warn("userName: '{}', type of work: '{}' // problem to change borrowed state of item by '{}' index: " +
                     "webShelfHandler == null", userName, typeOfWork, indexOfItem);
-            log.debug("changeBorrowedState(userName: '{}', typeOfWork: '{}',indexOfItem: '{}', modelMap: '{}') // springBootWebUtil: '{}'",
-                    userName, typeOfWork, indexOfItem, modelMap, springBootWebUtil);
         }
-        return new ModelAndView("redirect:/" + Constants.EDIT_ITEMS_TITLE, modelMap);
-    }
-
-    private static void changeBorrowedState(int indexOfItem, SaveReadShelfHandler webShelfHandler) {
-        webShelfHandler.readShelfItems();
-        List<Item> allLiteratureObjects = webShelfHandler.getShelf().getAllLiteratureObjects();
-        webShelfHandler.changeBorrowedStateOfItem(allLiteratureObjects, indexOfItem);
-        log.info("successful changed item borrowed state // item index: '{}'", indexOfItem);
     }
 
     @PostMapping()
-    <T extends Item> ResponseEntity<Void> changeBorrowedStateAndGetResponse(@CookieValue String userName,
-                                                                            @CookieValue int typeOfWork,
-                                                                            @RequestBody T item) {
+    ResponseEntity<Void> changeBorrowedStateAndGetResponse(@CookieValue String userName,
+                                                           @CookieValue int typeOfWork,
+                                                           @RequestBody int indexOfItem) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
-        webShelfHandler.changeBorrowedStateOfItem(item);
+        Item itemToCheck = webShelfHandler.getShelf().getAllLiteratureObjects().get(indexOfItem);
+        itemToCheck.setBorrowed(!itemToCheck.isBorrowed());
+
+        changeBorrowedState(userName, typeOfWork, indexOfItem);
 
         webShelfHandler.readShelfItems();
-        T itemWithBorrowedState = item;
-        itemWithBorrowedState.setBorrowed(!item.isBorrowed());
-        if (webShelfHandler.getShelf().getAllLiteratureObjects().contains(itemWithBorrowedState)) {
+        if (webShelfHandler.getShelf().getAllLiteratureObjects().contains(itemToCheck)) {
             return ResponseEntity.ok().build();
         } else {
-            log.warn("userName: '{}', type of work: '{}' // problem to change '{}' item borrowed state", userName, typeOfWork, item);
+            log.warn("userName: '{}', type of work: '{}' // problem to change '{}' item borrowed state", userName, typeOfWork, itemToCheck);
             return ResponseEntity.badRequest().build();
         }
     }

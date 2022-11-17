@@ -11,6 +11,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 
+import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.CHANGE_ITEM_BORROWED_STATE_PAGE;
 import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.READ_ITEMS_BY_TYPE_PAGE;
 
 @Component
@@ -25,7 +26,7 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
 
     @Override
     @PostMapping("/" + HttpClientAppConfig.LOG_IN_VIA_USER_MODEL_PAGE)
-    public ResponseEntity logIn(UserDataModelForJson userModel) {
+    public ResponseEntity<Void> logIn(UserDataModelForJson userModel) {
         return shelfFeignClient.logIn(userModel);
     }
 
@@ -39,6 +40,11 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
     @PutMapping("/" + HttpClientAppConfig.PUT_ITEM_TO_DB_PAGE)
     public <T extends Item> ResponseEntity<Void> saveItem(String userName, int typeOfWork, T item) {
         return shelfFeignClient.saveItem(userName, typeOfWork, item);
+    }
+
+    @PostMapping("/" + CHANGE_ITEM_BORROWED_STATE_PAGE)
+    public ResponseEntity<Void> changeBorrowedStateAndGetResponse(String userName, int typeOfWork, int itemIndex) {
+        return shelfFeignClient.changeBorrowedStateAndGetResponse(userName, typeOfWork, itemIndex);
     }
 
 }
