@@ -60,22 +60,6 @@ public class AbstractShelfHandler implements ShelfHandlerInterface {
         }
     }
 
-    public void changeBorrowedStateOfItem(Item item) {
-        List<Item> allLiteratureObjects = this.shelf.getAllLiteratureObjects();
-        if (allLiteratureObjects.contains(item)) {
-            int indexOfItemToChange = allLiteratureObjects.indexOf(item);
-            if (indexOfItemToChange > 0 ) {
-                Item itemFromShelfToChange = allLiteratureObjects.get(indexOfItemToChange);
-                itemFromShelfToChange.setBorrowed(!item.isBorrowed());
-            }
-//            allLiteratureObjects.remove(item);
-//            item.setBorrowed(!item.isBorrowed());
-//            allLiteratureObjects.add(item);
-        } else {
-            log.warn("problem to change borrowed state for item '{}' // shelf does not contain '{}' item", item, item);
-        }
-    }
-
     public Shelf getShelf() {
         return shelf;
     }
