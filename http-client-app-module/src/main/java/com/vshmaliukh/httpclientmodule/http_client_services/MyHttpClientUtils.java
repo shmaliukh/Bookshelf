@@ -12,6 +12,8 @@ import static org.vshmaliukh.Constants.USER_NAME;
 @Slf4j
 public final class MyHttpClientUtils {
 
+    public static final String SUCCESSFUL_LOG_IN_MESSAGE_STR = "successful authorized";
+    public static final String PROBLEM_TO_LOG_IN_MESSAGE_STR = "problem to authorize";
     public static final String SUCCESSFUL_DELETED_ITEM_MESSAGE_STR = "successful deleted '{}' item";
     public static final String PROBLEM_TO_DELETE_ITEM_MESSAGE_STR = "problem to delete '{}' item";
     public static final String SUCCESSFUL_CHANGED_BORROWED_STATE_FOR_ITEM_MESSAGE_STR = "successful changed borrowed state for '{}' item";
@@ -19,12 +21,13 @@ public final class MyHttpClientUtils {
     public static final String SUCCESSFUL_ADDED_ITEM_MESSAGE_STR = "successful added '{}' item";
     public static final String PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR = "problem to add '{}' item to db";
 
-    private MyHttpClientUtils(){}
+    private MyHttpClientUtils() {
+    }
 
     public static void informAboutResponseStatus(ResponseEntity<Void> responseEntity,
-                                   String messageIfSuccessStr,
-                                   String messageIfProblemStr,
-                                   Object... values) {
+                                                 String messageIfSuccessStr,
+                                                 String messageIfProblemStr,
+                                                 Object... values) {
         HttpStatus statusCode = responseEntity.getStatusCode();
         if (statusCode.is2xxSuccessful()) {
             log.info("userName: '{}' "
