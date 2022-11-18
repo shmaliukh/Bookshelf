@@ -7,8 +7,6 @@ import org.vshmaliukh.console_terminal_app.ConsoleSqlShelfHandler;
 import org.vshmaliukh.shelf.Shelf;
 
 import javax.annotation.PostConstruct;
-import java.io.PrintWriter;
-import java.util.Scanner;
 
 @Component
 @NoArgsConstructor
@@ -30,11 +28,6 @@ public class ConsoleRestTemplateShelfHandler extends ConsoleSqlShelfHandler {
     @Override
     public void setUpDataService(String userName, int typeOfWork) {
         restTemplateClientServiceImp.logIn(userName, typeOfWork);
-    }
-
-
-    public ConsoleRestTemplateShelfHandler(Scanner scanner, PrintWriter printWriter, String userName, int typeOfWork) {
-        super(scanner, printWriter, userName, typeOfWork);
     }
 
     @Override
