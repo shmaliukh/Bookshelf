@@ -2,9 +2,9 @@ package org.vshmaliukh;
 
 public final class MyUtils {
 
-    public static final String COOKIE_HEADER = "Cookie";
+    private MyUtils(){}
 
-    public static String generateCookieValue(String name, String value){
+    public static String generateCookieValue(String name, Object value){
         return name + "=" + value;
     }
 
