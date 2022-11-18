@@ -28,6 +28,7 @@ public final class HttpClientAppConfig {
     public static final String DELETE_ITEM_BY_INDEX_URL_STR = HTTP_LOCALHOST_8082 + DELETE_ITEM_PAGE;
     public static final String CHANGE_ITEM_BORROWED_STATE_BY_INDEX_URL_STR = HTTP_LOCALHOST_8082 + CHANGE_ITEM_BORROWED_STATE_PAGE;
     public static final String READ_ITEMS_BY_TYPE_URL_STR = HTTP_LOCALHOST_8082 + READ_ITEMS_BY_TYPE_PAGE;
+    public static final String PUT_ITEM_TO_DB_PAGE_URL_STR = HTTP_LOCALHOST_8082 + PUT_ITEM_TO_DB_PAGE;
 
     public static String MESSAGE_ENTER_TYPE_OF_WORK_WITH_HTTP_CLIENT = "Enter type number of http client work: (program ignores all not number symbols)" + System.lineSeparator();
     public static final Pattern PATTERN_FOR_TYPE_OF_HTTP_CLIENT_WORK;

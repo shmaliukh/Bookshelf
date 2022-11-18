@@ -12,8 +12,11 @@ import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 import java.util.Collections;
 import java.util.List;
 
+import static com.vshmaliukh.spring_web_app_module.conrollers.http.ReadItemsController.READ_ITEMS_BY_TYPE;
+
 @Slf4j
 @RestController
+@RequestMapping(READ_ITEMS_BY_TYPE)
 public class ReadItemsController {
 
     public static final String READ_ITEMS_BY_TYPE = "/read_items_by_type";
@@ -23,18 +26,17 @@ public class ReadItemsController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @GetMapping(READ_ITEMS_BY_TYPE)
-//    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, path = READ_ITEMS_BY_TYPE)
-    ResponseEntity<List<? extends Item>> readItemLisByClassType(@CookieValue(name = "userName") String userName,
+    @GetMapping
+    ResponseEntity<List<? extends Item>> readItemLisByClassType_get(@CookieValue(name = "userName") String userName,
                                                                 @CookieValue(name = "typeOfWork") int typeOfWork,
                                                                 @RequestParam String itemClassType) {
         return getResponse(userName, typeOfWork, itemClassType);
     }
 
-    @PostMapping(READ_ITEMS_BY_TYPE)
+    @PostMapping
     ResponseEntity<List<? extends Item>> readItemLisByClassType_post(@CookieValue(name = "userName") String userName,
-                                                                @CookieValue(name = "typeOfWork") int typeOfWork,
-                                                                @RequestBody String itemClassType) {
+                                                                     @CookieValue(name = "typeOfWork") int typeOfWork,
+                                                                     @RequestBody String itemClassType) {
         return getResponse(userName, typeOfWork, itemClassType);
     }
 

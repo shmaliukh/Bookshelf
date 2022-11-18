@@ -21,7 +21,7 @@ public interface BaseShelfHttpClient {
 
     ResponseEntity<Void> changeItemBorrowedStateAndGetResponse(String userName,
                                                                int typeOfWork,
-                                                               int itemIndex);
+                                                               int indexOfItem);
 
     ResponseEntity<Void> deleteItemAndGetResponse(String userName,
                                                   int typeOfWork,
