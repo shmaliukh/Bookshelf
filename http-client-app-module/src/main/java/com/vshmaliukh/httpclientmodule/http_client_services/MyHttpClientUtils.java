@@ -12,6 +12,13 @@ import static org.vshmaliukh.Constants.USER_NAME;
 @Slf4j
 public final class MyHttpClientUtils {
 
+    public static final String SUCCESSFUL_DELETED_ITEM_MESSAGE_STR = "successful deleted '{}' item";
+    public static final String PROBLEM_TO_DELETE_ITEM_MESSAGE_STR = "problem to delete '{}' item";
+    public static final String SUCCESSFUL_CHANGED_BORROWED_STATE_FOR_ITEM_MESSAGE_STR = "successful changed borrowed state for '{}' item";
+    public static final String PROBLEM_TO_CHANGE_BORROWED_STATE_FOR_ITEM_MESSAGE_STR = "problem to change borrowed state for '{}' item";
+    public static final String SUCCESSFUL_ADDED_ITEM_MESSAGE_STR = "successful added '{}' item";
+    public static final String PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR = "problem to add '{}' item to db";
+
     private MyHttpClientUtils(){}
 
     public static void informAboutResponseStatus(ResponseEntity<Void> responseEntity,
