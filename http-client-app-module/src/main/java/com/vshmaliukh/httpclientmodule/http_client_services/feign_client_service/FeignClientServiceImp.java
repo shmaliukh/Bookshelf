@@ -19,7 +19,7 @@ import static com.vshmaliukh.httpclientmodule.http_client_services.MyHttpClientU
 @NoArgsConstructor
 public class FeignClientServiceImp extends AbstractSpringClientService {
 
-    public static HttpHeaders cookieHeaders = new HttpHeaders(); // todo refactor
+    public static final HttpHeaders cookieHeaders = new HttpHeaders(); // todo refactor
 
     @Autowired
     public FeignClientServiceImp(ShelfFeignClientImp shelfFeignClientController) {

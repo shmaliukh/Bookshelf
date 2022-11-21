@@ -20,7 +20,7 @@ import static org.vshmaliukh.Constants.*;
 public class LogInController {
 
     @GetMapping(value = {"/", "/" + LOG_IN_TITLE})
-    ModelAndView doGet(@CookieValue(defaultValue = "") String userName,// Todo save userModel to cookie
+    ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
                        @CookieValue(defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
         modelMap.addAttribute(USER_NAME, userName);

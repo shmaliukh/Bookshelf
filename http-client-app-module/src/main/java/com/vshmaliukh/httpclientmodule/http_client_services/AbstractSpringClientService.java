@@ -74,4 +74,5 @@ public abstract class AbstractSpringClientService extends AbstractHttpShelfServi
                 MyHttpClientUtils.PROBLEM_TO_ADD_ITEM_TO_DB_MESSAGE_STR,
                 userName, typeOfWork, item);
     }
+
 }

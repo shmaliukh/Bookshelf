@@ -112,7 +112,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
         return Collections.emptyList();
     }
 
-    private <T extends Item> ArrayList<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
+    private <T extends Item> List<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
         try (CloseableHttpResponse closeableHttpResponse = client.execute(httpGet)) {
             HttpEntity entity = closeableHttpResponse.getEntity();
             String result = EntityUtils.toString(entity);
@@ -120,7 +120,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override
