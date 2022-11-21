@@ -25,7 +25,8 @@ public class HttpClientUI extends ConsoleUI {
     protected HttpClientInputHandlerForUser httpClientInputHandlerForUser;
 
     @Autowired
-    public HttpClientUI(ConsoleFeignShelfHandler consoleFeignShelfHandler, ConsoleRestTemplateShelfHandler consoleRestTemplateShelfHandler) {
+    public HttpClientUI(ConsoleFeignShelfHandler consoleFeignShelfHandler,
+                        ConsoleRestTemplateShelfHandler consoleRestTemplateShelfHandler) {
         this.consoleFeignShelfHandler = consoleFeignShelfHandler;
         this.consoleRestTemplateShelfHandler = consoleRestTemplateShelfHandler;
     }

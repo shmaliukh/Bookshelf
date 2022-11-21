@@ -27,19 +27,21 @@ public final class MyHttpClientUtils {
     public static void informAboutResponseStatus(ResponseEntity<Void> responseEntity,
                                                  String messageIfSuccessStr,
                                                  String messageIfProblemStr,
+                                                 Object userName,
+                                                 Object typeOfWork,
                                                  Object... values) {
         HttpStatus statusCode = responseEntity.getStatusCode();
         if (statusCode.is2xxSuccessful()) {
             log.info("userName: '{}' "
                             + "// typeOfWork: '{}' // "
                             + messageIfSuccessStr,
-                    values);
+                    userName, typeOfWork, values);
         } else {
             log.warn("userName: '{}' "
                             + "// typeOfWork: '{}' // "
                             + messageIfProblemStr
                             + " // response status code: '{}'",
-                    values, statusCode);
+                    userName, typeOfWork, values, statusCode);
         }
     }
 

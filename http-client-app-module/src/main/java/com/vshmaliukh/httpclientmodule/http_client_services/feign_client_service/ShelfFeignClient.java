@@ -18,8 +18,7 @@ import static com.vshmaliukh.httpclientmodule.HttpClientAppConfig.*;
 @FeignClient(
         name = "${feign.name}",
         url = "${feign.url}",
-        configuration = MyFeignClientConfig.class
-)
+        configuration = MyFeignClientConfig.class)
 public interface ShelfFeignClient extends BaseShelfHttpClient {
 
     @PostMapping("/" + LOG_IN_VIA_USER_MODEL_PAGE)
