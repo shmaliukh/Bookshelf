@@ -1,5 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.comics_item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -8,13 +10,18 @@ public class Comics extends Item {
 
     private String publisher;
 
-    public Comics(Integer id, String name, int pagesNumber, boolean isBorrowed, String publisher) {
-        super(id, name, pagesNumber, isBorrowed);
+    public Comics(String name, int pagesNumber, boolean isBorrowed, String publisher) {
+        super(name, pagesNumber, isBorrowed);
         this.publisher = publisher;
     }
 
-    public Comics(String name, int pagesNumber, boolean isBorrowed, String publisher) {
-        super(name, pagesNumber, isBorrowed);
+    @JsonCreator
+    public Comics(@JsonProperty("id") Integer id,
+                  @JsonProperty("name") String name,
+                  @JsonProperty("pagesNumber") int pagesNumber,
+                  @JsonProperty("isBorrowed") boolean isBorrowed,
+                  @JsonProperty("publisher") String publisher) {
+        super(id, name, pagesNumber, isBorrowed);
         this.publisher = publisher;
     }
 
@@ -24,7 +31,7 @@ public class Comics extends Item {
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
                 ", publisher='" + publisher + '\'' +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

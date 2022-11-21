@@ -2,12 +2,14 @@ package org.vshmaliukh.shelf.shelf_handler;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.vshmaliukh.shelf.Shelf;
 import org.vshmaliukh.shelf.literature_items.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class AbstractShelfHandler implements ShelfHandlerInterface {
 
     @Getter

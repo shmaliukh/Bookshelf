@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 })
 public class SpringWebApplication {
 
+    public static final String LOG_IN_VIA_USER_MODEL = "log_in_via_user_model";
+
     public static void main(String[] args) {
         SpringApplication.run(SpringWebApplication.class, args);
     }

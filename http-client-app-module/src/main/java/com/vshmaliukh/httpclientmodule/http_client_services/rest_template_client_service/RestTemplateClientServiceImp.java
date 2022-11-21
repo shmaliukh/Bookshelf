@@ -1,7 +1,7 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.rest_template_client_service;
 
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
-import com.vshmaliukh.httpclientmodule.MyUtils;
+import org.vshmaliukh.MyUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 import org.springframework.http.*;
@@ -24,6 +24,8 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
 
     protected RestTemplateClientServiceImp(String userName, int typeOfWork) {
         super(userName, typeOfWork);
+        init();
+        logIn(userName, typeOfWork);
     }
 
     @Override
@@ -33,12 +35,16 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
         UserDataModelForJson userDataModelForJson = new UserDataModelForJson(userName, typeOfWork);
         String userGsonStr = gson.toJson(userDataModelForJson);
         HttpEntity<String> entity = new HttpEntity<>(userGsonStr, baseHeaders);
-        ResponseEntity<String> response = restTemplate.exchange(LOG_IN_PAGE_URL_STR, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(
+                LOG_IN_PAGE_URL_STR,
+                HttpMethod.POST,
+                entity,
+                String.class);
         HttpHeaders responseHeaders = response.getHeaders();
         List<String> cookieStrList = responseHeaders.get("Set-Cookie");
         if (cookieStrList != null) {
             baseHeaders = new HttpHeaders();
-            cookieStrList.forEach(o -> baseHeaders.add(MyUtils.COOKIE_HEADER, o));
+            cookieStrList.forEach(o -> baseHeaders.add(HttpHeaders.COOKIE, o));
         } else {
             log.warn("problem to set up Cookie values // Set-Cookie list == null");
         }
@@ -103,7 +109,7 @@ public class RestTemplateClientServiceImp extends AbstractHttpShelfService {
         String itemClassTypeStr = item.getClass().getSimpleName();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.addAll(baseHeaders);
-        httpHeaders.add(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
+        httpHeaders.add(HttpHeaders.COOKIE, MyUtils.generateCookieValue(ITEM_CLASS_TYPE, itemClassTypeStr)); // todo refactor
         HttpEntity<Item> httpEntity = new HttpEntity<>(item, httpHeaders);
 //        ResponseEntity<Void> exchange =
         restTemplate.exchange(

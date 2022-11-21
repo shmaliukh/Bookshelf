@@ -1,5 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.magazine_item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -11,15 +13,16 @@ import org.vshmaliukh.shelf.literature_items.Item;
 @Data
 public class Magazine extends Item {
 
-    public Magazine(Integer id, String name, int pagesNumber, boolean isBorrowed) {
-        super(id, name, pagesNumber, isBorrowed);
-    }
-
-    /**
-     * Constructor for creating Magazine object
-     */
     public Magazine(String name, int pagesNumber, boolean isBorrowed) {
         super(name, pagesNumber, isBorrowed);
+    }
+
+    @JsonCreator
+    public Magazine(@JsonProperty("id") Integer id,
+                     @JsonProperty("name") String name,
+                     @JsonProperty("pagesNumber") int pagesNumber,
+                     @JsonProperty("isBorrowed") boolean isBorrowed) {
+        super(id, name, pagesNumber, isBorrowed);
     }
 
     /**
@@ -32,7 +35,7 @@ public class Magazine extends Item {
         return "Magazine {" +
                 " name='" + name + '\'' +
                 ", pagesNumber=" + pagesNumber +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }
