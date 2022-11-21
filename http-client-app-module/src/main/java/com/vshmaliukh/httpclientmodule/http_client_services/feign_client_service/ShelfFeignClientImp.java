@@ -4,6 +4,7 @@ import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.vshmaliukh.UserDataModelForJson;
@@ -46,7 +47,7 @@ public final class ShelfFeignClientImp implements ShelfFeignClient {
         return shelfFeignClient.changeItemBorrowedStateAndGetResponse(userName, typeOfWork, indexOfItem);
     }
 
-    @PostMapping("/" + DELETE_ITEM_PAGE)
+    @DeleteMapping("/" + DELETE_ITEM_PAGE)
     public ResponseEntity<Void> deleteItemAndGetResponse(String userName, int typeOfWork, int indexOfItem) {
         return shelfFeignClient.deleteItemAndGetResponse(userName, typeOfWork, indexOfItem);
     }

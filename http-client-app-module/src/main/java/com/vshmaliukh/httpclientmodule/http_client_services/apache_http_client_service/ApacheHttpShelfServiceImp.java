@@ -1,7 +1,6 @@
 package com.vshmaliukh.httpclientmodule.http_client_services.apache_http_client_service;
 
 import com.vshmaliukh.httpclientmodule.HttpClientAppConfig;
-import org.vshmaliukh.MyUtils;
 import com.vshmaliukh.httpclientmodule.http_client_services.AbstractHttpShelfService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -16,7 +15,9 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.net.URIBuilder;
+import org.springframework.http.HttpHeaders;
 import org.vshmaliukh.MyLogUtil;
+import org.vshmaliukh.MyUtils;
 import org.vshmaliukh.UserDataModelForJson;
 import org.vshmaliukh.shelf.literature_items.Item;
 
@@ -82,7 +83,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
     }
 
     private void actionWithItemByIndex(Item item, HttpGet httpGet) {
-        cookieValueList.forEach(o -> httpGet.addHeader(MyUtils.COOKIE_HEADER, o));
+        cookieValueList.forEach(o -> httpGet.addHeader(HttpHeaders.COOKIE, o));
         try {
             URI uri = formUriWithItemIndex(item, httpGet.getUri());
             httpGet.setUri(uri);
@@ -96,7 +97,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
     public <T extends Item> List<T> readItemsByClass(Class<T> classType) {
         String classTypeSimpleName = classType.getSimpleName();
         HttpGet httpGet = new HttpGet(READ_ITEMS_BY_TYPE_URL_STR);
-        cookieValueList.forEach(o -> httpGet.addHeader(MyUtils.COOKIE_HEADER, o));
+        cookieValueList.forEach(o -> httpGet.addHeader(HttpHeaders.COOKIE, o));
         httpGet.addHeader("Accept", APPLICATION_JSON);
         httpGet.addHeader("Content-type", APPLICATION_JSON);
         try {
@@ -111,7 +112,7 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
         return Collections.emptyList();
     }
 
-    private <T extends Item> ArrayList<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
+    private <T extends Item> List<T> readItemListByClassFromResponse(HttpGet httpGet, Class<T> classType) {
         try (CloseableHttpResponse closeableHttpResponse = client.execute(httpGet)) {
             HttpEntity entity = closeableHttpResponse.getEntity();
             String result = EntityUtils.toString(entity);
@@ -119,15 +120,15 @@ public class ApacheHttpShelfServiceImp extends AbstractHttpShelfService {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override
     public void saveItemToDB(Item item) {
         String itemClassTypeStr = item.getClass().getSimpleName();
         HttpPost httpPost = new HttpPost(ADD_ITEM_URI_STR);
-        cookieValueList.forEach(o -> httpPost.addHeader(MyUtils.COOKIE_HEADER, o));
-        httpPost.addHeader(MyUtils.COOKIE_HEADER, MyUtils.generateCookieValue(HttpClientAppConfig.ITEM_CLASS_TYPE, itemClassTypeStr));
+        cookieValueList.forEach(o -> httpPost.addHeader(HttpHeaders.COOKIE, o));
+        httpPost.addHeader(HttpHeaders.COOKIE, MyUtils.generateCookieValue(HttpClientAppConfig.ITEM_CLASS_TYPE, itemClassTypeStr));
         String userGsonStr = gson.toJson(item);
         StringEntity stringEntity = new StringEntity(userGsonStr);
         httpPost.setEntity(stringEntity);

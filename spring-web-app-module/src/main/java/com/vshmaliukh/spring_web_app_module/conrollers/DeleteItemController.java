@@ -45,7 +45,7 @@ public class DeleteItemController {
         }
     }
 
-    @PostMapping()
+    @DeleteMapping
     ResponseEntity<Void> deleteItemAndGetResponse(@CookieValue String userName,
                                                   @CookieValue int typeOfWork,
                                                   @RequestBody int indexOfItem) {
@@ -55,12 +55,13 @@ public class DeleteItemController {
 
         webShelfHandler.readShelfItems();
         List<Item> itemListAfterAction = webShelfHandler.getShelf().getAllLiteratureObjects();
-        if (!itemListAfterAction.contains(itemToDelete)) {
+        // if (!itemListAfterAction.contains(itemToDelete)) {  // ??? returns 'true' even if list does not contain the item
+        if (itemListAfterAction.indexOf(itemToDelete) < 0) {
             return ResponseEntity.ok().build();
         } else {
             log.warn("userName: '{}' " +
                             "// type of work: '{}' " +
-                            "// problem to change '{}' item borrowed state",
+                            "// problem to delete '{}' item",
                     userName, typeOfWork, itemToDelete);
             return ResponseEntity.badRequest().build();
         }

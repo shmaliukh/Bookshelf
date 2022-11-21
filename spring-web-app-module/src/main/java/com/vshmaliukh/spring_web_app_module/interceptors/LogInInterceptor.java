@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.vshmaliukh.MyLogUtil;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -27,10 +26,11 @@ public class LogInInterceptor implements HandlerInterceptor {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             String pageToRedirect = LOG_IN_TITLE;
             try {
+                log.warn("interceptor redirect to '{}' // request '{}' is not valid ", pageToRedirect, pageToRedirect);
                 response.sendRedirect(pageToRedirect);
             } catch (Exception e) {
-                MyLogUtil.logWarn(this, "problem to redirect to '{}' page // ", pageToRedirect);
-                MyLogUtil.logErr(this, e);
+                log.warn("problem to redirect to '{}' page // ", pageToRedirect);
+                log.error(e.getMessage(), e);
             }
         }
         return isValid;
@@ -42,8 +42,8 @@ public class LogInInterceptor implements HandlerInterceptor {
             CookieUtil.refreshCookie(cookie, CookieUtil.MAX_AGE);
             return cookie.getValue();
         }
-        MyLogUtil.logDebug(this, "problem to read cookie value by name: '{}' ", nameToCheck);
-        MyLogUtil.logDebug(this, "readCookieValueAndRefresh(cookie: '{}', nameToCheck: '{}') will return NULL", cookie, nameToCheck);
+        log.debug("problem to read cookie value by name: '{}' ", nameToCheck);
+        log.debug("readCookieValueAndRefresh(cookie: '{}', nameToCheck: '{}') will return NULL", cookie, nameToCheck);
         return null;
     }
 
@@ -57,7 +57,7 @@ public class LogInInterceptor implements HandlerInterceptor {
                 typeOfWork = readCookieValue(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, typeOfWork, cookie);
             }
         } else {
-            MyLogUtil.logDebug(this, "cookies is null // request: '{}' ", request);
+            log.debug("cookies is null // request: '{}' ", request);
         }
         return userName != null && typeOfWork != null;
     }
@@ -65,7 +65,7 @@ public class LogInInterceptor implements HandlerInterceptor {
     private String readCookieValue(String name, String value, Cookie cookie) {
         if (StringUtils.isBlank(value)) {
             value = readCookieValueAndRefresh(cookie, name);
-            MyLogUtil.logDebug(this, "read '{}' value from cookie: '{}' // result: '{}'", name.toUpperCase(), cookie, value);
+            log.debug("read '{}' value from cookie: '{}' // result: '{}'", name.toUpperCase(), cookie, value);
         }
         return value;
     }

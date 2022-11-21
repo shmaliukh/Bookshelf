@@ -19,13 +19,16 @@ import java.util.Scanner;
 public class HttpClientUI extends ConsoleUI {
 
     ConsoleFeignShelfHandler consoleFeignShelfHandler;
+    ConsoleRestTemplateShelfHandler consoleRestTemplateShelfHandler;
 
     protected int httpClientType;
     protected HttpClientInputHandlerForUser httpClientInputHandlerForUser;
 
     @Autowired
-    public HttpClientUI(ConsoleFeignShelfHandler consoleFeignShelfHandler) {
+    public HttpClientUI(ConsoleFeignShelfHandler consoleFeignShelfHandler,
+                        ConsoleRestTemplateShelfHandler consoleRestTemplateShelfHandler) {
         this.consoleFeignShelfHandler = consoleFeignShelfHandler;
+        this.consoleRestTemplateShelfHandler = consoleRestTemplateShelfHandler;
     }
 
     @PostConstruct
@@ -51,7 +54,10 @@ public class HttpClientUI extends ConsoleUI {
                 shelfHandler = new ConsoleApacheHttpShelfHandler(scanner, printWriter, userName, saveReadServiceType);
                 break;
             case HttpClientAppConfig.REST_TEMPLATE_MODE_WORK:
-                shelfHandler = new ConsoleRestTemplateShelfHandler(scanner, printWriter, userName, saveReadServiceType);
+                consoleRestTemplateShelfHandler.setScanner(scanner);
+                consoleRestTemplateShelfHandler.setPrintWriter(printWriter);
+                consoleRestTemplateShelfHandler.setUpDataService(userName, saveReadServiceType);
+                shelfHandler = consoleRestTemplateShelfHandler;
                 break;
             case HttpClientAppConfig.FEIGN_MODE_WORK:
                 consoleFeignShelfHandler.setScanner(scanner);

@@ -15,6 +15,7 @@ import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.Constants.*;
@@ -32,14 +33,15 @@ public class AddItemController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @PutMapping("/put_item_to_db")
+    @PutMapping("/add_item_to_db")
     <T extends Item> ResponseEntity<Void> addItem(@CookieValue(name = "userName") String userName,
                                                   @CookieValue(name = "typeOfWork") int typeOfWork,
                                                   @RequestBody T item) {
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
         webShelfHandler.addItem(item);
         webShelfHandler.readShelfItems();
-        if (webShelfHandler.getShelf().getItemsOfShelf().contains(item)) {
+        List<Item> itemListAfterAction = webShelfHandler.getShelf().getItemsOfShelf();
+        if (itemListAfterAction.contains(item)) {
             return ResponseEntity.ok().build();
         }
         log.warn("userName: '{}' // type of work: '{}' // item '{}' not added to shelf", userName, typeOfWork, item);
