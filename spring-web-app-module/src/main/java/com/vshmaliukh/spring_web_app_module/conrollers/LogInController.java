@@ -1,15 +1,16 @@
 package com.vshmaliukh.spring_web_app_module.conrollers;
 
-import org.vshmaliukh.UserDataModelForJson;
+import com.vshmaliukh.spring_web_app_module.SpringWebApplication;
 import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
 import com.vshmaliukh.spring_web_app_module.utils.CookieUtil;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.vshmaliukh.MyUtils;
+import org.vshmaliukh.UserDataModelForJson;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +20,7 @@ import static org.vshmaliukh.Constants.*;
 public class LogInController {
 
     @GetMapping(value = {"/", "/" + LOG_IN_TITLE})
-    ModelAndView doGet(@CookieValue(defaultValue = "") String userName,// Todo save userModel to cookie
+    ModelAndView doGet(@CookieValue(defaultValue = "") String userName,
                        @CookieValue(defaultValue = "") String typeOfWork,
                        ModelMap modelMap) {
         modelMap.addAttribute(USER_NAME, userName);
@@ -36,6 +37,16 @@ public class LogInController {
         CookieUtil.addCookie(USER_NAME, userName, response);
         CookieUtil.addCookie(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, typeOfWork, response);
         return "redirect:/" + MAIN_MENU_TITLE;
+    }
+
+    @PostMapping("/" + SpringWebApplication.LOG_IN_VIA_USER_MODEL)
+    public ResponseEntity<Void> logIn(@RequestBody UserDataModelForJson userModel) {
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE,
+                        MyUtils.generateCookieValue(USER_NAME, userModel.getUserName()),
+                        MyUtils.generateCookieValue(TYPE_OF_WORK_WITH_SAVE_READ_SERVICE, userModel.getTypeOfWorkAsStr()))
+                .build();
     }
 
 }

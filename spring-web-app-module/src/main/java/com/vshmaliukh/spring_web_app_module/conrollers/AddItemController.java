@@ -4,22 +4,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.vshmaliukh.spring_web_app_module.SpringBootWebUtil;
 import com.vshmaliukh.spring_web_app_module.utils.ControllerUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.vshmaliukh.MyLogUtil;
 import org.vshmaliukh.services.SaveReadShelfHandler;
 import org.vshmaliukh.shelf.literature_items.Item;
 import org.vshmaliukh.shelf.literature_items.ItemHandler;
 import org.vshmaliukh.shelf.literature_items.ItemHandlerProvider;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.vshmaliukh.Constants.*;
 
+@Slf4j
 @Controller
-@RequestMapping("/" + ADD_ITEM_TITLE)
 public class AddItemController {
 
     public static final String ADD_ITEM_FORM = "addItemForm";
@@ -31,12 +33,26 @@ public class AddItemController {
         this.springBootWebUtil = springBootWebUtil;
     }
 
-    @PostMapping()
+    @PutMapping("/add_item_to_db")
+    <T extends Item> ResponseEntity<Void> addItem(@CookieValue(name = "userName") String userName,
+                                                  @CookieValue(name = "typeOfWork") int typeOfWork,
+                                                  @RequestBody T item) {
+        SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
+        webShelfHandler.addItem(item);
+        webShelfHandler.readShelfItems();
+        List<Item> itemListAfterAction = webShelfHandler.getShelf().getItemsOfShelf();
+        if (itemListAfterAction.contains(item)) {
+            return ResponseEntity.ok().build();
+        }
+        log.warn("userName: '{}' // type of work: '{}' // item '{}' not added to shelf", userName, typeOfWork, item);
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping("/" + ADD_ITEM_TITLE)
     ModelAndView doPost(@CookieValue String userName,
                         @CookieValue int typeOfWork,
                         @CookieValue String itemClassType,
                         @RequestBody String jsonBody,
-//                        HttpServletResponse response,
                         ModelMap modelMap) {
         ItemHandler<?> handlerByName = ItemHandlerProvider.getHandlerByName(itemClassType);
         SaveReadShelfHandler webShelfHandler = springBootWebUtil.generateSpringBootShelfHandler(userName, typeOfWork);
@@ -50,19 +66,19 @@ public class AddItemController {
                 Item item = handlerByName.generateItemByParameterValueMap(itemFieldValueMap);
                 webShelfHandler.addItem(item);
             } else {
-                MyLogUtil.logWarn(this, "userName: '{}' // type of work: '{}' // problem to add item with fields '{}' index: " +
+                log.warn("userName: '{}' // type of work: '{}' // problem to add item with fields '{}' index: " +
                         "item fields are not valid or webShelfHandler == null", userName, typeOfWork, jsonBody);
-                MyLogUtil.logDebug(this, "doGet(userName: '{}', typeOfWork: '{}', itemClassType: '{}', jsonBody: '{}', modelMap: '{}') " +
+                log.debug("doGet(userName: '{}', typeOfWork: '{}', itemClassType: '{}', jsonBody: '{}', modelMap: '{}') " +
                                 "// handlerByName: '{}' // springBootWebUtil: '{}' // webShelfHandler: '{}' // itemFieldValueMap: '{}' ",
                         userName, typeOfWork, itemClassType, jsonBody, modelMap, handlerByName, springBootWebUtil, webShelfHandler, itemFieldValueMap);
             }
         }
-        //TODO set status according to adding item state
+        //TODO set status according to added item state
 //        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         return new ModelAndView("redirect:/" + ADD_MENU_TITLE, modelMap);
     }
 
-    @GetMapping()
+    @GetMapping("/" + ADD_ITEM_TITLE)
     ModelAndView doGet(@CookieValue(defaultValue = "") String itemClassType,
                        @CookieValue String isRandom,
                        ModelMap modelMap) {

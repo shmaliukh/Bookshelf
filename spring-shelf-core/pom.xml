@@ -11,7 +11,7 @@
 
     <groupId>com.vshmaliukh</groupId>
     <artifactId>spring-shelf-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>spring-shelf-core</name>
     <description>spring-shelf-core</description>
 
@@ -19,6 +19,7 @@
         <sqlite-dialect.version>0.1.2</sqlite-dialect.version>
         <spring-boot-starter.version>2.7.4</spring-boot-starter.version>
         <annotations.version>23.0.0</annotations.version>
+        <spring-boot-maven-plugin.version>2.7.3</spring-boot-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -91,6 +92,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot-maven-plugin.version}</version>
             </plugin>
         </plugins>
     </build>

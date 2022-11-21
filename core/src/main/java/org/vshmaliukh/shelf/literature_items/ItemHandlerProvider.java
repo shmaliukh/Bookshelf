@@ -33,8 +33,12 @@ public final class ItemHandlerProvider {
         uniqueTypeNames = Collections.unmodifiableList(classList);
     }
 
-    public static ItemHandler getHandlerByClass(Class<? extends Item> classType) {
-        return itemHandlerMap.get(classType);
+    public static <T extends Item> ItemHandler<T> getHandlerByClass(Class<T> classType) {
+        return (ItemHandler<T>) itemHandlerMap.get(classType);
+    }
+
+    public static <T>T getSomething(){
+        return (T) "";
     }
 
     public static ItemHandler getHandlerByName(String name) {

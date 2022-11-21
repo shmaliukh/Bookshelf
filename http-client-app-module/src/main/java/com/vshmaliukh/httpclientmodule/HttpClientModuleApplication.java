@@ -2,10 +2,10 @@ package com.vshmaliukh.httpclientmodule;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@SpringBootApplication(scanBasePackages = {
-        "com.vshmaliukh.httpclientmodule.console_http_client_app",
-})
+@EnableFeignClients
+@SpringBootApplication
 public class HttpClientModuleApplication {
 
     public static void main(String[] args) {

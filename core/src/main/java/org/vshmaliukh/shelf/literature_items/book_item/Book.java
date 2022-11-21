@@ -1,5 +1,7 @@
 package org.vshmaliukh.shelf.literature_items.book_item;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.vshmaliukh.BaseAppConfig;
 import org.vshmaliukh.shelf.literature_items.Item;
@@ -19,8 +21,8 @@ public class Book extends Item {
     private String author;
     private Date issuanceDate;
 
-    public Book(Integer id, String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
-        super(id, name, pagesNumber, isBorrowed);
+    public Book(String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
+        super(name, pagesNumber, isBorrowed);
         this.author = author;
         this.issuanceDate = issuanceDate;
     }
@@ -28,8 +30,14 @@ public class Book extends Item {
     /**
      * Constructor for creating Book object
      */
-    public Book(String name, int pagesNumber, boolean isBorrowed, String author, Date issuanceDate) {
-        super(name, pagesNumber, isBorrowed);
+    @JsonCreator
+    public Book(@JsonProperty("id") Integer id,
+                @JsonProperty("name") String name,
+                @JsonProperty("pagesNumber") int pagesNumber,
+                @JsonProperty("isBorrowed") boolean isBorrowed,
+                @JsonProperty("author") String author,
+                @JsonProperty("issuanceDate") Date issuanceDate) {
+        super(id, name, pagesNumber, isBorrowed);
         this.author = author;
         this.issuanceDate = issuanceDate;
     }
@@ -46,7 +54,7 @@ public class Book extends Item {
                 ", pagesNumber=" + pagesNumber +
                 ", author='" + author + '\'' +
                 ", issuanceDate=" + new SimpleDateFormat(BaseAppConfig.DATE_FORMAT_STR).format(issuanceDate) +
-                ", isBorrowed=" + isBorrowed +
+                ", isBorrowed=" + borrowed +
                 " }";
     }
 }

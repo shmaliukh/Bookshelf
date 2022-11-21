@@ -1,0 +1,23 @@
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %X{serviceName} %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="CONSOLE2" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %-5level %X{serviceName} %logger{100} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.vshmaliukh.spring_web_app_module.LoggerTest" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE2"/>
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

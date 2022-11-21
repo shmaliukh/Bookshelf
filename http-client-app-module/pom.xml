@@ -5,27 +5,94 @@
     <parent>
         <groupId>com.vshmaliukh</groupId>
         <artifactId>base-shelf-spring-boot-module</artifactId>
-        <version>0.0.1</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../base-shelf-spring-boot-module/pom.xml</relativePath>
     </parent>
 
     <artifactId>http-client-app-module</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>http-client-app-module</name>
     <description>http-client-app-module</description>
 
+    <properties>
+        <httpclient5.version>5.1.3</httpclient5.version>
+        <feign.version>12.0</feign.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.vshmaliukh</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.vshmaliukh</groupId>
             <artifactId>console-app-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>com.vshmaliukh</groupId>
-            <artifactId>apache-http-client-module</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${httpclient5.version}</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>io.github.openfeign</groupId>-->
+<!--            <artifactId>feign-okhttp</artifactId>-->
+<!--            <version>${feign.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.github.openfeign</groupId>-->
+<!--            <artifactId>feign-okhttp</artifactId>-->
+<!--            <version>${feign.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.github.openfeign</groupId>-->
+<!--            <artifactId>feign-gson</artifactId>-->
+<!--            <version>${feign.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.github.openfeign</groupId>-->
+<!--            <artifactId>feign-slf4j</artifactId>-->
+<!--            <version>${feign.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>3.1.5</version>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2021.0.5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
