@@ -12,6 +12,7 @@ public final class ConstantsForDataBase {
     public static final String NEWSPAPER_TABLE = "Newspapers";
 
     public static final String USER_NAME_COLUMN = "user_name";
+    public static final String USER_EMAIL_COLUMN = "user_email";
     public static final String ID_COLUMN = "id";
     public static final String USER_ID_COLUMN = "user_id";
     public static final String NAME_COLUMN = "name";

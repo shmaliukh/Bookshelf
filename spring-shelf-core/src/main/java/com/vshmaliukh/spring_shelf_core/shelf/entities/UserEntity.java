@@ -24,4 +24,10 @@ public class UserEntity {
     @Column(name = USER_NAME_COLUMN, nullable = false)
     private String userName;
 
+    @Column(name = USER_EMAIL_COLUMN)
+    private String userEmail;
+
+    @Enumerated(EnumType.STRING)
+    private LogInProvider logInProvider;
+
 }

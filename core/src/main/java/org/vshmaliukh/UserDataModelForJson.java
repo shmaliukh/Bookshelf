@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 public class UserDataModelForJson {
 
     private String userName;
+    private String userEmail;
     private int typeOfWork;
 
     public String getTypeOfWorkAsStr(){
