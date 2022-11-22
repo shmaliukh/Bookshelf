@@ -31,6 +31,16 @@
                     <th:block th:insert="blocks/radioButtons :: generateRadioButtonsCheckedByTypeOfWork"></th:block>
                     <br>
                     <button class="w-100 btn btn-primary btn-lg" type="submit">Sign in</button>
+                    <div class="text-center">
+                        <br>
+                        <p>OR</p>
+                        <button type="button"
+                                onclick="location.href='/log_in'"
+                                class="w-100 btn btn-lg btn-outline-primary">
+                            Login with Google
+                        </button>
+                        <!--  TODO  -->
+                    </div>
                 </form>
             </div>
         </div>
