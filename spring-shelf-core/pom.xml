@@ -20,6 +20,11 @@
         <spring-boot-starter.version>2.7.4</spring-boot-starter.version>
         <annotations.version>23.0.0</annotations.version>
         <spring-boot-maven-plugin.version>2.7.3</spring-boot-maven-plugin.version>
+        <spring-boot-starter-oauth2-client.version>2.7.5</spring-boot-starter-oauth2-client.version>
+        <spring-context.version>5.3.23</spring-context.version>
+        <h2.version>2.1.214</h2.version>
+        <mockito-core.version>2.28.2</mockito-core.version>
+        <spring-boot-test-autoconfigure.version>2.7.4</spring-boot-test-autoconfigure.version>
     </properties>
 
     <dependencies>
@@ -65,24 +70,29 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test-autoconfigure</artifactId>
-            <version>2.7.4</version>
+            <version>${spring-boot-test-autoconfigure.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>2.28.2</version>
+            <version>${mockito-core.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>2.1.214</version>
+            <version>${h2.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>5.3.23</version>
+            <version>${spring-context.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <version>${spring-boot-starter-oauth2-client.version}</version>
         </dependency>
     </dependencies>
 
