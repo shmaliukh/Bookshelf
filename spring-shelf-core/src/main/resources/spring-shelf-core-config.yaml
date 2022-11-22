@@ -14,10 +14,11 @@ spring:
   security:
     oauth2:
       client:
+        name: BookshelfClient
         registration:
           google:
             clientId: 286497126804-6l44l74rci15kvidgadpomq5jcls2d73.apps.googleusercontent.com
-            clientSecret: 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
+            clientSecret: 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
 
 ---
 
