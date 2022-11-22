@@ -25,6 +25,7 @@ public class LogInInterceptorConfig implements WebMvcConfigurer {
                         "/" + LOG_IN_TITLE,
                         "/" + SpringWebApplication.LOG_IN_VIA_USER_MODEL,
                         "/utils.js",
+                        "/oauth/**",
                         "/ping/**");
     }
 
