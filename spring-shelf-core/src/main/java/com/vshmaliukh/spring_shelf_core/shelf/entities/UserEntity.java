@@ -24,4 +24,7 @@ public class UserEntity {
     @Column(name = USER_NAME_COLUMN, nullable = false)
     private String userName;
 
+    @Enumerated(EnumType.STRING)
+    private LogInProvider logInProvider;
+
 }
