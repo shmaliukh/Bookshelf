@@ -1,0 +1,108 @@
+application {
+  config {
+    applicationType       monolith,
+    buildTool             maven,
+    baseName              termometria,
+    packageName           xyz.shmaliukh,
+    authenticationType    jwt,
+
+    databaseType          sql,
+    devDatabaseType       h2Disk,
+    prodDatabaseType      postgresql,
+    enableHibernateCache  false,
+
+    clientPackageManager  npm,
+    clientFramework       react,
+    clientTheme           sandstone,
+    languages             [ua, en],
+    nativeLanguage        ua,
+    dtoSuffix             DTO,
+
+    enableSwaggerCodegen  true,
+    messageBroker         false,
+    reactive              false,
+    serviceDiscoveryType  false,
+    skipClient            false,
+    skipServer            false,
+    skipUserManagement    false,
+    websocket             false
+  }
+  entities *
+}
+
+// More info here https://www.jhipster.tech/user-entity/
+entity UserAttribute {              // Аккаунт користувача
+    id                  UUID,
+    defaultScreen      String,
+}
+
+relationship OneToOne {
+    UserAttribute{systemUser} to User
+}
+
+entity Enterprise {
+  id UUID
+  name String unique
+  isActive Boolean
+}
+
+entity Silage {
+  id UUID
+  name String unique
+  radius Long
+  weight Long
+  isActive Boolean
+  posX Double
+  posY Double
+  posZ Double
+}
+
+entity TermoStrip {
+  id UUID
+  heightStart Long
+  heightEnd Long
+  position Integer
+  isActive Boolean
+}
+
+entity Sensor {
+  id UUID
+  name String
+  type String
+  address String
+  isActive Boolean
+}
+
+entity SensorConfig {
+  id UUID
+  date LocalDate
+  minTemperature Double
+  maxTemperature Double
+  maxTemperatureDeltaUp Double
+  maxTemperatureDeltaDown Double
+  isActive Boolean
+}
+
+entity SensorData {
+  id UUID
+  data String
+  timeStamp Instant
+  temperature Double
+}
+
+relationship OneToMany {
+  User{enterprise} to Enterprise{user}
+  Enterprise{silage} to Silage{enterprise}
+  Silage{termoStrip} to TermoStrip{silage}
+  Silage{termoStrip} to TermoStrip{silage}
+  TermoStrip{sensor} to Sensor{termoStrip}
+  Sensor{sensorConfig} to SensorConfig{sensor}
+  SensorConfig{sensorData} to SensorData{sensorConfig}
+}
+
+paginate Silage with infinite-scroll
+paginate TermoStrip, Sensor, SensorConfig, SensorData with pagination
+
+dto * with mapstruct
+
+service all with serviceImpl
